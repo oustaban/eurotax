@@ -16,6 +16,12 @@
                     <label for="symfony-search-field"><span>Search on Symfony Website</span></label>
                     <input name="q" id="symfony-search-field" type="search" placeholder="Search on Symfony website" class="medium_txt">
                     <input type="submit" class="symfony-button-grey" value="OK" />
+                    <br/>
+                    {%if user=='anon.'  %}
+                    <a href="/login">Login</a> | <a href="/register">Register</a>
+                    {% else %}
+                    <a href="/profile/edit">Profile</a> | <a href="/logout">Logout</a>
+                    {% endif %}
                 </form>
             </div>
 

@@ -8,6 +8,7 @@ class WelcomeController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('AcmeDemoBundle:Welcome:index.html.twig');
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        return $this->render('AcmeDemoBundle:Welcome:index.html.twig', array('user' => $user));
     }
 }
