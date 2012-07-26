@@ -1,3 +1,4 @@
+<pre>
 <?php
 
 if (!$iniPath = get_cfg_var('cfg_file_path')) {
