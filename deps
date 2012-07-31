@@ -66,3 +66,44 @@
     git=git://github.com/FriendsOfSymfony/FOSUserBundle.git
     target=bundles/FOS/UserBundle
     version=1.2.0
+
+[SonatajQueryBundle]
+    git=https://github.com/sonata-project/SonatajQueryBundle.git
+    target=/bundles/Sonata/jQueryBundle
+
+[SonataAdminBundle]
+    git=https://github.com/sonata-project/SonataAdminBundle.git
+    target=/bundles/Sonata/AdminBundle
+
+[MenuBundle]
+    git=https://github.com/KnpLabs/KnpMenuBundle.git
+    target=/bundles/Knp/Bundle/MenuBundle
+
+[KnpMenu]
+    git=https://github.com/KnpLabs/KnpMenu.git
+    target=/knp/menu
+
+[SonataUserBundle]
+    git=git://github.com/sonata-project/SonataUserBundle.git
+    target=/bundles/Sonata/UserBundle
+
+[SonataEasyExtendsBundle]
+    git=git://github.com/sonata-project/SonataEasyExtendsBundle.git
+    target=/bundles/Sonata/EasyExtendsBundle
+
+[SonataDoctrineORMAdminBundle]
+    git=https://github.com/sonata-project/SonataDoctrineORMAdminBundle.git
+    target=/bundles/Sonata/DoctrineORMAdminBundle
+
+[SonataNotificationBundle]
+    git=git://github.com/sonata-project/SonataNotificationBundle.git
+    target=/bundles/Sonata/NotificationBundle
+    version=origin/2.0
+
+[PhpAmqplib]
+    git=git://github.com/videlalvaro/php-amqplib.git
+    target=/php-amqplib
+
+[SonataDoctrineExtensions]
+    git=git://github.com/sonata-project/sonata-doctrine-extensions.git
+    target=/sonata-doctrine-extensions
