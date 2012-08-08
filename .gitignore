@@ -19,3 +19,4 @@ composer.phar
 # IDE files
 .idea/*
 nbproject/*
+/app\cache/*.gitkeep
