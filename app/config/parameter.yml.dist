@@ -1,0 +1,14 @@
+parameters:
+    database_driver: pdo_mysql
+    database_host: 192.168.0.8
+    database_port: null
+    database_name: eurotax
+    database_user: www
+    database_password: null
+    mailer_transport: smtp
+    mailer_host: localhost
+    mailer_user: null
+    mailer_password: null
+    locale: en
+    secret: 5893310b103c637c0b67165610be32b9bc5
+    database_path: null
