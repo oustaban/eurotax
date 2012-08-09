@@ -13,6 +13,12 @@ use Knp\Menu\ItemInterface as MenuItemInterface;
 class DevisesAdmin extends Admin
 {
     //create & edit form
+    protected $_money_arr = array(
+        'money_dollar'  => 'Dollar',
+        'money_yen'  => 'Yen',
+        'money_british'  => 'British Pound',
+    );
+
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
@@ -21,28 +27,19 @@ class DevisesAdmin extends Admin
                 'days' => range(1, 1),
                 'years' => range(date('Y'), date('Y')+3),
                 'label' => ' ',
-                ))
-            ->add('money_dollar', 'text',  array(
-                'label'=>'Dollar'
-        ))
-            ->add('money_yen', 'text', array(
-                'label'=>'Yen'
-        ))
-            ->add('money_british', 'text', array(
-                'label'=>'Livre Sterling'
-        ))
-        ;
+                ));
+
+        foreach($this->_money_arr as $field => $label)
+                $formMapper->add($field, 'text', array('label' => $label));
     }
 
     //filter form
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper
-            ->add('date')
-            ->add('money_dollar')
-            ->add('money_yen')
-            ->add('money_british')
-        ;
+        $datagridMapper->add('date');
+
+        foreach($this->_money_arr as $field => $label)
+            $datagridMapper->add($field, null, array('label' => $label));
     }
 
     //list
@@ -50,10 +47,9 @@ class DevisesAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('id')
-            ->add('date')
-            ->add('money_dollar')
-            ->add('money_yen')
-            ->add('money_british')
-        ;
+            ->add('date', null, array('format' => 'MM yyyy')) ;
+
+        foreach($this->_money_arr as $field => $label)
+            $listMapper->add($field, null, array('label' => $label));
     }
 }
