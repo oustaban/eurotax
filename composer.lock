@@ -180,8 +180,14 @@
         {
             "package": "symfony/assetic-bundle",
             "version": "dev-master",
-            "source-reference": "0c09207be07b044e06d28a4111f554f071e5b658",
-            "commit-date": "1343812720"
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/assetic-bundle",
+            "version": "dev-master",
+            "source-reference": "23220f745218e7b2d0efcffd579d1dab3d825602",
+            "commit-date": "1344283756"
         },
         {
             "package": "symfony/monolog-bundle",
@@ -204,8 +210,8 @@
         {
             "package": "symfony/symfony",
             "version": "dev-master",
-            "source-reference": "b91a4a8368abdca7b9728f3cf170175c3aa3befc",
-            "commit-date": "1344326985"
+            "source-reference": "dd9afddfd9a9f169832c4634d1094f50f34d5df4",
+            "commit-date": "1344494996"
         },
         {
             "package": "twig/extensions",
