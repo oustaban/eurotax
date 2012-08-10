@@ -52,4 +52,9 @@ class DevisesAdmin extends Admin
         foreach($this->_money_arr as $field => $label)
             $listMapper->add($field, null, array('label' => $label));
     }
+
+    public function getFormTheme()
+    {
+        return array('ApplicationSonataDevisesBundle:Form:form_admin_fields.html.twig');
+    }
 }
