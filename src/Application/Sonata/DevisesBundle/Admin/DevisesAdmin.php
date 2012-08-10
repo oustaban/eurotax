@@ -32,7 +32,7 @@ class DevisesAdmin extends Admin
              ));
 
         foreach($this->_money_arr as $field => $label)
-                $formMapper->add($field, 'text', array('label' => 'form.'.$label));
+             $formMapper->add($field, 'money', array('label' => 'form.'.$label, 'divisor' => 1));
     }
 
     //filter form
