@@ -161,13 +161,17 @@ file that was distributed with this source code.
 {% endblock collection_widget %}
 
 
+
 {% block date_widget %}
 {% spaceless %}
 {% if widget == 'single_text' %}
 {{ block('field_widget') }}
 {% else %}
 <div {{ block('widget_container_attributes') }}>
-   <div style="display:none"> {{ form_widget(form.day) }} </div> Mois  {{form_widget(form.month)}} Année {{form_widget(form.year)}}
+    {% set month_text = 'form.Month' %}
+    {% set year_text = 'form.Year' %}
+
+   <div style="display:none"> {{ form_widget(form.day) }} </div> {{month_text|trans}}  {{form_widget(form.month)}} {{year_text|trans}} {{form_widget(form.year)}}
 </div>
 {% endif %}
 {% endspaceless %}
