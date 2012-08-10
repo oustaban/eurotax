@@ -1,0 +1,17 @@
+form:
+  Dollar: Dollar
+  Yen: Yen
+  British Pound: British Pound
+  Month: Mois
+  Year:  Année
+  Devises: Modifier les devises
+
+list:
+  Dollar: Dollar
+  Yen: Yen
+  British Pound: British Pound
+
+filter:
+  Dollar: Dollar
+  Yen: Yen
+  British Pound: British Pound

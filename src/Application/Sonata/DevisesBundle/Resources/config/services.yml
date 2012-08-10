@@ -1,4 +1,10 @@
 services:
+
+  application.sonata.admin.devises.twig:
+     class : Application\Twig\DateFmtFormatExtension
+     tags:
+          - { name: twig.extension }
+
   application.sonata.admin.devises:
      class : Application\Sonata\DevisesBundle\Admin\DevisesAdmin
      tags:

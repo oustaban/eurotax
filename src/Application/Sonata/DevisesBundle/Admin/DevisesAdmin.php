@@ -19,27 +19,27 @@ class DevisesAdmin extends Admin
         'money_british'  => 'British Pound',
     );
 
+    //form create and edit
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
+            ->with('form.Devises')
             ->add('date', 'date', array(
                 'format' => 'dd MMMM yyyy',
                 'days' => range(1, 1),
                 'years' => range(date('Y'), date('Y')+3),
                 'label' => ' ',
-                ));
+             ));
 
         foreach($this->_money_arr as $field => $label)
-                $formMapper->add($field, 'text', array('label' => $label));
+             $formMapper->add($field, 'money', array('label' => 'form.'.$label, 'divisor' => 1));
     }
 
     //filter form
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('date');
-
         foreach($this->_money_arr as $field => $label)
-            $datagridMapper->add($field, null, array('label' => $label));
+            $datagridMapper->add($field, null, array('label' => 'filter.'.$label));
     }
 
     //list
@@ -47,10 +47,10 @@ class DevisesAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('id')
-            ->add('date', null, array('format' => 'MM yyyy')) ;
+            ->add('date', null, array('template' => 'ApplicationSonataDevisesBundle:Form:list_date.html.twig')) ;
 
         foreach($this->_money_arr as $field => $label)
-            $listMapper->add($field, null, array('label' => $label));
+            $listMapper->add($field, null, array('label' => 'list.'.$label));
     }
 
     public function getFormTheme()
