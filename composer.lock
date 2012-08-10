@@ -16,8 +16,14 @@
         {
             "package": "doctrine/doctrine-bundle",
             "version": "dev-master",
-            "source-reference": "ed8d02b491512f947fdb2f8b665dc8fd72b5879c",
-            "commit-date": "1343657020"
+            "alias-pretty-version": "1.0.x-dev",
+            "alias-version": "1.0.9999999.9999999-dev"
+        },
+        {
+            "package": "doctrine/doctrine-bundle",
+            "version": "dev-master",
+            "source-reference": "4d9bb0f3af470556983eb41a7d19ede23401ef0b",
+            "commit-date": "1344549563"
         },
         {
             "package": "doctrine/orm",
@@ -204,8 +210,8 @@
         {
             "package": "symfony/symfony",
             "version": "dev-master",
-            "source-reference": "dd9afddfd9a9f169832c4634d1094f50f34d5df4",
-            "commit-date": "1344494996"
+            "source-reference": "31536c36ec8875aee1406aa7d7a0b5e38a04af66",
+            "commit-date": "1344599303"
         },
         {
             "package": "twig/extensions",
