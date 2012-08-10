@@ -1,0 +1,6 @@
+services:
+  application.sonata.admin.clients:
+     class : Application\Sonata\ClientBundle\Admin\ClientAdmin
+     tags:
+          - { name: sonata.admin, manager_type: orm, group: Client, label: Client }
+     arguments: [null, Application\Sonata\ClientBundle\Entity\Client, SonataAdminBundle:CRUD]
