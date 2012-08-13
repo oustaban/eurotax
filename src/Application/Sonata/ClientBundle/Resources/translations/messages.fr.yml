@@ -1,0 +1,61 @@
+form:
+  client: Ajouter / Modifier un client
+  user: Nom du gestionnaire
+  nom: Nom
+  nature_du_client: Nature du client
+  raison_sociale: Raison sociale
+  activite: Activité
+  mode_denregistrement: Mode d'enregistrement
+  avance_contractuelle: Avance contractuelle
+  siret: Siret
+  periodicite_facturation: Périodicité Facturation
+  num_dossier_fiscal: Num dossier fiscal
+  taxe_additionnelle: Taxe additionnelle
+  periodicite_CA3: Périodicité CA3
+  center_des_impots: Centre des impôts
+  date_fin_mission: Date fin mission
+  libelle_avance: Libellé avance
+  date_de_depot_id: Date de dépot
+  N_TVA_CEE: N° TVA CEE
+  niveau_dobligation_id: Niveau d'obligation
+
+list:
+  user: Nom du gestionnaire
+  nom: Nom
+  nature_du_client: Nature du client
+  raison_sociale: Raison sociale
+  activite: Activité
+  mode_denregistrement: Mode d'enregistrement
+  avance_contractuelle: Avance contractuelle
+  siret: Siret
+  periodicite_facturation: Périodicité Facturation
+  num_dossier_fiscal: Num dossier fiscal
+  taxe_additionnelle: Taxe additionnelle
+  periodicite_CA3: Périodicité CA3
+  center_des_impots: Centre des impôts
+  date_fin_mission: Date fin mission
+  libelle_avance: Libellé avance
+  date_de_depot_id: Date de dépot
+  N_TVA_CEE: N° TVA CEE
+  niveau_dobligation_id: Niveau d'obligation
+
+
+filter:
+  user: Nom du gestionnaire
+  nom: Nom
+  nature_du_client: Nature du client
+  raison_sociale: Raison sociale
+  activite: Activité
+  mode_denregistrement: Mode d'enregistrement
+  avance_contractuelle: Avance contractuelle
+  siret: Siret
+  periodicite_facturation: Périodicité Facturation
+  num_dossier_fiscal: Num dossier fiscal
+  taxe_additionnelle: Taxe additionnelle
+  periodicite_CA3: Périodicité CA3
+  center_des_impots: Centre des impôts
+  date_fin_mission: Date fin mission
+  libelle_avance: Libellé avance
+  date_de_depot_id: Date de dépot
+  N_TVA_CEE: N° TVA CEE
+  niveau_dobligation_id: Niveau d'obligation
