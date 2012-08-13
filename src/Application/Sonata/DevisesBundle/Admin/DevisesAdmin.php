@@ -47,7 +47,7 @@ class DevisesAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('id')
-            ->add('date', null, array('template' => 'ApplicationSonataDevisesBundle:Form:list_date.html.twig')) ;
+            ->add('date', null, array('template' => 'ApplicationSonataDevisesBundle:CRUD:list_date.html.twig')) ;
 
         foreach($this->_money_arr as $field => $label)
             $listMapper->add($field, null, array('label' => 'list.'.$label));
