@@ -16,12 +16,6 @@
         {
             "package": "doctrine/doctrine-bundle",
             "version": "dev-master",
-            "alias-pretty-version": "1.0.x-dev",
-            "alias-version": "1.0.9999999.9999999-dev"
-        },
-        {
-            "package": "doctrine/doctrine-bundle",
-            "version": "dev-master",
             "source-reference": "4d9bb0f3af470556983eb41a7d19ede23401ef0b",
             "commit-date": "1344549563"
         },
