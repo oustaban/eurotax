@@ -54,28 +54,28 @@ class Client
     /**
      * @var string $adresse_1_postal
      *
-     * @ORM\Column(name="adresse_1_postal", type="string", length=255)
+     * @ORM\Column(name="adresse_1_postal", type="string", length=100)
      */
     private $adresse_1_postal;
 
     /**
      * @var string $adresse_2_postal
      *
-     * @ORM\Column(name="adresse_2_postal", type="string", length=255)
+     * @ORM\Column(name="adresse_2_postal", type="string", length=100)
      */
     private $adresse_2_postal;
 
     /**
      * @var string $code_postal_postal
      *
-     * @ORM\Column(name="code_postal_postal", type="string", length=5)
+     * @ORM\Column(name="code_postal_postal", type="string", length=20)
      */
     private $code_postal_postal;
 
     /**
      * @var string $ville_postal
      *
-     * @ORM\Column(name="ville_postal", type="string", length=255)
+     * @ORM\Column(name="ville_postal", type="string", length=50)
      */
     private $ville_postal;
 
@@ -154,44 +154,45 @@ class Client
     private $periodicite_CA3;
 
     /**
-     * @var integer $center_des_impots_id
+     * @var integer $center_des_impots
      *
-     * @ORM\Column(name="center_des_impots_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="\Application\Sonata\ImpotsBundle\Entity\Impots", inversedBy="client")
+     * @ORM\JoinColumn(name="center_des_impots_id", referencedColumnName="id")
      */
-    private $center_des_impots_id;
+    private $center_des_impots;
 
     /**
      * @var string $adresse_1_facturation
      *
-     * @ORM\Column(name="adresse_1_facturation", type="string", length=255)
+     * @ORM\Column(name="adresse_1_facturation", type="string", length=100)
      */
     private $adresse_1_facturation;
 
     /**
      * @var string $adresse_2_facturation
      *
-     * @ORM\Column(name="adresse_2_facturation", type="string", length=255)
+     * @ORM\Column(name="adresse_2_facturation", type="string", length=100)
      */
     private $adresse_2_facturation;
 
     /**
      * @var string $code_postal_facturation
      *
-     * @ORM\Column(name="code_postal_facturation", type="string", length=5)
+     * @ORM\Column(name="code_postal_facturation", type="string", length=20)
      */
     private $code_postal_facturation;
 
     /**
      * @var string $ville_facturation
      *
-     * @ORM\Column(name="ville_facturation", type="string", length=255)
+     * @ORM\Column(name="ville_facturation", type="string", length=50)
      */
     private $ville_facturation;
 
     /**
      * @var integer $pays_id_facturation
      *
-     * @ORM\Column(name="pays_id_facturation", type="integer")
+     * @ORM\Column(name="pays_id_facturation", type="string", length=2)
      */
     private $pays_id_facturation;
 
@@ -542,29 +543,6 @@ class Client
         return $this->taxe_additionnelle;
     }
 
-
-    /**
-     * Set center_des_impots_id
-     *
-     * @param integer $centerDesImpotsId
-     * @return Client
-     */
-    public function setCenterDesImpotsId($centerDesImpotsId)
-    {
-        $this->center_des_impots_id = $centerDesImpotsId;
-
-        return $this;
-    }
-
-    /**
-     * Get center_des_impots_id
-     *
-     * @return integer
-     */
-    public function getCenterDesImpotsId()
-    {
-        return $this->center_des_impots_id;
-    }
 
     /**
      * Set adresse_1_facturation
@@ -932,6 +910,29 @@ class Client
     public function getPeriodiciteCA3()
     {
         return $this->periodicite_CA3;
+    }
+
+    /**
+     * Set center_des_impots
+     *
+     * @param Application\Sonata\ImpotsBundle\Entity\Impots $centerDesImpots
+     * @return Client
+     */
+    public function setCenterDesImpots(\Application\Sonata\ImpotsBundle\Entity\Impots $centerDesImpots = null)
+    {
+        $this->center_des_impots = $centerDesImpots;
+
+        return $this;
+    }
+
+    /**
+     * Get center_des_impots
+     *
+     * @return Application\Sonata\ImpotsBundle\Entity\Impots
+     */
+    public function getCenterDesImpots()
+    {
+        return $this->center_des_impots;
     }
 
     /**

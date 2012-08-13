@@ -359,4 +359,14 @@ class Impots
     {
         return $this->pays_id;
     }
+
+    /**
+     * Returns a string representation
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getNom() ?: '-';
+    }
 }

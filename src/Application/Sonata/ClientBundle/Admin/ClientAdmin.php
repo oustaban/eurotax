@@ -80,15 +80,6 @@ class ClientAdmin extends Admin
                     ));
                 break;
 
-                case 'center_des_impots':
-                   $formMapper->add('center_des_impots_id', 'choice',
-                       array(
-                           'label' => 'form.'.$field,
-                           'choices' => array(0, 1, 4)
-                       ));
-                 break;
-
-
                 case 'location_facturation':
                  $formMapper->add($field, new LocationFacturationType(), array(
                         'data_class' => 'Application\Sonata\ClientBundle\Entity\Client',
