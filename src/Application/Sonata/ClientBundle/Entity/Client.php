@@ -141,7 +141,7 @@ class Client
     /**
      * @var boolean $taxe_additionnelle
      *
-     * @ORM\Column(name="taxe_additionnelle", type="boolean")
+     * @ORM\Column(name="taxe_additionnelle", type="boolean", nullable=true)
      */
     private $taxe_additionnelle;
 
