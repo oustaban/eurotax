@@ -159,6 +159,6 @@ class Devises
      */
     public function __toString()
     {
-        return $this->getDate() ?: '-';
+        return (string)$this->getId() ?: '-';
     }
 }

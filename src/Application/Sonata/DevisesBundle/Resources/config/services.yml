@@ -1,12 +1,11 @@
 services:
+    application.sonata.admin.devises:
+        class : Application\Sonata\DevisesBundle\Admin\DevisesAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Devises, label: Devises }
+        arguments: [null, Application\Sonata\DevisesBundle\Entity\Devises, SonataAdminBundle:CRUD]
 
-  application.sonata.admin.devises.twig:
-     class : Application\Twig\DateFmtFormatExtension
-     tags:
-          - { name: twig.extension }
-
-  application.sonata.admin.devises:
-     class : Application\Sonata\DevisesBundle\Admin\DevisesAdmin
-     tags:
-          - { name: sonata.admin, manager_type: orm, group: Devises, label: Devises }
-     arguments: [null, Application\Sonata\DevisesBundle\Entity\Devises, SonataAdminBundle:CRUD]
+    application.sonata.admin.devises.twig:
+        class : Application\Twig\DateFmtFormatExtension
+        tags:
+            - { name: twig.extension }
