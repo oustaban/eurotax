@@ -114,6 +114,13 @@ class Impots
     private $pays_id;
 
     /**
+     * @return string
+     */
+    public function __toString(){
+
+        return $this->getNom();
+    }
+    /**
      * Get id
      *
      * @return integer

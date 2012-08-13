@@ -8,6 +8,7 @@ form:
   mode_denregistrement: Mode d'enregistrement
   avance_contractuelle: Avance contractuelle
   siret: Siret
+  date_debut_mission: Date début mission
   periodicite_facturation: Périodicité Facturation
   num_dossier_fiscal: Num dossier fiscal
   taxe_additionnelle: Taxe additionnelle
@@ -28,6 +29,7 @@ list:
   mode_denregistrement: Mode d'enregistrement
   avance_contractuelle: Avance contractuelle
   siret: Siret
+  date_debut_mission: Date début mission
   periodicite_facturation: Périodicité Facturation
   num_dossier_fiscal: Num dossier fiscal
   taxe_additionnelle: Taxe additionnelle
@@ -49,6 +51,7 @@ filter:
   mode_denregistrement: Mode d'enregistrement
   avance_contractuelle: Avance contractuelle
   siret: Siret
+  date_debut_mission: Date début mission
   periodicite_facturation: Périodicité Facturation
   num_dossier_fiscal: Num dossier fiscal
   taxe_additionnelle: Taxe additionnelle
