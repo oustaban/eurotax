@@ -11,6 +11,7 @@ if (CHECK_ACCESS) {
         && !in_array(@$_SERVER['REMOTE_ADDR'], array(
             '195.140.169.238', //Kiev office
             '88.188.160.112', //Pierre home
+            '62.193.54.208', //Pierre Masao
             '127.0.0.1',
             '::1',
         ))
