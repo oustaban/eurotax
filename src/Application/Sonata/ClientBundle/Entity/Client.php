@@ -234,7 +234,7 @@ class Client
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -250,14 +250,14 @@ class Client
     public function setNom($nom)
     {
         $this->nom = $nom;
-    
+
         return $this;
     }
 
     /**
      * Get nom
      *
-     * @return string 
+     * @return string
      */
     public function getNom()
     {
@@ -274,14 +274,14 @@ class Client
     public function setRaisonSociale($raisonSociale)
     {
         $this->raison_sociale = $raisonSociale;
-    
+
         return $this;
     }
 
     /**
      * Get raison_sociale
      *
-     * @return string 
+     * @return string
      */
     public function getRaisonSociale()
     {
@@ -297,14 +297,14 @@ class Client
     public function setAdresse1Postal($adressePostale1)
     {
         $this->adresse_1_postal = $adressePostale1;
-    
+
         return $this;
     }
 
     /**
      * Get adresse_1_postal
      *
-     * @return string 
+     * @return string
      */
     public function getAdresse1Postal()
     {
@@ -320,14 +320,14 @@ class Client
     public function setAdresse2Postal($adressePostale2)
     {
         $this->adresse_2_postal = $adressePostale2;
-    
+
         return $this;
     }
 
     /**
      * Get adresse_2_postal
      *
-     * @return string 
+     * @return string
      */
     public function getAdresse2Postal()
     {
@@ -343,14 +343,14 @@ class Client
     public function setCodePostalPostal($codePostal)
     {
         $this->code_postal_postal = $codePostal;
-    
+
         return $this;
     }
 
     /**
      * Get code_postal_postal
      *
-     * @return string 
+     * @return string
      */
     public function getCodePostalPostal()
     {
@@ -366,14 +366,14 @@ class Client
     public function setVillePostal($villePostal)
     {
         $this->ville_postal = $villePostal;
-    
+
         return $this;
     }
 
     /**
      * Get ville_postal
      *
-     * @return string 
+     * @return string
      */
     public function getVillePostal()
     {
@@ -389,14 +389,14 @@ class Client
     public function setPaysIdPostal($paysIdPostal)
     {
         $this->pays_id_postal = $paysIdPostal;
-    
+
         return $this;
     }
 
     /**
      * Get pays_id_postal
      *
-     * @return integer 
+     * @return integer
      */
     public function getPaysIdPostal()
     {
@@ -412,14 +412,14 @@ class Client
     public function setActivite($activite)
     {
         $this->activite = $activite;
-    
+
         return $this;
     }
 
     /**
      * Get activite
      *
-     * @return string 
+     * @return string
      */
     public function getActivite()
     {
@@ -435,14 +435,14 @@ class Client
     public function setDateDebutMission($dateDebutMission)
     {
         $this->date_debut_mission = $dateDebutMission;
-    
+
         return $this;
     }
 
     /**
      * Get date_debut_mission
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateDebutMission()
     {
@@ -458,14 +458,14 @@ class Client
     public function setAvanceContractuelle($avanceContractuelle)
     {
         $this->avance_contractuelle = $avanceContractuelle;
-    
+
         return $this;
     }
 
     /**
      * Get avance_contractuelle
      *
-     * @return string 
+     * @return string
      */
     public function getAvanceContractuelle()
     {
@@ -481,14 +481,14 @@ class Client
     public function setSiret($siret)
     {
         $this->siret = $siret;
-    
+
         return $this;
     }
 
     /**
      * Get siret
      *
-     * @return string 
+     * @return string
      */
     public function getSiret()
     {
@@ -505,14 +505,14 @@ class Client
     public function setNumDossierFiscal($numDossierFiscal)
     {
         $this->num_dossier_fiscal = $numDossierFiscal;
-    
+
         return $this;
     }
 
     /**
      * Get num_dossier_fiscal
      *
-     * @return string 
+     * @return string
      */
     public function getNumDossierFiscal()
     {
@@ -528,14 +528,14 @@ class Client
     public function setTaxeAdditionnelle($taxeAdditionnelle)
     {
         $this->taxe_additionnelle = $taxeAdditionnelle;
-    
+
         return $this;
     }
 
     /**
      * Get taxe_additionnelle
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getTaxeAdditionnelle()
     {
@@ -552,14 +552,14 @@ class Client
     public function setCenterDesImpotsId($centerDesImpotsId)
     {
         $this->center_des_impots_id = $centerDesImpotsId;
-    
+
         return $this;
     }
 
     /**
      * Get center_des_impots_id
      *
-     * @return integer 
+     * @return integer
      */
     public function getCenterDesImpotsId()
     {
@@ -575,14 +575,14 @@ class Client
     public function setAdresse1Facturation($adresse1Facturation)
     {
         $this->adresse_1_facturation = $adresse1Facturation;
-    
+
         return $this;
     }
 
     /**
      * Get adresse_1_facturation
      *
-     * @return string 
+     * @return string
      */
     public function getAdresse1Facturation()
     {
@@ -598,14 +598,14 @@ class Client
     public function setAdresse2Facturation($adresse2Facturation)
     {
         $this->adresse_2_facturation = $adresse2Facturation;
-    
+
         return $this;
     }
 
     /**
      * Get adresse_2_facturation
      *
-     * @return string 
+     * @return string
      */
     public function getAdresse2Facturation()
     {
@@ -621,14 +621,14 @@ class Client
     public function setCodePostalFacturation($codePostalFacturation)
     {
         $this->code_postal_facturation = $codePostalFacturation;
-    
+
         return $this;
     }
 
     /**
      * Get code_postal_facturation
      *
-     * @return string 
+     * @return string
      */
     public function getCodePostalFacturation()
     {
@@ -644,14 +644,14 @@ class Client
     public function setVilleFacturation($villeFacturation)
     {
         $this->ville_facturation = $villeFacturation;
-    
+
         return $this;
     }
 
     /**
      * Get ville_facturation
      *
-     * @return string 
+     * @return string
      */
     public function getVilleFacturation()
     {
@@ -667,14 +667,14 @@ class Client
     public function setPaysIdFacturation($paysIdFacturation)
     {
         $this->pays_id_facturation = $paysIdFacturation;
-    
+
         return $this;
     }
 
     /**
      * Get pays_id_facturation
      *
-     * @return integer 
+     * @return integer
      */
     public function getPaysIdFacturation()
     {
@@ -690,14 +690,14 @@ class Client
     public function setDateFinMission($dateFinMission)
     {
         $this->date_fin_mission = $dateFinMission;
-    
+
         return $this;
     }
 
     /**
      * Get date_fin_mission
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateFinMission()
     {
@@ -713,14 +713,14 @@ class Client
     public function setLibelleAvance($libelleAvance)
     {
         $this->libelle_avance = $libelleAvance;
-    
+
         return $this;
     }
 
     /**
      * Get libelle_avance
      *
-     * @return string 
+     * @return string
      */
     public function getLibelleAvance()
     {
@@ -736,7 +736,7 @@ class Client
     public function setDateDeDepot($dateDeDepot)
     {
         $this->date_de_depot_id = $dateDeDepot;
-    
+
         return $this;
     }
 
@@ -759,14 +759,14 @@ class Client
     public function setNTVACEE($nTVACEE)
     {
         $this->N_TVA_CEE = $nTVACEE;
-    
+
         return $this;
     }
 
     /**
      * Get N_TVA_CEE
      *
-     * @return string 
+     * @return string
      */
     public function getNTVACEE()
     {
@@ -782,14 +782,14 @@ class Client
     public function setNiveauDobligationId($niveauDobligationId)
     {
         $this->niveau_dobligation_id = $niveauDobligationId;
-    
+
         return $this;
     }
 
     /**
      * Get niveau_dobligation_id
      *
-     * @return integer 
+     * @return integer
      */
     public function getNiveauDobligationId()
     {
@@ -805,14 +805,14 @@ class Client
     public function setDateDeDepotId($dateDeDepotId)
     {
         $this->date_de_depot_id = $dateDeDepotId;
-    
+
         return $this;
     }
 
     /**
      * Get date_de_depot_id
      *
-     * @return integer 
+     * @return integer
      */
     public function getDateDeDepotId()
     {
@@ -828,14 +828,14 @@ class Client
     public function setNatureDuClient(\Application\Sonata\ClientBundle\Entity\ListNatureDuClients $natureDuClient = null)
     {
         $this->nature_du_client = $natureDuClient;
-    
+
         return $this;
     }
 
     /**
      * Get nature_du_client
      *
-     * @return Application\Sonata\ClientBundle\Entity\ListNatureDuClients 
+     * @return Application\Sonata\ClientBundle\Entity\ListNatureDuClients
      */
     public function getNatureDuClient()
     {
@@ -851,14 +851,14 @@ class Client
     public function setUser(\Application\Sonata\UserBundle\Entity\User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
      * Get user
      *
-     * @return Application\Sonata\UserBundle\Entity\User 
+     * @return Application\Sonata\UserBundle\Entity\User
      */
     public function getUser()
     {
@@ -874,14 +874,14 @@ class Client
     public function setModeDenregistrement(\Application\Sonata\ClientBundle\Entity\ListModeDenregistrements $modeDenregistrement = null)
     {
         $this->mode_denregistrement = $modeDenregistrement;
-    
+
         return $this;
     }
 
     /**
      * Get mode_denregistrement
      *
-     * @return Application\Sonata\ClientBundle\Entity\ListModeDenregistrements 
+     * @return Application\Sonata\ClientBundle\Entity\ListModeDenregistrements
      */
     public function getModeDenregistrement()
     {
@@ -897,7 +897,7 @@ class Client
     public function setPeriodiciteFacturation(\Application\Sonata\ClientBundle\Entity\ListPeriodiciteFacturations $periodiciteFacturation = null)
     {
         $this->periodicite_facturation = $periodiciteFacturation;
-    
+
         return $this;
     }
 
@@ -920,7 +920,7 @@ class Client
     public function setPeriodiciteCA3(\Application\Sonata\ClientBundle\Entity\ListPeriodiciteFacturations $periodiciteCA3 = null)
     {
         $this->periodicite_CA3 = $periodiciteCA3;
-    
+
         return $this;
     }
 
@@ -932,5 +932,15 @@ class Client
     public function getPeriodiciteCA3()
     {
         return $this->periodicite_CA3;
+    }
+
+    /**
+     * Returns a string representation
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getNom() ?: '-';
     }
 }

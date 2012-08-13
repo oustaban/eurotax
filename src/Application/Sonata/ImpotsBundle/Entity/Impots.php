@@ -21,22 +21,6 @@ class Impots
     private $id;
 
     /**
-    - Nom (text 100)
-    - Nom de la banque (text 100)
-     *
-    - Adresse 1 (text 100)
-    - Adresse 2 (text 100)
-    - CP (text 20)
-    - Ville (text 50)
-    - Pays (country Field)
-     *
-    - N° de compte (text 200)
-    - Code Swift (text 200)
-    - IBAN (text 200)
-    - SEPA (text 200)
-     */
-
-    /**
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=100)
@@ -132,14 +116,14 @@ class Impots
     public function setNom($nom)
     {
         $this->nom = $nom;
-    
+
         return $this;
     }
 
     /**
      * Get nom
      *
-     * @return string 
+     * @return string
      */
     public function getNom()
     {
@@ -155,14 +139,14 @@ class Impots
     public function setNomDeLaBanque($nomDeLaBanque)
     {
         $this->nom_de_la_banque = $nomDeLaBanque;
-    
+
         return $this;
     }
 
     /**
      * Get nom_de_la_banque
      *
-     * @return string 
+     * @return string
      */
     public function getNomDeLaBanque()
     {
@@ -178,14 +162,14 @@ class Impots
     public function setNoDeCompte($noDeCompte)
     {
         $this->no_de_compte = $noDeCompte;
-    
+
         return $this;
     }
 
     /**
      * Get no_de_compte
      *
-     * @return string 
+     * @return string
      */
     public function getNoDeCompte()
     {
@@ -201,14 +185,14 @@ class Impots
     public function setCodeSwift($codeSwift)
     {
         $this->code_swift = $codeSwift;
-    
+
         return $this;
     }
 
     /**
      * Get code_swift
      *
-     * @return string 
+     * @return string
      */
     public function getCodeSwift()
     {
@@ -224,14 +208,14 @@ class Impots
     public function setIBAN($iBAN)
     {
         $this->IBAN = $iBAN;
-    
+
         return $this;
     }
 
     /**
      * Get IBAN
      *
-     * @return string 
+     * @return string
      */
     public function getIBAN()
     {
@@ -247,14 +231,14 @@ class Impots
     public function setSEPA($sEPA)
     {
         $this->SEPA = $sEPA;
-    
+
         return $this;
     }
 
     /**
      * Get SEPA
      *
-     * @return string 
+     * @return string
      */
     public function getSEPA()
     {
@@ -270,14 +254,14 @@ class Impots
     public function setAdresse1($adresse1)
     {
         $this->adresse_1 = $adresse1;
-    
+
         return $this;
     }
 
     /**
      * Get adresse_1
      *
-     * @return string 
+     * @return string
      */
     public function getAdresse1()
     {
@@ -293,14 +277,14 @@ class Impots
     public function setAdresse2($adresse2)
     {
         $this->adresse_2 = $adresse2;
-    
+
         return $this;
     }
 
     /**
      * Get adresse_2
      *
-     * @return string 
+     * @return string
      */
     public function getAdresse2()
     {
@@ -316,14 +300,14 @@ class Impots
     public function setCodePostal($codePostal)
     {
         $this->code_postal = $codePostal;
-    
+
         return $this;
     }
 
     /**
      * Get code_postal
      *
-     * @return string 
+     * @return string
      */
     public function getCodePostal()
     {
@@ -339,14 +323,14 @@ class Impots
     public function setVille($ville)
     {
         $this->ville = $ville;
-    
+
         return $this;
     }
 
     /**
      * Get ville
      *
-     * @return string 
+     * @return string
      */
     public function getVille()
     {
@@ -362,14 +346,14 @@ class Impots
     public function setPaysId($paysId)
     {
         $this->pays_id = $paysId;
-    
+
         return $this;
     }
 
     /**
      * Get pays_id
      *
-     * @return string 
+     * @return string
      */
     public function getPaysId()
     {

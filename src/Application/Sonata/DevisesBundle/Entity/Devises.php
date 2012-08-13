@@ -53,7 +53,7 @@ class Devises
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -69,14 +69,14 @@ class Devises
     public function setDate($date)
     {
         $this->date = $date;
-    
+
         return $this;
     }
 
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -92,14 +92,14 @@ class Devises
     public function setMoneyDollar($moneyDollar)
     {
         $this->money_dollar = $moneyDollar;
-    
+
         return $this;
     }
 
     /**
      * Get money_dollar
      *
-     * @return string 
+     * @return string
      */
     public function getMoneyDollar()
     {
@@ -115,14 +115,14 @@ class Devises
     public function setMoneyYen($moneyYen)
     {
         $this->money_yen = $moneyYen;
-    
+
         return $this;
     }
 
     /**
      * Get money_yen
      *
-     * @return string 
+     * @return string
      */
     public function getMoneyYen()
     {
@@ -138,17 +138,27 @@ class Devises
     public function setMoneyBritish($moneyBritish)
     {
         $this->money_british = $moneyBritish;
-    
+
         return $this;
     }
 
     /**
      * Get money_british
      *
-     * @return string 
+     * @return string
      */
     public function getMoneyBritish()
     {
         return $this->money_british;
+    }
+
+    /**
+     * Returns a string representation
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getDate() ?: '-';
     }
 }
