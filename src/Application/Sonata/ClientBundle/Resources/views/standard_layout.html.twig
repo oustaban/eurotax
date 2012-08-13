@@ -1,0 +1,16 @@
+{% extends 'SonataAdminBundle::standard_layout.html.twig' %}
+
+{% use 'ApplicationSonataClientBundle:CRUD:form_tabs.html.twig' with form_tabs as formTabs %}
+
+{% block sonata_admin_content %}
+{{ block('formTabs') }}
+
+<div class="sonata-ba-list">
+    {{ list_table|raw }}
+</div>
+
+<div class="sonata-ba-form">
+    {{ form|raw }}
+</div>
+
+{% endblock %}

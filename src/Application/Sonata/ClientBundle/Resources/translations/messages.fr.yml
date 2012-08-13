@@ -20,6 +20,17 @@ form:
   N_TVA_CEE: N° TVA CEE
   niveau_dobligation_id: Niveau d'obligation
 
+  contact:
+    contact: Contact
+    civilite: Civilité
+    nom: Nom
+    prenom: Prénom
+    telephone_1: Téléphone 1
+    telephone_2: Téléphone 2
+    fax: Fax
+    email: Email
+    affichage_facture: Affichage Facture
+
 list:
   user: Nom du gestionnaire
   nom: Nom

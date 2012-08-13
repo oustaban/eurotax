@@ -1,6 +1,13 @@
 services:
-  application.sonata.admin.clients:
-     class : Application\Sonata\ClientBundle\Admin\ClientAdmin
-     tags:
-          - { name: sonata.admin, manager_type: orm, group: Client, label: Client }
-     arguments: [null, Application\Sonata\ClientBundle\Entity\Client, SonataAdminBundle:CRUD]
+    application.sonata.admin.client:
+        class : Application\Sonata\ClientBundle\Admin\ClientAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Client, label: Client }
+        arguments: [null, Application\Sonata\ClientBundle\Entity\Client, SonataAdminBundle:CRUD]
+
+    application.sonata.admin.contact:
+        class : Application\Sonata\ClientBundle\Admin\ContactAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Contact, label: Contact }
+        arguments: [null, Application\Sonata\ClientBundle\Entity\Contact, ApplicationSonataClientBundle:Contact]
+

@@ -83,14 +83,14 @@ class ClientAdmin extends Admin
                 case 'location_facturation':
                  $formMapper->add($field, new LocationFacturationType(), array(
                         'data_class' => 'Application\Sonata\ClientBundle\Entity\Client',
-                        'label' => ' ',
+                        'label' => 'Location',
                  ), array('type'=>'location'));
 
                 break;
                 case 'location_postal':
                     $formMapper->add($field, new LocationPostalType(), array(
                         'data_class' => 'Application\Sonata\ClientBundle\Entity\Client',
-                        'label' => ' ',
+                        'label' => 'Location',
                     ),
                     array('type'=>'postal'));
                 break;
