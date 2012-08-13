@@ -140,4 +140,21 @@ class ClientAdmin extends Admin
             $listMapper->add($field, null, array('label' => 'list.'.$field));
         }
     }
+
+    /**
+     * @param string $name
+     *
+     * @return null|string
+     */
+    public function getTemplate($name)
+    {
+        switch($name){
+            case 'edit':
+            case 'create':
+                return 'ApplicationSonataClientBundle:CRUD:edit.html.twig';
+                break;
+        }
+
+        return parent::getTemplate($name);
+    }
 }
