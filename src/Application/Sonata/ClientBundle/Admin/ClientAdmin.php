@@ -15,40 +15,6 @@ use Application\Form\Type\LocationFacturationType;
 
 class ClientAdmin extends Admin
 {
-    //create & edit form
-    /**
-     * @param FormMapper $formMapper
-     */
-    protected $_fields = array(
-        'user',
-        'nom',
-        'nature_du_client',
-        'raison_sociale',
-        'location_postal',
-        'date_debut_mission',
-        'activite',
-        'mode_denregistrement',
-        'avance_contractuelle',
-        'siret',
-        'periodicite_facturation',
-        'num_dossier_fiscal',
-        'taxe_additionnelle',
-        'periodicite_CA3',
-        'location_facturation',
-        'center_des_impots',
-        /*TODO*/
-        'date_fin_mission',
-        'libelle_avance',
-
-        /*TODO*/
-        'date_de_depot_id',
-        'N_TVA_CEE',
-
-        /*TODO*/
-        'niveau_dobligation_id',
-    );
-
-
     protected $_fields_list = array(
         'raison_sociale',
         'nature_du_client',
@@ -58,53 +24,50 @@ class ClientAdmin extends Admin
         'user',
     );
 
+    //create & edit form
+    /**
+     * @param FormMapper $formMapper
+     */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->with('form.client');
-
-        foreach ($this->_fields as $field) {
-
-            switch ($field) {
-
-                case 'date_de_depot_id':
-                    $formMapper->add($field, 'choice', array(
-                        'label' => 'form.' . $field,
-                        'choices' => array(15, 19, 24, 31)
-                    ));
-                    break;
-
-                case 'niveau_dobligation_id':
-                    $formMapper->add($field, 'choice', array(
-                        'label' => 'form.' . $field,
-                        'choices' => array(0, 1, 4)
-                    ));
-                    break;
-
-                case 'location_facturation':
-                    $formMapper->add($field, new LocationFacturationType(), array(
-                        'data_class' => 'Application\Sonata\ClientBundle\Entity\Client',
-                        'label' => 'Location',
-                    ), array('type' => 'location'));
-
-                    break;
-                case 'location_postal':
-                    $formMapper->add($field, new LocationPostalType(), array(
-                            'data_class' => 'Application\Sonata\ClientBundle\Entity\Client',
-                            'label' => 'Location',
-                        ),
-                        array('type' => 'postal'));
-                    break;
-
-                case 'date_debut_mission':
-                case 'date_fin_mission':
-                    $formMapper->add($field, 'date', array('label' => 'form.' . $field));
-                    break;
-
-                default:
-                    $formMapper->add($field, null, array('label' => 'form.' . $field));
-                    break;
-            }
-        }
+        $formMapper
+            ->with('form.client')
+            ->add('user', null, array('label' => 'form.user',))
+            ->add('nom', null, array('label' => 'form.nom', 'required' => false,))
+            ->add('nature_du_client', null, array('label' => 'form.nature_du_client'))
+            ->add('raison_sociale', null, array('label' => 'form.raison_sociale', 'required' => false,))
+            ->add('location_postal', new LocationPostalType(), array(
+                'data_class' => 'Application\Sonata\ClientBundle\Entity\Client',
+                'label' => 'Location',
+                'required' => false,
+            ),
+            array('type' => 'location'))
+            ->add('date_debut_mission', 'date', array('label' => 'form.date_debut_mission'))
+            ->add('activite', null, array('label' => 'form.activite', 'required' => false,))
+            ->add('mode_denregistrement', null, array('label' => 'form.mode_denregistrement'))
+            ->add('avance_contractuelle', null, array('label' => 'form.avance_contractuelle', 'required' => false,))
+            ->add('siret', null, array('label' => 'form.siret', 'required' => false,))
+            ->add('periodicite_facturation', null, array('label' => 'form.periodicite_facturation'))
+            ->add('num_dossier_fiscal', null, array('label' => 'form.num_dossier_fiscal', 'required' => false,))
+            ->add('taxe_additionnelle', null, array('label' => 'form.taxe_additionnelle', 'required' => false,))
+            ->add('periodicite_CA3', null, array('label' => 'form.periodicite_CA3'))
+            ->add('location_facturation', new LocationFacturationType(), array(
+            'data_class' => 'Application\Sonata\ClientBundle\Entity\Client',
+            'label' => 'Location',
+            'required' => false,
+        ), array('type' => 'location'))
+            ->add('center_des_impots', null, array('label' => 'form.center_des_impots'))
+            ->add('date_fin_mission', 'date', array('label' => 'form.date_fin_mission'))
+            ->add('libelle_avance', null, array('label' => 'form.libelle_avance', 'required' => false,))
+            ->add('date_de_depot_id', 'choice', array(
+            'label' => 'form.date_de_depot_id',
+            'choices' => array(15, 19, 24, 31)
+        ))
+            ->add('N_TVA_CEE', null, array('label' => 'form.N_TVA_CEE', 'required' => false,))
+            ->add('niveau_dobligation_id', 'choice', array(
+            'label' => 'form.niveau_dobligation_id',
+            'choices' => array(0, 1, 4)
+        ));
     }
 
     //filter form
