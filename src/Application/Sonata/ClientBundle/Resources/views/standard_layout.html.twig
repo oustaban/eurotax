@@ -14,3 +14,13 @@
 </div>
 
 {% endblock sonata_admin_content %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/applicationsonataclient/css/client.css') }}" type="text/css" media="all" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/applicationsonataclient/js/client.js') }}" type="text/javascript"></script>
+{% endblock javascripts %}

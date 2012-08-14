@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ContactAdmin extends Admin
 {
 
-   /* protected $datagridValues = array(
+    /* protected $datagridValues = array(
         'client' => array(
             'type'=>1,
             'value' => 1,
@@ -51,30 +51,30 @@ class ContactAdmin extends Admin
         $request = Request::createFromGlobals();
         $filter = $request->query->get('filter');
 
-        foreach($this->_fields as $field){
+        foreach ($this->_fields as $field) {
 
-            $label = 'form.contact.'.$field;
+            $label = 'form.contact.' . $field;
 
-            switch($field){
+            switch ($field) {
                 case 'email':
                     $formMapper->add($field, 'email', array(
                         'label' => $label
                     ));
-                break;
+                    break;
 
                 case 'client_id':
-                   $client_id = NULL;
-                    if(!empty($filter[$field]) && $client = $filter[$field])
+                    $client_id = NULL;
+                    if (!empty($filter[$field]) && $client = $filter[$field])
                         $client_id = $client['value'];
 
-                    $formMapper->add($field, 'hidden',  array(
-                        'data'=> $client_id,
+                    $formMapper->add($field, 'hidden', array(
+                        'data' => $client_id,
                     ));
-                break;
+                    break;
 
                 default:
                     $formMapper->add($field, null, array('label' => $label));
-                break;
+                    break;
             }
         }
     }
@@ -96,25 +96,18 @@ class ContactAdmin extends Admin
     {
         $listMapper->addIdentifier('id', null);
 
-        foreach($this->_fields_list as $field){
-            $listMapper->add($field, null, array('label' => 'list.'.$field));
+        foreach ($this->_fields_list as $field) {
+            $listMapper->add($field, null, array('label' => 'list.contact.' . $field));
         }
+
+        /*$listMapper->add('_action', 'actions', array(
+            'actions' => array(
+                'view' => array(),
+                'edit' => array(),
+                'delete' => array(),
+            )
+        ));*/
     }
-
-  /*  protected function configureSideMenu(MenuItemInterface $menu, $action, Admin $childAdmin = null)
-    {
-        $menu->addChild(
-            $action == 'edit' ? 'edit' : 'show',
-            array('uri' => $this->generateUrl(
-                $action == 'edit' ? 'show' : 'edit', array('id' => $this->getRequest()->get('id'))))
-        );
-
-        $menu->addChild(
-            $action == 'edit' ? 'create' : 'create',
-            array('uri' => $this->generateUrl(
-                $action == 'create' ? 'create' : 'create', array('id' => $this->getRequest()->get('id'))))
-        );
-    }*/
 
     /**
      * @param string $name
@@ -127,43 +120,30 @@ class ContactAdmin extends Admin
     {
         switch ($name) {
             case 'list':
-            $name = 'create';
-            break;
-
+                $name = 'create';
             case 'create':
             case 'edit':
-                $request = Request::createFromGlobals();
-                $filter = $request->query->get('filter');
-
-                $client_id = NULL;
-                if(!empty($filter['client_id']) && $client = $filter['client_id'])
-                  $client_id = $client['value'];
-
-                $parameters['filter']['client_id']['value'] = $client_id;
-            break;
+            case 'delete':
+            case 'batch':
+                $filter = Request::createFromGlobals()->query->get('filter');
+                $parameters['filter']['client_id']['value'] = $filter['client_id']['value'];
+                break;
         }
         return parent::generateUrl($name, $parameters, $absolute);
     }
 
 
-
     /**
      * @param string $name
      *
-    * @return null|string
+     * @return null|string
      */
     public function getTemplate($name)
     {
-        switch($name){
+        switch ($name) {
             case 'list':
                 return 'ApplicationSonataClientBundle:CRUD:list.html.twig';
-
-//            case 'edit':
-//            case 'create':
-//                return 'ApplicationSonataClientBundle:CRUD:edit.html.twig';
-//                break;
         }
-
         return parent::getTemplate($name);
     }
 }

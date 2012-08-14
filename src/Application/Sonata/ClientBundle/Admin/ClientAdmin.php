@@ -158,18 +158,5 @@ class ClientAdmin extends Admin
         return parent::getTemplate($name);
     }
 
-    /*protected function configureSideMenu(MenuItemInterface $menu, $action, Admin $childAdmin = null)
-    {
-        $menu->addChild(
-            $action == 'edit' ? 'edit' : 'show',
-            array('uri' => $this->generateUrl(
-                $action == 'edit' ? 'show' : 'edit', array('id' => $this->getRequest()->get('id'))))
-        );
 
-        $menu->addChild(
-            $action == 'edit' ? 'create' : 'create',
-            array('uri' => $this->generateUrl(
-                $action == 'create' ? 'create' : 'create', array('id' => $this->getRequest()->get('id'))))
-        );
-    }*/
 }
