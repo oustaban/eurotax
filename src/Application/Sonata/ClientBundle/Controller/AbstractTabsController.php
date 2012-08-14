@@ -35,6 +35,9 @@ abstract class AbstractTabsController extends Controller
         }
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function createAction()
     {
         $list = parent::listAction();
@@ -50,6 +53,10 @@ abstract class AbstractTabsController extends Controller
     }
 
 
+    /**
+     * @param null $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function editAction($id = null)
     {
         $list = parent::listAction();

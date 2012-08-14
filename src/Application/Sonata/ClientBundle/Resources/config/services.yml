@@ -11,3 +11,8 @@ services:
             - { name: sonata.admin, manager_type: orm, group: Contact, label: Contact, show_in_dashboard: false }
         arguments: [null, Application\Sonata\ClientBundle\Entity\Contact, ApplicationSonataClientBundle:Contact]
 
+    application.sonata.admin.document:
+        class : Application\Sonata\ClientBundle\Admin\DocumentAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Document, label: Document, show_in_dashboard: false }
+        arguments: [null, Application\Sonata\ClientBundle\Entity\Document, ApplicationSonataClientBundle:Document]
