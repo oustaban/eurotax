@@ -110,12 +110,8 @@ class ContactAdmin extends Admin
     }
 
     /**
-     * @param string $name
-     * @param array $parameters
-     * @param bool $absolute
-     * @return string
+     * {@inheritdoc}
      */
-
     public function generateUrl($name, array $parameters = array(), $absolute = false)
     {
         switch ($name) {

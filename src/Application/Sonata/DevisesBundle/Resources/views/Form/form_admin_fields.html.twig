@@ -9,12 +9,12 @@
     {% set month_text = 'form.Month' %}
     {% set year_text = 'form.Year' %}
 
-   <div style="display:none"> {{ form_widget(form.day) }} </div> {{month_text|trans}}  {{form_widget(form.month)}} {{year_text|trans}} {{form_widget(form.year)}}
+    <div style="display:none"> {{ form_widget(form.day) }} </div>
+    {{month_text|trans}} {{form_widget(form.month)}} {{year_text|trans}} {{form_widget(form.year)}}
 </div>
 {% endif %}
 {% endspaceless %}
 {% endblock date_widget %}
-
 
 
 {% block field_widget %}

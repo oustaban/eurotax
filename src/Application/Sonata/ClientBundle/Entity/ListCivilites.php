@@ -32,7 +32,7 @@ class ListCivilites
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -48,14 +48,14 @@ class ListCivilites
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -65,7 +65,8 @@ class ListCivilites
     /**
      * @return string
      */
-    public function __toString(){
+    public function __toString()
+    {
         return $this->getName();
     }
 }

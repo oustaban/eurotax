@@ -51,8 +51,7 @@ class UserAdmin extends BaseUserAdmin
             ->with('Profile')
             ->add('firstname', null, array('required' => false))
             ->add('lastname', null, array('required' => false))
-            ->end()
-        ;
+            ->end();
 
         if (!$this->getSubject()->hasRole('ROLE_SUPER_ADMIN')) {
             $formMapper->with('Management')

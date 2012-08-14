@@ -1,8 +1,0 @@
-{% extends 'SonataAdminBundle:CRUD:edit.html.twig' %}
-
-{% use 'ApplicationSonataClientBundle:CRUD:form_tabs.html.twig' with form_tabs as formTabs %}
-
-{% block form %}
-{{ block('formTabs') }}
-{{ block('parentForm') }}
-{% endblock %}

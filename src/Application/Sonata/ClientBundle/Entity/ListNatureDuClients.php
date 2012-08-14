@@ -30,16 +30,16 @@ class ListNatureDuClients
     private $name;
 
 
-
     /**
      * ORM\OneToMany(targetEntity="Client", mappedBy="nature_du_client")
-    **/
+     **/
     protected $client;
 
     /***
      *
      */
-    public function __construct(){
+    public function __construct()
+    {
 
         $this->client = ArrayCollection();
     }
@@ -47,7 +47,8 @@ class ListNatureDuClients
     /**
      * @return string
      */
-    public function __toString(){
+    public function __toString()
+    {
 
         return $this->getName();
     }
@@ -55,7 +56,7 @@ class ListNatureDuClients
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -71,14 +72,14 @@ class ListNatureDuClients
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {

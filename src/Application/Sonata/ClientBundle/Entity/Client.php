@@ -942,6 +942,6 @@ class Client
      */
     public function __toString()
     {
-        return $this->getNom() ?: '-';
+        return $this->getNom() ? : '-';
     }
 }

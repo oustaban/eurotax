@@ -3,11 +3,11 @@ services:
         class : Application\Sonata\ClientBundle\Admin\ClientAdmin
         tags:
             - { name: sonata.admin, manager_type: orm, group: Client, label: Client }
-        arguments: [null, Application\Sonata\ClientBundle\Entity\Client, SonataAdminBundle:CRUD]
+        arguments: [null, Application\Sonata\ClientBundle\Entity\Client, ApplicationSonataClientBundle:Client]
 
     application.sonata.admin.contact:
         class : Application\Sonata\ClientBundle\Admin\ContactAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: Contact, label: Contact }
+            - { name: sonata.admin, manager_type: orm, group: Contact, label: Contact, show_in_dashboard: false }
         arguments: [null, Application\Sonata\ClientBundle\Entity\Contact, ApplicationSonataClientBundle:Contact]
 

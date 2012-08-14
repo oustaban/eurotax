@@ -37,7 +37,8 @@ class ListModeDenregistrements
     /***
      *
      */
-    public function __construct(){
+    public function __construct()
+    {
 
         $this->client = ArrayCollection();
     }
@@ -46,7 +47,8 @@ class ListModeDenregistrements
      * @return string
      */
 
-    public function __toString(){
+    public function __toString()
+    {
 
         return $this->getName();
     }
@@ -54,7 +56,7 @@ class ListModeDenregistrements
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -70,14 +72,14 @@ class ListModeDenregistrements
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {

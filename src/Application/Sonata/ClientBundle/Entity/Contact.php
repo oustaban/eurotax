@@ -282,7 +282,8 @@ class Contact
         return $this->civilite;
     }
 
-    public function __toString(){
+    public function __toString()
+    {
 
         return $this->getNom() ? : '-';
     }

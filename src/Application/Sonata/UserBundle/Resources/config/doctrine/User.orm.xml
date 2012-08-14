@@ -6,23 +6,23 @@
 
     <entity name="Application\Sonata\UserBundle\Entity\User" table="fos_user_user">
         <id name="id" column="id" type="integer">
-            <generator strategy="AUTO" />
+            <generator strategy="AUTO"/>
         </id>
 
-        <field name="createdAt"    type="datetime"   column="created_at" />
-        <field name="updatedAt"    type="datetime"   column="updated_at" />
+        <field name="createdAt" type="datetime" column="created_at"/>
+        <field name="updatedAt" type="datetime" column="updated_at"/>
 
         <!-- Profile fields -->
-        <field name="firstname"    type="string"     column="firstname" length="64"    nullable="true" />
-        <field name="lastname"     type="string"     column="lastname"  length="64"    nullable="true" />
+        <field name="firstname" type="string" column="firstname" length="64" nullable="true"/>
+        <field name="lastname" type="string" column="lastname" length="64" nullable="true"/>
 
         <!-- extra security fields -->
-        <field name="token"                   type="string" length="255" column="token" nullable="true" />
-        <field name="twoStepVerificationCode" type="string" length="255" column="two_step_code" nullable="true" />
+        <field name="token" type="string" length="255" column="token" nullable="true"/>
+        <field name="twoStepVerificationCode" type="string" length="255" column="two_step_code" nullable="true"/>
 
         <lifecycle-callbacks>
-            <lifecycle-callback type="prePersist" method="prePersist" />
-            <lifecycle-callback type="preUpdate" method="preUpdate" />
+            <lifecycle-callback type="prePersist" method="prePersist"/>
+            <lifecycle-callback type="preUpdate" method="preUpdate"/>
         </lifecycle-callbacks>
     </entity>
 

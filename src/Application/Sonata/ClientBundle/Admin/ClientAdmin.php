@@ -62,42 +62,42 @@ class ClientAdmin extends Admin
     {
         $formMapper->with('form.client');
 
-        foreach($this->_fields as $field){
+        foreach ($this->_fields as $field) {
 
-            switch($field){
+            switch ($field) {
 
                 case 'date_de_depot_id':
                     $formMapper->add($field, 'choice', array(
-                        'label' => 'form.'.$field,
-                        'choices' => array(15,19, 24, 31)
+                        'label' => 'form.' . $field,
+                        'choices' => array(15, 19, 24, 31)
                     ));
-                break;
+                    break;
 
                 case 'niveau_dobligation_id':
                     $formMapper->add($field, 'choice', array(
-                    'label' => 'form.'.$field,
+                        'label' => 'form.' . $field,
                         'choices' => array(0, 1, 4)
                     ));
-                break;
+                    break;
 
                 case 'location_facturation':
-                 $formMapper->add($field, new LocationFacturationType(), array(
+                    $formMapper->add($field, new LocationFacturationType(), array(
                         'data_class' => 'Application\Sonata\ClientBundle\Entity\Client',
                         'label' => 'Location',
-                 ), array('type'=>'location'));
+                    ), array('type' => 'location'));
 
-                break;
+                    break;
                 case 'location_postal':
                     $formMapper->add($field, new LocationPostalType(), array(
-                        'data_class' => 'Application\Sonata\ClientBundle\Entity\Client',
-                        'label' => 'Location',
-                    ),
-                    array('type'=>'postal'));
-                break;
+                            'data_class' => 'Application\Sonata\ClientBundle\Entity\Client',
+                            'label' => 'Location',
+                        ),
+                        array('type' => 'postal'));
+                    break;
 
                 case 'date_debut_mission':
                 case 'date_fin_mission':
-                    $formMapper->add($field, 'date', array('label' => 'form.'.$field));
+                    $formMapper->add($field, 'date', array('label' => 'form.' . $field));
 
                     /*$formMapper->add($field,'date',
                         array(
@@ -107,11 +107,11 @@ class ClientAdmin extends Admin
                             'format' => 'dd/MM/yyyy'
                         )
                     );*/
-                 break;
+                    break;
 
                 default:
-                    $formMapper->add($field, null, array('label' => 'form.'.$field));
-                break;
+                    $formMapper->add($field, null, array('label' => 'form.' . $field));
+                    break;
             }
             //$formMapper->add('location_postal', new LocationPostalType(), array(), array('type'=>'text'));
         }
@@ -123,8 +123,8 @@ class ClientAdmin extends Admin
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        foreach($this->_fields_list as $field){
-            $datagridMapper->add($field, null, array('label' => 'filter.'.$field));
+        foreach ($this->_fields_list as $field) {
+            $datagridMapper->add($field, null, array('label' => 'filter.' . $field));
         }
     }
 
@@ -136,27 +136,21 @@ class ClientAdmin extends Admin
     {
         $listMapper->addIdentifier('id');
 
-        foreach($this->_fields_list as $field){
-            $listMapper->add($field, null, array('label' => 'list.'.$field));
+        foreach ($this->_fields_list as $field) {
+            $listMapper->add($field, null, array('label' => 'list.' . $field));
         }
     }
 
     /**
-     * @param string $name
-     *
-     * @return null|string
+     * {@inheritdoc}
      */
-    public function getTemplate($name)
+    public function generateUrl($name, array $parameters = array(), $absolute = false)
     {
-        switch($name){
-            case 'edit':
-            case 'create':
-                return 'ApplicationSonataClientBundle:CRUD:edit.html.twig';
+        switch ($name) {
+            case 'tabs':
+                return generateUrl($name, $parameters, $absolute);
                 break;
         }
-
-        return parent::getTemplate($name);
+        return parent::generateUrl($name, $parameters, $absolute);
     }
-
-
 }

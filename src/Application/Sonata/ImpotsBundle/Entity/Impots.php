@@ -367,6 +367,6 @@ class Impots
      */
     public function __toString()
     {
-        return $this->getNom() ?: '-';
+        return $this->getNom() ? : '-';
     }
 }

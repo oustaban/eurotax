@@ -5,9 +5,11 @@
 {% block sonata_admin_content %}
 {{ block('formTabs') }}
 
+{% if list_table is defined %}
 <div class="sonata-ba-list">
     {{ list_table|raw }}
 </div>
+{% endif %}
 
 <div class="sonata-ba-form">
     {{ form|raw }}
@@ -16,11 +18,11 @@
 {% endblock sonata_admin_content %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('bundles/applicationsonataclient/css/client.css') }}" type="text/css" media="all" />
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('bundles/applicationsonataclient/css/client.css') }}" type="text/css" media="all"/>
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('bundles/applicationsonataclient/js/client.js') }}" type="text/javascript"></script>
+{{ parent() }}
+<script src="{{ asset('bundles/applicationsonataclient/js/client.js') }}" type="text/javascript"></script>
 {% endblock javascripts %}
