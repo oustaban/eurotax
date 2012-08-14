@@ -96,8 +96,14 @@
         {
             "package": "sensio/distribution-bundle",
             "version": "dev-master",
-            "source-reference": "57190e5baa0cc1d8ef6095ce57e6719a5eae2b79",
-            "commit-date": "1344240835"
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "sensio/distribution-bundle",
+            "version": "dev-master",
+            "source-reference": "e5e3e4758bfe4dd5fab74bccf9418888d1492691",
+            "commit-date": "1344928161"
         },
         {
             "package": "sensio/framework-extra-bundle",
@@ -204,8 +210,8 @@
         {
             "package": "symfony/symfony",
             "version": "dev-master",
-            "source-reference": "31536c36ec8875aee1406aa7d7a0b5e38a04af66",
-            "commit-date": "1344599303"
+            "source-reference": "fa4f9f58ff19b98cf91a60c356a7cc51e4383f9d",
+            "commit-date": "1344888947"
         },
         {
             "package": "twig/extensions",
