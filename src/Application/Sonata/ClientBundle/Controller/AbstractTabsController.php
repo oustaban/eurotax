@@ -9,18 +9,42 @@ use Symfony\Component\HttpFoundation\Request;
 
 
 /**
- * Client controller.
+ * AbstractTabsController controller.
  *
  */
-class ClientController extends Controller
+abstract class AbstractTabsController extends Controller
 {
+
+    /**
+     * @var int
+     */
+    public $client_id = null;
+
+    /**
+     * @var string
+     */
+    protected  $_tabAlias = '';
+
+    public function __construct()
+    {
+        $filter = Request::createFromGlobals()->query->get('filter');
+        if (!empty($filter['client_id']) && !empty($filter['client_id']['value'])) {
+            $this->client_id = $filter['client_id']['value'];
+        } else {
+            throw new NotFoundHttpException('Unable load page with no client_id');
+        }
+    }
+
     public function createAction()
     {
+        $list = parent::listAction();
+
         $create = parent::createAction();
 
         return $this->render('ApplicationSonataClientBundle::standard_layout.html.twig', array(
-            'client_id' => null,
-            'active_tab' => 'client',
+            'client_id' => $this->client_id,
+            'active_tab' => $this->_tabAlias,
+            'list_table' => $list->getContent(),
             'form' => $create->getContent(),
         ));
     }
@@ -28,11 +52,13 @@ class ClientController extends Controller
 
     public function editAction($id = null)
     {
+        $list = parent::listAction();
         $edit = parent::editAction($id);
 
         return $this->render('ApplicationSonataClientBundle::standard_layout.html.twig', array(
-            'client_id' => $id,
-            'active_tab' => 'client',
+            'client_id' => $this->client_id,
+            'active_tab' => $this->_tabAlias,
+            'list_table' => $list->getContent(),
             'form' => $edit->getContent(),
         ));
     }
@@ -50,9 +76,13 @@ class ClientController extends Controller
         if ($parameters && isset($parameters['action'])) {
 
             switch ($parameters['action']) {
+                case 'list':
                 case 'edit':
                 case 'create':
-                    $parameters['base_template'] = $this->admin->getTemplate('ajax');
+                    //fix template to delete
+                    if (!$this->getRequest()->query->get('client_id')) {
+                        $parameters['base_template'] = $this->admin->getTemplate('ajax');
+                    }
                     break;
             }
         }

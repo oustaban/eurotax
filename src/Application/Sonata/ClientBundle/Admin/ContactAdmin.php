@@ -15,13 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 class ContactAdmin extends Admin
 {
 
-    /* protected $datagridValues = array(
-        'client' => array(
-            'type'=>1,
-            'value' => 1,
-        ),
-    );*/
-
     //create & edit form
     /**
      * @param FormMapper $formMapper
@@ -99,14 +92,6 @@ class ContactAdmin extends Admin
         foreach ($this->_fields_list as $field) {
             $listMapper->add($field, null, array('label' => 'list.contact.' . $field));
         }
-
-        /*$listMapper->add('_action', 'actions', array(
-            'actions' => array(
-                'view' => array(),
-                'edit' => array(),
-                'delete' => array(),
-            )
-        ));*/
     }
 
     /**

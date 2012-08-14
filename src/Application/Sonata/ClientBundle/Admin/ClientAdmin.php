@@ -98,22 +98,12 @@ class ClientAdmin extends Admin
                 case 'date_debut_mission':
                 case 'date_fin_mission':
                     $formMapper->add($field, 'date', array('label' => 'form.' . $field));
-
-                    /*$formMapper->add($field,'date',
-                        array(
-                            'attr' => array('class' => 'datapicker'),
-                            'widget' => 'single_text',
-                            //'input' => 'datetime',
-                            'format' => 'dd/MM/yyyy'
-                        )
-                    );*/
                     break;
 
                 default:
                     $formMapper->add($field, null, array('label' => 'form.' . $field));
                     break;
             }
-            //$formMapper->add('location_postal', new LocationPostalType(), array(), array('type'=>'text'));
         }
     }
 
@@ -139,18 +129,5 @@ class ClientAdmin extends Admin
         foreach ($this->_fields_list as $field) {
             $listMapper->add($field, null, array('label' => 'list.' . $field));
         }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function generateUrl($name, array $parameters = array(), $absolute = false)
-    {
-        switch ($name) {
-            case 'tabs':
-                return generateUrl($name, $parameters, $absolute);
-                break;
-        }
-        return parent::generateUrl($name, $parameters, $absolute);
     }
 }
