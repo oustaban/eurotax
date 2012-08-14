@@ -89,7 +89,7 @@ class Contact
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -106,14 +106,14 @@ class Contact
     public function setNom($nom)
     {
         $this->nom = $nom;
-    
+
         return $this;
     }
 
     /**
      * Get nom
      *
-     * @return string 
+     * @return string
      */
     public function getNom()
     {
@@ -129,14 +129,14 @@ class Contact
     public function setPrenom($prenom)
     {
         $this->prenom = $prenom;
-    
+
         return $this;
     }
 
     /**
      * Get prenom
      *
-     * @return string 
+     * @return string
      */
     public function getPrenom()
     {
@@ -152,14 +152,14 @@ class Contact
     public function setTelephone1($telephone1)
     {
         $this->telephone_1 = $telephone1;
-    
+
         return $this;
     }
 
     /**
      * Get telephone_1
      *
-     * @return string 
+     * @return string
      */
     public function getTelephone1()
     {
@@ -175,14 +175,14 @@ class Contact
     public function setTelephone2($telephone2)
     {
         $this->telephone_2 = $telephone2;
-    
+
         return $this;
     }
 
     /**
      * Get telephone_2
      *
-     * @return string 
+     * @return string
      */
     public function getTelephone2()
     {
@@ -198,14 +198,14 @@ class Contact
     public function setFax($fax)
     {
         $this->fax = $fax;
-    
+
         return $this;
     }
 
     /**
      * Get fax
      *
-     * @return string 
+     * @return string
      */
     public function getFax()
     {
@@ -221,14 +221,14 @@ class Contact
     public function setEmail($email)
     {
         $this->email = $email;
-    
+
         return $this;
     }
 
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -244,14 +244,14 @@ class Contact
     public function setAffichageFacture($affichageFacture)
     {
         $this->affichage_facture = $affichageFacture;
-    
+
         return $this;
     }
 
     /**
      * Get affichage_facture
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getAffichageFacture()
     {
@@ -268,14 +268,14 @@ class Contact
     public function setCivilite(\Application\Sonata\ClientBundle\Entity\ListCivilites $civilite = null)
     {
         $this->civilite = $civilite;
-    
+
         return $this;
     }
 
     /**
      * Get civilite
      *
-     * @return Application\Sonata\ClientBundle\Entity\ListCivilites 
+     * @return Application\Sonata\ClientBundle\Entity\ListCivilites
      */
     public function getCivilite()
     {
@@ -296,14 +296,14 @@ class Contact
     public function setClientId($clientId)
     {
         $this->client_id = $clientId;
-    
+
         return $this;
     }
 
     /**
      * Get client_id
      *
-     * @return integer 
+     * @return integer
      */
     public function getClientId()
     {

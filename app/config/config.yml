@@ -68,6 +68,9 @@ fos_user:
 sonata_user:
     impersonating_route:    sonata_user_impersonating
 
+parameters:
+    sonata.user.admin.user.class: Application\Sonata\UserBundle\Admin\Entity\UserAdmin
+
 sonata_block:
     default_contexts: [cms]
     blocks:
