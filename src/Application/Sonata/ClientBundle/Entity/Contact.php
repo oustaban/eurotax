@@ -24,10 +24,9 @@ class Contact
     /**
      * @var integer $client_id
      *
-     * @ORM\ManyToOne(targetEntity="Client", inversedBy="client")
-     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
+     * @ORM\Column(name="client_id", type="integer")
      */
-    private $client;
+    private $client_id;
 
     /**
      * @var integer $civilite_id
@@ -259,28 +258,6 @@ class Contact
         return $this->affichage_facture;
     }
 
-    /**
-     * Set client
-     *
-     * @param Application\Sonata\ClientBundle\Entity\Client $client
-     * @return Contact
-     */
-    public function setClient(\Application\Sonata\ClientBundle\Entity\Client $client = null)
-    {
-        $this->client = $client;
-    
-        return $this;
-    }
-
-    /**
-     * Get client
-     *
-     * @return Application\Sonata\ClientBundle\Entity\Client 
-     */
-    public function getClient()
-    {
-        return $this->client;
-    }
 
     /**
      * Set civilite
@@ -308,5 +285,28 @@ class Contact
     public function __toString(){
 
         return $this->getNom() ? : '-';
+    }
+
+    /**
+     * Set client_id
+     *
+     * @param integer $clientId
+     * @return Contact
+     */
+    public function setClientId($clientId)
+    {
+        $this->client_id = $clientId;
+    
+        return $this;
+    }
+
+    /**
+     * Get client_id
+     *
+     * @return integer 
+     */
+    public function getClientId()
+    {
+        return $this->client_id;
     }
 }

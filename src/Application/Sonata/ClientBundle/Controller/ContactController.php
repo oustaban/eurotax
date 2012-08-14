@@ -19,12 +19,26 @@ class ContactController extends Controller
 
     public function createAction()
     {
-        $list = parent::listAction();
+       $list = parent::listAction();
+
         $create = parent::createAction();
 
         return $this->render('ApplicationSonataClientBundle::standard_layout.html.twig', array(
             'list_table'=>$list->getContent(),
             'form'=>$create->getContent(),
+        ));
+    }
+
+
+
+    public function editAction($id = null)
+    {
+        $list = parent::listAction();
+        $edit = parent::editAction($id);
+
+        return $this->render('ApplicationSonataClientBundle::standard_layout.html.twig', array(
+            'list_table'=>$list->getContent(),
+            'form'=>$edit->getContent(),
         ));
     }
 
@@ -41,6 +55,7 @@ class ContactController extends Controller
         if ($parameters && isset($parameters['action'])) {
             switch ($parameters['action']) {
                 case 'list':
+                case 'edit':
                 case 'create':
                     $parameters['base_template'] = $this->admin->getTemplate('ajax');
                     break;
