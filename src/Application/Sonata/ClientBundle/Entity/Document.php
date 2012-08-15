@@ -176,7 +176,7 @@ class Document
      *
      * @return \DateTime
      */
-    public function getsetDateDocument()
+    public function getDateDocument()
     {
         return $this->date_document;
     }
@@ -281,16 +281,6 @@ class Document
     {
 
         return $this->getDocument();
-    }
-
-    /**
-     * Get date_document
-     *
-     * @return \DateTime
-     */
-    public function getDateDocument()
-    {
-        return $this->date_document;
     }
 
 

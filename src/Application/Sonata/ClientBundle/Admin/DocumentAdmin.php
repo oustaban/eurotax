@@ -14,13 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DocumentAdmin extends AbstractTabsAdmin
 {
-    protected $_fields_list = array(
-        'document',
-        'date_document',
-        'date_notaire',
-    );
-
-
     //create & edit form
     /**
      * @param FormMapper $formMapper
@@ -48,9 +41,12 @@ class DocumentAdmin extends AbstractTabsAdmin
     {
         $listMapper->addIdentifier('id', null);
 
-        foreach ($this->_fields_list as $field) {
-            $listMapper->add($field, null, array('label' => 'list.document.' . $field));
-        }
+        $listMapper->add('document', null, array(
+            'label' => 'list.document.document',
+            'template' => 'ApplicationSonataClientBundle:CRUD:document_link.html.twig'
+        ));
+        $listMapper->add('date_document', null, array('label' => 'list.document.date_document'));
+        $listMapper->add('date_notaire', null, array('label' => 'list.document.date_notaire'));
     }
 
     /**
