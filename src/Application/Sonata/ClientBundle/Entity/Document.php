@@ -345,6 +345,7 @@ class Document
             return;
         }
 
+        // validate php code
         if (null == $this->file->guessExtension()) {
             return;
         }
@@ -355,7 +356,8 @@ class Document
 
         $this->file->move($this->getUploadDir(), $this->file_alias);
 
-        $this->document = basename($this->file->getClientOriginalName(), $extension);
+        $this->document = substr($this->file->getClientOriginalName(), 0, strpos($this->file->getClientOriginalName(), '.'));
+        #$this->document =  basename($this->file->getClientOriginalName(), $extension);
 
         unset($this->file);
     }
