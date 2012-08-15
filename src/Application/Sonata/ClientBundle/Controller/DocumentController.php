@@ -4,7 +4,7 @@ namespace Application\Sonata\ClientBundle\Controller;
 
 
 /**
- * Contact controller.
+ * Document controller.
  *
  */
 class DocumentController extends AbstractTabsController

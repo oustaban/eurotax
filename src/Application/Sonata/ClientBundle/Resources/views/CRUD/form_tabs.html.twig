@@ -22,6 +22,11 @@
         </li>
         {% endif %}
         {% if client_id  %}
+        <li {% if active_tab=='coordonnees' %}class="active"{% endif %}>
+            <a href="{{ url('admin_sonata_client_coordonnees_create', {'filter[client_id][value]':client_id}) }}">Coordonnées Bancaires</a>
+        </li>
+        {% endif %}
+        {% if client_id  %}
         <li {% if active_tab=='commentaire' %}class="active"{% endif %}>
             <a href="{{ url('admin_sonata_client_commentaire_create', {'filter[client_id][value]':client_id}) }}">Commentairs</a>
         </li>

@@ -23,6 +23,12 @@ services:
             - { name: sonata.admin, manager_type: orm, group: Garantie, label: Garantie, show_in_dashboard: false }
         arguments: [null, Application\Sonata\ClientBundle\Entity\Garantie, ApplicationSonataClientBundle:Garantie]
 
+    application.sonata.admin.coordonnees:
+        class : Application\Sonata\ClientBundle\Admin\CoordonneesAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Coordonnees, label: Coordonnees, show_in_dashboard: false }
+        arguments: [null, Application\Sonata\ClientBundle\Entity\Coordonnees, ApplicationSonataClientBundle:Coordonnees]
+
     application.sonata.admin.commentaire:
         class : Application\Sonata\ClientBundle\Admin\CommentaireAdmin
         tags:

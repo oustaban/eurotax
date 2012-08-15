@@ -52,6 +52,15 @@ form:
     date_demission: Date d'émission
     date_decheance: Date d'échéance
 
+  coordonnees:
+      title: Ajouter une coordonnées bancaire
+      nom: Nom de la banque
+      orders: Ordre de priorité
+      no_de_compte: N° de compte
+      code_swift: Code Swift
+      IBAN: IBAN
+      SEPA: SEPA
+
   commentaire:
     title: Ajouter un commentaire
     date: Date
@@ -110,6 +119,15 @@ list:
     num_de_ganrantie: Num de ganrantie
     date_demission: Date d'émission
     date_decheance: Date d'échéance
+
+  coordonnees:
+    title: Ajouter une coordonnées bancaire
+    orders: Ordre de priorité
+    nom: Banque
+    no_de_compte: N° de compte
+    code_swift: Code Swift
+    IBAN: IBAN
+    SEPA: SEPA
 
   commentaire:
     title: Ajouter un commentaire

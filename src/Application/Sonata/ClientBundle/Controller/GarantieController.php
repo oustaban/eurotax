@@ -4,7 +4,7 @@ namespace Application\Sonata\ClientBundle\Controller;
 
 
 /**
- * Contact controller.
+ * Garantie controller.
  *
  */
 class GarantieController extends AbstractTabsController
