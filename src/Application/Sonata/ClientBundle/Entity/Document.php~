@@ -94,13 +94,6 @@ class Document
     private $date_apostille;
 
 
-    public $replace_extension = 'txt';
-
-    public $allowed_extensions = null;
-    public $denied_extensions = array(
-        'php',
-    );
-
     /**
      * Get id
      *
@@ -318,12 +311,13 @@ class Document
     }
 
 
+
     /**
      * @return null|string
      */
     public function getAbsolutePath()
     {
-        return null === $this->file_alias ? null : $this->getUploadDir() . '/' . $this->file_alias;
+        return null === $this->document ? null : $this->getUploadDir() . '/' . $this->document;
     }
 
     /**
@@ -331,7 +325,7 @@ class Document
      */
     public function getWebPath()
     {
-        return null === $this->file_alias ? null : UPLOAD_DOCUMENTS_WEB_PATH . '/' . $this->file_alias;
+        return null === $this->document ? null : $this->getUploadDir() . '/' . $this->document;
     }
 
 
@@ -352,42 +346,14 @@ class Document
             return;
         }
 
+        $this->file->move($this->getUploadDir(), $this->file->getClientOriginalName());
+
         $pathinfo = pathinfo($this->file->getClientOriginalName());
 
-        $extension = $this->getAllowedExtension($pathinfo['extension']);
-
-        $this->file_alias = md5($this->document) . time() . '.' . $extension;
-
-        $this->file->move($this->getUploadDir(), $this->file_alias);
-
-        $this->document = $pathinfo['filename']; #substr($this->file->getClientOriginalName(), 0, strpos($this->file->getClientOriginalName(), '.'));
+        $this->document = $pathinfo['filename'];
 
         unset($this->file);
     }
-
-    /**
-     * @param $extension
-     * @return string
-     */
-    private function getAllowedExtension($extension)
-    {
-        if ($this->allowed_extensions && is_array($this->allowed_extensions)) {
-
-            if (!in_array($extension, $this->allowed_extensions)) {
-                $extension = $this->replace_extension;
-            }
-        }
-
-        if ($this->denied_extensions && is_array($this->denied_extensions)) {
-
-            if (in_array($extension, $this->denied_extensions)) {
-                $extension = $this->replace_extension;
-            }
-        }
-
-        return $extension;
-    }
-
 
     /**
      *
@@ -397,30 +363,7 @@ class Document
         $file = $this->getAbsolutePath();
 
         if ($file) {
-            @unlink($file);
+           @unlink($file);
         }
-    }
-
-    /**
-     * Set file_alias
-     *
-     * @param string $fileAlias
-     * @return Document
-     */
-    public function setFileAlias($fileAlias)
-    {
-        $this->file_alias = $fileAlias;
-
-        return $this;
-    }
-
-    /**
-     * Get file_alias
-     *
-     * @return string
-     */
-    public function getFileAlias()
-    {
-        return $this->file_alias;
     }
 }
