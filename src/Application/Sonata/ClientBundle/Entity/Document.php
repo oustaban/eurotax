@@ -52,7 +52,7 @@ class Document
     /**
      * @var integer $type_document
      *
-     * @ORM\ManyToOne(targetEntity="ListTypeDocuments", inversedBy="client")
+     * @ORM\ManyToOne(targetEntity="ListTypeDocuments", inversedBy="document")
      * @ORM\JoinColumn(name="type_document_id", referencedColumnName="id")
      */
     private $type_document;

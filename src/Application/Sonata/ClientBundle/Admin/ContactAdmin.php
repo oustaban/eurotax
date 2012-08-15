@@ -41,8 +41,7 @@ class ContactAdmin extends AbstractTabsAdmin
     {
         $formMapper->with('form.contact.title');
 
-        $request = Request::createFromGlobals();
-        $filter = $request->query->get('filter');
+        $filter = $this->getRequest()->query->get('filter');
 
         foreach ($this->_fields as $field) {
 

@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Application\Sonata\ClientBundle\Entity\ListTypeDocuments
+ * Application\Sonata\ClientBundle\Entity\ListTypeGaranties
  *
- * @ORM\Table("et_list_type_documents")
+ * @ORM\Table("et_list_type_garanties")
  * @ORM\Entity
  */
-class ListTypeDocuments
+class ListTypeGaranties
 {
     /**
      * @var integer $id
@@ -25,15 +25,14 @@ class ListTypeDocuments
     /**
      * @var string $name
      *
-     * @ORM\Column(name="name", type="string", length=100)
+     * @ORM\Column(name="name", type="string", length=200)
      */
     private $name;
 
-
     /**
-     * ORM\OneToMany(targetEntity="Document", mappedBy="type_document")
+     * ORM\OneToMany(targetEntity="Garantie", mappedBy="type_garantie")
      **/
-    protected $document;
+    protected $garantie;
 
     /***
      *
@@ -41,7 +40,7 @@ class ListTypeDocuments
     public function __construct()
     {
 
-        $this->document = ArrayCollection();
+        $this->garantie = ArrayCollection();
     }
 
     /**
@@ -53,7 +52,8 @@ class ListTypeDocuments
 
         return $this->getName();
     }
-    /**
+
+        /**
      * Get id
      *
      * @return integer 
@@ -67,7 +67,7 @@ class ListTypeDocuments
      * Set name
      *
      * @param string $name
-     * @return ListTypeDocuments
+     * @return ListTypeGaranties
      */
     public function setName($name)
     {
@@ -85,6 +85,4 @@ class ListTypeDocuments
     {
         return $this->name;
     }
-
-
 }

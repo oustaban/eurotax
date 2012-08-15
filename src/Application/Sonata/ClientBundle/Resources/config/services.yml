@@ -16,3 +16,9 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: Document, label: Document, show_in_dashboard: false }
         arguments: [null, Application\Sonata\ClientBundle\Entity\Document, ApplicationSonataClientBundle:Document]
+
+    application.sonata.admin.garantie:
+        class : Application\Sonata\ClientBundle\Admin\GarantieAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Garantie, label: Garantie, show_in_dashboard: false }
+        arguments: [null, Application\Sonata\ClientBundle\Entity\Garantie, ApplicationSonataClientBundle:Garantie]

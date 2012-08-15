@@ -20,7 +20,7 @@ class DocumentAdmin extends AbstractTabsAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $filter = Request::createFromGlobals()->query->get('filter');
+        $filter = $this->getRequest()->query->get('filter');
 
         $formMapper->with('form.document.title')
             ->add('client_id', 'hidden', array('data' => $filter['client_id']['value']))
