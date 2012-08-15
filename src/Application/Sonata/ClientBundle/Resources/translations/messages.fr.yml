@@ -52,6 +52,12 @@ form:
     date_demission: Date d'émission
     date_decheance: Date d'échéance
 
+  commentaire:
+    title: Ajouter un commentaire
+    date: Date
+    categorie: Catégorie
+    note: Note
+
 list:
   user: Nom du gestionnaire
   nom: Nom
@@ -95,15 +101,21 @@ list:
     date_apostille: Apostille
 
   garantie:
-      title: Ajouter une garantie
-      type_garantie: Type
-      montant: Montant
-      devise: Devise
-      nom_de_la_banque: Nom de la banque
-      nom_de_la_banques: Nom de la banque
-      num_de_ganrantie: Num de ganrantie
-      date_demission: Date d'émission
-      date_decheance: Date d'échéance
+    title: Ajouter une garantie
+    type_garantie: Type
+    montant: Montant
+    devise: Devise
+    nom_de_la_banque: Nom de la banque
+    nom_de_la_banques: Nom de la banque
+    num_de_ganrantie: Num de ganrantie
+    date_demission: Date d'émission
+    date_decheance: Date d'échéance
+
+  commentaire:
+    title: Ajouter un commentaire
+    date: Date
+    categorie: Catégorie
+    note: Commentaire
 
 filter:
   user: Nom du gestionnaire

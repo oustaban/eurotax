@@ -20,3 +20,4 @@ composer.phar
 .idea/*
 nbproject/*
 /app\cache/*.gitkeep
+*.php~

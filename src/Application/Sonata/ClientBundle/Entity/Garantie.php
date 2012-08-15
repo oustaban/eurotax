@@ -90,7 +90,7 @@ class Garantie
     public function __toString()
     {
 
-        return $this->getTypeGarantie();
+        return $this->getTypeGarantie()?:'-';
     }
 
     /**

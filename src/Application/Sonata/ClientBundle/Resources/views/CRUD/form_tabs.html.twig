@@ -21,6 +21,11 @@
             <a href="{{ url('admin_sonata_client_garantie_create', {'filter[client_id][value]':client_id}) }}">Garanties</a>
         </li>
         {% endif %}
+        {% if client_id  %}
+        <li {% if active_tab=='commentaire' %}class="active"{% endif %}>
+            <a href="{{ url('admin_sonata_client_commentaire_create', {'filter[client_id][value]':client_id}) }}">Commentairs</a>
+        </li>
+        {% endif %}
 
     </ul>
 </div>
