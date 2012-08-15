@@ -12,6 +12,12 @@ use Knp\Menu\ItemInterface as MenuItemInterface;
 
 class DevisesAdmin extends Admin
 {
+    protected $datagridValues = array(
+        '_sort_order' => 'DESC',
+        '_sort_by' => 'date'
+    );
+
+
     //create & edit form
     protected $_money_arr = array(
         'money_dollar' => 'Dollar',
