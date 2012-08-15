@@ -30,7 +30,7 @@ class DocumentAdmin extends Admin
 
         $formMapper->with('form.document.title')
             ->add('client_id', 'hidden', array('data' => $filter['client_id']['value']))
-            ->add('document', null, array('label' => 'form.document.document'))
+            ->add('file', 'file', array('label' => 'form.document.document', 'required' => false))
             ->add('type_document', null, array('label' => 'form.document.type_document'))
             ->add('date_document', null, array('label' => 'form.document.date_document'))
             ->add('preavis', null, array('label' => 'form.document.preavis'))
@@ -80,7 +80,6 @@ class DocumentAdmin extends Admin
         return parent::generateUrl($name, $parameters, $absolute);
     }
 
-
     /**
      * @param string $name
      *
@@ -94,4 +93,45 @@ class DocumentAdmin extends Admin
         }
         return parent::getTemplate($name);
     }
+
+    /**
+     * @param $document
+     */
+    public function saveFile($document)
+    {
+        $basepath = $this->getRequest()->getBasePath();
+        $document->setBasePath($basepath);
+        $document->upload();
+    }
+
+    /**
+     * @param mixed $document
+     * @return mixed|void
+     */
+    public function prePersist($document)
+    {
+        $this->saveFile($document);
+    }
+
+    /**
+     * @param mixed $document
+     * @return mixed|void
+     */
+    public function preUpdate($document)
+    {
+        $this->saveFile($document);
+    }
+
+    #TODO
+    /**
+     * @param mixed $document
+     * @return mixed|void
+     */
+    public function postRemove($document)
+    {
+        $basepath = $this->getRequest()->getBasePath();
+        $document->setBasePath($basepath);
+        $document->removeUpload();
+    }
 }
+

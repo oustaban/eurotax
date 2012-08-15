@@ -31,17 +31,17 @@ class Document
     private $client_id;
 
     /**
-     * @var string $document
-     *
-     * @ORM\Column(name="document", type="string", length=255)
+     * @var string $file
      * @Assert\File(maxSize="6000000")
+     */
+    public $file;
+
+    /**
+     * @var string $document
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $document;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    public $path;
 
     /**
      * @var integer $type_document
@@ -87,6 +87,8 @@ class Document
      */
     private $date_apostille;
 
+
+    public $basepath;
 
     /**
      * Get id
@@ -304,102 +306,77 @@ class Document
         return $this->type_document;
     }
 
-    /**
-     * Set path
-     *
-     * @param string $path
-     * @return Document
-     */
-    public function setPath($path)
-    {
-        $this->path = $path;
 
-        return $this;
+    /**
+     * @param $basepath
+     */
+
+    public function setBasePath($basepath)
+    {
+        $this->basepath = $basepath;
     }
 
     /**
-     * Get path
-     *
-     * @return string
+     * @return null|string
      */
-    public function getPath()
-    {
-        return $this->path;
-    }
-
     public function getAbsolutePath()
     {
-        return null === $this->path ? null : $this->getUploadRootDir() . '/' . $this->id . '.' . $this->path;
+        return null === $this->document ? null : $this->getUploadRootDir() . '/' . $this->document;
     }
 
+    /**
+     * @return null|string
+     */
     public function getWebPath()
     {
-        return null === $this->path ? null : $this->getUploadDir() . '/' . $this->path;
+        return null === $this->document ? null : $this->getUploadDir() . '/' . $this->document;
     }
 
+    /**
+     * @return string
+     */
     protected function getUploadRootDir()
     {
-        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+        return $this->basepath . $this->getUploadDir();
     }
 
+    /**
+     * @return string
+     */
     protected function getUploadDir()
     {
         return 'uploads/documents';
     }
 
     /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function preUpload()
-    {
-        if (null !== $this->document) {
-            $this->path = uniqid() . '.' . $this->file->guessExtension();
-        }
-    }
-
-    /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
+     * @return mixed
      */
     public function upload()
     {
-        // the file property can be empty if the field is not required
-        if (null === $this->document) {
+        if (null === $this->file) {
             return;
         }
 
-        // we use the original file name here but you should
-        // sanitize it at least to avoid any security issues
+        if (null === $this->basepath) {
+            return;
+        }
 
-        // move takes the target directory and then the target filename to move to
-        //$this->document->move($this->getUploadRootDir(), $this->document->getClientOriginalName());
-        $this->document->move($this->getUploadRootDir(), $this->path);
-        //$this->document->move($this->getUploadRootDir(), $this->id.'.'.$this->file->guessExtension());
+        $this->file->move($this->getUploadRootDir(), $this->file->getClientOriginalName());
 
-        unset($this->document);
-        // set the path property to the filename where you'ved saved the file
-        #  $this->path = $this->document->getClientOriginalName();
+        $this->document = $this->file->getClientOriginalName();
 
-        // clean up the document property as you won't need it anymore
-        #   $this->document = null;
+        unset($this->file);
     }
 
     /**
-     * @ORM\PreRemove()
-     */
-    public function storeFilenameForRemove()
-    {
-        $this->filenameForRemove = $this->getAbsolutePath();
-    }
-
-    /**
-     * @ORM\PostRemove()
+     *
      */
     public function removeUpload()
     {
-        if ($file = $this->getAbsolutePath()) {
-            unlink($file);
+        $file = $this->getAbsolutePath();
+
+        if ($file) {
+           @unlink($file);
         }
     }
 }
