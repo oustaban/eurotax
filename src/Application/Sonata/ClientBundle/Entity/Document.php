@@ -31,7 +31,7 @@ class Document
     private $client_id;
 
     /**
-     * @var string $file
+     * @var UploadedFile $file
      * @Assert\File(maxSize="6000000")
      */
     public $file;
@@ -42,6 +42,12 @@ class Document
      */
     private $document;
 
+
+    /**
+     * @var string $file_alias
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $file_alias;
 
     /**
      * @var integer $type_document
@@ -87,8 +93,6 @@ class Document
      */
     private $date_apostille;
 
-
-    public $basepath;
 
     /**
      * Get id
@@ -308,20 +312,11 @@ class Document
 
 
     /**
-     * @param $basepath
-     */
-
-    public function setBasePath($basepath)
-    {
-        $this->basepath = $basepath;
-    }
-
-    /**
      * @return null|string
      */
     public function getAbsolutePath()
     {
-        return null === $this->document ? null : $this->getUploadRootDir() . '/' . $this->document;
+        return null === $this->file_alias ? null : $this->getUploadDir() . '/' . $this->file_alias;
     }
 
     /**
@@ -329,23 +324,16 @@ class Document
      */
     public function getWebPath()
     {
-        return null === $this->document ? null : $this->getUploadDir() . '/' . $this->document;
+        return null === $this->file_alias ? null : UPLOAD_DOCUMENTS_WEB_PATH . '/' . $this->file_alias;
     }
 
-    /**
-     * @return string
-     */
-    protected function getUploadRootDir()
-    {
-        return $this->basepath . $this->getUploadDir();
-    }
 
     /**
      * @return string
      */
     protected function getUploadDir()
     {
-        return 'uploads/documents';
+        return UPLOAD_DOCUMENTS_PATH;
     }
 
     /**
@@ -357,13 +345,17 @@ class Document
             return;
         }
 
-        if (null === $this->basepath) {
+        if (null == $this->file->guessExtension()) {
             return;
         }
 
-        $this->file->move($this->getUploadRootDir(), $this->file->getClientOriginalName());
+        $extension = '.' . $this->file->guessExtension();
 
-        $this->document = $this->file->getClientOriginalName();
+        $this->file_alias = md5($this->document) . time() . $extension;
+
+        $this->file->move($this->getUploadDir(), $this->file_alias);
+
+        $this->document = basename($this->file->getClientOriginalName(), $extension);
 
         unset($this->file);
     }
@@ -376,7 +368,30 @@ class Document
         $file = $this->getAbsolutePath();
 
         if ($file) {
-           @unlink($file);
+            @unlink($file);
         }
+    }
+
+    /**
+     * Set file_alias
+     *
+     * @param string $fileAlias
+     * @return Document
+     */
+    public function setFileAlias($fileAlias)
+    {
+        $this->file_alias = $fileAlias;
+
+        return $this;
+    }
+
+    /**
+     * Get file_alias
+     *
+     * @return string
+     */
+    public function getFileAlias()
+    {
+        return $this->file_alias;
     }
 }

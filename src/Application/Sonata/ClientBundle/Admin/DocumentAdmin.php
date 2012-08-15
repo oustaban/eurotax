@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class DocumentAdmin extends Admin
+class DocumentAdmin extends AbstractTabsAdmin
 {
     protected $_fields_list = array(
         'document',
@@ -39,15 +39,6 @@ class DocumentAdmin extends Admin
             ->add('date_apostille', null, array('label' => 'form.document.date_apostille'));
     }
 
-    //filter form
-    /**
-     * @param DatagridMapper $datagridMapper
-     */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
-    {
-        $datagridMapper->add('client_id');
-    }
-
     //list
     /**
      * @param ListMapper $listMapper
@@ -62,55 +53,12 @@ class DocumentAdmin extends Admin
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function generateUrl($name, array $parameters = array(), $absolute = false)
-    {
-        switch ($name) {
-            case 'list':
-                $name = 'create';
-            case 'create':
-            case 'edit':
-            case 'delete':
-            case 'batch':
-                $filter = Request::createFromGlobals()->query->get('filter');
-                $parameters['filter']['client_id']['value'] = $filter['client_id']['value'];
-                break;
-        }
-        return parent::generateUrl($name, $parameters, $absolute);
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return null|string
-     */
-    public function getTemplate($name)
-    {
-        switch ($name) {
-            case 'list':
-                return 'ApplicationSonataClientBundle:CRUD:list.html.twig';
-        }
-        return parent::getTemplate($name);
-    }
-
-    /**
-     * @param $document
-     */
-    public function saveFile($document)
-    {
-        $basepath = $this->getRequest()->getBasePath();
-        $document->setBasePath($basepath);
-        $document->upload();
-    }
-
-    /**
      * @param mixed $document
      * @return mixed|void
      */
     public function prePersist($document)
     {
-        $this->saveFile($document);
+        $document->upload();
     }
 
     /**
@@ -119,7 +67,7 @@ class DocumentAdmin extends Admin
      */
     public function preUpdate($document)
     {
-        $this->saveFile($document);
+        $document->upload();
     }
 
     #TODO
@@ -129,8 +77,6 @@ class DocumentAdmin extends Admin
      */
     public function postRemove($document)
     {
-        $basepath = $this->getRequest()->getBasePath();
-        $document->setBasePath($basepath);
         $document->removeUpload();
     }
 }

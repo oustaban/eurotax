@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class ContactAdmin extends Admin
+class ContactAdmin extends AbstractTabsAdmin
 {
 
     //create & edit form
@@ -69,14 +69,6 @@ class ContactAdmin extends Admin
         }
     }
 
-    //filter form
-    /**
-     * @param DatagridMapper $datagridMapper
-     */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
-    {
-        $datagridMapper->add('client_id');
-    }
 
     //list
     /**
@@ -91,37 +83,4 @@ class ContactAdmin extends Admin
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function generateUrl($name, array $parameters = array(), $absolute = false)
-    {
-        switch ($name) {
-            case 'list':
-                $name = 'create';
-            case 'create':
-            case 'edit':
-            case 'delete':
-            case 'batch':
-                $filter = Request::createFromGlobals()->query->get('filter');
-                $parameters['filter']['client_id']['value'] = $filter['client_id']['value'];
-                break;
-        }
-        return parent::generateUrl($name, $parameters, $absolute);
-    }
-
-
-    /**
-     * @param string $name
-     *
-     * @return null|string
-     */
-    public function getTemplate($name)
-    {
-        switch ($name) {
-            case 'list':
-                return 'ApplicationSonataClientBundle:CRUD:list.html.twig';
-        }
-        return parent::getTemplate($name);
-    }
 }
