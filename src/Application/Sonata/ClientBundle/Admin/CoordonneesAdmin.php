@@ -12,10 +12,27 @@ use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Application\Form\Type\LocationType;
+use Sonata\AdminBundle\Route\RouteCollection;
 
 class CoordonneesAdmin extends AbstractTabsAdmin
 {
+    /**
+     * @var int
+     */
+    protected $maxPerPage = 100000;
+
+    /**
+     * @var string
+     */
     protected $_prefix_label = 'coordonnees';
+
+    /**
+     * @var array
+     */
+    protected $datagridValues = array(
+        '_sort_order' => 'ASC',
+        '_sort_by' => 'orders'
+    );
 
     //create & edit form
     /**
@@ -55,10 +72,17 @@ class CoordonneesAdmin extends AbstractTabsAdmin
 
         $label = 'list.' . $this->_prefix_label;
         $listMapper
-            ->add('orders', null, array('label' => $label . '.orders'))
             ->add('nom', null, array('label' => $label . '.nom'))
             ->add('no_de_compte', null, array('label' => $label . '.no_de_compte'))
             ->add('code_swift', null, array('label' => $label . '.code_swift'));
+    }
+
+    /**
+     * @param RouteCollection $collection
+     */
+    protected function configureRoutes(RouteCollection $collection){
+
+        $collection->add('sortable');
     }
 }
 

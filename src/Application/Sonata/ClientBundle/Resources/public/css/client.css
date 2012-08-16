@@ -2,3 +2,8 @@
     clear: both;
     float: none;
 }
+
+.js-coordonnees .sonata-ba-list tbody {
+
+    cursor: move;
+}

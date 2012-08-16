@@ -24,8 +24,13 @@
 
 {% block javascripts %}
 {{ parent() }}
-<script src="{{ asset('bundles/applicationsonataclient/js/client.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     var uniqid = '{{ admin.uniqid }}';
+    var active_tab = '{{ active_tab }}';
+    {% if js_settings_json is not empty %}
+    var Sonata = {};
+    jQuery.extend(Sonata, {{ js_settings_json|raw }});
+    {% endif%}
 </script>
+<script src="{{ asset('bundles/applicationsonataclient/js/client.js') }}" type="text/javascript"></script>
 {% endblock javascripts %}
