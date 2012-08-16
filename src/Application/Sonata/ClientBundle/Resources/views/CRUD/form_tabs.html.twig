@@ -11,6 +11,27 @@
             <a href="{{ url('admin_sonata_client_contact_create', {'filter[client_id][value]':client_id}) }}">Contacts</a>
         </li>
         {% endif %}
+        {% if client_id  %}
+        <li {% if active_tab=='document' %}class="active"{% endif %}>
+            <a href="{{ url('admin_sonata_client_document_create', {'filter[client_id][value]':client_id}) }}">Documents légaux</a>
+        </li>
+        {% endif %}
+        {% if client_id  %}
+        <li {% if active_tab=='garantie' %}class="active"{% endif %}>
+            <a href="{{ url('admin_sonata_client_garantie_create', {'filter[client_id][value]':client_id}) }}">Garanties</a>
+        </li>
+        {% endif %}
+        {% if client_id  %}
+        <li {% if active_tab=='coordonnees' %}class="active"{% endif %}>
+            <a href="{{ url('admin_sonata_client_coordonnees_create', {'filter[client_id][value]':client_id}) }}">Coordonnées Bancaires</a>
+        </li>
+        {% endif %}
+        {% if client_id  %}
+        <li {% if active_tab=='commentaire' %}class="active"{% endif %}>
+            <a href="{{ url('admin_sonata_client_commentaire_create', {'filter[client_id][value]':client_id}) }}">Commentairs</a>
+        </li>
+        {% endif %}
+
     </ul>
 </div>
 {% endblock %}

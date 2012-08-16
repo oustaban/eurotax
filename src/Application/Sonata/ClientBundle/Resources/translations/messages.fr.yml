@@ -21,7 +21,7 @@ form:
   niveau_dobligation_id: Niveau d'obligation
 
   contact:
-    contact: Contact
+    title: Contact
     civilite: Civilité
     nom: Nom
     prenom: Prénom
@@ -30,6 +30,42 @@ form:
     fax: Fax
     email: Email
     affichage_facture: Affichage Facture
+
+  document:
+    title: Ajouter un document
+    document: Document
+    type_document: Type document
+    date_document: Date du document
+    preavis: Préavis
+    particularite: Particularité
+    date_notaire: Notaire
+    date_apostille: Apostille
+
+  garantie:
+    title: Ajouter une garantie
+    type_garantie: Type
+    montant: Montant
+    devise: Devise
+    nom_de_la_banque: Nom de la banque
+    nom_de_la_banques: Nom de la banque
+    num_de_ganrantie: Num de ganrantie
+    date_demission: Date d'émission
+    date_decheance: Date d'échéance
+
+  coordonnees:
+      title: Ajouter une coordonnées bancaire
+      nom: Nom de la banque
+      orders: Ordre de priorité
+      no_de_compte: N° de compte
+      code_swift: Code Swift
+      IBAN: IBAN
+      SEPA: SEPA
+
+  commentaire:
+    title: Ajouter un commentaire
+    date: Date
+    categorie: Catégorie
+    note: Note
 
 list:
   user: Nom du gestionnaire
@@ -53,7 +89,7 @@ list:
   niveau_dobligation_id: Niveau d'obligation
 
   contact:
-    contact: Contact
+    title: Contact
     civilite: Civilité
     nom: Nom
     prenom: Prénom
@@ -62,6 +98,42 @@ list:
     fax: Fax
     email: Email
     affichage_facture: Affichage Facture
+
+  document:
+    title: Ajouter un document
+    document: Document
+    type_document: Type document
+    date_document: Date du document
+    preavis: Préavis
+    particularite: Particularité
+    date_notaire: Notaire
+    date_apostille: Apostille
+
+  garantie:
+    title: Ajouter une garantie
+    type_garantie: Type
+    montant: Montant
+    devise: Devise
+    nom_de_la_banque: Nom de la banque
+    nom_de_la_banques: Nom de la banque
+    num_de_ganrantie: Num de ganrantie
+    date_demission: Date d'émission
+    date_decheance: Date d'échéance
+
+  coordonnees:
+    title: Ajouter une coordonnées bancaire
+    orders: Ordre de priorité
+    nom: Banque
+    no_de_compte: N° de compte
+    code_swift: Code Swift
+    IBAN: IBAN
+    SEPA: SEPA
+
+  commentaire:
+    title: Ajouter un commentaire
+    date: Date
+    categorie: Catégorie
+    note: Commentaire
 
 filter:
   user: Nom du gestionnaire

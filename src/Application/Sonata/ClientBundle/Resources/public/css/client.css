@@ -1,4 +1,9 @@
-.client_tabs_block{
+.client_tabs_block {
     clear: both;
     float: none;
+}
+
+.js-coordonnees .sonata-ba-list tbody {
+
+    cursor: move;
 }

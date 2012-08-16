@@ -25,6 +25,11 @@ abstract class AbstractTabsController extends Controller
      */
     protected  $_tabAlias = '';
 
+    /**
+     * @var string
+     */
+    protected $_jsSettingsJson = null;
+
     public function __construct()
     {
         $filter = Request::createFromGlobals()->query->get('filter');
@@ -35,6 +40,9 @@ abstract class AbstractTabsController extends Controller
         }
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function createAction()
     {
         $list = parent::listAction();
@@ -46,10 +54,15 @@ abstract class AbstractTabsController extends Controller
             'active_tab' => $this->_tabAlias,
             'list_table' => $list->getContent(),
             'form' => $create->getContent(),
+            'js_settings_json' => $this->_jsSettingsJson,
         ));
     }
 
 
+    /**
+     * @param null $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function editAction($id = null)
     {
         $list = parent::listAction();
@@ -60,6 +73,7 @@ abstract class AbstractTabsController extends Controller
             'active_tab' => $this->_tabAlias,
             'list_table' => $list->getContent(),
             'form' => $edit->getContent(),
+            'js_settings_json' => $this->_jsSettingsJson,
         ));
     }
 
@@ -90,4 +104,9 @@ abstract class AbstractTabsController extends Controller
         return parent::render($view, $parameters, $response);
     }
 
+
+    public function jsSettingsJson(array $data){
+
+        $this->_jsSettingsJson = json_encode($data);
+    }
 }
