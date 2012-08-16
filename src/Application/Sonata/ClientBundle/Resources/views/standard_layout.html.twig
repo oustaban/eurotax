@@ -27,7 +27,7 @@
 <script type="text/javascript">
     var uniqid = '{{ admin.uniqid }}';
     var active_tab = '{{ active_tab }}';
-    {% if js_settings_json is not empty %}
+    {% if js_settings_json is defined and js_settings_json is not empty %}
     var Sonata = {};
     jQuery.extend(Sonata, {{ js_settings_json|raw }});
     {% endif%}
