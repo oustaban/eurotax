@@ -1,5 +1,5 @@
 {
-    "hash": "0f241651e7c138c8a202abbb11a88c12",
+    "hash": "c8a13173aadfcdb0def6c60a9147e939",
     "packages": [
         {
             "package": "doctrine/common",
@@ -8,10 +8,22 @@
             "commit-date": "1343847076"
         },
         {
+            "package": "doctrine/data-fixtures",
+            "version": "dev-master",
+            "source-reference": "779c3dfe446b6da893be87b908d6be28345d1e01",
+            "commit-date": "1341780535"
+        },
+        {
             "package": "doctrine/dbal",
             "version": "2.3.x-dev",
-            "source-reference": "86b10e7eda2eed1d9a07a580a40e14cea8e1733a",
-            "commit-date": "1343559046"
+            "source-reference": "6470e2089e9ab4a2d24e6927ebe073b7935d7ed5",
+            "commit-date": "1344980709"
+        },
+        {
+            "package": "doctrine/doctrine-bundle",
+            "version": "dev-master",
+            "alias-pretty-version": "1.0.x-dev",
+            "alias-version": "1.0.9999999.9999999-dev"
         },
         {
             "package": "doctrine/doctrine-bundle",
@@ -20,10 +32,16 @@
             "commit-date": "1344549563"
         },
         {
+            "package": "doctrine/doctrine-fixtures-bundle",
+            "version": "dev-master",
+            "source-reference": "a5103a71bcd9b2f851ca6c16519a077784a3184a",
+            "commit-date": "1341472847"
+        },
+        {
             "package": "doctrine/orm",
             "version": "2.3.x-dev",
-            "source-reference": "17862d9a2a38bf801e564d09a26eea8503621ae0",
-            "commit-date": "1343850025"
+            "source-reference": "971865f271771a3b06c474dfea9e91f023837cce",
+            "commit-date": "1344977483"
         },
         {
             "package": "friendsofsymfony/user-bundle",
@@ -48,8 +66,8 @@
         {
             "package": "jms/di-extra-bundle",
             "version": "dev-master",
-            "source-reference": "912519a3dafc6318c781bd00a9ef7ff790b2c321",
-            "commit-date": "1343737883"
+            "source-reference": "a5484ac3f4900f792fa3fb2553461a287ad96b49",
+            "commit-date": "1344982028"
         },
         {
             "package": "jms/metadata",
@@ -96,12 +114,6 @@
         {
             "package": "sensio/distribution-bundle",
             "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
-        },
-        {
-            "package": "sensio/distribution-bundle",
-            "version": "dev-master",
             "source-reference": "e5e3e4758bfe4dd5fab74bccf9418888d1492691",
             "commit-date": "1344928161"
         },
@@ -120,8 +132,8 @@
         {
             "package": "sonata-project/admin-bundle",
             "version": "dev-master",
-            "source-reference": "8e6a04fbdb0544d8c184a0c20510db1a430223d2",
-            "commit-date": "1344293100"
+            "source-reference": "07e013ec1b00bfaac58663c6e5f3abc46cf1aa36",
+            "commit-date": "1345061800"
         },
         {
             "package": "sonata-project/block-bundle",
@@ -144,8 +156,7 @@
         {
             "package": "sonata-project/doctrine-orm-admin-bundle",
             "version": "dev-master",
-            "source-reference": "533b15f9663eea626b33295fee879f7eaf5e25d5",
-            "commit-date": "1344189658"
+            "source-reference": "533b15f9663eea626b33295fee879f7eaf5e25d5"
         },
         {
             "package": "sonata-project/easy-extends-bundle",
@@ -192,8 +203,8 @@
         {
             "package": "symfony/monolog-bundle",
             "version": "dev-master",
-            "source-reference": "v2.1.0-BETA4",
-            "commit-date": "1341078487"
+            "source-reference": "aed4d742838d2a7350633fed7afe18dbfd3415de",
+            "commit-date": "1344949802"
         },
         {
             "package": "symfony/swiftmailer-bundle",
@@ -210,8 +221,8 @@
         {
             "package": "symfony/symfony",
             "version": "dev-master",
-            "source-reference": "fa4f9f58ff19b98cf91a60c356a7cc51e4383f9d",
-            "commit-date": "1344888947"
+            "source-reference": "50df1a72aab92a93b532bf66bc4e2639f0730eb9",
+            "commit-date": "1345051403"
         },
         {
             "package": "twig/extensions",
@@ -248,6 +259,7 @@
         "sensio/generator-bundle": 20,
         "sonata-project/user-bundle": 20,
         "sonata-project/admin-bundle": 20,
-        "sonata-project/doctrine-orm-admin-bundle": 20
+        "sonata-project/doctrine-orm-admin-bundle": 20,
+        "doctrine/doctrine-fixtures-bundle": 20
     }
 }
