@@ -156,7 +156,8 @@
         {
             "package": "sonata-project/doctrine-orm-admin-bundle",
             "version": "dev-master",
-            "source-reference": "533b15f9663eea626b33295fee879f7eaf5e25d5"
+            "source-reference": "533b15f9663eea626b33295fee879f7eaf5e25d5",
+            "commit-date": "1344189658"
         },
         {
             "package": "sonata-project/easy-extends-bundle",
