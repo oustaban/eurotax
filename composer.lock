@@ -180,8 +180,8 @@
         {
             "package": "sonata-project/user-bundle",
             "version": "dev-master",
-            "source-reference": "2d94f3db44dda756ff244d7a001315e06a6d65b4",
-            "commit-date": "1344112960"
+            "source-reference": "d9d6db0d37905371a1b0498a6892b68c9b7d7bd9",
+            "commit-date": "1345131532"
         },
         {
             "package": "swiftmailer/swiftmailer",
