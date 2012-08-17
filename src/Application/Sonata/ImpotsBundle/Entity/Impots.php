@@ -67,35 +67,35 @@ class Impots
      *
      * @ORM\Column(name="adresse_1", type="string", length=100)
      */
-    private $adresse_1;
+    private $adresse_1 = "";
 
     /**
      * @var string $adresse_2
      *
      * @ORM\Column(name="adresse_2", type="string", length=100)
      */
-    private $adresse_2;
+    private $adresse_2 = "";
 
     /**
      * @var string $code_postal
      *
      * @ORM\Column(name="code_postal", type="string", length=20)
      */
-    private $code_postal;
+    private $code_postal = "";
 
     /**
      * @var string $ville
      *
      * @ORM\Column(name="ville", type="string", length=50)
      */
-    private $ville;
+    private $ville = "";
 
     /**
-     * @var integer $pays_id
+     * @var string $pays_id
      *
      * @ORM\Column(name="pays_id", type="string",  length=2)
      */
-    private $pays_id;
+    private $pays_id = "FR";
 
     /**
      * Get id
