@@ -55,11 +55,11 @@ class UserAdmin extends BaseUserAdmin
 
         if (!$this->getSubject()->hasRole('ROLE_SUPER_ADMIN')) {
             $formMapper->with('Management')
-                ->add('roles', 'sonata_security_roles', array(
-                'expanded' => true,
-                'multiple' => true,
-                'required' => false
-            ))
+//                ->add('roles', 'sonata_security_roles', array(
+//                'expanded' => true,
+//                'multiple' => true,
+//                'required' => false
+//            ))
                 ->add('locked', null, array('required' => false))
                 ->add('expired', null, array('required' => false))
                 ->add('enabled', null, array('required' => false))
