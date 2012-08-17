@@ -46,8 +46,8 @@
         {
             "package": "friendsofsymfony/user-bundle",
             "version": "dev-master",
-            "source-reference": "7a9d20e69ac0363432fae86523776b14592993d7",
-            "commit-date": "1343834547"
+            "source-reference": "4a9a399ca35de71504fcfe356b161b97b9980620",
+            "commit-date": "1345146070"
         },
         {
             "package": "jms/aop-bundle",
@@ -66,8 +66,8 @@
         {
             "package": "jms/di-extra-bundle",
             "version": "dev-master",
-            "source-reference": "a5484ac3f4900f792fa3fb2553461a287ad96b49",
-            "commit-date": "1344982028"
+            "source-reference": "3420add7ca1957b60c7e250506d7c59ea7012747",
+            "commit-date": "1345140102"
         },
         {
             "package": "jms/metadata",
@@ -82,8 +82,8 @@
         {
             "package": "jms/security-extra-bundle",
             "version": "dev-master",
-            "source-reference": "d65a3a9ff17892beea778e376c82bc420b77eb4e",
-            "commit-date": "1344175596"
+            "source-reference": "68ff54447d3be168ecb248dedbcd4cb401ec69b2",
+            "commit-date": "1345149984"
         },
         {
             "package": "knplabs/knp-menu",
@@ -114,8 +114,14 @@
         {
             "package": "sensio/distribution-bundle",
             "version": "dev-master",
-            "source-reference": "e5e3e4758bfe4dd5fab74bccf9418888d1492691",
-            "commit-date": "1344928161"
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "sensio/distribution-bundle",
+            "version": "dev-master",
+            "source-reference": "bd98b5fb0e4a5dddb4f7acd2e11f28c4cd7eacee",
+            "commit-date": "1345139690"
         },
         {
             "package": "sensio/framework-extra-bundle",
@@ -222,8 +228,8 @@
         {
             "package": "symfony/symfony",
             "version": "dev-master",
-            "source-reference": "50df1a72aab92a93b532bf66bc4e2639f0730eb9",
-            "commit-date": "1345051403"
+            "source-reference": "d3625b0c2bf96b8d6f8ef6682b4d51be8c213f83",
+            "commit-date": "1345191498"
         },
         {
             "package": "twig/extensions",
