@@ -31,6 +31,6 @@ class LocationType extends AbstractType
 
     public function getName()
     {
-        return 'location' . $this->_extension['name'];
+        return 'location';
     }
 }
