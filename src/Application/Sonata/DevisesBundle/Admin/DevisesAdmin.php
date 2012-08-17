@@ -20,9 +20,18 @@ class DevisesAdmin extends Admin
 
     //create & edit form
     protected $_money_arr = array(
-        'money_dollar' => 'Dollar',
-        'money_yen' => 'Yen',
-        'money_british' => 'British Pound',
+        'money_dollar' => array(
+            'label' => 'Dollar',
+            'currency' => 'USD',
+        ),
+        'money_yen' => array(
+            'label' => 'Yen',
+            'currency' => 'JPY',
+        ),
+        'money_british' => array(
+            'label' => 'British Pound',
+            'currency' => 'GBP',
+        ),
     );
 
     //form create and edit
@@ -37,15 +46,15 @@ class DevisesAdmin extends Admin
             'label' => ' ',
         ));
 
-        foreach ($this->_money_arr as $field => $label)
-            $formMapper->add($field, 'money', array('label' => 'form.' . $label, 'divisor' => 1));
+        foreach ($this->_money_arr as $field => $labelData)
+            $formMapper->add($field, 'money', array('label' => 'form.' . $labelData['label'], 'divisor' => 1, 'currency'=>$labelData['currency']));
     }
 
     //filter form
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        foreach ($this->_money_arr as $field => $label)
-            $datagridMapper->add($field, null, array('label' => 'filter.' . $label));
+        foreach ($this->_money_arr as $field => $labelData)
+            $datagridMapper->add($field, null, array('label' => 'filter.' . $labelData['label']));
     }
 
     //list
@@ -55,8 +64,8 @@ class DevisesAdmin extends Admin
             ->addIdentifier('id')
             ->add('date', null, array('template' => 'ApplicationSonataDevisesBundle:CRUD:list_date.html.twig'));
 
-        foreach ($this->_money_arr as $field => $label)
-            $listMapper->add($field, null, array('label' => 'list.' . $label));
+        foreach ($this->_money_arr as $field => $labelData)
+            $listMapper->add($field, null, array('label' => 'list.' . $labelData['label']));
     }
 
     public function getFormTheme()
