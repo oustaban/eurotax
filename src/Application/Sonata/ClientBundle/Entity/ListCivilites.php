@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Application\Sonata\ClientBundle\Entity\ListCivilites
  *
- * @ORM\Table("et_list_civilite")
+ * @ORM\Table("et_list_civilites")
  * @ORM\Entity
  */
 class ListCivilites

@@ -40,7 +40,7 @@ class ListDevises
     public function __construct()
     {
 
-        $this->garantie = ArrayCollection();
+        $this->garantie = new ArrayCollection();
     }
 
     /**

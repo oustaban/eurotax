@@ -30,6 +30,8 @@ abstract class AbstractTabsController extends Controller
      */
     protected $_jsSettingsJson = null;
 
+    protected $maxPerPage = 25;
+
     public function __construct()
     {
         $filter = Request::createFromGlobals()->query->get('filter');
