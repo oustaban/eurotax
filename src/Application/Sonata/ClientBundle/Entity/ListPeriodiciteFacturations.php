@@ -40,7 +40,7 @@ class ListPeriodiciteFacturations
     public function __construct()
     {
 
-        $this->client = ArrayCollection();
+        $this->client = new ArrayCollection();
     }
 
     /**

@@ -41,7 +41,7 @@ class ListCategorieCommentaires
     public function __construct()
     {
 
-        $this->commentaire = ArrayCollection();
+        $this->commentaire = new ArrayCollection();
     }
 
     /**

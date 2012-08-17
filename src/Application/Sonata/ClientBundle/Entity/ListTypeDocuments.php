@@ -41,7 +41,7 @@ class ListTypeDocuments
     public function __construct()
     {
 
-        $this->document = ArrayCollection();
+        $this->document = new ArrayCollection();
     }
 
     /**
