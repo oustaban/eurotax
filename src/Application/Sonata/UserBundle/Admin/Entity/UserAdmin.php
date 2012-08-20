@@ -19,17 +19,9 @@ class UserAdmin extends BaseUserAdmin
             ->with('General')
             ->add('username')
             ->add('email')
-            ->end()
-            ->with('Groups')
-            ->add('groups')
-            ->end()
-            ->with('Profile')
             ->add('firstname')
             ->add('lastname')
-//            ->end()
-//            ->with('Security')
-//            ->add('token')
-//            ->add('twoStepVerificationCode')
+            ->add('groups')
             ->end();
         ;
     }
