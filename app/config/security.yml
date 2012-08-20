@@ -53,4 +53,5 @@ security:
         # Change these rules to adapt them to your needs
         - { path: ^/sonata, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN] }
         - { path: ^/core, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN] }
+        - { path: ^/dashboard, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN] }
         - { path: ^/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
