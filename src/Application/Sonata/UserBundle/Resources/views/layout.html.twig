@@ -4,25 +4,17 @@
 
 {% block body %}
 
-    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-            <a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
-    {% else %}
-        <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
 
-        {% if(is_granted('ROLE_SONATA_ADMIN')) %}
-               <a href="{{ path('sonata_admin_dashboard') }}">Admin dashboard</a>
-        {% endif %}
+{% if(is_granted('ROLE_SONATA_ADMIN')) %}
+<a href="{{ path('sonata_admin_dashboard') }}">Admin dashboard</a>
+{% else %}
 
-    {% endif %}
+{% endif %}
 
-
-    {% for key, message in app.session.getFlashes() %}
-    <div class="{{ key }}">
-        {{ message|trans({}, 'FOSUserBundle') }}
-    </div>
-    {% endfor %}
-
-{{ block('fos_user_content') }}
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+<a href="{{ path('sonata_user_admin_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
+{% else %}
+<a href="{{ path('sonata_user_admin_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+{% endif %}
 
 {% endblock body %}
