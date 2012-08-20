@@ -49,49 +49,49 @@ class Client
      *
      * @ORM\Column(name="raison_sociale", type="string", length=100)
      */
-    private $raison_sociale;
+    private $raison_sociale = "";
 
     /**
      * @var string $adresse_1_postal
      *
      * @ORM\Column(name="adresse_1_postal", type="string", length=100)
      */
-    private $adresse_1_postal;
+    private $adresse_1_postal = "";
 
     /**
      * @var string $adresse_2_postal
      *
      * @ORM\Column(name="adresse_2_postal", type="string", length=100)
      */
-    private $adresse_2_postal;
+    private $adresse_2_postal = "";
 
     /**
      * @var string $code_postal_postal
      *
      * @ORM\Column(name="code_postal_postal", type="string", length=20)
      */
-    private $code_postal_postal;
+    private $code_postal_postal = "";
 
     /**
      * @var string $ville_postal
      *
      * @ORM\Column(name="ville_postal", type="string", length=50)
      */
-    private $ville_postal;
+    private $ville_postal = "";
 
     /**
-     * @var integer $pays_id_postal
+     * @var string $pays_id_postal
      *
      * @ORM\Column(name="pays_id_postal", type="string",  length=2)
      */
-    private $pays_id_postal;
+    private $pays_id_postal = "FR";
 
     /**
      * @var string $activite
      *
      * @ORM\Column(name="activite", type="string", length=200)
      */
-    private $activite;
+    private $activite = "";
 
     /**
      * @var \DateTime $date_debut_mission
@@ -114,14 +114,14 @@ class Client
      *
      * @ORM\Column(name="avance_contractuelle", type="string", length=100)
      */
-    private $avance_contractuelle;
+    private $avance_contractuelle = "";
 
     /**
      * @var string $siret
      *
      * @ORM\Column(name="siret", type="string", length=100)
      */
-    private $siret;
+    private $siret = "";
 
     /**
      * @var integer $periodicite_facturation_id
@@ -136,14 +136,14 @@ class Client
      *
      * @ORM\Column(name="num_dossier_fiscal", type="string", length=255)
      */
-    private $num_dossier_fiscal;
+    private $num_dossier_fiscal = "";
 
     /**
      * @var boolean $taxe_additionnelle
      *
      * @ORM\Column(name="taxe_additionnelle", type="boolean", nullable=true)
      */
-    private $taxe_additionnelle;
+    private $taxe_additionnelle = false;
 
     /**
      * @var integer $periodicite_CA3_id
@@ -166,35 +166,35 @@ class Client
      *
      * @ORM\Column(name="adresse_1_facturation", type="string", length=100)
      */
-    private $adresse_1_facturation;
+    private $adresse_1_facturation = "";
 
     /**
      * @var string $adresse_2_facturation
      *
      * @ORM\Column(name="adresse_2_facturation", type="string", length=100)
      */
-    private $adresse_2_facturation;
+    private $adresse_2_facturation = "";
 
     /**
      * @var string $code_postal_facturation
      *
      * @ORM\Column(name="code_postal_facturation", type="string", length=20)
      */
-    private $code_postal_facturation;
+    private $code_postal_facturation = "";
 
     /**
      * @var string $ville_facturation
      *
      * @ORM\Column(name="ville_facturation", type="string", length=50)
      */
-    private $ville_facturation;
+    private $ville_facturation = "";
 
     /**
-     * @var integer $pays_id_facturation
+     * @var string $pays_id_facturation
      *
      * @ORM\Column(name="pays_id_facturation", type="string", length=2)
      */
-    private $pays_id_facturation;
+    private $pays_id_facturation = "FR";
 
     /**
      * @var \DateTime $date_fin_mission
@@ -208,7 +208,7 @@ class Client
      *
      * @ORM\Column(name="libelle_avance", type="string", length=100)
      */
-    private $libelle_avance;
+    private $libelle_avance = "";
 
     /**
      * @var integer $date_de_depot_id
@@ -222,7 +222,7 @@ class Client
      *
      * @ORM\Column(name="N_TVA_CEE", type="string", length=100)
      */
-    private $N_TVA_CEE;
+    private $N_TVA_CEE = "";
 
     /**
      * @var integer $niveau_dobligation_id

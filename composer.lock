@@ -46,8 +46,8 @@
         {
             "package": "friendsofsymfony/user-bundle",
             "version": "dev-master",
-            "source-reference": "7a9d20e69ac0363432fae86523776b14592993d7",
-            "commit-date": "1343834547"
+            "source-reference": "5aa50962a4b67e380fe7912cb06defdf448c3f26",
+            "commit-date": "1345421669"
         },
         {
             "package": "jms/aop-bundle",
@@ -66,8 +66,8 @@
         {
             "package": "jms/di-extra-bundle",
             "version": "dev-master",
-            "source-reference": "a5484ac3f4900f792fa3fb2553461a287ad96b49",
-            "commit-date": "1344982028"
+            "source-reference": "3420add7ca1957b60c7e250506d7c59ea7012747",
+            "commit-date": "1345140102"
         },
         {
             "package": "jms/metadata",
@@ -82,8 +82,8 @@
         {
             "package": "jms/security-extra-bundle",
             "version": "dev-master",
-            "source-reference": "d65a3a9ff17892beea778e376c82bc420b77eb4e",
-            "commit-date": "1344175596"
+            "source-reference": "68ff54447d3be168ecb248dedbcd4cb401ec69b2",
+            "commit-date": "1345149984"
         },
         {
             "package": "knplabs/knp-menu",
@@ -109,13 +109,13 @@
         },
         {
             "package": "monolog/monolog",
-            "version": "1.1.0"
+            "version": "1.2.0"
         },
         {
             "package": "sensio/distribution-bundle",
             "version": "dev-master",
-            "source-reference": "e5e3e4758bfe4dd5fab74bccf9418888d1492691",
-            "commit-date": "1344928161"
+            "source-reference": "bd98b5fb0e4a5dddb4f7acd2e11f28c4cd7eacee",
+            "commit-date": "1345139690"
         },
         {
             "package": "sensio/framework-extra-bundle",
@@ -222,8 +222,8 @@
         {
             "package": "symfony/symfony",
             "version": "dev-master",
-            "source-reference": "50df1a72aab92a93b532bf66bc4e2639f0730eb9",
-            "commit-date": "1345051403"
+            "source-reference": "ef29276c3a1d6ab757d894bd64391fa2ea47db0c",
+            "commit-date": "1345367019"
         },
         {
             "package": "twig/extensions",
@@ -240,8 +240,8 @@
         {
             "package": "twig/twig",
             "version": "dev-master",
-            "source-reference": "f2f698c820d4396f519ef4175ad6fe79fcfb9ecf",
-            "commit-date": "1344328685"
+            "source-reference": "3e4057b4b14a2f90db7c895e3e9bcbd3d23875e8",
+            "commit-date": "1345222881"
         }
     ],
     "packages-dev": null,
