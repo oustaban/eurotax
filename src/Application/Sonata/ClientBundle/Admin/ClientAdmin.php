@@ -93,6 +93,9 @@ class ClientAdmin extends Admin
             $listMapper->add($field, null, array('label' => 'list.' . $field));
         }
 
-        $listMapper->add('client_operations', null, array('label' => 'list.' . 'client_operations'));
+        $listMapper->add('client_operations', null, array(
+            'label' => 'list.' . 'client_operations',
+            'template' => 'ApplicationSonataClientBundle:CRUD:client_operations.html.twig'
+        ));
     }
 }
