@@ -16,49 +16,52 @@ class ImpotsAdmin extends Admin
     //create & edit form
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $label = 'form.';
         $formMapper
-            ->add('nom')
-            ->add('nom_de_la_banque')
+            ->add('nom', null, array('label' => $label . 'nom'))
+            ->add('nom_de_la_banque', null, array('label' => $label . 'nom_de_la_banque'))
             ->add('location', new LocationType(), array(
             'data_class' => 'Application\Sonata\ImpotsBundle\Entity\Impots',
             //'label' => ' ',
         ), array('type' => 'location'))
-            ->add('no_de_compte')
-            ->add('code_swift')
-            ->add('IBAN')
-            ->add('SEPA');
+            ->add('no_de_compte', null, array('label' => $label . 'no_de_compte'))
+            ->add('code_swift', null, array('label' => $label . 'code_swift'))
+            ->add('IBAN', null, array('label' => $label . 'IBAN'))
+            ->add('SEPA', null, array('label' => $label . 'SEPA'));
     }
 
     //filter form
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
+        $label = 'filter.';
         $datagridMapper
-            ->add('nom')
-            ->add('nom_de_la_banque')
-            ->add('code_postal')
-            ->add('ville')
-            ->add('pays_id')
-            ->add('no_de_compte')
-            ->add('code_swift')
-            ->add('IBAN')
-            ->add('SEPA');
+            ->add('nom', null, array('label' => $label . 'nom'))
+            ->add('nom_de_la_banque', null, array('label' => $label . 'nom_de_la_banque'))
+            ->add('code_postal', null, array('label' => $label . 'code_postal'))
+            ->add('ville', null, array('label' => $label . 'ville'))
+            ->add('pays_id', null, array('label' => $label . 'pays'))
+            ->add('no_de_compte', null, array('label' => $label . 'no_de_compte'))
+            ->add('code_swift', null, array('label' => $label . 'code_swift'))
+            ->add('IBAN', null, array('label' => $label . 'IBAN'))
+            ->add('SEPA', null, array('label' => $label . 'SEPA'));
     }
 
     //list
     protected function configureListFields(ListMapper $listMapper)
     {
+        $label = 'list.';
         $listMapper
-            ->addIdentifier('id')
-            ->add('nom')
-            ->add('nom_de_la_banque')
-            ->add('adresse_1')
-            ->add('adresse_2')
-            ->add('code_postal')
-            ->add('ville')
-            ->add('pays_id')
-            ->add('no_de_compte')
-            ->add('code_swift')
-            ->add('IBAN')
-            ->add('SEPA');
+            ->addIdentifier('id', null, array('label' => $label . 'id'))
+            ->add('nom', null, array('label' => $label . 'nom'))
+            ->add('nom_de_la_banque', null, array('label' => $label . 'nom_de_la_banque'))
+            ->add('adresse_1', null, array('label' => $label . 'adresse_1'))
+            ->add('adresse_2', null, array('label' => $label . 'adresse_2'))
+            ->add('code_postal', null, array('label' => $label . 'code_postal'))
+            ->add('ville', null, array('label' => $label . 'ville'))
+            ->add('pays_id', null, array('label' => $label . 'pays'))
+            ->add('no_de_compte', null, array('label' => $label . 'no_de_compte'))
+            ->add('code_swift', null, array('label' => $label . 'code_swift'))
+            ->add('IBAN', null, array('label' => $label . 'IBAN'))
+            ->add('SEPA', null, array('label' => $label . 'SEPA'));
     }
 }
