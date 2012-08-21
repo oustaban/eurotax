@@ -1,0 +1,7 @@
+services:
+    application.sonata.admin.v01tva:
+        class : Application\Sonata\ClientOperationsBundle\Admin\V01TVAAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: V01_TVA, label: V01_TVA, show_in_dashboard: false}
+        arguments: [null, Application\Sonata\ClientOperationsBundle\Entity\V01TVA, ApplicationSonataClientOperationsBundle:V01TVA]
+

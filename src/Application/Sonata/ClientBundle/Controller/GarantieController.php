@@ -2,12 +2,12 @@
 
 namespace Application\Sonata\ClientBundle\Controller;
 
-
+use Application\Sonata\ClientBundle\Controller\AbstractTabsController as Controller;
 /**
  * Garantie controller.
  *
  */
-class GarantieController extends AbstractTabsController
+class GarantieController extends Controller
 {
     /**
      * @var string

@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Sonata\ClientBundle\Controller;
+namespace Application\Sonata\ClientOperationsBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -8,11 +8,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request;
 
 
-/**
- * AbstractTabsController controller.
- *
- */
-abstract class AbstractTabsController extends Controller
+class AbstractTabsController extends Controller
 {
 
     /**
@@ -23,12 +19,8 @@ abstract class AbstractTabsController extends Controller
     /**
      * @var string
      */
-    protected  $_tabAlias = '';
-
-    /**
-     * @var string
-     */
-    protected $_jsSettingsJson = null;
+    protected $_tabAlias = '';
+    protected $_operationType = '';
 
     protected $maxPerPage = 25;
 
@@ -43,43 +35,18 @@ abstract class AbstractTabsController extends Controller
     }
 
     /**
+     * @param $data
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function createAction()
+    protected function _action($data)
     {
-        $list = parent::listAction();
-
-        $create = parent::createAction();
-
-        return $this->render('ApplicationSonataClientBundle::standard_layout.html.twig', array(
+        return $this->render('ApplicationSonataClientOperationsBundle::standard_layout.html.twig', array(
             'client_id' => $this->client_id,
+            'content' => $data->getContent(),
             'active_tab' => $this->_tabAlias,
-            'list_table' => $list->getContent(),
-            'form' => $create->getContent(),
-            'js_settings_json' => $this->_jsSettingsJson,
+            'operation_type' => $this->_operationType,
         ));
     }
-
-
-    /**
-     * @param null $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function editAction($id = null)
-    {
-        $list = parent::listAction();
-        $edit = parent::editAction($id);
-
-        return $this->render('ApplicationSonataClientBundle::standard_layout.html.twig', array(
-            'client_id' => $this->client_id,
-            'active_tab' => $this->_tabAlias,
-            'list_table' => $list->getContent(),
-            'form' => $edit->getContent(),
-            'js_settings_json' => $this->_jsSettingsJson,
-        ));
-    }
-
-
 
     /**
      * @param string   $view
@@ -96,9 +63,9 @@ abstract class AbstractTabsController extends Controller
                 case 'list':
                 case 'edit':
                 case 'create':
-                    //fix template to delete
                     if (!$this->getRequest()->query->get('client_id')) {
-                        $parameters['base_template'] = $this->admin->getTemplate('ajax');
+                        $parameters['base_template'] = 'ApplicationSonataClientOperationsBundle::ajax_layout.html.twig';
+                        #$parameters['base_template'] = $this->admin->getTemplate('ajax');
                     }
                     break;
             }
@@ -108,7 +75,8 @@ abstract class AbstractTabsController extends Controller
     }
 
 
-    public function jsSettingsJson(array $data){
+    public function jsSettingsJson(array $data)
+    {
 
         $this->_jsSettingsJson = json_encode($data);
     }

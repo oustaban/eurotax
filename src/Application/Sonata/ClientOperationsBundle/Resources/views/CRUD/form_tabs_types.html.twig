@@ -1,0 +1,17 @@
+{#
+    Ventes (sell, ouput)
+    Achat (buy, input)
+#}
+
+{% block form_tabs %}
+<div class="clientoperations_tabs_types_block">
+    <ul class="nav nav-tabs">
+        <li {% if operation_type=='sell' %}class="active"{% endif %}>
+            <a href="{{ url('admin_sonata_clientoperations_v01tva_list', {'filter[client_id][value]':client_id}) }}">Ventes</a>
+        </li>
+        <li {% if operation_type=='buy' %}class="active"{% endif %}>
+            <a href="{{ url('admin_sonata_clientoperations_v01tva_list', {'filter[client_id][value]':client_id}) }}">Achat</a>
+        </li>
+    </ul>
+</div>
+{% endblock %}

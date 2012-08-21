@@ -2,11 +2,12 @@
 
 namespace Application\Sonata\ClientBundle\Controller;
 
+use Application\Sonata\ClientBundle\Controller\AbstractTabsController as Controller;
 /**
  * Coordonnees controller.
  *
  */
-class CoordonneesController extends AbstractTabsController
+class CoordonneesController extends Controller
 {
     /**
      * @var string

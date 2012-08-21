@@ -2,7 +2,7 @@
 
 namespace Application\Sonata\ClientBundle\Admin;
 
-use Sonata\AdminBundle\Admin\Admin;
+
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -14,7 +14,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Application\Form\Type\LocationType;
 use Sonata\AdminBundle\Route\RouteCollection;
 
-class CoordonneesAdmin extends AbstractTabsAdmin
+use Application\Sonata\ClientBundle\Admin\AbstractTabsAdmin as Admin;
+
+class CoordonneesAdmin extends Admin
 {
     /**
      * @var int
