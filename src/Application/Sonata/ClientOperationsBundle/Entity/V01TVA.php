@@ -151,6 +151,14 @@ class V01TVA
 
 
     /**
+     * @return string
+     */
+    public function __toString(){
+
+        return $this->getTiers();
+    }
+
+    /**
      * Get id
      *
      * @return integer 
