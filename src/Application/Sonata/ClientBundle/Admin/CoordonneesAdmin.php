@@ -45,22 +45,22 @@ class CoordonneesAdmin extends Admin
 
         $filter = $this->getRequest()->query->get('filter');
 
-        $label = 'form.' . $this->_prefix_label;
-        $formMapper->with($label . '.title')
+        $label = 'form.' . $this->_prefix_label . '.';
+        $formMapper->with($label . 'title')
             ->add('client_id', 'hidden', array('data' => $filter['client_id']['value']))
             ->add('orders', 'hidden', array(
             'data' => null,
-            'label' => $label . '.orders'
+            'label' => $label . 'orders'
         ))
-            ->add('nom', null, array('label' => $label . '.nom'))
+            ->add('nom', null, array('label' => $label . 'nom'))
             ->add('location', new LocationType(), array(
                 'data_class' => 'Application\Sonata\ClientBundle\Entity\Coordonnees',
             ),
             array('type' => 'location'))
-            ->add('no_de_compte', null, array('label' => $label . '.no_de_compte'))
-            ->add('code_swift', null, array('label' => $label . '.code_swift'))
-            ->add('IBAN', null, array('label' => $label . '.IBAN'))
-            ->add('SEPA', null, array('label' => $label . '.SEPA'));
+            ->add('no_de_compte', null, array('label' => $label . 'no_de_compte'))
+            ->add('code_swift', null, array('label' => $label . 'code_swift'))
+            ->add('IBAN', null, array('label' => $label . 'IBAN'))
+            ->add('SEPA', null, array('label' => $label . 'SEPA'));
 
     }
 
@@ -72,11 +72,11 @@ class CoordonneesAdmin extends Admin
     {
         $listMapper->addIdentifier('id', null);
 
-        $label = 'list.' . $this->_prefix_label;
+        $label = 'list.' . $this->_prefix_label . '.';
         $listMapper
-            ->add('nom', null, array('label' => $label . '.nom'))
-            ->add('no_de_compte', null, array('label' => $label . '.no_de_compte'))
-            ->add('code_swift', null, array('label' => $label . '.code_swift'));
+            ->add('nom', null, array('label' => $label . 'nom'))
+            ->add('no_de_compte', null, array('label' => $label . 'no_de_compte'))
+            ->add('code_swift', null, array('label' => $label . 'code_swift'));
     }
 
     /**

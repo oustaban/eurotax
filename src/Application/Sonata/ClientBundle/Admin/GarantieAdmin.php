@@ -26,13 +26,13 @@ class GarantieAdmin extends Admin
 
         $filter = $this->getRequest()->query->get('filter');
 
-        $label = 'form.' . $this->_prefix_label;
-        $formMapper->with($label . '.title')
+        $label = 'form.' . $this->_prefix_label . '.';
+        $formMapper->with($label . 'title')
             ->add('client_id', 'hidden', array('data' => $filter['client_id']['value']))
-            ->add('type_garantie', null, array('label' => $label . '.type_garantie'))
-            ->add('montant', null, array('label' => $label . '.montant'))
-            ->add('devise', null, array('label' => $label . '.devise'))
-            ->add('nom_de_la_banque', null, array('label' => $label . '.nom_de_la_banque'))
+            ->add('type_garantie', null, array('label' => $label . 'type_garantie'))
+            ->add('montant', null, array('label' => $label . 'montant'))
+            ->add('devise', null, array('label' => $label . 'devise'))
+            ->add('nom_de_la_banque', null, array('label' => $label . 'nom_de_la_banque'))
             ->add('nom_de_la_banques_id', 'choice', array(
             'label' => ' ',
             'required'  => false,
@@ -41,9 +41,9 @@ class GarantieAdmin extends Admin
                 'Nom demandé'
             )
         ))
-            ->add('num_de_ganrantie', null, array('label' => $label . '.num_de_ganrantie'))
-            ->add('date_demission', null, array('label' => $label . '.date_demission'))
-            ->add('date_decheance', null, array('label' => $label . '.date_decheance'));
+            ->add('num_de_ganrantie', null, array('label' => $label . 'num_de_ganrantie'))
+            ->add('date_demission', null, array('label' => $label . 'date_demission'))
+            ->add('date_decheance', null, array('label' => $label . 'date_decheance'));
     }
 
     //list
@@ -54,11 +54,11 @@ class GarantieAdmin extends Admin
     {
         $listMapper->addIdentifier('id', null);
 
-        $label = 'list.' . $this->_prefix_label;
+        $label = 'list.' . $this->_prefix_label . '.';
         $listMapper
-            ->add('type_garantie', null, array('label' => $label . '.type_garantie'))
-            ->add('montant', null, array('label' => $label . '.montant'))
-            ->add('devise', null, array('label' => $label . '.devise'));
+            ->add('type_garantie', null, array('label' => $label . 'type_garantie'))
+            ->add('montant', null, array('label' => $label . 'montant'))
+            ->add('devise', null, array('label' => $label . 'devise'));
 
     }
 }

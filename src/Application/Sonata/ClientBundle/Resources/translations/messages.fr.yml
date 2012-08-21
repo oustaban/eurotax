@@ -48,7 +48,7 @@ form:
     devise: Devise
     nom_de_la_banque: Nom de la banque
     nom_de_la_banques: Nom de la banque
-    num_de_ganrantie: Num de ganrantie
+    num_de_ganrantie: Num de garantie
     date_demission: Date d'émission
     date_decheance: Date d'échéance
 
@@ -117,7 +117,7 @@ list:
     devise: Devise
     nom_de_la_banque: Nom de la banque
     nom_de_la_banques: Nom de la banque
-    num_de_ganrantie: Num de ganrantie
+    num_de_ganrantie: Num de garantie
     date_demission: Date d'émission
     date_decheance: Date d'échéance
 

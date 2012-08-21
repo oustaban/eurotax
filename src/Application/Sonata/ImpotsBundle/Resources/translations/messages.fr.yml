@@ -1,0 +1,32 @@
+form:
+  nom: Nom
+  nom_de_la_banque: Nom de la Banque
+  no_de_compte: No de Compte
+  code_swift: Code Swift
+  IBAN: IBAN
+  SEPA: SEPA
+
+list:
+  id: ID
+  nom: Nom
+  nom_de_la_banque: Nom de la Banque
+  adresse_1: Adresse 1
+  adresse_2: Adresse 2
+  code_postal: Code Postal
+  ville: Ville
+  pays: Pays
+  no_de_compte: No de Compte
+  code_swift: Code Swift
+  IBAN: IBAN
+  SEPA: SEPA
+
+filter:
+  nom: Nom
+  nom_de_la_banque: Nom de la Banque
+  code_postal: Code Postal
+  ville: Ville
+  pays: Pays
+  no_de_compte: No de Compte
+  code_swift: Code Swift
+  IBAN: IBAN
+  SEPA: SEPA

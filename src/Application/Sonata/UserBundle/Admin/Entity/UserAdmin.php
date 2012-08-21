@@ -19,17 +19,9 @@ class UserAdmin extends BaseUserAdmin
             ->with('General')
             ->add('username')
             ->add('email')
-            ->end()
-            ->with('Groups')
-            ->add('groups')
-            ->end()
-            ->with('Profile')
             ->add('firstname')
             ->add('lastname')
-//            ->end()
-//            ->with('Security')
-//            ->add('token')
-//            ->add('twoStepVerificationCode')
+            ->add('groups')
             ->end();
         ;
     }
@@ -44,13 +36,9 @@ class UserAdmin extends BaseUserAdmin
             ->add('username')
             ->add('email')
             ->add('plainPassword', 'text', array('required' => false))
-            ->end()
-            ->with('Groups')
-            ->add('groups', 'sonata_type_model', array('required' => false, 'expanded' => true, 'multiple' => true))
-            ->end()
-            ->with('Profile')
             ->add('firstname', null, array('required' => false))
             ->add('lastname', null, array('required' => false))
+            ->add('groups', 'sonata_type_model', array('required' => false, 'expanded' => true, 'multiple' => true))
             ->end();
 
         if (!$this->getSubject()->hasRole('ROLE_SUPER_ADMIN')) {

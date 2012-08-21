@@ -7,19 +7,17 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class LocationType extends AbstractType
 {
-    protected $_extension = array(
-        'name' => '',
-        'label' => ''
-    );
+    protected $_extension = '';
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $label = 'form.' . $this->getName() . '.';
         $builder
-            ->add('adresse_1' . $this->_extension['name'], 'text', array('label' => 'Adresse' . $this->_extension['label'] . ' 1', 'required' => false,))
-            ->add('adresse_2' . $this->_extension['name'], 'text', array('label' => 'Adresse' . $this->_extension['label'] . ' 2', 'required' => false,))
-            ->add('code_postal' . $this->_extension['name'], 'text', array('label' => 'CP' . $this->_extension['label'], 'required' => false,))
-            ->add('ville' . $this->_extension['name'], 'text', array('label' => 'Ville' . $this->_extension['label'], 'required' => false,))
-            ->add('pays_id' . $this->_extension['name'], 'country', array('label' => 'Pays' . $this->_extension['label'], 'required' => true,));
+            ->add('adresse_1' . $this->_extension, 'text', array('attr'=>array('class'=>'span5'), 'label' => $label . 'adresse' . $this->_extension . '_1', 'required' => false,))
+            ->add('adresse_2' . $this->_extension, 'text', array('attr'=>array('class'=>'span5'), 'label' => $label . 'adresse' . $this->_extension . '_2', 'required' => false,))
+            ->add('code_postal' . $this->_extension, 'text', array('attr'=>array('class'=>'span5'), 'label' => $label . 'CP' . $this->_extension, 'required' => false,))
+            ->add('ville' . $this->_extension, 'text', array('attr'=>array('class'=>'span5'), 'label' => $label . 'ville' . $this->_extension, 'required' => false,))
+            ->add('pays_id' . $this->_extension, 'country', array('attr'=>array('class'=>'span5'), 'label' => $label . 'pays' . $this->_extension, 'required' => true,));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

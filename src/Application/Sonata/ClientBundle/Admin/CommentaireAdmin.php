@@ -26,12 +26,12 @@ class CommentaireAdmin extends Admin
 
         $filter = $this->getRequest()->query->get('filter');
 
-        $label = 'form.' . $this->_prefix_label;
-        $formMapper->with($label . '.title')
+        $label = 'form.' . $this->_prefix_label . '.';
+        $formMapper->with($label . 'title')
             ->add('client_id', 'hidden', array('data' => $filter['client_id']['value']))
-            ->add('date', null, array('label' => $label . '.date'))
-            ->add('categorie', null, array('label' => $label . '.categorie'))
-            ->add('note', null, array('label' => $label . '.note'));
+            ->add('date', null, array('label' => $label . 'date'))
+            ->add('categorie', null, array('label' => $label . 'categorie'))
+            ->add('note', null, array('label' => $label . 'note'));
     }
 
     //list
@@ -42,11 +42,11 @@ class CommentaireAdmin extends Admin
     {
         $listMapper->addIdentifier('id', null);
 
-        $label = 'list.' . $this->_prefix_label;
+        $label = 'list.' . $this->_prefix_label . '.';
         $listMapper
-            ->add('date', null, array('label' => $label . '.date'))
-            ->add('categorie', null, array('label' => $label . '.categorie'))
-            ->add('note', null, array('label' => $label . '.note'));
+            ->add('date', null, array('label' => $label . 'date'))
+            ->add('categorie', null, array('label' => $label . 'categorie'))
+            ->add('note', null, array('label' => $label . 'note'));
     }
 }
 
