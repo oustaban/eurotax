@@ -1,0 +1,17 @@
+{% extends 'SonataAdminBundle::standard_layout.html.twig' %}
+
+{% block breadcrumb %}_{% endblock breadcrumb%}
+
+{% use 'ApplicationSonataClientOperationsBundle:CRUD:form_tabs.html.twig' with form_tabs as formTabs %}
+
+{% block sonata_admin_content %}
+
+    {{ block('formTabs') }}
+
+    {% if content is not empty %}
+    <div class="sonata-ba-form">
+        {{ content|raw }}
+    </div>
+    {% endif %}
+
+{% endblock sonata_admin_content %}

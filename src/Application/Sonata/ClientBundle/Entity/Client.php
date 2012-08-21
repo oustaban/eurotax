@@ -944,4 +944,12 @@ class Client
     {
         return $this->getNom() ? : '-';
     }
+
+    /**
+     * @return string
+     */
+    public function getClientOperations()
+    {
+        return 'Client Operations';
+    }
 }

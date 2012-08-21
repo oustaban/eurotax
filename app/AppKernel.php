@@ -38,6 +38,7 @@ class AppKernel extends Kernel
 
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Application\Doctrine\FixturesBundle\ApplicationDoctrineFixturesBundle(),
+            new Application\Sonata\ClientOperationsBundle\ApplicationSonataClientOperationsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

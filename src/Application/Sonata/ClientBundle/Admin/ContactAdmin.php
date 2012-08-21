@@ -2,7 +2,6 @@
 
 namespace Application\Sonata\ClientBundle\Admin;
 
-use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -12,7 +11,9 @@ use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class ContactAdmin extends AbstractTabsAdmin
+use Application\Sonata\ClientBundle\Admin\AbstractTabsAdmin as Admin;
+
+class ContactAdmin extends Admin
 {
 
     //create & edit form

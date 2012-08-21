@@ -1,0 +1,14 @@
+{% use 'ApplicationSonataClientOperationsBundle:CRUD:form_tabs_types.html.twig' with form_tabs as formTabsTypes %}
+{% use 'ApplicationSonataClientOperationsBundle:CRUD:form_tabs_operations_sell.html.twig' with form_tabs as formTabsOperationsSell %}
+{% use 'ApplicationSonataClientOperationsBundle:CRUD:form_tabs_operations_buy.html.twig' with form_tabs as formTabsOperationsBuy %}
+
+{% block form_tabs %}
+{{ block('formTabsTypes') }}
+
+{% if operation_type=='sell'%}
+{{ block('formTabsOperationsSell') }}
+{% else %}
+{{ block('formTabsOperationsBuy') }}
+{% endif%}
+
+{% endblock %}
