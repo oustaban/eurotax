@@ -6,7 +6,8 @@ use Sonata\AdminBundle\Admin\Admin;
 use Symfony\Component\HttpFoundation\Request;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 
-abstract class AbstractTabsAdmin extends Admin{
+abstract class AbstractTabsAdmin extends Admin
+{
 
     /**
      * @param DatagridMapper $datagridMapper

@@ -46,6 +46,7 @@ class V01TVAAdmin extends Admin
     {
         $listMapper->addIdentifier('id', null)
             ->add('tiers', null)
-            ->add('no_TVA_tiers');
+            ->add('no_TVA_tiers')
+            ->add('date_piece');
     }
 }

@@ -21,8 +21,8 @@ class AbstractTabsController extends Controller
      */
     protected $_tabAlias = '';
     protected $_operationType = '';
-
     protected $maxPerPage = 25;
+    protected $_jsSettingsJson = null;
 
     public function __construct()
     {
