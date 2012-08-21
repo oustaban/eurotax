@@ -5,3 +5,9 @@ services:
             - { name: sonata.admin, manager_type: orm, group: V01_TVA, label: V01_TVA, show_in_dashboard: false}
         arguments: [null, Application\Sonata\ClientOperationsBundle\Entity\V01TVA, ApplicationSonataClientOperationsBundle:V01TVA]
 
+    application.sonata.admin.v03283i:
+        class : Application\Sonata\ClientOperationsBundle\Admin\V03283IAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: V03283I, label: V03283I, show_in_dashboard: false}
+        arguments: [null, Application\Sonata\ClientOperationsBundle\Entity\V03283I, ApplicationSonataClientOperationsBundle:V03283I]
+

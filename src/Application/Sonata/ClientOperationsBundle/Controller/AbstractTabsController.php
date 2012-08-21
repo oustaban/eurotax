@@ -49,6 +49,31 @@ class AbstractTabsController extends Controller
     }
 
     /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function createAction()
+    {
+        return $this->_action(parent::createAction());
+    }
+
+    /**
+     * @param null $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function editAction($id = null)
+    {
+        return $this->_action(parent::editAction());
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function listAction()
+    {
+        return $this->_action(parent::listAction());
+    }
+
+    /**
      * @param string   $view
      * @param array    $parameters
      * @param Response $response

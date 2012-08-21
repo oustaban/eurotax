@@ -1,0 +1,66 @@
+ApplicationSonataClientOperationsBundle:
+  form:
+    V01_TVA:
+      title: V01-TVA
+      tiers: Tiers
+      no_TVA_tiers: N° TVA Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      taux_de_TVA: Taux de TVA
+      montant_TVA_francaise: Montant TVA française
+      montant_TTC: Montant TTC
+      paiement_montant: Paiement Montant
+      paiement_devise_id: Paiement Devise
+      paiement_date: Paiement Date
+      mois: Mois
+      taux_de_change: Taux de change
+      HT: HT
+      TVA: TVA
+      commentaires: Commentaires
+
+    V03283I:
+      title: V03-283-I
+      tiers: Tiers
+      no_TVA_tiers: N° TVA Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      mois: Mois
+      taux_de_change: Taux de change
+      HT: HT
+      commentaires: Commentaires
+
+  list:
+    V01_TVA:
+      title: V01-TVA
+      tiers: Tiers
+      no_TVA_tiers: N° TVA Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      taux_de_TVA: Taux de TVA
+      montant_TVA_francaise: Montant TVA française
+      montant_TTC: Montant TTC
+      paiement_montant: Paiement Montant
+      paiement_devise_id: Paiement Devise
+      paiement_date: Paiement Date
+      mois: Mois
+      taux_de_change: Taux de change
+      HT: HT (€)
+      TVA: TVA (€)
+      commentaires: Commentaires
+    V03283I:
+      tiers: Tiers
+      no_TVA_tiers: N° TVA Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      mois: Mois
+      taux_de_change: Taux de change
+      HT: HT (€)
+      commentaires: Commentaires

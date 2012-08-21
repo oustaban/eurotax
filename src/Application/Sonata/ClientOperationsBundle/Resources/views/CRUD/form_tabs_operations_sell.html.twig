@@ -1,9 +1,15 @@
 {% block form_tabs %}
+{% set _filter_json = {'filter[client_id][value]':client_id} %}
 <div class="clientoperations_tabs_types_block">
     <ul class="nav nav-pills">
         {% if client_id %}
         <li {% if active_tab=='v01tva' %}class="active"{% endif %}>
-            <a href="{{ url('admin_sonata_clientoperations_v01tva_list', {'filter[client_id][value]':client_id}) }}">V01-TVA</a>
+            <a href="{{ url('admin_sonata_clientoperations_v01tva_list', _filter_json) }}">V01-TVA</a>
+        </li>
+        {% endif %}
+        {% if client_id %}
+        <li {% if active_tab=='v03283i' %}class="active"{% endif %}>
+            <a href="{{ url('admin_sonata_clientoperations_v03283i_list', _filter_json) }}">V03-283-I</a>
         </li>
         {% endif %}
     </ul>
