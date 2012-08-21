@@ -1,0 +1,17 @@
+form:
+  location:
+    adresse_1: Adresse 1
+    adresse_2: Adresse 2
+    CP: CP
+    ville: Ville
+    pays: Pays
+    adresse_postal_1: Adresse Postale 1
+    adresse_postal_2: Adresse Postale 2
+    CP_postal: Code Postal
+    ville_postal: Ville Postale
+    pays_postal: Pays Postal
+    adresse_facturation_1: Adresse Facturation 1
+    adresse_facturation_2: Adresse Facturation 2
+    CP_facturation: CP Facturation
+    ville_facturation: Ville Facturation
+    pays_facturation: Pays Facturation
