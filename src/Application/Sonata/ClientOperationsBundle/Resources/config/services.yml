@@ -16,3 +16,9 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: A02TVA, label: A02TVA, show_in_dashboard: false}
         arguments: [null, Application\Sonata\ClientOperationsBundle\Entity\A02TVA, ApplicationSonataClientOperationsBundle:A02TVA]
+
+    application.sonata.admin.a04283i:
+        class : Application\Sonata\ClientOperationsBundle\Admin\A04283IAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: A04283I, label: A04283I, show_in_dashboard: false}
+        arguments: [null, Application\Sonata\ClientOperationsBundle\Entity\A04283I, ApplicationSonataClientOperationsBundle:A04283I]

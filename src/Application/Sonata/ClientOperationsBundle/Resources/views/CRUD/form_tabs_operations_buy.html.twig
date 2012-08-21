@@ -7,6 +7,11 @@
             <a href="{{ url('admin_sonata_clientoperations_a02tva_list', _filter_json) }}">A02-TVA</a>
         </li>
         {% endif %}
+        {% if client_id %}
+        <li {% if active_tab=='a04283i' %}class="active"{% endif %}>
+            <a href="{{ url('admin_sonata_clientoperations_a04283i_list', _filter_json) }}">A04-283-I</a>
+        </li>
+        {% endif %}
     </ul>
 </div>
 {% endblock %}

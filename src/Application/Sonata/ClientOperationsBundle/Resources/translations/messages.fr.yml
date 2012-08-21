@@ -52,6 +52,21 @@ ApplicationSonataClientOperationsBundle:
       TVA: TVA
       commentaires: Commentaires
 
+    A04283I:
+      title: A04-283-I
+      tiers: Tiers
+      no_TVA_tiers: N° TVA Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      taux_de_TVA: Taux de TVA
+      mois: Mois
+      taux_de_change: Taux de change
+      HT: HT
+      TVA: TVA
+      commentaires: Commentaires
+
   list:
     V01_TVA:
       title: V01-TVA
@@ -72,6 +87,7 @@ ApplicationSonataClientOperationsBundle:
       HT: HT (€)
       TVA: TVA (€)
       commentaires: Commentaires
+
     V03283I:
       tiers: Tiers
       no_TVA_tiers: N° TVA Tiers
@@ -97,6 +113,21 @@ ApplicationSonataClientOperationsBundle:
       paiement_montant: Paiement Montant
       paiement_devise_id: Paiement Devise
       paiement_date: Paiement Date
+      mois: Mois
+      taux_de_change: Taux de change
+      HT: HT (€)
+      TVA: TVA (€)
+      commentaires: Commentaires
+
+    A04283I:
+      title: A04-283-I
+      tiers: Tiers
+      no_TVA_tiers: N° TVA Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      taux_de_TVA: Taux de TVA
       mois: Mois
       taux_de_change: Taux de change
       HT: HT (€)
