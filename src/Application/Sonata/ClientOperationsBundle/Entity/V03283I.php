@@ -5,12 +5,12 @@ namespace Application\Sonata\ClientOperationsBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Application\Sonata\ClientOperationsBundle\Entity\V01TVA
+ * Application\Sonata\ClientOperationsBundle\Entity\V03283I
  *
- * @ORM\Table("et_operations_V01TVA")
+ * @ORM\Table("et_operations_V03283I")
  * @ORM\Entity
  */
-class V01TVA
+class V03283I
 {
     /**
      * @var integer $id
@@ -21,14 +21,12 @@ class V01TVA
      */
     private $id;
 
-
     /**
      * @var integer $client_id
      *
      * @ORM\Column(name="client_id", type="integer")
      */
     private $client_id;
-
 
     /**
      * @var string $tiers
@@ -66,56 +64,14 @@ class V01TVA
     private $devise_id;
 
     /**
-     * @var string $montant_HT_en_devise
+     * @var float $montant_HT_en_devise
      *
      * @ORM\Column(name="montant_HT_en_devise", type="float")
      */
     private $montant_HT_en_devise;
 
     /**
-     * @var float $taux_de_TVA
-     *
-     * @ORM\Column(name="taux_de_TVA", type="float")
-     */
-    private $taux_de_TVA;
-
-    /**
-     * @var float $montant_TVA_francaise
-     *
-     * @ORM\Column(name="montant_TVA_francaise", type="float")
-     */
-    private $montant_TVA_francaise;
-
-    /**
-     * @var float $montant_TTC
-     *
-     * @ORM\Column(name="montant_TTC", type="float")
-     */
-    private $montant_TTC;
-
-    /**
-     * @var float $paiement_montant
-     *
-     * @ORM\Column(name="paiement_montant", type="float")
-     */
-    private $paiement_montant;
-
-    /**
-     * @var integer $paiement_devise_id
-     *
-     * @ORM\Column(name="paiement_devise_id", type="integer")
-     */
-    private $paiement_devise_id;
-
-    /**
-     * @var \DateTime $paiement_date
-     *
-     * @ORM\Column(name="paiement_date", type="date")
-     */
-    private $paiement_date;
-
-    /**
-     * @var string $mois
+     * @var float $mois
      *
      * @ORM\Column(name="mois", type="float")
      */
@@ -134,13 +90,6 @@ class V01TVA
      * @ORM\Column(name="HT", type="float")
      */
     private $HT;
-
-    /**
-     * @var float $TVA
-     *
-     * @ORM\Column(name="TVA", type="float")
-     */
-    private $TVA;
 
     /**
      * @var string $commentaires
@@ -169,10 +118,33 @@ class V01TVA
     }
 
     /**
+     * Set client_id
+     *
+     * @param integer $clientId
+     * @return V03283I
+     */
+    public function setClientId($clientId)
+    {
+        $this->client_id = $clientId;
+    
+        return $this;
+    }
+
+    /**
+     * Get client_id
+     *
+     * @return integer 
+     */
+    public function getClientId()
+    {
+        return $this->client_id;
+    }
+
+    /**
      * Set tiers
      *
      * @param string $tiers
-     * @return V01_TVA
+     * @return V03283I
      */
     public function setTiers($tiers)
     {
@@ -195,7 +167,7 @@ class V01TVA
      * Set no_TVA_tiers
      *
      * @param string $noTVATiers
-     * @return V01_TVA
+     * @return V03283I
      */
     public function setNoTVATiers($noTVATiers)
     {
@@ -218,7 +190,7 @@ class V01TVA
      * Set date_piece
      *
      * @param \DateTime $datePiece
-     * @return V01_TVA
+     * @return V03283I
      */
     public function setDatePiece($datePiece)
     {
@@ -241,7 +213,7 @@ class V01TVA
      * Set numero_piece
      *
      * @param string $numeroPiece
-     * @return V01_TVA
+     * @return V03283I
      */
     public function setNumeroPiece($numeroPiece)
     {
@@ -264,7 +236,7 @@ class V01TVA
      * Set devise_id
      *
      * @param integer $deviseId
-     * @return V01_TVA
+     * @return V03283I
      */
     public function setDeviseId($deviseId)
     {
@@ -287,7 +259,7 @@ class V01TVA
      * Set montant_HT_en_devise
      *
      * @param string $montantHTEnDevise
-     * @return V01_TVA
+     * @return V03283I
      */
     public function setMontantHTEnDevise($montantHTEnDevise)
     {
@@ -307,148 +279,10 @@ class V01TVA
     }
 
     /**
-     * Set taux_de_TVA
-     *
-     * @param float $tauxDeTVA
-     * @return V01_TVA
-     */
-    public function setTauxDeTVA($tauxDeTVA)
-    {
-        $this->taux_de_TVA = $tauxDeTVA;
-    
-        return $this;
-    }
-
-    /**
-     * Get taux_de_TVA
-     *
-     * @return float 
-     */
-    public function getTauxDeTVA()
-    {
-        return $this->taux_de_TVA;
-    }
-
-    /**
-     * Set montant_TVA_francaise
-     *
-     * @param float $montantTVAFrancaise
-     * @return V01_TVA
-     */
-    public function setMontantTVAFrancaise($montantTVAFrancaise)
-    {
-        $this->montant_TVA_francaise = $montantTVAFrancaise;
-    
-        return $this;
-    }
-
-    /**
-     * Get montant_TVA_francaise
-     *
-     * @return float 
-     */
-    public function getMontantTVAFrancaise()
-    {
-        return $this->montant_TVA_francaise;
-    }
-
-    /**
-     * Set montant_TTC
-     *
-     * @param float $montantTTC
-     * @return V01_TVA
-     */
-    public function setMontantTTC($montantTTC)
-    {
-        $this->montant_TTC = $montantTTC;
-    
-        return $this;
-    }
-
-    /**
-     * Get montant_TTC
-     *
-     * @return float 
-     */
-    public function getMontantTTC()
-    {
-        return $this->montant_TTC;
-    }
-
-    /**
-     * Set paiement_montant
-     *
-     * @param float $paiementMontant
-     * @return V01_TVA
-     */
-    public function setPaiementMontant($paiementMontant)
-    {
-        $this->paiement_montant = $paiementMontant;
-    
-        return $this;
-    }
-
-    /**
-     * Get paiement_montant
-     *
-     * @return float 
-     */
-    public function getPaiementMontant()
-    {
-        return $this->paiement_montant;
-    }
-
-    /**
-     * Set paiement_devise_id
-     *
-     * @param integer $paiementDeviseId
-     * @return V01_TVA
-     */
-    public function setPaiementDeviseId($paiementDeviseId)
-    {
-        $this->paiement_devise_id = $paiementDeviseId;
-    
-        return $this;
-    }
-
-    /**
-     * Get paiement_devise_id
-     *
-     * @return integer 
-     */
-    public function getPaiementDeviseId()
-    {
-        return $this->paiement_devise_id;
-    }
-
-    /**
-     * Set paiement_date
-     *
-     * @param \DateTime $paiementDate
-     * @return V01_TVA
-     */
-    public function setPaiementDate($paiementDate)
-    {
-        $this->paiement_date = $paiementDate;
-    
-        return $this;
-    }
-
-    /**
-     * Get paiement_date
-     *
-     * @return \DateTime 
-     */
-    public function getPaiementDate()
-    {
-        return $this->paiement_date;
-    }
-
-    /**
      * Set mois
      *
-     * @param string $mois
-     * @return V01_TVA
+     * @param float $mois
+     * @return V03283I
      */
     public function setMois($mois)
     {
@@ -460,7 +294,7 @@ class V01TVA
     /**
      * Get mois
      *
-     * @return string 
+     * @return float 
      */
     public function getMois()
     {
@@ -471,7 +305,7 @@ class V01TVA
      * Set taux_de_change
      *
      * @param string $tauxDeChange
-     * @return V01_TVA
+     * @return V03283I
      */
     public function setTauxDeChange($tauxDeChange)
     {
@@ -493,12 +327,12 @@ class V01TVA
     /**
      * Set HT
      *
-     * @param float $HT
-     * @return V01_TVA
+     * @param float $hT
+     * @return V03283I
      */
-    public function setHT($HT)
+    public function setHT($hT)
     {
-        $this->HT = $HT;
+        $this->HT = $hT;
     
         return $this;
     }
@@ -514,33 +348,10 @@ class V01TVA
     }
 
     /**
-     * Set TVA
-     *
-     * @param float $TVA
-     * @return V01_TVA
-     */
-    public function setTVA($TVA)
-    {
-        $this->TVA = $TVA;
-    
-        return $this;
-    }
-
-    /**
-     * Get TVA
-     *
-     * @return float 
-     */
-    public function getTVA()
-    {
-        return $this->TVA;
-    }
-
-    /**
      * Set commentaires
      *
      * @param string $commentaires
-     * @return V01_TVA
+     * @return V03283I
      */
     public function setCommentaires($commentaires)
     {
@@ -557,28 +368,5 @@ class V01TVA
     public function getCommentaires()
     {
         return $this->commentaires;
-    }
-
-    /**
-     * Set client_id
-     *
-     * @param integer $clientId
-     * @return V01TVA
-     */
-    public function setClientId($clientId)
-    {
-        $this->client_id = $clientId;
-    
-        return $this;
-    }
-
-    /**
-     * Get client_id
-     *
-     * @return integer 
-     */
-    public function getClientId()
-    {
-        return $this->client_id;
     }
 }

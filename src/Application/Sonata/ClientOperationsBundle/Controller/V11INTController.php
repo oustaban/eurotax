@@ -7,12 +7,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request;
 
-class V01TVAController extends Controller
+class V11INTController extends Controller
 {
     /**
      * @var string
      */
-    protected $_tabAlias = 'v01tva';
+    protected $_tabAlias = 'v11int';
     protected $_operationType = 'sell';
+
 
 }

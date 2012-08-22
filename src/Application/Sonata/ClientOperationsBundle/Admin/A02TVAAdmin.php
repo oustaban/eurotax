@@ -8,8 +8,9 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 
 use Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin as Admin;
 
-class V01TVAAdmin extends Admin
+class A02TVAAdmin extends Admin
 {
+
     /**
      * @param FormMapper $formMapper
      */
@@ -19,7 +20,6 @@ class V01TVAAdmin extends Admin
 
         $formMapper
             ->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
-            ->add('no_TVA_tiers', null, array('label' => $this->getFieldLabel('no_TVA_tiers')))
             ->add('date_piece', null, array('label' => $this->getFieldLabel('date_piece')))
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
             ->add('devise_id', null, array('label' => $this->getFieldLabel('devise_id')))
@@ -46,7 +46,6 @@ class V01TVAAdmin extends Admin
 
         $listMapper->addIdentifier('id', null)
             ->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
-            ->add('no_TVA_tiers', null, array('label' => $this->getFieldLabel('no_TVA_tiers')))
             ->add('date_piece', null, array('label' => $this->getFieldLabel('date_piece')));
     }
 }

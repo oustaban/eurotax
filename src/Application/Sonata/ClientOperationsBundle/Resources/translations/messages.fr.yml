@@ -1,0 +1,300 @@
+ApplicationSonataClientOperationsBundle:
+  form:
+    V01_TVA:
+      title: V01-TVA
+      tiers: Tiers
+      no_TVA_tiers: N° TVA Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      taux_de_TVA: Taux de TVA
+      montant_TVA_francaise: Montant TVA française
+      montant_TTC: Montant TTC
+      paiement_montant: Paiement Montant
+      paiement_devise_id: Paiement Devise
+      paiement_date: Paiement Date
+      mois: Mois
+      taux_de_change: Taux de change
+      HT: HT
+      TVA: TVA
+      commentaires: Commentaires
+
+    V03283I:
+      title: V03-283-I
+      tiers: Tiers
+      no_TVA_tiers: N° TVA Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      mois: Mois
+      taux_de_change: Taux de change
+      HT: HT
+      commentaires: Commentaires
+
+    V05LIC:
+      title: V03-283-I
+      tiers: Tiers
+      no_TVA_tiers: N° TVA Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      mois: Mois
+      taux_de_change: Taux de change
+      HT: HT
+      regime: Régime
+      DEB: DEB (OUI/NON)
+      commentaires: Commentaires
+      n_ligne: N° Ligne
+      nomenclature: Nomenclature
+      pays_id_destination: Pays Destination
+      valeur_fiscale: Valeur Fiscale
+      valeur_statistique: Valeur Statistique
+      masse_mette: Masse Nette
+      unites_supplementaires: Unités Supplémentaires
+      nature_transaction: Nature transaction
+      conditions_livraison: Conditions Livraison
+      mode_transport: Mode Transport
+      departement: Département
+      pays_id_origine: Pays d'Origine
+      CEE: No TVA Acquéreur C.E.E.
+
+    DEBExped:
+      title: DEB Exped
+      n_ligne: N° Ligne
+      nomenclature: Nomenclature de Produit
+      pays_id_destination: Pays Dest. Prov.
+      valeur_fiscale: Valeur Fiscale
+      regime: Régime
+      valeur_statistique: Valeur Statistique
+      masse_mette: Masse Nette
+      unites_supplementaires: Unités Supplémentaires
+      nature_transaction: Nature transaction
+      conditions_livraison: Conditions Livraison
+      mode_transport: Mode Transport
+      departement: Département
+      pays_id_origine: Pays d'Origine
+      CEE: No d'Identification de l'acquereur C.E.E.
+
+    V07EX:
+      title: V07-EX
+      tiers: Tiers
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      mois: Mois
+      taux_de_change: Taux de change
+      HT: HT
+      commentaires: Commentaires
+
+    V11INT:
+      title: V11-INT
+      tiers: Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      mois: Mois
+      taux_de_change: Taux de change
+      HT: HT
+      commentaires: Commentaires
+
+    A02TVA:
+      title: V01-TVA
+      tiers: Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      taux_de_TVA: Taux de TVA
+      montant_TVA_francaise: Montant TVA française
+      montant_TTC: Montant TTC
+      paiement_montant: Paiement Montant
+      paiement_devise_id: Paiement Devise
+      paiement_date: Paiement Date
+      mois: Mois
+      taux_de_change: Taux de change
+      HT: HT
+      TVA: TVA
+      commentaires: Commentaires
+
+    A04283I:
+      title: A04-283-I
+      tiers: Tiers
+      no_TVA_tiers: N° TVA Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      taux_de_TVA: Taux de TVA
+      mois: Mois
+      taux_de_change: Taux de change
+      HT: HT
+      TVA: TVA
+      commentaires: Commentaires
+
+    V09DES:
+      title: V09-DES
+      tiers: Tiers
+      no_TVA_tiers: N° TVA Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      mois: Mois
+      mois_complementaire: Mois Complémentaire
+      taux_de_change: Taux de change
+      HT: HT
+      commentaires: Commentaires
+
+  list:
+    V01_TVA:
+      title: V01-TVA
+      tiers: Tiers
+      no_TVA_tiers: N° TVA Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      taux_de_TVA: Taux de TVA
+      montant_TVA_francaise: Montant TVA française
+      montant_TTC: Montant TTC
+      paiement_montant: Paiement Montant
+      paiement_devise_id: Paiement Devise
+      paiement_date: Paiement Date
+      mois: Mois
+      taux_de_change: Taux de change
+      HT: HT (€)
+      TVA: TVA (€)
+      commentaires: Commentaires
+
+    V03283I:
+      tiers: Tiers
+      no_TVA_tiers: N° TVA Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      mois: Mois
+      taux_de_change: Taux de change
+      HT: HT (€)
+      commentaires: Commentaires
+
+    V05LIC:
+      title: V03-283-I
+      tiers: Tiers
+      no_TVA_tiers: N° TVA Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      mois: Mois
+      taux_de_change: Taux de change
+      HT: HT (€)
+      regime: Régime
+      DEB: DEB (OUI/NON)
+      commentaires: Commentaires
+      n_ligne: N° Ligne
+      nomenclature: Nomenclature
+      pays_id_destination: Pays Destination
+      valeur_fiscale: Valeur Fiscale
+      valeur_statistique: Valeur Statistique
+      masse_mette: Masse Nette
+      unites_supplementaires: Unités Supplémentaires
+      nature_transaction: Nature transaction
+      conditions_livraison: Conditions Livraison
+      mode_transport: Mode Transport
+      departement: Département
+      pays_id_origine: Pays d'Origine
+      CEE: No TVA Acquéreur C.E.E.
+
+    DEBExped:
+      title: DEB Exped
+      n_ligne: N° Ligne
+      nomenclature: Nomenclature de Produit
+      pays_id_destination: Pays Dest. Prov.
+      valeur_fiscale: Valeur Fiscale
+      regime: Régime
+      valeur_statistique: Valeur Statistique
+      masse_mette: Masse Nette
+      unites_supplementaires: Unités Supplémentaires
+      nature_transaction: Nature transaction
+      conditions_livraison: Conditions Livraison
+      mode_transport: Mode Transport
+      departement: Département
+      pays_id_origine: Pays d'Origine
+      CEE: No d'Identification de l'acquereur C.E.E.
+
+    V07EX:
+      title: V07-EX
+      tiers: Tiers
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      mois: Mois
+      taux_de_change: Taux de change
+      HT: HT (€)
+      commentaires: Commentaires
+
+    V09DES:
+      title: V09-DES
+      tiers: Tiers
+      no_TVA_tiers: N° TVA Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      mois: Mois
+      mois_complementaire: Mois Complémentaire
+      taux_de_change: Taux de change
+      HT: HT (€)
+      commentaires: Commentaires
+
+    V11INT:
+      title: V11-INT
+      tiers: Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      mois: Mois
+      taux_de_change: Taux de change
+      HT: HT (€)
+      commentaires: Commentaires
+
+    A02TVA:
+      title: V01-TVA
+      tiers: Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      taux_de_TVA: Taux de TVA
+      montant_TVA_francaise: Montant TVA française
+      montant_TTC: Montant TTC
+      paiement_montant: Paiement Montant
+      paiement_devise_id: Paiement Devise
+      paiement_date: Paiement Date
+      mois: Mois
+      taux_de_change: Taux de change
+      HT: HT (€)
+      TVA: TVA (€)
+      commentaires: Commentaires
+
+    A04283I:
+      title: A04-283-I
+      tiers: Tiers
+      no_TVA_tiers: N° TVA Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      taux_de_TVA: Taux de TVA
+      mois: Mois
+      taux_de_change: Taux de change
+      HT: HT (€)
+      TVA: TVA (€)
+      commentaires: Commentaires
+

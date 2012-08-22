@@ -5,3 +5,50 @@ services:
             - { name: sonata.admin, manager_type: orm, group: V01_TVA, label: V01_TVA, show_in_dashboard: false}
         arguments: [null, Application\Sonata\ClientOperationsBundle\Entity\V01TVA, ApplicationSonataClientOperationsBundle:V01TVA]
 
+    application.sonata.admin.v03283i:
+        class : Application\Sonata\ClientOperationsBundle\Admin\V03283IAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: V03283I, label: V03283I, show_in_dashboard: false}
+        arguments: [null, Application\Sonata\ClientOperationsBundle\Entity\V03283I, ApplicationSonataClientOperationsBundle:V03283I]
+
+    application.sonata.admin.a02tva:
+        class : Application\Sonata\ClientOperationsBundle\Admin\A02TVAAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: A02TVA, label: A02TVA, show_in_dashboard: false}
+        arguments: [null, Application\Sonata\ClientOperationsBundle\Entity\A02TVA, ApplicationSonataClientOperationsBundle:A02TVA]
+
+    application.sonata.admin.a04283i:
+        class : Application\Sonata\ClientOperationsBundle\Admin\A04283IAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: A04283I, label: A04283I, show_in_dashboard: false}
+        arguments: [null, Application\Sonata\ClientOperationsBundle\Entity\A04283I, ApplicationSonataClientOperationsBundle:A04283I]
+
+    application.sonata.admin.v05lic:
+        class : Application\Sonata\ClientOperationsBundle\Admin\V05LICAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: V05LIC, label: V05LIC, show_in_dashboard: false}
+        arguments: [null, Application\Sonata\ClientOperationsBundle\Entity\V05LIC, ApplicationSonataClientOperationsBundle:V05LIC]
+
+    application.sonata.admin.debexped:
+        class : Application\Sonata\ClientOperationsBundle\Admin\DEBExpedAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: DEBExped, label: DEBExped, show_in_dashboard: false}
+        arguments: [null, Application\Sonata\ClientOperationsBundle\Entity\DEBExped, ApplicationSonataClientOperationsBundle:DEBExped]
+
+    application.sonata.admin.v07ex:
+        class : Application\Sonata\ClientOperationsBundle\Admin\V07EXAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: V07EX, label: V07EX, show_in_dashboard: false}
+        arguments: [null, Application\Sonata\ClientOperationsBundle\Entity\V07EX, ApplicationSonataClientOperationsBundle:V07EX]
+
+    application.sonata.admin.v09des:
+        class : Application\Sonata\ClientOperationsBundle\Admin\V09DESAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: V09DES, label: V09DES, show_in_dashboard: false}
+        arguments: [null, Application\Sonata\ClientOperationsBundle\Entity\V09DES, ApplicationSonataClientOperationsBundle:V09DES]
+
+    application.sonata.admin.v11int:
+        class : Application\Sonata\ClientOperationsBundle\Admin\V11INTAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: V11INT, label: V11INT, show_in_dashboard: false}
+        arguments: [null, Application\Sonata\ClientOperationsBundle\Entity\V11INT, ApplicationSonataClientOperationsBundle:V11INT]

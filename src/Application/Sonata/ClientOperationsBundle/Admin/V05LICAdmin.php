@@ -8,8 +8,9 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 
 use Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin as Admin;
 
-class V01TVAAdmin extends Admin
+class V05LICAdmin extends Admin
 {
+
     /**
      * @param FormMapper $formMapper
      */
@@ -24,17 +25,25 @@ class V01TVAAdmin extends Admin
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
             ->add('devise_id', null, array('label' => $this->getFieldLabel('devise_id')))
             ->add('montant_HT_en_devise', null, array('label' => $this->getFieldLabel('montant_HT_en_devise')))
-            ->add('taux_de_TVA', null, array('label' => $this->getFieldLabel('taux_de_TVA')))
-            ->add('montant_TVA_francaise', null, array('label' => $this->getFieldLabel('montant_TVA_francaise')))
-            ->add('montant_TTC', null, array('label' => $this->getFieldLabel('montant_TTC')))
-            ->add('paiement_montant', null, array('label' => $this->getFieldLabel('paiement_montant')))
-            ->add('paiement_devise_id', null, array('label' => $this->getFieldLabel('paiement_devise_id')))
-            ->add('paiement_date', null, array('label' => $this->getFieldLabel('paiement_date')))
             ->add('mois', null, array('label' => $this->getFieldLabel('mois')))
             ->add('taux_de_change', null, array('label' => $this->getFieldLabel('taux_de_change')))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT')))
-            ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA')))
-            ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
+            ->add('regime', null, array('label' => $this->getFieldLabel('regime')))
+            ->add('DEB', null, array('label' => $this->getFieldLabel('DEB')))
+            ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')))
+            ->add('n_ligne', null, array('label' => $this->getFieldLabel('n_ligne')))
+            ->add('nomenclature', null, array('label' => $this->getFieldLabel('nomenclature')))
+            ->add('pays_id_destination', null, array('label' => $this->getFieldLabel('pays_id_destination')))
+            ->add('valeur_fiscale', null, array('label' => $this->getFieldLabel('valeur_fiscale')))
+            ->add('valeur_statistique', null, array('label' => $this->getFieldLabel('valeur_statistique')))
+            ->add('masse_mette', null, array('label' => $this->getFieldLabel('masse_mette')))
+            ->add('unites_supplementaires', null, array('label' => $this->getFieldLabel('unites_supplementaires')))
+            ->add('nature_transaction', null, array('label' => $this->getFieldLabel('nature_transaction')))
+            ->add('conditions_livraison', null, array('label' => $this->getFieldLabel('conditions_livraison')))
+            ->add('mode_transport', null, array('label' => $this->getFieldLabel('mode_transport')))
+            ->add('departement', null, array('label' => $this->getFieldLabel('departement')))
+            ->add('pays_id_origine', null, array('label' => $this->getFieldLabel('pays_id_origine')))
+            ->add('CEE', null, array('label' => $this->getFieldLabel('CEE')));
     }
 
     /**

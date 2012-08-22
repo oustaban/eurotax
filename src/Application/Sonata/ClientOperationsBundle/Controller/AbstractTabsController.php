@@ -21,8 +21,8 @@ class AbstractTabsController extends Controller
      */
     protected $_tabAlias = '';
     protected $_operationType = '';
-
     protected $maxPerPage = 25;
+    protected $_jsSettingsJson = null;
 
     public function __construct()
     {
@@ -46,6 +46,31 @@ class AbstractTabsController extends Controller
             'active_tab' => $this->_tabAlias,
             'operation_type' => $this->_operationType,
         ));
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function createAction()
+    {
+        return $this->_action(parent::createAction());
+    }
+
+    /**
+     * @param null $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function editAction($id = null)
+    {
+        return $this->_action(parent::editAction());
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function listAction()
+    {
+        return $this->_action(parent::listAction());
     }
 
     /**
