@@ -37,7 +37,7 @@
 {% block title %}
 {{ 'Admin'|trans({}, 'SonataAdminBundle') }}
 
-{% if _title is not empty %}
+{% if _title is defined and _title is not empty %}
 {{ _title|raw }}
 {% else %}
 {% if action is defined %}
