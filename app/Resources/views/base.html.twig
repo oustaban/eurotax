@@ -1,13 +1,103 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Bouygues{% endblock %}</title>
+    {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" type="text/css"/>
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}" type="text/css"/>
+    {% endblock %}
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}"/>
+    {% block javascripts %}
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
+    {% endblock %}
+</head>
+<body>
+<div class="container-fluid" id="container">
+    {% block mainheader %}
+    <div class="row-fluid" id="header">
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="{{ path('home') }}">
+                        <img src="{{ asset('img/u2_original.png') }}"/>
+                    </a>
+
+                    <div id="user_tools" class="pull-right">
+                        <ul class="nav">
+
+                            {% if app.user %}
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{ path('fos_user_change_password') }}">{{ 'change_password.submit'|trans({}, 'FOSUserBundle') }}</a>
+                                    </li>
+<!--
+                                    <li><a href="{{ path('sonata_user_profile_edit_authentication') }}">{{ 'title_user_edit_authentication'|trans({}, 'SonataUserBundle') }}</a></li>
+                                    <li><a href="{{ path('sonata_user_profile_edit') }}">{{ 'title_user_edit_profile'|trans({}, 'SonataUserBundle') }}</a></li>
+-->
+                                    <li><a href="{{ path('sonata_user_admin_security_logout') }}">
+                                        <i class="icon-off icon"></i> {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                                    </a></li>
+                                </ul>
+                            </li>
+                            {% else %}
+                            <li><a href="{{ path('sonata_user_admin_security_login') }}">
+                                <i class="icon-ok icon-white"></i> {{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                            </li>
+                            {% endif %}
+
+                        </ul>
+                    </div>
+
+                    {% if app.user %}
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li>
+                                <a href="{{ path('home') }}">Home</a>
+                            </li>
+                            {% if is_granted('ROLE_SONATA_ADMIN') %}
+                            <li>
+                                <a href="{{ path('sonata_admin_dashboard') }}">Admin dashboard</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock mainheader %}
+
+    {% if test is defined %}
+    <div style="clear: both; float: none;">
+        <pre>
+            {{ dump(test) }}
+        </pre>
+    </div>
+    {% endif %}
+
+    {% if errors is defined %}
+    {% for error in errors %}
+    <div class="alert alert-error">
+        {{ error }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% block body %}{% endblock %}
+</div>
+
+{% block javascriptsafter %}
+<script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
+{% endblock %}
+</body>
 </html>
+
