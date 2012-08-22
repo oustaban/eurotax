@@ -58,3 +58,9 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: A06AIB, label: A06AIB, show_in_dashboard: false}
         arguments: [null, Application\Sonata\ClientOperationsBundle\Entity\A06AIB, ApplicationSonataClientOperationsBundle:A06AIB]
+
+    application.sonata.admin.debintro:
+        class : Application\Sonata\ClientOperationsBundle\Admin\DEBIntroAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: DEBIntro, label: DEBIntro, show_in_dashboard: false}
+        arguments: [null, Application\Sonata\ClientOperationsBundle\Entity\DEBIntro, ApplicationSonataClientOperationsBundle:DEBIntro]
