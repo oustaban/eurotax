@@ -22,6 +22,11 @@
             <a href="{{ url('admin_sonata_clientoperations_debintro_list', _filter_json) }}">DEB Intro</a>
         </li>
         {% endif %}
+        {% if client_id %}
+        <li {% if active_tab=='a08im' %}class="active"{% endif %}>
+            <a href="{{ url('admin_sonata_clientoperations_a08im_list', _filter_json) }}">A08-IM</a>
+        </li>
+        {% endif %}
     </ul>
 </div>
 {% endblock %}
