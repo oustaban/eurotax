@@ -18,6 +18,11 @@
         </li>
         {% endif %}
         {% if client_id %}
+        <li {% if active_tab=='debexped' %}class="active"{% endif %}>
+            <a href="{{ url('admin_sonata_clientoperations_debexped_list', _filter_json) }}">DEB Exped</a>
+        </li>
+        {% endif %}
+        {% if client_id %}
         <li {% if active_tab=='v07ex' %}class="active"{% endif %}>
             <a href="{{ url('admin_sonata_clientoperations_v07ex_list', _filter_json) }}">V07-EX</a>
         </li>

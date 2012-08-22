@@ -61,6 +61,23 @@ ApplicationSonataClientOperationsBundle:
       pays_id_origine: Pays d'Origine
       CEE: No TVA Acquéreur C.E.E.
 
+    DEBExped:
+      title: DEB Exped
+      n_ligne: N° Ligne
+      nomenclature: Nomenclature de Produit
+      pays_id_destination: Pays Dest. Prov.
+      valeur_fiscale: Valeur Fiscale
+      regime: Régime
+      valeur_statistique: Valeur Statistique
+      masse_mette: Masse Nette
+      unites_supplementaires: Unités Supplémentaires
+      nature_transaction: Nature transaction
+      conditions_livraison: Conditions Livraison
+      mode_transport: Mode Transport
+      departement: Département
+      pays_id_origine: Pays d'Origine
+      CEE: No d'Identification de l'acquereur C.E.E.
+
     V07EX:
       title: V07-EX
       tiers: Tiers
@@ -192,6 +209,23 @@ ApplicationSonataClientOperationsBundle:
       departement: Département
       pays_id_origine: Pays d'Origine
       CEE: No TVA Acquéreur C.E.E.
+
+    DEBExped:
+      title: DEB Exped
+      n_ligne: N° Ligne
+      nomenclature: Nomenclature de Produit
+      pays_id_destination: Pays Dest. Prov.
+      valeur_fiscale: Valeur Fiscale
+      regime: Régime
+      valeur_statistique: Valeur Statistique
+      masse_mette: Masse Nette
+      unites_supplementaires: Unités Supplémentaires
+      nature_transaction: Nature transaction
+      conditions_livraison: Conditions Livraison
+      mode_transport: Mode Transport
+      departement: Département
+      pays_id_origine: Pays d'Origine
+      CEE: No d'Identification de l'acquereur C.E.E.
 
     V07EX:
       title: V07-EX
