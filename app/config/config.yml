@@ -69,7 +69,7 @@ fos_user:
     user_class: Application\Sonata\UserBundle\Entity\User
 
 sonata_user:
-    impersonating_route:    sonata_user_impersonating
+    impersonating_route:    home
 
 parameters:
     sonata.user.admin.user.class: Application\Sonata\UserBundle\Admin\Entity\UserAdmin
