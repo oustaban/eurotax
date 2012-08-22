@@ -1,0 +1,7 @@
+{% extends 'ApplicationSonataClientOperationsBundle::standard_layout.html.twig' %}
+
+{% use 'ApplicationSonataClientOperationsBundle:CRUD:form_panels.html.twig' with form_panels as formPanels %}
+
+{% block panel_block %}
+    {{ block('formPanels')}}
+{% endblock panel_block %}

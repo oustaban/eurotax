@@ -24,11 +24,17 @@ class AbstractTabsController extends Controller
     protected $maxPerPage = 25;
     protected $_jsSettingsJson = null;
 
+    /**
+     *
+     */
     public function __construct()
     {
         $filter = Request::createFromGlobals()->query->get('filter');
         if (!empty($filter['client_id']) && !empty($filter['client_id']['value'])) {
+
             $this->client_id = $filter['client_id']['value'];
+
+
         } else {
             throw new NotFoundHttpException('Unable load page with no client_id');
         }
@@ -38,13 +44,17 @@ class AbstractTabsController extends Controller
      * @param $data
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function _action($data)
+    protected function _action($data, $action = 'create', $template = 'standard_layout')
     {
-        return $this->render('ApplicationSonataClientOperationsBundle::standard_layout.html.twig', array(
+        $client = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:Client')->find($this->client_id);
+
+        return $this->render('ApplicationSonataClientOperationsBundle::'.$template.'.html.twig', array(
             'client_id' => $this->client_id,
+            'client' => $client,
             'content' => $data->getContent(),
             'active_tab' => $this->_tabAlias,
             'operation_type' => $this->_operationType,
+            'action' => $action,
         ));
     }
 
@@ -53,7 +63,7 @@ class AbstractTabsController extends Controller
      */
     public function createAction()
     {
-        return $this->_action(parent::createAction());
+        return $this->_action(parent::createAction(), 'create', 'form_layout');
     }
 
     /**
@@ -62,7 +72,7 @@ class AbstractTabsController extends Controller
      */
     public function editAction($id = null)
     {
-        return $this->_action(parent::editAction());
+        return $this->_action(parent::editAction(), 'edit', 'form_layout');
     }
 
     /**
@@ -70,7 +80,7 @@ class AbstractTabsController extends Controller
      */
     public function listAction()
     {
-        return $this->_action(parent::listAction());
+        return $this->_action(parent::listAction(), 'list', 'list_layout');
     }
 
     /**
