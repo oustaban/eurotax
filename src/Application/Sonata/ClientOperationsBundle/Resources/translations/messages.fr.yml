@@ -72,6 +72,18 @@ ApplicationSonataClientOperationsBundle:
       HT: HT
       commentaires: Commentaires
 
+    V11INT:
+      title: V11-INT
+      tiers: Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      mois: Mois
+      taux_de_change: Taux de change
+      HT: HT
+      commentaires: Commentaires
+
     A02TVA:
       title: V01-TVA
       tiers: Tiers
@@ -202,6 +214,18 @@ ApplicationSonataClientOperationsBundle:
       montant_HT_en_devise: Montant HT en devise
       mois: Mois
       mois_complementaire: Mois Complémentaire
+      taux_de_change: Taux de change
+      HT: HT (€)
+      commentaires: Commentaires
+
+    V11INT:
+      title: V11-INT
+      tiers: Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      mois: Mois
       taux_de_change: Taux de change
       HT: HT (€)
       commentaires: Commentaires

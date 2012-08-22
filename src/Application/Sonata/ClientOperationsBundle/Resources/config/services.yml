@@ -40,3 +40,9 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: V09DES, label: V09DES, show_in_dashboard: false}
         arguments: [null, Application\Sonata\ClientOperationsBundle\Entity\V09DES, ApplicationSonataClientOperationsBundle:V09DES]
+
+    application.sonata.admin.v11int:
+        class : Application\Sonata\ClientOperationsBundle\Admin\V11INTAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: V11INT, label: V11INT, show_in_dashboard: false}
+        arguments: [null, Application\Sonata\ClientOperationsBundle\Entity\V11INT, ApplicationSonataClientOperationsBundle:V11INT]
