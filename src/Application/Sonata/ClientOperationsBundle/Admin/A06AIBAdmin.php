@@ -8,7 +8,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 
 use Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin as Admin;
 
-class V05LICAdmin extends Admin
+class A06AIBAdmin extends Admin
 {
 
     /**
@@ -20,7 +20,6 @@ class V05LICAdmin extends Admin
 
         $formMapper
             ->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
-            ->add('no_TVA_tiers', null, array('label' => $this->getFieldLabel('no_TVA_tiers')))
             ->add('date_piece', null, array('label' => $this->getFieldLabel('date_piece')))
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
             ->add('devise_id', null, array('label' => $this->getFieldLabel('devise_id')))
@@ -42,8 +41,7 @@ class V05LICAdmin extends Admin
             ->add('conditions_livraison', null, array('label' => $this->getFieldLabel('conditions_livraison')))
             ->add('mode_transport', null, array('label' => $this->getFieldLabel('mode_transport')))
             ->add('departement', null, array('label' => $this->getFieldLabel('departement')))
-            ->add('pays_id_origine', 'country', array('label' => $this->getFieldLabel('pays_id_origine')))
-            ->add('CEE', null, array('label' => $this->getFieldLabel('CEE')));
+            ->add('pays_id_origine', 'country', array('label' => $this->getFieldLabel('pays_id_origine')));
     }
 
     /**
@@ -55,7 +53,7 @@ class V05LICAdmin extends Admin
 
         $listMapper->addIdentifier('id', null)
             ->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
-            ->add('no_TVA_tiers', null, array('label' => $this->getFieldLabel('no_TVA_tiers')))
-            ->add('date_piece', null, array('label' => $this->getFieldLabel('date_piece')));
+            ->add('date_piece', null, array('label' => $this->getFieldLabel('date_piece')))
+            ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')));
     }
 }
