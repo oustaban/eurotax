@@ -106,6 +106,20 @@ ApplicationSonataClientOperationsBundle:
       TVA: TVA
       commentaires: Commentaires
 
+    V09DES:
+      title: V09-DES
+      tiers: Tiers
+      no_TVA_tiers: N° TVA Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      mois: Mois
+      mois_complementaire: Mois Complémentaire
+      taux_de_change: Taux de change
+      HT: HT
+      commentaires: Commentaires
+
   list:
     V01_TVA:
       title: V01-TVA
@@ -174,6 +188,20 @@ ApplicationSonataClientOperationsBundle:
       devise_id: Devise
       montant_HT_en_devise: Montant HT en devise
       mois: Mois
+      taux_de_change: Taux de change
+      HT: HT (€)
+      commentaires: Commentaires
+
+    V09DES:
+      title: V09-DES
+      tiers: Tiers
+      no_TVA_tiers: N° TVA Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      mois: Mois
+      mois_complementaire: Mois Complémentaire
       taux_de_change: Taux de change
       HT: HT (€)
       commentaires: Commentaires

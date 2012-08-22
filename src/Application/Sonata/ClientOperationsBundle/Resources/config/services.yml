@@ -34,3 +34,9 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: V07EX, label: V07EX, show_in_dashboard: false}
         arguments: [null, Application\Sonata\ClientOperationsBundle\Entity\V07EX, ApplicationSonataClientOperationsBundle:V07EX]
+
+    application.sonata.admin.v09des:
+        class : Application\Sonata\ClientOperationsBundle\Admin\V09DESAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: V09DES, label: V09DES, show_in_dashboard: false}
+        arguments: [null, Application\Sonata\ClientOperationsBundle\Entity\V09DES, ApplicationSonataClientOperationsBundle:V09DES]
