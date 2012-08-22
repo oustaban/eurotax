@@ -79,3 +79,10 @@ body {
   border-radius: 5px;
 }
 
+.main-content {
+}
+
+.sonata-bc div.connection {
+    margin: 0 auto !important;
+    position: inherit !important;
+}

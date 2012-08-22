@@ -75,7 +75,7 @@
     <div class="sonata-bc {% if _side_menu is empty %}sonata-ba-no-side-menu{% endif %}">
         {# initialize block value #}
 
-        <div class="">
+        <div class="main-content">
             {% block notice %}
             {% for notice_level in ['success','error','info', 'warning'] %}
             {% set session_var = 'sonata_flash_' ~ notice_level %}
