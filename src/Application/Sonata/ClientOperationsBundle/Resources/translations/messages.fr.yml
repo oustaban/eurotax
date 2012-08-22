@@ -33,6 +33,45 @@ ApplicationSonataClientOperationsBundle:
       HT: HT
       commentaires: Commentaires
 
+    V05LIC:
+      title: V03-283-I
+      tiers: Tiers
+      no_TVA_tiers: N° TVA Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      mois: Mois
+      taux_de_change: Taux de change
+      HT: HT
+      regime: Régime
+      DEB: DEB (OUI/NON)
+      commentaires: Commentaires
+      n_ligne: N° Ligne
+      nomenclature: Nomenclature
+      pays_id_destination: Pays Destination
+      valeur_fiscale: Valeur Fiscale
+      valeur_statistique: Valeur Statistique
+      masse_mette: Masse Nette
+      unites_supplementaires: Unités Supplémentaires
+      nature_transaction: Nature transaction
+      conditions_livraison: Conditions Livraison
+      mode_transport: Mode Transport
+      departement: Département
+      pays_id_origine: Pays d'Origine
+      CEE: No TVA Acquéreur C.E.E.
+
+    V07EX:
+      title: V07-EX
+      tiers: Tiers
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      mois: Mois
+      taux_de_change: Taux de change
+      HT: HT
+      commentaires: Commentaires
+
     A02TVA:
       title: V01-TVA
       tiers: Tiers
@@ -100,6 +139,45 @@ ApplicationSonataClientOperationsBundle:
       HT: HT (€)
       commentaires: Commentaires
 
+    V05LIC:
+      title: V03-283-I
+      tiers: Tiers
+      no_TVA_tiers: N° TVA Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      mois: Mois
+      taux_de_change: Taux de change
+      HT: HT (€)
+      regime: Régime
+      DEB: DEB (OUI/NON)
+      commentaires: Commentaires
+      n_ligne: N° Ligne
+      nomenclature: Nomenclature
+      pays_id_destination: Pays Destination
+      valeur_fiscale: Valeur Fiscale
+      valeur_statistique: Valeur Statistique
+      masse_mette: Masse Nette
+      unites_supplementaires: Unités Supplémentaires
+      nature_transaction: Nature transaction
+      conditions_livraison: Conditions Livraison
+      mode_transport: Mode Transport
+      departement: Département
+      pays_id_origine: Pays d'Origine
+      CEE: No TVA Acquéreur C.E.E.
+
+    V07EX:
+      title: V07-EX
+      tiers: Tiers
+      numero_piece: Numéro pièce
+      devise_id: Devise
+      montant_HT_en_devise: Montant HT en devise
+      mois: Mois
+      taux_de_change: Taux de change
+      HT: HT (€)
+      commentaires: Commentaires
+
     A02TVA:
       title: V01-TVA
       tiers: Tiers
@@ -133,3 +211,4 @@ ApplicationSonataClientOperationsBundle:
       HT: HT (€)
       TVA: TVA (€)
       commentaires: Commentaires
+

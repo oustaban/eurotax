@@ -22,3 +22,15 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: A04283I, label: A04283I, show_in_dashboard: false}
         arguments: [null, Application\Sonata\ClientOperationsBundle\Entity\A04283I, ApplicationSonataClientOperationsBundle:A04283I]
+
+    application.sonata.admin.v05lic:
+        class : Application\Sonata\ClientOperationsBundle\Admin\V05LICAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: V05LIC, label: V05LIC, show_in_dashboard: false}
+        arguments: [null, Application\Sonata\ClientOperationsBundle\Entity\V05LIC, ApplicationSonataClientOperationsBundle:V05LIC]
+
+    application.sonata.admin.v07ex:
+        class : Application\Sonata\ClientOperationsBundle\Admin\V07EXAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: V07EX, label: V07EX, show_in_dashboard: false}
+        arguments: [null, Application\Sonata\ClientOperationsBundle\Entity\V07EX, ApplicationSonataClientOperationsBundle:V07EX]
