@@ -16,23 +16,22 @@ class Config
             return false;
 
         //init APPLICATION_ENVIRONMENT
-        if (!defined('ConfigType')) {
-            if (isset($_GET['aen'])) {
-                $configType = $_GET['aen'];
-            } else {
-                $configType = 'prod';
-                if (isset($_SERVER ['SERVER_NAME'])) {
-                    $esn = explode('.', $_SERVER ['SERVER_NAME']);
-                    $c = count($esn) - 1;
-                    $d = $esn[$c - 1] . '.' . $esn[$c];
-                    switch ($esn[$c]) {
-                        case 'local':
-                            $configType = 'dev';
-                            break;
-                        case 'test':
-                            $configType = 'test';
-                            break;
-                    }
+
+        if (isset($_GET['aen'])) {
+            $configType = $_GET['aen'];
+        } elseif (!defined('ConfigType')) {
+            $configType = 'prod';
+            if (isset($_SERVER ['SERVER_NAME'])) {
+                $esn = explode('.', $_SERVER ['SERVER_NAME']);
+                $c = count($esn) - 1;
+                $d = $esn[$c - 1] . '.' . $esn[$c];
+                switch ($esn[$c]) {
+                    case 'local':
+                        $configType = 'dev';
+                        break;
+                    case 'test':
+                        $configType = 'test';
+                        break;
                 }
             }
         } else {
