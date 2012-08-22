@@ -2,7 +2,7 @@
 
 {% block title %} Dashboard! {% endblock %}
 
-{% block body %}
+{% block body_content %}
 
 
 {% if(is_granted('ROLE_SONATA_ADMIN')) %}
@@ -17,4 +17,4 @@
 <a href="{{ path('sonata_user_admin_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
 {% endif %}
 
-{% endblock body %}
+{% endblock body_content %}
