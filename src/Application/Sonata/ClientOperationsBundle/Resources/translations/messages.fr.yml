@@ -202,6 +202,15 @@ ApplicationSonataClientOperationsBundle:
       mois: Mois
       commentaires: Commentaires
 
+    A10CAF:
+      title: A10-CAF
+      tiers: Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      HT: HT
+      mois: Mois
+      commentaires: Commentaires
+
   list:
     V01_TVA:
       title: V01-TVA
@@ -401,6 +410,15 @@ ApplicationSonataClientOperationsBundle:
       numero_piece: Numéro pièce
       taux_de_TVA: Taux de TVA
       TVA: TVA (€)
+      mois: Mois
+      commentaires: Commentaires
+
+    A10CAF:
+      title: A10-CAF
+      tiers: Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      HT: HT (€)
       mois: Mois
       commentaires: Commentaires
 
