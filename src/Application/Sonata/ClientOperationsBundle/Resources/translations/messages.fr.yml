@@ -192,6 +192,15 @@ ApplicationSonataClientOperationsBundle:
       pays_id_origine: Pays d'Origine
       CEE: No d'Identification de l'acquereur C.E.E.
 
+    A08IM:
+      title: A08-IM
+      tiers: Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      taux_de_TVA: Taux de TVA
+      TVA: TVA
+      mois: Mois
+      commentaires: Commentaires
 
   list:
     V01_TVA:
@@ -384,4 +393,14 @@ ApplicationSonataClientOperationsBundle:
       departement: Département
       pays_id_origine: Pays d'Origine
       CEE: No d'Identification de l'acquereur C.E.E.
+
+    A08IM:
+      title: A08-IM
+      tiers: Tiers
+      date_piece: Date pièce
+      numero_piece: Numéro pièce
+      taux_de_TVA: Taux de TVA
+      TVA: TVA (€)
+      mois: Mois
+      commentaires: Commentaires
 
