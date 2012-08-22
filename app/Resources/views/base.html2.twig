@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Bouygues{% endblock %}</title>
+        {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" type="text/css" />
+        <link rel="stylesheet" href="{{ asset('css/main.css') }}" type="text/css" />
+        {% endblock %}
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+	{% block javascripts %}
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="{{ asset('js/menu.js') }}"></script>
+	{% endblock %}
+    </head>
+    <body>
+        <div class="container-fluid">
+{% block mainheader %}
+            <div class="row-fluid" id="header">
+                <div class="navbar navbar-fixed-top"><div class="navbar-inner"><div class="container">
+                    <a class="brand" href="{{ path('home') }}">
+                      <img src="{{ asset('img/bouygues_logo.png') }}" />
+                    </a>
+                    <div id="user_tools" class="pull-right">
+                        <ul class="nav">
+{% if app.user %}
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('fos_user_change_password') }}">{{ 'change_password.submit'|trans({}, 'FOSUserBundle') }}</a></li>
+<!--
+                                    <li><a href="{{ path('sonata_user_profile_edit_authentication') }}">{{ 'title_user_edit_authentication'|trans({}, 'SonataUserBundle') }}</a></li>
+                                    <li><a href="{{ path('sonata_user_profile_edit') }}">{{ 'title_user_edit_profile'|trans({}, 'SonataUserBundle') }}</a></li>
+-->
+                                    <li><a href="{{ path('sonata_user_admin_security_logout') }}">
+                                        <i class="icon-off icon"></i> {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
+                                </ul>
+                            </li>
+{% else %}
+                            <li><a href="{{ path('sonata_user_admin_security_login') }}">
+                                <i class="icon-ok icon-white"></i> {{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
+{% endif %}
+                        </ul>
+                    </div>
+{% if app.user %}
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li>
+                                <a href="{{ path('home') }}">Reports</a>
+                            </li>
+    {% if is_granted('ROLE_ADMIN') %}
+                            <li{{ 'AdminBundle' in app.request.attributes.get('_controller')
+                                or 'ConfigBundle' in app.request.attributes.get('_controller')
+                                ? ' class="active"' : '' }}>
+                                <a href="{{ path('sonata_admin_dashboard') }}">Administration</a>
+                            </li>
+    {% endif %}
+                        </ul>
+                    </div>
+{% endif %}
+                </div></div></div>
+            </div>
+<!--
+            <div class="row-fluid" id="maintabs">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#">Rapports</a></li>
+                    <li><a href="#">Configuration</a></li>
+                </ul>
+            </div>
+-->
+{% endblock mainheader %}
+    {% if test is defined %}<pre>{{ dump(test) }}</pre>{% endif %}
+    {% if errors is defined %}
+        {% for error in errors %}<div class="alert alert-error">{{ error }}</div>{% endfor %}
+    {% endif %}
+            {% block body %}
+			<div id="main-content">
+<div id="left-menu">
+    <div class="menu">
+        <ul class="nav nav-list">
+            <li class="nav-header">{{ 'users'|trans({}, 'FOSUserBundle')|capitalize }}</li>
+            <li{{ 'sonata.user.admin.user' in app.request.attributes.get('_sonata_admin') ? ' class="active"' : '' }}>
+                <a href="{{ path('admin_sonata_user_user_list') }}">{{ 'users'|trans({}, 'FOSUserBundle')|capitalize }}</a>
+            </li>
+            <li{{ 'sonata.user.admin.group' in app.request.attributes.get('_sonata_admin') ? ' class="active"' : '' }}>
+                <a href="{{ path('admin_sonata_user_group_list') }}">{{ 'groups'|trans({}, 'FOSUserBundle')|capitalize }}</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="content">
+{% block glideconfig %}{% endblock %}
+</div>
+</div>
+			{% endblock %}
+        </div>
+    </body>
+	{% block javascriptsafter %}
+	<script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
+	{% endblock %}
+</html>

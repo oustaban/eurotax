@@ -34,7 +34,7 @@ soanata_user:
     resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
     prefix: /
 
-sonata_user_impersonating:
+home:
     pattern: /
     defaults: { _controller: ApplicationSonataUserBundle:Impersonating:index }
 

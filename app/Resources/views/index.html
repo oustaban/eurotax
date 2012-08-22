@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Eurotax</title>
+    <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="css/main.css" type="text/css" />
+    <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+</head>
+<body>
+<div id="container">
+<div id="header">
+    <img src="img/u2_original.png" />
+    <div class="pull-right navbar" id="top-nav">
+    <div class="navbar-inner">
+    <div class="container">
+        <ul class="nav">
+          <li><a href="#">Accueil</a></li>
+          <li class="dropdown active">
+            <a class="dropdown-toggle"
+               data-toggle="dropdown"
+               href="#">
+                Administration
+                <b class="caret"></b>
+              </a>
+            <ul class="dropdown-menu">
+                <li><a href="#">Utilisateurs</a></li>
+                <li class="active"><a href="#">Clients</a></li>
+                <li><a href="#">Devises</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a>Bonjour Fabrice Cochet</a></li>
+          <li class="divider-vertical"></li>
+          <li><a href="#"><i class="icon-white icon-off"></i> Déconnecter</a></li>
+        </ul>
+    </div>
+    </div>
+    </div>
+</div>
+<div id="maincont"><div id="mainsubcont">
+    <div class="pull-right" id="client_folder">
+        Répertoire Client
+        <ul>
+            <li><i class="icon icon-folder-open"></i>
+                Répertoire 1
+                <ul>
+                    <li><i class="icon icon-file"></i>File 1.1</li>
+                </ul>
+            </li>
+            <li><i class="icon icon-folder-open"></i>
+                Répertoire 2
+                <ul>
+                    <li><i class="icon icon-file"></i>File 2.1</li>
+                </ul>
+            </li>
+            <li><i class="icon icon-file"></i>File 1</li>
+            <li><i class="icon icon-file"></i>File 2</li>
+        </ul>
+    </div>
+    <form class="form-inline pull-right" id="client-topinfo">
+        <h1>Client 1
+            <span class="label label-warning" title="S'affiche uniquement si on a cloturé le mois (il y a donc au moins une ligne qui est cloturée)">Mois en cours cloturé</span>
+        </h1><br />
+        <div>
+            <label for="selected_month">Mois</label>
+            <select id="selected_month">
+                <option></option>
+                <option>Janvier</option>
+                <option>Février</option>
+                <option>Mars</option>
+                <option>Avril</option>
+            </select>
+        </div>
+    </form>
+    <form id="mass-buttons">
+        <div>
+            <div class="btn-group inline">
+                <button class="btn"><i class="icon icon-list-alt"></i> Voir la fiche</button>
+                <button class="btn"><i class="icon icon-eye-open"></i> Prévisualisation</button>
+                <button class="btn"><i class="icon icon-edit"></i> Saisie</button>
+            </div>
+        </div>
+        <div>
+            <div class="btn-group inline">
+                <button class="btn"><i class="icon icon-hdd"></i> Importer un fichier</button>
+                <button class="btn"><i class="icon icon-trash"></i> Supprimer un lot importé</button>
+            </div>
+        </div>
+        <div>
+            <div class="btn-group inline">
+                <button class="btn"><i class="icon icon-exclamation-sign"></i> Alertes</button>
+                <button class="btn"><i class="icon icon-lock"></i> Déverrouillage</button>
+            </div>
+        </div>
+    </form>
+    <ul class="nav nav-tabs">
+      <li><a href="#">Achat</a></li>
+      <li class="active"><a href="#">Vente</a></li>
+    </ul>
+    <ul class="nav nav-pills">
+        <li><a href="#">VT01-TVA</a></li>
+        <li><a href="#">V03-283-I</a></li>
+        <li class="active"><a href="#">V05-LIC</a></li>
+        <li><a href="#">DEB Exped</a></li>
+        <li><a href="#">V07-EX</a></li>
+        <li><a href="#">V09-DES</a></li>
+        <li><a href="#">V11-INT</a></li>
+    </ul>
+<table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <td><input /></td>
+        <td><input /></td>
+        <td><input /></td>
+        <td><input /></td>
+        <td><input /></td>
+        <td><input /></td>
+        <td><input /></td>
+        <td><input /></td>
+        <td><input /></td>
+        <td><input /></td>
+      </tr>
+      <tr>
+        <th>Num Import</th>
+        <th>N° TVA Tiers</th>
+        <th>Tiers</th>
+        <th>Date pièce</th>
+        <th>Numéro pièce</th>
+        <th>Devise</th>
+        <th>Montant HT en devise</th>
+        <th>Taux TVA</th>
+        <th>Montant TVA Française</th>
+        <th>Montant TTC</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>&nbsp;</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+<button class="btn pull-left"><i class="icon icon-plus"></i> Ajouter</button>
+<div class="pagination pagination-right">
+  <ul>
+    <li><a href="#">Précédent</a></li>
+    <li class="active">
+      <a href="#">1</a>
+    </li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">Suivant</a></li>
+  </ul>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
+

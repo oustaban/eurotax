@@ -1,0 +1,81 @@
+body {
+    background: #969696 url(../img/bg.png) repeat-x top;
+}
+
+#header {
+    margin-bottom: 20px;
+}
+#top-nav {
+    padding-top: 20px;
+}
+
+#container {
+  min-width: 1100px;
+  margin: 20px;
+}
+
+#maincont {
+    border: 5px solid rgba(0,0,0,0.3);
+    box-shadow: 0 0 10px black;
+    border-radius: 10px;
+}
+#mainsubcont {
+    background: white;
+    padding: 10px;
+}
+
+#client_folder {
+    margin: -10px;
+    margin-left: 10px;
+    padding: 10px 20px 0;
+    background-color: #eee;
+    border: 1px solid silver;
+    border-width: 0 0 1px 1px;
+}
+#client_folder ul {
+    list-style-type: none;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.cboth {
+    clear: both;
+}
+
+.center, .table td.center {
+    text-align: center;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+#mass-buttons {
+}
+
+#client-topinfo {
+    margin: 10px;
+}
+#client-topinfo span {
+}
+
+.table thead td {
+  background-color: #eee;
+  text-align: center;
+}
+
+.table thead input {
+  margin: -5px;
+  width: 90px;
+  background-image: url(../img/loupe.png);
+  background-position: center right;
+  background-repeat: no-repeat;
+  padding: 3px;
+  padding-right: 20px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+

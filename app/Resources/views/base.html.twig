@@ -17,59 +17,50 @@
 <div class="container-fluid" id="container">
     {% block mainheader %}
     <div class="row-fluid" id="header">
-        <div class="navbar navbar-fixed-top">
+        <a class="brand" href="{{ path('home') }}">
+            <img src="{{ asset('img/u2_original.png') }}"/>
+        </a>
+
+        <div class="pull-right navbar" id="top-nav">
             <div class="navbar-inner">
                 <div class="container">
-                    <a class="brand" href="{{ path('home') }}">
-                        <img src="{{ asset('img/u2_original.png') }}"/>
-                    </a>
-
-                    <div id="user_tools" class="pull-right">
-                        <ul class="nav">
-
-                            {% if app.user %}
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
-                                    <b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="{{ path('fos_user_change_password') }}">{{ 'change_password.submit'|trans({}, 'FOSUserBundle') }}</a>
-                                    </li>
-<!--
-                                    <li><a href="{{ path('sonata_user_profile_edit_authentication') }}">{{ 'title_user_edit_authentication'|trans({}, 'SonataUserBundle') }}</a></li>
-                                    <li><a href="{{ path('sonata_user_profile_edit') }}">{{ 'title_user_edit_profile'|trans({}, 'SonataUserBundle') }}</a></li>
--->
-                                    <li><a href="{{ path('sonata_user_admin_security_logout') }}">
-                                        <i class="icon-off icon"></i> {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                                    </a></li>
-                                </ul>
-                            </li>
-                            {% else %}
-                            <li><a href="{{ path('sonata_user_admin_security_login') }}">
-                                <i class="icon-ok icon-white"></i> {{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
-                            </li>
-                            {% endif %}
-
-                        </ul>
-                    </div>
-
-                    {% if app.user %}
-                    <div class="nav-collapse collapse">
-                        <ul class="nav">
-                            <li>
-                                <a href="{{ path('home') }}">Home</a>
-                            </li>
+                    <ul class="nav">
+                        <li><a href="{{ path('home') }}">Accueil</a></li>
+                        {% if app.user %}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Administration
+                                <b class="caret"></b>
+                            </a>
                             {% if is_granted('ROLE_SONATA_ADMIN') %}
-                            <li>
-                                <a href="{{ path('sonata_admin_dashboard') }}">Admin dashboard</a>
-                            </li>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{ path('sonata_admin_dashboard') }}">Dashboard</a>
+                                </li>
+                                <li><a href="#">Utilisateurs</a></li>
+                                <li class="active"><a href="#">Clients</a></li>
+                                <li><a href="#">Devises</a></li>
+                            </ul>
                             {% endif %}
-                        </ul>
-                    </div>
+                        </li>
+                        {% else %}
+                        <li><a href="{{ path('sonata_user_admin_security_login') }}">
+                            <i class="icon-ok icon-white"></i> {{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    {% if app.user %}
+                    <ul class="nav">
+                        <li class="divider-vertical"></li>
+                        <li><a href="{{ path('sonata_user_profile_show') }}">
+                            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+                            </b>
+                        </a></li>
+                        <li><a href="{{ path('sonata_user_admin_security_logout') }}">
+                            <i class="icon-off icon-white"></i> {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                        </a></li>
+                    </ul>
                     {% endif %}
-
                 </div>
             </div>
         </div>
@@ -92,7 +83,13 @@
     {% endfor %}
     {% endif %}
 
-    {% block body %}{% endblock %}
+    {% block body %}
+    <div id="maincont">
+        <div id="mainsubcont">
+            {% block body_content %}{% endblock %}
+        </div>
+    </div>
+    {% endblock %}
 </div>
 
 {% block javascriptsafter %}
