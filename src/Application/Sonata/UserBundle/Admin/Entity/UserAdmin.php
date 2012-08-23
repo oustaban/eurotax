@@ -10,6 +10,8 @@ use FOS\UserBundle\Model\UserManagerInterface;
 
 class UserAdmin extends BaseUserAdmin
 {
+    public $dashboards = array('Admin');
+
     /**
      * {@inheritdoc}
      */

@@ -13,6 +13,8 @@ use Knp\Menu\ItemInterface as MenuItemInterface;
 
 class ImpotsAdmin extends Admin
 {
+    public $dashboards = array('Admin');
+
     //create & edit form
     protected function configureFormFields(FormMapper $formMapper)
     {

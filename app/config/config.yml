@@ -73,6 +73,7 @@ sonata_user:
 
 parameters:
     sonata.user.admin.user.class: Application\Sonata\UserBundle\Admin\Entity\UserAdmin
+    sonata.user.admin.group.class: Application\Sonata\UserBundle\Admin\Entity\GroupAdmin
 
 sonata_block:
     default_contexts: [cms]

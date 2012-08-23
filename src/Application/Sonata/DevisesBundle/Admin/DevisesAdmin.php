@@ -12,6 +12,8 @@ use Knp\Menu\ItemInterface as MenuItemInterface;
 
 class DevisesAdmin extends Admin
 {
+    public $dashboards = array('Admin');
+
     protected $datagridValues = array(
         '_sort_order' => 'DESC',
         '_sort_by' => 'date'

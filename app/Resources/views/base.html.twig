@@ -26,23 +26,18 @@
                 <div class="container">
                     <ul class="nav">
                         <li><a href="{{ path('home') }}">Accueil</a></li>
+                        <li class="divider-vertical"></li>
                         {% if app.user %}
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                Administration
-                                <b class="caret"></b>
-                            </a>
-                            {% if is_granted('ROLE_SONATA_ADMIN') %}
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="{{ path('sonata_admin_dashboard') }}">Dashboard</a>
-                                </li>
-                                <li><a href="#">Utilisateurs</a></li>
-                                <li class="active"><a href="#">Clients</a></li>
-                                <li><a href="#">Devises</a></li>
-                            </ul>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li><a href="{{ path('application_sonata_dashboard_admin') }}">Administration</a></li>
                             {% endif %}
-                        </li>
+                            {% if is_granted('ROLE_ADMIN_CLIENT') %}
+                                <li><a href="{{ path('application_sonata_dashboard_client') }}">Client Operations</a></li>
+                            {% endif %}
+                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                <li class="divider-vertical"></li>
+                                <li><a href="{{ path('sonata_admin_dashboard') }}">SuperAdmin</a></li>
+                            {% endif %}
                         {% else %}
                         <li><a href="{{ path('sonata_user_admin_security_login') }}">
                             <i class="icon-ok icon-white"></i> {{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>

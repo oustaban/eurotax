@@ -8,29 +8,29 @@ services:
     application.sonata.admin.contact:
         class : Application\Sonata\ClientBundle\Admin\ContactAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: Contact, label: Contact, show_in_dashboard: false }
+            - { name: sonata.admin, manager_type: orm, group: Client, label: Contact }
         arguments: [null, Application\Sonata\ClientBundle\Entity\Contact, ApplicationSonataClientBundle:Contact]
 
     application.sonata.admin.document:
         class : Application\Sonata\ClientBundle\Admin\DocumentAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: Document, label: Document, show_in_dashboard: false }
+            - { name: sonata.admin, manager_type: orm, group: Client, label: Document }
         arguments: [null, Application\Sonata\ClientBundle\Entity\Document, ApplicationSonataClientBundle:Document]
 
     application.sonata.admin.garantie:
         class : Application\Sonata\ClientBundle\Admin\GarantieAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: Garantie, label: Garantie, show_in_dashboard: false }
+            - { name: sonata.admin, manager_type: orm, group: Client, label: Garantie }
         arguments: [null, Application\Sonata\ClientBundle\Entity\Garantie, ApplicationSonataClientBundle:Garantie]
 
     application.sonata.admin.coordonnees:
         class : Application\Sonata\ClientBundle\Admin\CoordonneesAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: Coordonnees, label: Coordonnees, show_in_dashboard: false }
+            - { name: sonata.admin, manager_type: orm, group: Client, label: Coordonnees }
         arguments: [null, Application\Sonata\ClientBundle\Entity\Coordonnees, ApplicationSonataClientBundle:Coordonnees]
 
     application.sonata.admin.commentaire:
         class : Application\Sonata\ClientBundle\Admin\CommentaireAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: Commentaire, label: Commentaire, show_in_dashboard: false }
+            - { name: sonata.admin, manager_type: orm, group: Client, label: Commentaire }
         arguments: [null, Application\Sonata\ClientBundle\Entity\Commentaire, ApplicationSonataClientBundle:Commentaire]

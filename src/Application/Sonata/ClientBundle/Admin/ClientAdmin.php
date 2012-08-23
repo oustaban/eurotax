@@ -15,6 +15,8 @@ use Application\Form\Type\LocationFacturationType;
 
 class ClientAdmin extends Admin
 {
+    public $dashboards = array('Admin', 'Client');
+
     protected $_fields_list = array(
         'raison_sociale',
         'nature_du_client',

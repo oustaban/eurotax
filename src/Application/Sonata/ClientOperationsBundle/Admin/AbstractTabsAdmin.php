@@ -10,6 +10,8 @@ use Sonata\AdminBundle\Form\FormMapper;
 
 abstract class AbstractTabsAdmin extends Admin
 {
+    public $dashboards = array();
+
     /**
      * @var string
      */
