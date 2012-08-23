@@ -191,6 +191,13 @@ class A06AIB
 
 
     /**
+     *
+     * @ORM\ManyToOne(targetEntity="Imports", inversedBy="ao2tva")
+     * @ORM\JoinColumn(name="import_id", referencedColumnName="id")
+     */
+    private $imports;
+
+    /**
      * @return string
      */
     public function __toString()
@@ -758,5 +765,28 @@ class A06AIB
     public function getPaysIdOrigine()
     {
         return $this->pays_id_origine;
+    }
+
+    /**
+     * Set imports
+     *
+     * @param Application\Sonata\ClientOperationsBundle\Entity\Imports $imports
+     * @return A06AIB
+     */
+    public function setImports(\Application\Sonata\ClientOperationsBundle\Entity\Imports $imports = null)
+    {
+        $this->imports = $imports;
+    
+        return $this;
+    }
+
+    /**
+     * Get imports
+     *
+     * @return Application\Sonata\ClientOperationsBundle\Entity\Imports 
+     */
+    public function getImports()
+    {
+        return $this->imports;
     }
 }
