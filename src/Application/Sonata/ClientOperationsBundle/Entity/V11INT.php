@@ -92,6 +92,13 @@ class V11INT
     private $commentaires;
 
     /**
+     *
+     * @ORM\ManyToOne(targetEntity="Imports", inversedBy="ao2tva")
+     * @ORM\JoinColumn(name="import_id", referencedColumnName="id")
+     */
+    private $imports;
+
+    /**
      * @return string
      */
     public function __toString()
@@ -337,5 +344,28 @@ class V11INT
     public function getCommentaires()
     {
         return $this->commentaires;
+    }
+
+    /**
+     * Set imports
+     *
+     * @param Application\Sonata\ClientOperationsBundle\Entity\Imports $imports
+     * @return V11INT
+     */
+    public function setImports(\Application\Sonata\ClientOperationsBundle\Entity\Imports $imports = null)
+    {
+        $this->imports = $imports;
+    
+        return $this;
+    }
+
+    /**
+     * Get imports
+     *
+     * @return Application\Sonata\ClientOperationsBundle\Entity\Imports 
+     */
+    public function getImports()
+    {
+        return $this->imports;
     }
 }

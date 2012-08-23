@@ -203,6 +203,12 @@ class V05LIC
      */
     private $CEE;
 
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="Imports", inversedBy="ao2tva")
+     * @ORM\JoinColumn(name="import_id", referencedColumnName="id")
+     */
+    private $imports;
 
     /**
      * @return string
@@ -819,5 +825,28 @@ class V05LIC
     public function getCEE()
     {
         return $this->CEE;
+    }
+
+    /**
+     * Set imports
+     *
+     * @param Application\Sonata\ClientOperationsBundle\Entity\Imports $imports
+     * @return V05LIC
+     */
+    public function setImports(\Application\Sonata\ClientOperationsBundle\Entity\Imports $imports = null)
+    {
+        $this->imports = $imports;
+    
+        return $this;
+    }
+
+    /**
+     * Get imports
+     *
+     * @return Application\Sonata\ClientOperationsBundle\Entity\Imports 
+     */
+    public function getImports()
+    {
+        return $this->imports;
     }
 }
