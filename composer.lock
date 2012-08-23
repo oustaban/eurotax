@@ -1,6 +1,12 @@
 {
-    "hash": "c8a13173aadfcdb0def6c60a9147e939",
+    "hash": "87071eb09b14e977dcd69791ef62d440",
     "packages": [
+        {
+            "package": "CodePlex/PHPExcel",
+            "version": "dev-master",
+            "source-reference": "1.7.7",
+            "commit-date": "1337463449"
+        },
         {
             "package": "doctrine/common",
             "version": "2.3.x-dev",
@@ -240,8 +246,8 @@
         {
             "package": "twig/twig",
             "version": "dev-master",
-            "source-reference": "552143062982fd15a1d6fe5a0cdda1f007212154",
-            "commit-date": "1345489844"
+            "source-reference": "11e91f63e94a4fce9e65ddbda44ed00ba22a2171",
+            "commit-date": "1345724338"
         }
     ],
     "packages-dev": null,
@@ -261,6 +267,7 @@
         "sonata-project/user-bundle": 20,
         "sonata-project/admin-bundle": 20,
         "sonata-project/doctrine-orm-admin-bundle": 20,
-        "doctrine/doctrine-fixtures-bundle": 20
+        "doctrine/doctrine-fixtures-bundle": 20,
+        "codeplex/phpexcel": 20
     }
 }
