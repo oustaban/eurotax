@@ -42,20 +42,70 @@ class AbstractTabsController extends Controller
 
     /**
      * @param $data
+     * @param string $action
+     * @param string $template
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function _action($data, $action = 'create', $template = 'standard_layout')
     {
         $client = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:Client')->find($this->client_id);
 
-        return $this->render('ApplicationSonataClientOperationsBundle::'.$template.'.html.twig', array(
+        return $this->render('ApplicationSonataClientOperationsBundle::' . $template . '.html.twig', array(
             'client_id' => $this->client_id,
             'client' => $client,
+            'month_list' => $this->selectedMonthTopInfo(),
             'content' => $data->getContent(),
             'active_tab' => $this->_tabAlias,
             'operation_type' => $this->_operationType,
             'action' => $action,
         ));
+    }
+
+    /*
+     *
+     */
+    protected function  selectedMonthTopInfo()
+    {
+        $translator = $this->get('translator');
+
+        $month_list = array();
+        $month_list[] = array('key' => 0, 'name' => $translator->trans('All'));
+
+        $month_arr = range(1, date('m'));
+        $year = date('Y');
+
+        foreach ($month_arr as $key => $month) {
+
+            $month_list[] = array('key' => $key + 1, 'name' => $this->datefmtFormatFilter(new \DateTime("{$year}-{$month}-01"), 'MMMM'));
+        }
+
+        return $month_list;
+    }
+
+    /**
+     * @param $datetime
+     * @param null $format
+     * @return string
+     */
+    public function datefmtFormatFilter($datetime, $format = null)
+    {
+        $dateFormat = is_int($format) ? $format : \IntlDateFormatter::MEDIUM;
+        $timeFormat = \IntlDateFormatter::NONE;
+        $calendar = \IntlDateFormatter::GREGORIAN;
+        $pattern = is_string($format) ? $format : null;
+
+        $formatter = new \IntlDateFormatter(
+            \Locale::getDefault(),
+            $dateFormat,
+            $timeFormat,
+            null,
+            $calendar,
+            $pattern
+        );
+        $formatter->setLenient(false);
+        $timestamp = $datetime->getTimestamp();
+
+        return $formatter->format($timestamp);
     }
 
     /**
@@ -109,7 +159,9 @@ class AbstractTabsController extends Controller
         return parent::render($view, $parameters, $response);
     }
 
-
+    /**
+     * @param array $data
+     */
     public function jsSettingsJson(array $data)
     {
 

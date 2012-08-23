@@ -6,14 +6,33 @@
     </h1><br>
 
     <div>
+
+        {% set _month = app.request.query.get('month') %}
+
         <label for="selected_month">Mois</label>
-        <select id="selected_month">
-            <option></option>
-            <option>Janvier</option>
-            <option>Février</option>
-            <option>Mars</option>
-            <option>Avril</option>
+        <select id="selected_month" name="month">
+            {% for month in month_list %}
+            <option {% if _month is defined and month.key == _month %} selected="selected" {% endif %} value="{{ month.key }}">{{ month.name}}</option>
+            {% endfor %}
         </select>
     </div>
 </form>
+
+
+{% set path = url('admin_sonata_clientoperations_'~active_tab~'_list', {'filter[client_id][value]':client_id}) %}
+
+
+<script type="text/javascript">
+    $('#selected_month').change(function () {
+
+        var _path = '{{ path }}';
+        var _filter = [];
+
+        if ($(this).val() > 0) {
+            _path += '&month=' + $(this).val();
+        }
+
+        window.location = _path;
+    });
+</script>
 {% endblock form_client_topinfo %}

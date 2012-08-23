@@ -12,6 +12,18 @@ abstract class AbstractTabsAdmin extends Admin
 {
     public $dashboards = array();
 
+    public function __construct($code, $class, $baseControllerName){
+
+
+        $month = $this->getRequest()->query->get('month', 0);
+
+        $this->datagridValues = array(
+            'date_piece' => array('value' => array('day' => 1, 'month' => $month, 'year' => date('Y'))),
+        );
+
+        return parent::__construct($code, $class, $baseControllerName);
+    }
+
     /**
      * @var string
      */
@@ -47,13 +59,14 @@ abstract class AbstractTabsAdmin extends Admin
         return $this->_bundle_name.'.'.$this->_form_label.'.'.$this->getLabel().'.'.$name;
     }
 
-
     /**
      * @param DatagridMapper $datagridMapper
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('client_id');
+        $datagridMapper->add('client_id')
+            ->add('date_piece');
+            #->add('date_piece', 'doctrine_orm_date_range');
     }
 
     /**
@@ -95,9 +108,17 @@ abstract class AbstractTabsAdmin extends Admin
     {
         switch ($name) {
             case 'list':
-                return 'ApplicationSonataClientOperationsBundle:CRUD:list.html.twig';
+                return $this->_bundle_name.':CRUD:list.html.twig';
         }
 
         return parent::getTemplate($name);
+    }
+
+    /**
+     * @return array
+     */
+    public function getFormTheme()
+    {
+        return array($this->_bundle_name.':Form:form_admin_fields.html.twig');
     }
 }

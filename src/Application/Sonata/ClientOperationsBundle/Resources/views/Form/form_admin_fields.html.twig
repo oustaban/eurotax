@@ -1,0 +1,18 @@
+{% extends 'SonataDoctrineORMAdminBundle:Form:form_admin_fields.html.twig' %}
+{% form_theme form ':Form:fields.html.twig' %}
+
+{% block date_widget %}
+{% spaceless %}
+{% if widget == 'single_text' %}
+{{ block('field_widget') }}
+{% else %}
+<div {{ block('widget_container_attributes') }}>
+    {% set month_text = 'form.Month' %}
+    {% set year_text = 'form.Year' %}
+
+    <div style="display:none"> {{ form_widget(form.day) }} </div>
+    {{month_text|trans}} {{form_widget(form.month)}} {{year_text|trans}} {{form_widget(form.year)}}
+</div>
+{% endif %}
+{% endspaceless %}
+{% endblock date_widget %}
