@@ -1,6 +1,6 @@
 ApplicationSonataClientOperationsBundle:
   form:
-    V01_TVA:
+    V01TVA:
       title: V01-TVA
       tiers: Tiers
       no_TVA_tiers: N° TVA Tiers
@@ -212,7 +212,7 @@ ApplicationSonataClientOperationsBundle:
       commentaires: Commentaires
 
   list:
-    V01_TVA:
+    V01TVA:
       title: V01-TVA
       tiers: Tiers
       no_TVA_tiers: N° TVA Tiers

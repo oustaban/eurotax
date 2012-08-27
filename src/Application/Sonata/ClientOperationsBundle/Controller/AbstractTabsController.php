@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request;
 
-
 class AbstractTabsController extends Controller
 {
 
@@ -15,13 +14,31 @@ class AbstractTabsController extends Controller
      * @var int
      */
     public $client_id = null;
+    public $tabs_arr = array(
+        'sell' => array(
+            'V01-TVA' => 'V01TVA',
+            'V03-283-I' => 'V03283I',
+            'V05-LIC' => 'V05LIC',
+            'DEB Exped' => 'DEBExped',
+            'V07-EX' => 'V07EX',
+            'V09-DES' => 'V09DES',
+            'V11-INT' => 'V11INT',
+        ),
+        'buy' => array(
+            'A02-TVA' => 'A02TVA',
+            'A04-283-I' => 'A04283I',
+            'A06-AIB' => 'A06AIB',
+            'DEB Intro' => 'DEBIntro',
+            'A08-IM' => 'A08IM',
+            'A10-CAF' => 'A10CAF',
+        ),
+    );
 
     /**
      * @var string
      */
     protected $_tabAlias = '';
     protected $_operationType = '';
-    protected $maxPerPage = 25;
     protected $_jsSettingsJson = null;
 
     /**
@@ -66,10 +83,7 @@ class AbstractTabsController extends Controller
      */
     protected function  selectedMonthTopInfo()
     {
-        $translator = $this->get('translator');
-
         $month_list = array();
-        #$month_list[] = array('key' => 0, 'name' => $translator->trans('All'));
 
         $month_arr = range(1, date('m'));
         $year = date('Y');
@@ -132,6 +146,65 @@ class AbstractTabsController extends Controller
     public function listAction()
     {
         return $this->_action(parent::listAction(), 'list', 'list_layout');
+    }
+
+
+    /**
+     *
+     */
+    public function blankAction()
+    {
+        $translator = $this->get('translator');
+        $exclude_fields = array('id', 'client_id', 'imports');
+
+        $file_name = 'blank';
+
+        $entity_arr = $this->tabs_arr[$this->_operationType] ? : array();
+
+        $excel = new \PHPExcel();
+
+        $i = 0;
+        foreach ($entity_arr as $sheet_name => $class) {
+
+            $className = '\Application\Sonata\ClientOperationsBundle\Entity\\' . $class;
+            $entity = new $className();
+
+            $reflect = new \ReflectionClass($entity);
+            $props = $reflect->getProperties();
+
+
+            $fields = array();
+            foreach ($props as $field) {
+                if (!in_array($field->name, $exclude_fields)) {
+                    $fields[] = $translator->trans('ApplicationSonataClientOperationsBundle.list.' . $class . '.' . $field->name);
+                }
+            }
+
+            unset($entity);
+
+            if ($i > 0) {
+                $excel->createSheet(null, $i);
+            }
+
+            $excel->setActiveSheetIndex($i);
+            $sheet = $excel->getActiveSheet();
+            $sheet->fromArray($fields);
+            $sheet->setTitle($sheet_name);
+
+            $i++;
+        }
+
+
+        header('Content-Type: application/excel');
+        header('Content-Disposition: attachment; filename="' . $file_name . '.xlsx"');
+
+        $obj_writer = new \PHPExcel_Writer_Excel2007($excel);
+        $obj_writer->save('php://output');
+        exit;
+        /*$response = new Response();
+        $response->headers->set('Content-type', 'application/excel');
+        $response->headers->set('Content-Disposition', 'attachment; filename="'.$file_name.'.xlsx"');
+        return $response;*/
     }
 
     /**

@@ -7,10 +7,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 
 abstract class AbstractTabsAdmin extends Admin
 {
     public $dashboards = array();
+
+    protected $maxPerPage = 25;
 
     /**
      * @var string
@@ -57,7 +60,7 @@ abstract class AbstractTabsAdmin extends Admin
      */
     protected function getFieldLabel($name = 'title'){
 
-        return $this->_bundle_name.'.'.$this->_form_label.'.'.$this->getLabel().'.'.$name;
+        return $this->_bundle_name.'.'.$this->_form_label.'.'.str_replace('_', '', $this->getLabel()).'.'.$name;
     }
 
     /**
@@ -121,5 +124,13 @@ abstract class AbstractTabsAdmin extends Admin
     public function getFormTheme()
     {
         return array($this->_bundle_name.':Form:form_admin_fields.html.twig');
+    }
+
+    /**
+     * @param RouteCollection $collection
+     */
+    protected function configureRoutes(RouteCollection $collection){
+
+        $collection->add('blank');
     }
 }

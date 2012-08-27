@@ -48,4 +48,12 @@ class DEBIntroAdmin extends Admin
             ->add('nomenclature', null, array('label'=> $this->getFieldLabel('nomenclature')))
             ->add('pays_id_destination', null, array('label'=> $this->getFieldLabel('pays_id_destination')));
     }
+
+    /**
+     * @param DatagridMapper $datagridMapper
+     */
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    {
+        $datagridMapper->add('client_id');
+    }
 }

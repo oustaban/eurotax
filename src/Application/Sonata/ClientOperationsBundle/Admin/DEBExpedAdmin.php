@@ -16,7 +16,7 @@ class DEBExpedAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-         parent::configureFormFields($formMapper);
+        parent::configureFormFields($formMapper);
 
         $formMapper
             ->add('n_ligne', null, array('label' => $this->getFieldLabel('n_ligne')))
@@ -32,8 +32,7 @@ class DEBExpedAdmin extends Admin
             ->add('mode_transport', null, array('label' => $this->getFieldLabel('mode_transport')))
             ->add('departement', null, array('label' => $this->getFieldLabel('departement')))
             ->add('pays_id_origine', 'country', array('label' => $this->getFieldLabel('pays_id_origine')))
-            ->add('CEE', null, array('label' => $this->getFieldLabel('CEE')))
-            ;
+            ->add('CEE', null, array('label' => $this->getFieldLabel('CEE')));
     }
 
     /**
@@ -44,8 +43,17 @@ class DEBExpedAdmin extends Admin
         parent::configureListFields($listMapper);
 
         $listMapper->addIdentifier('id', null)
-            ->add('n_ligne', null, array('label'=> $this->getFieldLabel('n_ligne')))
-            ->add('nomenclature', null, array('label'=> $this->getFieldLabel('nomenclature')))
-            ->add('pays_id_destination', null, array('label'=> $this->getFieldLabel('pays_id_destination')));
+            ->add('n_ligne', null, array('label' => $this->getFieldLabel('n_ligne')))
+            ->add('nomenclature', null, array('label' => $this->getFieldLabel('nomenclature')))
+            ->add('pays_id_destination', null, array('label' => $this->getFieldLabel('pays_id_destination')));
+    }
+
+
+    /**
+     * @param DatagridMapper $datagridMapper
+     */
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    {
+        $datagridMapper->add('client_id');
     }
 }

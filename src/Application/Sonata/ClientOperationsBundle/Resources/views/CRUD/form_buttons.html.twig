@@ -1,4 +1,5 @@
 {% block form_buttons %}
+{% set _filter_json = {'filter[client_id][value]':client_id} %}
 <form id="mass-buttons" onsubmit="return false">
     <div>
         <div class="btn-group inline">
@@ -17,6 +18,11 @@
         <div class="btn-group inline">
             <button class="btn"><i class="icon icon-exclamation-sign"></i> Alertes</button>
             <button class="btn"><i class="icon icon-lock"></i> Déverrouillage</button>
+        </div>
+    </div>
+    <div>
+        <div class="btn-group inline">
+            <button class="btn" onclick="location.href='{{ path('admin_sonata_clientoperations_v01tva_blank', _filter_json) }}'"><i class="icon icon-exclamation-sign"></i>Excel blanc</button>
         </div>
     </div>
 </form>
