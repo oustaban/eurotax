@@ -157,8 +157,7 @@ class AbstractTabsController extends Controller
         $translator = $this->get('translator');
         $exclude_fields = array('id', 'client_id', 'imports');
 
-        $file_name = 'blank';
-
+        $file_name = 'blank-'.$translator->trans($this->_operationType);
         $entity_arr = $this->tabs_arr[$this->_operationType] ? : array();
 
         $excel = new \PHPExcel();
