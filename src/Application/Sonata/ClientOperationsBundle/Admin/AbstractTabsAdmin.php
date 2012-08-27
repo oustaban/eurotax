@@ -22,9 +22,8 @@ abstract class AbstractTabsAdmin extends Admin
     protected $_form_label = '';
 
 
-    public function __construct($code, $class, $baseControllerName){
-
-
+    public function __construct($code, $class, $baseControllerName)
+    {
         $month = $this->getRequest()->query->get('month', date('m'));
 
         $this->datagridValues = array(
@@ -37,7 +36,8 @@ abstract class AbstractTabsAdmin extends Admin
     /**
      * @param FormMapper $formMapper
      */
-    protected function configureFormFields(FormMapper $formMapper){
+    protected function configureFormFields(FormMapper $formMapper)
+    {
 
         $filter = $this->getRequest()->query->get('filter');
         $this->_form_label = 'form';
@@ -49,7 +49,8 @@ abstract class AbstractTabsAdmin extends Admin
     /**
      * @param ListMapper $listMapper
      */
-    protected function configureListFields(ListMapper $listMapper){
+    protected function configureListFields(ListMapper $listMapper)
+    {
 
         $this->_form_label = 'list';
     }
@@ -58,9 +59,10 @@ abstract class AbstractTabsAdmin extends Admin
      * @param string $name
      * @return string
      */
-    protected function getFieldLabel($name = 'title'){
+    protected function getFieldLabel($name = 'title')
+    {
 
-        return $this->_bundle_name.'.'.$this->_form_label.'.'.str_replace('_', '', $this->getLabel()).'.'.$name;
+        return $this->_bundle_name . '.' . $this->_form_label . '.' . str_replace('_', '', $this->getLabel()) . '.' . $name;
     }
 
     /**
@@ -70,7 +72,7 @@ abstract class AbstractTabsAdmin extends Admin
     {
         $datagridMapper->add('client_id')
             ->add('date_piece');
-            #->add('date_piece', 'doctrine_orm_date_range');
+        #->add('date_piece', 'doctrine_orm_date_range');
     }
 
     /**
@@ -112,7 +114,7 @@ abstract class AbstractTabsAdmin extends Admin
     {
         switch ($name) {
             case 'list':
-                return $this->_bundle_name.':CRUD:list.html.twig';
+                return $this->_bundle_name . ':CRUD:list.html.twig';
         }
 
         return parent::getTemplate($name);
@@ -123,14 +125,15 @@ abstract class AbstractTabsAdmin extends Admin
      */
     public function getFormTheme()
     {
-        return array($this->_bundle_name.':Form:form_admin_fields.html.twig');
+        return array($this->_bundle_name . ':Form:form_admin_fields.html.twig');
     }
 
     /**
      * @param RouteCollection $collection
      */
-    protected function configureRoutes(RouteCollection $collection){
-
+    protected function configureRoutes(RouteCollection $collection)
+    {
         $collection->add('blank');
+        $collection->add('locking', 'locking/{client_id}/{month}/{blocked}');
     }
 }

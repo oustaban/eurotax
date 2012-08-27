@@ -1,5 +1,6 @@
 {% block form_buttons %}
 {% set _filter_json = {'filter[client_id][value]':client_id} %}
+{% set _month = app.request.query.get('month') %}
 <form id="mass-buttons" onsubmit="return false">
     <div>
         <div class="btn-group inline">
@@ -17,12 +18,18 @@
     <div>
         <div class="btn-group inline">
             <button class="btn"><i class="icon icon-exclamation-sign"></i> Alertes</button>
-            <button class="btn"><i class="icon icon-lock"></i> Déverrouillage</button>
+
+            {% if blocked %}
+                {% set text_lock =  'Verouiller' %}
+            {% else %}
+                {% set text_lock =  'Déverrouillage' %}
+            {% endif %}
+            <button class="btn" onclick="location.href='{{ path('admin_sonata_clientoperations_'~active_tab~'_locking', {'filter[client_id][value]':client_id, 'client_id': client_id, 'month' : _month, 'blocked': blocked  }) }}'" ><i class="icon icon-lock"></i> {{ text_lock|trans}}</button>
         </div>
     </div>
     <div>
         <div class="btn-group inline">
-            <button class="btn" onclick="location.href='{{ path('admin_sonata_clientoperations_'~active_tab~'_blank', _filter_json) }}'"><i class="icon icon-exclamation-sign"></i>Excel blanc</button>
+            <button class="btn" onclick="location.href='{{ path('admin_sonata_clientoperations_'~active_tab~'_blank', _filter_json) }}'"><i class="icon icon-exclamation-sign"></i> Excel blanc</button>
         </div>
     </div>
 </form>

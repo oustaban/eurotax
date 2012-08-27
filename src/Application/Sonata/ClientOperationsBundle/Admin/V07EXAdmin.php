@@ -40,4 +40,12 @@ class V07EXAdmin extends Admin
             ->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')));
     }
+
+    /**
+     * @param DatagridMapper $datagridMapper
+     */
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    {
+        $datagridMapper->add('client_id');
+    }
 }
