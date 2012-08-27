@@ -47,6 +47,25 @@ class V01TVAAdmin extends Admin
         $listMapper->addIdentifier('id', null)
             ->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
             ->add('no_TVA_tiers', null, array('label' => $this->getFieldLabel('no_TVA_tiers')))
-            ->add('date_piece', null, array('label' => $this->getFieldLabel('date_piece')));
+            ->add('date_piece', null, array(
+            'label' => $this->getFieldLabel('date_piece'),
+            'template' => $this->_bundle_name . ':CRUD:list_date_piece.html.twig'
+        ))
+            ->add('numero_piece', null, array('label' => $this->getFieldLabel('tiers')))
+            ->add('devise_id', null, array('label' => $this->getFieldLabel('devise_id')))
+            ->add('montant_HT_en_devise', null, array('label' => $this->getFieldLabel('montant_HT_en_devise')))
+            ->add('taux_de_TVA', null, array('label' => $this->getFieldLabel('taux_de_TVA')))
+            ->add('montant_TVA_francaise', null, array('label' => $this->getFieldLabel('montant_TVA_francaise')))
+            ->add('montant_TTC', null, array('label' => $this->getFieldLabel('montant_TTC')))
+            ->add('paiement_montant', null, array('label' => $this->getFieldLabel('paiement_montant')))
+            ->add('paiement_devise_id', null, array('label' => $this->getFieldLabel('paiement_devise_id')))
+            ->add('paiement_date', null, array(
+            'label' => $this->getFieldLabel('paiement_date'),
+            'template' => $this->_bundle_name . ':CRUD:list_paiement_date.html.twig'
+        ))
+            ->add('mois', null, array('label' => $this->getFieldLabel('mois')))
+            ->add('taux_de_change', null, array('label' => $this->getFieldLabel('taux_de_change')))
+            ->add('HT', 'money', array('label' => $this->getFieldLabel('HT')))
+            ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA')));
     }
 }

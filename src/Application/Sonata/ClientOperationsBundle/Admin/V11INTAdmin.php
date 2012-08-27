@@ -16,18 +16,18 @@ class V11INTAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-         parent::configureFormFields($formMapper);
+        parent::configureFormFields($formMapper);
 
         $formMapper
             ->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
-            ->add('date_piece', null, array('label'=> $this->getFieldLabel('date_piece')))
-            ->add('numero_piece', null, array('label'=> $this->getFieldLabel('numero_piece')))
-            ->add('devise_id', null, array('label'=> $this->getFieldLabel('devise_id')))
-            ->add('montant_HT_en_devise', null, array('label'=> $this->getFieldLabel('montant_HT_en_devise')))
-            ->add('mois', null, array('label'=> $this->getFieldLabel('mois')))
-            ->add('taux_de_change', null, array('label'=> $this->getFieldLabel('taux_de_change')))
-            ->add('HT', 'money', array('label'=> $this->getFieldLabel('HT')))
-            ->add('commentaires', null, array('label'=> $this->getFieldLabel('commentaires')));
+            ->add('date_piece', null, array('label' => $this->getFieldLabel('date_piece')))
+            ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
+            ->add('devise_id', null, array('label' => $this->getFieldLabel('devise_id')))
+            ->add('montant_HT_en_devise', null, array('label' => $this->getFieldLabel('montant_HT_en_devise')))
+            ->add('mois', null, array('label' => $this->getFieldLabel('mois')))
+            ->add('taux_de_change', null, array('label' => $this->getFieldLabel('taux_de_change')))
+            ->add('HT', 'money', array('label' => $this->getFieldLabel('HT')))
+            ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
     }
 
     /**
@@ -38,8 +38,17 @@ class V11INTAdmin extends Admin
         parent::configureListFields($listMapper);
 
         $listMapper->addIdentifier('id', null)
-            ->add('tiers', null, array('label'=> $this->getFieldLabel('tiers')))
-            ->add('date_piece', null, array('label'=> $this->getFieldLabel('date_piece')))
-            ->add('numero_piece', null, array('label'=> $this->getFieldLabel('numero_piece')));
+            ->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
+            ->add('date_piece', null, array(
+            'label' => $this->getFieldLabel('date_piece'),
+            'template' => $this->_bundle_name . ':CRUD:list_date_piece.html.twig'
+        ))
+            ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
+            ->add('devise_id', null, array('label' => $this->getFieldLabel('devise_id')))
+            ->add('montant_HT_en_devise', null, array('label' => $this->getFieldLabel('montant_HT_en_devise')))
+            ->add('mois', null, array('label' => $this->getFieldLabel('mois')))
+            ->add('taux_de_change', null, array('label' => $this->getFieldLabel('taux_de_change')))
+            ->add('HT', 'money', array('label' => $this->getFieldLabel('HT')))
+            ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
     }
 }

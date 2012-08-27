@@ -56,6 +56,16 @@ class V05LICAdmin extends Admin
         $listMapper->addIdentifier('id', null)
             ->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
             ->add('no_TVA_tiers', null, array('label' => $this->getFieldLabel('no_TVA_tiers')))
-            ->add('date_piece', null, array('label' => $this->getFieldLabel('date_piece')));
+            ->add('date_piece', null, array(
+            'label' => $this->getFieldLabel('date_piece'),
+            'template' => $this->_bundle_name . ':CRUD:list_date_piece.html.twig'
+        ))
+            ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
+            ->add('devise_id', null, array('label' => $this->getFieldLabel('devise_id')))
+            ->add('montant_HT_en_devise', null, array('label' => $this->getFieldLabel('montant_HT_en_devise')))
+            ->add('mois', null, array('label' => $this->getFieldLabel('mois')))
+            ->add('regime', null, array('label' => $this->getFieldLabel('regime')))
+            ->add('HT', 'money', array('label' => $this->getFieldLabel('HT')))
+            ->add('DEB', null, array('label' => $this->getFieldLabel('DEB')));
     }
 }

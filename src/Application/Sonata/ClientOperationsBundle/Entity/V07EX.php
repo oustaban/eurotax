@@ -36,6 +36,13 @@ class V07EX
     private $tiers;
 
     /**
+     * @var \DateTime $date_piece
+     *
+     * @ORM\Column(name="date_piece", type="date")
+     */
+    private $date_piece;
+
+    /**
      * @var string $numero_piece
      *
      * @ORM\Column(name="numero_piece", type="string", length=255)
@@ -338,5 +345,28 @@ class V07EX
     public function getImports()
     {
         return $this->imports;
+    }
+
+    /**
+     * Set date_piece
+     *
+     * @param \DateTime $datePiece
+     * @return V07EX
+     */
+    public function setDatePiece($datePiece)
+    {
+        $this->date_piece = $datePiece;
+    
+        return $this;
+    }
+
+    /**
+     * Get date_piece
+     *
+     * @return \DateTime 
+     */
+    public function getDatePiece()
+    {
+        return $this->date_piece;
     }
 }
