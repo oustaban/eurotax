@@ -76,3 +76,8 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: Client Operations, label: A10CAF }
         arguments: [null, Application\Sonata\ClientOperationsBundle\Entity\A10CAF, ApplicationSonataClientOperationsBundle:A10CAF]
+
+    application.sonata.admin.devises.twig:
+        class : Application\Twig\DateFmtFormatExtension
+        tags:
+            - { name: twig.extension }

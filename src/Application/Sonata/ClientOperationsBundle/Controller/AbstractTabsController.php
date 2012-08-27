@@ -69,15 +69,16 @@ class AbstractTabsController extends Controller
         $translator = $this->get('translator');
 
         $month_list = array();
-        $month_list[] = array('key' => 0, 'name' => $translator->trans('All'));
+        #$month_list[] = array('key' => 0, 'name' => $translator->trans('All'));
 
         $month_arr = range(1, date('m'));
         $year = date('Y');
 
         foreach ($month_arr as $key => $month) {
-
             $month_list[] = array('key' => $key + 1, 'name' => $this->datefmtFormatFilter(new \DateTime("{$year}-{$month}-01"), 'MMMM'));
         }
+
+        $month_list = array_reverse($month_list);
 
         return $month_list;
     }

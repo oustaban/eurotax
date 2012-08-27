@@ -12,23 +12,24 @@ abstract class AbstractTabsAdmin extends Admin
 {
     public $dashboards = array();
 
-    public function __construct($code, $class, $baseControllerName){
-
-
-        $month = $this->getRequest()->query->get('month', 0);
-
-        $this->datagridValues = array(
-            'date_piece' => array('value' => array('day' => 1, 'month' => $month, 'year' => date('Y'))),
-        );
-
-        return parent::__construct($code, $class, $baseControllerName);
-    }
-
     /**
      * @var string
      */
     protected $_bundle_name = 'ApplicationSonataClientOperationsBundle';
     protected $_form_label = '';
+
+
+    public function __construct($code, $class, $baseControllerName){
+
+
+        $month = $this->getRequest()->query->get('month', date('m'));
+
+        $this->datagridValues = array(
+            'date_piece' => array('value' => array('day' => 1, 'month' => intval($month), 'year' => date('Y'))),
+        );
+
+        return parent::__construct($code, $class, $baseControllerName);
+    }
 
     /**
      * @param FormMapper $formMapper
