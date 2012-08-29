@@ -149,9 +149,9 @@ abstract class AbstractTabsAdmin extends Admin
     {
         $t = strtotime($value);
         return array(
-            'day' => 1, //date('j', $t),
-            'month' => 1, //date('n', $t),
-            'year' => 2010, //date('Y', $t),
+            'day' => date('j', $t),
+            'month' => date('n', $t),
+            'year' => date('Y', $t),
         );
     }
 
