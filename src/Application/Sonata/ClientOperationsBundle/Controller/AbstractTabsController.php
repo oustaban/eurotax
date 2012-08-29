@@ -15,7 +15,6 @@ class AbstractTabsController extends Controller
      */
     public $client_id = null;
     public $tabs_arr = array(
-        'sell' => array(
             'V01-TVA' => 'V01TVA',
             'V03-283-I' => 'V03283I',
             'V05-LIC' => 'V05LIC',
@@ -23,15 +22,12 @@ class AbstractTabsController extends Controller
             'V07-EX' => 'V07EX',
             'V09-DES' => 'V09DES',
             'V11-INT' => 'V11INT',
-        ),
-        'buy' => array(
             'A02-TVA' => 'A02TVA',
             'A04-283-I' => 'A04283I',
             'A06-AIB' => 'A06AIB',
             'DEB Intro' => 'DEBIntro',
             'A08-IM' => 'A08IM',
             'A10-CAF' => 'A10CAF',
-        ),
     );
 
     /**
@@ -70,7 +66,7 @@ class AbstractTabsController extends Controller
         return $this->render('ApplicationSonataClientOperationsBundle::' . $template . '.html.twig', array(
             'client_id' => $this->client_id,
             'client' => $client,
-            'month_list' => $this->selectedMonthTopInfo(),
+            'month_list' => $this->getMonthList(),
             'content' => $data->getContent(),
             'active_tab' => $this->_tabAlias,
             'operation_type' => $this->_operationType,
@@ -81,18 +77,15 @@ class AbstractTabsController extends Controller
     /*
      *
      */
-    protected function  selectedMonthTopInfo()
+    protected function  getMonthList()
     {
         $month_list = array();
 
-        $month_arr = range(1, date('m'));
         $year = date('Y');
 
-        foreach ($month_arr as $key => $month) {
-            $month_list[] = array('key' => $key + 1, 'name' => $this->datefmtFormatFilter(new \DateTime("{$year}-{$month}-01"), 'MMMM'));
+        for ($month = date('n'); $month > 0; $month--) {
+            $month_list[] = array('key' => $month, 'name' => $this->datefmtFormatFilter(new \DateTime("{$year}-{$month}-01"), 'MMMM'));
         }
-
-        $month_list = array_reverse($month_list);
 
         return $month_list;
     }
@@ -157,13 +150,12 @@ class AbstractTabsController extends Controller
         $translator = $this->get('translator');
         $exclude_fields = array('id', 'client_id', 'imports');
 
-        $file_name = 'blank-'.$translator->trans($this->_operationType);
-        $entity_arr = $this->tabs_arr[$this->_operationType] ? : array();
+        $file_name = 'blank-' . md5(time() . rand(1, 99999999));
 
         $excel = new \PHPExcel();
 
         $i = 0;
-        foreach ($entity_arr as $sheet_name => $class) {
+        foreach ($this->tabs_arr as $sheet_name => $class) {
 
             $className = '\Application\Sonata\ClientOperationsBundle\Entity\\' . $class;
             $entity = new $className();
@@ -189,6 +181,12 @@ class AbstractTabsController extends Controller
             $sheet = $excel->getActiveSheet();
             $sheet->fromArray($fields);
             $sheet->setTitle($sheet_name);
+
+            $toCol = $sheet->getColumnDimension($sheet->getHighestColumn())->getColumnIndex();
+            $toCol++;
+            for($k = 'A'; $k !== $toCol; $k++) {
+                $sheet->getColumnDimension($k)->setAutoSize(true);
+            }
 
             $i++;
         }
