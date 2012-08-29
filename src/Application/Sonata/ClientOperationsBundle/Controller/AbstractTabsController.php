@@ -15,19 +15,19 @@ class AbstractTabsController extends Controller
      */
     public $client_id = null;
     public $tabs_arr = array(
-            'V01-TVA' => 'V01TVA',
-            'V03-283-I' => 'V03283I',
-            'V05-LIC' => 'V05LIC',
-            'DEB Exped' => 'DEBExped',
-            'V07-EX' => 'V07EX',
-            'V09-DES' => 'V09DES',
-            'V11-INT' => 'V11INT',
-            'A02-TVA' => 'A02TVA',
-            'A04-283-I' => 'A04283I',
-            'A06-AIB' => 'A06AIB',
-            'DEB Intro' => 'DEBIntro',
-            'A08-IM' => 'A08IM',
-            'A10-CAF' => 'A10CAF',
+        'V01-TVA' => 'V01TVA',
+        'V03-283-I' => 'V03283I',
+        'V05-LIC' => 'V05LIC',
+        'DEB Exped' => 'DEBExped',
+        'V07-EX' => 'V07EX',
+        'V09-DES' => 'V09DES',
+        'V11-INT' => 'V11INT',
+        'A02-TVA' => 'A02TVA',
+        'A04-283-I' => 'A04283I',
+        'A06-AIB' => 'A06AIB',
+        'DEB Intro' => 'DEBIntro',
+        'A08-IM' => 'A08IM',
+        'A10-CAF' => 'A10CAF',
     );
 
     /**
@@ -141,6 +141,76 @@ class AbstractTabsController extends Controller
         return $this->_action(parent::listAction(), 'list', 'list_layout');
     }
 
+    /**
+     */
+    public function importAction()
+    {
+        $translator = $this->get('translator');
+        $exclude_fields = array('id', 'client_id', 'imports');
+
+        if (!empty($_FILES) && !empty($_FILES["inputFile"])) {
+            $file = TMP_UPLOAD_PATH . '/' . $_FILES["inputFile"]["name"];
+            $tmpFile = $_FILES["inputFile"]["tmp_name"];
+            if (move_uploaded_file($tmpFile, $file)) {
+                $objReader = \PHPExcel_IOFactory::createReaderForFile($file);
+                /* @var $objPHPExcel \PHPExcel */
+                $objPHPExcel = $objReader->load($file);
+                $sheets = $objPHPExcel->getAllSheets();
+
+                foreach ($sheets as $sheet) {
+                    $title = $sheet->getTitle();
+                    if (array_key_exists($title, $this->tabs_arr)) {
+                        $class = $this->tabs_arr[$title];
+
+                        $className = '\Application\Sonata\ClientOperationsBundle\Entity\\' . $class;
+                        $adminClassName = '\Application\Sonata\ClientOperationsBundle\Admin\\' . $class . 'Admin';
+                        $adminCode = 'application.sonata.admin.' . strtolower($class);
+                        $entity = new $className();
+
+                        $reflect = new \ReflectionClass($entity);
+                        $props = $reflect->getProperties();
+
+                        $fields = array();
+                        foreach ($props as $field) {
+                            if (!in_array($field->name, $exclude_fields)) {
+                                $fields[] = $field->name;
+                            }
+                        }
+
+                        unset($entity);
+
+                        $data = $sheet->toArray();
+                        if (isset($data[0][0]) && $data[0][0] == $translator->trans('ApplicationSonataClientOperationsBundle.list.' . $class . '.' . $fields[0])) {
+                            array_shift($data);
+                        }
+                        foreach ($data as $line) {
+                            file_put_contents($tmpFile, '');
+                            /* @var $admin \Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin */
+                            $admin = $this->container->get('sonata.admin.pool')->getAdminByAdminCode($adminCode);
+                            $object = $admin->getNewInstance();
+                            $admin->setSubject($object);
+                            /* @var $form \Symfony\Component\Form\Form */
+                            $form = $admin->getForm();
+                            $form->setData($object);
+
+                            $formData = array('client_id' => $this->client_id,'_token'=>$this->get('form.csrf_provider')->generateCsrfToken('unknown'));
+                            foreach ($line as $index=>$value) {
+                                $fieldName = $fields[$index];
+                                $formData[$fieldName] = $admin->getFormValue($fieldName, $value);
+                            }
+                            $form->bind($formData);
+
+                            if ($form->isValid()) {
+                                $admin->create($object);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $this->render('ApplicationSonataClientOperationsBundle:redirects:back.html.twig');
+    }
 
     /**
      *
@@ -184,7 +254,7 @@ class AbstractTabsController extends Controller
 
             $toCol = $sheet->getColumnDimension($sheet->getHighestColumn())->getColumnIndex();
             $toCol++;
-            for($k = 'A'; $k !== $toCol; $k++) {
+            for ($k = 'A'; $k !== $toCol; $k++) {
                 $sheet->getColumnDimension($k)->setAutoSize(true);
             }
 

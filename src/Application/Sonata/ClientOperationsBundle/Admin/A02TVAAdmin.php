@@ -67,4 +67,14 @@ class A02TVAAdmin extends Admin
             ->add('HT', null, array('label' => $this->getFieldLabel('HT')))
             ->add('TVA', null, array('label' => $this->getFieldLabel('TVA')));
     }
+
+    protected function getDate_pieceFormValue($value)
+    {
+        return $this->dateFormValue($value);
+    }
+
+    protected function getPaiement_dateFormValue($value)
+    {
+        return $this->dateFormValue($value);
+    }
 }

@@ -43,4 +43,9 @@ class V03283IAdmin extends Admin
             ->add('no_TVA_tiers', null, array('label'=> $this->getFieldLabel('no_TVA_tiers')))
             ->add('date_piece', null, array('label'=> $this->getFieldLabel('date_piece')));
     }
+
+    protected function getDate_pieceFormValue($value)
+    {
+        return $this->dateFormValue($value);
+    }
 }

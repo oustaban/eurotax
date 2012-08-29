@@ -10,7 +10,7 @@
     </div>
     <div>
         <div class="btn-group inline">
-            <button class="btn"><i class="icon icon-hdd"></i> Importer un fichier</button>
+            <button class="btn" id="toggleImportModal"><i class="icon icon-hdd"></i> Importer un fichier</button>
             <button class="btn"><i class="icon icon-trash"></i> Supprimer un lot importé</button>
         </div>
     </div>
@@ -20,10 +20,40 @@
             <button class="btn"><i class="icon icon-lock"></i> Déverrouillage</button>
         </div>
     </div>
-    <div>
-        <div class="btn-group inline">
-            <button class="btn" onclick="location.href='{{ path('admin_sonata_clientoperations_'~active_tab~'_blank', _filter_json) }}'"><i class="icon icon-exclamation-sign"></i>Excel blanc</button>
-        </div>
-    </div>
 </form>
+
+<div class="modal hide fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="importModalLabel">Importer un fichier</h3>
+    </div>
+    <div class="modal-body">
+        <p>
+            <form class="form-inline" id="importForm" method="post" action="{{ path('admin_sonata_clientoperations_'~active_tab~'_import', _filter_json) }}" enctype="multipart/form-data">
+                <input id="inputFile" type="file" name="inputFile" style="display:none" />
+                <input id="inputFileCover" class="input-large" type="text">
+                <a class="btn" onclick="$('input[id=inputFile]').click();">choisir le fichier</a>
+            </form>
+            <button class="btn" onclick="location.href='{{ path('admin_sonata_clientoperations_'~active_tab~'_blank', _filter_json) }}'"><i class="icon icon-exclamation-sign"></i> télécharger échantillon</button>
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">fermer</button>
+        <button class="btn btn-primary" id="doImport">importer</button>
+    </div>
+</div>
+<script type="text/javascript">
+    $("#toggleImportModal").click(function(){
+        $("#importModal").modal('toggle');
+    });
+
+    $("#doImport").click(function(){
+        $("#importForm").submit();
+    });
+
+    $('input[id=inputFile]').change(function() {
+        $('#inputFileCover').val($(this).val());
+    });
+</script>
+
 {% endblock form_buttons %}
