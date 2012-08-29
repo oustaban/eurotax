@@ -62,6 +62,10 @@ class ContactAdmin extends Admin
                     ));
                     break;
 
+                case 'telephone_1':
+                case 'telephone_2':
+                    $formMapper->add($field, null, array('label' => $label, 'required' => false,));
+
                 default:
                     $formMapper->add($field, null, array('label' => $label));
                     break;
