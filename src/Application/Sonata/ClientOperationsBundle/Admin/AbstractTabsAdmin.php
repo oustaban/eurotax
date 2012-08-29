@@ -74,7 +74,6 @@ abstract class AbstractTabsAdmin extends Admin
     {
         $datagridMapper->add('client_id')
             ->add('date_piece');
-        #->add('date_piece', 'doctrine_orm_date_range');
     }
 
     /**
@@ -150,7 +149,6 @@ abstract class AbstractTabsAdmin extends Admin
     {
         $t = strtotime($value);
         return array(
-            'day' => date('j', $t),
             'month' => date('n', $t),
             'year' => date('Y', $t),
         );
