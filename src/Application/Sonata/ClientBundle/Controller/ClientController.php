@@ -21,7 +21,7 @@ class ClientController extends Controller
         return $this->render('ApplicationSonataClientBundle::standard_layout.html.twig', array(
             'client_id' => null,
             'active_tab' => 'client',
-            'form' => $create->getContent(),
+            'content' => $create->getContent(),
         ));
     }
 
@@ -33,7 +33,7 @@ class ClientController extends Controller
         return $this->render('ApplicationSonataClientBundle::standard_layout.html.twig', array(
             'client_id' => $id,
             'active_tab' => 'client',
-            'form' => $edit->getContent(),
+            'content' => $edit->getContent(),
         ));
     }
 

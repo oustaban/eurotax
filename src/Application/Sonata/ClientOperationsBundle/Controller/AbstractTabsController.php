@@ -198,8 +198,8 @@ class AbstractTabsController extends Controller
                             $form = $admin->getForm();
                             $form->setData($object);
 
-                            $formData = array('client_id' => $this->client_id,'_token'=>$this->get('form.csrf_provider')->generateCsrfToken('unknown'));
-                            foreach ($line as $index=>$value) {
+                            $formData = array('client_id' => $this->client_id, '_token' => $this->get('form.csrf_provider')->generateCsrfToken('unknown'));
+                            foreach ($line as $index => $value) {
                                 $fieldName = $fields[$index];
                                 $formData[$fieldName] = $admin->getFormValue($fieldName, $value);
                             }
@@ -305,7 +305,7 @@ class AbstractTabsController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('admin_sonata_clientoperations_' . $this->_tabAlias . '_list', array('filter' => array('client_id' =>array('value' => $client_id)), 'month' => $month)));
+        return $this->redirect($this->generateUrl('admin_sonata_clientoperations_' . $this->_tabAlias . '_list', array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)));
     }
 
     /**
@@ -325,7 +325,6 @@ class AbstractTabsController extends Controller
                 case 'create':
                     if (!$this->getRequest()->query->get('client_id')) {
                         $parameters['base_template'] = 'ApplicationSonataClientOperationsBundle::ajax_layout.html.twig';
-                        #$parameters['base_template'] = $this->admin->getTemplate('ajax');
                     }
                     break;
             }

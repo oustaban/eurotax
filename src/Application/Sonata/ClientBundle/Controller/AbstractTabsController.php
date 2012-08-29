@@ -23,7 +23,7 @@ abstract class AbstractTabsController extends Controller
     /**
      * @var string
      */
-    protected  $_tabAlias = '';
+    protected $_tabAlias = '';
 
     /**
      * @var string
@@ -43,23 +43,32 @@ abstract class AbstractTabsController extends Controller
     }
 
     /**
+     * @param $data
+     * @param string $action
+     * @param string $template
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function createAction()
+    protected function _action($data, $action = 'create', $template = 'standard_layout')
     {
-        $list = parent::listAction();
+        $client = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:Client')->find($this->client_id);
 
-        $create = parent::createAction();
-
-        return $this->render('ApplicationSonataClientBundle::standard_layout.html.twig', array(
+        return $this->render('ApplicationSonataClientBundle::' . $template . '.html.twig', array(
             'client_id' => $this->client_id,
+            'client' => $client,
+            'content' => $data->getContent(),
             'active_tab' => $this->_tabAlias,
-            'list_table' => $list->getContent(),
-            'form' => $create->getContent(),
+            'action' => $action,
             'js_settings_json' => $this->_jsSettingsJson,
         ));
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function createAction()
+    {
+        return $this->_action(parent::createAction(), 'create');
+    }
 
     /**
      * @param null $id
@@ -67,19 +76,16 @@ abstract class AbstractTabsController extends Controller
      */
     public function editAction($id = null)
     {
-        $list = parent::listAction();
-        $edit = parent::editAction($id);
-
-        return $this->render('ApplicationSonataClientBundle::standard_layout.html.twig', array(
-            'client_id' => $this->client_id,
-            'active_tab' => $this->_tabAlias,
-            'list_table' => $list->getContent(),
-            'form' => $edit->getContent(),
-            'js_settings_json' => $this->_jsSettingsJson,
-        ));
+        return $this->_action(parent::editAction(), 'edit');
     }
 
-
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function listAction()
+    {
+        return $this->_action(parent::listAction(), 'list');
+    }
 
     /**
      * @param string   $view
@@ -96,9 +102,8 @@ abstract class AbstractTabsController extends Controller
                 case 'list':
                 case 'edit':
                 case 'create':
-                    //fix template to delete
                     if (!$this->getRequest()->query->get('client_id')) {
-                        $parameters['base_template'] = $this->admin->getTemplate('ajax');
+                        $parameters['base_template'] = 'ApplicationSonataClientBundle::ajax_layout.html.twig';
                     }
                     break;
             }
@@ -108,7 +113,8 @@ abstract class AbstractTabsController extends Controller
     }
 
 
-    public function jsSettingsJson(array $data){
+    public function jsSettingsJson(array $data)
+    {
 
         $this->_jsSettingsJson = json_encode($data);
     }

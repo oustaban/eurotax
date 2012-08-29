@@ -43,7 +43,6 @@ abstract class AbstractTabsAdmin extends Admin
     {
         switch ($name) {
             case 'list':
-                $name = 'create';
             case 'create':
             case 'edit':
             case 'delete':

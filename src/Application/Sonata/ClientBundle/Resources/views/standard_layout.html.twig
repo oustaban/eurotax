@@ -3,17 +3,14 @@
 {% use 'ApplicationSonataClientBundle:CRUD:form_tabs.html.twig' with form_tabs as formTabs %}
 
 {% block sonata_admin_content %}
+
 {{ block('formTabs') }}
 
-{% if list_table is defined %}
-<div class="sonata-ba-list">
-    {{ list_table|raw }}
+{% if content is not empty %}
+<div class="sonata-ba-form sonata-ba-list">
+    {{ content|raw }}
 </div>
 {% endif %}
-
-<div class="sonata-ba-form">
-    {{ form|raw }}
-</div>
 
 {% endblock sonata_admin_content %}
 
