@@ -81,6 +81,7 @@ ApplicationSonataClientOperationsBundle:
     V07EX:
       title: V07-EX
       tiers: Tiers
+      date_piece: Date pièce
       numero_piece: Numéro pièce
       devise_id: Devise
       montant_HT_en_devise: Montant HT en devise
@@ -292,6 +293,7 @@ ApplicationSonataClientOperationsBundle:
     V07EX:
       title: V07-EX
       tiers: Tiers
+      date_piece: Date pièce
       numero_piece: Numéro pièce
       devise_id: Devise
       montant_HT_en_devise: Montant HT en devise

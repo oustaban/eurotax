@@ -65,7 +65,8 @@ class A02TVAAdmin extends Admin
             ->add('mois', null, array('label' => $this->getFieldLabel('mois')))
             ->add('taux_de_change', null, array('label' => $this->getFieldLabel('taux_de_change')))
             ->add('HT', null, array('label' => $this->getFieldLabel('HT')))
-            ->add('TVA', null, array('label' => $this->getFieldLabel('TVA')));
+            ->add('TVA', null, array('label' => $this->getFieldLabel('TVA')))
+            ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
     }
 
     protected function getDate_pieceFormValue($value)

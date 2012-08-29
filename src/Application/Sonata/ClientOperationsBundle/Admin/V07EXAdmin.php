@@ -20,6 +20,7 @@ class V07EXAdmin extends Admin
 
         $formMapper
             ->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
+            ->add('date_piece', null, array('label' => $this->getFieldLabel('date_piece')))
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
             ->add('devise_id', null, array('label' => $this->getFieldLabel('devise_id')))
             ->add('montant_HT_en_devise', null, array('label' => $this->getFieldLabel('montant_HT_en_devise')))
@@ -38,6 +39,15 @@ class V07EXAdmin extends Admin
 
         $listMapper->addIdentifier('id', null)
             ->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
-            ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')));
+            ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
+            ->add('date_piece', null, array(
+            'label' => $this->getFieldLabel('date_piece'),
+            'template' => $this->_bundle_name . ':CRUD:list_date_piece.html.twig'
+        ))
+            ->add('devise_id', null, array('label' => $this->getFieldLabel('devise_id')))
+            ->add('montant_HT_en_devise', null, array('label' => $this->getFieldLabel('montant_HT_en_devise')))
+            ->add('mois', null, array('label' => $this->getFieldLabel('mois')))
+            ->add('taux_de_change', null, array('label' => $this->getFieldLabel('taux_de_change')))
+            ->add('HT', 'money', array('label' => $this->getFieldLabel('HT')));
     }
 }

@@ -6,6 +6,7 @@ use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request;
+use Application\Sonata\ClientOperationsBundle\Entity\Locking;
 
 class AbstractTabsController extends Controller
 {
@@ -63,6 +64,9 @@ class AbstractTabsController extends Controller
     {
         $client = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:Client')->find($this->client_id);
 
+        $month = $this->getRequest()->query->get('month', date('m'));
+        $locking = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $this->client_id, 'month' => $month));
+
         return $this->render('ApplicationSonataClientOperationsBundle::' . $template . '.html.twig', array(
             'client_id' => $this->client_id,
             'client' => $client,
@@ -71,6 +75,7 @@ class AbstractTabsController extends Controller
             'active_tab' => $this->_tabAlias,
             'operation_type' => $this->_operationType,
             'action' => $action,
+            'blocked' => isset($locking) ? 0 : 1,
         ));
     }
 
@@ -272,6 +277,35 @@ class AbstractTabsController extends Controller
         $response->headers->set('Content-type', 'application/excel');
         $response->headers->set('Content-Disposition', 'attachment; filename="'.$file_name.'.xlsx"');
         return $response;*/
+    }
+
+
+    /**
+     * @param $client_id
+     * @param $month
+     * @param int $blocked
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function lockingAction($client_id, $month, $blocked = 1)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $locking = $em->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $client_id, 'month' => $month));
+
+        if ($locking) {
+            $em->remove($locking);
+            $em->flush();
+        }
+
+        if ($blocked) {
+            $locking = new Locking();
+            $locking->setClientId($client_id);
+            $locking->setMonth($month);
+            $em->persist($locking);
+            $em->flush();
+        }
+
+        return $this->redirect($this->generateUrl('admin_sonata_clientoperations_' . $this->_tabAlias . '_list', array('filter' => array('client_id' =>array('value' => $client_id)), 'month' => $month)));
     }
 
     /**
