@@ -15,6 +15,27 @@ class UserAdmin extends BaseUserAdmin
     /**
      * {@inheritdoc}
      */
+    protected function configureListFields(ListMapper $listMapper)
+    {
+        $listMapper
+            ->addIdentifier('username')
+            ->add('email')
+            ->add('groups')
+            ->add('enabled')
+            ->add('locked')
+            ->add('createdAt')
+        ;
+
+//        if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
+//            $listMapper
+//                ->add('impersonating', 'string', array('template' => 'SonataUserBundle:Admin:Field/impersonating.html.twig'))
+//            ;
+//        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
