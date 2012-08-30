@@ -20,6 +20,7 @@ class DEBExpedAdmin extends Admin
 
         $formMapper
             ->add('n_ligne', null, array('label' => $this->getFieldLabel('n_ligne')))
+            ->add('date_piece', null, array('label' => $this->getFieldLabel('date_piece')))
             ->add('nomenclature', null, array('label' => $this->getFieldLabel('nomenclature')))
             ->add('pays_id_destination', 'country', array('label' => $this->getFieldLabel('pays_id_destination')))
             ->add('valeur_fiscale', null, array('label' => $this->getFieldLabel('valeur_fiscale')))
@@ -44,7 +45,10 @@ class DEBExpedAdmin extends Admin
 
         $listMapper->addIdentifier('id', null)
             ->add('n_ligne', null, array('label' => $this->getFieldLabel('n_ligne')))
-            ->add('nomenclature', null, array('label' => $this->getFieldLabel('nomenclature')))
+            ->add('date_piece', null, array(
+            'label' => $this->getFieldLabel('date_piece'),
+            'template' => $this->_bundle_name . ':CRUD:list_date_piece.html.twig'
+        ))->add('nomenclature', null, array('label' => $this->getFieldLabel('nomenclature')))
             ->add('pays_id_destination', null, array('label' => $this->getFieldLabel('pays_id_destination')))
             ->add('valeur_fiscale', null, array('label' => $this->getFieldLabel('valeur_fiscale')))
             ->add('regime', null, array('label' => $this->getFieldLabel('regime')))

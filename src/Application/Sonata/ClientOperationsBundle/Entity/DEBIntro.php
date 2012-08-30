@@ -29,6 +29,14 @@ class DEBIntro
     private $client_id;
 
     /**
+     * @var \DateTime $date_piece
+     *
+     * @ORM\Column(name="date_piece", type="date")
+     */
+    private $date_piece;
+
+
+    /**
      * @var string $n_ligne
      *
      * @ORM\Column(name="n_ligne", type="string", length=255)
@@ -517,5 +525,28 @@ class DEBIntro
     public function getImports()
     {
         return $this->imports;
+    }
+
+    /**
+     * Set date_piece
+     *
+     * @param \DateTime $datePiece
+     * @return DEBIntro
+     */
+    public function setDatePiece($datePiece)
+    {
+        $this->date_piece = $datePiece;
+    
+        return $this;
+    }
+
+    /**
+     * Get date_piece
+     *
+     * @return \DateTime 
+     */
+    public function getDatePiece()
+    {
+        return $this->date_piece;
     }
 }
