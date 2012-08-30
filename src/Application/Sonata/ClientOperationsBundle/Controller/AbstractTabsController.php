@@ -76,6 +76,7 @@ class AbstractTabsController extends Controller
             'client_id' => $this->client_id,
             'client' => $client,
             'month_list' => $this->getMonthList(),
+            'month' =>  $this->_month,
             'content' => $data->getContent(),
             'active_tab' => $this->_tabAlias,
             'operation_type' => $this->_operationType,
