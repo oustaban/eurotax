@@ -71,7 +71,14 @@ abstract class AbstractTabsAdmin extends Admin
      */
     public function validate(ErrorElement $errorElement, $object)
     {
+        $date_piece = $object->getDatePiece();
 
+        $this->_month = $date_piece->format('m');
+        $this->_year = $date_piece->format('Y');
+
+        if ($this->getLocking()) {
+            $errorElement->addViolation('Sorry with month is locked');
+        }
     }
 
     /**
