@@ -53,8 +53,7 @@ class V05LICAdmin extends Admin
     {
         parent::configureListFields($listMapper);
 
-        $listMapper->addIdentifier('id', null)
-            ->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
+        $listMapper->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
             ->add('no_TVA_tiers', null, array('label' => $this->getFieldLabel('no_TVA_tiers')))
             ->add('date_piece', null, array(
             'label' => $this->getFieldLabel('date_piece'),

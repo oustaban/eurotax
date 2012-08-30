@@ -43,8 +43,7 @@ class DEBExpedAdmin extends Admin
     {
         parent::configureListFields($listMapper);
 
-        $listMapper->addIdentifier('id', null)
-            ->add('n_ligne', null, array('label' => $this->getFieldLabel('n_ligne')))
+        $listMapper->add('n_ligne', null, array('label' => $this->getFieldLabel('n_ligne')))
             ->add('date_piece', null, array(
             'label' => $this->getFieldLabel('date_piece'),
             'template' => $this->_bundle_name . ':CRUD:list_date_piece.html.twig'
