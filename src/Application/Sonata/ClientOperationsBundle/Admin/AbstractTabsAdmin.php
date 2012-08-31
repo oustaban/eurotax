@@ -43,7 +43,8 @@ abstract class AbstractTabsAdmin extends Admin
     /**
      * @return array
      */
-    public function getBatchActions(){
+    public function getBatchActions()
+    {
 
         return array();
     }
@@ -81,11 +82,15 @@ abstract class AbstractTabsAdmin extends Admin
     {
         $date_piece = $object->getDatePiece();
 
-        $this->_month = $date_piece->format('m');
-        $this->_year = $date_piece->format('Y');
 
-        if ($this->getLocking()) {
-            $errorElement->addViolation('Sorry with month is locked');
+        if ($date_piece) {
+
+            $this->_month = $date_piece->format('m');
+            $this->_year = $date_piece->format('Y');
+
+            if ($this->getLocking()) {
+                $errorElement->addViolation('Sorry with month is locked');
+            }
         }
     }
 
@@ -188,9 +193,13 @@ abstract class AbstractTabsAdmin extends Admin
     public function dateFormValue($value)
     {
         $t = strtotime($value);
-        return array(
-            'month' => date('n', $t),
+
+        $date = array(
+            'day' => 1,
+            'month' => intval(date('m', $t)),
             'year' => date('Y', $t),
         );
+
+        return $date;
     }
 }

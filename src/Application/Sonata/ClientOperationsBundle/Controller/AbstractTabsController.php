@@ -90,7 +90,8 @@ class AbstractTabsController extends Controller
     protected function getLocking(){
 
         $this->_locking = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $this->client_id, 'month' => $this->_month, 'year' => $this->_year));
-
+        $session = $this->getRequest()->getSession();
+        $session->set('locking', $this->_locking);
         return $this->_locking;
     }
 
@@ -366,10 +367,6 @@ class AbstractTabsController extends Controller
         $obj_writer = new \PHPExcel_Writer_Excel2007($excel);
         $obj_writer->save('php://output');
         exit;
-        /*$response = new Response();
-        $response->headers->set('Content-type', 'application/excel');
-        $response->headers->set('Content-Disposition', 'attachment; filename="'.$file_name.'.xlsx"');
-        return $response;*/
     }
 
 
