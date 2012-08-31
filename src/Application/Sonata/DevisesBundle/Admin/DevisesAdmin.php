@@ -36,6 +36,15 @@ class DevisesAdmin extends Admin
         ),
     );
 
+
+    /**
+     * @return array
+     */
+    public function getBatchActions(){
+
+        return array();
+    }
+
     //form create and edit
     protected function configureFormFields(FormMapper $formMapper)
     {

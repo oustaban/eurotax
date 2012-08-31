@@ -15,6 +15,14 @@ class ImpotsAdmin extends Admin
 {
     public $dashboards = array('Admin');
 
+    /**
+     * @return array
+     */
+    public function getBatchActions(){
+
+        return array();
+    }
+
     //create & edit form
     protected function configureFormFields(FormMapper $formMapper)
     {

@@ -11,6 +11,14 @@ abstract class AbstractTabsAdmin extends Admin
     public $dashboards = array();
 
     /**
+     * @return array
+     */
+    public function getBatchActions(){
+
+        return array();
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getRequest()

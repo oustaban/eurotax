@@ -41,6 +41,14 @@ abstract class AbstractTabsAdmin extends Admin
     }
 
     /**
+     * @return array
+     */
+    public function getBatchActions(){
+
+        return array();
+    }
+
+    /**
      * @param FormMapper $formMapper
      */
     protected function configureFormFields(FormMapper $formMapper)

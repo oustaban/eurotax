@@ -26,6 +26,13 @@ class ClientAdmin extends Admin
         'user',
     );
 
+    /**
+     * @return array
+     */
+    public function getBatchActions(){
+
+        return array();
+    }
     //create & edit form
     /**
      * @param FormMapper $formMapper

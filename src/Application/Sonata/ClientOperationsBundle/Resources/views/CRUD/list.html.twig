@@ -1,10 +1,2 @@
 {% extends 'SonataAdminBundle:CRUD:base_list.html.twig' %}
 {% block list_filters %}{% endblock list_filters %}
-
-
-{% block batch_actions %}
-{% if app.session.get('locking') %}
-{% else %}
-    {{ parent() }}
-{% endif %}
-{% endblock batch_actions %}
