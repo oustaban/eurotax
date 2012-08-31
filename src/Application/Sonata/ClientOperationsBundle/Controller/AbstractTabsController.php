@@ -147,6 +147,20 @@ class AbstractTabsController extends Controller
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function redirectTo($object)
+    {
+        if ($this->get('request')->get('btn_create_and_edit')) {
+            $url = $this->admin->generateUrl('list');
+
+            return  new RedirectResponse($url);
+        }
+
+        return parent::redirectTo($object);
+    }
+
+    /**
      */
     public function importAction()
     {
