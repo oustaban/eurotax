@@ -18,12 +18,12 @@ class ClientAdmin extends Admin
     public $dashboards = array('Admin', 'Client');
 
     protected $_fields_list = array(
-        'raison_sociale',
-        'nature_du_client',
-        'date_de_depot_id',
-        'date_debut_mission',
-        'date_fin_mission',
-        'user',
+        'raison_sociale'=>array(),
+        'nature_du_client'=>array(),
+        'date_de_depot_id'=>array(),
+        'date_debut_mission'=>array('template' => 'ApplicationSonataClientBundle:CRUD:list_date_debut_mission.html.twig'),
+        'date_fin_mission'=>array('template' => 'ApplicationSonataClientBundle:CRUD:list_date_fin_mission.html.twig'),
+        'user'=>array(),
     );
 
     //create & edit form
@@ -78,8 +78,9 @@ class ClientAdmin extends Admin
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        foreach ($this->_fields_list as $field) {
-            $datagridMapper->add($field, null, array('label' => 'filter.' . $field));
+        foreach ($this->_fields_list as $field => $options) {
+            $options['label'] = 'filter.' . $field;
+            $datagridMapper->add($field, null, $options);
         }
     }
 
@@ -91,8 +92,9 @@ class ClientAdmin extends Admin
     {
         $listMapper->addIdentifier('id');
 
-        foreach ($this->_fields_list as $field) {
-            $listMapper->add($field, null, array('label' => 'list.' . $field));
+        foreach ($this->_fields_list as $field => $options) {
+            $options['label'] = 'filter.' . $field;
+            $listMapper->add($field, null, $options);
         }
 
         $listMapper->add('client_operations', null, array(
