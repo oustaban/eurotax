@@ -2,6 +2,7 @@
 
 namespace Application\Sonata\ClientOperationsBundle\Controller;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
