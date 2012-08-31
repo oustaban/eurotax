@@ -45,7 +45,7 @@ class CommentaireAdmin extends Admin
         $label = 'list.' . $this->_prefix_label . '.';
         $listMapper
             ->add('date', null, array('label' => $label . 'date'))
-            ->add('categorie', null, array('label' => $label . 'categorie'))
+            ->add('categorie.name', null, array('label' => $label . 'categorie'))
             ->add('note', null, array('label' => $label . 'note'));
     }
 }
