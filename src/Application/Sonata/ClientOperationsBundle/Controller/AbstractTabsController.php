@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request;
 use Application\Sonata\ClientOperationsBundle\Entity\Locking;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class AbstractTabsController extends Controller
 {
@@ -37,17 +38,22 @@ class AbstractTabsController extends Controller
     protected $_tabAlias = '';
     protected $_operationType = '';
     protected $_jsSettingsJson = null;
+    protected $_locking = '';
+    protected $_month = '';
+    protected $_year = '';
 
     /**
      *
      */
     public function __construct()
     {
-        $filter = Request::createFromGlobals()->query->get('filter');
+        $request = Request::createFromGlobals();
+        $filter = $request->query->get('filter');
         if (!empty($filter['client_id']) && !empty($filter['client_id']['value'])) {
 
             $this->client_id = $filter['client_id']['value'];
-
+            $this->_month = $request->query->get('month', date('m'));
+            $this->_year = date('Y');
 
         } else {
             throw new NotFoundHttpException('Unable load page with no client_id');
@@ -64,25 +70,61 @@ class AbstractTabsController extends Controller
     {
         $client = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:Client')->find($this->client_id);
 
-        $month = $this->getRequest()->query->get('month', date('m'));
-        $locking = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $this->client_id, 'month' => $month));
+        //$this->getLocking();
 
         return $this->render('ApplicationSonataClientOperationsBundle::' . $template . '.html.twig', array(
             'client_id' => $this->client_id,
             'client' => $client,
             'month_list' => $this->getMonthList(),
+            'month' =>  $this->_month,
             'content' => $data->getContent(),
             'active_tab' => $this->_tabAlias,
             'operation_type' => $this->_operationType,
             'action' => $action,
-            'blocked' => isset($locking) ? 0 : 1,
+            'blocked' => isset($this->_locking) ? 0 : 1,
         ));
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getLocking(){
+
+        $this->_locking = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $this->client_id, 'month' => $this->_month, 'year' => $this->_year));
+        $session = $this->getRequest()->getSession();
+        $session->set('locking', $this->_locking);
+        return $this->_locking;
+    }
+
+    /**
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    protected function getLockingAccessDenied()
+    {
+        if (isset($this->_locking)) {
+            throw new AccessDeniedException();
+        }
+    }
+
+
+    /**
+     *
+     */
+    protected function getObjectMonthYear()
+    {
+        $id = $this->get('request')->get($this->admin->getIdParameter());
+        $object = $this->admin->getObject($id);
+
+        $date_piece = $object->getDatePiece();
+
+        $this->_month = $date_piece->format('m');
+        $this->_year = $date_piece->format('Y');
     }
 
     /*
      *
      */
-    protected function  getMonthList()
+    protected function getMonthList()
     {
         $month_list = array();
 
@@ -135,15 +177,54 @@ class AbstractTabsController extends Controller
      */
     public function editAction($id = null)
     {
-        return $this->_action(parent::editAction(), 'edit', 'form_layout');
+        $this->getObjectMonthYear();
+        $this->getLocking();
+        $this->getLockingAccessDenied();
+
+        $action = $this->_action(parent::editAction(), 'edit', 'form_layout');
+        return $action;
     }
+
+    /**
+     * @param mixed $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteAction($id)
+    {
+        $this->getObjectMonthYear();
+        $this->getLocking();
+        $this->getLockingAccessDenied();
+
+        $action = parent::deleteAction($id);
+        return $action;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function batchAction(){
+
+        $date_piece = $this->getRequest()->query->get('date_piece');
+        $this->_month = $date_piece['value']['month'];
+
+        $this->getLocking();
+        $this->getLockingAccessDenied();
+
+        return parent::batchAction();
+    }
+
 
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listAction()
     {
-        return $this->_action(parent::listAction(), 'list', 'list_layout');
+        $this->getLocking();
+        $session = $this->getRequest()->getSession();
+        $session->set('locking', $this->_locking);
+
+        $action = $this->_action(parent::listAction(), 'list', 'list_layout');
+        return $action;
     }
 
     /**
@@ -302,6 +383,7 @@ class AbstractTabsController extends Controller
      */
     public function lockingAction($client_id, $month, $blocked = 1)
     {
+        $year = date('Y');
         $em = $this->getDoctrine()->getManager();
 
         $locking = $em->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $client_id, 'month' => $month));
@@ -315,6 +397,7 @@ class AbstractTabsController extends Controller
             $locking = new Locking();
             $locking->setClientId($client_id);
             $locking->setMonth($month);
+            $locking->setYear($year);
             $em->persist($locking);
             $em->flush();
         }

@@ -37,8 +37,7 @@ class V11INTAdmin extends Admin
     {
         parent::configureListFields($listMapper);
 
-        $listMapper->addIdentifier('id', null)
-            ->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
+        $listMapper->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
             ->add('date_piece', null, array(
             'label' => $this->getFieldLabel('date_piece'),
             'template' => $this->_bundle_name . ':CRUD:list_date_piece.html.twig'

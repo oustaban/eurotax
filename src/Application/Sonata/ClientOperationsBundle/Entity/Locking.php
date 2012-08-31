@@ -28,6 +28,14 @@ class Locking
      */
     private $month;
 
+ /**
+     * @var integer $year
+     *
+     * @ORM\Id
+     * @ORM\Column(name="year", type="integer")
+     */
+    private $year;
+
 
     /**
      * @param $client_id
@@ -91,5 +99,28 @@ class Locking
     public function getMonth()
     {
         return $this->month;
+    }
+
+    /**
+     * Set year
+     *
+     * @param integer $year
+     * @return Locking
+     */
+    public function setYear($year)
+    {
+        $this->year = $year;
+    
+        return $this;
+    }
+
+    /**
+     * Get year
+     *
+     * @return integer 
+     */
+    public function getYear()
+    {
+        return $this->year;
     }
 }

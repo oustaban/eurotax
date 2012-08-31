@@ -8,6 +8,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Validator\ErrorElement;
 
 abstract class AbstractTabsAdmin extends Admin
 {
@@ -20,16 +21,20 @@ abstract class AbstractTabsAdmin extends Admin
      */
     protected $_bundle_name = 'ApplicationSonataClientOperationsBundle';
     protected $_form_label = '';
+    protected $_month = '';
+    protected $_year = '';
+    protected $_client_id = '';
 
 
     public function __construct($code, $class, $baseControllerName)
     {
-
-
-        $month = $this->getRequest()->query->get('month', date('m'));
+        $filter = $this->getRequest()->query->get('filter');
+        $this->_client_id = $filter['client_id']['value'];
+        $this->_month = $this->getRequest()->query->get('month', date('m'));
+        $this->_year = date('Y');
 
         $this->datagridValues = array(
-            'date_piece' => array('value' => array('day' => 1, 'month' => intval($month), 'year' => date('Y'))),
+            'date_piece' => array('value' => array('day' => 1, 'month' => intval($this->_month), 'year' => $this->_year)),
         );
 
         return parent::__construct($code, $class, $baseControllerName);
@@ -40,12 +45,10 @@ abstract class AbstractTabsAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-
-        $filter = $this->getRequest()->query->get('filter');
         $this->_form_label = 'form';
 
         $formMapper->with($this->getFieldLabel())
-            ->add('client_id', 'hidden', array('data' => $filter['client_id']['value']));
+            ->add('client_id', 'hidden', array('data' => $this->_client_id));
     }
 
     /**
@@ -53,8 +56,38 @@ abstract class AbstractTabsAdmin extends Admin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
-
         $this->_form_label = 'list';
+
+        if ($this->getLocking()) {
+            $listMapper->add('id', null);
+        } else {
+            $listMapper->addIdentifier('id', null);
+        }
+    }
+
+    /**
+     * @param ErrorElement $errorElement
+     * @param mixed $object
+     */
+    public function validate(ErrorElement $errorElement, $object)
+    {
+        $date_piece = $object->getDatePiece();
+
+        $this->_month = $date_piece->format('m');
+        $this->_year = $date_piece->format('Y');
+
+        if ($this->getLocking()) {
+            $errorElement->addViolation('Sorry with month is locked');
+        }
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getLocking()
+    {
+        $locking = $this->getConfigurationPool()->getContainer()->get('doctrine')->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $this->_client_id, 'month' => $this->_month, 'year' => $this->_year));
+        return $locking ? : 0;
     }
 
     /**
@@ -87,8 +120,7 @@ abstract class AbstractTabsAdmin extends Admin
             case 'edit':
             case 'delete':
             case 'batch':
-                $filter = $this->getRequest()->query->get('filter');
-                $parameters['filter']['client_id']['value'] = $filter['client_id']['value'];
+                $parameters['filter']['client_id']['value'] = $this->_client_id;
                 break;
         }
         return parent::generateUrl($name, $parameters, $absolute);
@@ -153,6 +185,4 @@ abstract class AbstractTabsAdmin extends Admin
             'year' => date('Y', $t),
         );
     }
-
-
 }

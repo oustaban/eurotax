@@ -37,8 +37,7 @@ class V07EXAdmin extends Admin
     {
         parent::configureListFields($listMapper);
 
-        $listMapper->addIdentifier('id', null)
-            ->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
+        $listMapper->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
             ->add('date_piece', null, array(
             'label' => $this->getFieldLabel('date_piece'),

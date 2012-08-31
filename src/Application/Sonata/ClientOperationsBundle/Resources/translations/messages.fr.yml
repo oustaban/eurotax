@@ -63,6 +63,7 @@ ApplicationSonataClientOperationsBundle:
 
     DEBExped:
       title: DEB Exped
+      date_piece: Date pièce
       n_ligne: N° Ligne
       nomenclature: Nomenclature de Produit
       pays_id_destination: Pays Dest. Prov.
@@ -178,6 +179,7 @@ ApplicationSonataClientOperationsBundle:
 
     DEBIntro:
       title: DEB Intro
+      date_piece: Date pièce
       n_ligne: N° Ligne
       nomenclature: Nomenclature de Produit
       pays_id_destination: Pays Dest. Prov.
@@ -275,6 +277,7 @@ ApplicationSonataClientOperationsBundle:
 
     DEBExped:
       title: DEB Exped
+      date_piece: Date pièce
       n_ligne: N° Ligne
       nomenclature: Nomenclature de Produit
       pays_id_destination: Pays Dest. Prov.
@@ -390,6 +393,7 @@ ApplicationSonataClientOperationsBundle:
 
     DEBIntro:
       title: DEB Intro
+      date_piece: Date pièce
       n_ligne: N° Ligne
       nomenclature: Nomenclature de Produit
       pays_id_destination: Pays Dest. Prov.

@@ -1,6 +1,6 @@
 {% block form_buttons %}
 {% set _filter_json = {'filter[client_id][value]':client_id} %}
-{% set _month = app.request.query.get('month') %}
+
 <form id="mass-buttons" onsubmit="return false">
     <div>
         <div class="btn-group inline">
@@ -24,7 +24,7 @@
             {% else %}
                 {% set text_lock =  'Déverrouillage' %}
             {% endif %}
-            <button class="btn" onclick="location.href='{{ path('admin_sonata_clientoperations_'~active_tab~'_locking', {'filter[client_id][value]':client_id, 'client_id': client_id, 'month' : _month, 'blocked': blocked  }) }}'" ><i class="icon icon-lock"></i> {{ text_lock|trans}}</button>
+            <button class="btn" onclick="location.href='{{ path('admin_sonata_clientoperations_'~active_tab~'_locking', {'filter[client_id][value]':client_id, 'client_id': client_id, 'month' : month, 'blocked': blocked  }) }}'" ><i class="icon icon-lock"></i> {{ text_lock|trans}}</button>
         </div>
     </div>
 </form>
