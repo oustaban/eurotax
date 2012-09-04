@@ -42,6 +42,7 @@ class AbstractTabsController extends Controller
     protected $_locking = '';
     protected $_month = '';
     protected $_year = '';
+    protected $_import_counts = array();
 
     /**
      *
@@ -75,7 +76,7 @@ class AbstractTabsController extends Controller
             'client_id' => $this->client_id,
             'client' => $client,
             'month_list' => $this->getMonthList(),
-            'month' =>  $this->_month,
+            'month' => $this->_month,
             'content' => $data->getContent(),
             'active_tab' => $this->_tabAlias,
             'operation_type' => $this->_operationType,
@@ -87,7 +88,8 @@ class AbstractTabsController extends Controller
     /**
      * @return mixed
      */
-    protected function getLocking(){
+    protected function getLocking()
+    {
 
         $this->_locking = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $this->client_id, 'month' => $this->_month, 'year' => $this->_year));
         #$session = $this->getRequest()->getSession();
@@ -201,7 +203,8 @@ class AbstractTabsController extends Controller
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function batchAction(){
+    public function batchAction()
+    {
 
         $date_piece = $this->getRequest()->query->get('date_piece');
         $this->_month = $date_piece['value']['month'];
@@ -234,13 +237,14 @@ class AbstractTabsController extends Controller
         if ($this->get('request')->get('btn_create_and_edit')) {
             $url = $this->admin->generateUrl('list');
 
-            return  new RedirectResponse($url);
+            return new RedirectResponse($url);
         }
 
         return parent::redirectTo($object);
     }
 
     /**
+     * {@inheritdoc}
      */
     public function importAction()
     {
@@ -282,6 +286,7 @@ class AbstractTabsController extends Controller
                         if (isset($data[0][0]) && $data[0][0] == $translator->trans('ApplicationSonataClientOperationsBundle.list.' . $class . '.' . $fields[0])) {
                             array_shift($data);
                         }
+
                         foreach ($data as $line) {
                             file_put_contents($tmpFile, '');
                             /* @var $admin \Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin */
@@ -297,10 +302,15 @@ class AbstractTabsController extends Controller
                                 $fieldName = $fields[$index];
                                 $formData[$fieldName] = $admin->getFormValue($fieldName, $value);
                             }
+
                             $form->bind($formData);
 
                             if ($form->isValid()) {
                                 $admin->create($object);
+                                $this->setCount($class, 'success');
+
+                            } else {
+                                $this->setCount($class, 'errors');
                             }
                         }
                     }
@@ -308,7 +318,61 @@ class AbstractTabsController extends Controller
             }
         }
 
+        $this->get('session')->setFlash('sonata_flash_info|raw', implode("<br/>", $this->getCountMessage()));
+
         return $this->render('ApplicationSonataClientOperationsBundle:redirects:back.html.twig');
+    }
+
+
+    protected function getCountMessage()
+    {
+        $translator = $this->get('translator');
+
+        $messages = array();
+
+        foreach ($this->_import_counts as $table => $values) {
+
+            $message = array();
+            switch ($table) {
+
+                case 'rows';
+                    if (isset($values['success'])) {
+                        $message[] = $translator->trans('Imported %table% : %count%', array('%table%' => $table, '%count%' => $values['success']));
+                    }
+                    if (isset($values['errors'])) {
+                        $message[] = $translator->trans('Not valid %table% : %count%', array('%table%' => $table, '%count%' => $values['errors']));
+                    }
+                    $messages[] = implode('; ', $message);
+                    break;
+                default;
+                    $table = $translator->trans('ApplicationSonataClientOperationsBundle.form.' . $table . '.title');
+                    $str_repeat = str_repeat('&nbsp;', 4);
+                    if (isset($values['success'])) {
+                        $message[] = $str_repeat . $translator->trans('Imported : %count%', array('%count%' => $values['success']));
+                    }
+                    if (isset($values['errors'])) {
+                        $message[] = $str_repeat . $translator->trans('Not valid : %count%', array('%count%' => $values['errors']));
+                    }
+                    $messages[] = '<strong>' . $table . '</strong><br />' . implode('; ', $message);
+                    break;
+            }
+
+
+        }
+
+        return $messages;
+    }
+
+    protected function setCount($table, $type)
+    {
+
+        if (!isset($this->_import_counts[$table][$type])) {
+            $this->_import_counts['rows'][$type] = 0;
+            $this->_import_counts[$table][$type] = 0;
+        }
+
+        $this->_import_counts['rows'][$type]++;
+        $this->_import_counts[$table][$type]++;
     }
 
     /**

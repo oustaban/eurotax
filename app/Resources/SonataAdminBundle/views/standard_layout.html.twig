@@ -22,8 +22,8 @@
 <link rel="stylesheet" href="{{ asset('bundles/sonataadmin/css/colors.css') }}" type="text/css" media="all"/>
 {% endblock %}
 
-{% block javascripts %}{{ parent() }}
-<script src="{{ asset('bundles/sonatajquery/jquery-1.7.1.js') }}" type="text/javascript"></script>
+{% block javascripts %}
+{{ parent() }}
 <script src="{{ asset('bundles/sonatajquery/jquery-ui-1.8.17.js') }}" type="text/javascript"></script>
 <script src="{{ asset('bundles/sonatajquery/jquery-ui-i18n.js') }}" type="text/javascript"></script>
 
@@ -82,6 +82,12 @@
             {% for flash in app.session.flashbag.get(session_var) %}
             <div class="alert {{ 'alert-' ~ notice_level }}">
                 {{ flash|trans([], 'SonataAdminBundle') }}
+            </div>
+            {% endfor %}
+            {% set session_var = 'sonata_flash_' ~ notice_level ~ '|raw' %}
+            {% for flash in app.session.flashbag.get(session_var) %}
+            <div class="alert {{ 'alert-' ~ notice_level }}">
+                {{ flash|trans([], 'SonataAdminBundle')|raw }}
             </div>
             {% endfor %}
             {% endfor %}

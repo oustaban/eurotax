@@ -1,5 +1,8 @@
 ApplicationSonataClientOperationsBundle:
   form:
+    Month: Mois
+    Year:  Année
+
     V01TVA:
       title: V01-TVA
       tiers: Tiers

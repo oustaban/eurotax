@@ -7,8 +7,8 @@
 {{ block('field_widget') }}
 {% else %}
 <div {{ block('widget_container_attributes') }}>
-    {% set month_text = 'form.Month' %}
-    {% set year_text = 'form.Year' %}
+    {% set month_text = 'ApplicationSonataClientOperationsBundle.form.Month' %}
+    {% set year_text = 'ApplicationSonataClientOperationsBundle.form.Year' %}
 
     <div style="display:none"> {{ form_widget(form.day) }} </div>
     {{month_text|trans}} {{form_widget(form.month)}} {{year_text|trans}} {{form_widget(form.year)}}
