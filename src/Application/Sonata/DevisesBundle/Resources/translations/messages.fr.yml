@@ -1,17 +1,18 @@
-form:
-  Dollar: Dollar
-  Yen: Yen
-  British Pound: British Pound
-  Month: Mois
-  Year:  Année
-  Devises: Ajouter / Modifier les devises
+ApplicationSonataDevisesBundle:
+  form:
+    Dollar: Dollar
+    Yen: Yen
+    British Pound: British Pound
+    Month: Mois
+    Year:  Année
+    Devises: Ajouter / Modifier les devises
 
-list:
-  Dollar: Dollar
-  Yen: Yen
-  British Pound: British Pound
+  list:
+    Dollar: Dollar
+    Yen: Yen
+    British Pound: British Pound
 
-filter:
-  Dollar: Dollar
-  Yen: Yen
-  British Pound: British Pound
+  filter:
+    Dollar: Dollar
+    Yen: Yen
+    British Pound: British Pound

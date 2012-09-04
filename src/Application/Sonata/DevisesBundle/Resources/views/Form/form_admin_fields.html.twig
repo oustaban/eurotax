@@ -7,12 +7,16 @@
 {{ block('field_widget') }}
 {% else %}
 <div {{ block('widget_container_attributes') }}>
-    {% set month_text = 'form.Month' %}
-    {% set year_text = 'form.Year' %}
+    {% set month_text = 'ApplicationSonataDevisesBundle.form.Month' %}
+    {% set year_text = 'ApplicationSonataDevisesBundle.form.Year' %}
 
-    <div style="display:none"> {{ form_widget(form.day) }} </div>
-    {{month_text|trans}} {{form_widget(form.month)}} {{year_text|trans}} {{form_widget(form.year)}}
+    <div style="display:none">{{ form_widget(form.day) }}
+        {{month_text|trans}} {{form_widget(form.month)}} {{year_text|trans}} {{form_widget(form.year)}}
+    </div>
+    {{ form.month.vars.choices[0].label }} / {{ form.year.vars.choices[0].value }}
 </div>
 {% endif %}
 {% endspaceless %}
 {% endblock date_widget %}
+
+
