@@ -479,7 +479,7 @@ class AbstractTabsController extends Controller
                 case 'list':
                 case 'edit':
                 case 'create':
-                    if (!$this->getRequest()->query->get('client_id')) {
+                    if ($this->get('request')->getMethod() != 'POST') {
                         $parameters['base_template'] = 'ApplicationSonataClientOperationsBundle::ajax_layout.html.twig';
                     }
                     break;

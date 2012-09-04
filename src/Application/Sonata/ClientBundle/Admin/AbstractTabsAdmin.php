@@ -18,6 +18,18 @@ abstract class AbstractTabsAdmin extends Admin
         return array();
     }
 
+
+    /**
+     * @return array
+     */
+    public function getFilterParameters(){
+
+        $parameters = parent::getFilterParameters();
+        unset($parameters['client_id']);
+
+       return $parameters;
+    }
+
     /**
      * {@inheritdoc}
      */

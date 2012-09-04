@@ -184,12 +184,21 @@ abstract class AbstractTabsAdmin extends Admin
         $collection->add('locking', 'locking/{client_id}/{month}/{blocked}');
     }
 
+    /**
+     * @param $field
+     * @param $value
+     * @return mixed
+     */
     public function getFormValue($field, $value)
     {
         $method = 'get' . ucfirst($field) . 'FormValue';
         return method_exists($this, $method) ? $this->$method($value) : $value;
     }
 
+    /**
+     * @param $value
+     * @return array
+     */
     public function dateFormValue($value)
     {
         $t = strtotime($value);
@@ -201,5 +210,16 @@ abstract class AbstractTabsAdmin extends Admin
         );
 
         return $date;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFilterParameters(){
+
+        $parameters = parent::getFilterParameters();
+        unset($parameters['client_id']);
+
+        return $parameters;
     }
 }

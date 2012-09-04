@@ -96,7 +96,7 @@ abstract class AbstractTabsController extends Controller
         if ($this->get('request')->get('btn_create_and_edit')) {
             $url = $this->admin->generateUrl('list');
 
-            return  new RedirectResponse($url);
+            return new RedirectResponse($url);
         }
 
         return parent::redirectTo($object);
@@ -117,7 +117,7 @@ abstract class AbstractTabsController extends Controller
                 case 'list':
                 case 'edit':
                 case 'create':
-                    if (!$this->getRequest()->query->get('client_id')) {
+                    if ($this->get('request')->getMethod() != 'POST') {
                         $parameters['base_template'] = 'ApplicationSonataClientBundle::ajax_layout.html.twig';
                     }
                     break;
