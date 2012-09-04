@@ -1,21 +1,14 @@
 {% block client_folder %}
 <div id="client_folder" class="pull-right">
-    Répertoire Client
     <ul>
         <li><i class="icon icon-folder-open"></i>
-            Répertoire 1
+            Répertoire Client
             <ul>
-                <li><i class="icon icon-file"></i>File 1.1</li>
+                {% for object in client_documents %}
+                <li><i class="icon icon-file"></i><a href="{{ object.webPath }}" target="_blank">{{ object.document }}</a></li>
+                {% endfor %}
             </ul>
         </li>
-        <li><i class="icon icon-folder-open"></i>
-            Répertoire 2
-            <ul>
-                <li><i class="icon icon-file"></i>File 2.1</li>
-            </ul>
-        </li>
-        <li><i class="icon icon-file"></i>File 1</li>
-        <li><i class="icon icon-file"></i>File 2</li>
     </ul>
 </div>
 {% endblock client_folder%}

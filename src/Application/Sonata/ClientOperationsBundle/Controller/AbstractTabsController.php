@@ -43,6 +43,7 @@ class AbstractTabsController extends Controller
     protected $_month = '';
     protected $_year = '';
     protected $_import_counts = array();
+    protected $_client_documents = array();
 
     /**
      *
@@ -75,6 +76,7 @@ class AbstractTabsController extends Controller
         return $this->render('ApplicationSonataClientOperationsBundle::' . $template . '.html.twig', array(
             'client_id' => $this->client_id,
             'client' => $client,
+            'client_documents' => $this->_client_documents,
             'month_list' => $this->getMonthList(),
             'month' => $this->_month,
             'content' => $data->getContent(),
@@ -222,11 +224,28 @@ class AbstractTabsController extends Controller
     public function listAction()
     {
         $this->getLocking();
-        #$session = $this->getRequest()->getSession();
-        #$session->set('locking', $this->_locking);
+        $this->_initClientDocuments();
 
         $action = $this->_action(parent::listAction(), 'list', 'list_layout');
         return $action;
+    }
+
+    /**
+     * @return AbstractTabsController
+     */
+    protected function _initClientDocuments()
+    {
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder();
+
+        $this->_client_documents = $qb->select('d')
+            ->from('Application\Sonata\ClientBundle\Entity\Document', 'd')
+            ->where('d.client_id = :client_id')
+            ->setParameter(':client_id', $this->client_id)
+            ->getQuery()->getResult();
+
+        return $this;
     }
 
     /**
