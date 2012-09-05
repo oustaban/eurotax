@@ -40,27 +40,26 @@ class AbstractTabsController extends Controller
     protected $_operationType = '';
     protected $_jsSettingsJson = null;
     protected $_locking = '';
-    protected $_month = '';
-    protected $_year = '';
+    protected $_month = 0;
+    protected $_query_month = 0;
+    protected $_year = 0;
     protected $_import_counts = array();
     protected $_client_documents = array();
 
-    /**
-     *
-     */
-    public function __construct()
+
+    public function configure()
     {
-        $request = Request::createFromGlobals();
-        $filter = $request->query->get('filter');
-        if (!empty($filter['client_id']) && !empty($filter['client_id']['value'])) {
+        parent::configure();
+        $this->admin->getRequestParameters($this->getRequest());
 
-            $this->client_id = $filter['client_id']['value'];
-            $this->_month = $request->query->get('month', date('m'));
-            $this->_year = date('Y');
-
-        } else {
+        if (empty($this->admin->client_id)) {
             throw new NotFoundHttpException('Unable load page with no client_id');
         }
+
+        $this->client_id = $this->admin->client_id;
+        $this->_month = $this->admin->month;
+        $this->_query_month = $this->admin->query_month;
+        $this->_year = $this->admin->year;
     }
 
     /**
@@ -79,6 +78,9 @@ class AbstractTabsController extends Controller
             'client_documents' => $this->_client_documents,
             'month_list' => $this->getMonthList(),
             'month' => $this->_month,
+            'query_month' => $this->_query_month,
+            'year_list' => $this->getYearList(),
+            'year' => $this->_year,
             'content' => $data->getContent(),
             'active_tab' => $this->_tabAlias,
             'operation_type' => $this->_operationType,
@@ -138,6 +140,21 @@ class AbstractTabsController extends Controller
         }
 
         return $month_list;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getYearList()
+    {
+        $year_list = array();
+        $current_year = date('Y');
+
+        for ($year = $current_year; $year >= $current_year - 5; $year--) {
+            $year_list[] = array('key' => $year, 'name' => $year);
+        }
+
+        return $year_list;
     }
 
     /**
@@ -456,15 +473,15 @@ class AbstractTabsController extends Controller
     /**
      * @param $client_id
      * @param $month
+     * @param $year
      * @param int $blocked
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function lockingAction($client_id, $month, $blocked = 1)
+    public function lockingAction($client_id, $month, $year, $blocked = 1)
     {
-        $year = date('Y');
         $em = $this->getDoctrine()->getManager();
 
-        $locking = $em->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $client_id, 'month' => $month));
+        $locking = $em->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $client_id, 'month' => $month, 'year' => $year));
 
         if ($locking) {
             $em->remove($locking);
@@ -480,7 +497,7 @@ class AbstractTabsController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('admin_sonata_clientoperations_' . $this->_tabAlias . '_list', array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)));
+        return $this->redirect($this->generateUrl('admin_sonata_clientoperations_' . $this->_tabAlias . '_list', array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month, 'year' => $year)));
     }
 
     /**

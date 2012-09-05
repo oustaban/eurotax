@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Validator\ErrorElement;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 abstract class AbstractTabsAdmin extends Admin
 {
@@ -21,23 +22,63 @@ abstract class AbstractTabsAdmin extends Admin
      */
     protected $_bundle_name = 'ApplicationSonataClientOperationsBundle';
     protected $_form_label = '';
-    protected $_month = '';
-    protected $_year = '';
-    protected $_client_id = '';
+    public $month = '';
+    public $query_month = '';
+    public $year = '';
+    public $client_id = '';
 
 
+    /**
+     * @param string $code
+     * @param string $class
+     * @param string $baseControllerName
+     */
     public function __construct($code, $class, $baseControllerName)
     {
-        $filter = $this->getRequest()->query->get('filter');
-        $this->_client_id = $filter['client_id']['value'];
-        $this->_month = $this->getRequest()->query->get('month', date('m'));
-        $this->_year = date('Y');
-
-        $this->datagridValues = array(
-            'date_piece' => array('value' => array('day' => 1, 'month' => intval($this->_month), 'year' => $this->_year)),
-        );
+        $this->getRequestParameters($this->getRequest());
 
         return parent::__construct($code, $class, $baseControllerName);
+    }
+
+    /**
+     * @param $request
+     */
+    public function getRequestParameters($request)
+    {
+        $filter = $request->query->get('filter');
+
+        if (!empty($filter['client_id']) && !empty($filter['client_id']['value'])) {
+
+            $this->client_id = $this->client_id = $filter['client_id']['value'];
+
+            $this->year = isset($filter['year']) ? $filter['year'] : $request->query->get('year', date('Y'));
+            $this->month = $this->query_month = isset($filter['month']) ? $filter['month'] : $request->query->get('month', date('n'));
+
+            if ($this->query_month == -1) {
+                $this->month = date('n') - 1;
+            }
+        }
+    }
+
+    public function createQuery($context = 'list')
+    {
+        $query = parent::createQuery($context);
+
+        if ($this->query_month == -1) {
+
+            $date = new \DateTime($this->year . '-' . $this->month . '-01');
+
+
+            $where = array();
+            $where[] = $query->getRootAlias() . '.date_piece IS NULL';
+            $where[] = $query->getRootAlias() . ".date_piece = '" . $date->format('Y-m-d') . "'";
+
+            $query->andWhere(implode(' OR ', $where));
+        }
+
+        $query->andWhere($query->getRootAlias() . '.client_id=' . $this->client_id);
+
+        return $query;
     }
 
     /**
@@ -57,7 +98,7 @@ abstract class AbstractTabsAdmin extends Admin
         $this->_form_label = 'form';
 
         $formMapper->with($this->getFieldLabel())
-            ->add('client_id', 'hidden', array('data' => $this->_client_id));
+            ->add('client_id', 'hidden', array('data' => $this->client_id));
     }
 
     /**
@@ -82,11 +123,10 @@ abstract class AbstractTabsAdmin extends Admin
     {
         $date_piece = $object->getDatePiece();
 
-
         if ($date_piece) {
 
-            $this->_month = $date_piece->format('m');
-            $this->_year = $date_piece->format('Y');
+            $this->month = $date_piece->format('m');
+            $this->year = $date_piece->format('Y');
 
             if ($this->getLocking()) {
                 $errorElement->addViolation('Sorry with month is locked');
@@ -99,7 +139,7 @@ abstract class AbstractTabsAdmin extends Admin
      */
     protected function getLocking()
     {
-        $locking = $this->getConfigurationPool()->getContainer()->get('doctrine')->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $this->_client_id, 'month' => $this->_month, 'year' => $this->_year));
+        $locking = $this->getConfigurationPool()->getContainer()->get('doctrine')->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $this->client_id, 'month' => $this->month, 'year' => $this->year));
         return $locking ? : 0;
     }
 
@@ -109,7 +149,6 @@ abstract class AbstractTabsAdmin extends Admin
      */
     protected function getFieldLabel($name = 'title')
     {
-
         return $this->_bundle_name . '.' . $this->_form_label . '.' . str_replace('_', '', $this->getLabel()) . '.' . $name;
     }
 
@@ -118,8 +157,7 @@ abstract class AbstractTabsAdmin extends Admin
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('client_id')
-            ->add('date_piece');
+        #$datagridMapper->add('client_id');
     }
 
     /**
@@ -133,7 +171,7 @@ abstract class AbstractTabsAdmin extends Admin
             case 'edit':
             case 'delete':
             case 'batch':
-                $parameters['filter']['client_id']['value'] = $this->_client_id;
+                $parameters['filter']['client_id']['value'] = $this->client_id;
                 break;
         }
         return parent::generateUrl($name, $parameters, $absolute);
@@ -181,7 +219,7 @@ abstract class AbstractTabsAdmin extends Admin
     {
         $collection->add('blank');
         $collection->add('import');
-        $collection->add('locking', 'locking/{client_id}/{month}/{blocked}');
+        $collection->add('locking', 'locking/{client_id}/{month}/{year}/{blocked}');
     }
 
     /**
@@ -204,8 +242,8 @@ abstract class AbstractTabsAdmin extends Admin
         $t = strtotime($value);
 
         $date = array(
-            'day' => 1,
-            'month' => intval(date('m', $t)),
+            'day' => date('d', $t),
+            'month' => date('n', $t),
             'year' => date('Y', $t),
         );
 
@@ -215,10 +253,13 @@ abstract class AbstractTabsAdmin extends Admin
     /**
      * @return array
      */
-    public function getFilterParameters(){
-
+    public function getFilterParameters()
+    {
         $parameters = parent::getFilterParameters();
         unset($parameters['client_id']);
+
+        $parameters['month'] = $this->query_month;
+        $parameters['year'] = $this->year;
 
         return $parameters;
     }
