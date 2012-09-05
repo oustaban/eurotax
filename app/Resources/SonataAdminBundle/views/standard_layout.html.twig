@@ -12,7 +12,8 @@
 
 {% block stylesheets %}{{ parent() }}
 <!-- jQuery code -->
-<link rel="stylesheet" href="{{ asset('bundles/sonatajquery/themes/flick/jquery-ui-1.8.16.custom.css') }}" type="text/css" media="all"/>
+<link rel="stylesheet" href="{{ asset('bundles/sonatajquery/themes/flick/jquery-ui-1.8.16.custom.css') }}"
+      type="text/css" media="all"/>
 
 <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" type="text/css" media="all"/>
 <link rel="stylesheet" href="{{ asset('css/bootstrap-responsive.min.css') }}" type="text/css" media="all"/>
@@ -35,13 +36,10 @@
 {% endblock %}
 
 {% block title %}
-{{ 'Admin'|trans({}, 'SonataAdminBundle') }}
-
+{# 'Admin'|trans({}, 'SonataAdminBundle') #}
 {% if _title is defined and _title is not empty %}
-{{ _title|raw }}
 {% else %}
 {% if action is defined %}
--
 {% for label, uri in admin.breadcrumbs(action) %}
 {% if not loop.first  %}
 &gt;
@@ -50,27 +48,10 @@
 {% endfor %}
 {% endif %}
 {% endif%}
-{% endblock %}
+{% endblock title%}
 
 {% block body_content %}
 <div class="container-fluid">
-    {% if _breadcrumb is not empty or action is defined %}
-    <ul class="breadcrumb">
-        {% if _breadcrumb is empty %}
-        {% if action is defined %}
-        {% for label, uri in admin.breadcrumbs(action) %}
-        {% if not loop.last  %}
-        <li><a href="{{ uri }}">{{ label }}</a><span class="divider">/</span></li>
-        {% else %}
-        <li class="active">{{ label }}</li>
-        {% endif %}
-        {% endfor %}
-        {% endif %}
-        {% else %}
-        {{ _breadcrumb|raw }}
-        {% endif %}
-    </ul>
-    {% endif %}
 
     <div class="sonata-bc {% if _side_menu is empty %}sonata-ba-no-side-menu{% endif %}">
         {# initialize block value #}
@@ -99,17 +80,7 @@
 
             {% if _title is not empty or action is defined %}
             <div class="page-header">
-                <h1>
-                    {% if _title is not empty %}
-                    {{ _title|raw }}
-                    {% elseif action is defined %}
-                    {% for label, uri in admin.breadcrumbs(action) %}
-                    {% if loop.last  %}
-                    {{ label }}
-                    {% endif %}
-                    {% endfor %}
-                    {% endif%}
-                </h1>
+                <h1>{% if _title is not empty %}{{ _title|raw }}{% endif%}</h1>
             </div>
             {% endif%}
 

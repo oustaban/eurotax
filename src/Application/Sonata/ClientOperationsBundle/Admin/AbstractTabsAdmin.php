@@ -10,6 +10,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Validator\ErrorElement;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Knp\Menu\ItemInterface as MenuItemInterface;
 
 abstract class AbstractTabsAdmin extends Admin
 {
@@ -86,8 +87,19 @@ abstract class AbstractTabsAdmin extends Admin
      */
     public function getBatchActions()
     {
-
         return array();
+    }
+
+    /**
+     * @param string $action
+     * @param ItemInterface|null $menu
+     * @return array
+     */
+    public function buildBreadcrumbs($action, MenuItemInterface $menu = null)
+    {
+        $result = parent::buildBreadcrumbs($action, $menu);
+        unset($result['Dashboard']);
+        return $result;
     }
 
     /**
