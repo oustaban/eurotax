@@ -14,26 +14,35 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ClientController extends Controller
 {
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function createAction()
     {
-        $create = parent::createAction();
-
-        return $this->render('ApplicationSonataClientBundle::standard_layout.html.twig', array(
-            'client_id' => null,
-            'active_tab' => 'client',
-            'content' => $create->getContent(),
-        ));
+        return $this->_action(parent::createAction());
     }
 
 
+    /**
+     * @param null $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function editAction($id = null)
     {
-        $edit = parent::editAction($id);
+        return $this->_action(parent::editAction($id), $id);
+    }
 
-        return $this->render('ApplicationSonataClientBundle::standard_layout.html.twig', array(
+    /**
+     * @param $object
+     * @param null $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function _action($object, $id = null, $template = 'standard_layout_client')
+    {
+        return $this->render('ApplicationSonataClientBundle::'.$template.'.html.twig', array(
             'client_id' => $id,
             'active_tab' => 'client',
-            'content' => $edit->getContent(),
+            'content' => $object->getContent(),
         ));
     }
 
