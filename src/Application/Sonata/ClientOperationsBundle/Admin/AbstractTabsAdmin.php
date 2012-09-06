@@ -52,16 +52,18 @@ abstract class AbstractTabsAdmin extends Admin
 
             $this->client_id = $this->client_id = $filter['client_id']['value'];
 
-            $this->query_month = isset($filter['month']) ? $filter['month'] : $request->query->get('month', date('n-Y'));
+            $this->query_month = isset($filter['month']) ? $filter['month'] : $request->query->get('month', date('n:Y'));
 
             list($this->month, $this->year) = $this->getQueryMonth($this->query_month);
         }
     }
 
-    public function getQueryMonth($query_month){
+    public function getQueryMonth($query_month)
+    {
+        $year = substr($query_month, -4);
+        $month = $query_month == -1 ? (date('n') - 1) . ':' . $year : $query_month;
 
-        $month = $query_month == -1 ? (date('n') - 1).'-'.date('Y'): $query_month;
-        return explode('-', $month);
+        return explode(':', $month);
     }
 
 
@@ -69,18 +71,15 @@ abstract class AbstractTabsAdmin extends Admin
     {
         $query = parent::createQuery($context);
 
-        $date = new \DateTime($this->year . '-' . $this->month . '-01');
+        $date_piece = $this->year . '-' . $this->month . '-01';
+
         if ($this->query_month == -1) {
-
-            $where = array();
-            $where[] = $query->getRootAlias() . '.date_piece IS NULL';
-            $where[] = $query->getRootAlias() . '.date_piece = :date_piece';
-
-            $query->andWhere(implode(' OR ', $where));
+            $query->orWhere($query->getRootAlias() . '.date_piece IS NULL');
+            $query->orWhere($query->getRootAlias() . '.date_piece = :date_piece');
         } else {
             $query->andWhere($query->getRootAlias() . '.date_piece = :date_piece');
         }
-        $query->setParameter('date_piece', $date->format('Y-m-d'));
+        $query->setParameter(':date_piece', $date_piece);
 
         $query->andWhere($query->getRootAlias() . '.client_id=' . $this->client_id);
 
