@@ -259,13 +259,7 @@ abstract class AbstractTabsAdmin extends Admin
     {
         $t = strtotime($value);
 
-        $date = array(
-            'day' => date('d', $t),
-            'month' => date('n', $t),
-            'year' => date('Y', $t),
-        );
-
-        return $date;
+        return date('d/m/Y', $t);
     }
 
     /**
