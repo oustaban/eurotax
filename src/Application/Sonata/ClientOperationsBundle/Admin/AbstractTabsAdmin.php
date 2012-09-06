@@ -52,7 +52,7 @@ abstract class AbstractTabsAdmin extends Admin
 
             $this->client_id = $this->client_id = $filter['client_id']['value'];
 
-            $this->query_month = isset($filter['month']) ? $filter['month'] : $request->query->get('month', date('n:Y'));
+            $this->query_month = isset($filter['month']) ? $filter['month'] : $request->query->get('month', date('n' . $this->date_filter_separator . 'Y'));
 
             list($this->month, $this->year) = $this->getQueryMonth($this->query_month);
         }
@@ -61,9 +61,22 @@ abstract class AbstractTabsAdmin extends Admin
     public function getQueryMonth($query_month)
     {
         $year = substr($query_month, -4);
-        $month = $query_month == -1 ? (date('n') - 1) .$this->date_filter_separator . $year : $query_month;
+        $month = $query_month == -1 ? (date('n') - 1) . $this->date_filter_separator . $year : $query_month;
 
         return explode($this->date_filter_separator, $month);
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getBatchActions()
+    {
+        $batch = array();
+        if (!$this->getLocking()) {
+            $batch = parent::getBatchActions();
+        }
+        return $batch;
     }
 
 
