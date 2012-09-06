@@ -83,14 +83,6 @@ abstract class AbstractTabsAdmin extends Admin
     }
 
     /**
-     * @return array
-     */
-    public function getBatchActions()
-    {
-        return array();
-    }
-
-    /**
      * @param string $action
      * @param ItemInterface|null $menu
      * @return array
