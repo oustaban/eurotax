@@ -36,7 +36,7 @@
 {% endblock %}
 
 {% block title %}
-{# 'Admin'|trans({}, 'SonataAdminBundle') #}
+{{ 'Admin'|trans({}, 'SonataAdminBundle') }}
 {% if _title is defined and _title is not empty %}
 {% else %}
 {% if action is defined %}
@@ -52,9 +52,27 @@
 
 {% block body_content %}
 <div class="container-fluid">
+    {% if _breadcrumb is not empty or action is defined %}
+    {% if _breadcrumb is empty %}
+    <ul class="breadcrumb">
+        {% if action is defined %}
+        {% for label, uri in admin.breadcrumbs(action) %}
+        {% if not loop.last  %}
+        <li><a href="{{ uri }}">{{ label }}</a><span class="divider">/</span></li>
+        {% else %}
+        <li class="active">{{ label }}</li>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        {% else %}
+        {{ _breadcrumb|raw }}
+    </ul>
+    {% endif %}
+    {% endif %}
 
     <div class="sonata-bc {% if _side_menu is empty %}sonata-ba-no-side-menu{% endif %}">
         {# initialize block value #}
+
 
         <div class="main-content">
             {% block notice %}
@@ -80,7 +98,17 @@
 
             {% if _title is not empty or action is defined %}
             <div class="page-header">
-                <h1>{% if _title is not empty %}{{ _title|raw }}{% endif%}</h1>
+                <h1>
+                    {% if _title is not empty %}
+                    {{ _title|raw }}
+                    {% elseif action is defined %}
+                    {% for label, uri in admin.breadcrumbs(action) %}
+                    {% if loop.last  %}
+                    {{ label }}
+                    {% endif %}
+                    {% endfor %}
+                    {% endif%}
+                </h1>
             </div>
             {% endif%}
 

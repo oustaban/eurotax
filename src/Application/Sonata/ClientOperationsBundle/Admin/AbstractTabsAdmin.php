@@ -30,7 +30,7 @@ abstract class AbstractTabsAdmin extends Admin
     public $query_month = '';
     public $year = '';
     public $client_id = '';
-
+    public $date_filter_separator = '|';
 
     /**
      * @param string $code
@@ -55,30 +55,47 @@ abstract class AbstractTabsAdmin extends Admin
 
             $this->client_id = $this->client_id = $filter['client_id']['value'];
 
-            $this->year = isset($filter['year']) ? $filter['year'] : $request->query->get('year', date('Y'));
-            $this->month = $this->query_month = isset($filter['month']) ? $filter['month'] : $request->query->get('month', date('n'));
+            $this->query_month = isset($filter['month']) ? $filter['month'] : $request->query->get('month', date('n' . $this->date_filter_separator . 'Y'));
 
-            if ($this->query_month == -1) {
-                $this->month = date('n') - 1;
-            }
+            list($this->month, $this->year) = $this->getQueryMonth($this->query_month);
         }
     }
+
+    public function getQueryMonth($query_month)
+    {
+        $year = substr($query_month, -4);
+        $month = $query_month == -1 ? (date('n') - 1) . $this->date_filter_separator . $year : $query_month;
+
+        return explode($this->date_filter_separator, $month);
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getBatchActions()
+    {
+        $batch = array();
+        if (!$this->getLocking()) {
+            $batch = parent::getBatchActions();
+        }
+        return $batch;
+    }
+
 
     public function createQuery($context = 'list')
     {
         $query = parent::createQuery($context);
 
+        $date_piece = $this->year . '-' . $this->month . '-01';
+
         if ($this->query_month == -1) {
-
-            $date = new \DateTime($this->year . '-' . $this->month . '-01');
-
-
-            $where = array();
-            $where[] = $query->getRootAlias() . '.date_piece IS NULL';
-            $where[] = $query->getRootAlias() . ".date_piece = '" . $date->format('Y-m-d') . "'";
-
-            $query->andWhere(implode(' OR ', $where));
+            $query->orWhere($query->getRootAlias() . '.date_piece IS NULL');
+            $query->orWhere($query->getRootAlias() . '.date_piece = :date_piece');
+        } else {
+            $query->andWhere($query->getRootAlias() . '.date_piece = :date_piece');
         }
+        $query->setParameter(':date_piece', $date_piece);
 
         $query->andWhere($query->getRootAlias() . '.client_id=' . $this->client_id);
 
@@ -87,14 +104,11 @@ abstract class AbstractTabsAdmin extends Admin
 
     /**
      * @param string $action
-     * @param ItemInterface|null $menu
      * @return array
      */
-    public function buildBreadcrumbs($action, MenuItemInterface $menu = null)
+    public function getBreadcrumbs($action)
     {
-        $result = parent::buildBreadcrumbs($action, $menu);
-        unset($result['Dashboard']);
-        return $result;
+        return null;
     }
 
     /**

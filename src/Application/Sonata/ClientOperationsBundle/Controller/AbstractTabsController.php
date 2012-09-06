@@ -79,7 +79,6 @@ class AbstractTabsController extends Controller
             'month_list' => $this->getMonthList(),
             'month' => $this->_month,
             'query_month' => $this->_query_month,
-            'year_list' => $this->getYearList(),
             'year' => $this->_year,
             'content' => $data->getContent(),
             'active_tab' => $this->_tabAlias,
@@ -126,36 +125,25 @@ class AbstractTabsController extends Controller
         $this->_year = $date_piece->format('Y');
     }
 
-    /*
-     *
+    /**
+     * @return array
      */
     protected function getMonthList()
     {
-        $month_list = array();
-
         $year = date('Y');
+        $month_list = array();
+        $month_list[] = array('key'=>'-1'.$this->admin->date_filter_separator.$year, 'name'=>'Operations en cours');
 
-        for ($month = date('n'); $month > 0; $month--) {
-            $month_list[] = array('key' => $month, 'name' => $this->datefmtFormatFilter(new \DateTime("{$year}-{$month}-01"), 'MMMM'));
+        for ($month = date('n'); $month >= date('n') - 12; $month--) {
+
+            $mktime  = mktime(0, 0, 0, $month, 1, $year);
+
+            $month_list[] = array('key' => date('n'.$this->admin->date_filter_separator.'Y', $mktime), 'name' => $this->datefmtFormatFilter(new \DateTime(date('Y-m-d', $mktime)), 'MMMM YYYY'));
         }
 
         return $month_list;
     }
 
-    /**
-     * @return array
-     */
-    protected function getYearList()
-    {
-        $year_list = array();
-        $current_year = date('Y');
-
-        for ($year = $current_year; $year >= $current_year - 5; $year--) {
-            $year_list[] = array('key' => $year, 'name' => $year);
-        }
-
-        return $year_list;
-    }
 
     /**
      * @param $datetime
@@ -479,9 +467,11 @@ class AbstractTabsController extends Controller
      */
     public function lockingAction($client_id, $month, $year, $blocked = 1)
     {
+        list($_month, $_year) = $this->admin->getQueryMonth($month);
+
         $em = $this->getDoctrine()->getManager();
 
-        $locking = $em->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $client_id, 'month' => $month, 'year' => $year));
+        $locking = $em->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $client_id, 'month' => $_month, 'year' => $_year));
 
         if ($locking) {
             $em->remove($locking);
@@ -491,13 +481,13 @@ class AbstractTabsController extends Controller
         if ($blocked) {
             $locking = new Locking();
             $locking->setClientId($client_id);
-            $locking->setMonth($month);
-            $locking->setYear($year);
+            $locking->setMonth($_month);
+            $locking->setYear($_year);
             $em->persist($locking);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('admin_sonata_clientoperations_' . $this->_tabAlias . '_list', array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month, 'year' => $year)));
+        return $this->redirect($this->generateUrl('admin_sonata_clientoperations_' . $this->_tabAlias . '_list', array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)));
     }
 
     /**

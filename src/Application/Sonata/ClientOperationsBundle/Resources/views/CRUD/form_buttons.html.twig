@@ -25,7 +25,7 @@
             {% set text_lock =  'Déverrouillage' %}
             {% endif %}
             <button class="btn"
-                    onclick="location.href='{{ path('admin_sonata_clientoperations_'~active_tab~'_locking', {'filter[client_id][value]':client_id, 'client_id': client_id, 'month' : month, 'year' : year, 'blocked': blocked  }) }}'">
+                    onclick="location.href='{{ path('admin_sonata_clientoperations_'~active_tab~'_locking', {'filter[client_id][value]':client_id, 'client_id': client_id, 'month' : query_month, 'year' : year, 'blocked': blocked  }) }}'">
                 <i class="icon icon-lock"></i> {{ text_lock|trans}}</button>
         </div>
     </div>
