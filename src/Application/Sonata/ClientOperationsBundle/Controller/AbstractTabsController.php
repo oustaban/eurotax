@@ -84,7 +84,7 @@ class AbstractTabsController extends Controller
             'content' => $data->getContent(),
             'active_tab' => $this->_tabAlias,
             'operation_type' => $this->_operationType,
-            'action' => $action,
+            //'action' => $action,
             'blocked' => isset($this->_locking) ? 0 : 1,
         ));
     }

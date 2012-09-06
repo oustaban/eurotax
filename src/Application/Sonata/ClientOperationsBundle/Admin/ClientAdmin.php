@@ -23,4 +23,13 @@ class ClientAdmin extends ClientAdminBase
             'template' => 'ApplicationSonataClientOperationsBundle:CRUD:client_operations.html.twig'
         ));
     }
+
+    /**
+     * @param string $action
+     * @return array
+     */
+    public function getBreadcrumbs($action)
+    {
+        return null;
+    }
 }

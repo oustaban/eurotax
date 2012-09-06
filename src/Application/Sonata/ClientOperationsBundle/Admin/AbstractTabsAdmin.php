@@ -84,14 +84,11 @@ abstract class AbstractTabsAdmin extends Admin
 
     /**
      * @param string $action
-     * @param ItemInterface|null $menu
      * @return array
      */
-    public function buildBreadcrumbs($action, MenuItemInterface $menu = null)
+    public function getBreadcrumbs($action)
     {
-        $result = parent::buildBreadcrumbs($action, $menu);
-        unset($result['Dashboard']);
-        return $result;
+        return null;
     }
 
     /**
