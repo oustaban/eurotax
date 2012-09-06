@@ -20,13 +20,7 @@ class A02TVAAdmin extends Admin
 
         $formMapper
             ->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
-            ->add('date_piece', null, array(
-                'label' => $this->getFieldLabel('date_piece'),
-                'attr' => array('class' => 'datepicker'),
-                'widget' => 'single_text',
-                'input' => 'datetime',
-                'format' => 'MM/dd/yyyy')
-        )
+            ->add('date_piece', null, array('label' => $this->getFieldLabel('date_piece')))
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
             ->add('devise_id', null, array('label' => $this->getFieldLabel('devise_id')))
             ->add('montant_HT_en_devise', null, array('label' => $this->getFieldLabel('montant_HT_en_devise')))
@@ -57,7 +51,7 @@ class A02TVAAdmin extends Admin
         ))
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
             ->add('devise_id', null, array('label' => $this->getFieldLabel('devise_id')))
-            ->add('montant_HT_en_devise', null, array('label' => $this->getFieldLabel('montant_HT_en_devise')))
+            ->add('montant_HT_en_devise', null, array('label' => $this->getFieldLabel('montant_HT_en_devise'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:montant_HT_en_devise.html.twig'))
             ->add('taux_de_TVA', null, array('label' => $this->getFieldLabel('taux_de_TVA')))
             ->add('montant_TVA_francaise', null, array('label' => $this->getFieldLabel('montant_TVA_francaise')))
             ->add('montant_TTC', null, array('label' => $this->getFieldLabel('montant_TTC')))
@@ -69,7 +63,7 @@ class A02TVAAdmin extends Admin
         ))
             ->add('mois', null, array('label' => $this->getFieldLabel('mois')))
             ->add('taux_de_change', null, array('label' => $this->getFieldLabel('taux_de_change')))
-            ->add('HT', null, array('label' => $this->getFieldLabel('HT')))
+            ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:HT.html.twig'))
             ->add('TVA', null, array('label' => $this->getFieldLabel('TVA')))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
     }

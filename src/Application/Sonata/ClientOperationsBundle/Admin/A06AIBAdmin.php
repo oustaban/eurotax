@@ -64,10 +64,10 @@ class A06AIBAdmin extends Admin
         ))
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
             ->add('devise_id', null, array('label' => $this->getFieldLabel('devise_id')))
-            ->add('montant_HT_en_devise', null, array('label' => $this->getFieldLabel('montant_HT_en_devise')))
+            ->add('montant_HT_en_devise', null, array('label' => $this->getFieldLabel('montant_HT_en_devise'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:montant_HT_en_devise.html.twig'))
             ->add('mois', null, array('label' => $this->getFieldLabel('mois')))
             ->add('taux_de_change', null, array('label' => $this->getFieldLabel('taux_de_change')))
-            ->add('HT', 'money', array('label' => $this->getFieldLabel('HT')))
+            ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:HT.html.twig'))
             ->add('regime', null, array('label' => $this->getFieldLabel('regime')))
             ->add('DEB', null, array('label' => $this->getFieldLabel('DEB')))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
