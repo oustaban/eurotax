@@ -150,11 +150,11 @@ class AbstractTabsController extends Controller
         $month_list = array();
         $month_list[] = array('key' => '-1' . $this->admin->date_filter_separator . $year, 'name' => 'Operations en cours');
 
-        for ($month = date('n'); $month >= date('n') - 12; $month--) {
+        for ($month = date('n'); $month > date('n') - 12; $month--) {
 
             $mktime = mktime(0, 0, 0, $month, 1, $year);
 
-            $month_list[] = array('key' => date('n' . $this->admin->date_filter_separator . 'Y', $mktime), 'name' => $this->datefmtFormatFilter(new \DateTime(date('Y-m-d', $mktime)), 'MMMM YYYY'));
+            $month_list[] = array('key' => date('n' . $this->admin->date_filter_separator . 'Y', $mktime), 'name' => $this->datefmtFormatFilter(new \DateTime(date('Y-m-d', $mktime)), 'MMMM').' '.date('Y', $mktime));
         }
 
         return $month_list;
