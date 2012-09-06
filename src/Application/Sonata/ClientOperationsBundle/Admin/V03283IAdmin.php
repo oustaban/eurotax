@@ -26,7 +26,7 @@ class V03283IAdmin extends Admin
                 'attr' => array('class' => 'datepicker'),
                 'widget' => 'single_text',
                 'input' => 'datetime',
-                'format' => 'dd/MM/yyyy')
+                'format' => 'MM/dd/yyyy')
         )
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
             ->add('devise_id', null, array('label' => $this->getFieldLabel('devise_id')))

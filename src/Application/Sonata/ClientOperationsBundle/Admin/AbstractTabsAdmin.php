@@ -16,7 +16,10 @@ abstract class AbstractTabsAdmin extends Admin
 {
     public $dashboards = array();
 
-    protected $maxPerPage = 100;
+    /**
+     * @var int
+     */
+    protected $maxPerPage = 10000000;
 
     /**
      * @var string
@@ -131,6 +134,7 @@ abstract class AbstractTabsAdmin extends Admin
         } else {
             $listMapper->addIdentifier('id', null);
         }
+        $listMapper->add('imports.id', null);
     }
 
     /**
