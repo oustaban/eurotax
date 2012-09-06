@@ -16,7 +16,7 @@ abstract class AbstractTabsAdmin extends Admin
 {
     public $dashboards = array();
 
-    protected $maxPerPage = 25;
+    protected $maxPerPage = 100;
 
     /**
      * @var string
@@ -52,30 +52,35 @@ abstract class AbstractTabsAdmin extends Admin
 
             $this->client_id = $this->client_id = $filter['client_id']['value'];
 
-            $this->year = isset($filter['year']) ? $filter['year'] : $request->query->get('year', date('Y'));
-            $this->month = $this->query_month = isset($filter['month']) ? $filter['month'] : $request->query->get('month', date('n'));
+            $this->query_month = isset($filter['month']) ? $filter['month'] : $request->query->get('month', date('n-Y'));
 
-            if ($this->query_month == -1) {
-                $this->month = date('n') - 1;
-            }
+            list($this->month, $this->year) = $this->getQueryMonth($this->query_month);
         }
     }
+
+    public function getQueryMonth($query_month){
+
+        $month = $query_month == -1 ? (date('n') - 1).'-'.date('Y'): $query_month;
+        return explode('-', $month);
+    }
+
 
     public function createQuery($context = 'list')
     {
         $query = parent::createQuery($context);
 
+        $date = new \DateTime($this->year . '-' . $this->month . '-01');
         if ($this->query_month == -1) {
-
-            $date = new \DateTime($this->year . '-' . $this->month . '-01');
-
 
             $where = array();
             $where[] = $query->getRootAlias() . '.date_piece IS NULL';
-            $where[] = $query->getRootAlias() . ".date_piece = '" . $date->format('Y-m-d') . "'";
+            $where[] = $query->getRootAlias() . '.date_piece = :date_piece';
 
             $query->andWhere(implode(' OR ', $where));
+        } else {
+            $query->andWhere($query->getRootAlias() . '.date_piece = :date_piece');
         }
+        $query->setParameter('date_piece', $date->format('Y-m-d'));
 
         $query->andWhere($query->getRootAlias() . '.client_id=' . $this->client_id);
 
