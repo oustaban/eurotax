@@ -15,6 +15,22 @@
 
 {% endblock sonata_admin_content %}
 
-
 {% block title %}  {% endblock title %}
 {% block breadcrumb %} {% endblock breadcrumb %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('bundles/applicationsonataclientoperations/css/client_operation.css') }}" type="text/css" media="all"/>
+{% endblock stylesheets %}
+
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+    var uniqid = '{{ admin.uniqid }}';
+    {% if js_settings_json is defined and js_settings_json is not empty %}
+    var Sonata = {};
+    jQuery.extend(Sonata, {{ js_settings_json|raw }});
+    {% endif%}
+</script>
+<script src="{{ asset('bundles/applicationsonataclientoperations/js/client_operation.js') }}" type="text/javascript"></script>
+{% endblock javascripts %}
