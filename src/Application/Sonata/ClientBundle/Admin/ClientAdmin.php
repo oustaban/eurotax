@@ -15,7 +15,7 @@ use Application\Form\Type\LocationFacturationType;
 
 class ClientAdmin extends Admin
 {
-    public $dashboards = array('Admin', 'Client');
+    public $dashboards = array('Admin');
 
     protected $_fields_list = array(
         'raison_sociale'=>array(),
@@ -103,10 +103,5 @@ class ClientAdmin extends Admin
             $options['label'] = 'filter.' . $field;
             $listMapper->add($field, null, $options);
         }
-
-        $listMapper->add('client_operations', null, array(
-            'label' => 'list.' . 'client_operations',
-            'template' => 'ApplicationSonataClientBundle:CRUD:client_operations.html.twig'
-        ));
     }
 }
