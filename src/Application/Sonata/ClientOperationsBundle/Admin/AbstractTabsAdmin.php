@@ -27,7 +27,7 @@ abstract class AbstractTabsAdmin extends Admin
     public $query_month = '';
     public $year = '';
     public $client_id = '';
-
+    public $date_filter_separator = '|';
 
     /**
      * @param string $code
@@ -61,9 +61,9 @@ abstract class AbstractTabsAdmin extends Admin
     public function getQueryMonth($query_month)
     {
         $year = substr($query_month, -4);
-        $month = $query_month == -1 ? (date('n') - 1) . ':' . $year : $query_month;
+        $month = $query_month == -1 ? (date('n') - 1) .$this->date_filter_separator . $year : $query_month;
 
-        return explode(':', $month);
+        return explode($this->date_filter_separator, $month);
     }
 
 
