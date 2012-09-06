@@ -1,0 +1,23 @@
+<a id="error_repost_show" href="#">View errors</a>
+
+<div class="modal hide fade" id="importReportModal" tabindex="-1" role="dialog" aria-labelledby="importReportModalLabel"
+     aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="importModalLabel">Errors reporting</h3>
+    </div>
+    <div class="modal-body">
+       <ul>
+       {% for table, reports in error_reports %}
+           {{ table }}:
+           {% for report in reports %}
+                  <pre>{{report}}</pre>
+            {% endfor%}
+       {% endfor%}
+        <ul>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" id="doValider"  data-dismiss="modal" aria-hidden="true">Valider</button>
+        <button class="btn btn-primary" id="doAnnuler" data-dismiss="modal" import_id="{{ import_id }}"  aria-hidden="true">Annuler</button>
+    </div>
+</div>

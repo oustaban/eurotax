@@ -1,0 +1,9 @@
+.error{
+    color:red;
+}
+#error_repost_show{
+    text-decoration: underline;
+}
+#error_repost_show:hover{
+    text-decoration: none;
+}
