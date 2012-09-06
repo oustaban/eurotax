@@ -16,7 +16,10 @@ abstract class AbstractTabsAdmin extends Admin
 {
     public $dashboards = array();
 
-    protected $maxPerPage = 25;
+    /**
+     * @var int
+     */
+    protected $maxPerPage = 10000000;
 
     /**
      * @var string
