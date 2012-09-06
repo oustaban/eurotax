@@ -20,7 +20,13 @@ class A08IMAdmin extends Admin
 
         $formMapper
             ->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
-            ->add('date_piece', null, array('label' => $this->getFieldLabel('date_piece')))
+            ->add('date_piece', null, array(
+                'label' => $this->getFieldLabel('date_piece'),
+                'attr' => array('class' => 'datepicker'),
+                'widget' => 'single_text',
+                'input' => 'datetime',
+                'format' => 'dd/MM/yyyy')
+        )
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
             ->add('taux_de_TVA', null, array('label' => $this->getFieldLabel('taux_de_TVA')))
             ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA')))

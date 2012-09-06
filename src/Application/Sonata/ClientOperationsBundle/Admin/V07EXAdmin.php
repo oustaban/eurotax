@@ -20,7 +20,13 @@ class V07EXAdmin extends Admin
 
         $formMapper
             ->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
-            ->add('date_piece', null, array('label' => $this->getFieldLabel('date_piece')))
+            ->add('date_piece', null, array(
+                'label' => $this->getFieldLabel('date_piece'),
+                'attr' => array('class' => 'datepicker'),
+                'widget' => 'single_text',
+                'input' => 'datetime',
+                'format' => 'dd/MM/yyyy')
+        )
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
             ->add('devise_id', null, array('label' => $this->getFieldLabel('devise_id')))
             ->add('montant_HT_en_devise', null, array('label' => $this->getFieldLabel('montant_HT_en_devise')))

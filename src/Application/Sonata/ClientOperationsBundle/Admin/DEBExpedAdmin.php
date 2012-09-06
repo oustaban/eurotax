@@ -20,7 +20,13 @@ class DEBExpedAdmin extends Admin
 
         $formMapper
             ->add('n_ligne', null, array('label' => $this->getFieldLabel('n_ligne')))
-            ->add('date_piece', null, array('label' => $this->getFieldLabel('date_piece')))
+            ->add('date_piece', null, array(
+                'label' => $this->getFieldLabel('date_piece'),
+                'attr' => array('class' => 'datepicker'),
+                'widget' => 'single_text',
+                'input' => 'datetime',
+                'format' => 'dd/MM/yyyy')
+        )
             ->add('nomenclature', null, array('label' => $this->getFieldLabel('nomenclature')))
             ->add('pays_id_destination', 'country', array('label' => $this->getFieldLabel('pays_id_destination')))
             ->add('valeur_fiscale', null, array('label' => $this->getFieldLabel('valeur_fiscale')))
