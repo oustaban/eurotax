@@ -8,6 +8,7 @@
 {% set _side_menu    = block('side_menu') %}
 {% set _content      = block('content') %}
 {% set _title        = block('title') %}
+{% set _page_title   = block('page_title') %}
 {% set _breadcrumb   = block('breadcrumb') %}
 
 {% block stylesheets %}{{ parent() }}
@@ -107,6 +108,10 @@
                     {{ label }}
                     {% endif %}
                     {% endfor %}
+                    {% endif%}
+
+                    {% if _page_title is not empty %}
+                    {{ _page_title|raw }}
                     {% endif%}
                 </h1>
             </div>
