@@ -21,6 +21,7 @@ jQuery(document).ready(function ($) {
             success:function (i) {
                 if (i.status) {
                     function_alert();
+                    window.location.reload();
                 }
             }
         });
