@@ -38,7 +38,7 @@ class V11INT
     /**
      * @var \DateTime $date_piece
      *
-     * @ORM\Column(name="date_piece", type="date")
+     * @ORM\Column(name="date_piece", type="date", nullable=true)
      */
     private $date_piece;
 

@@ -1,6 +1,5 @@
 {% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
 
 {% block field %}
-{{ object.paiementDate|datefmt_format('MMMM') }}
-{{ object.paiementDate|date('Y') }}
+{{ object.datePiece|datefmt_format('dd MMMM YYYY') }}
 {% endblock field %}

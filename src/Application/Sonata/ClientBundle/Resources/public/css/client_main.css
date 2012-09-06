@@ -1,0 +1,11 @@
+.form-horizontal fieldset {
+    width: 50%;
+    float: left;
+}
+.form-horizontal fieldset legend{
+    height: 40px;
+}
+
+.form-horizontal .form-actions{
+    clear: both;
+}

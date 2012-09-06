@@ -10,8 +10,7 @@
     {% set month_text = 'ApplicationSonataClientOperationsBundle.form.Month' %}
     {% set year_text = 'ApplicationSonataClientOperationsBundle.form.Year' %}
 
-    <div style="display:none"> {{ form_widget(form.day) }} </div>
-    {{month_text|trans}} {{form_widget(form.month)}} {{year_text|trans}} {{form_widget(form.year)}}
+    {{ form_widget(form.day) }} {{month_text|trans}} {{form_widget(form.month)}} {{year_text|trans}} {{form_widget(form.year)}}
 </div>
 {% endif %}
 {% endspaceless %}

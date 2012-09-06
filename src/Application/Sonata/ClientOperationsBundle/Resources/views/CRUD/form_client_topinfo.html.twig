@@ -8,33 +8,30 @@
     </h1><br>
 
     <div>
-
         {% set _month = app.request.query.get('month') %}
-
         <label for="selected_month">Mois</label>
         <select id="selected_month" name="month">
+            <option {% if month == -1 %} selected="selected" {% endif %} value="-1">Operations en cours</option>
             {% for month in month_list %}
-            <option {% if _month is defined and month.key == _month %} selected="selected" {% endif %} value="{{ month.key }}">{{ month.name}}</option>
+            <option {% if _month is defined and month.key == _month %} selected="selected" {% endif %}
+                                                                       value="{{ month.key }}">{{ month.name}}</option>
+            {% endfor %}
+        </select>
+
+        <label for="selected_year">Mois</label>
+        <select id="selected_year" name="year">
+            {% for y in year_list %}
+            <option {% if y.key == year %} selected="selected" {% endif %} value="{{ y.key }}">{{ y.name}}</option>
             {% endfor %}
         </select>
     </div>
 </form>
 
-
 {% set path = url('admin_sonata_clientoperations_'~active_tab~'_list', {'filter[client_id][value]':client_id}) %}
 
-
 <script type="text/javascript">
-    $('#selected_month').change(function () {
-
-        var _path = '{{ path }}';
-        var _filter = [];
-
-        if ($(this).val() > 0) {
-            _path += '&month=' + $(this).val();
-        }
-
-        window.location = _path;
+    $('#selected_month, #selected_year').change(function () {
+        window.location = '{{ path }}' + '&month=' + $('#selected_month :selected').val() + '&year=' + $('#selected_year :selected').val();
     });
 </script>
 {% endblock form_client_topinfo %}

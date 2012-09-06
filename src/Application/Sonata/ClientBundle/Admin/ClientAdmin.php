@@ -51,8 +51,8 @@ class ClientAdmin extends Admin
                 'required' => false,
             ),
             array('type' => 'location'))
-            ->add('date_debut_mission', 'date', array('label' => 'form.date_debut_mission'))
             ->add('activite', null, array('label' => 'form.activite', 'required' => false,))
+            ->add('date_debut_mission', 'date', array('label' => 'form.date_debut_mission'))
             ->add('mode_denregistrement', null, array('label' => 'form.mode_denregistrement'))
             ->add('avance_contractuelle', null, array('label' => 'form.avance_contractuelle', 'required' => false,))
             ->add('siret', null, array('label' => 'form.siret', 'required' => false,))
@@ -60,12 +60,13 @@ class ClientAdmin extends Admin
             ->add('num_dossier_fiscal', null, array('label' => 'form.num_dossier_fiscal', 'required' => false,))
             ->add('taxe_additionnelle', null, array('label' => 'form.taxe_additionnelle', 'required' => false,))
             ->add('periodicite_CA3', null, array('label' => 'form.periodicite_CA3'))
+            ->add('center_des_impots', null, array('label' => 'form.center_des_impots'))
+            ->with(' ')
             ->add('location_facturation', new LocationFacturationType(), array(
             'data_class' => 'Application\Sonata\ClientBundle\Entity\Client',
             'label' => 'Location',
             'required' => false,
         ), array('type' => 'location'))
-            ->add('center_des_impots', null, array('label' => 'form.center_des_impots'))
             ->add('date_fin_mission', 'date', array('label' => 'form.date_fin_mission'))
             ->add('libelle_avance', null, array('label' => 'form.libelle_avance', 'required' => false,))
             ->add('date_de_depot_id', 'choice', array(
