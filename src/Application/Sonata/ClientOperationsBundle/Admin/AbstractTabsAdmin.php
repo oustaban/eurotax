@@ -31,6 +31,7 @@ abstract class AbstractTabsAdmin extends Admin
     public $year = '';
     public $client_id = '';
     public $date_filter_separator = '|';
+    public $month_default = '';
 
     /**
      * @param string $code
@@ -55,7 +56,9 @@ abstract class AbstractTabsAdmin extends Admin
 
             $this->client_id = $this->client_id = $filter['client_id']['value'];
 
-            $this->query_month = isset($filter['month']) ? $filter['month'] : $request->query->get('month', date('n' . $this->date_filter_separator . 'Y'));
+            $this->month_default = '-1' . date($this->date_filter_separator . 'Y');
+
+            $this->query_month = isset($filter['month']) ? $filter['month'] : $request->query->get('month', $this->month_default);
 
             list($this->month, $this->year) = $this->getQueryMonth($this->query_month);
         }
