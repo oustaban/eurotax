@@ -52,12 +52,6 @@
         {
             "package": "friendsofsymfony/user-bundle",
             "version": "dev-master",
-            "alias-pretty-version": "2.0.x-dev",
-            "alias-version": "2.0.9999999.9999999-dev"
-        },
-        {
-            "package": "friendsofsymfony/user-bundle",
-            "version": "dev-master",
             "source-reference": "24edb2f2e83b227a4ba24180c69758005e805991",
             "commit-date": "1346829941"
         },
@@ -71,21 +65,9 @@
         },
         {
             "package": "jms/di-extra-bundle",
-            "version": "dev-master",
-            "alias-pretty-version": "1.1.x-dev",
-            "alias-version": "1.1.9999999.9999999-dev"
-        },
-        {
-            "package": "jms/di-extra-bundle",
-            "version": "dev-master",
-            "alias-pretty-version": "1.2.x-dev",
-            "alias-version": "1.2.9999999.9999999-dev"
-        },
-        {
-            "package": "jms/di-extra-bundle",
-            "version": "dev-master",
-            "source-reference": "a949d13485eff40b5672d29a136f3ecd34ed0f85",
-            "commit-date": "1346498128"
+            "version": "1.1.x-dev",
+            "source-reference": "af219527024c584d7311aa855d7522429c5bdb67",
+            "commit-date": "1346947722"
         },
         {
             "package": "jms/metadata",
@@ -93,21 +75,9 @@
         },
         {
             "package": "jms/security-extra-bundle",
-            "version": "dev-master",
-            "alias-pretty-version": "1.2.x-dev",
-            "alias-version": "1.2.9999999.9999999-dev"
-        },
-        {
-            "package": "jms/security-extra-bundle",
-            "version": "dev-master",
-            "alias-pretty-version": "1.3.x-dev",
-            "alias-version": "1.3.9999999.9999999-dev"
-        },
-        {
-            "package": "jms/security-extra-bundle",
-            "version": "dev-master",
-            "source-reference": "70514f4be9256caa1abff2e4418e56261c8f2a5d",
-            "commit-date": "1346497751"
+            "version": "1.2.x-dev",
+            "source-reference": "9ab6aceda50fc7a2b07d741ba4b3f0695508afcb",
+            "commit-date": "1346947943"
         },
         {
             "package": "knplabs/knp-menu",
@@ -152,13 +122,19 @@
         {
             "package": "sensio/distribution-bundle",
             "version": "dev-master",
-            "source-reference": "749aa6bbb2fac33091804d56a35339dc4c65f4a6",
+            "source-reference": "v2.1.0",
             "commit-date": "1346859132"
         },
         {
             "package": "sensio/framework-extra-bundle",
             "version": "dev-master",
-            "source-reference": "1281f6218226ddb88df8546f28a3166e2a0cb55d",
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "sensio/framework-extra-bundle",
+            "version": "dev-master",
+            "source-reference": "v2.1.0",
             "commit-date": "1346234539"
         },
         {
@@ -166,12 +142,6 @@
             "version": "dev-master",
             "source-reference": "v2.1.0-RC2",
             "commit-date": "1346138171"
-        },
-        {
-            "package": "sonata-project/admin-bundle",
-            "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
         },
         {
             "package": "sonata-project/admin-bundle",
@@ -188,8 +158,8 @@
         {
             "package": "sonata-project/cache-bundle",
             "version": "dev-master",
-            "source-reference": "082efe51dfba60f30905472b642807db40437893",
-            "commit-date": "1346370131"
+            "source-reference": "0f339c37e19d8cce728e74ee9da34a9e51d54a11",
+            "commit-date": "1346968445"
         },
         {
             "package": "sonata-project/doctrine-extensions",
@@ -212,8 +182,8 @@
         {
             "package": "sonata-project/exporter",
             "version": "dev-master",
-            "source-reference": "bcdfd50bc3118173d914e790921701ab26fb6b14",
-            "commit-date": "1338844924"
+            "source-reference": "75174b5a41f1014ecb4b4810a518f036b830d862",
+            "commit-date": "1346967589"
         },
         {
             "package": "sonata-project/jquery-bundle",
@@ -248,12 +218,6 @@
         {
             "package": "symfony/monolog-bundle",
             "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
-        },
-        {
-            "package": "symfony/monolog-bundle",
-            "version": "dev-master",
             "source-reference": "v2.1.0-RC2",
             "commit-date": "1345557954"
         },
@@ -272,8 +236,14 @@
         {
             "package": "symfony/symfony",
             "version": "dev-master",
-            "source-reference": "00ec9b53911c0ff288439ac911d0f0edde176b6c",
-            "commit-date": "1346859854"
+            "alias-pretty-version": "2.2.x-dev",
+            "alias-version": "2.2.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/symfony",
+            "version": "dev-master",
+            "source-reference": "4dc197c3e1ea227e36cab7ea93877fa44ecc569b",
+            "commit-date": "1346957130"
         },
         {
             "package": "twig/extensions",
