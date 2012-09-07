@@ -11,7 +11,8 @@
         <label for="selected_month">Mois</label>
         <select id="selected_month" name="month">
             {% for month in month_list %}
-            <option {% if month.key == query_month %} selected="selected" {% endif %} value="{{ month.key }}">{{ month.name}}</option>
+            <option {% if month.key == query_month %} selected="selected" {% endif %}
+                                                      value="{{ month.key }}">{{ month.name}}</option>
             {% endfor %}
         </select>
     </div>
@@ -21,7 +22,7 @@
 
 <script type="text/javascript">
     $('#selected_month, #selected_year').change(function () {
-        window.location = '{{ path }}' + '&month=' + $('#selected_month :selected').val();
+        window.location = $('#selected_month :selected').val() ? '{{ path }}' + '&month=' + $('#selected_month :selected').val() : '{{ path }}';
     });
 </script>
 {% endblock form_client_topinfo %}

@@ -48,6 +48,7 @@ class AbstractTabsController extends Controller
     protected $_import_reports = array();
     protected $_client_documents = array();
     protected $_imports = null;
+    protected $_parameters_url = array();
 
 
     /**
@@ -66,6 +67,12 @@ class AbstractTabsController extends Controller
         $this->_month = $this->admin->month;
         $this->_query_month = $this->admin->query_month;
         $this->_year = $this->admin->year;
+
+        $this->_parameters_url['filter']['client_id']['value'] = $this->client_id;
+
+        if ($this->admin->month_default != $this->_query_month) {
+            $this->_parameters_url['month'] = $this->_query_month;
+        }
 
         $this->jsSettingsJson(array(
             'url' => array(
@@ -99,6 +106,8 @@ class AbstractTabsController extends Controller
             'action' => $action,
             'blocked' => isset($this->_locking) ? 0 : 1,
             'js_settings_json' => $this->_jsSettingsJson,
+            '_filter_json' => $this->_parameters_url,
+
         ));
     }
 
@@ -147,14 +156,15 @@ class AbstractTabsController extends Controller
     protected function getMonthList()
     {
         $year = date('Y');
+
         $month_list = array();
-        $month_list[] = array('key' => '-1' . $this->admin->date_filter_separator . $year, 'name' => 'Operations en cours');
+        $month_list[] = array('key' => '', 'name' => 'Operations en cours');
 
         for ($month = date('n'); $month > date('n') - 12; $month--) {
 
             $mktime = mktime(0, 0, 0, $month, 1, $year);
 
-            $month_list[] = array('key' => date('n' . $this->admin->date_filter_separator . 'Y', $mktime), 'name' => $this->datefmtFormatFilter(new \DateTime(date('Y-m-d', $mktime)), 'MMMM').' '.date('Y', $mktime));
+            $month_list[] = array('key' => date('n' . $this->admin->date_filter_separator . 'Y', $mktime), 'name' => $this->datefmtFormatFilter(new \DateTime(date('Y-m-d', $mktime)), 'MMMM') . ' ' . date('Y', $mktime));
         }
 
         return $month_list;
