@@ -131,12 +131,6 @@ abstract class AbstractTabsAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $this->_form_label = 'list';
-
-        if ($this->getLocking()) {
-            $listMapper->add('id', null);
-        } else {
-            $listMapper->addIdentifier('id', null);
-        }
         $listMapper->add('imports.id', null);
     }
 
@@ -162,7 +156,7 @@ abstract class AbstractTabsAdmin extends Admin
     /**
      * @return mixed
      */
-    protected function getLocking()
+    public function getLocking()
     {
         $locking = $this->getConfigurationPool()->getContainer()->get('doctrine')->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $this->client_id, 'month' => $this->month, 'year' => $this->year));
         return $locking ? : 0;

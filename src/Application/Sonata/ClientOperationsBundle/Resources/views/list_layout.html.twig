@@ -17,6 +17,7 @@
 
         var add_total_rows = false;
         $tr.children().each(function(){
+            $(this).removeAttr('objectid');
             var $div = $(this).children();
             if(!$div.hasClass('totals')) {
                 $(this).html('&nbsp;');
@@ -48,5 +49,17 @@
             $('#container').css('min-width', w+'px');
         }
     });
+    {% if not admin.getLocking %}
+        $(function(){
+            var editObjectAbstractUrl = '{{ admin.generateUrl('edit', {'id':'__id__'}) }}';
+            var $table = $('.sonata-ba-list .table tbody:first');
+            $table.find('tr').css('cursor', 'pointer').click(function(){
+                var objectid = $(this).children(':last').attr('objectid');
+                if (objectid){
+                    location.href = editObjectAbstractUrl.replace("__id__", objectid);
+                }
+            });
+        });
+    {% endif %}
 </script>
 {% endblock javascripts %}
