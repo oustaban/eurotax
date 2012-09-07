@@ -16,13 +16,13 @@
 #client-topinfo div {
     clear: none;
     float: left;
-    margin: 0;
+    margin: 0 0 0 50px;
 }
 #client-topinfo h1 {
     clear: none;
     float: left;
-    margin: 0 0 0 50px
+    margin: 0 0 0 50px;
 }
 #client-topinfo span.label {
-    margin: 0 50px
+    margin: 0 0 0 50px;
 }
