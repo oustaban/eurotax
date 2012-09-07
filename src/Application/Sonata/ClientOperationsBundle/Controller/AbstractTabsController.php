@@ -390,8 +390,13 @@ class AbstractTabsController extends Controller
                             array_shift($data);
                         }
 
-                        foreach ($data as $line) {
+                        foreach ($data as $key => $line) {
                             file_put_contents($tmpFile, '');
+
+                            if ($this->getImportsBreak($data, $key)) {
+                                break;
+                            }
+
                             /* @var $admin \Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin */
                             $admin = $this->container->get('sonata.admin.pool')->getAdminByAdminCode($adminCode);
                             $object = $admin->getNewInstance();
@@ -428,6 +433,37 @@ class AbstractTabsController extends Controller
         return $this->render('ApplicationSonataClientOperationsBundle:redirects:back.html.twig');
     }
 
+    /**
+     * @param $data
+     * @param $key
+     * @param int $tabs
+     * @return bool
+     */
+    protected function getImportsBreak($data, $key, $tabs = 3)
+    {
+        $data_counter = 0;
+        for ($i = $key; $i <= $tabs; $i++) {
+            $line_counter = false;
+            if (!empty($data[$i]) && $line = $data[$i]) {
+                foreach ($line as $value) {
+                    if (empty($value)) {
+                        $line_counter = true;
+                    } else {
+                        $line_counter = false;
+                        break;
+                    }
+                }
+            }
+            if ($line_counter) {
+                $data_counter++;
+            }
+        }
+
+        if ($data_counter >= $tabs) {
+            return true;
+        }
+        return false;
+    }
 
     protected function getCountMessageImports()
     {

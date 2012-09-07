@@ -32,6 +32,8 @@ abstract class AbstractTabsAdmin extends Admin
     public $client_id = '';
     public $date_filter_separator = '|';
     public $month_default = '';
+    public $date_format_php = '';
+    public $date_format_js = '';
 
     /**
      * @param string $code
@@ -50,6 +52,10 @@ abstract class AbstractTabsAdmin extends Admin
      */
     public function getRequestParameters($request)
     {
+        $this->date_format_datetime = 'dd/MM/yyyy';
+        $this->date_format_php = 'd/m/Y';
+        $this->date_format_js = 'dd/mm/yyyy';
+
         $filter = $request->query->get('filter');
 
         if (!empty($filter['client_id']) && !empty($filter['client_id']['value'])) {
@@ -62,6 +68,14 @@ abstract class AbstractTabsAdmin extends Admin
 
             list($this->month, $this->year) = $this->getQueryMonth($this->query_month);
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateFormat()
+    {
+        return $this->date_format_js;
     }
 
     public function getQueryMonth($query_month)
@@ -90,15 +104,17 @@ abstract class AbstractTabsAdmin extends Admin
     {
         $query = parent::createQuery($context);
 
-        $date_piece = $this->year . '-' . $this->month . '-01';
+        $form_date_piece = $this->year . '-' . $this->month . '-01';
+        $to_date_piece = $this->year . '-' . $this->month . '-31';
 
         if ($this->query_month == -1) {
             $query->orWhere($query->getRootAlias() . '.date_piece IS NULL');
-            $query->orWhere($query->getRootAlias() . '.date_piece = :date_piece');
+            $query->orWhere($query->getRootAlias() . '.date_piece BETWEEN :form_date_piece AND :to_date_piece');
         } else {
-            $query->andWhere($query->getRootAlias() . '.date_piece = :date_piece');
+            $query->andWhere($query->getRootAlias() . '.date_piece BETWEEN :form_date_piece AND :to_date_piece');
         }
-        $query->setParameter(':date_piece', $date_piece);
+        $query->setParameter(':form_date_piece', $form_date_piece);
+        $query->setParameter(':to_date_piece', $to_date_piece);
 
         $query->andWhere($query->getRootAlias() . '.client_id=' . $this->client_id);
 
@@ -263,16 +279,6 @@ abstract class AbstractTabsAdmin extends Admin
         return method_exists($this, $method) ? $this->$method($value) : $value;
     }
 
-    /**
-     * @param $value
-     * @return array
-     */
-    public function dateFormValue($value)
-    {
-        $t = strtotime($value);
-
-        return date('d/m/Y', $t);
-    }
 
     /**
      * @return array
@@ -286,5 +292,29 @@ abstract class AbstractTabsAdmin extends Admin
         $parameters['year'] = $this->year;
 
         return $parameters;
+    }
+
+    /**
+     * @param $value
+     * @return array
+     */
+    public function dateFormValue($value)
+    {
+        $t = strtotime($value);
+
+        if (!$t) {
+            $t = \PHPExcel_Shared_Date::ExcelToPHP($value);
+        }
+
+        return date($this->date_format_php, $t);
+    }
+
+    /**
+     * @param $value
+     * @return array
+     */
+    protected function getDate_pieceFormValue($value)
+    {
+        return $this->dateFormValue($value);
     }
 }
