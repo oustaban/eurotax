@@ -25,7 +25,7 @@ class V01TVAAdmin extends Admin
                 'attr' => array('class' => 'datepicker'),
                 'widget' => 'single_text',
                 'input' => 'datetime',
-                'format' => 'MM/dd/yyyy')
+                'format' => $this->date_format_datetime)
             )
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
             ->add('devise_id', null, array('label' => $this->getFieldLabel('devise_id')))
@@ -74,10 +74,6 @@ class V01TVAAdmin extends Admin
             ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA')));
     }
 
-    protected function getDate_pieceFormValue($value)
-    {
-        return $this->dateFormValue($value);
-    }
 
     protected function getPaiement_dateFormValue($value)
     {

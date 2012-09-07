@@ -25,7 +25,7 @@ class A06AIBAdmin extends Admin
                 'attr' => array('class' => 'datepicker'),
                 'widget' => 'single_text',
                 'input' => 'datetime',
-                'format' => 'MM/dd/yyyy')
+                'format' => $this->date_format_datetime)
         )
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
             ->add('devise_id', null, array('label' => $this->getFieldLabel('devise_id')))

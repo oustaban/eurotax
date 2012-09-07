@@ -20,7 +20,13 @@ class A02TVAAdmin extends Admin
 
         $formMapper
             ->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
-            ->add('date_piece', null, array('label' => $this->getFieldLabel('date_piece')))
+            ->add('date_piece', null, array(
+                'label' => $this->getFieldLabel('date_piece'),
+                'attr' => array('class' => 'datepicker'),
+                'widget' => 'single_text',
+                'input' => 'datetime',
+                'format' => $this->date_format_datetime)
+        )
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
             ->add('devise_id', null, array('label' => $this->getFieldLabel('devise_id')))
             ->add('montant_HT_en_devise', null, array('label' => $this->getFieldLabel('montant_HT_en_devise')))
@@ -66,11 +72,6 @@ class A02TVAAdmin extends Admin
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:HT.html.twig'))
             ->add('TVA', null, array('label' => $this->getFieldLabel('TVA')))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
-    }
-
-    protected function getDate_pieceFormValue($value)
-    {
-        return $this->dateFormValue($value);
     }
 
     protected function getPaiement_dateFormValue($value)

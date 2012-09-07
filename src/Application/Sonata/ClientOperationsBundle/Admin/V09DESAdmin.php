@@ -26,7 +26,7 @@ class V09DESAdmin extends Admin
                 'attr' => array('class' => 'datepicker'),
                 'widget' => 'single_text',
                 'input' => 'datetime',
-                'format' => 'MM/dd/yyyy')
+                'format' => $this->date_format_datetime)
         )
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
             ->add('devise_id', null, array('label' => $this->getFieldLabel('devise_id')))
@@ -59,10 +59,5 @@ class V09DESAdmin extends Admin
             ->add('taux_de_change', null, array('label' => $this->getFieldLabel('taux_de_change')))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:HT.html.twig'))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
-    }
-
-    protected function getDate_pieceFormValue($value)
-    {
-        return $this->dateFormValue($value);
     }
 }

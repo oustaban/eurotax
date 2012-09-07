@@ -26,7 +26,7 @@ class V03283IAdmin extends Admin
                 'attr' => array('class' => 'datepicker'),
                 'widget' => 'single_text',
                 'input' => 'datetime',
-                'format' => 'MM/dd/yyyy')
+                'format' => $this->date_format_datetime)
         )
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
             ->add('devise_id', null, array('label' => $this->getFieldLabel('devise_id')))
@@ -58,8 +58,4 @@ class V03283IAdmin extends Admin
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:HT.html.twig'));
     }
 
-    protected function getDate_pieceFormValue($value)
-    {
-        return $this->dateFormValue($value);
-    }
 }

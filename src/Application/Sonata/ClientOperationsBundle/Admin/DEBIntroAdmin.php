@@ -25,7 +25,7 @@ class DEBIntroAdmin extends Admin
                 'attr' => array('class' => 'datepicker'),
                 'widget' => 'single_text',
                 'input' => 'datetime',
-                'format' => 'MM/dd/yyyy')
+                'format' => $this->date_format_datetime)
         )
             ->add('nomenclature', null, array('label' => $this->getFieldLabel('nomenclature')))
             ->add('pays_id_destination', 'country', array('label' => $this->getFieldLabel('pays_id_destination')))
@@ -67,13 +67,5 @@ class DEBIntroAdmin extends Admin
             ->add('departement', null, array('label' => $this->getFieldLabel('departement')))
             ->add('pays_id_origine', 'country', array('label' => $this->getFieldLabel('pays_id_origine')))
             ->add('CEE', null, array('label' => $this->getFieldLabel('CEE')));
-    }
-
-    /**
-     * @param DatagridMapper $datagridMapper
-     */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
-    {
-        $datagridMapper->add('client_id');
     }
 }
