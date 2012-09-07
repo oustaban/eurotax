@@ -305,8 +305,10 @@ class AbstractTabsController extends Controller
             $file = TMP_UPLOAD_PATH . '/' . $_FILES["inputFile"]["name"];
             $tmpFile = $_FILES["inputFile"]["tmp_name"];
             if (move_uploaded_file($tmpFile, $file)) {
+                /* @var $objReader \PHPExcel_Reader_Excel2007 */
                 $objReader = \PHPExcel_IOFactory::createReaderForFile($file);
                 /* @var $objPHPExcel \PHPExcel */
+                $objReader->setReadDataOnly(true);
                 $objPHPExcel = $objReader->load($file);
                 $sheets = $objPHPExcel->getAllSheets();
 
