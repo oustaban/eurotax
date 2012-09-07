@@ -84,6 +84,9 @@ class A08IM
      */
     private $imports;
 
+    public function __clone() {
+        $this->id = null;
+    }
 
     /**
      * @return string
@@ -296,14 +299,14 @@ class A08IM
     public function setImports(\Application\Sonata\ClientOperationsBundle\Entity\Imports $imports = null)
     {
         $this->imports = $imports;
-    
+
         return $this;
     }
 
     /**
      * Get imports
      *
-     * @return Application\Sonata\ClientOperationsBundle\Entity\Imports 
+     * @return Application\Sonata\ClientOperationsBundle\Entity\Imports
      */
     public function getImports()
     {

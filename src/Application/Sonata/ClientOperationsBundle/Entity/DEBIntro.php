@@ -141,6 +141,10 @@ class DEBIntro
      */
     private $imports;
 
+    public function __clone() {
+        $this->id = null;
+    }
+
     /**
      * @return string
      */
@@ -513,14 +517,14 @@ class DEBIntro
     public function setImports(\Application\Sonata\ClientOperationsBundle\Entity\Imports $imports = null)
     {
         $this->imports = $imports;
-    
+
         return $this;
     }
 
     /**
      * Get imports
      *
-     * @return Application\Sonata\ClientOperationsBundle\Entity\Imports 
+     * @return Application\Sonata\ClientOperationsBundle\Entity\Imports
      */
     public function getImports()
     {
@@ -536,14 +540,14 @@ class DEBIntro
     public function setDatePiece($datePiece)
     {
         $this->date_piece = $datePiece;
-    
+
         return $this;
     }
 
     /**
      * Get date_piece
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDatePiece()
     {

@@ -112,6 +112,10 @@ class V09DES
      */
     private $imports;
 
+    public function __clone() {
+        $this->id = null;
+    }
+
     /**
      * @return string
      */
@@ -415,14 +419,14 @@ class V09DES
     public function setImports(\Application\Sonata\ClientOperationsBundle\Entity\Imports $imports = null)
     {
         $this->imports = $imports;
-    
+
         return $this;
     }
 
     /**
      * Get imports
      *
-     * @return Application\Sonata\ClientOperationsBundle\Entity\Imports 
+     * @return Application\Sonata\ClientOperationsBundle\Entity\Imports
      */
     public function getImports()
     {

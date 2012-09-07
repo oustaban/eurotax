@@ -148,6 +148,10 @@ class A02TVA
      */
     private $imports;
 
+    public function __clone() {
+        $this->id = null;
+    }
+
     /**
      * @return string
      */
@@ -160,7 +164,7 @@ class A02TVA
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -176,14 +180,14 @@ class A02TVA
     public function setClientId($clientId)
     {
         $this->client_id = $clientId;
-    
+
         return $this;
     }
 
     /**
      * Get client_id
      *
-     * @return integer 
+     * @return integer
      */
     public function getClientId()
     {
@@ -199,14 +203,14 @@ class A02TVA
     public function setDatePiece($datePiece)
     {
         $this->date_piece = $datePiece;
-    
+
         return $this;
     }
 
     /**
      * Get date_piece
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDatePiece()
     {
@@ -222,14 +226,14 @@ class A02TVA
     public function setNumeroPiece($numeroPiece)
     {
         $this->numero_piece = $numeroPiece;
-    
+
         return $this;
     }
 
     /**
      * Get numero_piece
      *
-     * @return string 
+     * @return string
      */
     public function getNumeroPiece()
     {
@@ -245,14 +249,14 @@ class A02TVA
     public function setDeviseId($deviseId)
     {
         $this->devise_id = $deviseId;
-    
+
         return $this;
     }
 
     /**
      * Get devise_id
      *
-     * @return integer 
+     * @return integer
      */
     public function getDeviseId()
     {
@@ -268,14 +272,14 @@ class A02TVA
     public function setMontantHTEnDevise($montantHTEnDevise)
     {
         $this->montant_HT_en_devise = $montantHTEnDevise;
-    
+
         return $this;
     }
 
     /**
      * Get montant_HT_en_devise
      *
-     * @return float 
+     * @return float
      */
     public function getMontantHTEnDevise()
     {
@@ -291,14 +295,14 @@ class A02TVA
     public function setTauxDeTVA($tauxDeTVA)
     {
         $this->taux_de_TVA = $tauxDeTVA;
-    
+
         return $this;
     }
 
     /**
      * Get taux_de_TVA
      *
-     * @return float 
+     * @return float
      */
     public function getTauxDeTVA()
     {
@@ -314,14 +318,14 @@ class A02TVA
     public function setMontantTVAFrancaise($montantTVAFrancaise)
     {
         $this->montant_TVA_francaise = $montantTVAFrancaise;
-    
+
         return $this;
     }
 
     /**
      * Get montant_TVA_francaise
      *
-     * @return float 
+     * @return float
      */
     public function getMontantTVAFrancaise()
     {
@@ -337,14 +341,14 @@ class A02TVA
     public function setMontantTTC($montantTTC)
     {
         $this->montant_TTC = $montantTTC;
-    
+
         return $this;
     }
 
     /**
      * Get montant_TTC
      *
-     * @return float 
+     * @return float
      */
     public function getMontantTTC()
     {
@@ -360,14 +364,14 @@ class A02TVA
     public function setPaiementMontant($paiementMontant)
     {
         $this->paiement_montant = $paiementMontant;
-    
+
         return $this;
     }
 
     /**
      * Get paiement_montant
      *
-     * @return float 
+     * @return float
      */
     public function getPaiementMontant()
     {
@@ -383,14 +387,14 @@ class A02TVA
     public function setPaiementDeviseId($paiementDeviseId)
     {
         $this->paiement_devise_id = $paiementDeviseId;
-    
+
         return $this;
     }
 
     /**
      * Get paiement_devise_id
      *
-     * @return integer 
+     * @return integer
      */
     public function getPaiementDeviseId()
     {
@@ -406,14 +410,14 @@ class A02TVA
     public function setPaiementDate($paiementDate)
     {
         $this->paiement_date = $paiementDate;
-    
+
         return $this;
     }
 
     /**
      * Get paiement_date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getPaiementDate()
     {
@@ -429,14 +433,14 @@ class A02TVA
     public function setMois($mois)
     {
         $this->mois = $mois;
-    
+
         return $this;
     }
 
     /**
      * Get mois
      *
-     * @return float 
+     * @return float
      */
     public function getMois()
     {
@@ -452,14 +456,14 @@ class A02TVA
     public function setTauxDeChange($tauxDeChange)
     {
         $this->taux_de_change = $tauxDeChange;
-    
+
         return $this;
     }
 
     /**
      * Get taux_de_change
      *
-     * @return string 
+     * @return string
      */
     public function getTauxDeChange()
     {
@@ -475,14 +479,14 @@ class A02TVA
     public function setHT($hT)
     {
         $this->HT = $hT;
-    
+
         return $this;
     }
 
     /**
      * Get HT
      *
-     * @return float 
+     * @return float
      */
     public function getHT()
     {
@@ -498,14 +502,14 @@ class A02TVA
     public function setTVA($tVA)
     {
         $this->TVA = $tVA;
-    
+
         return $this;
     }
 
     /**
      * Get TVA
      *
-     * @return float 
+     * @return float
      */
     public function getTVA()
     {
@@ -521,14 +525,14 @@ class A02TVA
     public function setCommentaires($commentaires)
     {
         $this->commentaires = $commentaires;
-    
+
         return $this;
     }
 
     /**
      * Get commentaires
      *
-     * @return string 
+     * @return string
      */
     public function getCommentaires()
     {
@@ -544,14 +548,14 @@ class A02TVA
     public function setTiers($tiers)
     {
         $this->tiers = $tiers;
-    
+
         return $this;
     }
 
     /**
      * Get tiers
      *
-     * @return string 
+     * @return string
      */
     public function getTiers()
     {
@@ -569,14 +573,14 @@ class A02TVA
     public function setImports(\Application\Sonata\ClientOperationsBundle\Entity\Imports $imports = null)
     {
         $this->imports = $imports;
-    
+
         return $this;
     }
 
     /**
      * Get imports
      *
-     * @return Application\Sonata\ClientOperationsBundle\Entity\Imports 
+     * @return Application\Sonata\ClientOperationsBundle\Entity\Imports
      */
     public function getImports()
     {

@@ -105,6 +105,10 @@ class V03283I
      */
     private $imports;
 
+    public function __clone() {
+        $this->id = null;
+    }
+
     /**
      * @return string
      */
@@ -116,7 +120,7 @@ class V03283I
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -132,14 +136,14 @@ class V03283I
     public function setClientId($clientId)
     {
         $this->client_id = $clientId;
-    
+
         return $this;
     }
 
     /**
      * Get client_id
      *
-     * @return integer 
+     * @return integer
      */
     public function getClientId()
     {
@@ -155,14 +159,14 @@ class V03283I
     public function setTiers($tiers)
     {
         $this->tiers = $tiers;
-    
+
         return $this;
     }
 
     /**
      * Get tiers
      *
-     * @return string 
+     * @return string
      */
     public function getTiers()
     {
@@ -178,14 +182,14 @@ class V03283I
     public function setNoTVATiers($noTVATiers)
     {
         $this->no_TVA_tiers = $noTVATiers;
-    
+
         return $this;
     }
 
     /**
      * Get no_TVA_tiers
      *
-     * @return string 
+     * @return string
      */
     public function getNoTVATiers()
     {
@@ -201,14 +205,14 @@ class V03283I
     public function setDatePiece($datePiece)
     {
         $this->date_piece = $datePiece;
-    
+
         return $this;
     }
 
     /**
      * Get date_piece
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDatePiece()
     {
@@ -224,14 +228,14 @@ class V03283I
     public function setNumeroPiece($numeroPiece)
     {
         $this->numero_piece = $numeroPiece;
-    
+
         return $this;
     }
 
     /**
      * Get numero_piece
      *
-     * @return string 
+     * @return string
      */
     public function getNumeroPiece()
     {
@@ -247,14 +251,14 @@ class V03283I
     public function setDeviseId($deviseId)
     {
         $this->devise_id = $deviseId;
-    
+
         return $this;
     }
 
     /**
      * Get devise_id
      *
-     * @return integer 
+     * @return integer
      */
     public function getDeviseId()
     {
@@ -270,14 +274,14 @@ class V03283I
     public function setMontantHTEnDevise($montantHTEnDevise)
     {
         $this->montant_HT_en_devise = $montantHTEnDevise;
-    
+
         return $this;
     }
 
     /**
      * Get montant_HT_en_devise
      *
-     * @return string 
+     * @return string
      */
     public function getMontantHTEnDevise()
     {
@@ -293,14 +297,14 @@ class V03283I
     public function setMois($mois)
     {
         $this->mois = $mois;
-    
+
         return $this;
     }
 
     /**
      * Get mois
      *
-     * @return float 
+     * @return float
      */
     public function getMois()
     {
@@ -316,14 +320,14 @@ class V03283I
     public function setTauxDeChange($tauxDeChange)
     {
         $this->taux_de_change = $tauxDeChange;
-    
+
         return $this;
     }
 
     /**
      * Get taux_de_change
      *
-     * @return string 
+     * @return string
      */
     public function getTauxDeChange()
     {
@@ -339,14 +343,14 @@ class V03283I
     public function setHT($hT)
     {
         $this->HT = $hT;
-    
+
         return $this;
     }
 
     /**
      * Get HT
      *
-     * @return float 
+     * @return float
      */
     public function getHT()
     {
@@ -362,14 +366,14 @@ class V03283I
     public function setCommentaires($commentaires)
     {
         $this->commentaires = $commentaires;
-    
+
         return $this;
     }
 
     /**
      * Get commentaires
      *
-     * @return string 
+     * @return string
      */
     public function getCommentaires()
     {
@@ -385,14 +389,14 @@ class V03283I
     public function setImports(\Application\Sonata\ClientOperationsBundle\Entity\Imports $imports = null)
     {
         $this->imports = $imports;
-    
+
         return $this;
     }
 
     /**
      * Get imports
      *
-     * @return Application\Sonata\ClientOperationsBundle\Entity\Imports 
+     * @return Application\Sonata\ClientOperationsBundle\Entity\Imports
      */
     public function getImports()
     {

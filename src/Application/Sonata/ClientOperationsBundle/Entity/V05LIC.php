@@ -210,6 +210,10 @@ class V05LIC
      */
     private $imports;
 
+    public function __clone() {
+        $this->id = null;
+    }
+
     /**
      * @return string
      */
@@ -813,14 +817,14 @@ class V05LIC
     public function setCEE($cEE)
     {
         $this->CEE = $cEE;
-    
+
         return $this;
     }
 
     /**
      * Get CEE
      *
-     * @return string 
+     * @return string
      */
     public function getCEE()
     {
@@ -836,14 +840,14 @@ class V05LIC
     public function setImports(\Application\Sonata\ClientOperationsBundle\Entity\Imports $imports = null)
     {
         $this->imports = $imports;
-    
+
         return $this;
     }
 
     /**
      * Get imports
      *
-     * @return Application\Sonata\ClientOperationsBundle\Entity\Imports 
+     * @return Application\Sonata\ClientOperationsBundle\Entity\Imports
      */
     public function getImports()
     {

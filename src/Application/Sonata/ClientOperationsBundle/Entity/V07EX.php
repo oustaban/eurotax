@@ -99,6 +99,10 @@ class V07EX
      */
     private $imports;
 
+    public function __clone() {
+        $this->id = null;
+    }
+
     /**
      * @return string
      */
@@ -110,7 +114,7 @@ class V07EX
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -126,14 +130,14 @@ class V07EX
     public function setClientId($clientId)
     {
         $this->client_id = $clientId;
-    
+
         return $this;
     }
 
     /**
      * Get client_id
      *
-     * @return integer 
+     * @return integer
      */
     public function getClientId()
     {
@@ -149,14 +153,14 @@ class V07EX
     public function setTiers($tiers)
     {
         $this->tiers = $tiers;
-    
+
         return $this;
     }
 
     /**
      * Get tiers
      *
-     * @return string 
+     * @return string
      */
     public function getTiers()
     {
@@ -172,14 +176,14 @@ class V07EX
     public function setNumeroPiece($numeroPiece)
     {
         $this->numero_piece = $numeroPiece;
-    
+
         return $this;
     }
 
     /**
      * Get numero_piece
      *
-     * @return string 
+     * @return string
      */
     public function getNumeroPiece()
     {
@@ -195,14 +199,14 @@ class V07EX
     public function setDeviseId($deviseId)
     {
         $this->devise_id = $deviseId;
-    
+
         return $this;
     }
 
     /**
      * Get devise_id
      *
-     * @return integer 
+     * @return integer
      */
     public function getDeviseId()
     {
@@ -218,14 +222,14 @@ class V07EX
     public function setMontantHTEnDevise($montantHTEnDevise)
     {
         $this->montant_HT_en_devise = $montantHTEnDevise;
-    
+
         return $this;
     }
 
     /**
      * Get montant_HT_en_devise
      *
-     * @return float 
+     * @return float
      */
     public function getMontantHTEnDevise()
     {
@@ -241,14 +245,14 @@ class V07EX
     public function setMois($mois)
     {
         $this->mois = $mois;
-    
+
         return $this;
     }
 
     /**
      * Get mois
      *
-     * @return float 
+     * @return float
      */
     public function getMois()
     {
@@ -264,14 +268,14 @@ class V07EX
     public function setTauxDeChange($tauxDeChange)
     {
         $this->taux_de_change = $tauxDeChange;
-    
+
         return $this;
     }
 
     /**
      * Get taux_de_change
      *
-     * @return string 
+     * @return string
      */
     public function getTauxDeChange()
     {
@@ -287,14 +291,14 @@ class V07EX
     public function setHT($hT)
     {
         $this->HT = $hT;
-    
+
         return $this;
     }
 
     /**
      * Get HT
      *
-     * @return float 
+     * @return float
      */
     public function getHT()
     {
@@ -310,14 +314,14 @@ class V07EX
     public function setCommentaires($commentaires)
     {
         $this->commentaires = $commentaires;
-    
+
         return $this;
     }
 
     /**
      * Get commentaires
      *
-     * @return string 
+     * @return string
      */
     public function getCommentaires()
     {
@@ -333,14 +337,14 @@ class V07EX
     public function setImports(\Application\Sonata\ClientOperationsBundle\Entity\Imports $imports = null)
     {
         $this->imports = $imports;
-    
+
         return $this;
     }
 
     /**
      * Get imports
      *
-     * @return Application\Sonata\ClientOperationsBundle\Entity\Imports 
+     * @return Application\Sonata\ClientOperationsBundle\Entity\Imports
      */
     public function getImports()
     {
@@ -356,14 +360,14 @@ class V07EX
     public function setDatePiece($datePiece)
     {
         $this->date_piece = $datePiece;
-    
+
         return $this;
     }
 
     /**
      * Get date_piece
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDatePiece()
     {

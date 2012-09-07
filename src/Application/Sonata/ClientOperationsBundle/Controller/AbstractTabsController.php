@@ -197,6 +197,45 @@ class AbstractTabsController extends Controller
         return $formatter->format($timestamp);
     }
 
+    public function cloneAction($id = null)
+    {
+        return $this->_action($this->abstractCloneAction($id), 'create', 'form_layout');
+    }
+
+    protected function abstractCloneAction($id = null)
+    {
+        $id = $this->get('request')->get($this->admin->getIdParameter());
+
+        $object = $this->admin->getObject($id);
+        $object = clone $object;
+
+        if (!$object) {
+            throw new NotFoundHttpException(sprintf('unable to find the object with id : %s', $id));
+        }
+
+        // the key used to lookup the template
+        $templateKey = 'edit';
+
+        if (false === $this->admin->isGranted('CREATE')) {
+            throw new AccessDeniedException();
+        }
+
+        $this->admin->setSubject($object);
+
+        $form = $this->admin->getForm();
+        $form->setData($object);
+        $view = $form->createView();
+
+        // set the theme for the current Admin Form
+        $this->get('twig')->getExtension('form')->renderer->setTheme($view, $this->admin->getFormTheme());
+
+        return $this->render($this->admin->getTemplate($templateKey), array(
+            'action' => 'create',
+            'form'   => $view,
+            'object' => $object,
+        ));
+    }
+
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */

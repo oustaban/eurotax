@@ -131,6 +131,15 @@ abstract class AbstractTabsAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $this->_form_label = 'list';
+
+        if (!$this->getLocking()) {
+            $listMapper->add('_action', 'actions', array(
+                'actions' => array(
+                    'clone' => array('template' => 'ApplicationSonataClientOperationsBundle:CRUD:clone_action.html.twig'),
+                )
+            ));
+        }
+
         $listMapper->add('imports.id', null);
     }
 
@@ -240,6 +249,7 @@ abstract class AbstractTabsAdmin extends Admin
         $collection->add('import');
         $collection->add('locking', 'locking/{client_id}/{month}/{year}/{blocked}');
         $collection->add('importremove');
+        $collection->add('clone', '{id}/clone');
     }
 
     /**
