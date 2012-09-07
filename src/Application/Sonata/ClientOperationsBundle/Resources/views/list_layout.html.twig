@@ -41,7 +41,12 @@
         else {
             $tr.remove();
         }
-
+    });
+    $(window).resize(function(){
+        $('#container').width($('.sonata-ba-list table.table').width()+100);
+    });
+    $(function(){
+        $(window).resize();
     });
 </script>
 {% endblock javascripts %}
