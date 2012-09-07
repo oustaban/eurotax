@@ -1,19 +1,6 @@
 body {
     background: #969696 url(../img/bg.png) repeat-x top;
 }
-#container #maincont,
-#container #maincont #mainsubcont,
-#container #maincont #mainsubcont div.container-fluid,
-#container #maincont #mainsubcont div.container-fluid div.sonata-bc,
-#container #maincont #mainsubcont div.container-fluid div.sonata-bc div.main-content,
-#container #maincont #mainsubcont div.container-fluid div.sonata-bc div.main-content div.row-fluid,
-#container #maincont #mainsubcont div.container-fluid div.sonata-bc div.main-content div.row-fluid div.content,
-#container #maincont #mainsubcont div.container-fluid div.sonata-bc div.main-content div.row-fluid div.content div.sonata-ba-list,
-#container #maincont #mainsubcont div.container-fluid div.sonata-bc div.main-content div.row-fluid div.content div.sonata-ba-list div.row-fluid,
-#container #maincont #mainsubcont div.container-fluid div.sonata-bc div.main-content div.row-fluid div.content div.sonata-ba-list div.row-fluid div.content,
-#container #maincont #mainsubcont div.container-fluid div.sonata-bc div.main-content div.row-fluid div.content div.sonata-ba-list div.row-fluid div.sonata-ba-list {
-    display: table;
-}
 #header {
     margin-bottom: 20px;
 }
