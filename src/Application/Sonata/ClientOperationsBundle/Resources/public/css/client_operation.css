@@ -7,3 +7,22 @@
 #error_repost_show:hover{
     text-decoration: none;
 }
+#client-topinfo {
+    clear: none;
+    float: left;
+    margin-left: 200px;
+    margin-top: -60px;
+}
+#client-topinfo div {
+    clear: none;
+    float: left;
+    margin: 0;
+}
+#client-topinfo h1 {
+    clear: none;
+    float: left;
+    margin: 0 0 0 50px
+}
+#client-topinfo span.label {
+    margin: 0 50px
+}

@@ -1,3 +1,4 @@
+{% use 'ApplicationSonataClientOperationsBundle:CRUD:form_client_topinfo.html.twig' %}
 {#
     Ventes (sell, ouput)
     Achat (buy, input)
@@ -15,5 +16,6 @@
             <a href="{{ url('admin_sonata_clientoperations_a02tva_list', _filter_json) }}">Achat</a>
         </li>
     </ul>
+    {{ block('form_client_topinfo')}}
 </div>
 {% endblock %}

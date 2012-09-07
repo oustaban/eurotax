@@ -1,11 +1,9 @@
 {% use 'ApplicationSonataClientOperationsBundle:CRUD:client_folder.html.twig' %}
-{% use 'ApplicationSonataClientOperationsBundle:CRUD:form_client_topinfo.html.twig' %}
 {% use 'ApplicationSonataClientOperationsBundle:CRUD:form_buttons.html.twig' %}
 
 {% block form_panels %}
 
 {{ block('client_folder') }}
-{{ block('form_client_topinfo')}}
 {{ block('form_buttons') }}
 
 {% endblock form_panels %}
