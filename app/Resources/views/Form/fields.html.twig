@@ -1,12 +1,9 @@
-{% block form_row %}
+{% extends 'SonataDoctrineORMAdminBundle:Form:form_admin_fields.html.twig' %}
+
+{% block field_row %}
+{% if sonata_admin is defined and not sonata_admin_enabled %}
 <div class="control-group{% if errors|length > 0%} error{%endif%}" id="sonata-ba-field-container-{{ id }}">
-    {% block label %}
-    {% if sonata_admin.field_description.options.name is defined %}
-    {{ form_label(form, sonata_admin.field_description.options.name, { 'attr' : {'class' : 'control-label'} }) }}
-    {% else %}
-    {{ form_label(form, label|default(null), { 'attr' : {'class' : 'control-label'} }) }}
-    {% endif %}
-    {% endblock %}
+    {{ block ('label') }}
 
     <div class="controls sonata-ba-field sonata-ba-field-{{ sonata_admin.edit }}-{{ sonata_admin.inline }} {% if errors|length > 0 %}sonata-ba-field-error{% endif %}">
 
@@ -19,7 +16,33 @@
         {% endif %}
     </div>
 </div>
-{% endblock form_row %}
+{% else %}
+{% if sonata_admin is not defined or not sonata_admin_enabled or not sonata_admin.field_description %}
+{{ form_label(form, label|default(null)) }}
+{{ form_errors(form) }}
+{{ form_widget(form) }}
+{% else %}
+<div class="control-group{% if errors|length > 0%} error{%endif%}" id="sonata-ba-field-container-{{ id }}">
+    {{ block ('label') }}
+
+    <div class="controls sonata-ba-field sonata-ba-field-{{ sonata_admin.edit }}-{{ sonata_admin.inline }} {% if errors|length > 0 %}sonata-ba-field-error{% endif %}">
+
+        {{ form_widget(form) }}
+
+        {% if errors|length > 0 %}
+        <div class="help-inline sonata-ba-field-error-messages">
+            {{ form_errors(form) }}
+        </div>
+        {% endif %}
+
+        {% if sonata_admin.field_description.help %}
+        <span class="help-block sonata-ba-field-help">{{ sonata_admin.field_description.help }}</span>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+{% endif %}
+{% endblock field_row %}
 
 {% block location_row %}
 {#% set attr = attr|merge({'data-prototype': block('collection_widget_row') }) %#}
