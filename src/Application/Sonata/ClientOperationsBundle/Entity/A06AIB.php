@@ -10,51 +10,16 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table("et_operations_A06AIB")
  * @ORM\Entity
  */
-class A06AIB
+class A06AIB extends AbstractBuyEntity
 {
     /**
-     * @var integer $id
+     * @var integer $devise
      *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\ManyToOne(targetEntity="\Application\Sonata\ClientBundle\Entity\ListDevises", inversedBy="BaseListDevises")
+     * @ORM\JoinColumn(name="devise_id", referencedColumnName="id")
      */
-    private $id;
 
-    /**
-     * @var integer $client_id
-     *
-     * @ORM\Column(name="client_id", type="integer")
-     */
-    private $client_id;
-
-    /**
-     * @var string $tiers
-     *
-     * @ORM\Column(name="tiers", type="string", length=255)
-     */
-    private $tiers;
-
-    /**
-     * @var \DateTime $date_piece
-     *
-     * @ORM\Column(name="date_piece", type="date", nullable=true)
-     */
-    private $date_piece;
-
-    /**
-     * @var string $numero_piece
-     *
-     * @ORM\Column(name="numero_piece", type="string", length=255)
-     */
-    private $numero_piece;
-
-    /**
-     * @var integer $devise_id
-     *
-     * @ORM\Column(name="devise_id", type="integer")
-     */
-    private $devise_id;
+    private $devise;
 
     /**
      * @var float $montant_HT_en_devise
@@ -62,13 +27,6 @@ class A06AIB
      * @ORM\Column(name="montant_HT_en_devise", type="float")
      */
     private $montant_HT_en_devise;
-
-    /**
-     * @var float $mois
-     *
-     * @ORM\Column(name="mois", type="float")
-     */
-    private $mois;
 
     /**
      * @var string $taux_de_change
@@ -98,12 +56,6 @@ class A06AIB
      */
     private $DEB;
 
-    /**
-     * @var string $commentaires
-     *
-     * @ORM\Column(name="commentaires", type="text")
-     */
-    private $commentaires;
 
     /**
      * @var string $n_ligne
@@ -190,16 +142,6 @@ class A06AIB
     private $pays_id_origine;
 
 
-    /**
-     *
-     * @ORM\ManyToOne(targetEntity="Imports", inversedBy="ao2tva")
-     * @ORM\JoinColumn(name="import_id", referencedColumnName="id")
-     */
-    private $imports;
-
-    public function __clone() {
-        $this->id = null;
-    }
 
     /**
      * @return string
@@ -209,130 +151,6 @@ class A06AIB
         return $this->getTiers();
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set client_id
-     *
-     * @param integer $clientId
-     * @return A06AIB
-     */
-    public function setClientId($clientId)
-    {
-        $this->client_id = $clientId;
-
-        return $this;
-    }
-
-    /**
-     * Get client_id
-     *
-     * @return integer
-     */
-    public function getClientId()
-    {
-        return $this->client_id;
-    }
-
-    /**
-     * Set tiers
-     *
-     * @param string $tiers
-     * @return A06AIB
-     */
-    public function setTiers($tiers)
-    {
-        $this->tiers = $tiers;
-
-        return $this;
-    }
-
-    /**
-     * Get tiers
-     *
-     * @return string
-     */
-    public function getTiers()
-    {
-        return $this->tiers;
-    }
-
-    /**
-     * Set date_piece
-     *
-     * @param \DateTime $datePiece
-     * @return A06AIB
-     */
-    public function setDatePiece($datePiece)
-    {
-        $this->date_piece = $datePiece;
-
-        return $this;
-    }
-
-    /**
-     * Get date_piece
-     *
-     * @return \DateTime
-     */
-    public function getDatePiece()
-    {
-        return $this->date_piece;
-    }
-
-    /**
-     * Set numero_piece
-     *
-     * @param string $numeroPiece
-     * @return A06AIB
-     */
-    public function setNumeroPiece($numeroPiece)
-    {
-        $this->numero_piece = $numeroPiece;
-
-        return $this;
-    }
-
-    /**
-     * Get numero_piece
-     *
-     * @return string
-     */
-    public function getNumeroPiece()
-    {
-        return $this->numero_piece;
-    }
-
-    /**
-     * Set devise_id
-     *
-     * @param integer $deviseId
-     * @return A06AIB
-     */
-    public function setDeviseId($deviseId)
-    {
-        $this->devise_id = $deviseId;
-
-        return $this;
-    }
-
-    /**
-     * Get devise_id
-     *
-     * @return integer
-     */
-    public function getDeviseId()
-    {
-        return $this->devise_id;
-    }
 
     /**
      * Set montant_HT_en_devise
@@ -357,28 +175,7 @@ class A06AIB
         return $this->montant_HT_en_devise;
     }
 
-    /**
-     * Set mois
-     *
-     * @param float $mois
-     * @return A06AIB
-     */
-    public function setMois($mois)
-    {
-        $this->mois = $mois;
 
-        return $this;
-    }
-
-    /**
-     * Get mois
-     *
-     * @return float
-     */
-    public function getMois()
-    {
-        return $this->mois;
-    }
 
     /**
      * Set taux_de_change
@@ -472,28 +269,7 @@ class A06AIB
         return $this->DEB;
     }
 
-    /**
-     * Set commentaires
-     *
-     * @param string $commentaires
-     * @return A06AIB
-     */
-    public function setCommentaires($commentaires)
-    {
-        $this->commentaires = $commentaires;
 
-        return $this;
-    }
-
-    /**
-     * Get commentaires
-     *
-     * @return string
-     */
-    public function getCommentaires()
-    {
-        return $this->commentaires;
-    }
 
     /**
      * Set n_ligne
@@ -771,26 +547,28 @@ class A06AIB
         return $this->pays_id_origine;
     }
 
+
+
     /**
-     * Set imports
+     * Set devise
      *
-     * @param Application\Sonata\ClientOperationsBundle\Entity\Imports $imports
+     * @param Application\Sonata\ClientBundle\Entity\ListDevises $devise
      * @return A06AIB
      */
-    public function setImports(\Application\Sonata\ClientOperationsBundle\Entity\Imports $imports = null)
+    public function setDevise(\Application\Sonata\ClientBundle\Entity\ListDevises $devise = null)
     {
-        $this->imports = $imports;
-
+        $this->devise = $devise;
+    
         return $this;
     }
 
     /**
-     * Get imports
+     * Get devise
      *
-     * @return Application\Sonata\ClientOperationsBundle\Entity\Imports
+     * @return Application\Sonata\ClientBundle\Entity\ListDevises 
      */
-    public function getImports()
+    public function getDevise()
     {
-        return $this->imports;
+        return $this->devise;
     }
 }

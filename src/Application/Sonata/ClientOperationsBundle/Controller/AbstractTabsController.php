@@ -231,7 +231,7 @@ class AbstractTabsController extends Controller
 
         return $this->render($this->admin->getTemplate($templateKey), array(
             'action' => 'create',
-            'form'   => $view,
+            'form' => $view,
             'object' => $object,
         ));
     }
@@ -411,6 +411,9 @@ class AbstractTabsController extends Controller
                                 $formData[$fieldName] = $admin->getFormValue($fieldName, $value);
                             }
 
+                            echo '<pre>';
+                            print_r($formData);
+                            exit;
                             $form->bind($formData);
 
                             if ($form->isValid()) {
@@ -428,7 +431,10 @@ class AbstractTabsController extends Controller
             }
         }
 
-        $this->get('session')->setFlash('sonata_flash_info|raw', implode("<br/>", $this->getCountMessageImports()));
+        $messages = $this->getCountMessageImports();
+        if (!empty($messages)) {
+            $this->get('session')->setFlash('sonata_flash_info|raw', implode("<br/>", $messages));
+        }
 
         return $this->render('ApplicationSonataClientOperationsBundle:redirects:back.html.twig');
     }
