@@ -4,7 +4,7 @@
 <form id="mass-buttons" onsubmit="return false">
     <div>
         <div class="btn-group inline">
-            <button class="btn"><i class="icon icon-list-alt"></i> Voir la fiche</button>
+            <button class="btn" id="btn_more_info"><i class="icon icon-list-alt"></i> Voir la fiche</button>
             <button class="btn"><i class="icon icon-eye-open"></i> Prévisualisation</button>
             <button class="btn"><i class="icon icon-edit"></i> Saisie</button>
         </div>
@@ -69,6 +69,10 @@
 
     $('input[id=inputFile]').change(function () {
         $('#inputFileCover').val($(this).val());
+    });
+
+    $('#btn_more_info').click(function(){
+        location.href = '{{ url('admin_sonata_client_client_edit', {'id':client_id}) }}';
     });
 </script>
 
