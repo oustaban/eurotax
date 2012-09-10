@@ -71,13 +71,18 @@ class instead:
         // ...
     }
 
-You might want to add the new `strict_parameters` parameter to
+You might want to add the new `strict_requirements` parameter to
 `framework.router` (it avoids fatal errors in the production environment when
 a link cannot be generated):
 
     framework:
         router:
-            strict_parameters: %kernel.debug%
+            strict_requirements: %kernel.debug%
+
+You can even disable the requirements check on production with `null` as you should
+know that the parameters for URL generation always pass the requirements, e.g. by
+validating them beforehand. This additionally enhances performance. See
+[config_prod.yml](https://github.com/symfony/symfony-standard/blob/master/app/config/config_prod.yml).
 
 The `default_locale` parameter is now a setting of the main `framework`
 configuration (it was under the `framework.session` in 2.0):
@@ -184,8 +189,8 @@ Under `security.providers`, the `in_memory` example was updated to the following
 
 The following bundles have been added to the list of default registered bundles:
 
-    `new JMS\AopBundle\JMSAopBundle(),
-    `new JMS\DiExtraBundle\JMSDiExtraBundle($this),
+    new JMS\AopBundle\JMSAopBundle(),
+    new JMS\DiExtraBundle\JMSDiExtraBundle($this),
 
 ### `web/app.php`
 
