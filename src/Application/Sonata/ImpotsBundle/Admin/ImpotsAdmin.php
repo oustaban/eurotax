@@ -15,6 +15,8 @@ class ImpotsAdmin extends Admin
 {
     public $dashboards = array('Admin');
 
+    protected $_bundle_name = 'ApplicationSonataImpotsBundle';
+
     /**
      * @return array
      */
@@ -73,5 +75,13 @@ class ImpotsAdmin extends Admin
             ->add('code_swift', null, array('label' => $label . 'code_swift'))
             ->add('IBAN', null, array('label' => $label . 'IBAN'))
             ->add('SEPA', null, array('label' => $label . 'SEPA'));
+    }
+
+    /**
+     * @return array
+     */
+    public function getFormTheme()
+    {
+        return array($this->_bundle_name . ':Form:form_admin_fields.html.twig');
     }
 }

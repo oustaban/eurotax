@@ -7,9 +7,14 @@ security:
         FOS\UserBundle\Model\UserInterface: sha512
 
     role_hierarchy:
-        ROLE_ADMIN_CLIENT:       [ROLE_USER, ROLE_SONATA_ADMIN]
-        ROLE_ADMIN:       [ROLE_USER, ROLE_SONATA_ADMIN]
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_SONATA_ADMIN, ROLE_ADMIN, ROLE_ADMIN_CLIENT]
+        ROLE_SUPER_ADMIN: [ROLE_EDIT_USERS, ROLE_EDIT_DEVISES, ROLE_EDIT_IMPOTS, ROLE_EDIT_CLIENTS, ROLE_EDIT_CLIENTOPERATIONS]
+        ROLE_DASHBOARD_ADMIN: [ROLE_USER, ROLE_SONATA_ADMIN]
+        ROLE_EDIT_USERS: [ROLE_DASHBOARD_ADMIN, ROLE_USER, ROLE_SONATA_ADMIN]
+        ROLE_EDIT_DEVISES: [ROLE_DASHBOARD_ADMIN, ROLE_USER, ROLE_SONATA_ADMIN]
+        ROLE_EDIT_IMPOTS: [ROLE_DASHBOARD_ADMIN, ROLE_USER, ROLE_SONATA_ADMIN]
+        ROLE_DASHBOARD_CLIENT: [ROLE_USER, ROLE_SONATA_ADMIN]
+        ROLE_EDIT_CLIENTS: [ROLE_DASHBOARD_CLIENT, ROLE_USER, ROLE_SONATA_ADMIN]
+        ROLE_EDIT_CLIENTOPERATIONS: [ROLE_USER, ROLE_SONATA_ADMIN]
         SONATA:
             - ROLE_SONATA_PAGE_ADMIN_PAGE_EDIT  # if you are not using acl then this line must be uncommented
 
@@ -38,6 +43,9 @@ security:
         # URL of FOSUserBundle which need to be available to anonymous users
         - { path: ^/_wdt, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/_profiler, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/_configurator, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/core, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/sonata/cache, role: IS_AUTHENTICATED_ANONYMOUSLY }
         #- { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
         # -> custom access control for the admin area of the URL
@@ -49,12 +57,25 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
+        # -> user access
+        - { path: ^/profile, role: [ROLE_USER] }
+        - { path: ^/change-password, role: [ROLE_USER] }
+        # -> end
+
         # Secured part of the site
         # This config requires being logged for the whole site and having the admin role for the admin part.
         # Change these rules to adapt them to your needs
-        - { path: ^/sonata, role: [ROLE_SONATA_ADMIN] }
-        - { path: ^/core, role: [ROLE_SONATA_ADMIN] }
+
         - { path: ^/dashboard$, role: [ROLE_SUPER_ADMIN] }
-        - { path: ^/dashboard/admin, role: [ROLE_ADMIN] }
-        - { path: ^/dashboard/client, role: [ROLE_ADMIN_CLIENT] }
-        - { path: ^/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+
+        - { path: ^/dashboard/admin, role: [ROLE_DASHBOARD_ADMIN] }
+        - { path: ^/sonata/user, role: [ROLE_EDIT_USERS] }
+        - { path: ^/sonata/devises, role: [ROLE_EDIT_DEVISES] }
+        - { path: ^/sonata/impots, role: [ROLE_EDIT_IMPOTS] }
+
+        - { path: ^/dashboard/client, role: [ROLE_DASHBOARD_CLIENT] }
+        - { path: ^/sonata/client, role: [ROLE_EDIT_CLIENTS] }
+
+        - { path: ^/sonata/clientoperations, role: [ROLE_EDIT_CLIENTOPERATIONS] }
+
+        - { path: ^/.*, role: [ROLE_SONATA_ADMIN] }

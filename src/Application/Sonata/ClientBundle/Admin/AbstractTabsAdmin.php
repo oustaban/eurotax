@@ -10,6 +10,8 @@ abstract class AbstractTabsAdmin extends Admin
 {
     public $dashboards = array();
 
+    protected $_bundle_name = 'ApplicationSonataClientBundle';
+
     /**
      * @return array
      */
@@ -81,5 +83,13 @@ abstract class AbstractTabsAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper->add('client_id');
+    }
+
+    /**
+     * @return array
+     */
+    public function getFormTheme()
+    {
+        return array($this->_bundle_name . ':Form:form_admin_fields.html.twig');
     }
 }

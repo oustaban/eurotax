@@ -28,11 +28,11 @@
                         <li><a href="{{ path('home') }}">Accueil</a></li>
                         <li class="divider-vertical"></li>
                         {% if app.user %}
-                            {% if is_granted('ROLE_ADMIN') %}
+                            {% if is_granted('ROLE_DASHBOARD_ADMIN') %}
                                 <li><a href="{{ path('application_sonata_dashboard_admin') }}">Administration</a></li>
                             {% endif %}
-                            {% if is_granted('ROLE_ADMIN_CLIENT') %}
-                                <li><a href="{{ path('application_sonata_dashboard_client') }}">Client Operations</a></li>
+                            {% if is_granted('ROLE_EDIT_CLIENTOPERATIONS') %}
+                                <li><a href="{{ path('admin_sonata_clientoperations_client_list') }}">Client Operations</a></li>
                             {% endif %}
                             {% if is_granted('ROLE_SUPER_ADMIN') %}
                                 <li class="divider-vertical"></li>

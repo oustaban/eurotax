@@ -17,6 +17,8 @@ class ClientAdmin extends Admin
 {
     public $dashboards = array('Admin');
 
+    protected $_bundle_name = 'ApplicationSonataClientBundle';
+
     protected $_fields_list = array(
         'raison_sociale'=>array(),
         'nature_du_client'=>array(),
@@ -104,5 +106,13 @@ class ClientAdmin extends Admin
             $options['label'] = 'filter.' . $field;
             $listMapper->add($field, null, $options);
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function getFormTheme()
+    {
+        return array($this->_bundle_name . ':Form:form_admin_fields.html.twig');
     }
 }
