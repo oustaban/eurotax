@@ -2,19 +2,4 @@
 
 {% block title %} Dashboard! {% endblock %}
 
-{% block body_content %}
-
-
-{% if(is_granted('ROLE_DASHBOARD_ADMIN')) %}
-<a href="{{ path('sonata_admin_dashboard') }}">Admin dashboard</a>
-{% else %}
-
-{% endif %}
-
-{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-<a href="{{ path('sonata_user_admin_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
-{% else %}
-<a href="{{ path('sonata_user_admin_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
-{% endif %}
-
-{% endblock body_content %}
+{% block body_content %}{% endblock body_content %}

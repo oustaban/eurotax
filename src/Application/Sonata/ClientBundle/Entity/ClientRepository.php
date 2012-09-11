@@ -9,6 +9,18 @@ use Doctrine\DBAL\LockMode;
 class ClientRepository extends EntityRepository
 {
     /**
+     * Finds all entities in the repository.
+     *
+     * @return array The entities.
+     */
+    public function findAll()
+    {
+        /* @var $securityContext SecurityContext */
+        $securityContext = \AppKernel::getStaticContainer()->get('security.context');
+        return $this->findBy(array('user' => $securityContext->getToken()->getUser()));
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function find($id, $lockMode = LockMode::NONE, $lockVersion = null)

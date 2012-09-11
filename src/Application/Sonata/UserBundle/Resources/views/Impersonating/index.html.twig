@@ -1,6 +1,12 @@
 {% extends 'ApplicationSonataUserBundle::layout.html.twig' %}
 
 {% block body_content %}
-        {{ parent() }}
-        Index
+{{ parent() }}
+{% if clients %}
+<ul>
+    {% for client in clients %}
+    <li><a href="{{ url('admin_sonata_clientoperations_v01tva_list', {'filter[client_id][value]' : client.id}) }}">{{ client.nom }}</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
 {% endblock body_content %}

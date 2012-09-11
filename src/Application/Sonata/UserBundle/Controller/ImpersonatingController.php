@@ -12,6 +12,11 @@ class ImpersonatingController extends Controller
      */
     public function indexAction()
     {
-        return array();
+        $clients = $this->getDoctrine()->getManager()
+            ->getRepository('Application\Sonata\ClientBundle\Entity\Client')
+            ->findAll();
+        ;
+
+        return array('clients' => $clients);
     }
 }
