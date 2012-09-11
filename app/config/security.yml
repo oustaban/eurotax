@@ -58,18 +58,18 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
         # -> user access
-        - { path: ^/profile, role: ROLE_USER }
-        - { path: ^/change-password, role: ROLE_USER }
+        - { path: ^/profile, role: [ROLE_USER] }
+        - { path: ^/change-password, role: [ROLE_USER] }
         # -> end
 
         # Secured part of the site
         # This config requires being logged for the whole site and having the admin role for the admin part.
         # Change these rules to adapt them to your needs
 
-        - { path: ^/dashboard$, role: ROLE_SUPER_ADMIN }
+        - { path: ^/dashboard$, role: [ROLE_SUPER_ADMIN] }
 
-        - { path: ^/dashboard/admin, role: ROLE_DASHBOARD_ADMIN }
-        - { path: ^/sonata/user, role: ROLE_EDIT_USERS] }
+        - { path: ^/dashboard/admin, role: [ROLE_DASHBOARD_ADMIN] }
+        - { path: ^/sonata/user, role: [ROLE_EDIT_USERS] }
         - { path: ^/sonata/devises, role: [ROLE_EDIT_DEVISES] }
         - { path: ^/sonata/impots, role: [ROLE_EDIT_IMPOTS] }
 
