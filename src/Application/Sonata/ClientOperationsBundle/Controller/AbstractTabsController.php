@@ -18,6 +18,7 @@ class AbstractTabsController extends Controller
      * @var int
      */
     public $client_id = null;
+    public $client = null;
     public $tabs_arr = array(
         'V01-TVA' => 'V01TVA',
         'V03-283-I' => 'V03283I',
@@ -61,6 +62,14 @@ class AbstractTabsController extends Controller
 
         if (empty($this->admin->client_id)) {
             throw new NotFoundHttpException('Unable load page with no client_id');
+        }
+
+        $this->client = $this->getDoctrine()->getManager()
+            ->getRepository('Application\Sonata\ClientBundle\Entity\Client')
+            ->find($this->admin->client_id)
+        ;
+        if (empty($this->client)) {
+            throw new NotFoundHttpException(sprintf('unable to find Client with id : %s', $this->admin->client_id));
         }
 
         $this->client_id = $this->admin->client_id;
