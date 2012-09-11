@@ -10,51 +10,17 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table("et_operations_A04283I")
  * @ORM\Entity
  */
-class A04283I
+class A04283I extends AbstractBuyEntity
 {
-    /**
-     * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
 
     /**
-     * @var integer $client_id
+     * @var integer $devise
      *
-     * @ORM\Column(name="client_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="\Application\Sonata\ClientBundle\Entity\ListDevises", inversedBy="BaseListDevises")
+     * @ORM\JoinColumn(name="devise_id", referencedColumnName="id")
      */
-    private $client_id;
 
-    /**
-     * @var string $tiers
-     *
-     * @ORM\Column(name="tiers", type="string", length=255)
-     */
-    private $tiers;
-
-    /**
-     * @var \DateTime $date_piece
-     *
-     * @ORM\Column(name="date_piece", type="date", nullable=true)
-     */
-    private $date_piece;
-
-    /**
-     * @var string $numero_piece
-     *
-     * @ORM\Column(name="numero_piece", type="string", length=255)
-     */
-    private $numero_piece;
-
-    /**
-     * @var integer $devise_id
-     *
-     * @ORM\Column(name="devise_id", type="integer")
-     */
-    private $devise_id;
+    private $devise;
 
     /**
      * @var float $montant_HT_en_devise
@@ -70,12 +36,6 @@ class A04283I
      */
     private $taux_de_TVA;
 
-    /**
-     * @var float $mois
-     *
-     * @ORM\Column(name="mois", type="float")
-     */
-    private $mois;
 
     /**
      * @var string $taux_de_change
@@ -98,156 +58,6 @@ class A04283I
      */
     private $TVA;
 
-    /**
-     * @var string $commentaires
-     *
-     * @ORM\Column(name="commentaires", type="text")
-     */
-    private $commentaires;
-
-    /**
-     *
-     * @ORM\ManyToOne(targetEntity="Imports", inversedBy="ao2tva")
-     * @ORM\JoinColumn(name="import_id", referencedColumnName="id")
-     */
-    private $imports;
-
-    public function __clone() {
-        $this->id = null;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getTiers();
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set client_id
-     *
-     * @param integer $clientId
-     * @return A04283I
-     */
-    public function setClientId($clientId)
-    {
-        $this->client_id = $clientId;
-
-        return $this;
-    }
-
-    /**
-     * Get client_id
-     *
-     * @return integer
-     */
-    public function getClientId()
-    {
-        return $this->client_id;
-    }
-
-    /**
-     * Set tiers
-     *
-     * @param string $tiers
-     * @return A04283I
-     */
-    public function setTiers($tiers)
-    {
-        $this->tiers = $tiers;
-
-        return $this;
-    }
-
-    /**
-     * Get tiers
-     *
-     * @return string
-     */
-    public function getTiers()
-    {
-        return $this->tiers;
-    }
-
-    /**
-     * Set date_piece
-     *
-     * @param \DateTime $datePiece
-     * @return A04283I
-     */
-    public function setDatePiece($datePiece)
-    {
-        $this->date_piece = $datePiece;
-
-        return $this;
-    }
-
-    /**
-     * Get date_piece
-     *
-     * @return \DateTime
-     */
-    public function getDatePiece()
-    {
-        return $this->date_piece;
-    }
-
-    /**
-     * Set numero_piece
-     *
-     * @param string $numeroPiece
-     * @return A04283I
-     */
-    public function setNumeroPiece($numeroPiece)
-    {
-        $this->numero_piece = $numeroPiece;
-
-        return $this;
-    }
-
-    /**
-     * Get numero_piece
-     *
-     * @return string
-     */
-    public function getNumeroPiece()
-    {
-        return $this->numero_piece;
-    }
-
-    /**
-     * Set devise_id
-     *
-     * @param integer $deviseId
-     * @return A04283I
-     */
-    public function setDeviseId($deviseId)
-    {
-        $this->devise_id = $deviseId;
-
-        return $this;
-    }
-
-    /**
-     * Get devise_id
-     *
-     * @return integer
-     */
-    public function getDeviseId()
-    {
-        return $this->devise_id;
-    }
 
     /**
      * Set montant_HT_en_devise
@@ -295,28 +105,6 @@ class A04283I
         return $this->taux_de_TVA;
     }
 
-    /**
-     * Set mois
-     *
-     * @param float $mois
-     * @return A04283I
-     */
-    public function setMois($mois)
-    {
-        $this->mois = $mois;
-
-        return $this;
-    }
-
-    /**
-     * Get mois
-     *
-     * @return float
-     */
-    public function getMois()
-    {
-        return $this->mois;
-    }
 
     /**
      * Set taux_de_change
@@ -387,49 +175,28 @@ class A04283I
         return $this->TVA;
     }
 
+
+
     /**
-     * Set commentaires
+     * Set devise
      *
-     * @param string $commentaires
+     * @param Application\Sonata\ClientBundle\Entity\ListDevises $devise
      * @return A04283I
      */
-    public function setCommentaires($commentaires)
+    public function setDevise(\Application\Sonata\ClientBundle\Entity\ListDevises $devise = null)
     {
-        $this->commentaires = $commentaires;
-
+        $this->devise = $devise;
+    
         return $this;
     }
 
     /**
-     * Get commentaires
+     * Get devise
      *
-     * @return string
+     * @return Application\Sonata\ClientBundle\Entity\ListDevises 
      */
-    public function getCommentaires()
+    public function getDevise()
     {
-        return $this->commentaires;
-    }
-
-    /**
-     * Set imports
-     *
-     * @param Application\Sonata\ClientOperationsBundle\Entity\Imports $imports
-     * @return A04283I
-     */
-    public function setImports(\Application\Sonata\ClientOperationsBundle\Entity\Imports $imports = null)
-    {
-        $this->imports = $imports;
-
-        return $this;
-    }
-
-    /**
-     * Get imports
-     *
-     * @return Application\Sonata\ClientOperationsBundle\Entity\Imports
-     */
-    public function getImports()
-    {
-        return $this->imports;
+        return $this->devise;
     }
 }

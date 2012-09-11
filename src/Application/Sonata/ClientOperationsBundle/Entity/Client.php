@@ -4,12 +4,7 @@ namespace Application\Sonata\ClientOperationsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Application\Sonata\ClientBundle\Entity\Client
- *
- * @ORM\Table("et_client")
- * @ORM\Entity
- */
+
 class Client
 {
     /**

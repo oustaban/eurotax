@@ -4,38 +4,14 @@ namespace Application\Sonata\ClientOperationsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
- * Application\Sonata\ClientOperationsBundle\Entity\V05LIC
+ * Application\Sonata\ClientOperationsBundle\Entity\AbstractDEBEntity
  *
- * @ORM\Table("et_operations_V05LIC")
- * @ORM\Entity
+ * @ORM\MappedSuperclass
  */
-class V05LIC extends AbstractSellEntity
+abstract class AbstractDEBEntity extends AbstractBaseEntity
 {
-
-    /**
-     * @var string $no_TVA_tiers
-     *
-     * @ORM\Column(name="no_TVA_tiers", type="string", length=255)
-     */
-    private $no_TVA_tiers;
-
-
-    /**
-     * @var string $regime
-     *
-     * @ORM\Column(name="regime", type="string", length=255)
-     */
-    private $regime;
-
-    /**
-     * @var boolean $DEB
-     *
-     * @ORM\Column(name="DEB", type="boolean", nullable=true)
-     */
-    private $DEB;
-
-
     /**
      * @var string $n_ligne
      *
@@ -49,6 +25,7 @@ class V05LIC extends AbstractSellEntity
      * @ORM\Column(name="nomenclature", type="string", length=255)
      */
     private $nomenclature;
+
 
     /**
      * @var string $pays_id_destination
@@ -65,6 +42,13 @@ class V05LIC extends AbstractSellEntity
     private $valeur_fiscale;
 
     /**
+     * @var string $regime
+     *
+     * @ORM\Column(name="regime", type="string", length=255)
+     */
+    private $regime;
+
+    /**
      * @var float $valeur_statistique
      *
      * @ORM\Column(name="valeur_statistique", type="float")
@@ -77,6 +61,7 @@ class V05LIC extends AbstractSellEntity
      * @ORM\Column(name="masse_mette", type="float")
      */
     private $masse_mette;
+
 
     /**
      * @var float $unites_supplementaires
@@ -99,6 +84,7 @@ class V05LIC extends AbstractSellEntity
      */
     private $conditions_livraison;
 
+
     /**
      * @var string $mode_transport
      *
@@ -114,11 +100,12 @@ class V05LIC extends AbstractSellEntity
     private $departement;
 
     /**
-     * @var integer $pays_id_origine
+     * @var string $pays_id_origine
      *
      * @ORM\Column(name="pays_id_origine", type="string", length=2)
      */
     private $pays_id_origine;
+
 
     /**
      * @var string $CEE
@@ -127,97 +114,31 @@ class V05LIC extends AbstractSellEntity
      */
     private $CEE;
 
-
-
-
     /**
-     * Set no_TVA_tiers
-     *
-     * @param string $noTVATiers
-     * @return V05LIC
-     */
-    public function setNoTVATiers($noTVATiers)
-    {
-        $this->no_TVA_tiers = $noTVATiers;
-
-        return $this;
-    }
-
-    /**
-     * Get no_TVA_tiers
-     *
      * @return string
      */
-    public function getNoTVATiers()
+    public function __toString()
     {
-        return $this->no_TVA_tiers;
+        return $this->getNLigne();
     }
-
-
-    /**
-     * Set regime
-     *
-     * @param string $regime
-     * @return V05LIC
-     */
-    public function setRegime($regime)
-    {
-        $this->regime = $regime;
-
-        return $this;
-    }
-
-    /**
-     * Get regime
-     *
-     * @return string
-     */
-    public function getRegime()
-    {
-        return $this->regime;
-    }
-
-    /**
-     * Set DEB
-     *
-     * @param boolean $dEB
-     * @return V05LIC
-     */
-    public function setDEB($dEB)
-    {
-        $this->DEB = $dEB;
-
-        return $this;
-    }
-
-    /**
-     * Get DEB
-     *
-     * @return boolean
-     */
-    public function getDEB()
-    {
-        return $this->DEB;
-    }
-
 
     /**
      * Set n_ligne
      *
      * @param string $nLigne
-     * @return V05LIC
+     * @return AbstractDEBEntity
      */
     public function setNLigne($nLigne)
     {
         $this->n_ligne = $nLigne;
-
+    
         return $this;
     }
 
     /**
      * Get n_ligne
      *
-     * @return string
+     * @return string 
      */
     public function getNLigne()
     {
@@ -228,19 +149,19 @@ class V05LIC extends AbstractSellEntity
      * Set nomenclature
      *
      * @param string $nomenclature
-     * @return V05LIC
+     * @return AbstractDEBEntity
      */
     public function setNomenclature($nomenclature)
     {
         $this->nomenclature = $nomenclature;
-
+    
         return $this;
     }
 
     /**
      * Get nomenclature
      *
-     * @return string
+     * @return string 
      */
     public function getNomenclature()
     {
@@ -248,22 +169,45 @@ class V05LIC extends AbstractSellEntity
     }
 
     /**
+     * Set pays_id_destination
+     *
+     * @param string $paysIdDestination
+     * @return AbstractDEBEntity
+     */
+    public function setPaysIdDestination($paysIdDestination)
+    {
+        $this->pays_id_destination = $paysIdDestination;
+    
+        return $this;
+    }
+
+    /**
+     * Get pays_id_destination
+     *
+     * @return string 
+     */
+    public function getPaysIdDestination()
+    {
+        return $this->pays_id_destination;
+    }
+
+    /**
      * Set valeur_fiscale
      *
      * @param float $valeurFiscale
-     * @return V05LIC
+     * @return AbstractDEBEntity
      */
     public function setValeurFiscale($valeurFiscale)
     {
         $this->valeur_fiscale = $valeurFiscale;
-
+    
         return $this;
     }
 
     /**
      * Get valeur_fiscale
      *
-     * @return float
+     * @return float 
      */
     public function getValeurFiscale()
     {
@@ -271,22 +215,45 @@ class V05LIC extends AbstractSellEntity
     }
 
     /**
+     * Set regime
+     *
+     * @param string $regime
+     * @return AbstractDEBEntity
+     */
+    public function setRegime($regime)
+    {
+        $this->regime = $regime;
+    
+        return $this;
+    }
+
+    /**
+     * Get regime
+     *
+     * @return string 
+     */
+    public function getRegime()
+    {
+        return $this->regime;
+    }
+
+    /**
      * Set valeur_statistique
      *
      * @param float $valeurStatistique
-     * @return V05LIC
+     * @return AbstractDEBEntity
      */
     public function setValeurStatistique($valeurStatistique)
     {
         $this->valeur_statistique = $valeurStatistique;
-
+    
         return $this;
     }
 
     /**
      * Get valeur_statistique
      *
-     * @return float
+     * @return float 
      */
     public function getValeurStatistique()
     {
@@ -297,19 +264,19 @@ class V05LIC extends AbstractSellEntity
      * Set masse_mette
      *
      * @param float $masseMette
-     * @return V05LIC
+     * @return AbstractDEBEntity
      */
     public function setMasseMette($masseMette)
     {
         $this->masse_mette = $masseMette;
-
+    
         return $this;
     }
 
     /**
      * Get masse_mette
      *
-     * @return float
+     * @return float 
      */
     public function getMasseMette()
     {
@@ -320,19 +287,19 @@ class V05LIC extends AbstractSellEntity
      * Set unites_supplementaires
      *
      * @param float $unitesSupplementaires
-     * @return V05LIC
+     * @return AbstractDEBEntity
      */
     public function setUnitesSupplementaires($unitesSupplementaires)
     {
         $this->unites_supplementaires = $unitesSupplementaires;
-
+    
         return $this;
     }
 
     /**
      * Get unites_supplementaires
      *
-     * @return float
+     * @return float 
      */
     public function getUnitesSupplementaires()
     {
@@ -343,19 +310,19 @@ class V05LIC extends AbstractSellEntity
      * Set nature_transaction
      *
      * @param string $natureTransaction
-     * @return V05LIC
+     * @return AbstractDEBEntity
      */
     public function setNatureTransaction($natureTransaction)
     {
         $this->nature_transaction = $natureTransaction;
-
+    
         return $this;
     }
 
     /**
      * Get nature_transaction
      *
-     * @return string
+     * @return string 
      */
     public function getNatureTransaction()
     {
@@ -366,19 +333,19 @@ class V05LIC extends AbstractSellEntity
      * Set conditions_livraison
      *
      * @param string $conditionsLivraison
-     * @return V05LIC
+     * @return AbstractDEBEntity
      */
     public function setConditionsLivraison($conditionsLivraison)
     {
         $this->conditions_livraison = $conditionsLivraison;
-
+    
         return $this;
     }
 
     /**
      * Get conditions_livraison
      *
-     * @return string
+     * @return string 
      */
     public function getConditionsLivraison()
     {
@@ -389,19 +356,19 @@ class V05LIC extends AbstractSellEntity
      * Set mode_transport
      *
      * @param string $modeTransport
-     * @return V05LIC
+     * @return AbstractDEBEntity
      */
     public function setModeTransport($modeTransport)
     {
         $this->mode_transport = $modeTransport;
-
+    
         return $this;
     }
 
     /**
      * Get mode_transport
      *
-     * @return string
+     * @return string 
      */
     public function getModeTransport()
     {
@@ -412,66 +379,42 @@ class V05LIC extends AbstractSellEntity
      * Set departement
      *
      * @param string $departement
-     * @return V05LIC
+     * @return AbstractDEBEntity
      */
     public function setDepartement($departement)
     {
         $this->departement = $departement;
-
+    
         return $this;
     }
 
     /**
      * Get departement
      *
-     * @return string
+     * @return string 
      */
     public function getDepartement()
     {
         return $this->departement;
     }
 
-
-    /**
-     * Set pays_id_destination
-     *
-     * @param string $paysIdDestination
-     * @return V05LIC
-     */
-    public function setPaysIdDestination($paysIdDestination)
-    {
-        $this->pays_id_destination = $paysIdDestination;
-
-        return $this;
-    }
-
-    /**
-     * Get pays_id_destination
-     *
-     * @return string
-     */
-    public function getPaysIdDestination()
-    {
-        return $this->pays_id_destination;
-    }
-
     /**
      * Set pays_id_origine
      *
      * @param string $paysIdOrigine
-     * @return V05LIC
+     * @return AbstractDEBEntity
      */
     public function setPaysIdOrigine($paysIdOrigine)
     {
         $this->pays_id_origine = $paysIdOrigine;
-
+    
         return $this;
     }
 
     /**
      * Get pays_id_origine
      *
-     * @return string
+     * @return string 
      */
     public function getPaysIdOrigine()
     {
@@ -482,23 +425,22 @@ class V05LIC extends AbstractSellEntity
      * Set CEE
      *
      * @param string $cEE
-     * @return V05LIC
+     * @return AbstractDEBEntity
      */
     public function setCEE($cEE)
     {
         $this->CEE = $cEE;
-
+    
         return $this;
     }
 
     /**
      * Get CEE
      *
-     * @return string
+     * @return string 
      */
     public function getCEE()
     {
         return $this->CEE;
     }
-
 }

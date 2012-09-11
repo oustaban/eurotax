@@ -28,7 +28,7 @@ class V01TVAAdmin extends Admin
                 'format' => $this->date_format_datetime)
             )
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
-            ->add('devise_id', null, array('label' => $this->getFieldLabel('devise_id')))
+            ->add('devise', null, array('label' => $this->getFieldLabel('devise_id')))
             ->add('montant_HT_en_devise', null, array('label' => $this->getFieldLabel('montant_HT_en_devise')))
             ->add('taux_de_TVA', null, array('label' => $this->getFieldLabel('taux_de_TVA')))
             ->add('montant_TVA_francaise', null, array('label' => $this->getFieldLabel('montant_TVA_francaise')))
@@ -57,7 +57,7 @@ class V01TVAAdmin extends Admin
             'template' => $this->_bundle_name . ':CRUD:list_date_piece.html.twig'
         ))
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('tiers')))
-            ->add('devise_id', null, array('label' => $this->getFieldLabel('devise_id')))
+            ->add('devise', null, array('label' => $this->getFieldLabel('devise_id')))
             ->add('montant_HT_en_devise', null, array('label' => $this->getFieldLabel('montant_HT_en_devise'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:montant_HT_en_devise.html.twig'))
             ->add('taux_de_TVA', null, array('label' => $this->getFieldLabel('taux_de_TVA')))
             ->add('montant_TVA_francaise', null, array('label' => $this->getFieldLabel('montant_TVA_francaise')))

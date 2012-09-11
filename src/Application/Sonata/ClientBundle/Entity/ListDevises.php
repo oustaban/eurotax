@@ -34,6 +34,13 @@ class ListDevises
      **/
     protected $garantie;
 
+    /**
+     * @var string $alias
+     *
+     * @ORM\Column(name="alias", type="string", length=200)
+     */
+    private $alias;
+
     /***
      *
      */
@@ -84,5 +91,28 @@ class ListDevises
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set alias
+     *
+     * @param string $alias
+     * @return ListDevises
+     */
+    public function setAlias($alias)
+    {
+        $this->alias = $alias;
+    
+        return $this;
+    }
+
+    /**
+     * Get alias
+     *
+     * @return string 
+     */
+    public function getAlias()
+    {
+        return $this->alias;
     }
 }
