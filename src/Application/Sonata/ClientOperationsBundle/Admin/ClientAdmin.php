@@ -32,4 +32,20 @@ class ClientAdmin extends ClientAdminBase
     {
         return null;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getClass()
+    {
+        $class = parent::getClass();
+
+        $backtrace = debug_backtrace (DEBUG_BACKTRACE_IGNORE_ARGS, 2);
+        if (in_array($backtrace[1]['function'], array('getBaseRouteName', 'getBaseRoutePattern')))
+        {
+            $class = str_replace('\\ClientBundle\\', '\\ClientOperationsBundle\\', $class);
+        }
+
+        return $class;
+    }
 }
