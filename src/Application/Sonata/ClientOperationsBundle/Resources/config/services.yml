@@ -3,7 +3,7 @@ services:
             class : Application\Sonata\ClientOperationsBundle\Admin\ClientAdmin
             tags:
                 - { name: sonata.admin, manager_type: orm, group: Client Operations, label: Client Operations }
-            arguments: [null, Application\Sonata\ClientOperationsBundle\Entity\Client, ApplicationSonataClientOperationsBundle:Client]
+            arguments: [null, Application\Sonata\ClientBundle\Entity\Client, ApplicationSonataClientOperationsBundle:Client]
 
     application.sonata.admin.v01tva:
         class : Application\Sonata\ClientOperationsBundle\Admin\V01TVAAdmin
