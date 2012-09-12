@@ -23,6 +23,8 @@ twig:
     strict_variables: %kernel.debug%
     globals:
         default_locale:  %locale%
+        default_date_format_js: "dd/mm/yyyy"
+        default_date_format: "dd/MM/yyyy"
     form:
         resources:
             - ':Form:fields.html.twig'

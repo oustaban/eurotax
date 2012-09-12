@@ -23,8 +23,9 @@ class UserAdmin extends BaseUserAdmin
             ->add('groups')
             ->add('enabled')
             ->add('locked')
-            ->add('createdAt')
-        ;
+            ->add('createdAt', 'date', array(
+            'template' => 'ApplicationSonataUserBundle:CRUD:list_created_at.html.twig'
+        ));
 
 //        if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
 //            $listMapper

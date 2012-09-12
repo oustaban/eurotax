@@ -29,7 +29,13 @@ class CommentaireAdmin extends Admin
         $label = 'form.' . $this->_prefix_label . '.';
         $formMapper->with($label . 'title')
             ->add('client_id', 'hidden', array('data' => $filter['client_id']['value']))
-            ->add('date', null, array('label' => $label . 'date'))
+            ->add('date', null, array(
+            'label' => $label . 'date',
+            'attr' => array('class' => 'datepicker'),
+            'widget' => 'single_text',
+            'input' => 'datetime',
+            'format' => $this->date_format_datetime
+        ))
             ->add('categorie', null, array('label' => $label . 'categorie'))
             ->add('note', null, array('label' => $label . 'note'));
     }
@@ -44,7 +50,10 @@ class CommentaireAdmin extends Admin
 
         $label = 'list.' . $this->_prefix_label . '.';
         $listMapper
-            ->add('date', null, array('label' => $label . 'date'))
+            ->add('date', null, array(
+            'label' => $label . 'date',
+            'template' => 'ApplicationSonataClientBundle:CRUD:list_date.html.twig'
+        ))
             ->add('categorie.name', null, array('label' => $label . 'categorie'))
             ->add('note', null, array('label' => $label . 'note'));
     }

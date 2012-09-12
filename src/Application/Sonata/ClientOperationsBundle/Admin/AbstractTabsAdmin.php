@@ -35,7 +35,6 @@ abstract class AbstractTabsAdmin extends Admin
     public $devise = array();
     public $date_format_datetime = 'dd/MM/yyyy';
     public $date_format_php = 'd/m/Y';
-    public $date_format_js = 'dd/mm/yyyy';
 
     /**
      * @param string $code
@@ -68,14 +67,11 @@ abstract class AbstractTabsAdmin extends Admin
         }
     }
 
-    /**
-     * @return string
-     */
-    public function getDateFormat()
-    {
-        return $this->date_format_js;
-    }
 
+    /**
+     * @param $query_month
+     * @return array
+     */
     public function getQueryMonth($query_month)
     {
         $year = substr($query_month, -4);

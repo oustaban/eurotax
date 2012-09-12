@@ -42,8 +42,20 @@ class GarantieAdmin extends Admin
             )
         ))
             ->add('num_de_ganrantie', null, array('label' => $label . 'num_de_ganrantie'))
-            ->add('date_demission', null, array('label' => $label . 'date_demission'))
-            ->add('date_decheance', null, array('label' => $label . 'date_decheance'));
+            ->add('date_demission', null, array(
+            'label' => $label . 'date_demission',
+            'attr' => array('class' => 'datepicker'),
+            'widget' => 'single_text',
+            'input' => 'datetime',
+            'format' => $this->date_format_datetime
+        ))
+            ->add('date_decheance', null, array(
+            'label' => $label . 'date_decheance',
+            'attr' => array('class' => 'datepicker'),
+            'widget' => 'single_text',
+            'input' => 'datetime',
+            'format' => $this->date_format_datetime
+        ));
     }
 
     //list

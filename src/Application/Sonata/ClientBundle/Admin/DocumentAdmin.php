@@ -27,7 +27,13 @@ class DocumentAdmin extends Admin
             ->add('client_id', 'hidden', array('data' => $filter['client_id']['value']))
             ->add('file', 'file', array('label' => 'form.document.document', 'required' => false))
             ->add('type_document', null, array('label' => 'form.document.type_document'))
-            ->add('date_document', null, array('label' => 'form.document.date_document'))
+            ->add('date_document', null, array(
+            'label' => 'form.document.date_document',
+            'attr' => array('class' => 'datepicker'),
+            'widget' => 'single_text',
+            'input' => 'datetime',
+            'format' => $this->date_format_datetime
+        ))
             ->add('preavis', null, array('label' => 'form.document.preavis'))
             ->add('particularite', null, array('label' => 'form.document.particularite'))
             ->add('date_notaire', null, array('label' => 'form.document.date_notaire'))
@@ -46,7 +52,10 @@ class DocumentAdmin extends Admin
             'label' => 'list.document.document',
             'template' => 'ApplicationSonataClientBundle:CRUD:document_link.html.twig'
         ));
-        $listMapper->add('date_document', null, array('label' => 'list.document.date_document'));
+        $listMapper->add('date_document', null, array(
+            'label' => 'list.document.date_document',
+            'template' => 'ApplicationSonataClientBundle:CRUD:list_date_document.html.twig'
+        ));
         $listMapper->add('date_notaire', null, array('label' => 'list.document.date_notaire'));
     }
 

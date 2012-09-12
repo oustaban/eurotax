@@ -51,7 +51,10 @@ class A10CAFAdmin extends Admin
         ))
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:HT.html.twig'))
-            ->add('mois', null, array('label' => $this->getFieldLabel('mois')))
+            ->add('mois', null, array(
+            'label' => $this->getFieldLabel('mois'),
+            'template' => $this->_bundle_name . ':CRUD:list_mois.html.twig',
+        ))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
     }
 

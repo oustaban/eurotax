@@ -16,25 +16,29 @@ use Application\Form\Type\LocationFacturationType;
 class ClientAdmin extends Admin
 {
     public $dashboards = array('Admin');
+    public $date_format_datetime = 'dd/MM/yyyy';
+    public $date_format_php = 'd/m/Y';
 
     protected $_bundle_name = 'ApplicationSonataClientBundle';
 
     protected $_fields_list = array(
-        'raison_sociale'=>array(),
-        'nature_du_client'=>array(),
-        'date_de_depot_id'=>array(),
-        'date_debut_mission'=>array('template' => 'ApplicationSonataClientBundle:CRUD:list_date_debut_mission.html.twig'),
-        'date_fin_mission'=>array('template' => 'ApplicationSonataClientBundle:CRUD:list_date_fin_mission.html.twig'),
-        'user'=>array(),
+        'raison_sociale' => array(),
+        'nature_du_client' => array(),
+        'date_de_depot_id' => array(),
+        'date_debut_mission' => array('template' => 'ApplicationSonataClientBundle:CRUD:list_date_debut_mission.html.twig'),
+        'date_fin_mission' => array('template' => 'ApplicationSonataClientBundle:CRUD:list_date_fin_mission.html.twig'),
+        'user' => array(),
     );
 
     /**
      * @return array
      */
-    public function getBatchActions(){
+    public function getBatchActions()
+    {
 
         return array();
     }
+
     //create & edit form
     /**
      * @param FormMapper $formMapper
@@ -54,7 +58,13 @@ class ClientAdmin extends Admin
             ),
             array('type' => 'location'))
             ->add('activite', null, array('label' => 'form.activite', 'required' => false,))
-            ->add('date_debut_mission', 'date', array('label' => 'form.date_debut_mission'))
+            ->add('date_debut_mission', 'date', array(
+            'label' => 'form.date_debut_mission',
+            'attr' => array('class' => 'datepicker'),
+            'widget' => 'single_text',
+            'input' => 'datetime',
+            'format' => $this->date_format_datetime
+        ))
             ->add('mode_denregistrement', null, array('label' => 'form.mode_denregistrement'))
             ->add('avance_contractuelle', null, array('label' => 'form.avance_contractuelle', 'required' => false,))
             ->add('siret', null, array('label' => 'form.siret', 'required' => false,))
@@ -69,7 +79,13 @@ class ClientAdmin extends Admin
             'label' => 'Location',
             'required' => false,
         ), array('type' => 'location'))
-            ->add('date_fin_mission', 'date', array('label' => 'form.date_fin_mission'))
+            ->add('date_fin_mission', 'date', array(
+            'label' => 'form.date_fin_mission',
+            'attr' => array('class' => 'datepicker'),
+            'widget' => 'single_text',
+            'input' => 'datetime',
+            'format' => $this->date_format_datetime
+        ))
             ->add('libelle_avance', null, array('label' => 'form.libelle_avance', 'required' => false,))
             ->add('date_de_depot_id', 'choice', array(
             'label' => 'form.date_de_depot_id',

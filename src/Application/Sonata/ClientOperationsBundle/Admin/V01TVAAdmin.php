@@ -78,7 +78,10 @@ class V01TVAAdmin extends Admin
             'label' => $this->getFieldLabel('paiement_date'),
             'template' => $this->_bundle_name . ':CRUD:list_paiement_date.html.twig'
         ))
-            ->add('mois', null, array('label' => $this->getFieldLabel('mois')))
+            ->add('mois', null, array(
+            'label' => $this->getFieldLabel('mois'),
+            'template' => $this->_bundle_name . ':CRUD:list_mois.html.twig',
+        ))
             ->add('taux_de_change', null, array('label' => $this->getFieldLabel('taux_de_change')))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:HT.html.twig'))
             ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA')));

@@ -2,6 +2,6 @@
 
 {% block field %}
 {% if object.datePiece %}
-    {{ object.datePiece|datefmt_format('dd MMMM YYYY') }}
+    {{ object.datePiece|datefmt_format(default_date_format) }}
 {% endif %}
 {% endblock field %}

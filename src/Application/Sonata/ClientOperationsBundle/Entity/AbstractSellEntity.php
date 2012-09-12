@@ -45,7 +45,7 @@ abstract class AbstractSellEntity extends AbstractBaseEntity
     /**
      * @var integer $devise
      *
-     * @ORM\ManyToOne(targetEntity="\Application\Sonata\ClientBundle\Entity\ListDevises", inversedBy="BaseListDevises")
+     * @ORM\ManyToOne(targetEntity="\Application\Sonata\ClientBundle\Entity\ListDevises")
      * @ORM\JoinColumn(name="devise_id", referencedColumnName="id")
      */
 

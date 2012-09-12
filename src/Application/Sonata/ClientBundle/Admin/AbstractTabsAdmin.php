@@ -9,6 +9,9 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 abstract class AbstractTabsAdmin extends Admin
 {
     public $dashboards = array();
+    public $date_format_datetime = 'dd/MM/yyyy';
+    public $date_format_php = 'd/m/Y';
+
 
     protected $_bundle_name = 'ApplicationSonataClientBundle';
 
