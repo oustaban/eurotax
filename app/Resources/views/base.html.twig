@@ -29,14 +29,19 @@
                         <li class="divider-vertical"></li>
                         {% if app.user %}
                             {% if is_granted('ROLE_DASHBOARD_ADMIN') %}
-                                <li><a href="{{ path('application_sonata_dashboard_admin') }}">Administration</a></li>
-                            {% endif %}
-                            {% if is_granted('ROLE_EDIT_CLIENTOPERATIONS') %}
-                                <li><a href="{{ path('admin_sonata_clientoperations_client_list') }}">Client Operations</a></li>
-                            {% endif %}
-                            {% if is_granted('ROLE_SUPER_ADMIN') %}
-                                <li class="divider-vertical"></li>
-                                <li><a href="{{ path('sonata_admin_dashboard') }}">SuperAdmin</a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        Administration
+                                        <b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{{ url('admin_sonata_user_user_list') }}">Users</a></li>
+                                        <li><a href="{{ url('admin_sonata_user_group_list') }}">Groups</a></li>
+                                        <li><a href="{{ url('admin_sonata_devises_devises_create') }}">Devises</a></li>
+                                        <li><a href="{{ url('admin_sonata_impots_impots_list') }}">Centres des Impots</a></li>
+                                        <li><a href="{{ url('admin_sonata_client_client_list') }}">Clients</a></li>
+                                    </ul>
+                                </li>
                             {% endif %}
                         {% else %}
                         <li><a href="{{ path('sonata_user_admin_security_login') }}">
