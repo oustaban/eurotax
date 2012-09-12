@@ -299,6 +299,14 @@ abstract class AbstractTabsAdmin extends Admin
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getExportFormats()
+    {
+        return array();
+    }
+
+    /**
      * @param $value
      * @return array
      */

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Application\Sonata\ClientBundle\Entity\Client
  *
  * @ORM\Table("et_client")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Sonata\ClientBundle\Entity\ClientRepository")
  */
 class Client
 {

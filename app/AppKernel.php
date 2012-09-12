@@ -2,9 +2,26 @@
 
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class AppKernel extends Kernel
 {
+    protected static $_container;
+
+    protected function initializeContainer()
+    {
+        parent::initializeContainer();
+        static::$_container = $this->getContainer();
+    }
+
+    /**
+     * @return ContainerInterface
+     */
+    public static function getStaticContainer()
+    {
+        return static::$_container;
+    }
+
     public function registerBundles()
     {
         $bundles = array(
