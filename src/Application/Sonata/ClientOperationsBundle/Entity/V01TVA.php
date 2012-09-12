@@ -50,11 +50,12 @@ class V01TVA extends AbstractSellEntity
     private $paiement_montant;
 
     /**
-     * @var integer $paiement_devise_id
+     * @var integer $paiement_devise
      *
-     * @ORM\Column(name="paiement_devise_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="\Application\Sonata\ClientBundle\Entity\ListDevises", inversedBy="BaseListDevises")
+     * @ORM\JoinColumn(name="paiement_devise_id", referencedColumnName="id")
      */
-    private $paiement_devise_id;
+    private $paiement_devise;
 
     /**
      * @var \DateTime $paiement_date
@@ -187,28 +188,6 @@ class V01TVA extends AbstractSellEntity
         return $this->paiement_montant;
     }
 
-    /**
-     * Set paiement_devise_id
-     *
-     * @param integer $paiementDeviseId
-     * @return V01_TVA
-     */
-    public function setPaiementDeviseId($paiementDeviseId)
-    {
-        $this->paiement_devise_id = $paiementDeviseId;
-
-        return $this;
-    }
-
-    /**
-     * Get paiement_devise_id
-     *
-     * @return integer
-     */
-    public function getPaiementDeviseId()
-    {
-        return $this->paiement_devise_id;
-    }
 
     /**
      * Set paiement_date
@@ -254,5 +233,28 @@ class V01TVA extends AbstractSellEntity
     public function getTVA()
     {
         return $this->TVA;
+    }
+
+    /**
+     * Set paiement_devise
+     *
+     * @param Application\Sonata\ClientBundle\Entity\ListDevises $paiementDevise
+     * @return V01TVA
+     */
+    public function setPaiementDevise(\Application\Sonata\ClientBundle\Entity\ListDevises $paiementDevise = null)
+    {
+        $this->paiement_devise = $paiementDevise;
+    
+        return $this;
+    }
+
+    /**
+     * Get paiement_devise
+     *
+     * @return Application\Sonata\ClientBundle\Entity\ListDevises 
+     */
+    public function getPaiementDevise()
+    {
+        return $this->paiement_devise;
     }
 }

@@ -35,8 +35,18 @@ class A02TVAAdmin extends Admin
             ->add('montant_TTC', null, array('label' => $this->getFieldLabel('montant_TTC')))
             ->add('paiement_montant', null, array('label' => $this->getFieldLabel('paiement_montant')))
             ->add('paiement_devise', null, array('label' => $this->getFieldLabel('paiement_devise_id')))
-            ->add('paiement_date', null, array('label' => $this->getFieldLabel('paiement_date')))
-            ->add('mois', null, array('label' => $this->getFieldLabel('mois')))
+            ->add('paiement_date', null, array('label' =>
+        $this->getFieldLabel('paiement_date'),
+            'attr' => array('class' => 'datepicker'),
+            'widget' => 'single_text',
+            'input' => 'datetime',
+            'format' => $this->date_format_datetime)
+        )
+            ->add('mois', 'date', array(
+            'label' => $this->getFieldLabel('mois'),
+            'days' => range(1, 1),
+            'format' => 'dd MMMM yyyy',
+        ))
             ->add('taux_de_change', null, array('label' => $this->getFieldLabel('taux_de_change')))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT')))
             ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA')))
@@ -62,7 +72,7 @@ class A02TVAAdmin extends Admin
             ->add('montant_TVA_francaise', null, array('label' => $this->getFieldLabel('montant_TVA_francaise')))
             ->add('montant_TTC', null, array('label' => $this->getFieldLabel('montant_TTC')))
             ->add('paiement_montant', null, array('label' => $this->getFieldLabel('paiement_montant')))
-            ->add('paiement_devise_id', null, array('label' => $this->getFieldLabel('paiement_devise_id')))
+            ->add('paiement_devise', null, array('label' => $this->getFieldLabel('paiement_devise_id')))
             ->add('paiement_date', null, array(
             'label' => $this->getFieldLabel('paiement_date'),
             'template' => $this->_bundle_name . ':CRUD:list_paiement_date.html.twig'

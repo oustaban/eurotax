@@ -31,7 +31,11 @@ class A04283IAdmin extends Admin
             ->add('devise', null, array('label' => $this->getFieldLabel('devise_id')))
             ->add('montant_HT_en_devise', null, array('label' => $this->getFieldLabel('montant_HT_en_devise')))
             ->add('taux_de_TVA', null, array('label' => $this->getFieldLabel('taux_de_TVA')))
-            ->add('mois', null, array('label' => $this->getFieldLabel('mois')))
+            ->add('mois', 'date', array(
+            'label' => $this->getFieldLabel('mois'),
+            'days' => range(1, 1),
+            'format' => 'dd MMMM yyyy',
+        ))
             ->add('taux_de_change', null, array('label' => $this->getFieldLabel('taux_de_change')))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT')))
             ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA')))

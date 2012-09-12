@@ -18,7 +18,7 @@ class AbstractTabsController extends Controller
      * @var int
      */
     public $client_id = null;
-    public $client = null;
+    public $devise_list = array();
     public $tabs_arr = array(
         'V01-TVA' => 'V01TVA',
         'V03-283-I' => 'V03283I',
@@ -51,6 +51,280 @@ class AbstractTabsController extends Controller
     protected $_imports = null;
     protected $_parameters_url = array();
 
+    protected $_config_excel = array(
+        'V01-TVA' => array(
+            'name' => 'V01-TVA',
+            'entity' => 'V01TVA',
+            'skip_line' => 1,
+            'fields' => array(
+                'tiers',
+                'no_TVA_tiers',
+                'date_piece',
+                'numero_piece',
+                'devise',
+                'montant_HT_en_devise',
+                'taux_de_TVA',
+                'montant_TVA_francaise',
+                'montant_TTC',
+                'paiement_montant',
+                'paiement_devise',
+                'paiement_date',
+                'mois',
+                'taux_de_change',
+                'HT',
+                'TVA',
+                'commentaires',
+            )
+        ),
+
+        'V03-283-I' => array(
+            'name' => 'V03-283-I',
+            'entity' => 'V03283I',
+            'skip_line' => 1,
+            'fields' => array(
+                'tiers',
+                'no_TVA_tiers',
+                'date_piece',
+                'numero_piece',
+                'devise',
+                'montant_HT_en_devise',
+                'mois',
+                'taux_de_change',
+                'HT',
+                'commentaires',
+            )
+        ),
+
+        'V05-LIC' => array(
+            'name' => 'V05-LIC',
+            'entity' => 'V05LIC',
+            'skip_line' => 1,
+            'fields' => array(
+                'tiers',
+                'no_TVA_tiers',
+                'date_piece',
+                'numero_piece',
+                'devise',
+                'montant_HT_en_devise',
+                'mois',
+                'taux_de_change',
+                'HT',
+                'regime', //TODO 2 fields
+                'DEB',
+                'commentaires',
+                'n_ligne',
+                'nomenclature',
+                'pays_id_destination',
+                'valeur_fiscale',
+                'regime',
+                'valeur_statistique',
+                'masse_mette',
+                'unites_supplementaires',
+                'nature_transaction',
+                'conditions_livraison',
+                'mode_transport',
+                'departement',
+                'pays_id_origine',
+                'CEE',
+            )
+        ),
+
+        'DEB Exped' => array(
+            'name' => 'DEB Exped',
+            'entity' => 'DEBExped',
+            'skip_line' => 7,
+            'fields' => array(
+                'n_ligne',
+                'nomenclature',
+                'pays_id_destination',
+                'valeur_fiscale',
+                'regime',
+                'valeur_statistique',
+                'masse_mette',
+                'unites_supplementaires',
+                'nature_transaction',
+                'conditions_livraison',
+                'mode_transport',
+                'departement',
+                'pays_id_origine',
+                'CEE',
+            )
+        ),
+        'V07-EX' => array(
+            'name' => 'V07-EX',
+            'entity' => 'V07EX',
+            'skip_line' => 1,
+            'fields' => array(
+                'tiers',
+                'date_piece',
+                'numero_piece',
+                'devise',
+                'montant_HT_en_devise',
+                'mois',
+                'taux_de_change',
+                'HT',
+                'commentaires',
+            )
+        ),
+        'V09-DES' => array(
+            'name' => 'V09-DES',
+            'entity' => 'V09DES',
+            'skip_line' => 1,
+            'fields' => array(
+                'tiers',
+                'no_TVA_tiers',
+                'date_piece',
+                'numero_piece',
+                'devise',
+                'montant_HT_en_devise',
+                'mois',
+                'mois_complementaire',
+                'taux_de_change',
+                'HT',
+                'commentaires',
+            )
+        ),
+        'V11-INT' => array(
+            'name' => 'V11-INT',
+            'entity' => 'V11INT',
+            'skip_line' => 1,
+            'fields' => array(
+                'tiers',
+                'date_piece',
+                'numero_piece',
+                'devise',
+                'montant_HT_en_devise',
+                'mois',
+                'taux_de_change',
+                'HT',
+                'commentaires',
+            )
+        ),
+        'A02-TVA' => array(
+            'name' => 'A02-TVA',
+            'entity' => 'A02TVA',
+            'skip_line' => 1,
+            'fields' => array(
+                'tiers',
+                'date_piece',
+                'numero_piece',
+                'devise',
+                'montant_HT_en_devise',
+                'taux_de_TVA',
+                'montant_TVA_francaise',
+                'montant_TTC',
+                'paiement_montant',
+                'paiement_devise',
+                'paiement_date',
+                'mois',
+                'taux_de_change',
+                'HT',
+                'TVA',
+                'commentaires',
+            )
+        ),
+        'A04-283-I' => array(
+            'name' => 'A04-283-I',
+            'entity' => 'A04283I',
+            'skip_line' => 1,
+            'fields' => array(
+                'tiers',
+                'date_piece',
+                'numero_piece',
+                'devise',
+                'montant_HT_en_devise',
+                'taux_de_TVA',
+                'mois',
+                'taux_de_change',
+                'HT',
+                'TVA',
+                'commentaires',
+            )
+        ),
+
+        'A06-AIB' => array(
+            'name' => 'A06-AIB',
+            'entity' => 'A06AIB',
+            'skip_line' => 1,
+            'fields' => array(
+                'tiers',
+                'date_piece',
+                'numero_piece',
+                'devise',
+                'montant_HT_en_devise',
+                'mois',
+                'taux_de_change',
+                'regime', //TODO 2 columns
+                'HT',
+                'DEB',
+                'commentaires',
+                'n_ligne',
+                'nomenclature',
+                'pays_id_destination',
+                'valeur_fiscale',
+                'regime',
+                'valeur_statistique',
+                'masse_mette',
+                'unites_supplementaires',
+                'nature_transaction',
+                'conditions_livraison',
+                'mode_transport',
+                'departement',
+                'pays_id_origine',
+            )
+        ),
+
+        'DEB Intro' => array(
+            'name' => 'DEB Intro',
+            'entity' => 'DEBIntro',
+            'skip_line' => 7,
+            'fields' => array(
+                'n_ligne',
+                'nomenclature',
+                'pays_id_destination',
+                'valeur_fiscale',
+                'regime',
+                'valeur_statistique',
+                'masse_mette',
+                'unites_supplementaires',
+                'nature_transaction',
+                'conditions_livraison',
+                'mode_transport',
+                'departement',
+                'pays_id_origine',
+                'CEE',
+            )
+        ),
+
+        'A08-IM' => array(
+            'name' => 'A08-IM',
+            'entity' => 'A08IM',
+            'skip_line' => 1,
+            'fields' => array(
+                'tiers',
+                'date_piece',
+                'numero_piece',
+                'taux_de_TVA',
+                'TVA',
+                'mois',
+                'commentaires',
+            )
+        ),
+
+        'A10-CAF' => array(
+            'name' => 'A10-CAF',
+            'entity' => 'A10CAF',
+            'skip_line' => 1,
+            'fields' => array(
+                'tiers',
+                'date_piece',
+                'numero_piece',
+                'HT',
+                'mois',
+                'commentaires',
+            )
+        ),
+    );
 
     /**
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
@@ -83,11 +357,6 @@ class AbstractTabsController extends Controller
             $this->_parameters_url['month'] = $this->_query_month;
         }
 
-        $this->jsSettingsJson(array(
-            'url' => array(
-                'importremove' => $this->admin->generateUrl('importremove', array('filter' => array('client_id' => array('value' => $this->client_id))))
-            )
-        ));
     }
 
 
@@ -347,7 +616,7 @@ class AbstractTabsController extends Controller
     public function importAction()
     {
         $translator = $this->get('translator');
-        $exclude_fields = array('id', 'client_id', 'imports');
+//        $exclude_fields = array('id', 'client_id', 'imports');
 
         if (!empty($_FILES) && !empty($_FILES["inputFile"])) {
             $file = TMP_UPLOAD_PATH . '/' . $_FILES["inputFile"]["name"];
@@ -371,71 +640,14 @@ class AbstractTabsController extends Controller
                 $em->persist($this->_imports);
                 $em->flush();
 
-                foreach ($sheets as $sheet) {
-                    $title = $sheet->getTitle();
-                    if (array_key_exists($title, $this->tabs_arr)) {
-                        $class = $this->tabs_arr[$title];
+                $this->devise_list = $this->getDeviseList();
 
-                        $className = '\Application\Sonata\ClientOperationsBundle\Entity\\' . $class;
-                        $adminClassName = '\Application\Sonata\ClientOperationsBundle\Admin\\' . $class . 'Admin';
-                        $adminCode = 'application.sonata.admin.' . strtolower($class);
-                        $entity = new $className();
+                file_put_contents($tmpFile, '');
+                $this->importValidateAndSave($sheets);
 
-                        $reflect = new \ReflectionClass($entity);
-                        $props = $reflect->getProperties();
+                if(empty($this->_import_counts['rows']['errors'])){
 
-                        $fields = array();
-                        foreach ($props as $field) {
-                            if (!in_array($field->name, $exclude_fields)) {
-                                $fields[] = $field->name;
-                            }
-                        }
-
-                        unset($entity);
-
-                        $data = $sheet->toArray();
-
-                        if (isset($data[0][0]) && $data[0][0] == $translator->trans('ApplicationSonataClientOperationsBundle.list.' . $class . '.' . $fields[0])) {
-                            array_shift($data);
-                        }
-
-                        foreach ($data as $key => $line) {
-                            file_put_contents($tmpFile, '');
-
-                            if ($this->getImportsBreak($data, $key)) {
-                                break;
-                            }
-
-                            /* @var $admin \Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin */
-                            $admin = $this->container->get('sonata.admin.pool')->getAdminByAdminCode($adminCode);
-                            $object = $admin->getNewInstance();
-                            $admin->setSubject($object);
-                            /* @var $form \Symfony\Component\Form\Form */
-                            $form = $admin->getForm();
-                            $form->setData($object);
-
-                            $formData = array('client_id' => $this->client_id, '_token' => $this->get('form.csrf_provider')->generateCsrfToken('unknown'));
-                            foreach ($line as $index => $value) {
-                                $fieldName = $fields[$index];
-                                $formData[$fieldName] = $admin->getFormValue($fieldName, $value);
-                            }
-
-                            echo '<pre>';
-                            print_r($formData);
-                            exit;
-                            $form->bind($formData);
-
-                            if ($form->isValid()) {
-                                $object->setImports($this->_imports);
-                                $admin->create($object);
-                                $this->setCountImports($class, 'success');
-
-                            } else {
-
-                                $this->setCountImports($class, 'errors', $form->getErrorsAsString());
-                            }
-                        }
-                    }
+                    $this->importValidateAndSave($sheets, true);
                 }
             }
         }
@@ -446,6 +658,96 @@ class AbstractTabsController extends Controller
         }
 
         return $this->render('ApplicationSonataClientOperationsBundle:redirects:back.html.twig');
+    }
+
+    protected function importValidateAndSave($sheets, $save = false)
+    {
+        foreach ($sheets as $sheet) {
+
+            $title = $sheet->getTitle();
+            if (array_key_exists($title, $this->_config_excel)) {
+
+                $data = $sheet->toArray();
+
+
+                $config_excel = $this->_config_excel[$title];
+                $class = $config_excel['entity'];
+
+                $adminCode = 'application.sonata.admin.' . strtolower($class);
+
+                $fields = $config_excel['fields'];
+
+                $skip_line = $config_excel['skip_line'];
+                for ($i = 0; $i < $skip_line; $i++) {
+                    array_shift($data);
+                }
+
+
+                /* @var $admin \Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin */
+                $admin = $this->container->get('sonata.admin.pool')->getAdminByAdminCode($adminCode);
+                $admin->setDeviseList($this->devise_list);
+
+                foreach ($data as $key => $line) {
+
+                    if ($this->getImportsBreak($data, $key)) {
+                        break;
+                    }
+
+                    $object = $admin->getNewInstance();
+
+                    $admin->setSubject($object);
+
+                    /* @var $form \Symfony\Component\Form\Form */
+                    $form_builder = $admin->getFormBuilder();
+                    $form = $form_builder->getForm();
+
+                    $form->setData($object);
+
+
+                    $formData = array('client_id' => $this->client_id, '_token' => $this->get('form.csrf_provider')->generateCsrfToken('unknown'));
+
+                    foreach ($line as $index => $value) {
+                        if (isset($fields[$index])) {
+                            $fieldName = $fields[$index];
+                            $formData[$fieldName] = $admin->getFormValue($fieldName, $value);
+                        }
+                    }
+
+                    $form->bind($formData);
+
+                    if ($form->isValid()) {
+                        try {
+                            if ($save) {
+                                $object->setImports($this->_imports);
+                                $admin->create($object);
+                                $this->setCountImports($class, 'success');
+                            }
+                        } catch (\Exception $e) {
+                            //$this->setCountImports($class, 'errors', $e->getMessage());
+                        }
+                    } else {
+
+                        $this->setCountImports($class, 'errors', $form->getErrorsAsString());
+                    }
+                    unset($formData, $form, $form_builder, $object);
+                }
+                unset($data, $admin);
+            }
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function getDeviseList()
+    {
+        $objects = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:ListDevises')->findAll();
+        foreach ($objects as $object) {
+
+            $this->devise[$object->getAlias()] = $object;
+        }
+
+        return $this->devise;
     }
 
     /**
@@ -506,7 +808,6 @@ class AbstractTabsController extends Controller
                             'import_id' => $this->_imports ? $this->_imports->getId() : null,
                         ));
 
-
                         $message[] = '<span class="error">' . $translator->trans('Not valid %table% : %count%', array(
                             '%table%' => $table,
                             '%count%' => $values['errors'],
@@ -541,8 +842,11 @@ class AbstractTabsController extends Controller
      */
     protected function setCountImports($table, $type, $messages = '')
     {
-        if (!isset($this->_import_counts[$table][$type])) {
+        if (!isset($this->_import_counts['rows'][$type])) {
             $this->_import_counts['rows'][$type] = 0;
+        }
+
+        if (!isset($this->_import_counts[$table][$type])) {
             $this->_import_counts[$table][$type] = 0;
         }
 
@@ -611,28 +915,6 @@ class AbstractTabsController extends Controller
         $obj_writer->save('php://output');
         exit;
     }
-
-    public function importremoveAction()
-    {
-        $id = $this->getRequest()->query->get('id');
-
-
-        $em = $this->getDoctrine()->getManager();
-        foreach ($this->tabs_arr as $table => $entity) {
-            $object = $em->getRepository('ApplicationSonataClientOperationsBundle:' . $entity)->findByImports($id);
-
-            foreach ($object as $obj) {
-                $em->remove($obj);
-            }
-            unset($object);
-        }
-        $em->flush();
-
-        return $this->renderJson(array(
-            'status' => 1,
-        ));
-    }
-
 
     /**
      * @param $client_id

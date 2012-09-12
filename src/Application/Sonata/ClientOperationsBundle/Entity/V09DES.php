@@ -24,7 +24,7 @@ class V09DES extends AbstractSellEntity
     /**
      * @var string $mois_complementaire
      *
-     * @ORM\Column(name="mois_complementaire", type="text")
+     * @ORM\Column(name="mois_complementaire", type="text", nullable=true)
      */
     private $mois_complementaire;
 

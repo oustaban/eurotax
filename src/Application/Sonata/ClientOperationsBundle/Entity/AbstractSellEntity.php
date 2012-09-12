@@ -31,14 +31,14 @@ abstract class AbstractSellEntity extends AbstractBaseEntity
     /**
      * @var float $mois
      *
-     * @ORM\Column(name="mois", type="float")
+     * @ORM\Column(name="mois", type="date", nullable=true)
      */
     private $mois;
 
     /**
      * @var float $HT
      *
-     * @ORM\Column(name="HT", type="float")
+     * @ORM\Column(name="HT", type="float", nullable=true)
      */
     private $HT;
 
@@ -61,7 +61,7 @@ abstract class AbstractSellEntity extends AbstractBaseEntity
     /**
      * @var string $taux_de_change
      *
-     * @ORM\Column(name="taux_de_change", type="string", length=255)
+     * @ORM\Column(name="taux_de_change", type="string", length=255, nullable=true)
      */
     private $taux_de_change;
 
@@ -69,7 +69,7 @@ abstract class AbstractSellEntity extends AbstractBaseEntity
     /**
      * @var string $commentaires
      *
-     * @ORM\Column(name="commentaires", type="text")
+     * @ORM\Column(name="commentaires", type="text", nullable=true)
      */
     private $commentaires;
 

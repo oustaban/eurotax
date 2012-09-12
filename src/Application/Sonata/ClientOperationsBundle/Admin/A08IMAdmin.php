@@ -30,7 +30,11 @@ class A08IMAdmin extends Admin
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
             ->add('taux_de_TVA', null, array('label' => $this->getFieldLabel('taux_de_TVA')))
             ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA')))
-            ->add('mois', null, array('label' => $this->getFieldLabel('mois')))
+            ->add('mois', 'date', array(
+            'label' => $this->getFieldLabel('mois'),
+            'days' => range(1, 1),
+            'format' => 'dd MMMM yyyy',
+        ))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
     }
 
