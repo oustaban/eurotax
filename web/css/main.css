@@ -6,6 +6,9 @@ body {
 }
 #top-nav {
     padding-top: 20px;
+    position: fixed;
+    right: 40px;
+    top: 20px;
 }
 
 #container {
