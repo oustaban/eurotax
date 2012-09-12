@@ -663,9 +663,12 @@ class AbstractTabsController extends Controller
     protected function importValidateAndSave($sheets, $save = false)
     {
         foreach ($sheets as $sheet) {
+
             $title = $sheet->getTitle();
             if (array_key_exists($title, $this->_config_excel)) {
+
                 $data = $sheet->toArray();
+
 
                 $config_excel = $this->_config_excel[$title];
                 $class = $config_excel['entity'];
@@ -674,32 +677,32 @@ class AbstractTabsController extends Controller
 
                 $fields = $config_excel['fields'];
 
-//                        echo '<pre><hr />';
-//                        var_dump($sheet->getCell('H1')->getCalculatedValue());
-//                        $value = $sheet->getCell('H2')->getValue();
-//                        var_dump($value);
-//                        $sheet->getCell('H2')->setValue(strtolower($value));
-//                        var_dump($sheet->getCell('H2')->getCalculatedValue());
-
                 $skip_line = $config_excel['skip_line'];
                 for ($i = 0; $i < $skip_line; $i++) {
                     array_shift($data);
                 }
 
+
+                /* @var $admin \Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin */
+                $admin = $this->container->get('sonata.admin.pool')->getAdminByAdminCode($adminCode);
+                $admin->setDeviseList($this->devise_list);
+
                 foreach ($data as $key => $line) {
+
                     if ($this->getImportsBreak($data, $key)) {
                         break;
                     }
 
-                    /* @var $admin \Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin */
-                    $admin = $this->container->get('sonata.admin.pool')->getAdminByAdminCode($adminCode);
-                    $admin->setDeviseList($this->devise_list);
-
                     $object = $admin->getNewInstance();
+
                     $admin->setSubject($object);
+
                     /* @var $form \Symfony\Component\Form\Form */
-                    $form = $admin->getForm();
+                    $form_builder = $admin->getFormBuilder();
+                    $form = $form_builder->getForm();
+
                     $form->setData($object);
+
 
                     $formData = array('client_id' => $this->client_id, '_token' => $this->get('form.csrf_provider')->generateCsrfToken('unknown'));
 
@@ -709,12 +712,6 @@ class AbstractTabsController extends Controller
                             $formData[$fieldName] = $admin->getFormValue($fieldName, $value);
                         }
                     }
-
-                    /*if (empty($formData['tiers'])) {
-                        echo '<pre>';
-                        var_dump($formData);
-                        exit;
-                    }*/
 
                     $form->bind($formData);
 
@@ -732,7 +729,9 @@ class AbstractTabsController extends Controller
 
                         $this->setCountImports($class, 'errors', $form->getErrorsAsString());
                     }
+                    unset($formData, $form, $form_builder, $object);
                 }
+                unset($data, $admin);
             }
         }
     }
