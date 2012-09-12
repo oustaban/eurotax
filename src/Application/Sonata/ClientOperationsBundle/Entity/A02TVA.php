@@ -76,14 +76,14 @@ class A02TVA extends AbstractBuyEntity
     /**
      * @var string $taux_de_change
      *
-     * @ORM\Column(name="taux_de_change", type="string", length=255)
+     * @ORM\Column(name="taux_de_change", type="string", length=255, nullable=true)
      */
     private $taux_de_change;
 
     /**
      * @var float $HT
      *
-     * @ORM\Column(name="HT", type="float")
+     * @ORM\Column(name="HT", type="float", nullable=true)
      */
     private $HT;
 

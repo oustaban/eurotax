@@ -32,7 +32,7 @@ abstract class AbstractBuyEntity extends AbstractBaseEntity
     /**
      * @var float $mois
      *
-     * @ORM\Column(name="mois", type="float")
+     * @ORM\Column(name="mois", type="date", nullable=true)
      */
     private $mois;
 
@@ -40,7 +40,7 @@ abstract class AbstractBuyEntity extends AbstractBaseEntity
     /**
      * @var string $commentaires
      *
-     * @ORM\Column(name="commentaires", type="text")
+     * @ORM\Column(name="commentaires", type="text", nullable=true)
      */
     private $commentaires;
 

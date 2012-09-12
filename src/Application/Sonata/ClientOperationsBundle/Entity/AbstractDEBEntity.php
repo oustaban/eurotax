@@ -15,14 +15,14 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     /**
      * @var string $n_ligne
      *
-     * @ORM\Column(name="n_ligne", type="string", length=255)
+     * @ORM\Column(name="n_ligne", type="string", length=255, nullable=true)
      */
     private $n_ligne;
 
     /**
      * @var string $nomenclature
      *
-     * @ORM\Column(name="nomenclature", type="string", length=255)
+     * @ORM\Column(name="nomenclature", type="string", length=255, nullable=true)
      */
     private $nomenclature;
 
@@ -30,35 +30,35 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     /**
      * @var string $pays_id_destination
      *
-     * @ORM\Column(name="pays_id_destination", type="string", length=2)
+     * @ORM\Column(name="pays_id_destination", type="string", length=2, nullable=true)
      */
     private $pays_id_destination;
 
     /**
      * @var float $valeur_fiscale
      *
-     * @ORM\Column(name="valeur_fiscale", type="float")
+     * @ORM\Column(name="valeur_fiscale", type="float", nullable=true)
      */
     private $valeur_fiscale;
 
     /**
      * @var string $regime
      *
-     * @ORM\Column(name="regime", type="string", length=255)
+     * @ORM\Column(name="regime", type="string", length=255, nullable=true)
      */
     private $regime;
 
     /**
      * @var float $valeur_statistique
      *
-     * @ORM\Column(name="valeur_statistique", type="float")
+     * @ORM\Column(name="valeur_statistique", type="float", nullable=true)
      */
     private $valeur_statistique;
 
     /**
      * @var float $masse_mette
      *
-     * @ORM\Column(name="masse_mette", type="float")
+     * @ORM\Column(name="masse_mette", type="float", nullable=true)
      */
     private $masse_mette;
 
@@ -66,21 +66,21 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     /**
      * @var float $unites_supplementaires
      *
-     * @ORM\Column(name="unites_supplementaires", type="float")
+     * @ORM\Column(name="unites_supplementaires", type="float", nullable=true)
      */
     private $unites_supplementaires;
 
     /**
      * @var string $nature_transaction
      *
-     * @ORM\Column(name="nature_transaction", type="string", length=255)
+     * @ORM\Column(name="nature_transaction", type="string", length=255, nullable=true)
      */
     private $nature_transaction;
 
     /**
      * @var string $conditions_livraison
      *
-     * @ORM\Column(name="conditions_livraison", type="string", length=255)
+     * @ORM\Column(name="conditions_livraison", type="string", length=255, nullable=true)
      */
     private $conditions_livraison;
 
@@ -88,21 +88,21 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     /**
      * @var string $mode_transport
      *
-     * @ORM\Column(name="mode_transport", type="string", length=255)
+     * @ORM\Column(name="mode_transport", type="string", length=255, nullable=true)
      */
     private $mode_transport;
 
     /**
      * @var string $departement
      *
-     * @ORM\Column(name="departement", type="string", length=255)
+     * @ORM\Column(name="departement", type="string", length=255, nullable=true)
      */
     private $departement;
 
     /**
      * @var string $pays_id_origine
      *
-     * @ORM\Column(name="pays_id_origine", type="string", length=2)
+     * @ORM\Column(name="pays_id_origine", type="string", length=2, nullable=true)
      */
     private $pays_id_origine;
 
@@ -110,7 +110,7 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     /**
      * @var string $CEE
      *
-     * @ORM\Column(name="CEE", type="string", length=255)
+     * @ORM\Column(name="CEE", type="string", length=255, nullable=true)
      */
     private $CEE;
 

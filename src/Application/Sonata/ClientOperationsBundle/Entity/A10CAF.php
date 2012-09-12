@@ -16,7 +16,7 @@ class A10CAF extends AbstractBuyEntity
     /**
      * @var float $HT
      *
-     * @ORM\Column(name="HT", type="float")
+     * @ORM\Column(name="HT", type="float", nullable=true)
      */
     private $HT;
 

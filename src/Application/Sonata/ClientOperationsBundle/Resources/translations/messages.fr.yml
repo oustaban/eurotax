@@ -37,7 +37,7 @@ ApplicationSonataClientOperationsBundle:
       commentaires: Commentaires
 
     V05LIC:
-      title: V03-283-I
+      title: V05-LIC
       tiers: Tiers
       no_TVA_tiers: N° TVA Tiers
       date_piece: Date pièce
@@ -107,7 +107,7 @@ ApplicationSonataClientOperationsBundle:
       commentaires: Commentaires
 
     A02TVA:
-      title: V01-TVA
+      title: A02-TVA
       tiers: Tiers
       date_piece: Date pièce
       numero_piece: Numéro pièce
@@ -251,7 +251,7 @@ ApplicationSonataClientOperationsBundle:
       commentaires: Commentaires
 
     V05LIC:
-      title: V03-283-I
+      title: V05-LIC
       tiers: Tiers
       no_TVA_tiers: N° TVA Tiers
       date_piece: Date pièce
@@ -335,7 +335,7 @@ ApplicationSonataClientOperationsBundle:
       commentaires: Commentaires
 
     A02TVA:
-      title: V01-TVA
+      title: A02-TVA
       tiers: Tiers
       date_piece: Date pièce
       numero_piece: Numéro pièce

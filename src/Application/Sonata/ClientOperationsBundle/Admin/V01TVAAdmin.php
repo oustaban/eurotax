@@ -26,7 +26,7 @@ class V01TVAAdmin extends Admin
                 'widget' => 'single_text',
                 'input' => 'datetime',
                 'format' => $this->date_format_datetime)
-            )
+        )
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
             ->add('devise', null, array('label' => $this->getFieldLabel('devise_id')))
             ->add('montant_HT_en_devise', null, array('label' => $this->getFieldLabel('montant_HT_en_devise')))
@@ -34,9 +34,19 @@ class V01TVAAdmin extends Admin
             ->add('montant_TVA_francaise', null, array('label' => $this->getFieldLabel('montant_TVA_francaise')))
             ->add('montant_TTC', null, array('label' => $this->getFieldLabel('montant_TTC')))
             ->add('paiement_montant', null, array('label' => $this->getFieldLabel('paiement_montant')))
-            ->add('paiement_devise_id', null, array('label' => $this->getFieldLabel('paiement_devise_id')))
-            ->add('paiement_date', null, array('label' => $this->getFieldLabel('paiement_date')))
-            ->add('mois', null, array('label' => $this->getFieldLabel('mois')))
+            ->add('paiement_devise', null, array('label' => $this->getFieldLabel('paiement_devise_id')))
+            ->add('paiement_date', null, array(
+                'label' => $this->getFieldLabel('paiement_date'),
+                'attr' => array('class' => 'datepicker'),
+                'widget' => 'single_text',
+                'input' => 'datetime',
+                'format' => $this->date_format_datetime)
+        )
+            ->add('mois', 'date', array(
+            'label' => $this->getFieldLabel('mois'),
+            'days' => range(1, 1),
+            'format' => 'dd MMMM yyyy',
+        ))
             ->add('taux_de_change', null, array('label' => $this->getFieldLabel('taux_de_change')))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT')))
             ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA')))
@@ -74,9 +84,4 @@ class V01TVAAdmin extends Admin
             ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA')));
     }
 
-
-    protected function getPaiement_dateFormValue($value)
-    {
-        return $this->dateFormValue($value);
-    }
 }

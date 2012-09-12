@@ -32,8 +32,10 @@ abstract class AbstractTabsAdmin extends Admin
     public $client_id = '';
     public $date_filter_separator = '|';
     public $month_default = '';
-    public $date_format_php = '';
-    public $date_format_js = '';
+    public $devise = array();
+    public $date_format_datetime = 'dd/MM/yyyy';
+    public $date_format_php = 'd/m/Y';
+    public $date_format_js = 'dd/mm/yyyy';
 
     /**
      * @param string $code
@@ -52,10 +54,6 @@ abstract class AbstractTabsAdmin extends Admin
      */
     public function getRequestParameters($request)
     {
-        $this->date_format_datetime = 'dd/MM/yyyy';
-        $this->date_format_php = 'd/m/Y';
-        $this->date_format_js = 'dd/mm/yyyy';
-
         $filter = $request->query->get('filter');
 
         if (!empty($filter['client_id']) && !empty($filter['client_id']['value'])) {
@@ -268,6 +266,8 @@ abstract class AbstractTabsAdmin extends Admin
         $collection->add('clone', '{id}/clone');
     }
 
+    //customs fields
+
     /**
      * @param $field
      * @param $value
@@ -276,7 +276,11 @@ abstract class AbstractTabsAdmin extends Admin
     public function getFormValue($field, $value)
     {
         $method = 'get' . ucfirst($field) . 'FormValue';
-        return method_exists($this, $method) ? $this->$method($value) : $value;
+        $v = method_exists($this, $method) ? $this->$method($value) : $value;
+        if (is_scalar($v)) {
+            $v = trim($v);
+        }
+        return $v;
     }
 
 
@@ -306,7 +310,9 @@ abstract class AbstractTabsAdmin extends Admin
             $t = \PHPExcel_Shared_Date::ExcelToPHP($value);
         }
 
-        return date($this->date_format_php, $t);
+        $value = date($this->date_format_php, $t);
+
+        return $value;
     }
 
     /**
@@ -317,4 +323,102 @@ abstract class AbstractTabsAdmin extends Admin
     {
         return $this->dateFormValue($value);
     }
+
+
+    /**
+     * @param $value
+     * @return array
+     */
+    protected function getPaiement_dateFormValue($value)
+    {
+        return $this->dateFormValue($value);
+    }
+
+
+    protected function getMoisFormValue($value)
+    {
+
+        $value = $this->dateFormValue($value);
+
+        if ($value) {
+            list($day, $month, $year) = explode('/', $value);
+
+            return array(
+                'day' => 1,
+                'month' => intval($month),
+                'year' => $year,
+            );
+        }
+        return NULL;
+    }
+
+    /**
+     * @param array $value
+     */
+    public function setDeviseList(array $value)
+    {
+        $this->devise = $value;
+    }
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    protected function getDevise($value)
+    {
+        $value = strtolower($value);
+
+        $value_assoc = array(
+            'usd' => 'dollar',
+            'jpy' => 'yen',
+            'nok' => 'norwegian_krone',
+            'dkk' => 'danish_krone',
+            'sek' => 'swedish_krone',
+            'chf' => 'swiss_franc',
+        );
+
+        $value = isset($value_assoc[$value]) ? $value_assoc[$value] : $value;
+
+        return isset($this->devise[$value]) ? $this->devise[$value]->getId() : '';
+    }
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    protected function getDeviseFormValue($value)
+    {
+        return $this->getDevise($value);
+    }
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    protected function getPaiement_deviseFormValue($value)
+    {
+        return $this->getDevise($value);
+    }
+
+    /**
+     * @param $value
+     * @return int
+     */
+    protected function getDEBFormValue($value)
+    {
+        if ($value == 'OUI') {
+            return 1;
+        }
+        return 0;
+    }
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    protected function getPays_id_origineFormValue($value)
+    {
+        return $value;
+    }
+
 }
