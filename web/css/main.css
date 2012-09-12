@@ -6,6 +6,9 @@ body {
 }
 #top-nav {
     padding-top: 20px;
+    position: absolute;
+    right: 40px;
+    top: 20px;
 }
 
 #container {
@@ -85,4 +88,7 @@ body {
 .sonata-bc div.connection {
     margin: 0 auto !important;
     position: inherit !important;
+}
+.sonata-ba-list table.table td.sonata-ba-list-field-money{
+    text-align: right;
 }
