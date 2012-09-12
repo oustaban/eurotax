@@ -357,11 +357,6 @@ class AbstractTabsController extends Controller
             $this->_parameters_url['month'] = $this->_query_month;
         }
 
-        $this->jsSettingsJson(array(
-            'url' => array(
-                'importremove' => $this->admin->generateUrl('importremove', array('filter' => array('client_id' => array('value' => $this->client_id))))
-            )
-        ));
     }
 
 
@@ -921,28 +916,6 @@ class AbstractTabsController extends Controller
         $obj_writer->save('php://output');
         exit;
     }
-
-    public function importremoveAction()
-    {
-        $id = $this->getRequest()->query->get('id');
-
-
-        $em = $this->getDoctrine()->getManager();
-        foreach ($this->tabs_arr as $table => $entity) {
-            $object = $em->getRepository('ApplicationSonataClientOperationsBundle:' . $entity)->findByImports($id);
-
-            foreach ($object as $obj) {
-                $em->remove($obj);
-            }
-            unset($object);
-        }
-        $em->flush();
-
-        return $this->renderJson(array(
-            'status' => 1,
-        ));
-    }
-
 
     /**
      * @param $client_id
