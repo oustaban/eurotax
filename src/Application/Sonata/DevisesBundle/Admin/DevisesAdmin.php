@@ -131,6 +131,8 @@ class DevisesAdmin extends Admin
      */
     protected function configureRoutes(RouteCollection $collection)
     {
-        $collection->remove('list');
+        $collection
+            ->remove('list')
+            ->remove('delete');
     }
 }
