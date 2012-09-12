@@ -29,3 +29,9 @@
 .page-header {
     display: none;
 }
+.table-striped tbody tr.rowa td, .table-striped tbody tr.rowa th {
+    background-color: #FFFFFF;
+}
+.table-striped tbody tr.rowb td, .table-striped tbody tr.rowb th {
+    background-color: #F9F9F9;
+}

@@ -197,14 +197,6 @@ abstract class AbstractTabsAdmin extends Admin
     }
 
     /**
-     * @param DatagridMapper $datagridMapper
-     */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
-    {
-        #$datagridMapper->add('client_id');
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function generateUrl($name, array $parameters = array(), $absolute = false)

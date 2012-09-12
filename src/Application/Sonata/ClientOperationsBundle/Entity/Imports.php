@@ -42,7 +42,7 @@ class Imports
      */
     public function __toString()
     {
-        return $this->getUser();
+        return (string)$this->getId();
     }
 
     /**
