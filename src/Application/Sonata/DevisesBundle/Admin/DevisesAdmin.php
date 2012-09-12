@@ -32,15 +32,12 @@ class DevisesAdmin extends Admin
     protected $_money_arr = array(
         'money_dollar' => array(
             'label' => 'Dollar',
-            'currency' => 'USD',
         ),
         'money_yen' => array(
             'label' => 'Yen',
-            'currency' => 'JPY',
         ),
         'money_british' => array(
             'label' => 'British Pound',
-            'currency' => 'GBP',
         ),
     );
 
@@ -74,7 +71,7 @@ class DevisesAdmin extends Admin
 
         foreach ($this->_money_arr as $field => $labelData) {
 
-            $formMapper->add($field, 'money', array('label' => $this->_bundle_name . '.form.' . $labelData['label'], 'divisor' => 1, 'currency' => $labelData['currency']));
+            $formMapper->add($field, 'money', array('label' => $this->_bundle_name . '.form.' . $labelData['label'], 'divisor' => 1, 'currency' => 'EUR'));
         }
     }
 
