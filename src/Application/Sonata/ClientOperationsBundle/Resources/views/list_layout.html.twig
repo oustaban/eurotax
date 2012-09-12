@@ -51,7 +51,7 @@
                 $('.' + tc).each(function () {
                     sum += parseFloat($(this).html());
                 });
-                $div.html('<b>Total: ' + sum + '</b>');
+                $div.html('<b>Total:<br/>' + sum + '</b>');
             }
         });
 
@@ -61,6 +61,16 @@
         else {
             $tr.remove();
         }
+    });
+    $(function () {
+        $('.sonata-ba-list table.table td.sonata-ba-list-field-money').each(function(){
+            var $this = $(this);
+            var val = $this.text().trim();
+            var repl = Number(val).toFixed(2).toString();
+
+            $this.html($this.html().replace(val, repl));
+            $this.html($this.html().replace('.', ','));
+        });
     });
     {% if not admin.getLocking %}
     $(function () {
