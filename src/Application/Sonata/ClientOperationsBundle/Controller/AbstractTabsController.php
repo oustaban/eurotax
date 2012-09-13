@@ -18,24 +18,7 @@ class AbstractTabsController extends Controller
      * @var int
      */
     public $client_id = null;
-    public $devise_list = array();
-    public $tabs_arr = array(
-        'V01-TVA' => 'V01TVA',
-        'V03-283-I' => 'V03283I',
-        'V05-LIC' => 'V05LIC',
-        'DEB Exped' => 'DEBExped',
-        'V07-EX' => 'V07EX',
-        'V09-DES' => 'V09DES',
-        'V11-INT' => 'V11INT',
-        'A02-TVA' => 'A02TVA',
-        'A04-283-I' => 'A04283I',
-        'A06-AIB' => 'A06AIB',
-        'DEB Intro' => 'DEBIntro',
-        'A08-IM' => 'A08IM',
-        'A10-CAF' => 'A10CAF',
-    );
-
-    /**
+       /**
      * @var string
      */
     protected $_tabAlias = '';
@@ -871,22 +854,18 @@ class AbstractTabsController extends Controller
         $excel = new \PHPExcel();
 
         $i = 0;
-        foreach ($this->tabs_arr as $sheet_name => $class) {
+        foreach ($this->_config_excel as $sheet_name => $value) {
+            $class = $value['entity'];
 
             $className = '\Application\Sonata\ClientOperationsBundle\Entity\\' . $class;
             $entity = new $className();
 
-            $reflect = new \ReflectionClass($entity);
-            $props = $reflect->getProperties();
-
-
             $fields = array();
-            foreach ($props as $field) {
-                if (!in_array($field->name, $exclude_fields)) {
-                    $fields[] = $translator->trans('ApplicationSonataClientOperationsBundle.list.' . $class . '.' . $field->name);
+            foreach ($value['fields'] as $field_name) {
+                if (!in_array($field_name, $exclude_fields)) {
+                    $fields[] = $translator->trans('ApplicationSonataClientOperationsBundle.list.' . $class . '.' . $field_name);
                 }
             }
-
             unset($entity);
 
             if ($i > 0) {
