@@ -48,7 +48,7 @@ class ClientAdmin extends Admin
         $formMapper
             ->with('form.client')
             ->add('user', null, array('label' => 'form.user',))
-            ->add('nom', null, array('label' => 'form.nom', 'required' => false,))
+            ->add('nom', null, array('label' => 'form.nom'))
             ->add('nature_du_client', null, array('label' => 'form.nature_du_client'))
             ->add('raison_sociale', null, array('label' => 'form.raison_sociale', 'required' => false,))
             ->add('location_postal', new LocationPostalType(), array(
