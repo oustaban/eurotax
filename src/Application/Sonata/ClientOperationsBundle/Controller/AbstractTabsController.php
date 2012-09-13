@@ -335,7 +335,7 @@ class AbstractTabsController extends Controller
 
         $this->_parameters_url['filter']['client_id']['value'] = $this->client_id;
 
-        if ($this->admin->month_default != $this->_query_month) {
+        if ($this->admin->setQueryMonth()) {
             $this->_parameters_url['month'] = $this->_query_month;
         }
 
@@ -367,7 +367,6 @@ class AbstractTabsController extends Controller
             'blocked' => isset($this->_locking) ? 0 : 1,
             'js_settings_json' => $this->_jsSettingsJson,
             '_filter_json' => $this->_parameters_url,
-
         ));
     }
 
