@@ -39,7 +39,7 @@
             $(this).removeAttr('objectid');
             var $div = $(this).children();
             if (!$div.hasClass('totals')) {
-                $(this).html('&nbsp;');
+                $(this).removeClass('sonata-ba-list-field-money').html('&nbsp;');
             }
             else {
                 add_total_rows = true;
@@ -65,7 +65,7 @@
     $(function () {
         $('.sonata-ba-list table.table td.sonata-ba-list-field-money').each(function(){
             var $this = $(this);
-            var val = $this.text().trim();
+            var val = $this.text().trim().replace(/[^\d\.]+/, '');
             var repl = Number(val).toFixed(2).toString();
 
             $this.html($this.html().replace(val, repl));
