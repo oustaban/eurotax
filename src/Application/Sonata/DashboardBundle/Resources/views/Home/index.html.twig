@@ -19,21 +19,20 @@
         {% block table_header %}
         <thead>
         <tr class="sonata-ba-list-field-header">
-
             {% spaceless %}
             <th class="sonata-ba-list-field-header-text">
                 <a href="#">Raison sociale</a>
             </th>
-            <th class="sonata-ba-list-field-header-text">
+            <th class="sonata-ba-list-field-header-orm_many_to_one">
                 <a href="#">Nature du client</a>
             </th>
-            <th class="sonata-ba-list-field-header-text">
+            <th class="sonata-ba-list-field-header-integer">
                 <a href="#">Date de dépot</a>
             </th>
-            <th class="sonata-ba-list-field-header-text">
+            <th class="sonata-ba-list-field-header-date">
                 <a href="#">Date début mission </a>
             </th>
-            <th class="sonata-ba-list-field-header-text">
+            <th class="sonata-ba-list-field-header-date">
                 <a href="#">Date fin mission </a>
             </th>
             {% endspaceless %}
@@ -48,16 +47,16 @@
             <td class="sonata-ba-list-field sonata-ba-list-field-text" objectId="{{ client.id }}">
                 {{ client.getRaisonSociale }}
             </td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-text" objectId="{{ client.id }}">
+            <td class="sonata-ba-list-field sonata-ba-list-field-orm_many_to_one" objectId="{{ client.id }}">
                 {{ client.getNatureDuClient }}
             </td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-text" objectId="{{ client.id }}">
+            <td class="sonata-ba-list-field sonata-ba-list-field-integer" objectId="{{ client.id }}">
                 {{ client.getDateDeDepot }}
             </td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-text" objectId="{{ client.id }}">
+            <td class="sonata-ba-list-field sonata-ba-list-field-date" objectId="{{ client.id }}">
                 {{ client.getDateDebutMission|datefmt_format(default_date_format) }}
             </td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-text" objectId="{{ client.id }}">
+            <td class="sonata-ba-list-field sonata-ba-list-field-date" objectId="{{ client.id }}">
                 {{ client.getDateFinMission|datefmt_format(default_date_format) }}
             </td>
         </tr>
