@@ -12,6 +12,6 @@ form:
     pays_postal: Pays Postal
     adresse_facturation_1: Adresse Facturation 1
     adresse_facturation_2: Adresse Facturation 2
-    CP_facturation: CP Facturation
+    CP_facturation: Code Postal facturation
     ville_facturation: Ville Facturation
     pays_facturation: Pays Facturation

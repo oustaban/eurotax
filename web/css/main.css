@@ -92,3 +92,7 @@ body {
 .sonata-ba-list table.table td.sonata-ba-list-field-money{
     text-align: right;
 }
+
+.form-horizontal .sonata-ba-field .datepicker {
+    width: 80px;
+}
