@@ -2,65 +2,71 @@
 
 {% block body_content %}
 {{ parent() }}
-<h2>Sélectionnez votre project</h2>
-<div style="float: right;">
-    Attention, 5 alters en cours<br/>
-    <br/><br/>
-    <button>Consulter les projets ...</button><br/>
-    <br/><br/>
+<div style="clear:both;float: none;">
+    <h2>Sélectionnez votre project</h2>
+
+    <div style="float: right;">
+        Attention, 5 alters en cours<br/>
+        <br/><br/>
+        <button>Consulter les projets ...</button>
+        <br/>
+        <br/><br/>
+    </div>
 </div>
-{% if clients %}
-<table id="clientList" class="table table-bordered table-striped" style="width: auto;">
-    {% block table_header %}
-    <thead>
-    <tr class="sonata-ba-list-field-header">
+<div style="clear:both;float: none;">
+    {% if clients %}
+    <table id="clientList" class="table table-bordered table-striped" style="width: auto;">
+        {% block table_header %}
+        <thead>
+        <tr class="sonata-ba-list-field-header">
 
-        {% spaceless %}
-        <th class="sonata-ba-list-field-header-text">
-            <a href="#">Raison sociale</a>
-        </th>
-        <th class="sonata-ba-list-field-header-text">
-            <a href="#">Nature du client</a>
-        </th>
-        <th class="sonata-ba-list-field-header-text">
-            <a href="#">Date de dépot</a>
-        </th>
-        <th class="sonata-ba-list-field-header-text">
-            <a href="#">Date début mission </a>
-        </th>
-        <th class="sonata-ba-list-field-header-text">
-            <a href="#">Date fin mission </a>
-        </th>
-        {% endspaceless %}
-    </tr>
-    </thead>
-    {% endblock %}
+            {% spaceless %}
+            <th class="sonata-ba-list-field-header-text">
+                <a href="#">Raison sociale</a>
+            </th>
+            <th class="sonata-ba-list-field-header-text">
+                <a href="#">Nature du client</a>
+            </th>
+            <th class="sonata-ba-list-field-header-text">
+                <a href="#">Date de dépot</a>
+            </th>
+            <th class="sonata-ba-list-field-header-text">
+                <a href="#">Date début mission </a>
+            </th>
+            <th class="sonata-ba-list-field-header-text">
+                <a href="#">Date fin mission </a>
+            </th>
+            {% endspaceless %}
+        </tr>
+        </thead>
+        {% endblock %}
 
-    {% block table_body %}
-    <tbody>
-    {% for client in clients %}
-    <tr>
-        <td class="sonata-ba-list-field sonata-ba-list-field-text" objectId="{{ client.id }}">
-            {{ client.getRaisonSociale }}
-        </td>
-        <td class="sonata-ba-list-field sonata-ba-list-field-text" objectId="{{ client.id }}">
-            {{ client.getNatureDuClient }}
-        </td>
-        <td class="sonata-ba-list-field sonata-ba-list-field-text" objectId="{{ client.id }}">
-            {{ client.getDateDeDepot }}
-        </td>
-        <td class="sonata-ba-list-field sonata-ba-list-field-text" objectId="{{ client.id }}">
-            {{ client.getDateDebutMission|datefmt_format(default_date_format) }}
-        </td>
-        <td class="sonata-ba-list-field sonata-ba-list-field-text" objectId="{{ client.id }}">
-            {{ client.getDateFinMission|datefmt_format(default_date_format) }}
-        </td>
-    </tr>
-    {% endfor %}
-    </tbody>
-    {% endblock %}
-</table>
-{% endif %}
+        {% block table_body %}
+        <tbody>
+        {% for client in clients %}
+        <tr>
+            <td class="sonata-ba-list-field sonata-ba-list-field-text" objectId="{{ client.id }}">
+                {{ client.getRaisonSociale }}
+            </td>
+            <td class="sonata-ba-list-field sonata-ba-list-field-text" objectId="{{ client.id }}">
+                {{ client.getNatureDuClient }}
+            </td>
+            <td class="sonata-ba-list-field sonata-ba-list-field-text" objectId="{{ client.id }}">
+                {{ client.getDateDeDepot }}
+            </td>
+            <td class="sonata-ba-list-field sonata-ba-list-field-text" objectId="{{ client.id }}">
+                {{ client.getDateDebutMission|datefmt_format(default_date_format) }}
+            </td>
+            <td class="sonata-ba-list-field sonata-ba-list-field-text" objectId="{{ client.id }}">
+                {{ client.getDateFinMission|datefmt_format(default_date_format) }}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        {% endblock %}
+    </table>
+    {% endif %}
+</div>
 {% endblock body_content %}
 
 {% block javascripts %}
