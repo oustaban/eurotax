@@ -18,7 +18,7 @@ class AbstractTabsController extends Controller
      * @var int
      */
     public $client_id = null;
-       /**
+    /**
      * @var string
      */
     protected $_tabAlias = '';
@@ -323,8 +323,7 @@ class AbstractTabsController extends Controller
 
         $this->client = $this->getDoctrine()->getManager()
             ->getRepository('Application\Sonata\ClientBundle\Entity\Client')
-            ->find($this->admin->client_id)
-        ;
+            ->find($this->admin->client_id);
         if (empty($this->client)) {
             throw new NotFoundHttpException(sprintf('unable to find Client with id : %s', $this->admin->client_id));
         }
@@ -336,7 +335,7 @@ class AbstractTabsController extends Controller
 
         $this->_parameters_url['filter']['client_id']['value'] = $this->client_id;
 
-        if ($this->admin->month_default != $this->_query_month) {
+        if ($this->admin->setQueryMonth()) {
             $this->_parameters_url['month'] = $this->_query_month;
         }
 
@@ -368,7 +367,6 @@ class AbstractTabsController extends Controller
             'blocked' => isset($this->_locking) ? 0 : 1,
             'js_settings_json' => $this->_jsSettingsJson,
             '_filter_json' => $this->_parameters_url,
-
         ));
     }
 
@@ -598,9 +596,6 @@ class AbstractTabsController extends Controller
      */
     public function importAction()
     {
-        $translator = $this->get('translator');
-//        $exclude_fields = array('id', 'client_id', 'imports');
-
         if (!empty($_FILES) && !empty($_FILES["inputFile"])) {
             $file = TMP_UPLOAD_PATH . '/' . $_FILES["inputFile"]["name"];
             $tmpFile = $_FILES["inputFile"]["tmp_name"];
@@ -628,7 +623,7 @@ class AbstractTabsController extends Controller
                 file_put_contents($tmpFile, '');
                 $this->importValidateAndSave($sheets);
 
-                if(empty($this->_import_counts['rows']['errors'])){
+                if (empty($this->_import_counts['rows']['errors'])) {
 
                     $this->importValidateAndSave($sheets, true);
                 }
@@ -742,10 +737,14 @@ class AbstractTabsController extends Controller
     protected function getImportsBreak($data, $key, $tabs = 3)
     {
         $data_counter = 0;
-        for ($i = $key; $i <= $tabs; $i++) {
+
+        $limit = $key + ($tabs - 1);
+        for ($i = $key; $i <= $limit; $i++) {
             $line_counter = false;
+
             if (!empty($data[$i]) && $line = $data[$i]) {
                 foreach ($line as $value) {
+                    $value = trim($value);
                     if (empty($value)) {
                         $line_counter = true;
                     } else {
@@ -846,52 +845,12 @@ class AbstractTabsController extends Controller
      */
     public function blankAction()
     {
-        $translator = $this->get('translator');
-        $exclude_fields = array('id', 'client_id', 'imports');
-
         $file_name = 'blank-' . md5(time() . rand(1, 99999999));
-
-        $excel = new \PHPExcel();
-
-        $i = 0;
-        foreach ($this->_config_excel as $sheet_name => $value) {
-            $class = $value['entity'];
-
-            $className = '\Application\Sonata\ClientOperationsBundle\Entity\\' . $class;
-            $entity = new $className();
-
-            $fields = array();
-            foreach ($value['fields'] as $field_name) {
-                if (!in_array($field_name, $exclude_fields)) {
-                    $fields[] = $translator->trans('ApplicationSonataClientOperationsBundle.list.' . $class . '.' . $field_name);
-                }
-            }
-            unset($entity);
-
-            if ($i > 0) {
-                $excel->createSheet(null, $i);
-            }
-
-            $excel->setActiveSheetIndex($i);
-            $sheet = $excel->getActiveSheet();
-            $sheet->fromArray($fields);
-            $sheet->setTitle($sheet_name);
-
-            $toCol = $sheet->getColumnDimension($sheet->getHighestColumn())->getColumnIndex();
-            $toCol++;
-            for ($k = 'A'; $k !== $toCol; $k++) {
-                $sheet->getColumnDimension($k)->setAutoSize(true);
-            }
-
-            $i++;
-        }
-
 
         header('Content-Type: application/excel');
         header('Content-Disposition: attachment; filename="' . $file_name . '.xlsx"');
 
-        $obj_writer = new \PHPExcel_Writer_Excel2007($excel);
-        $obj_writer->save('php://output');
+        readfile('bundles/applicationsonataclientoperations/excel/blank.xlsx');
         exit;
     }
 

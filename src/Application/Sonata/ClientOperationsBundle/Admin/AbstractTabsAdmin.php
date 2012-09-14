@@ -80,6 +80,18 @@ abstract class AbstractTabsAdmin extends Admin
         return explode($this->date_filter_separator, $month);
     }
 
+    /**
+     * @return string
+     */
+    public function setQueryMonth()
+    {
+        if ($this->month_default != $this->query_month) {
+            return $this->query_month;
+        }
+
+        return '';
+    }
+
 
     /**
      * @return array
@@ -202,10 +214,17 @@ abstract class AbstractTabsAdmin extends Admin
             case 'delete':
             case 'batch':
                 $parameters['filter']['client_id']['value'] = $this->client_id;
+
+                if ($month = $this->setQueryMonth()) {
+
+                    $parameters['month'] = $month;
+                }
+
                 break;
         }
         return parent::generateUrl($name, $parameters, $absolute);
     }
+
 
     /**
      * {@inheritdoc}

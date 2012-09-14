@@ -25,6 +25,8 @@ class DateFmtFormatExtension extends Twig_Extension
      */
     public function datefmtFormatFilter($datetime, $format = null)
     {
+        if(empty($datetime)) return ;
+
         $dateFormat = is_int($format) ? $format : \IntlDateFormatter::MEDIUM;
         $timeFormat = \IntlDateFormatter::NONE;
         $calendar = \IntlDateFormatter::GREGORIAN;

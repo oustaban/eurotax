@@ -1,3 +1,9 @@
-<a href="{{ admin.generateObjectUrl('clone', object, {'filter[client_id][value]' : object.clientId}) }}" class="clone_link">
+{% if admin.setQueryMonth() is not empty %}
+{% set url_parameter = {'filter[client_id][value]' : object.clientId, 'month' : admin.setQueryMonth()} %}
+{% else %}
+{% set url_parameter = {'filter[client_id][value]' : object.clientId} %}
+{% endif%}
+
+<a href="{{ admin.generateObjectUrl('clone', object,  url_parameter)}}" class="clone_link">
     <i class="icon icon-th-list"></i>
 </a>
