@@ -110,4 +110,15 @@ class UserAdmin extends BaseUserAdmin
     {
         return $this->userManager;
     }
+
+    /**
+     * @param string $action
+     * @return array
+     */
+    public function getBreadcrumbs($action)
+    {
+        $res = parent::getBreadcrumbs($action);
+        array_shift($res);
+        return $res;
+    }
 }

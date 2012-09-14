@@ -156,3 +156,10 @@ filter:
   date_de_depot_id: Date de dépot
   N_TVA_CEE: N° TVA CEE
   niveau_dobligation_id: Niveau d'obligation
+
+Client List: Clients
+Contact List: Contacts
+Document List: Documents légaux
+Garantie List: Garanties
+Coordonnees List: Coordonnées Bancaires
+Commentaire List: Commentaires

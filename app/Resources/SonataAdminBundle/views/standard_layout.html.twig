@@ -40,7 +40,6 @@
 {% endblock %}
 
 {% block title %}
-{{ 'Admin'|trans({}, 'SonataAdminBundle') }}
 {% if _title is defined and _title is not empty %}
 {% else %}
 {% if action is defined %}
@@ -55,28 +54,9 @@
 {% endblock title%}
 
 {% block body_content %}
-{% if _breadcrumb is not empty or action is defined %}
-{% if _breadcrumb is empty %}
-<ul class="breadcrumb">
-    {% if action is defined %}
-    {% for label, uri in admin.breadcrumbs(action) %}
-    {% if not loop.last  %}
-    <li><a href="{{ uri }}">{{ label }}</a><span class="divider">/</span></li>
-    {% else %}
-    <li class="active">{{ label }}</li>
-    {% endif %}
-    {% endfor %}
-    {% endif %}
-</ul>
-{% else %}
-{{ _breadcrumb|raw }}
-{% endif %}
-{% endif %}
 
 <div class="sonata-bc {% if _side_menu is empty %}sonata-ba-no-side-menu{% endif %}">
     {# initialize block value #}
-
-
 
     <div class="main-content">
         {% block notice %}
