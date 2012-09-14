@@ -1,11 +1,15 @@
 <?php
 
-namespace Application\Sonata\UserBundle\Controller;
+namespace Application\Sonata\DashboardBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class ImpersonatingController extends Controller
+/**
+ * HomeController controller.
+ *
+ */
+class HomeController extends Controller
 {
     /**
      * @Template()
@@ -19,4 +23,5 @@ class ImpersonatingController extends Controller
 
         return array('clients' => $clients);
     }
+
 }
