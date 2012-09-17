@@ -5,7 +5,7 @@
         var $tr = $table.find('tr:first').clone();
 
         var add_total_rows = false;
-        $tr.children().each(function () {
+        $tr.addClass('totals_row').children().each(function () {
             $(this).addClass('total').removeAttr('objectid');
             var $div = $(this).children();
             if (!$div.hasClass('totals')) {
