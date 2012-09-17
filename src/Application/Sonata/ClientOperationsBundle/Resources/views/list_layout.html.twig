@@ -11,6 +11,7 @@
 {{parent()}}
 <script src="{{ asset('bundles/applicationsonataclientoperations/js/jquery.tablesorter.js') }}" type="text/javascript"></script>
 <script src="{{ asset('bundles/applicationsonataclientoperations/js/jquery.columnfilters.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/applicationsonataclientoperations/js/jquery.sticky.header.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     $(function () {
         $('.sonata-ba-list .table').tablesorter({
@@ -63,7 +64,7 @@
         }
     });
     $(function () {
-        $('.sonata-ba-list table.table td.sonata-ba-list-field-money').each(function(){
+        $('.sonata-ba-list table.table td.sonata-ba-list-field-money').each(function () {
             var $this = $(this);
             var val = $this.text().trim().replace(/[^\d\.]+/, '');
             var repl = Number(val).toFixed(2).toString();
@@ -71,6 +72,23 @@
             $this.html($this.html().replace(val, repl));
             $this.html($this.html().replace('.', ','));
         });
+    });
+    $(function () {
+        var $thead = $('.sonata-ba-list .table thead:first');
+        var $tr = $('<tr />').prependTo($thead);
+        var $th = $('<th />')
+                .attr('colspan', $thead.children(':last').children().length)
+                .append($('.clientoperations_tabs_types_block'))
+                .appendTo($tr);
+        var depth = 0;
+        $thead.children().addClass('sticky_header').each(function(){
+            $(this).attr('depth', depth++);
+        });
+        $('.sonata-ba-list .table').stickyHeader({
+            'headerClassName':'sticky_header',
+            'depth':[1, 1, 1]
+        });
+        //$('.sonata-ba-list .table thead:first').affix();
     });
     {% if not admin.getLocking %}
     $(function () {

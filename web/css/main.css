@@ -95,3 +95,6 @@ body {
 .sonata-ba-list table.table td.sonata-ba-list-field-percent{
     text-align: right;
 }
+.sonata-ba-list table.table thead th{
+    background-color: white;
+}
