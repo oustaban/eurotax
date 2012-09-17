@@ -1,13 +1,17 @@
 {% block formatNumbers %}
 <script type="text/javascript">
     $(function () {
-        $('td.sonata-ba-list-field-money').each(function () {
+        $('td.sonata-ba-list-field-money, td.sonata-ba-list-field-integer, td.sonata-ba-list-field-number').each(function () {
             var $this = $(this);
             if ($this.hasClass('total')) {
                 return;
             }
             var val = $this.text().trim().replace(/[^\d\.]+/, '');
-            var repl = Number(val).toFixed(2).toString();
+            var repl = Number(val);
+            if ($this.hasClass('sonata-ba-list-field-money')) {
+                repl = repl.toFixed(2);
+            }
+            repl = repl.toString();
 
             $this.html($this.html().replace(val, repl));
             $this.html($this.html().replace('.', ','));
