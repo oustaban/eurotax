@@ -29,7 +29,8 @@ class ContactAdmin extends Admin
         'telephone_2',
         'fax',
         'email',
-        'affichage_facture',
+        'raison_sociale_societe',
+        'affichage_facture_id',
     );
 
 
@@ -65,6 +66,16 @@ class ContactAdmin extends Admin
                 case 'telephone_1':
                 case 'telephone_2':
                     $formMapper->add($field, null, array('label' => $label, 'required' => false,));
+                    break;
+
+                case 'affichage_facture_id':
+                    $formMapper->add($field, 'choice', array(
+                        'label' => $label,
+                        'empty_value' => '',
+                        'required' => false,
+                        'choices' => array(1, 2),
+                    ));
+                    break;
 
                 default:
                     $formMapper->add($field, null, array('label' => $label));
