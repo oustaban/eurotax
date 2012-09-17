@@ -352,6 +352,10 @@ class AbstractTabsController extends Controller
     {
         $client = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:Client')->find($this->client_id);
 
+        if ($this->isXmlHttpRequest()) {
+            return $data;
+        }
+
         return $this->render('ApplicationSonataClientOperationsBundle::' . $template . '.html.twig', array(
             'client_id' => $this->client_id,
             'client' => $client,
