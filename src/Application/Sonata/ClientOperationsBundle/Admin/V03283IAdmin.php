@@ -35,7 +35,7 @@ class V03283IAdmin extends Admin
             'label' => $this->getFieldLabel('mois'),
             'days' => range(1, 1),
             'format' => 'dd MMMM yyyy',
-        ))->add('taux_de_change', null, array('label' => $this->getFieldLabel('taux_de_change')))
+        ))->add('taux_de_change', 'percent', array('label' => $this->getFieldLabel('taux_de_change')))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT')))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
     }
@@ -60,7 +60,7 @@ class V03283IAdmin extends Admin
             'label' => $this->getFieldLabel('mois'),
             'template' => $this->_bundle_name . ':CRUD:list_mois.html.twig',
         ))
-            ->add('taux_de_change', null, array('label' => $this->getFieldLabel('taux_de_change')))
+            ->add('taux_de_change', 'percent', array('label' => $this->getFieldLabel('taux_de_change')))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:HT.html.twig'));
     }
 

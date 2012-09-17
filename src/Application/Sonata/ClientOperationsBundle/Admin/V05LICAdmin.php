@@ -36,7 +36,7 @@ class V05LICAdmin extends Admin
             'days' => range(1, 1),
             'format' => 'dd MMMM yyyy',
         ))
-            ->add('taux_de_change', null, array('label' => $this->getFieldLabel('taux_de_change')))
+            ->add('taux_de_change', 'percent', array('label' => $this->getFieldLabel('taux_de_change')))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT')))
             ->add('regime', null, array('label' => $this->getFieldLabel('regime')))
             ->add('DEB', null, array('label' => $this->getFieldLabel('DEB')))

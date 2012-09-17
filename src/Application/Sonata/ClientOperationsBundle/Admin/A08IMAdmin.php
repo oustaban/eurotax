@@ -28,7 +28,7 @@ class A08IMAdmin extends Admin
                 'format' => $this->date_format_datetime)
         )
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
-            ->add('taux_de_TVA', null, array('label' => $this->getFieldLabel('taux_de_TVA')))
+            ->add('taux_de_TVA', 'percent', array('label' => $this->getFieldLabel('taux_de_TVA')))
             ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA')))
             ->add('mois', 'date', array(
             'label' => $this->getFieldLabel('mois'),
@@ -51,7 +51,7 @@ class A08IMAdmin extends Admin
             'template' => $this->_bundle_name . ':CRUD:list_date_piece.html.twig'
         ))
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
-            ->add('taux_de_TVA', null, array('label' => $this->getFieldLabel('taux_de_TVA')))
+            ->add('taux_de_TVA', 'percent', array('label' => $this->getFieldLabel('taux_de_TVA')))
             ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA')))
             ->add('mois', null, array(
             'label' => $this->getFieldLabel('mois'),
