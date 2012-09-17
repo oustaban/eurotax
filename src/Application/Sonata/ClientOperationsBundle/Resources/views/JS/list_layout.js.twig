@@ -41,6 +41,8 @@
                 var dialog_title = jQuery('.form-horizontal legend', field_dialog_{{ id }}).text();
                 jQuery('.form-horizontal legend', field_dialog_{{ id }}).remove();
 
+                jQuery('.datepicker').datepicker({language:'{{default_locale}}', format: '{{default_date_format_js}}'});
+
                 // capture the submit event to make an ajax call, ie : POST data to the
                 // related create admin
                 jQuery('a', field_dialog_{{ id }}).live('click', field_dialog_form_action_{{ id }});

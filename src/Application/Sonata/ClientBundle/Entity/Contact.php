@@ -79,11 +79,19 @@ class Contact
     private $email;
 
     /**
-     * @var boolean $affichage_facture
+     * @var integer $affichage_facture_id
      *
-     * @ORM\Column(name="affichage_facture", type="boolean", nullable=true)
+     * @ORM\Column(name="affichage_facture_id", type="integer", nullable=true)
      */
-    private $affichage_facture;
+    private $affichage_facture_id;
+
+
+    /**
+     * @var string $raison_sociale_societe
+     *
+     *@ORM\Column(name="raison_sociale_societe", type="string", length=100, nullable=true)
+     */
+    private $raison_sociale_societe;
 
 
     /**
@@ -235,29 +243,6 @@ class Contact
         return $this->email;
     }
 
-    /**
-     * Set affichage_facture
-     *
-     * @param boolean $affichageFacture
-     * @return Contact
-     */
-    public function setAffichageFacture($affichageFacture)
-    {
-        $this->affichage_facture = $affichageFacture;
-
-        return $this;
-    }
-
-    /**
-     * Get affichage_facture
-     *
-     * @return boolean
-     */
-    public function getAffichageFacture()
-    {
-        return $this->affichage_facture;
-    }
-
 
     /**
      * Set civilite
@@ -309,5 +294,53 @@ class Contact
     public function getClientId()
     {
         return $this->client_id;
+    }
+
+    /**
+     * Set raison_sociale_societe
+     *
+     * @param string $raisonSocialeSociete
+     * @return Contact
+     */
+    public function setRaisonSocialeSociete($raisonSocialeSociete)
+    {
+        $this->raison_sociale_societe = $raisonSocialeSociete;
+    
+        return $this;
+    }
+
+    /**
+     * Get raison_sociale_societe
+     *
+     * @return string 
+     */
+    public function getRaisonSocialeSociete()
+    {
+        return $this->raison_sociale_societe;
+    }
+
+
+
+    /**
+     * Set affichage_facture_id
+     *
+     * @param integer $affichageFactureId
+     * @return Contact
+     */
+    public function setAffichageFactureId($affichageFactureId)
+    {
+        $this->affichage_facture_id = $affichageFactureId;
+    
+        return $this;
+    }
+
+    /**
+     * Get affichage_facture_id
+     *
+     * @return integer 
+     */
+    public function getAffichageFactureId()
+    {
+        return $this->affichage_facture_id;
     }
 }

@@ -7,6 +7,7 @@
         $('.sonata-actions .sonata-action-element a').live('click', function (event) {
             var link = $(this).attr('href');
             field_dialog_form_add_{{ id }}(event, link);
+            return false;
         });
     });
 </script>

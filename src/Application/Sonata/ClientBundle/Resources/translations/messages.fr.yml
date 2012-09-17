@@ -29,7 +29,8 @@ form:
     telephone_2: Téléphone 2
     fax: Fax
     email: Email
-    affichage_facture: Affichage Facture
+    raison_sociale_societe: Raison Sociale Société
+    affichage_facture_id: Affichage Facture
 
   document:
     title: Ajouter / Modifier un document
@@ -98,7 +99,8 @@ list:
     telephone_2: Téléphone 2
     fax: Fax
     email: Email
-    affichage_facture: Affichage Facture
+    raison_sociale_societe: Raison Sociale Société
+    affichage_facture_id: Affichage Facture
 
   document:
     title: Ajouter un document
