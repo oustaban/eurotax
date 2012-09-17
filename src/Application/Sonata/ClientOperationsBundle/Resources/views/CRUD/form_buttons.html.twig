@@ -17,9 +17,9 @@
             <button class="btn"><i class="icon icon-exclamation-sign"></i> Alertes</button>
 
             {% if blocked %}
-            {% set text_lock =  'Verouiller' %}
+            {% set text_lock =  'Verrouiller' %}
             {% else %}
-            {% set text_lock =  'Déverrouillage' %}
+            {% set text_lock =  'Déverrouiller' %}
             {% endif %}
             <button class="btn"
                     onclick="location.href='{{ path('admin_sonata_clientoperations_'~active_tab~'_locking', {'filter[client_id][value]':client_id, 'client_id': client_id, 'month' : query_month, 'year' : year, 'blocked': blocked  }) }}'">
