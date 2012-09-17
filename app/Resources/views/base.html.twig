@@ -28,21 +28,21 @@
                         <li><a href="{{ path('home') }}">Accueil</a></li>
                         <li class="divider-vertical"></li>
                         {% if app.user %}
-                            {% if is_granted('ROLE_DASHBOARD_ADMIN') %}
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        Administration
-                                        <b class="caret"></b>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="{{ url('admin_sonata_user_user_list') }}">Users</a></li>
-                                        <li><a href="{{ url('admin_sonata_user_group_list') }}">Groups</a></li>
-                                        <li><a href="{{ url('admin_sonata_devises_devises_create') }}">Devises</a></li>
-                                        <li><a href="{{ url('admin_sonata_impots_impots_list') }}">Centres des Impots</a></li>
-                                        <li><a href="{{ url('admin_sonata_client_client_list') }}">Clients</a></li>
-                                    </ul>
-                                </li>
-                            {% endif %}
+                        {% if is_granted('ROLE_DASHBOARD_ADMIN') %}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Administration
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ url('admin_sonata_user_user_list') }}">Users</a></li>
+                                <li><a href="{{ url('admin_sonata_user_group_list') }}">Groups</a></li>
+                                <li><a href="{{ url('admin_sonata_devises_devises_create') }}">Devises</a></li>
+                                <li><a href="{{ url('admin_sonata_impots_impots_list') }}">Centres des Impots</a></li>
+                                <li><a href="{{ url('admin_sonata_client_client_list') }}">Clients</a></li>
+                            </ul>
+                        </li>
+                        {% endif %}
                         {% else %}
                         <li><a href="{{ path('sonata_user_admin_security_login') }}">
                             <i class="icon-ok icon-white"></i> {{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
@@ -84,8 +84,15 @@
     {% endblock %}
 </div>
 
+{% use ':JS:list_totals_calculate.html.twig' %}
+{% use ':JS:list_format_numbers.html.twig' %}
+{% use ':JS:ajax_loading.html.twig' %}
+
 {% block javascriptsafter %}
 <script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
+{{ block('ajaxLoading')}}
+{{ block('totalsCalculate')}}
+{{ block('formatNumbers')}}
 {% endblock %}
 </body>
 </html>

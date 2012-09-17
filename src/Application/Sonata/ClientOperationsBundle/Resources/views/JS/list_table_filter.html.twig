@@ -1,0 +1,16 @@
+{% block tableFilter_js %}
+<script src="{{ asset('bundles/applicationsonataclientoperations/js/jquery.columnfilters.js') }}" type="text/javascript"></script>
+{% endblock tableFilter_js %}
+
+{% block tableFilter %}
+<script type="text/javascript">
+    $(function () {
+        $('.sonata-ba-list .table').columnFilters({
+            {% if not admin.getLocking %}excludeColumns:[0, 1], {% endif %}
+            wildCard:false,
+            underline:true,
+            alternateRowClassNames:['rowa', 'rowb']
+        });
+    });
+</script>
+{% endblock tableFilter %}

@@ -1,0 +1,17 @@
+{% block formatNumbers %}
+<script type="text/javascript">
+    $(function () {
+        $('td.sonata-ba-list-field-money').each(function () {
+            var $this = $(this);
+            if ($this.hasClass('total')) {
+                return;
+            }
+            var val = $this.text().trim().replace(/[^\d\.]+/, '');
+            var repl = Number(val).toFixed(2).toString();
+
+            $this.html($this.html().replace(val, repl));
+            $this.html($this.html().replace('.', ','));
+        });
+    });
+</script>
+{% endblock formatNumbers %}
