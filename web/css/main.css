@@ -96,7 +96,9 @@ body {
 .form-horizontal .sonata-ba-field .datepicker {
     width: 80px;
 }
-.sonata-ba-list table.table td.sonata-ba-list-field-percent{
+td.sonata-ba-list-field-percent,
+td.sonata-ba-list-field-integer,
+td.sonata-ba-list-field-number{
     text-align: right;
 }
 .sonata-ba-list table.table thead th,
