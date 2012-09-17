@@ -70,7 +70,12 @@ class ClientAdmin extends Admin
             ->add('siret', null, array('label' => 'form.siret', 'required' => false,))
             ->add('periodicite_facturation', null, array('label' => 'form.periodicite_facturation'))
             ->add('num_dossier_fiscal', null, array('label' => 'form.num_dossier_fiscal', 'required' => false,))
-            ->add('taxe_additionnelle', null, array('label' => 'form.taxe_additionnelle', 'required' => false,))
+            ->add('taxe_additionnelle', 'choice',
+            array('expanded' => true,
+                'label' => 'form.taxe_additionnelle',
+                'choices' => array(1 => 'Oui', 0 => 'Non'),
+                'required' => false,)
+        )
             ->add('periodicite_CA3', null, array('label' => 'form.periodicite_CA3'))
             ->add('center_des_impots', null, array('label' => 'form.center_des_impots'))
             ->with(' ')
@@ -130,5 +135,32 @@ class ClientAdmin extends Admin
     public function getFormTheme()
     {
         return array($this->_bundle_name . ':Form:form_admin_fields.html.twig');
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return null|string
+     */
+    public function getTemplate($name)
+    {
+        switch ($name) {
+            case 'create':
+            case 'edit':
+                return $this->_bundle_name . ':CRUD:edit.html.twig';
+        }
+
+        return parent::getTemplate($name);
+    }
+
+    /**
+     * @param string $action
+     * @return array
+     */
+    public function getBreadcrumbs($action)
+    {
+        $res = parent::getBreadcrumbs($action);
+        array_shift($res);
+        return $res;
     }
 }

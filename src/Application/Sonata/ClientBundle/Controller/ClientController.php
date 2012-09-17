@@ -35,6 +35,7 @@ class ClientController extends Controller
     /**
      * @param $object
      * @param null $id
+     * @param string $template
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function _action($object, $id = null, $template = 'standard_layout_client')

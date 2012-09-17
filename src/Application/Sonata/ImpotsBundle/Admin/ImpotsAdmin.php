@@ -84,4 +84,15 @@ class ImpotsAdmin extends Admin
     {
         return array($this->_bundle_name . ':Form:form_admin_fields.html.twig');
     }
+
+    /**
+     * @param string $action
+     * @return array
+     */
+    public function getBreadcrumbs($action)
+    {
+        $res = parent::getBreadcrumbs($action);
+        array_shift($res);
+        return $res;
+    }
 }

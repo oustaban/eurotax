@@ -1,11 +1,41 @@
-.form-horizontal fieldset {
-    width: 50%;
-    float: left;
-}
-.form-horizontal fieldset legend{
-    height: 40px;
+.form-horizontal table td {
+
+    vertical-align: bottom;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
-.form-horizontal .form-actions{
-    clear: both;
+.form-horizontal .control-label {
+    text-align: left;
+}
+
+.form-horizontal ul.unstyled,
+.form-horizontal .sonata-ba-field {
+    width: 200px;
+}
+
+.form-horizontal ul.unstyled li {
+    float: left;
+    margin-right: 30px;
+}
+
+.form-horizontal .sonata-ba-field input.span5,
+.form-horizontal .sonata-ba-field select.span5 {
+    width: 100%;
+}
+
+.form-horizontal #clone_address {
+    margin: 0 0 18px 160px;
+}
+
+.form-horizontal .field-26{
+    margin-top:64px;
+}
+
+.form-horizontal .field-27 {
+    margin: 65px 0 64px 0;
+}
+
+.form-horizontal .field-29 {
+    margin-bottom: 118px;
 }
