@@ -32,6 +32,11 @@
             <a href="{{ url('admin_sonata_client_commentaire_list', _filter_json) }}">Commentaires</a>
         </li>
         {% endif %}
+        {% if client_id  %}
+        <li {% if active_tab=='tarif' %}class="active"{% endif %}>
+            <a href="{{ url('admin_sonata_client_tarif_list', _filter_json) }}">Tarif</a>
+        </li>
+        {% endif %}
 
     </ul>
 </div>

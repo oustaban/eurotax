@@ -74,6 +74,13 @@ form:
     categorie: Catégorie
     note: Note
 
+  tarif:
+    title: Tarif
+    mode_de_facturation: Mode de facturation
+    value: Valeur
+    value_percentage: Valeur %
+    invoice_type: Type
+
 list:
   code_client: Code client
   user: Nom du gestionnaire
@@ -150,6 +157,13 @@ list:
     categorie: Catégorie
     note: Commentaire
 
+  tarif:
+    title: Tarif
+    mode_de_facturation: Mode de facturation
+    value: Valeur
+    value_percentage: Valeur %
+    invoice_type: Type
+
 filter:
   code_client: Code client
   user: Nom du gestionnaire
@@ -181,3 +195,4 @@ Document List: Documents légaux
 Garantie List: Garanties
 Coordonnees List: Coordonnées Bancaires
 Commentaire List: Commentaires
+Tarif List : Tarif

@@ -11,29 +11,69 @@ abstract class AbstractTabsAdmin extends Admin
     public $dashboards = array();
     public $date_format_datetime = 'dd/MM/yyyy';
     public $date_format_php = 'd/m/Y';
-
+    public $client_id = '';
 
     protected $_bundle_name = 'ApplicationSonataClientBundle';
+
+
+    /**
+     * @param string $code
+     * @param string $class
+     * @param string $baseControllerName
+     */
+    public function __construct($code, $class, $baseControllerName)
+    {
+        $this->getRequestParameters($this->getRequest());
+
+        return parent::__construct($code, $class, $baseControllerName);
+    }
 
     /**
      * @return array
      */
-    public function getBatchActions(){
+    public function getBatchActions()
+    {
 
         return array();
     }
 
-
     /**
      * @return array
      */
-    public function getFilterParameters(){
-
+    public function getFilterParameters()
+    {
         $parameters = parent::getFilterParameters();
-        unset($parameters['client_id']);
+        #unset($parameters['client_id']);
 
-       return $parameters;
+        return $parameters;
     }
+
+    /**
+     * @param $request
+     */
+    public function getRequestParameters($request)
+    {
+        $filter = $request->query->get('filter');
+        if (!empty($filter['client_id']) && !empty($filter['client_id']['value'])) {
+
+            $this->client_id = $filter['client_id']['value'];
+        }
+    }
+
+
+    /**
+     * @param string $context
+     * @return \Sonata\AdminBundle\Datagrid\ProxyQueryInterface
+     */
+    public function createQuery($context = 'list')
+    {
+        $query = parent::createQuery($context);
+        $query->andWhere($query->getRootAlias() . '.client_id=:client_id')
+            ->setParameter(':client_id', $this->client_id);
+
+        return $query;
+    }
+
 
     /**
      * {@inheritdoc}

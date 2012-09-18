@@ -63,4 +63,6 @@
     width: 600px;
     clear: both;
 }
-
+.sonata-filter-form  #filter_client_id_row{
+    display: none;
+}

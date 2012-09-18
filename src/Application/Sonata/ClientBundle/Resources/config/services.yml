@@ -34,3 +34,9 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: Client, label: Commentaire }
         arguments: [null, Application\Sonata\ClientBundle\Entity\Commentaire, ApplicationSonataClientBundle:Commentaire]
+
+    application.sonata.admin.tarif:
+        class : Application\Sonata\ClientBundle\Admin\TarifAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Client, label: Tarif }
+        arguments: [null, Application\Sonata\ClientBundle\Entity\Tarif, ApplicationSonataClientBundle:Tarif]
