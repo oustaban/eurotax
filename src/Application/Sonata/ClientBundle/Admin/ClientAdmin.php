@@ -47,6 +47,7 @@ class ClientAdmin extends Admin
     {
         $formMapper
             ->with('form.client')
+            ->add('code_client', null, array('label' => 'form.code_client',))
             ->add('user', null, array('label' => 'form.user',))
             ->add('nom', null, array('label' => 'form.nom'))
             ->add('nature_du_client', null, array('label' => 'form.nature_du_client'))
@@ -66,7 +67,6 @@ class ClientAdmin extends Admin
             'format' => $this->date_format_datetime
         ))
             ->add('mode_denregistrement', null, array('label' => 'form.mode_denregistrement'))
-            ->add('avance_contractuelle', null, array('label' => 'form.avance_contractuelle', 'required' => false,))
             ->add('siret', null, array('label' => 'form.siret', 'required' => false,))
             ->add('periodicite_facturation', null, array('label' => 'form.periodicite_facturation'))
             ->add('num_dossier_fiscal', null, array('label' => 'form.num_dossier_fiscal', 'required' => false,))
@@ -78,12 +78,18 @@ class ClientAdmin extends Admin
         )
             ->add('periodicite_CA3', null, array('label' => 'form.periodicite_CA3'))
             ->add('center_des_impots', null, array('label' => 'form.center_des_impots'))
+            ->add('language', null, array('label' => 'form.language'))
+
             ->with(' ')
+            ->add('autre_destinataire_de_facturation', null, array('label' => 'form.autre_destinataire_de_facturation'))
+            ->add('contact', null, array('label' => 'form.contacts'))
+            ->add('raison_sociale_2', null, array('label' => 'form.raison_sociale_2'))
             ->add('location_facturation', new LocationFacturationType(), array(
             'data_class' => 'Application\Sonata\ClientBundle\Entity\Client',
             'label' => 'Location',
             'required' => false,
         ), array('type' => 'location'))
+            ->add('N_TVA_CEE_facture', null, array('label' => 'form.N_TVA_CEE_facture'))
             ->add('date_fin_mission', 'date', array(
             'label' => 'form.date_fin_mission',
             'attr' => array('class' => 'datepicker'),
@@ -91,7 +97,6 @@ class ClientAdmin extends Admin
             'input' => 'datetime',
             'format' => $this->date_format_datetime
         ))
-            ->add('libelle_avance', null, array('label' => 'form.libelle_avance', 'required' => false,))
             ->add('date_de_depot_id', 'choice', array(
             'label' => 'form.date_de_depot_id',
             'choices' => array(15, 19, 24, 31)

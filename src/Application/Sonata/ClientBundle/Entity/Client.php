@@ -21,6 +21,14 @@ class Client
      */
     private $id;
 
+
+    /**
+     * @var string $code_client
+     *
+     * @ORM\Column(name="code_client", type="string", length=200, nullable=true)
+     */
+    private $code_client;
+
     /**
      * @var integer $user_id
      *
@@ -110,13 +118,6 @@ class Client
     private $mode_denregistrement;
 
     /**
-     * @var string $avance_contractuelle
-     *
-     * @ORM\Column(name="avance_contractuelle", type="string", length=100)
-     */
-    private $avance_contractuelle = "";
-
-    /**
      * @var string $siret
      *
      * @ORM\Column(name="siret", type="string", length=100)
@@ -162,6 +163,43 @@ class Client
     private $center_des_impots;
 
     /**
+     * @var integer $language
+     *
+     * @ORM\ManyToOne(targetEntity="ListLanguages")
+     * @ORM\JoinColumn(name="language_id", referencedColumnName="id")
+     */
+    private $language;
+
+
+    /**
+     * @var string $autre_destinataire_de_facturation
+     *
+     * @ORM\Column(name="autre_destinataire_de_facturation", type="boolean", nullable=true)
+     */
+    private $autre_destinataire_de_facturation;
+
+    /**
+     * @var string $contact
+     *
+     * @ORM\Column(name="contact", type="string", length=200, nullable=true)
+     */
+    private $contact = "";
+
+    /**
+     * @var string $raison_sociale_2
+     *
+     * @ORM\Column(name="raison_sociale_2", type="string", length=200, nullable=true)
+     */
+    private $raison_sociale_2 = "";
+
+    /**
+     * @var string $N_TVA_CEE_facture
+     *
+     * @ORM\Column(name="N_TVA_CEE_facture", type="string", length=100, nullable=true)
+     */
+    private $N_TVA_CEE_facture = "";
+
+    /**
      * @var string $adresse_1_facturation
      *
      * @ORM\Column(name="adresse_1_facturation", type="string", length=100)
@@ -203,12 +241,6 @@ class Client
      */
     private $date_fin_mission;
 
-    /**
-     * @var string $libelle_avance
-     *
-     * @ORM\Column(name="libelle_avance", type="string", length=100)
-     */
-    private $libelle_avance = "";
 
     /**
      * @var integer $date_de_depot_id
@@ -450,28 +482,6 @@ class Client
         return $this->date_debut_mission;
     }
 
-    /**
-     * Set avance_contractuelle
-     *
-     * @param string $avanceContractuelle
-     * @return Client
-     */
-    public function setAvanceContractuelle($avanceContractuelle)
-    {
-        $this->avance_contractuelle = $avanceContractuelle;
-
-        return $this;
-    }
-
-    /**
-     * Get avance_contractuelle
-     *
-     * @return string
-     */
-    public function getAvanceContractuelle()
-    {
-        return $this->avance_contractuelle;
-    }
 
     /**
      * Set siret
@@ -680,29 +690,6 @@ class Client
     public function getDateFinMission()
     {
         return $this->date_fin_mission;
-    }
-
-    /**
-     * Set libelle_avance
-     *
-     * @param string $libelleAvance
-     * @return Client
-     */
-    public function setLibelleAvance($libelleAvance)
-    {
-        $this->libelle_avance = $libelleAvance;
-
-        return $this;
-    }
-
-    /**
-     * Get libelle_avance
-     *
-     * @return string
-     */
-    public function getLibelleAvance()
-    {
-        return $this->libelle_avance;
     }
 
     /**
@@ -943,5 +930,147 @@ class Client
     public function __toString()
     {
         return $this->getNom() ? : '-';
+    }
+
+    /**
+     * Set code_client
+     *
+     * @param string $codeClient
+     * @return Client
+     */
+    public function setCodeClient($codeClient)
+    {
+        $this->code_client = $codeClient;
+    
+        return $this;
+    }
+
+    /**
+     * Get code_client
+     *
+     * @return string 
+     */
+    public function getCodeClient()
+    {
+        return $this->code_client;
+    }
+
+    /**
+     * Set autre_destinataire_de_facturation
+     *
+     * @param boolean $autreDestinataireDeFacturation
+     * @return Client
+     */
+    public function setAutreDestinataireDeFacturation($autreDestinataireDeFacturation)
+    {
+        $this->autre_destinataire_de_facturation = $autreDestinataireDeFacturation;
+    
+        return $this;
+    }
+
+    /**
+     * Get autre_destinataire_de_facturation
+     *
+     * @return boolean 
+     */
+    public function getAutreDestinataireDeFacturation()
+    {
+        return $this->autre_destinataire_de_facturation;
+    }
+
+    /**
+     * Set contact
+     *
+     * @param string $contact
+     * @return Client
+     */
+    public function setContact($contact)
+    {
+        $this->contact = $contact;
+    
+        return $this;
+    }
+
+    /**
+     * Get contact
+     *
+     * @return string 
+     */
+    public function getContact()
+    {
+        return $this->contact;
+    }
+
+
+
+    /**
+     * Set N_TVA_CEE_facture
+     *
+     * @param string $nTVACEEFacture
+     * @return Client
+     */
+    public function setNTVACEEFacture($nTVACEEFacture)
+    {
+        $this->N_TVA_CEE_facture = $nTVACEEFacture;
+    
+        return $this;
+    }
+
+    /**
+     * Get N_TVA_CEE_facture
+     *
+     * @return string 
+     */
+    public function getNTVACEEFacture()
+    {
+        return $this->N_TVA_CEE_facture;
+    }
+
+
+
+    /**
+     * Set language
+     *
+     * @param Application\Sonata\ClientBundle\Entity\ListLanguages $language
+     * @return Client
+     */
+    public function setLanguage(\Application\Sonata\ClientBundle\Entity\ListLanguages $language = null)
+    {
+        $this->language = $language;
+    
+        return $this;
+    }
+
+    /**
+     * Get language
+     *
+     * @return Application\Sonata\ClientBundle\Entity\ListLanguages 
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * Set raison_sociale_2
+     *
+     * @param string $raisonSociale2
+     * @return Client
+     */
+    public function setRaisonSociale2($raisonSociale2)
+    {
+        $this->raison_sociale_2 = $raisonSociale2;
+    
+        return $this;
+    }
+
+    /**
+     * Get raison_sociale_2
+     *
+     * @return string 
+     */
+    public function getRaisonSociale2()
+    {
+        return $this->raison_sociale_2;
     }
 }

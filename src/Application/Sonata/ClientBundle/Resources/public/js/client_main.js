@@ -4,13 +4,15 @@ jQuery(document).ready(function ($) {
         $(this).addClass('field-' + i);
     });
 
-    $('.form-horizontal table td:last').prepend('<input type="button" value="Copier les information postales" name="clone_address" id="clone_address" class="btn" />');
+    $('.field-22').before('<input type="button" value="Copier les information postales" name="clone_address" id="clone_address" class="btn" />');
 
     $('#clone_address').live('click', function () {
 
         $.each(['adresse_1', 'adresse_2', 'code_postal', 'ville', 'pays_id'], function(i, field){
             $('#'+uniqid+'_location_facturation_'+field+'_facturation').val($('#'+uniqid+'_location_postal_'+field+'_postal').val());
         });
+
+        $('#'+uniqid+'_raison_sociale_2').val($('#'+uniqid+'_raison_sociale').val());
 
         return false;
     });

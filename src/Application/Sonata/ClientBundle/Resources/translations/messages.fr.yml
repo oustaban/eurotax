@@ -1,12 +1,12 @@
 form:
   client: Ajouter / Modifier un client
+  code_client: Code client
   user: Nom du gestionnaire
   nom: Nom
   nature_du_client: Nature du client
   raison_sociale: Raison sociale
   activite: Activité
   mode_denregistrement: Mode d'enregistrement
-  avance_contractuelle: Avance contractuelle
   siret: Siret
   date_debut_mission: Date début mission
   periodicite_facturation: Périodicité Facturation
@@ -14,8 +14,12 @@ form:
   taxe_additionnelle: Taxe additionnelle
   periodicite_CA3: Périodicité CA3
   center_des_impots: Centre des impôts
+  language: Langue
+  autre_destinataire_de_facturation: Autre destinataire de facturation
+  contacts: Contact
+  raison_sociale_2: Raison sociale
+  N_TVA_CEE_facture: N° TVA CEE facturé
   date_fin_mission: Date fin mission
-  libelle_avance: Libellé avance
   date_de_depot_id: Date de dépot
   N_TVA_CEE: N° TVA CEE
   niveau_dobligation_id: Niveau d'obligation
@@ -69,13 +73,13 @@ form:
     note: Note
 
 list:
+  code_client: Code client
   user: Nom du gestionnaire
   nom: Nom
   nature_du_client: Nature du client
   raison_sociale: Raison sociale
   activite: Activité
   mode_denregistrement: Mode d'enregistrement
-  avance_contractuelle: Avance contractuelle
   siret: Siret
   date_debut_mission: Date début mission
   periodicite_facturation: Périodicité Facturation
@@ -83,8 +87,12 @@ list:
   taxe_additionnelle: Taxe additionnelle
   periodicite_CA3: Périodicité CA3
   center_des_impots: Centre des impôts
+  language: Langue
+  autre_destinataire_de_facturation: Autre destinataire de facturation
+  contacts: Contact
+  raison_sociale_2: Raison sociale
+  N_TVA_CEE_facture: N° TVA CEE facturé
   date_fin_mission: Date fin mission
-  libelle_avance: Libellé avance
   date_de_depot_id: Date de dépot
   N_TVA_CEE: N° TVA CEE
   niveau_dobligation_id: Niveau d'obligation
@@ -139,13 +147,13 @@ list:
     note: Commentaire
 
 filter:
+  code_client: Code client
   user: Nom du gestionnaire
   nom: Nom
   nature_du_client: Nature du client
   raison_sociale: Raison sociale
   activite: Activité
   mode_denregistrement: Mode d'enregistrement
-  avance_contractuelle: Avance contractuelle
   siret: Siret
   date_debut_mission: Date début mission
   periodicite_facturation: Périodicité Facturation
@@ -153,8 +161,12 @@ filter:
   taxe_additionnelle: Taxe additionnelle
   periodicite_CA3: Périodicité CA3
   center_des_impots: Centre des impôts
+  language: Langue
+  autre_destinataire_de_facturation: Autre destinataire de facturation
+  contacts: Contact
+  raison_sociale_2: Raison sociale
+  N_TVA_CEE_facture: N° TVA CEE facturé
   date_fin_mission: Date fin mission
-  libelle_avance: Libellé avance
   date_de_depot_id: Date de dépot
   N_TVA_CEE: N° TVA CEE
   niveau_dobligation_id: Niveau d'obligation

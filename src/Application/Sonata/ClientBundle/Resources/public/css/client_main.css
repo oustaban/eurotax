@@ -1,6 +1,6 @@
 .form-horizontal table td {
 
-    vertical-align: bottom;
+    vertical-align: top;
     padding-left: 20px;
     padding-right: 20px;
 }
@@ -25,17 +25,24 @@
 }
 
 .form-horizontal #clone_address {
-    margin: 0 0 18px 160px;
+    margin: 0 0 18px 180px;
 }
 
-.form-horizontal .field-26{
-    margin-top:64px;
+.form-horizontal .field-21 {
+    margin-top: 121px;
 }
 
-.form-horizontal .field-27 {
-    margin: 65px 0 64px 0;
+.form-horizontal .field-21 label {
+    float: right;
+    margin: 0 42px 0 0;
+    padding: 3px;
+    white-space: nowrap;
 }
 
-.form-horizontal .field-29 {
-    margin-bottom: 118px;
+.form-horizontal .field-32 {
+    margin-top: 120px;
+}
+
+.form-horizontal .field-34 {
+    margin-top: 120px;
 }
