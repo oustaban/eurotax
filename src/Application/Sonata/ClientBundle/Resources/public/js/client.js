@@ -15,9 +15,19 @@ jQuery(document).ready(function ($) {
     /**
      * garantie
      * */
-    $('#' + uniqid + '_nom_de_la_banque').keyup(function () {
-        $('#sonata-ba-field-container-' + uniqid + '_nom_de_la_banques_id')[['hide', 'show'][$(this).val() ? 0 : 1]]();
-    }).keyup();
+
+    if ($('.js-garantie').size()) {
+
+
+        $('#' + uniqid + '_nom_de_lemeteur').keyup(function () {
+            $('#sonata-ba-field-container-' + uniqid + '_nom_de_la_banques_id')[['hide', 'show'][$(this).val() ? 0 : 1]]();
+        }).keyup();
+
+        $('.form-horizontal div.control-group').each(function (i) {
+            $(this).addClass('field-' + i);
+        });
+        $('.field-4 label').remove();
+    }
 
 
     /*
@@ -26,7 +36,7 @@ jQuery(document).ready(function ($) {
     if ($('.js-coordonnees').size()) {
 
         $(' .sonata-ba-list .table tbody').sortable({
-            helper: function (e, ui) {
+            helper:function (e, ui) {
                 ui.children().each(function () {
                     $(this).width($(this).width());
                 });

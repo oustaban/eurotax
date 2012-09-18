@@ -51,12 +51,20 @@ class Garantie
      */
     private $devise;
 
+
     /**
-     * @var string $nom_de_la_banque
+     * @var string $expire
      *
-     * @ORM\Column(name="nom_de_la_banque", type="string", length=100, nullable=true)
+     * @ORM\Column(name="expire", type="boolean", nullable=true)
      */
-    private $nom_de_la_banque;
+    private $expire;
+
+    /**
+     * @var string $nom_de_lemeteur
+     *
+     * @ORM\Column(name="nom_de_lemeteur", type="string", length=100, nullable=true)
+     */
+    private $nom_de_lemeteur;
 
     /**
      * @var integer $nom_de_la_banque_id
@@ -86,6 +94,12 @@ class Garantie
      */
     private $date_decheance;
 
+    /**
+     * @var string $note
+     *
+     * @ORM\Column(name="note", type="text", nullable=true)
+     */
+    private $note;
 
     public function __toString()
     {
@@ -311,5 +325,74 @@ class Garantie
     public function getNomDeLaBanquesId()
     {
         return $this->nom_de_la_banques_id;
+    }
+
+    /**
+     * Set expire
+     *
+     * @param boolean $expire
+     * @return Garantie
+     */
+    public function setExpire($expire)
+    {
+        $this->expire = $expire;
+    
+        return $this;
+    }
+
+    /**
+     * Get expire
+     *
+     * @return boolean 
+     */
+    public function getExpire()
+    {
+        return $this->expire;
+    }
+
+    /**
+     * Set nom_de_lemeteur
+     *
+     * @param string $nomDeLemeteur
+     * @return Garantie
+     */
+    public function setNomDeLemeteur($nomDeLemeteur)
+    {
+        $this->nom_de_lemeteur = $nomDeLemeteur;
+    
+        return $this;
+    }
+
+    /**
+     * Get nom_de_lemeteur
+     *
+     * @return string 
+     */
+    public function getNomDeLemeteur()
+    {
+        return $this->nom_de_lemeteur;
+    }
+
+    /**
+     * Set note
+     *
+     * @param string $note
+     * @return Garantie
+     */
+    public function setNote($note)
+    {
+        $this->note = $note;
+    
+        return $this;
+    }
+
+    /**
+     * Get note
+     *
+     * @return string 
+     */
+    public function getNote()
+    {
+        return $this->note;
     }
 }

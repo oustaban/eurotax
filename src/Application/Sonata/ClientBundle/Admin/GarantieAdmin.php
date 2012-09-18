@@ -32,7 +32,7 @@ class GarantieAdmin extends Admin
             ->add('type_garantie', null, array('label' => $label . 'type_garantie'))
             ->add('montant', null, array('label' => $label . 'montant'))
             ->add('devise', null, array('label' => $label . 'devise'))
-            ->add('nom_de_la_banque', null, array('label' => $label . 'nom_de_la_banque'))
+            ->add('nom_de_lemeteur', null, array('label' => $label . 'nom_de_lemeteur'))
             ->add('nom_de_la_banques_id', 'choice', array(
             'label' => ' ',
             'required'  => false,
@@ -55,7 +55,9 @@ class GarantieAdmin extends Admin
             'widget' => 'single_text',
             'input' => 'datetime',
             'format' => $this->date_format_datetime
-        ));
+        ))
+        ->add('expire', null, array('label' => $label . 'expire'))
+        ->add('note', null, array('label' => $label . 'note'));
     }
 
     //list
