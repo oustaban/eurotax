@@ -6,7 +6,7 @@
         var editObjectAbstractUrl = '{{ admin.generateUrl('edit', {'id':'__id__'}) }}';
         var $table = $('.sonata-ba-list .table tbody:first');
         $table.find('tr:not(.totals_row)').css('cursor', 'pointer').click(function (event) {
-            var objectid = $(this).children(':last').attr('objectid');
+            var objectid = $(this).children('[objectid]:first').attr('objectid');
             if (objectid) {
                 var link = editObjectAbstractUrl.replace("__id__", objectid).replace('&amp;', '&');
                 field_dialog_form_add_{{ id }}(event, link);
