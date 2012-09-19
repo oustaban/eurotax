@@ -3,7 +3,7 @@
     var ajax_loading = false;
     $(function () {
         if (!ajax_loading) {
-            ajax_loading = $('<div id="ajax_loading" style="background:#fff; border:1px solid #dddddd; position:fixed; left:45%; top: 25%; padding:20px 30px; z-index:99999" class="all_loading"><img height="66" width="66" alt=""  src="/img/ajax-loader.gif" /></div>').hide().appendTo('body');
+            ajax_loading = $(html_ajax_load()).hide().appendTo('body');
         }
         $('#ajax_loading')
                 .bind('ajaxSend', function () {

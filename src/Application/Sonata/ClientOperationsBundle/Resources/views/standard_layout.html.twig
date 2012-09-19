@@ -2,6 +2,7 @@
 {% set id =  admin.uniqid %}
 
 {% use 'ApplicationSonataClientOperationsBundle:CRUD:form_tabs.html.twig' with form_tabs as formTabs %}
+{% use 'ApplicationSonataClientOperationsBundle:popup:popup_form.html.twig' %}
 
 {% block sonata_admin_content %}
 
@@ -11,8 +12,7 @@
     {% if content is not empty %}
     <div class="sonata-ba-form sonata-ba-list">
         {{ content|raw }}
-        <div style="display: none" id="field_dialog_{{ id }}"></div>
-        <div id="msg"></div>
+        {{ block('popup_form') }}
     </div>
     {% endif %}
 

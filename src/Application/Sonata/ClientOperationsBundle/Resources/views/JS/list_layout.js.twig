@@ -1,5 +1,6 @@
 <script type="text/javascript">
     var field_dialog_{{ id }} = false;
+    var field_dialog_popup{{ id }} = false;
 
     function initialize_popup_{{ id }}() {
 // initialize component
@@ -22,7 +23,7 @@
 
         var a = jQuery(this);
 
-        field_dialog_{{ id }}.html('');
+        field_dialog_{{ id }}.html('<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="title"></h3></div><div class="modal-body"></div><div class="modal-footer"></div>');
 
         Admin.log('[{{ id }}|field_dialog_form_add] add link action');
 
@@ -35,11 +36,14 @@
                 Admin.log('[{{ id }}|field_dialog_form_add] ajax success', field_dialog_{{ id }});
 
                 // populate the popup container
-                field_dialog_{{ id }}.html(html);
+                field_dialog_{{ id }}.find('.modal-body').html(html);
+
 
                 jQuery('.sonata-actions', field_dialog_{{ id }}).parent().remove();
                 var dialog_title = jQuery('.form-horizontal legend', field_dialog_{{ id }}).text();
                 jQuery('.form-horizontal legend', field_dialog_{{ id }}).remove();
+
+                field_dialog_{{ id }}.find('#title').html(dialog_title);
 
                 jQuery('.datepicker').datepicker({language:'{{default_locale}}', format: '{{default_date_format_js}}'});
 
@@ -48,8 +52,10 @@
                 jQuery('a', field_dialog_{{ id }}).live('click', field_dialog_form_action_{{ id }});
                 jQuery('form', field_dialog_{{ id }}).live('submit', field_dialog_form_action_{{ id }});
 
+                field_dialog_{{ id }}.modal('toggle');
+
                 // open the dialog in modal mode
-                field_dialog_{{ id }}.dialog({
+                /*field_dialog_{{ id }}.dialog({
                     height:'auto',
                     width:650,
                     modal:true,
@@ -63,7 +69,7 @@
                         jQuery('form', field_dialog_{{ id }}).die('submit');
                     },
                     zIndex:9998
-                });
+                });*/
             }
         });
     };
@@ -111,6 +117,11 @@
             type:type,
             data:data,
             success:function (data) {
+
+                var ajax_loading = false;
+                if (!ajax_loading) {
+                    ajax_loading = $(html_ajax_load()).show().appendTo('body');
+                }
 
                 Admin.log('[{{ id }}|field_dialog_form_action] ajax success');
 
