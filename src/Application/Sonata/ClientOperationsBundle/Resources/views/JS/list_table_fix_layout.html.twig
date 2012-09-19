@@ -3,7 +3,7 @@
 {% block tableFixLayout %}
 <script type="text/javascript">
     $(function () {
-        var w = $('.sonata-ba-list table.table').width() + 71;
+        var w = $('.sonata-ba-list table.table').addClass('table-hover').width() + 71;
         if (w > 110) {
             $('#container').css('min-width', w + 'px');
         }
