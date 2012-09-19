@@ -3,22 +3,21 @@
 namespace Application\Sonata\ClientBundle\DataFixtures\ORM;
 
 use Application\Sonata\ClientBundle\DataFixtures\AbstractLoadListData;
-use Application\Sonata\ClientBundle\Entity\ListLanguages;
+use Application\Sonata\ClientBundle\Entity\ListFacturationDuClients;
 
 
-class LoadListLanguagesData extends AbstractLoadListData
+class LoadListFacturationDuClientsData extends AbstractLoadListData
 {
     /**
      * @var string
      */
-    protected $_className = 'ListLanguages';
+    protected $_className = 'ListFacturationDuClients';
 
     /**
      * @var array
      */
     protected $_lists = array(
-        'FR',
-        'EN',
-        'IT',
+        '5 (à échoir)',
+        '25 (échue)',
     );
 }

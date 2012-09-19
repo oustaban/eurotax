@@ -12,6 +12,7 @@ abstract class AbstractTabsAdmin extends Admin
     public $date_format_datetime = 'dd/MM/yyyy';
     public $date_format_php = 'd/m/Y';
     public $client_id = '';
+    protected $_generate_url = true;
 
     protected $_bundle_name = 'ApplicationSonataClientBundle';
 
@@ -106,15 +107,17 @@ abstract class AbstractTabsAdmin extends Admin
      */
     public function generateUrl($name, array $parameters = array(), $absolute = false)
     {
-        switch ($name) {
-            case 'list':
-            case 'create':
-            case 'edit':
-            case 'delete':
-            case 'batch':
-                $filter = $this->getRequest()->query->get('filter');
-                $parameters['filter']['client_id']['value'] = $filter['client_id']['value'];
-                break;
+        if ($this->_generate_url) {
+            switch ($name) {
+                case 'list':
+                case 'create':
+                case 'edit':
+                case 'delete':
+                case 'batch':
+                    $filter = $this->getRequest()->query->get('filter');
+                    $parameters['filter']['client_id']['value'] = $filter['client_id']['value'];
+                    break;
+            }
         }
         return parent::generateUrl($name, $parameters, $absolute);
     }

@@ -39,8 +39,6 @@ class TarifAdmin extends Admin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('id', null);
-
         $label = 'list.' . $this->_prefix_label . '.';
         $listMapper
             ->add('mode_de_facturation', null, array('label' => $label . 'mode_de_facturation'))

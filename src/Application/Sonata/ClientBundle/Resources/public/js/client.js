@@ -30,6 +30,15 @@ jQuery(document).ready(function ($) {
     }
 
 
+    if ($('.js-tarif').size()) {
+
+        $('.form-horizontal div.control-group').each(function (i) {
+            $(this).addClass('field-' + i);
+        });
+
+        $('.js-tarif .form-client-invoicing .field-4 label').remove();
+    }
+
     /*
      * coordonnees
      * */

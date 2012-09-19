@@ -3,7 +3,7 @@
 namespace Application\Sonata\ClientBundle\DataFixtures\ORM;
 
 use Application\Sonata\ClientBundle\DataFixtures\AbstractLoadListData;
-use Application\Sonata\ClientBundle\Entity\ListCivilites;
+use Application\Sonata\ClientBundle\Entity\ListModeDeFacturations;
 
 
 class LoadListModeDeFacturationsData extends AbstractLoadListData

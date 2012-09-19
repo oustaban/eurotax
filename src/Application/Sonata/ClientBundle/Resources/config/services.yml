@@ -38,5 +38,11 @@ services:
     application.sonata.admin.tarif:
         class : Application\Sonata\ClientBundle\Admin\TarifAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: Client, label: Tarif }
+            - { name: sonata.admin, manager_type: orm, group: Tarif, label: Tarif }
         arguments: [null, Application\Sonata\ClientBundle\Entity\Tarif, ApplicationSonataClientBundle:Tarif]
+
+    application.sonata.admin.client_invoicing:
+        class : Application\Sonata\ClientBundle\Admin\ClientInvoicingAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: ClientInvoicing, label: Tarif }
+        arguments: [null, Application\Sonata\ClientBundle\Entity\ClientInvoicing, ApplicationSonataClientBundle:ClientInvoicing]

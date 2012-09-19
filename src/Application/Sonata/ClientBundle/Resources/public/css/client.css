@@ -63,6 +63,56 @@
     width: 600px;
     clear: both;
 }
-.sonata-filter-form  #filter_client_id_row{
+
+.sonata-filter-form  #filter_client_id_row {
     display: none;
 }
+
+.js-tarif .form-client-invoicing .control-group {
+    width: 600px;
+}
+
+.js-tarif .form-client-invoicing {
+    position: relative;
+}
+.js-tarif .form-client-invoicing label {
+    white-space: nowrap;
+}
+
+.js-tarif .form-client-invoicing .field-1 input,
+.js-tarif .form-client-invoicing .field-2 input {
+    width: 100px;
+}
+
+.js-tarif .form-client-invoicing .field-3 input {
+    width: 87px;
+}
+
+.js-tarif .form-client-invoicing .field-2 {
+    position: absolute;
+    left: 200px;
+    top: 129px;
+}
+
+.js-tarif .form-client-invoicing .field-4 {
+    position: absolute;
+    left: 200px;
+    top: 180px;
+}
+
+.js-tarif .form-client-invoicing .field-5 {
+    position: absolute;
+    left: 500px;
+    top: 180px;
+}
+
+.js-tarif .form-client-invoicing .field-6 {
+    position: absolute;
+    left: 500px;
+    top: 230px;
+}
+
+.js-tarif .form-client-invoicing .form-horizontal fieldset{
+    min-height: 280px;
+}
+

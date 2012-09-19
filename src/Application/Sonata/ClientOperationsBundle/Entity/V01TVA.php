@@ -238,7 +238,7 @@ class V01TVA extends AbstractSellEntity
     /**
      * Set paiement_devise
      *
-     * @param Application\Sonata\ClientBundle\Entity\ListDevises $paiementDevise
+     * @param \Application\Sonata\ClientBundle\Entity\ListDevises $paiementDevise
      * @return V01TVA
      */
     public function setPaiementDevise(\Application\Sonata\ClientBundle\Entity\ListDevises $paiementDevise = null)
@@ -251,7 +251,7 @@ class V01TVA extends AbstractSellEntity
     /**
      * Get paiement_devise
      *
-     * @return Application\Sonata\ClientBundle\Entity\ListDevises 
+     * @return \Application\Sonata\ClientBundle\Entity\ListDevises
      */
     public function getPaiementDevise()
     {

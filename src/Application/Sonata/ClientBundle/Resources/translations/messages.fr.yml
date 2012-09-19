@@ -81,6 +81,16 @@ form:
     value_percentage: Valeur %
     invoice_type: Type
 
+  clientinvoicing:
+    title:  Tarif
+    facturation_du_client: Facturation du client
+    min: Facturation / mois Minimum
+    max: Maximum
+    facturation_davance_value: Facturation d'avance
+    facturation_davance: Facturation d'avance
+    paiement: Paiement
+    libelle: Libellé
+
 list:
   code_client: Code client
   user: Nom du gestionnaire
