@@ -32,7 +32,7 @@ abstract class AbstractBaseEntity
     /**
      * @var \DateTime $date_piece
      *
-     * @ORM\Column(name="date_piece", type="date", nullable=true)
+     * @ORM\Column(name="date_piece", type="date")
      */
     private $date_piece;
 
@@ -98,7 +98,7 @@ abstract class AbstractBaseEntity
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -114,14 +114,14 @@ abstract class AbstractBaseEntity
     public function setImports(\Application\Sonata\ClientOperationsBundle\Entity\Imports $imports = null)
     {
         $this->imports = $imports;
-    
+
         return $this;
     }
 
     /**
      * Get imports
      *
-     * @return Application\Sonata\ClientOperationsBundle\Entity\Imports 
+     * @return Application\Sonata\ClientOperationsBundle\Entity\Imports
      */
     public function getImports()
     {

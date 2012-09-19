@@ -63,14 +63,14 @@ abstract class AbstractBuyEntity extends AbstractBaseEntity
     public function setCommentaires($commentaires)
     {
         $this->commentaires = $commentaires;
-    
+
         return $this;
     }
 
     /**
      * Get commentaires
      *
-     * @return string 
+     * @return string
      */
     public function getCommentaires()
     {
@@ -86,14 +86,14 @@ abstract class AbstractBuyEntity extends AbstractBaseEntity
     public function setTiers($tiers)
     {
         $this->tiers = $tiers;
-    
+
         return $this;
     }
 
     /**
      * Get tiers
      *
-     * @return string 
+     * @return string
      */
     public function getTiers()
     {
@@ -109,14 +109,14 @@ abstract class AbstractBuyEntity extends AbstractBaseEntity
     public function setNumeroPiece($numeroPiece)
     {
         $this->numero_piece = $numeroPiece;
-    
+
         return $this;
     }
 
     /**
      * Get numero_piece
      *
-     * @return string 
+     * @return string
      */
     public function getNumeroPiece()
     {
@@ -132,14 +132,14 @@ abstract class AbstractBuyEntity extends AbstractBaseEntity
     public function setMois($mois)
     {
         $this->mois = $mois;
-    
+
         return $this;
     }
 
     /**
      * Get mois
      *
-     * @return float 
+     * @return float
      */
     public function getMois()
     {

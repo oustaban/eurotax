@@ -5,6 +5,7 @@ namespace Application\Sonata\ClientOperationsBundle\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Validator\ErrorElement;
 
 use Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin as Admin;
 
@@ -36,11 +37,11 @@ class A02TVAAdmin extends Admin
             ->add('paiement_montant', 'money', array('label' => $this->getFieldLabel('paiement_montant')))
             ->add('paiement_devise', null, array('label' => $this->getFieldLabel('paiement_devise_id')))
             ->add('paiement_date', null, array('label' =>
-        $this->getFieldLabel('paiement_date'),
-            'attr' => array('class' => 'datepicker'),
-            'widget' => 'single_text',
-            'input' => 'datetime',
-            'format' => $this->date_format_datetime)
+            $this->getFieldLabel('paiement_date'),
+                'attr' => array('class' => 'datepicker'),
+                'widget' => 'single_text',
+                'input' => 'datetime',
+                'format' => $this->date_format_datetime)
         )
             ->add('mois', 'date', array(
             'label' => $this->getFieldLabel('mois'),
@@ -90,5 +91,47 @@ class A02TVAAdmin extends Admin
     protected function getPaiement_dateFormValue($value)
     {
         return $this->dateFormValue($value);
+    }
+
+    /**
+     * @param ErrorElement $errorElement
+     * @param mixed $object
+     */
+    public function validate(ErrorElement $errorElement, $object)
+    {
+        /* @var $object \Application\Sonata\ClientOperationsBundle\Entity\A02TVA */
+        parent::validate($errorElement, $object);
+
+        $value = $object->getMontantTVAFrancaise();
+        if ($value) {
+            if (!($value == $object->getMontantHTEnDevise() * $object->getTauxDeTVA() / 100)) {
+                $errorElement->addViolation('Wrong "Montant TVA Francaise"');
+            }
+        }
+
+        $value = $object->getMontantTTC();
+        if ($value) {
+            if (!($value == $object->getMontantHTEnDevise() + $object->getMontantTVAFrancaise())) {
+                $errorElement->addViolation('Wrong "Montant TTC"');
+            }
+        }
+
+        $value = $object->getPaiementMontant();
+        if ($value) {
+            if (!$object->getPaiementDevise()) {
+                $errorElement->addViolation('"Paiement Devise" can\'t be empty');
+            }
+
+            if (!$object->getPaiementDate()) {
+                $errorElement->addViolation('"Paiement Date" can\'t be empty');
+            }
+        }
+
+        $value = $object->getHT();
+        if ($value) {
+            if (!($value == $object->getMontantHTEnDevise()/$object->getTauxDeChange())) {
+                $errorElement->addViolation('Wrong "HT"');
+            }
+        }
     }
 }
