@@ -21,7 +21,7 @@ class HomeController extends Controller
             ->findAll();
         ;
 
-        return array('clients' => $clients);
+        return array('clients' => $clients, 'cookies'=>$this->getRequest()->cookies);
     }
 
 }

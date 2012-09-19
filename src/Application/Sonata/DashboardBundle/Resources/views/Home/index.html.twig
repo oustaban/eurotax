@@ -1,5 +1,8 @@
 {% extends 'ApplicationSonataDashboardBundle::layout.html.twig' %}
 
+{% set label_all_clients = cookies.get('show_all_clients') ? 'hide_projects' : 'show_projects' %}
+
+
 {% block body_content %}
 {{ parent() }}
 <div style="clear:both;float: none;">
@@ -8,7 +11,7 @@
     <div style="float: right;">
         Attention, 5 alters en cours<br/>
         <br/><br/>
-        <button>Consulter les projets ...</button>
+        <button id="show_hide_all_clients">{{ ('ApplicationSonataDashboardBundle.index.'~label_all_clients)|trans() }} ...</button>
         <br/>
         <br/><br/>
     </div>
@@ -93,5 +96,16 @@
             }
         });
     });
+    $(function () {
+        $('#show_hide_all_clients').click(function(){
+            {% if cookies.get('show_all_clients') %}
+                $.removeCookie('show_all_clients');
+            {% else%}
+                $.cookie('show_all_clients', '1', { expires: 1, path: '/' });
+            {% endif %}
+            location.reload();
+        });
+    });
+
 </script>
 {% endblock javascripts %}
