@@ -2,11 +2,11 @@
     var field_dialog_{{ id }} = false;
 
     function initialize_popup_{{ id }}() {
-// initialize component
-        if (!field_dialog_{{ id }}) {
-            field_dialog_{{ id }} = jQuery("#field_dialog_{{ id }}");
+            // initialize component
+            if (!field_dialog_{{ id }}) {
+                field_dialog_{{ id }} = jQuery("#field_dialog_{{ id }}");
 
-// move the dialog as a child of the root element, nested form breaks html ...
+            // move the dialog as a child of the root element, nested form breaks html ...
             jQuery(document.body).append(field_dialog_{{ id }});
 
             Admin.log('[{{ id }}|field_dialog] move dialog container as a document child');
@@ -22,7 +22,7 @@
 
         var a = jQuery(this);
 
-        field_dialog_{{ id }}.html('');
+        field_dialog_{{ id }}.find('.popup-body').html('');
 
         Admin.log('[{{ id }}|field_dialog_form_add] add link action');
 
@@ -35,11 +35,14 @@
                 Admin.log('[{{ id }}|field_dialog_form_add] ajax success', field_dialog_{{ id }});
 
                 // populate the popup container
-                field_dialog_{{ id }}.html(html);
+                field_dialog_{{ id }}.find('.popup-body').html(html);
+
 
                 jQuery('.sonata-actions', field_dialog_{{ id }}).parent().remove();
                 var dialog_title = jQuery('.form-horizontal legend', field_dialog_{{ id }}).text();
                 jQuery('.form-horizontal legend', field_dialog_{{ id }}).remove();
+
+                field_dialog_{{ id }}.find('#title').html(dialog_title);
 
                 jQuery('.datepicker').datepicker({language:'{{default_locale}}', format: '{{default_date_format_js}}'});
 
@@ -48,22 +51,7 @@
                 jQuery('a', field_dialog_{{ id }}).live('click', field_dialog_form_action_{{ id }});
                 jQuery('form', field_dialog_{{ id }}).live('submit', field_dialog_form_action_{{ id }});
 
-                // open the dialog in modal mode
-                field_dialog_{{ id }}.dialog({
-                    height:'auto',
-                    width:650,
-                    modal:true,
-                    autoOpen:true,
-                    resizable:true,
-                    title: dialog_title,
-                    close:function (event, ui) {
-                        Admin.log('[{{ id }}|field_dialog_form_add] dialog closed - removing `live` events');
-                        // make sure we have a clean state
-                        jQuery('a', field_dialog_{{ id }}).die('click');
-                        jQuery('form', field_dialog_{{ id }}).die('submit');
-                    },
-                    zIndex:9998
-                });
+                field_dialog_{{ id }}.modal('toggle');
             }
         });
     };
@@ -111,6 +99,11 @@
             type:type,
             data:data,
             success:function (data) {
+
+                var ajax_loading = false;
+                if (!ajax_loading) {
+                    ajax_loading = $(html_ajax_load()).show().appendTo('body');
+                }
 
                 Admin.log('[{{ id }}|field_dialog_form_action] ajax success');
 
