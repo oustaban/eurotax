@@ -10,10 +10,6 @@ class AllClientsVoter implements VoterInterface
     public function __construct(ContainerInterface $container)
     {
         $this->container     = $container;
-
-        /* @var $request \Symfony\Component\HttpFoundation\Request */
-        $request = $container->get('request');
-        $this->garant = (bool)$request->cookies->get('show_all_clients');
     }
 
    /**
@@ -37,9 +33,12 @@ class AllClientsVoter implements VoterInterface
      */
     public function vote(TokenInterface $token, $object, array $attributes)
     {
+        /* @var $request \Symfony\Component\HttpFoundation\Request */
+        $request = $this->container->get('request');
+
         foreach ($attributes as $attribute) {
             if ($this->supportsAttribute($attribute)) {
-                return $token->getUser()->isSuperAdmin() && $this->garant;
+                return $token->getUser()->isSuperAdmin() && $request->cookies->get('show_all_clients');
             }
         }
 

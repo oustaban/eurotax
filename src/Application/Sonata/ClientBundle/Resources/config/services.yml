@@ -42,8 +42,8 @@ services:
         arguments: [null, Application\Sonata\ClientBundle\Entity\Tarif, ApplicationSonataClientBundle:Tarif]
 
     security.access.all_clients_voter:
-                class:      Application\Sonata\ClientBundle\Security\Authorization\Voter\AllClientsVoter
-                arguments:  [@service_container]
-                public:     true
-                tags:
-                    -       { name: security.voter }
+        class:      Application\Sonata\ClientBundle\Security\Authorization\Voter\AllClientsVoter
+        arguments:  [@service_container]
+        public:     true
+        tags:
+            - { name: security.voter }
