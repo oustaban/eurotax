@@ -1,0 +1,7 @@
+{% block sonata_admin_content %}
+    {% if content is not empty %}
+        <div class="sonata-ba-form sonata-ba-list">
+            {{ content|raw }}
+        </div>
+    {% endif %}
+{% endblock sonata_admin_content %}

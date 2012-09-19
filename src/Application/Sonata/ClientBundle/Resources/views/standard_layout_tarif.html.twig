@@ -1,0 +1,28 @@
+{% extends 'ApplicationSonataClientBundle::standard_layout.html.twig' %}
+
+{% use ':JS:ajax_edit.html.twig' %}
+{% use ':JS:ajax_create.html.twig' %}
+{% use ':popup:popup_form.html.twig' %}
+
+{% block sonata_admin_content %}
+    {{ block('formTabs') }}
+
+    <div class="form-client-invoicing">
+    {% render "ApplicationSonataClientBundle:ClientInvoicing:"~action_invoice  with {'filter' : {'client_id' : {'value' : client_id }},  'id' : client_id, '_sonata_admin': 'application.sonata.admin.client_invoicing'} %}
+    </div>
+
+    {% if content is not empty %}
+    <div class="sonata-ba-form sonata-ba-list">
+        {{ content|raw }}
+    </div>
+    {% endif %}
+    {{ block('popup_form') }}
+{% endblock sonata_admin_content %}
+
+
+{% block javascriptsafter %}
+    {{ parent() }}
+    {{ block('ajaxCreate') }}
+    {{ block('ajaxEdit') }}
+{% endblock javascriptsafter %}
+
