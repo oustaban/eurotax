@@ -51,8 +51,8 @@ class ClientRepository extends EntityRepository
         $securityContext = \AppKernel::getStaticContainer()->get('security.context');
         if (!$securityContext->isGranted('ROLE_EDIT_ALL_CLIENTS')){
             $queryBuilder
-                ->where($alias . '.user = :user_id')
-                ->setParameter(':user_id', $securityContext->getToken()->getUser());
+                ->where($alias . '.user = :user')
+                ->setParameter(':user', $securityContext->getToken()->getUser());
         }
 
         return $queryBuilder;

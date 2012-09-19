@@ -890,6 +890,57 @@ class AbstractTabsController extends Controller
         return $this->redirect($this->generateUrl('admin_sonata_clientoperations_' . $this->_tabAlias . '_list', array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)));
     }
 
+    public function importRemoveAction($id) {
+        $id = (int)$id;
+        if ($id) {
+            /* @var $em \Doctrine\ORM\EntityManager */
+            $em = $this->getDoctrine()->getManager();
+            foreach ($this->_config_excel as $table => $params) {
+                $object = $em->getRepository('ApplicationSonataClientOperationsBundle:' . $params['entity'])->findByImports($id);
+                foreach ($object as $obj) {
+                    $em->remove($obj);
+                }
+                unset($object);
+            }
+            $em->flush();
+
+            $import = $em->getRepository('ApplicationSonataClientOperationsBundle:Imports')->find($id);
+            $em->remove($import);
+            unset($import);
+            $em->flush();
+        }
+        return $this->render('ApplicationSonataClientOperationsBundle:redirects:back.html.twig');
+    }
+
+    public function importListAction()
+    {
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $this->getDoctrine()->getManager();
+
+        $iDB = $em->getRepository('ApplicationSonataClientOperationsBundle:Imports')->createQueryBuilder('i');
+
+        /* @var $securityContext SecurityContext */
+        $securityContext = $this->get('security.context');
+
+        /* @var $lastImport Application\Sonata\Client\Operations\Bundle\Imports */
+        $lastImports = $iDB->select('i')
+            ->where('i.client_id = :client_id')
+            ->andWhere('i.user = :user')
+            ->addOrderBy('i.date', 'DESC')
+            ->setMaxResults(10)
+            ->setParameters(array(
+                ':client_id' => $this->client_id,
+                ':user' => $securityContext->getToken()->getUser(),
+        ))
+            ->getQuery()
+            ->getArrayResult();
+
+        return $this->renderJson(array(
+            'title' => $this->admin->trans('ApplicationSonataClientOperationsBundle.imports.list_title'),
+            'imports' => $lastImports?$lastImports:array(),
+        ));
+    }
+
     /**
      * @param string   $view
      * @param array    $parameters

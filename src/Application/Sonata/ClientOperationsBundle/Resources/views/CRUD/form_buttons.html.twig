@@ -9,18 +9,14 @@
     <div>
         <div class="btn-group inline">
             <button class="btn" id="toggleImportModal"><i class="icon icon-hdd"></i> Importer un fichier</button>
-            <button class="btn"><i class="icon icon-trash"></i> Supprimer un lot importé</button>
+            <button class="btn" id="deleteImport"><i class="icon icon-trash"></i> Supprimer un lot importé</button>
         </div>
     </div>
     <div>
         <div class="btn-group inline">
             <button class="btn"><i class="icon icon-exclamation-sign"></i> Alertes</button>
 
-            {% if blocked %}
-            {% set text_lock =  'Verrouiller' %}
-            {% else %}
-            {% set text_lock =  'Déverrouiller' %}
-            {% endif %}
+            {% set text_lock = blocked ? 'Verrouiller' : 'Déverrouiller' %}
             <button class="btn"
                     onclick="location.href='{{ path('admin_sonata_clientoperations_'~active_tab~'_locking', {'filter[client_id][value]':client_id, 'client_id': client_id, 'month' : query_month, 'year' : year, 'blocked': blocked  }) }}'">
                 <i class="icon icon-lock"></i> {{ text_lock|trans}}</button>
@@ -68,8 +64,31 @@
         $('#inputFileCover').val($(this).val());
     });
 
-    $('#btn_more_info').click(function(){
-        location.href = '{{ url('admin_sonata_client_client_edit', {'id':client_id}) }}';
+    $('#btn_more_info').click(function () {
+        location.href = '{{ path('admin_sonata_client_client_edit', {'id':client_id}) }}';
+    });
+
+    $('#deleteImport').click(function () {
+        $.ajax({
+            url:'{{ path('admin_sonata_clientoperations_'~active_tab~'_importList', _filter_json) }}',
+            dataType:'json',
+            success:function (json) {
+                var $ul = $('<ul/>').addClass('nav nav-list');
+                for (i in json.imports) {
+                {% set import_delete_params = _filter_json|merge({'id':'__id__'}) %}
+                    var deleteUrl = '{{ path('admin_sonata_clientoperations_'~active_tab~'_importRemove', import_delete_params) }}'.replace("__id__", json.imports[i].id);
+                    $ul.append('<li><span>' + json.imports[i].date.date + '</span>&nbsp;&nbsp;&nbsp;&nbsp;<a style="display: inline;" class="import_del" href="' + deleteUrl + '">Supprimer</a></li>');
+                }
+                // populate the popup container
+                field_dialog_{{ id }}.find('.popup-body').html('').append($ul);
+                field_dialog_{{ id }}.find('#title').html(json.title);
+                field_dialog_{{ id }}.modal('toggle');
+
+                $ul.find('a.import_del').click(function () {
+                    return confirm('{{ 'ApplicationSonataClientOperationsBundle.imports.confirm_delete'|trans() }}');
+                });
+            }
+        });
     });
 </script>
 

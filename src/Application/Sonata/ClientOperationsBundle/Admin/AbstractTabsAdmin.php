@@ -270,6 +270,8 @@ abstract class AbstractTabsAdmin extends Admin
         $collection->add('import');
         $collection->add('locking', 'locking/{client_id}/{month}/{year}/{blocked}');
         $collection->add('clone', '{id}/clone');
+        $collection->add('importList', 'import-list');
+        $collection->add('importRemove', 'import-remove/{id}');
     }
 
     //customs fields
