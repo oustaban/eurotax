@@ -46,3 +46,10 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: ClientInvoicing, label: Tarif }
         arguments: [null, Application\Sonata\ClientBundle\Entity\ClientInvoicing, ApplicationSonataClientBundle:ClientInvoicing]
+
+    security.access.all_clients_voter:
+        class:      Application\Sonata\ClientBundle\Security\Authorization\Voter\AllClientsVoter
+        arguments:  [@service_container]
+        public:     true
+        tags:
+            - { name: security.voter }

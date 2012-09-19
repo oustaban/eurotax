@@ -10,6 +10,7 @@
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}"/>
     {% block javascripts %}
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.cookie.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
     {% endblock %}
 </head>
@@ -52,10 +53,9 @@
                     {% if app.user %}
                     <ul class="nav">
                         <li class="divider-vertical"></li>
-                        <li><a href="{{ path('sonata_user_profile_show') }}">
-                            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
-                            </b>
-                        </a></li>
+                        <li>
+                            <span >{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span>
+                        </li>
                         <li><a href="{{ path('sonata_user_admin_security_logout') }}">
                             <i class="icon-off icon-white"></i> {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
                         </a></li>
@@ -89,7 +89,11 @@
 {% use ':JS:ajax_loading.html.twig' %}
 
 {% block javascriptsafter %}
-<script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/bootbox.min.js') }}"></script>
+<script type="text/javascript">
+    bootbox.setLocale('{{default_locale}}');
+</script>
 {{ block('ajaxLoading')}}
 {{ block('totalsCalculate')}}
 {{ block('formatNumbers')}}

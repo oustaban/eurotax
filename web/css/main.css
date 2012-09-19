@@ -105,3 +105,11 @@ td.sonata-ba-list-field-number{
 .sonata-ba-list table.table thead th:hover{
     background-color: white;
 }
+.navbar .nav > li > span {
+    float: none;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #999999;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    display: block;
+}

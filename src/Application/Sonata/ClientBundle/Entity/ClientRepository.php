@@ -17,7 +17,10 @@ class ClientRepository extends EntityRepository
     {
         /* @var $securityContext SecurityContext */
         $securityContext = \AppKernel::getStaticContainer()->get('security.context');
-        return $this->findBy(array('user' => $securityContext->getToken()->getUser()));
+
+        return $securityContext->isGranted('ROLE_EDIT_ALL_CLIENTS') ?
+            parent::findAll() :
+            $this->findBy(array('user' => $securityContext->getToken()->getUser()));
     }
 
     /**
@@ -30,8 +33,7 @@ class ClientRepository extends EntityRepository
 
         /* @var $securityContext SecurityContext */
         $securityContext = \AppKernel::getStaticContainer()->get('security.context');
-        if ($client && $client->getUser() == $securityContext->getToken()->getUser())
-        {
+        if ($securityContext->isGranted('ROLE_EDIT_ALL_CLIENTS') || ($client && $client->getUser() == $securityContext->getToken()->getUser())) {
             return $client;
         }
 
@@ -47,10 +49,11 @@ class ClientRepository extends EntityRepository
 
         /* @var $securityContext SecurityContext */
         $securityContext = \AppKernel::getStaticContainer()->get('security.context');
-        $queryBuilder
-            ->where($alias . '.user = :user_id')
-            ->setParameter(':user_id', $securityContext->getToken()->getUser())
-        ;
+        if (!$securityContext->isGranted('ROLE_EDIT_ALL_CLIENTS')){
+            $queryBuilder
+                ->where($alias . '.user = :user')
+                ->setParameter(':user', $securityContext->getToken()->getUser());
+        }
 
         return $queryBuilder;
     }

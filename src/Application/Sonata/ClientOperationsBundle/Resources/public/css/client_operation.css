@@ -35,3 +35,7 @@
 .table-striped tbody tr.rowb td, .table-striped tbody tr.rowb th {
     background-color: #F9F9F9;
 }
+.table-hover tbody tr.rowa:hover td, .table-hover tbody tr.rowa:hover th,
+.table-hover tbody tr.rowb:hover td, .table-hover tbody tr.rowb:hover th {
+    background-color: #F5F5F5;
+}
