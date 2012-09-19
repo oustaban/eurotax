@@ -100,11 +100,6 @@
             data:data,
             success:function (data) {
 
-                var ajax_loading = false;
-                if (!ajax_loading) {
-                    ajax_loading = $(html_ajax_load()).show().appendTo('body');
-                }
-
                 Admin.log('[{{ id }}|field_dialog_form_action] ajax success');
 
                 if (typeof data == 'string') {
@@ -116,6 +111,7 @@
                 // if the crud action return ok, then the element has been added
                 // so the widget container must be refresh with the last option available
                 if (data.result == 'ok') {
+                    $(html_ajax_load()).show().appendTo('body');
                     field_dialog_{{ id }}.dialog('close');
                     window.location.reload();
                     return;

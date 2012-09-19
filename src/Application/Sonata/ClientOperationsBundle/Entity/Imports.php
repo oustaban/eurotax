@@ -36,6 +36,13 @@ class Imports
      */
     private $user;
 
+    /**
+     * @var integer $client_id
+     *
+     * @ORM\Column(name="client_id", type="integer")
+     */
+    private $client_id;
+
 
     /**
      * @return Application\Sonata\UserBundle\Entity\User
@@ -100,5 +107,28 @@ class Imports
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set client_id
+     *
+     * @param integer $clientId
+     * @return Imports
+     */
+    public function setClientId($clientId)
+    {
+        $this->client_id = $clientId;
+    
+        return $this;
+    }
+
+    /**
+     * Get client_id
+     *
+     * @return integer 
+     */
+    public function getClientId()
+    {
+        return $this->client_id;
     }
 }
