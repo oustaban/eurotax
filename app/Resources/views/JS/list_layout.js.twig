@@ -1,13 +1,12 @@
 <script type="text/javascript">
     var field_dialog_{{ id }} = false;
-    var field_dialog_popup{{ id }} = false;
 
     function initialize_popup_{{ id }}() {
-// initialize component
-        if (!field_dialog_{{ id }}) {
-            field_dialog_{{ id }} = jQuery("#field_dialog_{{ id }}");
+            // initialize component
+            if (!field_dialog_{{ id }}) {
+                field_dialog_{{ id }} = jQuery("#field_dialog_{{ id }}");
 
-// move the dialog as a child of the root element, nested form breaks html ...
+            // move the dialog as a child of the root element, nested form breaks html ...
             jQuery(document.body).append(field_dialog_{{ id }});
 
             Admin.log('[{{ id }}|field_dialog] move dialog container as a document child');
@@ -23,7 +22,7 @@
 
         var a = jQuery(this);
 
-        field_dialog_{{ id }}.html('<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="title"></h3></div><div class="modal-body"></div><div class="modal-footer"></div>');
+        field_dialog_{{ id }}.find('.popup-body').html('');
 
         Admin.log('[{{ id }}|field_dialog_form_add] add link action');
 
@@ -36,7 +35,7 @@
                 Admin.log('[{{ id }}|field_dialog_form_add] ajax success', field_dialog_{{ id }});
 
                 // populate the popup container
-                field_dialog_{{ id }}.find('.modal-body').html(html);
+                field_dialog_{{ id }}.find('.popup-body').html(html);
 
 
                 jQuery('.sonata-actions', field_dialog_{{ id }}).parent().remove();
@@ -53,23 +52,6 @@
                 jQuery('form', field_dialog_{{ id }}).live('submit', field_dialog_form_action_{{ id }});
 
                 field_dialog_{{ id }}.modal('toggle');
-
-                // open the dialog in modal mode
-                /*field_dialog_{{ id }}.dialog({
-                    height:'auto',
-                    width:650,
-                    modal:true,
-                    autoOpen:true,
-                    resizable:true,
-                    title: dialog_title,
-                    close:function (event, ui) {
-                        Admin.log('[{{ id }}|field_dialog_form_add] dialog closed - removing `live` events');
-                        // make sure we have a clean state
-                        jQuery('a', field_dialog_{{ id }}).die('click');
-                        jQuery('form', field_dialog_{{ id }}).die('submit');
-                    },
-                    zIndex:9998
-                });*/
             }
         });
     };
