@@ -38,7 +38,7 @@ class AllClientsVoter implements VoterInterface
 
         foreach ($attributes as $attribute) {
             if ($this->supportsAttribute($attribute)) {
-                return $token->getUser()->isSuperAdmin() && $request->cookies->get('show_all_clients');
+                return ($token->getUser()->isSuperAdmin() && $request->cookies->get('show_all_clients')) ? self::ACCESS_GRANTED : self::ACCESS_DENIED;
             }
         }
 
