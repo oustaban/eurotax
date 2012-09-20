@@ -61,7 +61,7 @@ abstract class AbstractSellEntity extends AbstractBaseEntity
     /**
      * @var string $taux_de_change
      *
-     * @ORM\Column(name="taux_de_change", type="string", length=255, nullable=true)
+     * @ORM\Column(name="taux_de_change", type="float", nullable=true)
      */
     private $taux_de_change;
 

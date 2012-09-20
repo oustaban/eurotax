@@ -38,7 +38,7 @@ class A06AIB extends AbstractBuyEntity
     /**
      * @var string $regime
      *
-     * @ORM\Column(name="regime", type="string", length=255, nullable=true)
+     * @ORM\Column(name="regime", type="float", nullable=true)
      */
     private $regime;
 
