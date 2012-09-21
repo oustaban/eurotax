@@ -45,7 +45,7 @@ class Imports
 
 
     /**
-     * @return Application\Sonata\UserBundle\Entity\User
+     * @return \Application\Sonata\UserBundle\Entity\User
      */
     public function __toString()
     {
@@ -89,7 +89,7 @@ class Imports
     /**
      * Set user
      *
-     * @param Application\Sonata\UserBundle\Entity\User $user
+     * @param \Application\Sonata\UserBundle\Entity\User $user
      * @return Imports
      */
     public function setUser(\Application\Sonata\UserBundle\Entity\User $user = null)
@@ -102,7 +102,7 @@ class Imports
     /**
      * Get user
      *
-     * @return Application\Sonata\UserBundle\Entity\User
+     * @return \Application\Sonata\UserBundle\Entity\User
      */
     public function getUser()
     {

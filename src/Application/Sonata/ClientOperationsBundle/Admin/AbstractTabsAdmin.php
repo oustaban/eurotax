@@ -171,12 +171,13 @@ abstract class AbstractTabsAdmin extends Admin
      */
     public function validate(ErrorElement $errorElement, $object)
     {
-        $date_piece = $object->getDatePiece();
+        /* @var $object \Application\Sonata\ClientOperationsBundle\Entity\AbstractBaseEntity */
+        parent::validate($errorElement, $object);
 
-        if ($date_piece) {
-
-            $this->month = $date_piece->format('m');
-            $this->year = $date_piece->format('Y');
+        $value = $object->getDatePiece();
+        if ($value) {
+            $this->month = $value->format('m');
+            $this->year = $value->format('Y');
 
             if ($this->getLocking()) {
                 $errorElement->addViolation('Sorry with month is locked');
@@ -385,8 +386,10 @@ abstract class AbstractTabsAdmin extends Admin
         $value = strtolower($value);
 
         $value_assoc = array(
+            'eur' => 'euro',
             'usd' => 'dollar',
             'jpy' => 'yen',
+            'gbr' => 'british',
             'nok' => 'norwegian_krone',
             'dkk' => 'danish_krone',
             'sek' => 'swedish_krone',

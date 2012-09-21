@@ -5,6 +5,7 @@ namespace Application\Sonata\ClientOperationsBundle\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Validator\ErrorElement;
 
 use Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin as Admin;
 
@@ -58,4 +59,20 @@ class A10CAFAdmin extends Admin
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
     }
 
+    /**
+     * @param ErrorElement $errorElement
+     * @param mixed $object
+     */
+    public function validate(ErrorElement $errorElement, $object)
+    {
+        /* @var $object \Application\Sonata\ClientOperationsBundle\Entity\A10CAF */
+        parent::validate($errorElement, $object);
+
+//        $value = $object->getHT();
+//        if ($value) {
+//            if (!($value == $object->getMontantHTEnDevise()/$object->getTauxDeChange())) {
+//                $errorElement->addViolation('Wrong "HT"');
+//            }
+//        }
+    }
 }

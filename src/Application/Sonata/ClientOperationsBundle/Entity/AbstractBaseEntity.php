@@ -32,7 +32,7 @@ abstract class AbstractBaseEntity
     /**
      * @var \DateTime $date_piece
      *
-     * @ORM\Column(name="date_piece", type="date", nullable=true)
+     * @ORM\Column(name="date_piece", type="date")
      */
     private $date_piece;
 
@@ -53,7 +53,7 @@ abstract class AbstractBaseEntity
      * Set client_id
      *
      * @param integer $clientId
-     * @return BaseEntity
+     * @return AbstractBaseEntity
      */
     public function setClientId($clientId)
     {
@@ -76,7 +76,7 @@ abstract class AbstractBaseEntity
      * Set date_piece
      *
      * @param \DateTime $datePiece
-     * @return AbstractEntity
+     * @return AbstractBaseEntity
      */
     public function setDatePiece($datePiece)
     {
@@ -98,7 +98,7 @@ abstract class AbstractBaseEntity
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -108,20 +108,20 @@ abstract class AbstractBaseEntity
     /**
      * Set imports
      *
-     * @param Application\Sonata\ClientOperationsBundle\Entity\Imports $imports
-     * @return AbstractEntity
+     * @param \Application\Sonata\ClientOperationsBundle\Entity\Imports $imports
+     * @return AbstractBaseEntity
      */
     public function setImports(\Application\Sonata\ClientOperationsBundle\Entity\Imports $imports = null)
     {
         $this->imports = $imports;
-    
+
         return $this;
     }
 
     /**
      * Get imports
      *
-     * @return Application\Sonata\ClientOperationsBundle\Entity\Imports 
+     * @return \Application\Sonata\ClientOperationsBundle\Entity\Imports
      */
     public function getImports()
     {

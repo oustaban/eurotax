@@ -310,20 +310,20 @@ class A02TVA extends AbstractBuyEntity
     /**
      * Set paiement_devise
      *
-     * @param Application\Sonata\ClientBundle\Entity\ListDevises $paiementDevise
+     * @param \Application\Sonata\ClientBundle\Entity\ListDevises $paiementDevise
      * @return A02TVA
      */
     public function setPaiementDevise(\Application\Sonata\ClientBundle\Entity\ListDevises $paiementDevise = null)
     {
         $this->paiement_devise = $paiementDevise;
-    
+
         return $this;
     }
 
     /**
      * Get paiement_devise
      *
-     * @return Application\Sonata\ClientBundle\Entity\ListDevises 
+     * @return \Application\Sonata\ClientBundle\Entity\ListDevises
      */
     public function getPaiementDevise()
     {
@@ -333,20 +333,20 @@ class A02TVA extends AbstractBuyEntity
     /**
      * Set devise
      *
-     * @param Application\Sonata\ClientBundle\Entity\ListDevises $devise
+     * @param \Application\Sonata\ClientBundle\Entity\ListDevises $devise
      * @return A02TVA
      */
     public function setDevise(\Application\Sonata\ClientBundle\Entity\ListDevises $devise = null)
     {
         $this->devise = $devise;
-    
+
         return $this;
     }
 
     /**
      * Get devise
      *
-     * @return Application\Sonata\ClientBundle\Entity\ListDevises 
+     * @return \Application\Sonata\ClientBundle\Entity\ListDevises
      */
     public function getDevise()
     {
