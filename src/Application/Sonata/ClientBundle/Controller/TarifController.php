@@ -3,6 +3,8 @@
 namespace Application\Sonata\ClientBundle\Controller;
 
 use Application\Sonata\ClientBundle\Controller\AbstractTabsController as Controller;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Tarif controller.
@@ -42,6 +44,49 @@ class TarifController extends Controller
             'action' => $action,
             'action_invoice' => $action_invoice,
             'js_settings_json' => $this->_jsSettingsJson,
+        ));
+    }
+
+    /**
+     * @param mixed $id
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws AccessDeniedException
+     * @throws NotFoundHttpException
+     */
+    public function deleteAction($id)
+    {
+        $id = $this->get('request')->get($this->admin->getIdParameter());
+        $object = $this->admin->getObject($id);
+
+        if (!$object) {
+            throw new NotFoundHttpException(sprintf('unable to find the object with id : %s', $id));
+        }
+
+        if (false === $this->admin->isGranted('DELETE', $object)) {
+            throw new AccessDeniedException();
+        }
+
+        if ($this->getRequest()->getMethod() == 'DELETE') {
+            try {
+                $this->admin->delete($object);
+                $this->get('session')->setFlash('sonata_flash_success', 'flash_delete_success');
+            } catch (ModelManagerException $e) {
+                $this->get('session')->setFlash('sonata_flash_error', 'flash_delete_error');
+            }
+
+            if ($this->isXmlHttpRequest()) {
+                return $this->renderJson(array(
+                    'result' => 'ok',
+                    'objectId' => $this->admin->getNormalizedIdentifier($object)
+                ));
+            }
+
+            return new RedirectResponse($this->admin->generateUrl('list'));
+        }
+
+        return $this->render($this->admin->getTemplate('delete'), array(
+            'object' => $object,
+            'action' => 'delete'
         ));
     }
 }

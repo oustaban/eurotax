@@ -56,8 +56,13 @@
 
 
         jQuery('.sonata-actions', field_dialog_{{ id }}).parent().remove();
-        var dialog_title = jQuery('.form-horizontal legend', field_dialog_{{ id }}).text();
-        jQuery('.form-horizontal legend', field_dialog_{{ id }}).remove();
+        var dialog_title = jQuery('.popup-body legend', field_dialog_{{ id }}).text();
+        jQuery('.popup-body legend', field_dialog_{{ id }}).remove();
+
+        if(dialog_title==''){
+            dialog_title = jQuery('.popup-body h1', field_dialog_{{ id }}).text();
+            jQuery('.popup-body h1', field_dialog_{{ id }}).remove();
+        }
 
         field_dialog_{{ id }}.find('#title').html(dialog_title);
 

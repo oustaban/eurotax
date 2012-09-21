@@ -1,0 +1,14 @@
+{% block ajaxDelete_js %}{% endblock ajaxDelete_js %}
+
+{% block ajaxDelete %}
+{% include ':JS:list_layout.js.twig'%}
+<script type="text/javascript">
+    $(function () {
+        $('.sonata-ba-list .delete_link').live('click', function (event) {
+            var link = $(this).attr('href');
+            field_dialog_form_add_{{ id }}(event, link);
+            return false;
+        });
+    });
+</script>
+{% endblock ajaxDelete %}

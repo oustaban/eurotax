@@ -2,6 +2,7 @@
 
 {% use ':JS:ajax_edit.html.twig' %}
 {% use ':JS:ajax_create.html.twig' %}
+{% use ':JS:ajax_delete_action.html.twig' %}
 {% use ':popup:popup_form.html.twig' %}
 
 {% block sonata_admin_content %}
@@ -24,5 +25,6 @@
     {{ parent() }}
     {{ block('ajaxCreate') }}
     {{ block('ajaxEdit') }}
+    {{ block('ajaxDelete') }}
 {% endblock javascriptsafter %}
 
