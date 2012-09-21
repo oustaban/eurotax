@@ -53,6 +53,13 @@ class Imports
     }
 
     /**
+     *
+     */
+    public function __construct(){
+        $this->date = new \DateTime();
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -118,14 +125,14 @@ class Imports
     public function setClientId($clientId)
     {
         $this->client_id = $clientId;
-    
+
         return $this;
     }
 
     /**
      * Get client_id
      *
-     * @return integer 
+     * @return integer
      */
     public function getClientId()
     {

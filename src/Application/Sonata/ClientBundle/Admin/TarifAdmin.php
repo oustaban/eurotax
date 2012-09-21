@@ -26,7 +26,10 @@ class TarifAdmin extends Admin
 
         $label = 'form.' . $this->_prefix_label . '.';
         $formMapper->with($label . 'title')
-            ->add('client_id', 'hidden', array('data' => $filter['client_id']['value']))
+            ->add('client_id', 'hidden', array(
+            'data' => $filter['client_id']['value'],
+            'attr' => array('class' => 'client_id'),
+        ))
             ->add('mode_de_facturation', null, array('label' => $label . 'mode_de_facturation'))
             ->add('value', 'money', array('label' => $label . 'value'))
             ->add('value_percentage', 'percent', array('label' => $label . 'value_percentage'))
