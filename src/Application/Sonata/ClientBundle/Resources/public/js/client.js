@@ -4,6 +4,7 @@ jQuery(document).ready(function ($) {
     if (active_tab) {
         $('body').addClass('js-' + active_tab);
     }
+    ;
 
     /**
      * document
@@ -38,6 +39,7 @@ jQuery(document).ready(function ($) {
 
         $('.js-tarif .form-client-invoicing .field-4 label').remove();
     }
+    ;
 
     /*
      * coordonnees
@@ -70,4 +72,46 @@ jQuery(document).ready(function ($) {
             }
         }).disableSelection();
     }
+    ;
+
+    /**
+     * tarif
+     */
+    if ($('.js-tarif').size()) {
+        symfony_ajax.behaviors.tarif = {
+            attach:function (context) {
+                var client_id_name = $('.client_id', context).attr('name');
+                if (client_id_name) {
+                    var tarif_uniqid = client_id_name.replace('[client_id]', '')
+
+                    var tarif_value_percentage = $('#' + tarif_uniqid + '_value_percentage');
+                    var tarif_value = $('#' + tarif_uniqid + '_value');
+
+                    tarif_value.keyup(function () {
+                        if ($(this).val() && $(this).val() != '0,00') {
+                            tarif_value_percentage.attr('disabled', 'disabled').val('');
+                        }
+                        else {
+                            tarif_value_percentage.removeAttr('disabled');
+                        }
+                    }).keyup();
+
+                    tarif_value_percentage.keyup(function () {
+                        if ($(this).val()) {
+                            tarif_value.attr('disabled', 'disabled').val('');
+                        }
+                        else {
+                            tarif_value.removeAttr('disabled');
+                        }
+                    }).keyup();
+
+                    // two fields is null value
+                    if (!parseInt(tarif_value_percentage.val()) && !parseInt(tarif_value.val())) {
+                        tarif_value.removeAttr('disabled');
+                    }
+                }
+            }
+        };
+    }
+    ;
 });

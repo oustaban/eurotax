@@ -1,6 +1,17 @@
 <script type="text/javascript">
     var field_dialog_{{ id }} = false;
 
+    var symfony_ajax = symfony_ajax || {'behaviors': {}};
+
+    symfony_attach_behaviors{{ id }} = function (context) {
+        context = context || document;
+        $.each(symfony_ajax.behaviors, function () {
+            if ($.isFunction(this.attach)) {
+                this.attach(context);
+            }
+        });
+    };
+
     function initialize_popup_{{ id }}() {
             // initialize component
             if (!field_dialog_{{ id }}) {
@@ -56,6 +67,8 @@
         // related create admin
         jQuery('a', field_dialog_{{ id }}).live('click', field_dialog_form_action_{{ id }});
         jQuery('form', field_dialog_{{ id }}).live('submit', field_dialog_form_action_{{ id }});
+
+        symfony_attach_behaviors{{ id }}( field_dialog_{{ id }}.find('.popup-body'));
     }
 
     // handle the post data
@@ -132,6 +145,7 @@
 
     $(function(){
         initialize_popup_{{ id }}();
+        symfony_attach_behaviors{{ id }}(document);
     })
 
 </script>

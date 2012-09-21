@@ -41,16 +41,15 @@ class Tarif
     /**
      * @var float $value
      *
-     * @ORM\Column(name="value", type="float")
+     * @ORM\Column(name="value", type="float", nullable=true)
      */
-
     private $value;
 
 
     /**
      * @var float $value_percentage
      *
-     * @ORM\Column(name="value_percentage", type="float")
+     * @ORM\Column(name="value_percentage", type="float", nullable=true)
      */
 
     private $value_percentage;
@@ -184,14 +183,14 @@ class Tarif
     public function setClientId($clientId)
     {
         $this->client_id = $clientId;
-    
+
         return $this;
     }
 
     /**
      * Get client_id
      *
-     * @return integer 
+     * @return integer
      */
     public function getClientId()
     {
