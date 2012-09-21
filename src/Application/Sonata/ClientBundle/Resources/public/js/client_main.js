@@ -10,7 +10,7 @@ jQuery(document).ready(function ($) {
 
     $('#' + uniqid + '_autre_destinataire_de_facturation').change(function () {
 
-        if ($(this).attr('checked') == 'checked') {
+        if ($(this).attr('checked') != 'checked') {
 
             $('#clone_address').die();
             $.each(fields_address, function (i, field) {

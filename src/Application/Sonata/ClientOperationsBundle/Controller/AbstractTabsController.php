@@ -618,6 +618,7 @@ class AbstractTabsController extends Controller
                 $this->_imports = new Imports();
                 $this->_imports->setDate(new \DateTime(date('Y-m-d H:i:s')));
                 $this->_imports->setUser($users);
+                $this->_imports->setClientId($this->client_id);
 
                 $em->persist($this->_imports);
                 $em->flush();
