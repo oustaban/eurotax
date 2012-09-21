@@ -201,7 +201,7 @@ abstract class AbstractSellEntity extends AbstractBaseEntity
     /**
      * Set devise
      *
-     * @param Application\Sonata\ClientBundle\Entity\ListDevises $devise
+     * @param \Application\Sonata\ClientBundle\Entity\ListDevises $devise
      * @return AbstractSellEntity
      */
     public function setDevise(\Application\Sonata\ClientBundle\Entity\ListDevises $devise = null)
@@ -214,7 +214,7 @@ abstract class AbstractSellEntity extends AbstractBaseEntity
     /**
      * Get devise
      *
-     * @return Application\Sonata\ClientBundle\Entity\ListDevises
+     * @return \Application\Sonata\ClientBundle\Entity\ListDevises
      */
     public function getDevise()
     {

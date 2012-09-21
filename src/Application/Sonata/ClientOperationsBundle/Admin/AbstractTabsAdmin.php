@@ -384,8 +384,10 @@ abstract class AbstractTabsAdmin extends Admin
         $value = strtolower($value);
 
         $value_assoc = array(
+            'eur' => 'euro',
             'usd' => 'dollar',
             'jpy' => 'yen',
+            'gbr' => 'british',
             'nok' => 'norwegian_krone',
             'dkk' => 'danish_krone',
             'sek' => 'swedish_krone',

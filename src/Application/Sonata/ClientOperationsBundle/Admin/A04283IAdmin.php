@@ -84,7 +84,7 @@ class A04283IAdmin extends Admin
         parent::validate($errorElement, $object);
 
         $value = $object->getMois();
-        if ($value != date('n', strtotime('-1 month'))) {
+        if (!$value || $value['year'] . '-' . $value['month'] != date('Y-n', strtotime('-1 month'))) {
             $errorElement->addViolation('Wrong "Mois"');
         }
 
@@ -92,6 +92,26 @@ class A04283IAdmin extends Admin
         if ($value) {
             if (!($value == $object->getMontantHTEnDevise()/$object->getTauxDeChange())) {
                 $errorElement->addViolation('Wrong "HT"');
+            }
+        }
+
+        $value = $object->getDevise()->getAlias();
+        if ($value != 'euro') {
+            /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+            $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+            $em = $doctrine->getManager();
+            /* @var $devise \Application\Sonata\DevisesBundle\Entity\Devises */
+            $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($object->getDatePiece());
+
+            $error = true;
+            if ($devise){
+                $method = 'getMoney' . ucfirst($value);
+                if (method_exists($devise, $method)) {
+                    $error = !$devise->$method();
+                }
+            }
+            if ($error){
+                $errorElement->addViolation('No Devise for this month');
             }
         }
     }

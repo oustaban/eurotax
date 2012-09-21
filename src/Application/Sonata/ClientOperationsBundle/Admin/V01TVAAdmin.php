@@ -97,6 +97,11 @@ class V01TVAAdmin extends Admin
         /* @var $object \Application\Sonata\ClientOperationsBundle\Entity\V01TVA */
         parent::validate($errorElement, $object);
 
+        $value = $object->getMois();
+        if (!$value) {
+            $errorElement->addViolation('"Mois" should not be null');
+        }
+
         $value = $object->getNoTVATiers();
         if ($value) {
             if (!preg_match('/^FR.*/', $value)) {
@@ -127,12 +132,37 @@ class V01TVAAdmin extends Admin
             if (!$object->getPaiementDate()) {
                 $errorElement->addViolation('"Paiement Date" can\'t be empty');
             }
+
+            $mois = $object->getMois();
+            if (!$mois || $mois['year'] . '-' . $mois['month'] != date('Y-n', strtotime('-1 month'))) {
+                $errorElement->addViolation('Wrong "Mois"');
+            }
         }
 
         $value = $object->getHT();
         if ($value) {
             if (!($value == $object->getMontantHTEnDevise()/$object->getTauxDeChange())) {
                 $errorElement->addViolation('Wrong "HT"');
+            }
+        }
+
+        $value = $object->getDevise()->getAlias();
+        if ($value != 'euro') {
+            /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+            $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+            $em = $doctrine->getManager();
+            /* @var $devise \Application\Sonata\DevisesBundle\Entity\Devises */
+            $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($object->getDatePiece());
+
+            $error = true;
+            if ($devise){
+                $method = 'getMoney' . ucfirst($value);
+                if (method_exists($devise, $method)) {
+                    $error = !$devise->$method();
+                }
+            }
+            if ($error){
+                $errorElement->addViolation('No Devise for this month');
             }
         }
     }

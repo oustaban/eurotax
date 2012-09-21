@@ -53,7 +53,7 @@ abstract class AbstractBaseEntity
      * Set client_id
      *
      * @param integer $clientId
-     * @return BaseEntity
+     * @return AbstractBaseEntity
      */
     public function setClientId($clientId)
     {
@@ -76,7 +76,7 @@ abstract class AbstractBaseEntity
      * Set date_piece
      *
      * @param \DateTime $datePiece
-     * @return AbstractEntity
+     * @return AbstractBaseEntity
      */
     public function setDatePiece($datePiece)
     {
@@ -108,8 +108,8 @@ abstract class AbstractBaseEntity
     /**
      * Set imports
      *
-     * @param Application\Sonata\ClientOperationsBundle\Entity\Imports $imports
-     * @return AbstractEntity
+     * @param \Application\Sonata\ClientOperationsBundle\Entity\Imports $imports
+     * @return AbstractBaseEntity
      */
     public function setImports(\Application\Sonata\ClientOperationsBundle\Entity\Imports $imports = null)
     {
@@ -121,7 +121,7 @@ abstract class AbstractBaseEntity
     /**
      * Get imports
      *
-     * @return Application\Sonata\ClientOperationsBundle\Entity\Imports
+     * @return \Application\Sonata\ClientOperationsBundle\Entity\Imports
      */
     public function getImports()
     {

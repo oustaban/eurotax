@@ -67,7 +67,7 @@ class A02TVAAdmin extends Admin
             'template' => $this->_bundle_name . ':CRUD:list_date_piece.html.twig'
         ))
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
-            ->add('devise_id', null, array('label' => $this->getFieldLabel('devise_id')))
+            ->add('devise', null, array('label' => $this->getFieldLabel('devise_id')))
             ->add('montant_HT_en_devise', 'money', array('label' => $this->getFieldLabel('montant_HT_en_devise'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:montant_HT_en_devise.html.twig'))
             ->add('taux_de_TVA', 'percent', array('label' => $this->getFieldLabel('taux_de_TVA')))
             ->add('montant_TVA_francaise', 'money', array('label' => $this->getFieldLabel('montant_TVA_francaise')))
@@ -102,6 +102,11 @@ class A02TVAAdmin extends Admin
         /* @var $object \Application\Sonata\ClientOperationsBundle\Entity\A02TVA */
         parent::validate($errorElement, $object);
 
+        $value = $object->getMois();
+        if (!$value) {
+            $errorElement->addViolation('"Mois" should not be null');
+        }
+
         $value = $object->getMontantTVAFrancaise();
         if ($value) {
             if (!($value == $object->getMontantHTEnDevise() * $object->getTauxDeTVA() / 100)) {
@@ -125,12 +130,37 @@ class A02TVAAdmin extends Admin
             if (!$object->getPaiementDate()) {
                 $errorElement->addViolation('"Paiement Date" can\'t be empty');
             }
+            
+            $mois = $object->getMois();
+            if (!$mois || $mois['year'] . '-' . $mois['month'] != date('Y-n', strtotime('-1 month'))) {
+                $errorElement->addViolation('Wrong "Mois"');
+            }
         }
 
         $value = $object->getHT();
         if ($value) {
-            if (!($value == $object->getMontantHTEnDevise()/$object->getTauxDeChange())) {
+            if (!($value == $object->getMontantHTEnDevise() / $object->getTauxDeChange())) {
                 $errorElement->addViolation('Wrong "HT"');
+            }
+        }
+
+        $value = $object->getDevise()->getAlias();
+        if ($value != 'euro') {
+            /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+            $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+            $em = $doctrine->getManager();
+            /* @var $devise \Application\Sonata\DevisesBundle\Entity\Devises */
+            $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($object->getDatePiece());
+
+            $error = true;
+            if ($devise) {
+                $method = 'getMoney' . ucfirst($value);
+                if (method_exists($devise, $method)) {
+                    $error = !$devise->$method();
+                }
+            }
+            if ($error) {
+                $errorElement->addViolation('No Devise for this month');
             }
         }
     }

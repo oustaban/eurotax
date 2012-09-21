@@ -76,7 +76,7 @@ class A08IMAdmin extends Admin
         parent::validate($errorElement, $object);
 
         $value = $object->getMois();
-        if ($value != date('n', strtotime('-1 month'))) {
+        if (!$value || $value['year'] . '-' . $value['month'] != date('Y-n', strtotime('-1 month'))) {
             $errorElement->addViolation('Wrong "Mois"');
         }
 
