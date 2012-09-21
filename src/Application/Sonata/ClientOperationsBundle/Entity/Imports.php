@@ -45,11 +45,18 @@ class Imports
 
 
     /**
-     * @return Application\Sonata\UserBundle\Entity\User
+     * @return \Application\Sonata\UserBundle\Entity\User
      */
     public function __toString()
     {
         return (string)$this->getId();
+    }
+
+    /**
+     *
+     */
+    public function __construct(){
+        $this->date = new \DateTime();
     }
 
     /**
@@ -89,7 +96,7 @@ class Imports
     /**
      * Set user
      *
-     * @param Application\Sonata\UserBundle\Entity\User $user
+     * @param \Application\Sonata\UserBundle\Entity\User $user
      * @return Imports
      */
     public function setUser(\Application\Sonata\UserBundle\Entity\User $user = null)
@@ -102,7 +109,7 @@ class Imports
     /**
      * Get user
      *
-     * @return Application\Sonata\UserBundle\Entity\User
+     * @return \Application\Sonata\UserBundle\Entity\User
      */
     public function getUser()
     {
@@ -118,14 +125,14 @@ class Imports
     public function setClientId($clientId)
     {
         $this->client_id = $clientId;
-    
+
         return $this;
     }
 
     /**
      * Get client_id
      *
-     * @return integer 
+     * @return integer
      */
     public function getClientId()
     {

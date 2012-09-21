@@ -596,6 +596,23 @@ class AbstractTabsController extends Controller
     }
 
     /**
+     * saveImports
+     */
+    protected function saveImports()
+    {
+        $user = $this->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $users = $em->getRepository('ApplicationSonataUserBundle:User')->find($user->getId());
+
+        $this->_imports = new Imports();
+        $this->_imports->setUser($users);
+        $this->_imports->setClientId($this->client_id);
+
+        $em->persist($this->_imports);
+        $em->flush();
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function importAction()
@@ -611,26 +628,23 @@ class AbstractTabsController extends Controller
                 $objPHPExcel = $objReader->load($file);
                 $sheets = $objPHPExcel->getAllSheets();
 
-                $user = $this->get('security.context')->getToken()->getUser();
-                $em = $this->getDoctrine()->getManager();
-                $users = $em->getRepository('ApplicationSonataUserBundle:User')->find($user->getId());
+                $content_arr = array();
+                foreach ($sheets as $sheet) {
 
-                $this->_imports = new Imports();
-                $this->_imports->setDate(new \DateTime(date('Y-m-d H:i:s')));
-                $this->_imports->setUser($users);
-                $this->_imports->setClientId($this->client_id);
-
-                $em->persist($this->_imports);
-                $em->flush();
+                    $title = $sheet->getTitle();
+                    $content_arr[$title] = $sheet->toArray();
+                }
+                unset($sheets, $objPHPExcel, $objReader);
 
                 $this->devise_list = $this->getDeviseList();
 
                 file_put_contents($tmpFile, '');
-                $this->importValidateAndSave($sheets);
+                $this->importValidateAndSave($content_arr);
 
                 if (empty($this->_import_counts['rows']['errors'])) {
 
-                    $this->importValidateAndSave($sheets, true);
+                    $this->saveImports();
+                    $this->importValidateAndSave($content_arr, true);
                 }
             }
         }
@@ -643,15 +657,15 @@ class AbstractTabsController extends Controller
         return $this->render('ApplicationSonataClientOperationsBundle:redirects:back.html.twig');
     }
 
+    /**
+     * @param $sheets
+     * @param bool $save
+     */
     protected function importValidateAndSave($sheets, $save = false)
     {
-        foreach ($sheets as $sheet) {
+        foreach ($sheets as $title => $data) {
 
-            $title = $sheet->getTitle();
             if (array_key_exists($title, $this->_config_excel)) {
-
-                $data = $sheet->toArray();
-
 
                 $config_excel = $this->_config_excel[$title];
                 $class = $config_excel['entity'];
@@ -710,13 +724,37 @@ class AbstractTabsController extends Controller
                         }
                     } else {
 
-                        $this->setCountImports($class, 'errors', $form->getErrorsAsString());
+                        $this->setCountImports($class, 'errors', $this->getErrorsAsString($class, $form, $key + 2));
                     }
                     unset($formData, $form, $form_builder, $object);
                 }
                 unset($data, $admin);
             }
         }
+    }
+
+
+    public function getErrorsAsString($class, $form, $line, $level = 0, $key = 0)
+    {
+        $row = array_flip($this->_config_excel[$this->admin->trans('ApplicationSonataClientOperationsBundle.form.' . $class . '.title')]['fields']);
+        $errors = '';
+
+        foreach ($form->getErrors() as $error) {
+            $repeat = str_repeat(' ', $level);
+            $field = '(' . (($row[$key] ? chr($row[$key] + 65) : '') . ':' . $line) . ') ';
+            $errors .= $repeat . 'VALUE : ' . $field . ($form->getViewData() ? : 'empty') . "\n";
+            $errors .= $repeat . 'ERROR: ' . $error->getMessage() . "\n\n";
+        }
+
+        foreach ($form->getChildren() as $key => $child) {
+            if ($err = $this->getErrorsAsString($class, $child, $line, ($level + 4), $key)) {
+                $field = $this->admin->trans('ApplicationSonataClientOperationsBundle.form.' . $class . '.' . $key);
+
+                $errors .= $field . "\n";
+                $errors .= $err;
+            }
+        }
+        return $errors;
     }
 
     /**
@@ -769,15 +807,18 @@ class AbstractTabsController extends Controller
         return false;
     }
 
+    /**
+     * @return array
+     */
     protected function getCountMessageImports()
     {
-        $translator = $this->get('translator');
-
+        $translator = $this->admin;
         $messages = array();
 
         foreach ($this->_import_counts as $table => $values) {
 
             $message = array();
+            $table_trans = $translator->trans('ApplicationSonataClientOperationsBundle.form.' . $table . '.title');
             switch ($table) {
 
                 case 'rows';
@@ -804,7 +845,6 @@ class AbstractTabsController extends Controller
                     $messages[] = implode('&nbsp;&nbsp;|&nbsp;&nbsp;', $message);
                     break;
                 default;
-                    $table = $translator->trans('ApplicationSonataClientOperationsBundle.form.' . $table . '.title');
                     $str_repeat = str_repeat('&nbsp;', 4);
                     if (isset($values['success'])) {
                         $message[] = $str_repeat . $translator->trans('Imported : %count%', array('%count%' => $values['success']));
@@ -812,13 +852,10 @@ class AbstractTabsController extends Controller
                     if (isset($values['errors'])) {
                         $message[] = $str_repeat . '<span class="error">' . $translator->trans('Not valid : %count%', array('%count%' => $values['errors'])) . '</span>';
                     }
-                    $messages[] = '<strong>' . $table . '</strong><br />' . implode('; ', $message);
+                    $messages[] = '<strong>' . $table_trans . '</strong><br />' . implode('; ', $message);
                     break;
             }
-
-
         }
-
         return $messages;
     }
 
@@ -846,17 +883,20 @@ class AbstractTabsController extends Controller
     }
 
     /**
-     *
+     * blankAction
      */
     public function blankAction()
     {
         $file_name = 'blank-' . md5(time() . rand(1, 99999999));
 
-        header('Content-Type: application/excel');
-        header('Content-Disposition: attachment; filename="' . $file_name . '.xlsx"');
+        $response = new Response();
 
-        readfile('bundles/applicationsonataclientoperations/excel/blank.xlsx');
-        exit;
+        $content = file_get_contents('bundles/applicationsonataclientoperations/excel/blank.xlsx');
+        $response->setContent($content);
+        $response->headers->set('Content-Type', 'application/excel');
+        $response->headers->set('Content-Disposition', 'attachment; filename="' . $file_name . '.xlsx"');
+
+        return $response;
     }
 
     /**
@@ -891,7 +931,12 @@ class AbstractTabsController extends Controller
         return $this->redirect($this->generateUrl('admin_sonata_clientoperations_' . $this->_tabAlias . '_list', array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)));
     }
 
-    public function importRemoveAction($id) {
+    /**
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function importRemoveAction($id)
+    {
         $id = (int)$id;
         if ($id) {
             /* @var $em \Doctrine\ORM\EntityManager */
@@ -913,6 +958,9 @@ class AbstractTabsController extends Controller
         return $this->render('ApplicationSonataClientOperationsBundle:redirects:back.html.twig');
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function importListAction()
     {
         /* @var $em \Doctrine\ORM\EntityManager */
@@ -930,24 +978,23 @@ class AbstractTabsController extends Controller
             ->addOrderBy('i.date', 'DESC')
             ->setMaxResults(10)
             ->setParameters(array(
-                ':client_id' => $this->client_id,
-                ':user' => $securityContext->getToken()->getUser(),
+            ':client_id' => $this->client_id,
+            ':user' => $securityContext->getToken()->getUser(),
         ))
             ->getQuery()
             ->getArrayResult();
 
         return $this->renderJson(array(
             'title' => $this->admin->trans('ApplicationSonataClientOperationsBundle.imports.list_title'),
-            'imports' => $lastImports?$lastImports:array(),
+            'imports' => $lastImports ? $lastImports : array(),
         ));
     }
 
     /**
-     * @param string   $view
-     * @param array    $parameters
-     * @param Response $response
-     *
-     * @return Response
+     * @param string $view
+     * @param array $parameters
+     * @param \Application\Sonata\ClientOperationsBundle\Controller\Response|null $response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function render($view, array $parameters = array(), Response $response = null)
     {
