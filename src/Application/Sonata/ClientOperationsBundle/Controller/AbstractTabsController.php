@@ -620,31 +620,35 @@ class AbstractTabsController extends Controller
         if (!empty($_FILES) && !empty($_FILES["inputFile"])) {
             $file = TMP_UPLOAD_PATH . '/' . $_FILES["inputFile"]["name"];
             $tmpFile = $_FILES["inputFile"]["tmp_name"];
-            if (move_uploaded_file($tmpFile, $file)) {
-                /* @var $objReader \PHPExcel_Reader_Excel2007 */
-                $objReader = \PHPExcel_IOFactory::createReaderForFile($file);
-                /* @var $objPHPExcel \PHPExcel */
-                $objReader->setReadDataOnly(true);
-                $objPHPExcel = $objReader->load($file);
-                $sheets = $objPHPExcel->getAllSheets();
+            $inputFile = $_FILES['inputFile'];
 
-                $content_arr = array();
-                foreach ($sheets as $sheet) {
+            if ($this->importFileValidate($inputFile)) {
+                if (move_uploaded_file($tmpFile, $file)) {
+                    /* @var $objReader \PHPExcel_Reader_Excel2007 */
+                    $objReader = \PHPExcel_IOFactory::createReaderForFile($file);
+                    /* @var $objPHPExcel \PHPExcel */
+                    $objReader->setReadDataOnly(true);
+                    $objPHPExcel = $objReader->load($file);
+                    $sheets = $objPHPExcel->getAllSheets();
 
-                    $title = $sheet->getTitle();
-                    $content_arr[$title] = $sheet->toArray();
-                }
-                unset($sheets, $objPHPExcel, $objReader);
+                    $content_arr = array();
+                    foreach ($sheets as $sheet) {
 
-                $this->devise_list = $this->getDeviseList();
+                        $title = $sheet->getTitle();
+                        $content_arr[$title] = $sheet->toArray();
+                    }
+                    unset($sheets, $objPHPExcel, $objReader);
 
-                file_put_contents($tmpFile, '');
-                $this->importValidateAndSave($content_arr);
+                    $this->devise_list = $this->getDeviseList();
 
-                if (empty($this->_import_counts['rows']['errors'])) {
+                    file_put_contents($tmpFile, '');
+                    $this->importValidateAndSave($content_arr);
 
-                    $this->saveImports();
-                    $this->importValidateAndSave($content_arr, true);
+                    if (empty($this->_import_counts['rows']['errors'])) {
+
+                        $this->saveImports();
+                        $this->importValidateAndSave($content_arr, true);
+                    }
                 }
             }
         }
@@ -733,6 +737,65 @@ class AbstractTabsController extends Controller
         }
     }
 
+
+    /**
+     * @param $file
+     * @return bool
+     */
+    protected function importFileValidate($file)
+    {
+        $file_name = $file['name'];
+
+        /* example file_name */
+        //$file_name = 'from CLIENT1_Import BDD_2012|09_1.xlsx';
+
+        if (preg_match('/from\s+(.*)_Import\s+BDD_(\d{4}+)\|(\d{2}+)_(\d+)\.xlsx/i', $file_name, $matches)) {
+
+            array_shift($matches);
+            list($nom_client, $year, $month, $version) = $matches;
+
+            /* @var $em \Doctrine\ORM\EntityManager */
+            $em = $this->getDoctrine()->getManager();
+
+            $qb = $em->createQueryBuilder();
+
+            $client = $qb->select('c')
+                ->from('Application\Sonata\ClientBundle\Entity\Client', 'c')
+                ->where('UPPER(c.nom) = UPPER(:nom)')
+                ->setParameter(':nom', $nom_client)
+                ->getQuery()
+                ->getSingleResult();
+
+            if ($client) {
+
+                /*
+                 * example source : http://www.simukti.net/blog/2012/04/05/how-to-select-year-month-day-in-doctrine2/
+                 */
+                $emConfig = $em->getConfiguration();
+                $emConfig->addCustomDatetimeFunction('YEAR', 'Application\Sonata\ClientOperationsBundle\DQL\YearFunction');
+                $emConfig->addCustomDatetimeFunction('MONTH', 'Application\Sonata\ClientOperationsBundle\DQL\MonthFunction');
+
+                $dql = "SELECT count(i.client_id) + 1 AS counts FROM Application\Sonata\ClientOperationsBundle\Entity\Imports i
+                        WHERE i.client_id = :client_id
+                        AND YEAR(i.date) = :year
+                        AND MONTH(i.date) = :month";
+
+                $sql = $em->createQuery($dql);
+                $sql->setParameter(':client_id', $client->getId());
+                $sql->setParameter(':year', $year);
+                $sql->setParameter(':month', $month);
+
+                $ver = $sql->getSingleResult();
+
+                if($ver['counts'] == $version){
+                    return true;
+                }
+            }
+        }
+
+        $this->get('session')->setFlash('sonata_flash_info', $this->admin->trans('Nom de fichier invalide'));
+        return false;
+    }
 
     public function getErrorsAsString($class, $form, $line, $level = 0, $key = 0)
     {
