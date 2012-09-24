@@ -785,9 +785,9 @@ class AbstractTabsController extends Controller
                 $sql->setParameter(':year', $year);
                 $sql->setParameter(':month', $month);
 
-                $ver = $sql->getSingleResult();
+                $ver = $sql->getSingleResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
 
-                if ($ver['counts'] == $version) {
+                if ($ver && $ver['counts'] == $version) {
                     return true;
                 }
             }
