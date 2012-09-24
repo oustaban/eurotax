@@ -5,6 +5,7 @@ namespace Application\Sonata\ClientOperationsBundle\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Validator\ErrorElement;
 
 use Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin as Admin;
 
@@ -63,5 +64,27 @@ class A08IMAdmin extends Admin
     protected function getDate_pieceFormValue($value)
     {
         return $this->dateFormValue($value);
+    }
+
+    /**
+     * @param ErrorElement $errorElement
+     * @param mixed $object
+     */
+    public function validate(ErrorElement $errorElement, $object)
+    {
+        /* @var $object \Application\Sonata\ClientOperationsBundle\Entity\A08IM */
+        parent::validate($errorElement, $object);
+
+        $value = $object->getMois();
+        if (!$value || $value['year'] . '-' . $value['month'] != date('Y-n', strtotime('-1 month'))) {
+            $errorElement->addViolation('Wrong "Mois"');
+        }
+
+//        $value = $object->getHT();
+//        if ($value) {
+//            if (!($value == $object->getMontantHTEnDevise()/$object->getTauxDeChange())) {
+//                $errorElement->addViolation('Wrong "HT"');
+//            }
+//        }
     }
 }

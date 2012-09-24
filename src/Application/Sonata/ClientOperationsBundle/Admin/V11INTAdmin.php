@@ -5,6 +5,7 @@ namespace Application\Sonata\ClientOperationsBundle\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Validator\ErrorElement;
 
 use Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin as Admin;
 
@@ -62,5 +63,47 @@ class V11INTAdmin extends Admin
             ->add('taux_de_change', 'percent', array('label' => $this->getFieldLabel('taux_de_change')))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:HT.html.twig'))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
+    }
+
+    /**
+     * @param ErrorElement $errorElement
+     * @param mixed $object
+     */
+    public function validate(ErrorElement $errorElement, $object)
+    {
+        /* @var $object \Application\Sonata\ClientOperationsBundle\Entity\V11INT */
+        parent::validate($errorElement, $object);
+
+        $value = $object->getMois();
+        if (!$value || $value['year'] . '-' . $value['month'] != date('Y-n', strtotime('-1 month'))) {
+            $errorElement->addViolation('Wrong "Mois"');
+        }
+
+        $value = $object->getHT();
+        if ($value) {
+            if (!($value == $object->getMontantHTEnDevise()/$object->getTauxDeChange())) {
+                $errorElement->addViolation('Wrong "HT"');
+            }
+        }
+
+        $value = $object->getDevise()->getAlias();
+        if ($value != 'euro') {
+            /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+            $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+            $em = $doctrine->getManager();
+            /* @var $devise \Application\Sonata\DevisesBundle\Entity\Devises */
+            $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($object->getDatePiece());
+
+            $error = true;
+            if ($devise){
+                $method = 'getMoney' . ucfirst($value);
+                if (method_exists($devise, $method)) {
+                    $error = !$devise->$method();
+                }
+            }
+            if ($error){
+                $errorElement->addViolation('No Devise for this month');
+            }
+        }
     }
 }

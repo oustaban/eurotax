@@ -552,20 +552,20 @@ class A06AIB extends AbstractBuyEntity
     /**
      * Set devise
      *
-     * @param Application\Sonata\ClientBundle\Entity\ListDevises $devise
+     * @param \Application\Sonata\ClientBundle\Entity\ListDevises $devise
      * @return A06AIB
      */
     public function setDevise(\Application\Sonata\ClientBundle\Entity\ListDevises $devise = null)
     {
         $this->devise = $devise;
-    
+
         return $this;
     }
 
     /**
      * Get devise
      *
-     * @return Application\Sonata\ClientBundle\Entity\ListDevises 
+     * @return \Application\Sonata\ClientBundle\Entity\ListDevises
      */
     public function getDevise()
     {

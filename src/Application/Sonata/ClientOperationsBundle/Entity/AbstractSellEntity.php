@@ -87,19 +87,19 @@ abstract class AbstractSellEntity extends AbstractBaseEntity
      * Set commentaires
      *
      * @param string $commentaires
-     * @return VAbstractBaseEntity
+     * @return AbstractSellEntity
      */
     public function setCommentaires($commentaires)
     {
         $this->commentaires = $commentaires;
-    
+
         return $this;
     }
 
     /**
      * Get commentaires
      *
-     * @return string 
+     * @return string
      */
     public function getCommentaires()
     {
@@ -110,19 +110,19 @@ abstract class AbstractSellEntity extends AbstractBaseEntity
      * Set tiers
      *
      * @param string $tiers
-     * @return VAbstractBaseEntity
+     * @return AbstractSellEntity
      */
     public function setTiers($tiers)
     {
         $this->tiers = $tiers;
-    
+
         return $this;
     }
 
     /**
      * Get tiers
      *
-     * @return string 
+     * @return string
      */
     public function getTiers()
     {
@@ -133,19 +133,19 @@ abstract class AbstractSellEntity extends AbstractBaseEntity
      * Set mois
      *
      * @param float $mois
-     * @return VAbstractBaseEntity
+     * @return AbstractSellEntity
      */
     public function setMois($mois)
     {
         $this->mois = $mois;
-    
+
         return $this;
     }
 
     /**
      * Get mois
      *
-     * @return float 
+     * @return float
      */
     public function getMois()
     {
@@ -156,19 +156,19 @@ abstract class AbstractSellEntity extends AbstractBaseEntity
      * Set numero_piece
      *
      * @param string $numeroPiece
-     * @return VAbstractBaseEntity
+     * @return AbstractSellEntity
      */
     public function setNumeroPiece($numeroPiece)
     {
         $this->numero_piece = $numeroPiece;
-    
+
         return $this;
     }
 
     /**
      * Get numero_piece
      *
-     * @return string 
+     * @return string
      */
     public function getNumeroPiece()
     {
@@ -179,19 +179,19 @@ abstract class AbstractSellEntity extends AbstractBaseEntity
      * Set HT
      *
      * @param float $hT
-     * @return VAbstractBaseEntity
+     * @return AbstractSellEntity
      */
     public function setHT($hT)
     {
         $this->HT = $hT;
-    
+
         return $this;
     }
 
     /**
      * Get HT
      *
-     * @return float 
+     * @return float
      */
     public function getHT()
     {
@@ -201,20 +201,20 @@ abstract class AbstractSellEntity extends AbstractBaseEntity
     /**
      * Set devise
      *
-     * @param Application\Sonata\ClientBundle\Entity\ListDevises $devise
-     * @return VAbstractBaseEntity
+     * @param \Application\Sonata\ClientBundle\Entity\ListDevises $devise
+     * @return AbstractSellEntity
      */
     public function setDevise(\Application\Sonata\ClientBundle\Entity\ListDevises $devise = null)
     {
         $this->devise = $devise;
-    
+
         return $this;
     }
 
     /**
      * Get devise
      *
-     * @return Application\Sonata\ClientBundle\Entity\ListDevises 
+     * @return \Application\Sonata\ClientBundle\Entity\ListDevises
      */
     public function getDevise()
     {
@@ -225,19 +225,19 @@ abstract class AbstractSellEntity extends AbstractBaseEntity
      * Set montant_HT_en_devise
      *
      * @param float $montantHTEnDevise
-     * @return VAbstractBaseEntity
+     * @return AbstractSellEntity
      */
     public function setMontantHTEnDevise($montantHTEnDevise)
     {
         $this->montant_HT_en_devise = $montantHTEnDevise;
-    
+
         return $this;
     }
 
     /**
      * Get montant_HT_en_devise
      *
-     * @return float 
+     * @return float
      */
     public function getMontantHTEnDevise()
     {
@@ -248,19 +248,19 @@ abstract class AbstractSellEntity extends AbstractBaseEntity
      * Set taux_de_change
      *
      * @param string $tauxDeChange
-     * @return VAbstractBaseEntity
+     * @return AbstractSellEntity
      */
     public function setTauxDeChange($tauxDeChange)
     {
         $this->taux_de_change = $tauxDeChange;
-    
+
         return $this;
     }
 
     /**
      * Get taux_de_change
      *
-     * @return string 
+     * @return string
      */
     public function getTauxDeChange()
     {

@@ -180,20 +180,20 @@ class A04283I extends AbstractBuyEntity
     /**
      * Set devise
      *
-     * @param Application\Sonata\ClientBundle\Entity\ListDevises $devise
+     * @param \Application\Sonata\ClientBundle\Entity\ListDevises $devise
      * @return A04283I
      */
     public function setDevise(\Application\Sonata\ClientBundle\Entity\ListDevises $devise = null)
     {
         $this->devise = $devise;
-    
+
         return $this;
     }
 
     /**
      * Get devise
      *
-     * @return Application\Sonata\ClientBundle\Entity\ListDevises 
+     * @return \Application\Sonata\ClientBundle\Entity\ListDevises
      */
     public function getDevise()
     {
