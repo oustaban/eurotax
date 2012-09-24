@@ -96,6 +96,15 @@ abstract class AbstractBaseEntity
     }
 
     /**
+     * @return \DateTime
+     */
+    public function getDatePieceFormat()
+    {
+        $date_piece = new \DateTime($this->date_piece->format('Y-m-01'));
+        return $date_piece;
+    }
+
+    /**
      * Get id
      *
      * @return integer

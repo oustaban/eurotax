@@ -74,13 +74,23 @@ class V07EXAdmin extends Admin
         parent::validate($errorElement, $object);
 
         $value = $object->getMois();
-        if (!$value || $value['year'] . '-' . $value['month'] != date('Y-n', strtotime('-1 month'))) {
-            $errorElement->addViolation('Wrong "Mois"');
+        if (!$value) {
+            if ($value instanceof \DateTime) {
+                $month = $value->format('n');
+                $year = $value->format('Y');
+            } else {
+                $month = $value['month'];
+                $year = $value['year'];
+            }
+
+            if ($year . '-' . $month != date('Y-n', strtotime('-1 month'))) {
+                $errorElement->addViolation('Wrong "Mois"');
+            }
         }
 
         $value = $object->getHT();
         if ($value) {
-            if (!($value == $object->getMontantHTEnDevise()/$object->getTauxDeChange())) {
+            if (!($value == $this->getNumberRound($object->getMontantHTEnDevise()/$object->getTauxDeChange()))) {
                 $errorElement->addViolation('Wrong "HT"');
             }
         }
@@ -91,16 +101,20 @@ class V07EXAdmin extends Admin
             $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
             $em = $doctrine->getManager();
             /* @var $devise \Application\Sonata\DevisesBundle\Entity\Devises */
-            $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($object->getDatePiece());
 
+
+            $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($object->getDatePieceFormat());
             $error = true;
+
             if ($devise){
                 $method = 'getMoney' . ucfirst($value);
                 if (method_exists($devise, $method)) {
+
                     $error = !$devise->$method();
                 }
             }
             if ($error){
+
                 $errorElement->addViolation('No Devise for this month');
             }
         }

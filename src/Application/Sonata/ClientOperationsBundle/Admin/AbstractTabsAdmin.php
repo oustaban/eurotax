@@ -280,18 +280,72 @@ abstract class AbstractTabsAdmin extends Admin
     /**
      * @param $field
      * @param $value
-     * @return mixed
+     * @return string
      */
     public function getFormValue($field, $value)
     {
+        /** @var $fieldDescription \Sonata\DoctrineORMAdminBundle\Admin\FieldDescription */
+        $fieldDescription = $this->getFormFieldDescription($field);
+
+        $type = $fieldDescription->getType();
+
         $method = 'get' . ucfirst($field) . 'FormValue';
         $v = method_exists($this, $method) ? $this->$method($value) : $value;
         if (is_scalar($v)) {
             $v = trim($v);
         }
+
+        $method = 'get' . ucfirst($type) . 'TypeFormValue';
+        $v = method_exists($this, $method) ? $this->$method($v) : $v;
+
         return $v;
     }
 
+    /**
+     * @param $value
+     * @return string
+     */
+    public function getMoneyTypeFormValue($value)
+    {
+        return $this->getNumberFormat($value);
+    }
+
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    public function getPercentTypeFormValue($value)
+    {
+        if ($value) {
+            $value = $this->getNumberFormat($value * 100);
+        }
+
+        return $value;
+    }
+
+    /**
+     * @param $value
+     * @param int $precision
+     * @return float
+     */
+    public function getNumberRound($value, $precision = 2)
+    {
+        return round($value, $precision);
+    }
+
+    /**
+     * @param $value
+     * @param int $precision
+     * @return string
+     */
+    protected function getNumberFormat($value, $precision = 2)
+    {
+        if ($value) {
+            $value = number_format($value, $precision, ',', '');
+        }
+        return $value;
+    }
 
     /**
      * @return array

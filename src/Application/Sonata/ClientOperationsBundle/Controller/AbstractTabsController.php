@@ -747,9 +747,9 @@ class AbstractTabsController extends Controller
         $file_name = $file['name'];
 
         /* example file_name */
-        //$file_name = 'from CLIENT1_Import BDD_2012|09_1.xlsx';
+        //$file_name = 'from CLIENT1_Import BDD_201209_1.xlsx';
 
-        if (preg_match('/from\s+(.*)_Import\s+BDD_(\d{4}+)\|(\d{2}+)_(\d+)\.xlsx/i', $file_name, $matches)) {
+        if (preg_match('/from\s+(.*)_Import\s+BDD_(\d{4}+)(\d{2}+)_(\d+)\.xlsx/i', $file_name, $matches)) {
 
             array_shift($matches);
             list($nom_client, $year, $month, $version) = $matches;
@@ -772,7 +772,7 @@ class AbstractTabsController extends Controller
                  * example source : http://www.simukti.net/blog/2012/04/05/how-to-select-year-month-day-in-doctrine2/
                  */
                 $emConfig = $em->getConfiguration();
-                $emConfig->addCustomDatetimeFunction('YEAR', 'Application\Sonata\ClientOperationsBundle\DQL\YearFunction');
+                $emConfig->addCustomStringFunction('YEAR', 'Application\Sonata\ClientOperationsBundle\DQL\YearFunction');
                 $emConfig->addCustomDatetimeFunction('MONTH', 'Application\Sonata\ClientOperationsBundle\DQL\MonthFunction');
 
                 $dql = "SELECT count(i.client_id) + 1 AS counts FROM Application\Sonata\ClientOperationsBundle\Entity\Imports i
@@ -787,7 +787,7 @@ class AbstractTabsController extends Controller
 
                 $ver = $sql->getSingleResult();
 
-                if($ver['counts'] == $version){
+                if ($ver['counts'] == $version) {
                     return true;
                 }
             }
@@ -799,14 +799,15 @@ class AbstractTabsController extends Controller
 
     public function getErrorsAsString($class, $form, $line, $level = 0, $key = 0)
     {
-        $row = array_flip($this->_config_excel[$this->admin->trans('ApplicationSonataClientOperationsBundle.form.' . $class . '.title')]['fields']);
+        $row = $this->_config_excel[$this->admin->trans('ApplicationSonataClientOperationsBundle.form.' . $class . '.title')]['fields'];
+
         $errors = '';
 
         foreach ($form->getErrors() as $error) {
             $repeat = str_repeat(' ', $level);
-            $field = '(' . (($row[$key] ? chr($row[$key] + 65) : '') . ':' . $line) . ') ';
+            $field = isset($row[$key]) ? '(' . (($row[$key] ? chr($row[$key] + 65) : '') . ':' . $line) . ') ' : '';
             $errors .= $repeat . 'VALUE : ' . $field . ($form->getViewData() ? : 'empty') . "\n";
-            $errors .= $repeat . 'ERROR: ' . $error->getMessage() . "\n\n";
+            $errors .= $repeat . 'ERROR : ' . $error->getMessage() . "\n\n";
         }
 
         foreach ($form->getChildren() as $key => $child) {
@@ -1031,14 +1032,18 @@ class AbstractTabsController extends Controller
 
         $iDB = $em->getRepository('ApplicationSonataClientOperationsBundle:Imports')->createQueryBuilder('i');
 
+        /* @var $securityContext SecurityContext */
+        $securityContext = $this->get('security.context');
+
         /* @var $lastImport Application\Sonata\Client\Operations\Bundle\Imports */
-        $lastImports = $iDB->select('i, u.username')
-            ->leftJoin('i.user', 'u')
+        $lastImports = $iDB->select('i')
             ->where('i.client_id = :client_id')
+            ->andWhere('i.user = :user')
             ->addOrderBy('i.date', 'DESC')
             ->setMaxResults(10)
             ->setParameters(array(
             ':client_id' => $this->client_id,
+            ':user' => $securityContext->getToken()->getUser(),
         ))
             ->getQuery()
             ->getArrayResult();

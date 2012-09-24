@@ -76,13 +76,23 @@ class A08IMAdmin extends Admin
         parent::validate($errorElement, $object);
 
         $value = $object->getMois();
-        if (!$value || $value['year'] . '-' . $value['month'] != date('Y-n', strtotime('-1 month'))) {
-            $errorElement->addViolation('Wrong "Mois"');
+        if (!$value) {
+            if ($value instanceof \DateTime) {
+                $month = $value->format('n');
+                $year = $value->format('Y');
+            } else {
+                $month = $value['month'];
+                $year = $value['year'];
+            }
+
+            if ($year . '-' . $month != date('Y-n', strtotime('-1 month'))) {
+                $errorElement->addViolation('Wrong "Mois"');
+            }
         }
 
 //        $value = $object->getHT();
 //        if ($value) {
-//            if (!($value == $object->getMontantHTEnDevise()/$object->getTauxDeChange())) {
+//            if (!($value == $this->getNumberRound($object->getMontantHTEnDevise()/$object->getTauxDeChange()))) {
 //                $errorElement->addViolation('Wrong "HT"');
 //            }
 //        }

@@ -111,14 +111,16 @@ class V01TVAAdmin extends Admin
 
         $value = $object->getMontantTVAFrancaise();
         if ($value) {
-            if (!($value == $object->getMontantHTEnDevise() * $object->getTauxDeTVA() / 100)) {
+
+            if (!($value == $this->getNumberRound($object->getMontantHTEnDevise() * $object->getTauxDeTVA()))) {
                 $errorElement->addViolation('Wrong "Montant TVA Francaise"');
             }
         }
 
         $value = $object->getMontantTTC();
         if ($value) {
-            if (!($value == $object->getMontantHTEnDevise() + $object->getMontantTVAFrancaise())) {
+            if (!($value == $this->getNumberRound($object->getMontantHTEnDevise() + $object->getMontantTVAFrancaise()))) {
+
                 $errorElement->addViolation('Wrong "Montant TTC"');
             }
         }
@@ -134,14 +136,25 @@ class V01TVAAdmin extends Admin
             }
 
             $mois = $object->getMois();
-            if (!$mois || $mois['year'] . '-' . $mois['month'] != date('Y-n', strtotime('-1 month'))) {
-                $errorElement->addViolation('Wrong "Mois"');
+
+            if (!$mois) {
+                if ($mois instanceof \DateTime) {
+                    $month = $mois->format('n');
+                    $year = $mois->format('Y');
+                } else {
+                    $month = $mois['month'];
+                    $year = $mois['year'];
+                }
+
+                if ($year . '-' . $month != date('Y-n', strtotime('-1 month'))) {
+                    $errorElement->addViolation('Wrong "Mois"');
+                }
             }
         }
 
         $value = $object->getHT();
         if ($value) {
-            if (!($value == $object->getMontantHTEnDevise()/$object->getTauxDeChange())) {
+            if (!($value == $this->getNumberRound($object->getMontantHTEnDevise() / $object->getTauxDeChange()))) {
                 $errorElement->addViolation('Wrong "HT"');
             }
         }
@@ -152,16 +165,16 @@ class V01TVAAdmin extends Admin
             $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
             $em = $doctrine->getManager();
             /* @var $devise \Application\Sonata\DevisesBundle\Entity\Devises */
-            $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($object->getDatePiece());
+            $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($object->getDatePieceFormat());
 
             $error = true;
-            if ($devise){
+            if ($devise) {
                 $method = 'getMoney' . ucfirst($value);
                 if (method_exists($devise, $method)) {
                     $error = !$devise->$method();
                 }
             }
-            if ($error){
+            if ($error) {
                 $errorElement->addViolation('No Devise for this month');
             }
         }
