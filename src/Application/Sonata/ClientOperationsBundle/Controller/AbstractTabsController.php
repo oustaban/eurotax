@@ -764,10 +764,10 @@ class AbstractTabsController extends Controller
                 ->where('UPPER(c.nom) = UPPER(:nom)')
                 ->setParameter(':nom', $nom_client)
                 ->getQuery()
-                ->getSingleResult();
+                ->getResult();
 
-            if ($client) {
-
+            if (!empty($client)) {
+                $client = array_shift($client);
                 /*
                  * example source : http://www.simukti.net/blog/2012/04/05/how-to-select-year-month-day-in-doctrine2/
                  */
@@ -784,11 +784,13 @@ class AbstractTabsController extends Controller
                 $sql->setParameter(':client_id', $client->getId());
                 $sql->setParameter(':year', $year);
                 $sql->setParameter(':month', $month);
+                $ver = $sql->getArrayResult();
 
-                $ver = $sql->getSingleResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
-
-                if ($ver && $ver['counts'] == $version) {
-                    return true;
+                if (!empty($ver)) {
+                    $ver = array_shift($ver);
+                    if ($ver['counts'] == $version) {
+                        return true;
+                    }
                 }
             }
         }
