@@ -1034,18 +1034,14 @@ class AbstractTabsController extends Controller
 
         $iDB = $em->getRepository('ApplicationSonataClientOperationsBundle:Imports')->createQueryBuilder('i');
 
-        /* @var $securityContext SecurityContext */
-        $securityContext = $this->get('security.context');
-
         /* @var $lastImport Application\Sonata\Client\Operations\Bundle\Imports */
-        $lastImports = $iDB->select('i')
+        $lastImports = $iDB->select('i, u.username')
+            ->leftJoin('i.user', 'u')
             ->where('i.client_id = :client_id')
-            ->andWhere('i.user = :user')
             ->addOrderBy('i.date', 'DESC')
             ->setMaxResults(10)
             ->setParameters(array(
             ':client_id' => $this->client_id,
-            ':user' => $securityContext->getToken()->getUser(),
         ))
             ->getQuery()
             ->getArrayResult();
