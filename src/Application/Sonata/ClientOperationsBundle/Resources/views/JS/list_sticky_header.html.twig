@@ -6,19 +6,21 @@
 <script type="text/javascript">
     $(function () {
         var $thead = $('.sonata-ba-list .table thead:first');
-        var $tr = $('<tr />').prependTo($thead);
-        var $th = $('<th />')
-                .attr('colspan', $thead.children(':last').children().length)
-                .append($('.clientoperations_tabs_types_block'))
-                .appendTo($tr);
-        var depth = 0;
-        $thead.children().addClass('sticky_header').each(function () {
-            $(this).attr('depth', depth++);
-        });
-        $('.sonata-ba-list .table').stickyHeader({
-            'headerClassName':'sticky_header',
-            'depth':[1, 1, 1]
-        });
+        if ($thead.length > 0) {
+            var $tr = $('<tr />').prependTo($thead);
+            var $th = $('<th />')
+                    .attr('colspan', $thead.children(':last').children().length)
+                    .append($('.clientoperations_tabs_types_block'))
+                    .appendTo($tr);
+            var depth = 0;
+            $thead.children().addClass('sticky_header').each(function () {
+                $(this).attr('depth', depth++);
+            });
+            $('.sonata-ba-list .table').stickyHeader({
+                'headerClassName':'sticky_header',
+                'depth':[1, 1, 1]
+            });
+        }
     });
 </script>
 {% endblock stickyHeader %}
