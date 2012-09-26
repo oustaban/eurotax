@@ -65,7 +65,7 @@ class A04283IAdmin extends Admin
         ))
             ->add('taux_de_change', 'percent', array('label' => $this->getFieldLabel('taux_de_change')))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:HT.html.twig'))
-            ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA')))
+            ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:TVA.html.twig'))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
     }
 

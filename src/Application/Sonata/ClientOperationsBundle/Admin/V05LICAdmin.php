@@ -45,7 +45,7 @@ class V05LICAdmin extends Admin
             ->add('n_ligne', null, array('label' => $this->getFieldLabel('n_ligne')))
             ->add('nomenclature', null, array('label' => $this->getFieldLabel('nomenclature')))
             ->add('pays_id_destination', 'country', array('label' => $this->getFieldLabel('pays_id_destination')))
-            ->add('valeur_fiscale', null, array('label' => $this->getFieldLabel('valeur_fiscale')))
+            ->add('valeur_fiscale', 'money', array('label' => $this->getFieldLabel('valeur_fiscale')))
             ->add('valeur_statistique', null, array('label' => $this->getFieldLabel('valeur_statistique')))
             ->add('masse_mette', null, array('label' => $this->getFieldLabel('masse_mette')))
             ->add('unites_supplementaires', null, array('label' => $this->getFieldLabel('unites_supplementaires')))

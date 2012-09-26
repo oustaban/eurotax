@@ -29,7 +29,7 @@ class DEBExpedAdmin extends Admin
         )
             ->add('nomenclature', null, array('label' => $this->getFieldLabel('nomenclature')))
             ->add('pays_id_destination', 'country', array('label' => $this->getFieldLabel('pays_id_destination')))
-            ->add('valeur_fiscale', null, array('label' => $this->getFieldLabel('valeur_fiscale')))
+            ->add('valeur_fiscale', 'money', array('label' => $this->getFieldLabel('valeur_fiscale')))
             ->add('regime', null, array('label' => $this->getFieldLabel('regime')))
             ->add('valeur_statistique', null, array('label' => $this->getFieldLabel('valeur_statistique')))
             ->add('masse_mette', null, array('label' => $this->getFieldLabel('masse_mette')))
@@ -55,7 +55,7 @@ class DEBExpedAdmin extends Admin
             'template' => $this->_bundle_name . ':CRUD:list_date_piece.html.twig'
         ))->add('nomenclature', null, array('label' => $this->getFieldLabel('nomenclature')))
             ->add('pays_id_destination', null, array('label' => $this->getFieldLabel('pays_id_destination')))
-            ->add('valeur_fiscale', null, array('label' => $this->getFieldLabel('valeur_fiscale')))
+            ->add('valeur_fiscale', 'money', array('label' => $this->getFieldLabel('valeur_fiscale'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:valeur_fiscale.html.twig'))
             ->add('regime', null, array('label' => $this->getFieldLabel('regime')))
             ->add('valeur_statistique', null, array('label' => $this->getFieldLabel('valeur_statistique')))
             ->add('masse_mette', null, array('label' => $this->getFieldLabel('masse_mette')))

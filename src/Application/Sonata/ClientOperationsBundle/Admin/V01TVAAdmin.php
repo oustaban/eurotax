@@ -71,9 +71,9 @@ class V01TVAAdmin extends Admin
             ->add('devise.name', null, array('label' => $this->getFieldLabel('devise_id')))
             ->add('montant_HT_en_devise', 'money', array('label' => $this->getFieldLabel('montant_HT_en_devise'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:montant_HT_en_devise.html.twig'))
             ->add('taux_de_TVA', 'percent', array('label' => $this->getFieldLabel('taux_de_TVA')))
-            ->add('montant_TVA_francaise', 'money', array('label' => $this->getFieldLabel('montant_TVA_francaise')))
-            ->add('montant_TTC', 'money', array('label' => $this->getFieldLabel('montant_TTC')))
-            ->add('paiement_montant', 'money', array('label' => $this->getFieldLabel('paiement_montant')))
+            ->add('montant_TVA_francaise', 'money', array('label' => $this->getFieldLabel('montant_TVA_francaise'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:montant_TVA_francaise.html.twig'))
+            ->add('montant_TTC', 'money', array('label' => $this->getFieldLabel('montant_TTC'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:montant_TTC.html.twig'))
+            ->add('paiement_montant', 'money', array('label' => $this->getFieldLabel('paiement_montant'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:paiement_montant.html.twig'))
             ->add('paiement_devise_id', null, array('label' => $this->getFieldLabel('paiement_devise_id')))
             ->add('paiement_date', null, array(
             'label' => $this->getFieldLabel('paiement_date'),
@@ -85,7 +85,7 @@ class V01TVAAdmin extends Admin
         ))
             ->add('taux_de_change', 'percent', array('label' => $this->getFieldLabel('taux_de_change')))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:HT.html.twig'))
-            ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA')));
+            ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:TVA.html.twig'));
     }
 
     /**
