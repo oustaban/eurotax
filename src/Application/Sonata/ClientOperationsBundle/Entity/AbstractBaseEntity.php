@@ -38,10 +38,17 @@ abstract class AbstractBaseEntity
 
     /**
      *
-     * @ORM\ManyToOne(targetEntity="Imports", inversedBy="AbstractImports")
+     * @ORM\ManyToOne(targetEntity="Imports", inversedBy="AbstractBaseEntity")
      * @ORM\JoinColumn(name="import_id", referencedColumnName="id")
      */
     private $imports;
+
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="ListStatuses", inversedBy="AbstractBaseEntity")
+     * @ORM\JoinColumn(name="status_id", referencedColumnName="id")
+     */
+    private $status;
 
 
     public function __clone()
@@ -135,5 +142,28 @@ abstract class AbstractBaseEntity
     public function getImports()
     {
         return $this->imports;
+    }
+
+    /**
+     * Set status
+     *
+     * @param ListStatuses $status
+     * @return AbstractBaseEntity
+     */
+    public function setStatus(ListStatuses $status = null)
+    {
+        $this->status= $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return ListStatuses
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

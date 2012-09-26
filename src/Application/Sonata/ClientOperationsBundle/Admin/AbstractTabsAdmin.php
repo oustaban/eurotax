@@ -162,7 +162,10 @@ abstract class AbstractTabsAdmin extends Admin
             ));
         }
 
-        $listMapper->add('imports.id', null);
+        $listMapper
+            ->add('status.name', null)
+            ->add('imports.id', null)
+        ;
     }
 
     /**

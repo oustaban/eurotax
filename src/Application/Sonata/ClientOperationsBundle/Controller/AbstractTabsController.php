@@ -976,6 +976,7 @@ class AbstractTabsController extends Controller
     {
         list($_month, $_year) = $this->admin->getQueryMonth($month);
 
+        /* @var $em \Doctrine\ORM\EntityManager */
         $em = $this->getDoctrine()->getManager();
 
         $locking = $em->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $client_id, 'month' => $_month, 'year' => $_year));
@@ -983,6 +984,7 @@ class AbstractTabsController extends Controller
         if ($locking) {
             $em->remove($locking);
             $em->flush();
+            $status_id = 2;
         }
 
         if ($blocked) {
@@ -992,6 +994,27 @@ class AbstractTabsController extends Controller
             $locking->setYear($_year);
             $em->persist($locking);
             $em->flush();
+            $status_id = 1;
+        }
+
+        $status = $em->getRepository('ApplicationSonataClientOperationsBundle:ListStatuses')->find($status_id);
+
+        if ($status) {
+            foreach ($this->_config_excel as $table => $params) {
+                $objects = $em->getRepository('ApplicationSonataClientOperationsBundle:' . $params['entity'])
+                    ->createQueryBuilder('o')
+                    ->where('o.date_piece BETWEEN :form_date_piece AND :to_date_piece')
+                    ->setParameter(':form_date_piece', $_year . '-' . $_month . '-01')
+                    ->setParameter(':to_date_piece', $_year . '-' . $_month . '-31')
+                    ->getQuery()->getResult();
+                foreach ($objects as $obj) {
+                    /** @var $obj \Application\Sonata\ClientOperationsBundle\Entity\AbstractBaseEntity */
+                    $obj->setStatus($status);
+                    $em->persist($obj);
+                    $em->flush();
+                }
+                unset($objects);
+            }
         }
 
         return $this->redirect($this->generateUrl('admin_sonata_clientoperations_' . $this->_tabAlias . '_list', array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)));
