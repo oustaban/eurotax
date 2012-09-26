@@ -31,7 +31,7 @@ class TarifAdmin extends Admin
             'data' => $filter['client_id']['value'],
             'attr' => array('class' => 'client_id'),
         ))
-            ->add('mode_de_facturation', null, array('label' => $label . 'mode_de_facturation', function(EntityRepository $er)
+            ->add('mode_de_facturation', null, array('label' => $label . 'mode_de_facturation', 'query_builder' => function(EntityRepository $er)
         {
             return $er->createQueryBuilder('u')
                 ->orderBy('u.name', 'ASC');
