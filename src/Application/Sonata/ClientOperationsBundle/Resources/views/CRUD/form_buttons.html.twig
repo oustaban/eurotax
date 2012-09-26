@@ -2,18 +2,8 @@
 <form id="mass-buttons" onsubmit="return false">
     <div>
         <div class="btn-group inline">
-            <button class="btn" id="btn_more_info"><i class="icon icon-list-alt"></i> Voir la fiche</button>
-            <button class="btn"><i class="icon icon-eye-open"></i> Prévisualisation</button>
-        </div>
-    </div>
-    <div>
-        <div class="btn-group inline">
             <button class="btn" id="toggleImportModal"><i class="icon icon-hdd"></i> Importer un fichier</button>
             <button class="btn" id="deleteImport"><i class="icon icon-trash"></i> Supprimer un lot importé</button>
-        </div>
-    </div>
-    <div>
-        <div class="btn-group inline">
             <button class="btn"><i class="icon icon-exclamation-sign"></i> Alertes</button>
 
             {% set text_lock = blocked ? 'Verrouiller' : 'Déverrouiller' %}
@@ -31,7 +21,6 @@
     </div>
     <div class="modal-body">
         <p>
-
         <form class="form-inline" id="importForm" method="post"
               action="{{ path('admin_sonata_clientoperations_'~active_tab~'_import', _filter_json) }}"
               enctype="multipart/form-data">
