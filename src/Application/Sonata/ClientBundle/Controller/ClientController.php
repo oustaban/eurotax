@@ -40,8 +40,11 @@ class ClientController extends Controller
      */
     protected function _action($object, $id = null, $template = 'standard_layout_client')
     {
+        $client = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:Client')->find($id);
+
         return $this->render('ApplicationSonataClientBundle::'.$template.'.html.twig', array(
             'client_id' => $id,
+            'current_client' => $client,
             'active_tab' => 'client',
             'content' => $object->getContent(),
         ));

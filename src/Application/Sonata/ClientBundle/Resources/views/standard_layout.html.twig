@@ -3,6 +3,19 @@
 {% set id =  admin.uniqid %}
 {% use 'ApplicationSonataClientBundle:CRUD:form_tabs.html.twig' with form_tabs as formTabs %}
 
+{% block title %}
+{% if client is defined %}
+{% set label = client ~ ' - ' ~ parent() %}
+{% elseif  current_client is defined %}
+{% set label = current_client ~ ' - ' ~ 'Général'|trans() %}
+{% else %}
+{% set label = '' %}
+{% endif %}
+{{ label }}
+
+
+{% endblock title %}
+
 {% block sonata_admin_content %}
 
 {{ block('formTabs') }}
