@@ -17,8 +17,7 @@
             <button class="btn"><i class="icon icon-exclamation-sign"></i> Alertes</button>
 
             {% set text_lock = blocked ? 'Verrouiller' : 'Déverrouiller' %}
-            <button class="btn"
-                    onclick="location.href='{{ path('admin_sonata_clientoperations_'~active_tab~'_locking', {'filter[client_id][value]':client_id, 'client_id': client_id, 'month' : query_month, 'year' : year, 'blocked': blocked  }) }}'">
+            <button id="btn_locking" class="btn">
                 <i class="icon icon-lock"></i> {{ text_lock|trans}}</button>
         </div>
     </div>
@@ -52,6 +51,13 @@
     </div>
 </div>
 <script type="text/javascript">
+    $("#btn_locking").click(function () {
+        {% set text_lock_confirm = blocked ? 'verrouiller_confirm' : 'deverrouiller_confirm' %}
+        if (confirm('{{ text_lock_confirm|trans}}')) {
+            location.href='{{ path('admin_sonata_clientoperations_'~active_tab~'_locking', {'filter[client_id][value]':client_id, 'client_id': client_id, 'month' : query_month, 'year' : year, 'blocked': blocked  }) }}';
+        }
+    });
+
     $("#toggleImportModal").click(function () {
         $("#importModal").modal('toggle');
     });

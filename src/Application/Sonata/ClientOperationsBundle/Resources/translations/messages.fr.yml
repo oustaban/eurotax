@@ -483,3 +483,5 @@ A08 I M List: A08-IM
 A08 I M Edit: Edit
 A10 C A F List: A10-CAF
 A10 C A F Edit: Edit
+verrouiller_confirm: Etes-vous sur de vouloir verrouiller toutes les operations pour ce mois ?
+deverrouiller_confirm: Etes-vous sur de vouloir déverrouiller toutes les operations pour ce mois ?
