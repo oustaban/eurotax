@@ -1,13 +1,10 @@
 <?php
 
-namespace Application\Sonata\ClientBundle\DataFixtures;
+namespace Application\Sonata\ClientOperationsBundle\DataFixtures;
 
 use Application\Doctrine\FixturesBundle\AbstractLoadListData as AbstractLoadListDataMain;
 
 abstract class AbstractLoadListData extends AbstractLoadListDataMain
 {
-    /**
-     * @var string
-     */
-    protected $_budleName = 'ApplicationSonataClientBundle';
+    protected $_budleName = 'ApplicationSonataClientOperationsBundle';
 }

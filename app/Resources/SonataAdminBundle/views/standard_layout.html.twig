@@ -44,8 +44,6 @@
 {% endblock %}
 
 {% block title %}
-{% if _title is defined and _title is not empty %}
-{% else %}
 {% if action is defined %}
 {% for label, uri in admin.breadcrumbs(action) %}
 {% if not loop.first  %}
@@ -54,7 +52,6 @@
 {{ label }}
 {% endfor %}
 {% endif %}
-{% endif%}
 {% endblock title%}
 
 {% block body_content %}
