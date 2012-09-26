@@ -12,6 +12,7 @@ use Knp\Menu\ItemInterface as MenuItemInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 use Application\Sonata\ClientBundle\Admin\AbstractTabsAdmin as Admin;
+use Doctrine\ORM\EntityRepository;
 
 class TarifAdmin extends Admin
 {
@@ -30,7 +31,11 @@ class TarifAdmin extends Admin
             'data' => $filter['client_id']['value'],
             'attr' => array('class' => 'client_id'),
         ))
-            ->add('mode_de_facturation', null, array('label' => $label . 'mode_de_facturation'))
+            ->add('mode_de_facturation', null, array('label' => $label . 'mode_de_facturation', function(EntityRepository $er)
+        {
+            return $er->createQueryBuilder('u')
+                ->orderBy('u.name', 'ASC');
+        },))
             ->add('value', 'money', array('label' => $label . 'value'))
             ->add('value_percentage', 'percent', array('label' => $label . 'value_percentage'));
     }
