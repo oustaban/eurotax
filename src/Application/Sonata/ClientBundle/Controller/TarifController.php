@@ -30,6 +30,10 @@ class TarifController extends Controller
             return $data;
         }
 
+        $this->jsSettingsJson(array(
+            'mode_de_facturation' => $this->getModeDeFacturationJson()
+        ));
+
         $em = $this->getDoctrine()->getManager();
         $client_invoicing = $em->getRepository('ApplicationSonataClientBundle:ClientInvoicing')->find($this->client_id);
         $action_invoice = $client_invoicing ? 'edit' : 'create';
@@ -45,6 +49,28 @@ class TarifController extends Controller
             'action_invoice' => $action_invoice,
             'js_settings_json' => $this->_jsSettingsJson,
         ));
+    }
+
+    /**
+     *
+     */
+    protected function getModeDeFacturationJson()
+    {
+        $rows = array();
+
+        $repository = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:ListModeDeFacturations');
+
+        /** @var $query \Doctrine\ORM\Query */
+        $query = $repository->createQueryBuilder('m')
+            ->getQuery();
+
+        $lists = $query->getArrayResult();
+
+        foreach ($lists as $list) {
+            $rows[$list['id']] = $list;
+        }
+
+        return $rows;
     }
 
     /**

@@ -30,6 +30,24 @@ class ListModeDeFacturations
 
 
     /**
+     * @var string $unit
+     *
+     * @ORM\Column(name="unit", type="string", length=2)
+     */
+    private $unit;
+
+
+    /**
+     * @var integer $invoice_type
+     *
+     * @ORM\ManyToOne(targetEntity="ListInvoiceTypes")
+     * @ORM\JoinColumn(name="invoice_type_id",  referencedColumnName="id")
+     */
+
+    private $invoice_type;
+
+
+    /**
      * Get id
      *
      * @return integer
@@ -68,5 +86,51 @@ class ListModeDeFacturations
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * Set unit
+     *
+     * @param string $unit
+     * @return ListModeDeFacturations
+     */
+    public function setUnit($unit)
+    {
+        $this->unit = $unit;
+
+        return $this;
+    }
+
+    /**
+     * Get unit
+     *
+     * @return string
+     */
+    public function getUnit()
+    {
+        return $this->unit;
+    }
+
+    /**
+     * Set invoice_type
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\ListInvoiceTypes $invoiceType
+     * @return ListModeDeFacturations
+     */
+    public function setInvoiceType(\Application\Sonata\ClientBundle\Entity\ListInvoiceTypes $invoiceType = null)
+    {
+        $this->invoice_type = $invoiceType;
+
+        return $this;
+    }
+
+    /**
+     * Get invoice_type
+     *
+     * @return \Application\Sonata\ClientBundle\Entity\ListInvoiceTypes
+     */
+    public function getInvoiceType()
+    {
+        return $this->invoice_type;
     }
 }

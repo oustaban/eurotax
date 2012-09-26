@@ -54,14 +54,7 @@ class Tarif
 
     private $value_percentage;
 
-    /**
-     * @var integer $invoice_type
-     *
-     * @ORM\ManyToOne(targetEntity="ListInvoiceTypes")
-     * @ORM\JoinColumn(name="invoice_type_id",  referencedColumnName="id")
-     */
 
-    private $invoice_type;
 
 
     /**
@@ -131,7 +124,7 @@ class Tarif
     /**
      * Set mode_de_facturation
      *
-     * @param Application\Sonata\ClientBundle\Entity\ListModeDeFacturations $modeDeFacturation
+     * @param \Application\Sonata\ClientBundle\Entity\ListModeDeFacturations $modeDeFacturation
      * @return Tarif
      */
     public function setModeDeFacturation(\Application\Sonata\ClientBundle\Entity\ListModeDeFacturations $modeDeFacturation = null)
@@ -144,35 +137,14 @@ class Tarif
     /**
      * Get mode_de_facturation
      *
-     * @return Application\Sonata\ClientBundle\Entity\ListModeDeFacturations
+     * @return \Application\Sonata\ClientBundle\Entity\ListModeDeFacturations
      */
     public function getModeDeFacturation()
     {
         return $this->mode_de_facturation;
     }
 
-    /**
-     * Set invoice_type
-     *
-     * @param Application\Sonata\ClientBundle\Entity\ListInvoiceTypes $invoiceType
-     * @return Tarif
-     */
-    public function setInvoiceType(\Application\Sonata\ClientBundle\Entity\ListInvoiceTypes $invoiceType = null)
-    {
-        $this->invoice_type = $invoiceType;
 
-        return $this;
-    }
-
-    /**
-     * Get invoice_type
-     *
-     * @return Application\Sonata\ClientBundle\Entity\ListInvoiceTypes
-     */
-    public function getInvoiceType()
-    {
-        return $this->invoice_type;
-    }
 
     /**
      * Set client_id

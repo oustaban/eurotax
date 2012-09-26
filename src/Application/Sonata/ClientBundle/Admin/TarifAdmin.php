@@ -32,8 +32,7 @@ class TarifAdmin extends Admin
         ))
             ->add('mode_de_facturation', null, array('label' => $label . 'mode_de_facturation'))
             ->add('value', 'money', array('label' => $label . 'value'))
-            ->add('value_percentage', 'percent', array('label' => $label . 'value_percentage'))
-            ->add('invoice_type', null, array('label' => $label . 'invoice_type'));
+            ->add('value_percentage', 'percent', array('label' => $label . 'value_percentage'));
     }
 
     //list
@@ -47,7 +46,7 @@ class TarifAdmin extends Admin
             ->add('mode_de_facturation', null, array('label' => $label . 'mode_de_facturation'))
             ->add('value', 'money', array('label' => $label . 'value'))
             ->add('value_percentage', 'percent', array('label' => $label . 'value_percentage'))
-            ->add('invoice_type', null, array('label' => $label . 'invoice_type'))
+            ->add('mode_de_facturation.invoice_type.name', null, array('label' => $label . 'invoice_type'))
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'delete' => array(),
@@ -55,6 +54,5 @@ class TarifAdmin extends Admin
             )
         );
     }
-
 }
 

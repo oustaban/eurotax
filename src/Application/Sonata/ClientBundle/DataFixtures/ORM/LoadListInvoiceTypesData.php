@@ -18,7 +18,6 @@ class LoadListInvoiceTypesData extends AbstractLoadListData
      */
     protected $_lists = array(
         'Récurrent',
-        'Récurrent',
         'Ponctuel',
     );
 }

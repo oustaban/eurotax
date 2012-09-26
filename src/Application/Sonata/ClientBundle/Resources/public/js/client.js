@@ -66,7 +66,7 @@ jQuery(document).ready(function ($) {
                     dataType:'json',
                     async:false,
                     success:function (i) {
-                        console.log(i);
+                        Admin.log(i);
                     }
                 });
             }
@@ -82,33 +82,27 @@ jQuery(document).ready(function ($) {
             attach:function (context) {
                 var client_id_name = $('.client_id', context).attr('name');
                 if (client_id_name) {
-                    var tarif_uniqid = client_id_name.replace('[client_id]', '')
+                    var tarif_uniqid = client_id_name.replace('[client_id]', '');
 
                     var tarif_value_percentage = $('#' + tarif_uniqid + '_value_percentage');
                     var tarif_value = $('#' + tarif_uniqid + '_value');
 
-                    tarif_value.keyup(function () {
-                        if ($(this).val() && $(this).val() != '0,00') {
-                            tarif_value_percentage.attr('disabled', 'disabled').val('');
-                        }
-                        else {
-                            tarif_value_percentage.removeAttr('disabled');
-                        }
-                    }).keyup();
+                    $('#' + tarif_uniqid + '_mode_de_facturation').change(function () {
+                        switch (Sonata.mode_de_facturation[$(this).val()].unit) {
 
-                    tarif_value_percentage.keyup(function () {
-                        if ($(this).val()) {
-                            tarif_value.attr('disabled', 'disabled').val('');
-                        }
-                        else {
-                            tarif_value.removeAttr('disabled');
-                        }
-                    }).keyup();
+                            case '%':
+                                tarif_value_percentage.removeAttr('disabled');
+                                tarif_value.attr('disabled', 'disabled').val('');
+                                Admin.log('%');
+                                break;
 
-                    // two fields is null value
-                    if (!parseInt(tarif_value_percentage.val()) && !parseInt(tarif_value.val())) {
-                        tarif_value.removeAttr('disabled');
-                    }
+                            case 'V':
+                                tarif_value.removeAttr('disabled');
+                                tarif_value_percentage.attr('disabled', 'disabled').val('');
+                                Admin.log('V');
+                                break;
+                        }
+                    }).trigger('change');
                 }
             }
         };
