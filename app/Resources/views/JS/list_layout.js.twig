@@ -22,7 +22,7 @@
 
             Admin.log('[{{ id }}|field_dialog] move dialog container as a document child');
         }
-    };
+    }
 
     // handle the add link
     var field_dialog_form_add_{{ id }} = function (event, link) {
@@ -70,11 +70,11 @@
 
         // capture the submit event to make an ajax call, ie : POST data to the
         // related create admin
-        jQuery('a', field_dialog_{{ id }}).live('click', field_dialog_form_action_{{ id }});
-        jQuery('form', field_dialog_{{ id }}).live('submit', field_dialog_form_action_{{ id }});
+        jQuery('a', field_dialog_{{ id }}).die().live('click', field_dialog_form_action_{{ id }});
+        jQuery('form', field_dialog_{{ id }}).die().live('submit', field_dialog_form_action_{{ id }});
 
         symfony_attach_behaviors{{ id }}( field_dialog_{{ id }}.find('.popup-body'));
-    }
+    };
 
     // handle the post data
     var field_dialog_form_action_{{ id }} = function (event) {
@@ -88,12 +88,15 @@
 
         var element = jQuery(this);
 
+        var url;
+        var type;
+
         if (this.nodeName == 'FORM') {
-            var url = element.attr('action');
-            var type = element.attr('method');
+            url = element.attr('action');
+            type = element.attr('method');
         } else if (this.nodeName == 'A') {
-            var url = element.attr('href');
-            var type = 'GET';
+            url = element.attr('href');
+            type = 'GET';
         } else {
             alert('unexpected element : @' + this.nodeName + '@');
             return;
@@ -106,7 +109,7 @@
 
         var data = {
             _xml_http_request:true
-        }
+        };
 
         var form = jQuery(this);
 
@@ -125,7 +128,6 @@
                     field_dialog_form_content_{{ id }}(data);
                     return;
                 }
-                ;
 
                 // if the crud action return ok, then the element has been added
                 // so the widget container must be refresh with the last option available
