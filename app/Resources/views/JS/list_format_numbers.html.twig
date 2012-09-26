@@ -3,10 +3,10 @@
     $(function () {
         $('td.sonata-ba-list-field-money, td.sonata-ba-list-field-integer, td.sonata-ba-list-field-number').each(function () {
             var $this = $(this);
-            if ($this.hasClass('total')) {
+            var val = $this.text().trim().replace(/[^\d\.]+/, '');
+            if (val == '' && $this.hasClass('total')){
                 return;
             }
-            var val = $this.text().trim().replace(/[^\d\.]+/, '');
             var repl = Number(val);
             if ($this.hasClass('sonata-ba-list-field-money')) {
                 repl = repl.toFixed(2);
