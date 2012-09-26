@@ -115,13 +115,14 @@
 
 .js-tarif .form-client-invoicing .field-5 {
     position: absolute;
-    left: 578px;
+    left: 480px;
     top: 180px;
 }
 
+
 .js-tarif .form-client-invoicing .field-6 {
     position: absolute;
-    left: 500px;
+    left: 400px;
     top: 230px;
 }
 
@@ -129,3 +130,14 @@
     min-height: 280px;
 }
 
+.js-tarif .row-fluid .span5{
+    width: 220px;
+}
+
+.js-tarif .form-client-invoicing .field-0 .span5{
+    width: 100px;
+}
+
+.js-tarif .form-client-invoicing .field-4 .span5{
+    width: 100px;
+}
