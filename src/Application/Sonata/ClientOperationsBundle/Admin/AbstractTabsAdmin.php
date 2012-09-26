@@ -163,7 +163,7 @@ abstract class AbstractTabsAdmin extends Admin
         }
 
         $listMapper
-            ->add('status.name', null)
+            ->add('status.name', null, array('label' => 'Status'))
             ->add('imports.id', null)
         ;
     }

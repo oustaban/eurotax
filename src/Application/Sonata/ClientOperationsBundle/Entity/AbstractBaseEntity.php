@@ -50,7 +50,6 @@ abstract class AbstractBaseEntity
      */
     private $status;
 
-
     public function __clone()
     {
         $this->id = null;
@@ -152,7 +151,7 @@ abstract class AbstractBaseEntity
      */
     public function setStatus(ListStatuses $status = null)
     {
-        $this->status= $status;
+        $this->status = $status;
 
         return $this;
     }
@@ -164,6 +163,14 @@ abstract class AbstractBaseEntity
      */
     public function getStatus()
     {
+        if (!$this->status) {
+            /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+            $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+            /* @var $em \Doctrine\ORM\EntityManager */
+            $em = $doctrine->getManager();
+            $this->setStatus($em->getRepository('ApplicationSonataClientOperationsBundle:ListStatuses')->find(2));
+        }
+
         return $this->status;
     }
 }
