@@ -45,6 +45,9 @@ class ClientAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        LocationPostalType::setRequired();
+        LocationFacturationType::setRequired();
+
         $formMapper
             ->with('form.client')
             ->add('code_client', null, array('label' => 'form.code_client',))
@@ -55,7 +58,7 @@ class ClientAdmin extends Admin
             ->add('location_postal', new LocationPostalType(), array(
                 'data_class' => 'Application\Sonata\ClientBundle\Entity\Client',
                 'label' => 'Location',
-                'required' => false,
+                'required' => true,
             ),
             array('type' => 'location'))
             ->add('activite', null, array('label' => 'form.activite', 'required' => false,))
@@ -87,25 +90,47 @@ class ClientAdmin extends Admin
             ->add('location_facturation', new LocationFacturationType(), array(
             'data_class' => 'Application\Sonata\ClientBundle\Entity\Client',
             'label' => 'Location',
-            'required' => false,
+            'required' => true,
         ), array('type' => 'location'))
-            ->add('N_TVA_CEE_facture', null, array('label' => 'form.N_TVA_CEE_facture'))
-            ->add('date_fin_mission', 'date', array(
+            ->add('N_TVA_CEE_facture', null, array('label' => 'form.N_TVA_CEE_facture'));
+
+
+        $id = $this->getRequest()->get($this->getIdParameter());
+
+        $class = $id ? '' : ' hidden';
+
+        $formMapper->add('date_fin_mission', 'date', array(
             'label' => 'form.date_fin_mission',
-            'attr' => array('class' => 'datepicker'),
+            'attr' => array('class' => 'datepicker'.$class),
             'widget' => 'single_text',
             'input' => 'datetime',
             'format' => $this->date_format_datetime
-        ))
-            ->add('date_de_depot_id', 'choice', array(
+        ));
+
+
+        $formMapper->add('date_de_depot_id', 'choice', array(
             'label' => 'form.date_de_depot_id',
-            'choices' => array(15, 19, 24, 31)
+            'choices' => array(15, 19, 24, 31),
+            'attr' => array('class' => 'date_de_depot_id'),
         ))
             ->add('N_TVA_CEE', null, array('label' => 'form.N_TVA_CEE', 'required' => false,))
             ->add('niveau_dobligation_id', 'choice', array(
             'label' => 'form.niveau_dobligation_id',
             'choices' => array(0, 1, 4)
         ));
+    }
+
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRequest()
+    {
+        if (!$this->request) {
+            $this->setRequest(Request::createFromGlobals());
+        }
+
+        return $this->request;
     }
 
     //filter form

@@ -97,7 +97,7 @@ class Client
     /**
      * @var string $activite
      *
-     * @ORM\Column(name="activite", type="string", length=200)
+     * @ORM\Column(name="activite", type="string", length=200, nullable=true)
      */
     private $activite = "";
 
@@ -120,7 +120,7 @@ class Client
     /**
      * @var string $siret
      *
-     * @ORM\Column(name="siret", type="string", length=100)
+     * @ORM\Column(name="siret", type="string", length=100, nullable=true)
      */
     private $siret = "";
 
@@ -135,7 +135,7 @@ class Client
     /**
      * @var string $num_dossier_fiscal
      *
-     * @ORM\Column(name="num_dossier_fiscal", type="string", length=255)
+     * @ORM\Column(name="num_dossier_fiscal", type="string", length=255, nullable=true)
      */
     private $num_dossier_fiscal = "";
 
@@ -202,42 +202,42 @@ class Client
     /**
      * @var string $adresse_1_facturation
      *
-     * @ORM\Column(name="adresse_1_facturation", type="string", length=100)
+     * @ORM\Column(name="adresse_1_facturation", type="string", length=100, nullable=true)
      */
     private $adresse_1_facturation = "";
 
     /**
      * @var string $adresse_2_facturation
      *
-     * @ORM\Column(name="adresse_2_facturation", type="string", length=100)
+     * @ORM\Column(name="adresse_2_facturation", type="string", length=100, nullable=true)
      */
     private $adresse_2_facturation = "";
 
     /**
      * @var string $code_postal_facturation
      *
-     * @ORM\Column(name="code_postal_facturation", type="string", length=20)
+     * @ORM\Column(name="code_postal_facturation", type="string", length=20, nullable=true)
      */
     private $code_postal_facturation = "";
 
     /**
      * @var string $ville_facturation
      *
-     * @ORM\Column(name="ville_facturation", type="string", length=50)
+     * @ORM\Column(name="ville_facturation", type="string", length=50, nullable=true)
      */
     private $ville_facturation = "";
 
     /**
      * @var string $pays_id_facturation
      *
-     * @ORM\Column(name="pays_id_facturation", type="string", length=2)
+     * @ORM\Column(name="pays_id_facturation", type="string", length=2, nullable=true)
      */
     private $pays_id_facturation = "FR";
 
     /**
      * @var \DateTime $date_fin_mission
      *
-     * @ORM\Column(name="date_fin_mission", type="date")
+     * @ORM\Column(name="date_fin_mission", type="date", nullable=true)
      */
     private $date_fin_mission;
 
@@ -794,7 +794,7 @@ class Client
     /**
      * Set nature_du_client
      *
-     * @param Application\Sonata\ClientBundle\Entity\ListNatureDuClients $natureDuClient
+     * @param \Application\Sonata\ClientBundle\Entity\ListNatureDuClients $natureDuClient
      * @return Client
      */
     public function setNatureDuClient(\Application\Sonata\ClientBundle\Entity\ListNatureDuClients $natureDuClient = null)
@@ -807,7 +807,7 @@ class Client
     /**
      * Get nature_du_client
      *
-     * @return Application\Sonata\ClientBundle\Entity\ListNatureDuClients
+     * @return \Application\Sonata\ClientBundle\Entity\ListNatureDuClients
      */
     public function getNatureDuClient()
     {
@@ -817,7 +817,7 @@ class Client
     /**
      * Set user
      *
-     * @param Application\Sonata\UserBundle\Entity\User $user
+     * @param \Application\Sonata\UserBundle\Entity\User $user
      * @return Client
      */
     public function setUser(\Application\Sonata\UserBundle\Entity\User $user = null)
@@ -830,7 +830,7 @@ class Client
     /**
      * Get user
      *
-     * @return Application\Sonata\UserBundle\Entity\User
+     * @return \Application\Sonata\UserBundle\Entity\User
      */
     public function getUser()
     {
@@ -840,7 +840,7 @@ class Client
     /**
      * Set mode_denregistrement
      *
-     * @param Application\Sonata\ClientBundle\Entity\ListModeDenregistrements $modeDenregistrement
+     * @param \Application\Sonata\ClientBundle\Entity\ListModeDenregistrements $modeDenregistrement
      * @return Client
      */
     public function setModeDenregistrement(\Application\Sonata\ClientBundle\Entity\ListModeDenregistrements $modeDenregistrement = null)
@@ -853,7 +853,7 @@ class Client
     /**
      * Get mode_denregistrement
      *
-     * @return Application\Sonata\ClientBundle\Entity\ListModeDenregistrements
+     * @return \Application\Sonata\ClientBundle\Entity\ListModeDenregistrements
      */
     public function getModeDenregistrement()
     {
@@ -863,7 +863,7 @@ class Client
     /**
      * Set periodicite_facturation
      *
-     * @param Application\Sonata\ClientBundle\Entity\ListPeriodiciteFacturations $periodiciteFacturation
+     * @param \Application\Sonata\ClientBundle\Entity\ListPeriodiciteFacturations $periodiciteFacturation
      * @return Client
      */
     public function setPeriodiciteFacturation(\Application\Sonata\ClientBundle\Entity\ListPeriodiciteFacturations $periodiciteFacturation = null)
@@ -886,7 +886,7 @@ class Client
     /**
      * Set periodicite_CA3
      *
-     * @param Application\Sonata\ClientBundle\Entity\ListPeriodiciteFacturations $periodiciteCA3
+     * @param \Application\Sonata\ClientBundle\Entity\ListPeriodiciteFacturations $periodiciteCA3
      * @return Client
      */
     public function setPeriodiciteCA3(\Application\Sonata\ClientBundle\Entity\ListPeriodiciteFacturations $periodiciteCA3 = null)
@@ -899,7 +899,7 @@ class Client
     /**
      * Get periodicite_CA3
      *
-     * @return Application\Sonata\ClientBundle\Entity\ListPeriodiciteFacturations
+     * @return \Application\Sonata\ClientBundle\Entity\ListPeriodiciteFacturations
      */
     public function getPeriodiciteCA3()
     {
@@ -909,7 +909,7 @@ class Client
     /**
      * Set center_des_impots
      *
-     * @param Application\Sonata\ImpotsBundle\Entity\Impots $centerDesImpots
+     * @param \Application\Sonata\ImpotsBundle\Entity\Impots $centerDesImpots
      * @return Client
      */
     public function setCenterDesImpots(\Application\Sonata\ImpotsBundle\Entity\Impots $centerDesImpots = null)
@@ -922,7 +922,7 @@ class Client
     /**
      * Get center_des_impots
      *
-     * @return Application\Sonata\ImpotsBundle\Entity\Impots
+     * @return \Application\Sonata\ImpotsBundle\Entity\Impots
      */
     public function getCenterDesImpots()
     {
@@ -1038,7 +1038,7 @@ class Client
     /**
      * Set language
      *
-     * @param Application\Sonata\ClientBundle\Entity\ListLanguages $language
+     * @param \Application\Sonata\ClientBundle\Entity\ListLanguages $language
      * @return Client
      */
     public function setLanguage(\Application\Sonata\ClientBundle\Entity\ListLanguages $language = null)
@@ -1051,7 +1051,7 @@ class Client
     /**
      * Get language
      *
-     * @return Application\Sonata\ClientBundle\Entity\ListLanguages 
+     * @return \Application\Sonata\ClientBundle\Entity\ListLanguages
      */
     public function getLanguage()
     {
