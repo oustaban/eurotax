@@ -4,16 +4,15 @@
         <div class="btn-group inline">
             <button class="btn" id="toggleImportModal"><i class="icon icon-hdd"></i> Importer un fichier</button>
             <button class="btn" id="deleteImport"><i class="icon icon-trash"></i> Supprimer un lot importé</button>
-            <button class="btn"><i class="icon icon-exclamation-sign"></i> Alertes</button>
+
+            {% set alert_count = client.getAlertCount()%}
+            {% if alert_count %}
+            <button class="btn"><i class="icon icon-exclamation-sign"></i> {% trans with {'%count%': alert_count } %}Attention, %count% alters en cours{% endtrans %}</button>
+            {% endif%}
 
             {% set text_lock = blocked ? 'Verrouiller' : 'Déverrouiller' %}
             <button id="btn_locking" class="btn">
                 <i class="icon icon-lock"></i> {{ text_lock|trans}}</button>
-        </div>
-        <div class="inline">
-            <div class="alert-count">
-                {% trans with {'%count%': client.getAlertCount()} %}Attention, %count% alters en cours{% endtrans %}
-            </div>
         </div>
     </div>
 </form>

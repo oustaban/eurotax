@@ -379,10 +379,7 @@ class AbstractTabsController extends Controller
      */
     protected function getLocking()
     {
-
         $this->_locking = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $this->client_id, 'month' => $this->_month, 'year' => $this->_year));
-        #$session = $this->getRequest()->getSession();
-        #$session->set('locking', $this->_locking);
         return $this->_locking;
     }
 
