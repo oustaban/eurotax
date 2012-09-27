@@ -16,12 +16,20 @@ class HomeController extends Controller
      */
     public function indexAction()
     {
-        $clients = $this->getDoctrine()->getManager()
-            ->getRepository('Application\Sonata\ClientBundle\Entity\Client')
-            ->findAll();
-        ;
+        $em = $this->getDoctrine()->getManager();
 
-        return array('clients' => $clients, 'cookies'=>$this->getRequest()->cookies);
+        $clients = $em->getRepository('ApplicationSonataClientBundle:Client')
+            ->findAll();
+
+        $dql = "SELECT SUM(c.alert_count) AS counts FROM ApplicationSonataClientBundle:Client c";
+        $sql = $em->createQuery($dql);
+        list($result) = $sql->getArrayResult();
+
+        return array(
+            'clients' => $clients,
+            'cookies' => $this->getRequest()->cookies,
+            'alert_count' => $result['counts'],
+        );
     }
 
 }
