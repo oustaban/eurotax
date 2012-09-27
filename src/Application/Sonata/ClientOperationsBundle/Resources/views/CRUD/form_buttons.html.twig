@@ -10,9 +10,11 @@
             <button class="btn"><i class="icon icon-exclamation-sign"></i> {% trans with {'%count%': alert_count } %}Attention, %count% alters en cours{% endtrans %}</button>
             {% endif%}
 
+            {% if admin.isGranted('ROLE_CLIENT_TOOLS') %}
             {% set text_lock = blocked ? 'Verrouiller' : 'Déverrouiller' %}
             <button id="btn_locking" class="btn">
                 <i class="icon icon-lock"></i> {{ text_lock|trans}}</button>
+            {% endif %}
         </div>
     </div>
 </form>
@@ -45,12 +47,14 @@
     </div>
 </div>
 <script type="text/javascript">
+    {% if admin.isGranted('ROLE_CLIENT_TOOLS') %}
     $("#btn_locking").click(function () {
         {% set text_lock_confirm = blocked ? 'verrouiller_confirm' : 'deverrouiller_confirm' %}
         if (confirm('{{ text_lock_confirm|trans}}')) {
             location.href = '{{ path('admin_sonata_clientoperations_'~active_tab~'_locking', {'filter[client_id][value]':client_id, 'client_id': client_id, 'month' : query_month, 'year' : year, 'blocked': blocked  }) }}';
         }
     });
+    {% endif %}
 
     $("#toggleImportModal").click(function () {
         $("#importModal").modal('toggle');
