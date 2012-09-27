@@ -55,7 +55,7 @@ class Client
     /**
      * @var string $raison_sociale
      *
-     * @ORM\Column(name="raison_sociale", type="string", length=100)
+     * @ORM\Column(name="raison_sociale", type="string", length=100, nullable=true)
      */
     private $raison_sociale = "";
 
@@ -268,7 +268,7 @@ class Client
      *
      * @ORM\Column(name="alert_count", type="integer", nullable=true, options={"default" = 0})
      */
-    private $alert_count;
+    private $alert_count = 0;
 
     /**
      * @var boolean $facturer
@@ -294,7 +294,7 @@ class Client
     /**
      * @var float $libelle
      *
-     * @ORM\Column(name="libelle", type="string", length=255)
+     * @ORM\Column(name="libelle", type="string", length=255, nullable=true)
      */
     private $libelle;
 

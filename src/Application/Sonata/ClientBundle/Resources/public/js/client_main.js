@@ -2,7 +2,7 @@ jQuery(document).ready(function ($) {
 
     $('.form-horizontal table td div.control-group').each(function (i) {
         $(this).addClass('field-' + i);
-        $('.hidden').attr('disabled', 'disabled');
+        $('.hidden').parent().parent().remove();
     });
 
     $('.field-22').before('<input type="button" value="Copier les information postales" name="clone_address" id="clone_address" class="btn" />');
