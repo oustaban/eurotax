@@ -10,6 +10,7 @@
             var $tr = $('<tr />').prependTo($thead);
             var $th = $('<th />')
                     .attr('colspan', $thead.children(':last').children().length)
+                    .append($('#block_actions'))
                     .append($('.clientoperations_tabs_types_block'))
                     .appendTo($tr);
             var depth = 0;
