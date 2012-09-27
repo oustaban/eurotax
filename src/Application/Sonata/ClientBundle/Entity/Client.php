@@ -55,7 +55,7 @@ class Client
     /**
      * @var string $raison_sociale
      *
-     * @ORM\Column(name="raison_sociale", type="string", length=100)
+     * @ORM\Column(name="raison_sociale", type="string", length=100, nullable=true)
      */
     private $raison_sociale = "";
 
@@ -97,7 +97,7 @@ class Client
     /**
      * @var string $activite
      *
-     * @ORM\Column(name="activite", type="string", length=200)
+     * @ORM\Column(name="activite", type="string", length=200, nullable=true)
      */
     private $activite = "";
 
@@ -120,7 +120,7 @@ class Client
     /**
      * @var string $siret
      *
-     * @ORM\Column(name="siret", type="string", length=100)
+     * @ORM\Column(name="siret", type="string", length=100, nullable=true)
      */
     private $siret = "";
 
@@ -135,7 +135,7 @@ class Client
     /**
      * @var string $num_dossier_fiscal
      *
-     * @ORM\Column(name="num_dossier_fiscal", type="string", length=255)
+     * @ORM\Column(name="num_dossier_fiscal", type="string", length=255, nullable=true)
      */
     private $num_dossier_fiscal = "";
 
@@ -202,42 +202,42 @@ class Client
     /**
      * @var string $adresse_1_facturation
      *
-     * @ORM\Column(name="adresse_1_facturation", type="string", length=100)
+     * @ORM\Column(name="adresse_1_facturation", type="string", length=100, nullable=true)
      */
     private $adresse_1_facturation = "";
 
     /**
      * @var string $adresse_2_facturation
      *
-     * @ORM\Column(name="adresse_2_facturation", type="string", length=100)
+     * @ORM\Column(name="adresse_2_facturation", type="string", length=100, nullable=true)
      */
     private $adresse_2_facturation = "";
 
     /**
      * @var string $code_postal_facturation
      *
-     * @ORM\Column(name="code_postal_facturation", type="string", length=20)
+     * @ORM\Column(name="code_postal_facturation", type="string", length=20, nullable=true)
      */
     private $code_postal_facturation = "";
 
     /**
      * @var string $ville_facturation
      *
-     * @ORM\Column(name="ville_facturation", type="string", length=50)
+     * @ORM\Column(name="ville_facturation", type="string", length=50, nullable=true)
      */
     private $ville_facturation = "";
 
     /**
      * @var string $pays_id_facturation
      *
-     * @ORM\Column(name="pays_id_facturation", type="string", length=2)
+     * @ORM\Column(name="pays_id_facturation", type="string", length=2, nullable=true)
      */
     private $pays_id_facturation = "FR";
 
     /**
      * @var \DateTime $date_fin_mission
      *
-     * @ORM\Column(name="date_fin_mission", type="date")
+     * @ORM\Column(name="date_fin_mission", type="date", nullable=true)
      */
     private $date_fin_mission;
 
@@ -268,7 +268,7 @@ class Client
      *
      * @ORM\Column(name="alert_count", type="integer", nullable=true, options={"default" = 0})
      */
-    private $alert_count;
+    private $alert_count = 0;
 
     /**
      * @var boolean $facturer
@@ -294,7 +294,7 @@ class Client
     /**
      * @var float $libelle
      *
-     * @ORM\Column(name="libelle", type="string", length=255)
+     * @ORM\Column(name="libelle", type="string", length=255, nullable=true)
      */
     private $libelle;
 

@@ -14,6 +14,39 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ClientController extends Controller
 {
+    /** @var array('Code' => 'Country') */
+    protected $_CountryEU = array(
+        'AT' => 'Austria',
+        'BE' => 'Belgium',
+        'BG' => 'Bulgaria',
+        'CY' => 'Cyprus',
+        'CZ' => 'Czech Republic',
+        'DK' => 'Denmark',
+        'EE' => 'Estonia',
+        'FI' => 'Finland',
+        'FR' => 'France',
+        'DE' => 'Germany',
+        'GR' => 'Greece',
+        'HU' => 'Hungary',
+        'IE' => 'Ireland',
+        'IT' => 'Italy',
+        'LV' => 'Latvia',
+        'LT' => 'Lithuania',
+        'LU' => 'Luxembourg',
+        'MT' => 'Malta',
+        'NL' => 'Netherlands',
+        'PL' => 'Poland',
+        'PT' => 'Portugal',
+        'RO' => 'Romania',
+        'SK' => 'Slovakia',
+        'SI' => 'Slovenia',
+        'ES' => 'Spain',
+        'SE' => 'Sweden',
+        'GB' => 'United Kingdom',
+    );
+
+    protected $_jsSettingsJson = null;
+
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -40,16 +73,31 @@ class ClientController extends Controller
      */
     protected function _action($object, $id = null, $template = 'standard_layout_client')
     {
-        $client = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:Client')->find($id);
+        $client = null;
+        if($id){
+            $client = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:Client')->find($id);
+        }
 
-        return $this->render('ApplicationSonataClientBundle::'.$template.'.html.twig', array(
+        $this->jsSettingsJson(array(
+            'country_eu' => $this->_CountryEU,
+        ));
+
+        return $this->render('ApplicationSonataClientBundle::' . $template . '.html.twig', array(
             'client_id' => $id,
             'current_client' => $client,
             'active_tab' => 'client',
             'content' => $object->getContent(),
+            'js_settings_json' => $this->_jsSettingsJson,
         ));
     }
 
+    /**
+     * @param array $data
+     */
+    public function jsSettingsJson(array $data)
+    {
+        $this->_jsSettingsJson = json_encode($data);
+    }
 
     /**
      * @param string   $view

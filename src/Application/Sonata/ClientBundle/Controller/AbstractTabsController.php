@@ -132,10 +132,11 @@ abstract class AbstractTabsController extends Controller
         return parent::render($view, $parameters, $response);
     }
 
-
+    /**
+     * @param array $data
+     */
     public function jsSettingsJson(array $data)
     {
-
         $this->_jsSettingsJson = json_encode($data);
     }
 }
