@@ -2,12 +2,14 @@
 <form id="mass-buttons" onsubmit="return false">
     <div>
         <div class="btn-group inline">
+            <button class="btn" id="btn_more_info"><i class="icon icon-list-alt"></i> Voir la fiche</button>
             <button class="btn" id="toggleImportModal"><i class="icon icon-hdd"></i> Importer un fichier</button>
             <button class="btn" id="deleteImport"><i class="icon icon-trash"></i> Supprimer un lot importé</button>
 
             {% set alert_count = client.getAlertCount()%}
             {% if alert_count %}
-            <button class="btn"><i class="icon icon-exclamation-sign"></i> {% trans with {'%count%': alert_count } %}Attention, %count% alters en cours{% endtrans %}</button>
+            <button class="btn"><i class="icon icon-exclamation-sign"></i> {% trans with {'%count%': alert_count } %}Attention,
+                %count% alters en cours{% endtrans %}</button>
             {% endif%}
 
             {% if admin.isGranted('ROLE_CLIENT_TOOLS') %}
@@ -77,18 +79,33 @@
             url:'{{ path('admin_sonata_clientoperations_'~active_tab~'_importList', _filter_json) }}',
             dataType:'json',
             success:function (json) {
-                var $ul = $('<ul/>').addClass('nav nav-list');
+                var $table = $('<table class="table table-bordered table-striped table-hover" style="width: auto;"><thead></thead></table>');
+                $('<tr class="sonata-ba-list-field-header" />')
+                        .append('<th class="sonata-ba-list-field-header-integer">Id</th>')
+                        .append('<th class="sonata-ba-list-field-header-date">Date</th>')
+                        .append('<th class="sonata-ba-list-field-header-orm_many_to_one">User</th>')
+                        .append('<th class="sonata-ba-list-field-header-actions">Action</th>')
+                        .appendTo($table.children('thead'));
+
+                var $tbody = $('<tbody />');
                 for (i in json.imports) {
                 {% set import_delete_params = _filter_json|merge({'id':'__id__'}) %}
                     var deleteUrl = '{{ path('admin_sonata_clientoperations_'~active_tab~'_importRemove', import_delete_params) }}'.replace("__id__", json.imports[i].id);
-                    $ul.append('<li><span><b>' + json.imports[i][0].date.date + '</b> - ' + json.imports[i].username + '</span>&nbsp;&nbsp;&nbsp;&nbsp;<a style="display: inline;" class="import_del" href="' + deleteUrl + '">Supprimer</a></li>');
+                    $('<tr />')
+                            .append('<td class="sonata-ba-list-field-header-integer">' + json.imports[i][0].id + '</td>')
+                            .append('<td class="sonata-ba-list-field-header-date"><b>' + json.imports[i][0].date.date + '</b></td>')
+                            .append('<td class="sonata-ba-list-field-header-orm_many_to_one">' + json.imports[i].username + '</td>')
+                            .append('<td class="sonata-ba-list-field-header-actions"><a style="display: inline;" class="import_del" href="' + deleteUrl + '">Supprimer</a></td>')
+                            .appendTo($tbody);
                 }
+                $table.append($tbody);
+
                 // populate the popup container
-                field_dialog_{{ id }}.find('.popup-body').html('').append($ul);
+                field_dialog_{{ id }}.find('.popup-body').html('').append($table);
                 field_dialog_{{ id }}.find('#title').html(json.title);
                 field_dialog_{{ id }}.modal('toggle');
 
-                $ul.find('a.import_del').click(function () {
+                $table.find('a.import_del').click(function () {
                     return confirm('{{ 'ApplicationSonataClientOperationsBundle.imports.confirm_delete'|trans() }}');
                 });
             }
