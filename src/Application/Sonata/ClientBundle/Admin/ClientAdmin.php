@@ -105,7 +105,12 @@ class ClientAdmin extends Admin
             ->add('niveau_dobligation_id', 'choice', array(
             'label' => 'form.niveau_dobligation_id',
             'choices' => array(0, 1, 4)
-        ));
+        ))
+            ->add('facturer', 'choice', array('label' => 'form.facturer', 'expanded' => true, 'choices' => array(1 => 'Oui', 0 => 'Non'), 'required' => false,))
+            ->add('invoice', null, array('label' => 'form.invoice', 'required' => false,))
+            ->add('free_rate', null, array('label' => 'form.free_rate', 'required' => false,))
+            ->add('libelle', null, array('label' => 'form.libelle', 'required' => true,))
+        ;
     }
 
     //filter form

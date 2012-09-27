@@ -270,6 +270,34 @@ class Client
      */
     private $alert_count;
 
+    /**
+     * @var boolean $facturer
+     *
+     * @ORM\Column(name="facturer", type="boolean", nullable=true)
+     */
+    private $facturer = false;
+
+    /**
+     * @var boolean $invoice
+     *
+     * @ORM\Column(name="invoice", type="boolean", nullable=true)
+     */
+    private $invoice = false;
+
+    /**
+     * @var boolean $free_rate
+     *
+     * @ORM\Column(name="free_rate", type="boolean", nullable=true)
+     */
+    private $free_rate = false;
+
+    /**
+     * @var float $libelle
+     *
+     * @ORM\Column(name="libelle", type="string", length=255)
+     */
+    private $libelle;
+
 
     /**
      * Get id
@@ -794,7 +822,7 @@ class Client
     /**
      * Set nature_du_client
      *
-     * @param Application\Sonata\ClientBundle\Entity\ListNatureDuClients $natureDuClient
+     * @param \Application\Sonata\ClientBundle\Entity\ListNatureDuClients $natureDuClient
      * @return Client
      */
     public function setNatureDuClient(\Application\Sonata\ClientBundle\Entity\ListNatureDuClients $natureDuClient = null)
@@ -807,7 +835,7 @@ class Client
     /**
      * Get nature_du_client
      *
-     * @return Application\Sonata\ClientBundle\Entity\ListNatureDuClients
+     * @return \Application\Sonata\ClientBundle\Entity\ListNatureDuClients
      */
     public function getNatureDuClient()
     {
@@ -817,7 +845,7 @@ class Client
     /**
      * Set user
      *
-     * @param Application\Sonata\UserBundle\Entity\User $user
+     * @param \Application\Sonata\UserBundle\Entity\User $user
      * @return Client
      */
     public function setUser(\Application\Sonata\UserBundle\Entity\User $user = null)
@@ -830,7 +858,7 @@ class Client
     /**
      * Get user
      *
-     * @return Application\Sonata\UserBundle\Entity\User
+     * @return \Application\Sonata\UserBundle\Entity\User
      */
     public function getUser()
     {
@@ -840,7 +868,7 @@ class Client
     /**
      * Set mode_denregistrement
      *
-     * @param Application\Sonata\ClientBundle\Entity\ListModeDenregistrements $modeDenregistrement
+     * @param \Application\Sonata\ClientBundle\Entity\ListModeDenregistrements $modeDenregistrement
      * @return Client
      */
     public function setModeDenregistrement(\Application\Sonata\ClientBundle\Entity\ListModeDenregistrements $modeDenregistrement = null)
@@ -853,7 +881,7 @@ class Client
     /**
      * Get mode_denregistrement
      *
-     * @return Application\Sonata\ClientBundle\Entity\ListModeDenregistrements
+     * @return \Application\Sonata\ClientBundle\Entity\ListModeDenregistrements
      */
     public function getModeDenregistrement()
     {
@@ -863,7 +891,7 @@ class Client
     /**
      * Set periodicite_facturation
      *
-     * @param Application\Sonata\ClientBundle\Entity\ListPeriodiciteFacturations $periodiciteFacturation
+     * @param \Application\Sonata\ClientBundle\Entity\ListPeriodiciteFacturations $periodiciteFacturation
      * @return Client
      */
     public function setPeriodiciteFacturation(\Application\Sonata\ClientBundle\Entity\ListPeriodiciteFacturations $periodiciteFacturation = null)
@@ -876,7 +904,7 @@ class Client
     /**
      * Get periodicite_facturation
      *
-     * @return Application\Sonata\ClientBundle\Entity\ListPeriodiciteFacturations
+     * @return \Application\Sonata\ClientBundle\Entity\ListPeriodiciteFacturations
      */
     public function getPeriodiciteFacturation()
     {
@@ -886,7 +914,7 @@ class Client
     /**
      * Set periodicite_CA3
      *
-     * @param Application\Sonata\ClientBundle\Entity\ListPeriodiciteFacturations $periodiciteCA3
+     * @param \Application\Sonata\ClientBundle\Entity\ListPeriodiciteFacturations $periodiciteCA3
      * @return Client
      */
     public function setPeriodiciteCA3(\Application\Sonata\ClientBundle\Entity\ListPeriodiciteFacturations $periodiciteCA3 = null)
@@ -899,7 +927,7 @@ class Client
     /**
      * Get periodicite_CA3
      *
-     * @return Application\Sonata\ClientBundle\Entity\ListPeriodiciteFacturations
+     * @return \Application\Sonata\ClientBundle\Entity\ListPeriodiciteFacturations
      */
     public function getPeriodiciteCA3()
     {
@@ -909,7 +937,7 @@ class Client
     /**
      * Set center_des_impots
      *
-     * @param Application\Sonata\ImpotsBundle\Entity\Impots $centerDesImpots
+     * @param \Application\Sonata\ImpotsBundle\Entity\Impots $centerDesImpots
      * @return Client
      */
     public function setCenterDesImpots(\Application\Sonata\ImpotsBundle\Entity\Impots $centerDesImpots = null)
@@ -922,7 +950,7 @@ class Client
     /**
      * Get center_des_impots
      *
-     * @return Application\Sonata\ImpotsBundle\Entity\Impots
+     * @return \Application\Sonata\ImpotsBundle\Entity\Impots
      */
     public function getCenterDesImpots()
     {
@@ -948,14 +976,14 @@ class Client
     public function setCodeClient($codeClient)
     {
         $this->code_client = $codeClient;
-    
+
         return $this;
     }
 
     /**
      * Get code_client
      *
-     * @return string 
+     * @return string
      */
     public function getCodeClient()
     {
@@ -971,14 +999,14 @@ class Client
     public function setAutreDestinataireDeFacturation($autreDestinataireDeFacturation)
     {
         $this->autre_destinataire_de_facturation = $autreDestinataireDeFacturation;
-    
+
         return $this;
     }
 
     /**
      * Get autre_destinataire_de_facturation
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getAutreDestinataireDeFacturation()
     {
@@ -994,14 +1022,14 @@ class Client
     public function setContact($contact)
     {
         $this->contact = $contact;
-    
+
         return $this;
     }
 
     /**
      * Get contact
      *
-     * @return string 
+     * @return string
      */
     public function getContact()
     {
@@ -1019,14 +1047,14 @@ class Client
     public function setNTVACEEFacture($nTVACEEFacture)
     {
         $this->N_TVA_CEE_facture = $nTVACEEFacture;
-    
+
         return $this;
     }
 
     /**
      * Get N_TVA_CEE_facture
      *
-     * @return string 
+     * @return string
      */
     public function getNTVACEEFacture()
     {
@@ -1038,20 +1066,20 @@ class Client
     /**
      * Set language
      *
-     * @param Application\Sonata\ClientBundle\Entity\ListLanguages $language
+     * @param \Application\Sonata\ClientBundle\Entity\ListLanguages $language
      * @return Client
      */
     public function setLanguage(\Application\Sonata\ClientBundle\Entity\ListLanguages $language = null)
     {
         $this->language = $language;
-    
+
         return $this;
     }
 
     /**
      * Get language
      *
-     * @return Application\Sonata\ClientBundle\Entity\ListLanguages 
+     * @return \Application\Sonata\ClientBundle\Entity\ListLanguages
      */
     public function getLanguage()
     {
@@ -1067,14 +1095,14 @@ class Client
     public function setRaisonSociale2($raisonSociale2)
     {
         $this->raison_sociale_2 = $raisonSociale2;
-    
+
         return $this;
     }
 
     /**
      * Get raison_sociale_2
      *
-     * @return string 
+     * @return string
      */
     public function getRaisonSociale2()
     {
@@ -1090,17 +1118,109 @@ class Client
     public function setAlertCount($alertCount)
     {
         $this->alert_count = $alertCount;
-    
+
         return $this;
     }
 
     /**
      * Get alert_count
      *
-     * @return integer 
+     * @return integer
      */
     public function getAlertCount()
     {
         return $this->alert_count;
+    }
+
+    /**
+     * Set facturer
+     *
+     * @param boolean $facturer
+     * @return Client
+     */
+    public function setFacturer($facturer)
+    {
+        $this->facturer = $facturer;
+
+        return $this;
+    }
+
+    /**
+     * Get facturer
+     *
+     * @return boolean
+     */
+    public function getFacturer()
+    {
+        return $this->facturer;
+    }
+
+    /**
+     * Set invoice
+     *
+     * @param boolean $invoice
+     * @return Client
+     */
+    public function setInvoice($invoice)
+    {
+        $this->invoice = $invoice;
+
+        return $this;
+    }
+
+    /**
+     * Get invoice
+     *
+     * @return boolean
+     */
+    public function getInvoice()
+    {
+        return $this->invoice;
+    }
+
+    /**
+     * Set free_rate
+     *
+     * @param boolean $free_rate
+     * @return Client
+     */
+    public function setFreeRate($free_rate)
+    {
+        $this->free_rate = $free_rate;
+
+        return $this;
+    }
+
+    /**
+     * Get free_rate
+     *
+     * @return boolean
+     */
+    public function getFreeRate()
+    {
+        return $this->free_rate;
+    }
+
+    /**
+     * Set libelle
+     *
+     * @param string $libelle
+     * @return Client
+     */
+    public function setLibelle($libelle)
+    {
+        $this->libelle = $libelle;
+
+        return $this;
+    }
+
+    /**
+     * Get libelle
+     *
+     * @return string
+     */
+    public function getLibelle()
+    {
+        return $this->libelle;
     }
 }

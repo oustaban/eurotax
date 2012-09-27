@@ -23,6 +23,10 @@ form:
   date_de_depot_id: Date de dépot
   N_TVA_CEE: N° TVA CEE
   niveau_dobligation_id: Niveau d'obligation
+  facturer: Facturer
+  invoice: À facturer
+  free_rate: Tarif libre
+  libelle: Libellé Facture Libre
 
   contact:
     title: Ajouter / Modifier un contact

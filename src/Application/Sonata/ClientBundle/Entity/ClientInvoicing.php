@@ -71,7 +71,7 @@ class ClientInvoicing
     /**
      * @var float $libelle
      *
-     * @ORM\Column(name="libelle", type="string", length=255, nullable=true)
+     * @ORM\Column(name="libelle", type="string", length=255)
      */
     private $libelle;
 
@@ -245,8 +245,6 @@ class ClientInvoicing
         return $this->paiement;
     }
 
-
-
     /**
      * Set libelle
      *
@@ -256,14 +254,14 @@ class ClientInvoicing
     public function setLibelle($libelle)
     {
         $this->libelle = $libelle;
-    
+
         return $this;
     }
 
     /**
      * Get libelle
      *
-     * @return string 
+     * @return string
      */
     public function getLibelle()
     {
