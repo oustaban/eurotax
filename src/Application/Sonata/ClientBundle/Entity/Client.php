@@ -263,6 +263,13 @@ class Client
      */
     private $niveau_dobligation_id;
 
+    /**
+     * @var integer $alert_count
+     *
+     * @ORM\Column(name="alert_count", type="integer", nullable=true, options={"default" = 0})
+     */
+    private $alert_count;
+
 
     /**
      * Get id
@@ -1072,5 +1079,28 @@ class Client
     public function getRaisonSociale2()
     {
         return $this->raison_sociale_2;
+    }
+
+    /**
+     * Set alert_count
+     *
+     * @param integer $alertCount
+     * @return Client
+     */
+    public function setAlertCount($alertCount)
+    {
+        $this->alert_count = $alertCount;
+    
+        return $this;
+    }
+
+    /**
+     * Get alert_count
+     *
+     * @return integer 
+     */
+    public function getAlertCount()
+    {
+        return $this->alert_count;
     }
 }

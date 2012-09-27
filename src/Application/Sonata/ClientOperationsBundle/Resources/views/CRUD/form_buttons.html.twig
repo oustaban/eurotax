@@ -10,6 +10,11 @@
             <button id="btn_locking" class="btn">
                 <i class="icon icon-lock"></i> {{ text_lock|trans}}</button>
         </div>
+        <div class="inline">
+            <div class="alert-count">
+                {% trans with {'%count%': client.getAlertCount()} %}Attention, %count% alters en cours{% endtrans %}
+            </div>
+        </div>
     </div>
 </form>
 
@@ -21,6 +26,7 @@
     </div>
     <div class="modal-body">
         <p>
+
         <form class="form-inline" id="importForm" method="post"
               action="{{ path('admin_sonata_clientoperations_'~active_tab~'_import', _filter_json) }}"
               enctype="multipart/form-data">
@@ -43,7 +49,7 @@
     $("#btn_locking").click(function () {
         {% set text_lock_confirm = blocked ? 'verrouiller_confirm' : 'deverrouiller_confirm' %}
         if (confirm('{{ text_lock_confirm|trans}}')) {
-            location.href='{{ path('admin_sonata_clientoperations_'~active_tab~'_locking', {'filter[client_id][value]':client_id, 'client_id': client_id, 'month' : query_month, 'year' : year, 'blocked': blocked  }) }}';
+            location.href = '{{ path('admin_sonata_clientoperations_'~active_tab~'_locking', {'filter[client_id][value]':client_id, 'client_id': client_id, 'month' : query_month, 'year' : year, 'blocked': blocked  }) }}';
         }
     });
 
@@ -72,7 +78,7 @@
                 for (i in json.imports) {
                 {% set import_delete_params = _filter_json|merge({'id':'__id__'}) %}
                     var deleteUrl = '{{ path('admin_sonata_clientoperations_'~active_tab~'_importRemove', import_delete_params) }}'.replace("__id__", json.imports[i].id);
-                    $ul.append('<li><span><b>' + json.imports[i][0].date.date + '</b> - ' + json.imports[i].username +'</span>&nbsp;&nbsp;&nbsp;&nbsp;<a style="display: inline;" class="import_del" href="' + deleteUrl + '">Supprimer</a></li>');
+                    $ul.append('<li><span><b>' + json.imports[i][0].date.date + '</b> - ' + json.imports[i].username + '</span>&nbsp;&nbsp;&nbsp;&nbsp;<a style="display: inline;" class="import_del" href="' + deleteUrl + '">Supprimer</a></li>');
                 }
                 // populate the popup container
                 field_dialog_{{ id }}.find('.popup-body').html('').append($ul);
