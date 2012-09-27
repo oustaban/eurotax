@@ -6,10 +6,10 @@
 {% block title %}
 {% if client is defined %}
 {% set label = client ~ ' - ' ~ parent() %}
-{% elseif  current_client is defined %}
+{% elseif  current_client is defined and current_client is not empty %}
 {% set label = current_client ~ ' - ' ~ 'Général'|trans() %}
 {% else %}
-{% set label = '' %}
+{% set label = 'Général'|trans() %}
 {% endif %}
 {{ label }}
 
