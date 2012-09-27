@@ -28,11 +28,11 @@ body {
 }
 
 #client_folder {
-    margin: -10px;
-    margin-left: 10px;
+    margin: -10px -10px 10px 10px;
     padding: 10px 20px 0;
     background-color: #eee;
-    border: 1px solid silver;
+    border-style: solid;
+    border-color: silver;
     border-width: 0 0 1px 1px;
     z-index: 99999;
 }
