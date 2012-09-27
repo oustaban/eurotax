@@ -24,7 +24,6 @@ class AbstractTabsController extends Controller
     protected $_tabAlias = '';
     protected $_operationType = '';
     protected $_jsSettingsJson = null;
-    protected $_locking = '';
     protected $_month = 0;
     protected $_query_month = 0;
     protected $_year = 0;
@@ -368,7 +367,7 @@ class AbstractTabsController extends Controller
             'active_tab' => $this->_tabAlias,
             'operation_type' => $this->_operationType,
             'action' => $action,
-            'blocked' => isset($this->_locking) ? 0 : 1,
+            'blocked' => $this->getLocking() ? 0 : 1,
             'js_settings_json' => $this->_jsSettingsJson,
             '_filter_json' => $this->_parameters_url,
         ));
@@ -379,8 +378,7 @@ class AbstractTabsController extends Controller
      */
     protected function getLocking()
     {
-        $this->_locking = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $this->client_id, 'month' => $this->_month, 'year' => $this->_year));
-        return $this->_locking;
+        return $this->admin->getLocking();
     }
 
     /**
@@ -388,7 +386,7 @@ class AbstractTabsController extends Controller
      */
     protected function getLockingAccessDenied()
     {
-        if (isset($this->_locking)) {
+        if (!$this->getLocking()) {
             throw new AccessDeniedException();
         }
     }

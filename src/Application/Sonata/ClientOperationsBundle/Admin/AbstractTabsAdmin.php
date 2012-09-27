@@ -26,6 +26,7 @@ abstract class AbstractTabsAdmin extends Admin
      */
     protected $_bundle_name = 'ApplicationSonataClientOperationsBundle';
     protected $_form_label = '';
+    protected $_locking = false;
     public $month = '';
     public $query_month = '';
     public $year = '';
@@ -193,8 +194,12 @@ abstract class AbstractTabsAdmin extends Admin
      */
     public function getLocking()
     {
-        $locking = $this->getConfigurationPool()->getContainer()->get('doctrine')->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $this->client_id, 'month' => $this->month, 'year' => $this->year));
-        return $locking ? : 0;
+        if ($this->_locking === false) {
+            $this->_locking = $this->getConfigurationPool()->getContainer()->get('doctrine')->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $this->client_id, 'month' => $this->month, 'year' => $this->year));
+            $this->_locking = $this->_locking ? : 0;
+        }
+
+        return $this->_locking;
     }
 
     /**
