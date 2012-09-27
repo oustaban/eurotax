@@ -266,7 +266,7 @@ class Client
     /**
      * @var integer $alert_count
      *
-     * @ORM\Column(name="alert_count", type="integer", nullable=true, options={"default" = 0})
+     * @ORM\Column(name="alert_count", type="integer", nullable=true)
      */
     private $alert_count = 0;
 
