@@ -386,7 +386,7 @@ class AbstractTabsController extends Controller
      */
     protected function getLockingAccessDenied()
     {
-        if (!$this->getLocking()) {
+        if ($this->getLocking()) {
             throw new AccessDeniedException();
         }
     }
