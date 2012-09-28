@@ -37,4 +37,9 @@
     {{ block('ajaxEdit')}}
     {{ block('ajaxDelete') }}
 {% endif %}
+<script type="text/javascript">
+    $(function () {
+        $('a.clone_link, a.delete_link').tooltip();
+    });
+</script>
 {% endblock javascriptsafter %}
