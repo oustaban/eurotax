@@ -41,6 +41,7 @@
 
 	$.fn.columnFilters = function(settings) {
 		var defaults = {
+            excludeRowClass: [],
 			wildCard: "*",
 			notCharacter: "!",
 			caseSensitive: false,
@@ -50,6 +51,7 @@
 			underline: false
 			};
 		settings = $.extend(defaults, settings);
+        settings.exclude = settings.excludeRowClass.length ? ':not(' + settings.excludeRowClass.join(', ') + ')' : "";
 
 		return this.each(function() {
 
@@ -73,7 +75,7 @@
 				filter;
 
 			function addClassToColumn(iColNum, sClassName) {
-				$('tbody:first tr', obj).each(
+				$('tbody:first tr'+settings.exclude, obj).each(
 					function() {
 						$('td', this).each(
 							function(iCellCount) {
@@ -105,7 +107,7 @@
 						sFilterTxt = settings.wildCard ? '^' + sFilterTxt : sFilterTxt;
 						var filterPatt = settings.caseSensitive ? new RegExp(sFilterTxt) : new RegExp(sFilterTxt,"i");
 
-						$('tbody:first tr', obj).each(
+						$('tbody:first tr'+settings.exclude, obj).each(
 							function() {
 								$('td',this).each(
 									function(iCellCount) {
@@ -145,7 +147,7 @@
 						sSecound = settings.alternateRowClassNames[1] || '',
 						bOddRow = true;
 
-					$('tbody:first tr', obj).each(
+					$('tbody:first tr' + settings.exclude, obj).each(
 						function() {
 							if ($(this).css('display') !== 'none') {
 								$(this).removeClass(sFirst).removeClass(sSecound);

@@ -21,6 +21,15 @@
                 'headerClassName':'sticky_header',
                 'depth':[1, 1, 1]
             });
+            $('.sticky_header_clone ._filterText').keyup(function () {
+                var id = $(this).attr('id').replace("clone_", "_");
+                $('#' + id).val($(this).val()).keyup();
+            }).each(function () {
+                $(this).attr('id', 'clone' + $(this).attr('id'));
+            });
+            $('.sticky_header ._filterText').keyup(function () {
+                $('#clone' + $(this).attr('id')).val($(this).val());
+            });
         }
     });
 </script>

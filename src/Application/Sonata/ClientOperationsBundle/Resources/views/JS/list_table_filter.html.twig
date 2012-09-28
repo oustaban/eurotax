@@ -7,8 +7,8 @@
     $(function () {
         $('.sonata-ba-list .table').columnFilters({
             {% if not admin.getLocking %}excludeColumns:[0, 1], {% endif %}
+            excludeRowClass: ['.totals_row'],
             wildCard:false,
-            underline:true,
             alternateRowClassNames:['rowa', 'rowb']
         });
     });
