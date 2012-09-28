@@ -31,9 +31,10 @@ class ClientAlert
 
 
     /**
-     * @var string $tabs
+     * @var integer $tabs
      *
-     * @ORM\Column(name="tabs", type="string", length=100)
+     * @ORM\ManyToOne(targetEntity="ListClientTabs")
+     * @ORM\JoinColumn(name="tabs_id",  referencedColumnName="id")
      */
     private $tabs;
 

@@ -8,7 +8,8 @@
 
             {% set alert_count = client.getAlertCount()%}
             {% if alert_count %}
-            <button class="btn"><i class="icon icon-exclamation-sign"></i> {% trans with {'%count%': alert_count } %}Attention,
+            <button class="btn" id="btn_client_alert"><i
+                    class="icon icon-exclamation-sign"></i> {% trans with {'%count%': alert_count } %}Attention,
                 %count% alters en cours{% endtrans %}</button>
             {% endif%}
 
@@ -34,7 +35,7 @@
               action="{{ path('admin_sonata_clientoperations_'~active_tab~'_import', _filter_json) }}"
               enctype="multipart/form-data">
             <input id="inputFile" type="file" name="inputFile" style="display:none"/>
-            <input id="inputFileCover" class="input-large" type="text">
+            <input id="inputFileCover" class="input-large" type="text"/>
             <a class="btn" onclick="$('input[id=inputFile]').click();">choisir le fichier</a>
         </form>
         <button class="btn"
@@ -110,6 +111,12 @@
                 });
             }
         });
+    });
+
+    $('#btn_client_alert').live('click', function (event) {
+        var link = '{{ path('admin_sonata_clientoperations_clientalert_list', _filter_json) }}';
+        field_dialog_form_add_{{ id }}(event, link);
+        return false;
     });
 </script>
 

@@ -95,6 +95,11 @@ form:
     paiement: Paiement
     libelle: Libellé
 
+  client_alert:
+    title: Client Alert
+    tabs: Tabs
+    text: Text
+
 list:
   code_client: Code client
   user: Nom du gestionnaire
@@ -177,6 +182,11 @@ list:
     value: Valeur
     value_percentage: Valeur %
     invoice_type: Type
+
+  client_alert:
+      title: Client Alert
+      tabs: Tabs
+      text: Text
 
 filter:
   code_client: Code client

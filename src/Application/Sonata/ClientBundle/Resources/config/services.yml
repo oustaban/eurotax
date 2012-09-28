@@ -47,6 +47,13 @@ services:
             - { name: sonata.admin, manager_type: orm, group: ClientInvoicing, label: Tarif }
         arguments: [null, Application\Sonata\ClientBundle\Entity\ClientInvoicing, ApplicationSonataClientBundle:ClientInvoicing]
 
+    application.sonata.admin.client_alert:
+        class : Application\Sonata\ClientBundle\Admin\ClientAlertAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Client, label: Client Alert }
+        arguments: [null, Application\Sonata\ClientBundle\Entity\ClientAlert, ApplicationSonataClientBundle:ClientAlert]
+
+
     security.access.all_clients_voter:
         class:      Application\Sonata\ClientBundle\Security\Authorization\Voter\AllClientsVoter
         arguments:  [@service_container]
