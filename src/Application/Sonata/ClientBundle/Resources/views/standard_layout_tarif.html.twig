@@ -26,5 +26,14 @@
     {{ block('ajaxCreate') }}
     {{ block('ajaxEdit') }}
     {{ block('ajaxDelete') }}
+<script type="text/javascript">
+    $(function () {
+        $('.sonata-ba-list-field-percent').each(function(){
+            if ($(this).html().replace(/[\n\r %,\.0]*/g, '') == ''){
+                $(this).html('');
+            }
+        });
+    });
+</script>
 {% endblock javascriptsafter %}
 
