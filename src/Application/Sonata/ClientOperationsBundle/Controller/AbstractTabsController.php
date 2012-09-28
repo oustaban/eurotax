@@ -518,7 +518,7 @@ class AbstractTabsController extends Controller
 
     /**
      * @param mixed $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function deleteAction($id)
     {
@@ -526,7 +526,15 @@ class AbstractTabsController extends Controller
         $this->getLocking();
         $this->getLockingAccessDenied();
 
+        /** @var $action RedirectResponse */
         $action = parent::deleteAction($id);
+
+        if ($this->getRequest()->getMethod() == 'DELETE' && $this->isXmlHttpRequest()) {
+            return $this->renderJson(array(
+                'result' => 'ok',
+            ));
+        }
+
         return $action;
     }
 

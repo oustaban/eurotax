@@ -8,6 +8,7 @@
 {% use 'ApplicationSonataClientOperationsBundle:JS:list_sticky_header.html.twig' %}
 {% use ':JS:ajax_edit.html.twig' %}
 {% use ':JS:ajax_create.html.twig' %}
+{% use ':JS:ajax_delete_action.html.twig' %}
 
 {% block panel_block %}
 {{ block('formPanels')}}
@@ -31,8 +32,9 @@
 {{ block('tableFilter')}}
 {{ block('tableFixLayout')}}
 {{ block('stickyHeader')}}
+{{ block('ajaxCreate')}}
 {% if not admin.getLocking %}
     {{ block('ajaxEdit')}}
+    {{ block('ajaxDelete') }}
 {% endif %}
-{{ block('ajaxCreate')}}
 {% endblock javascriptsafter %}

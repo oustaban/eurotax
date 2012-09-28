@@ -81,38 +81,15 @@ class TarifController extends Controller
      */
     public function deleteAction($id)
     {
-        $id = $this->get('request')->get($this->admin->getIdParameter());
-        $object = $this->admin->getObject($id);
+        /** @var $action RedirectResponse */
+        $action = parent::deleteAction($id);
 
-        if (!$object) {
-            throw new NotFoundHttpException(sprintf('unable to find the object with id : %s', $id));
+        if ($this->getRequest()->getMethod() == 'DELETE' && $this->isXmlHttpRequest()) {
+            return $this->renderJson(array(
+                'result' => 'ok',
+            ));
         }
 
-        if (false === $this->admin->isGranted('DELETE', $object)) {
-            throw new AccessDeniedException();
-        }
-
-        if ($this->getRequest()->getMethod() == 'DELETE') {
-            try {
-                $this->admin->delete($object);
-                $this->get('session')->setFlash('sonata_flash_success', 'flash_delete_success');
-            } catch (ModelManagerException $e) {
-                $this->get('session')->setFlash('sonata_flash_error', 'flash_delete_error');
-            }
-
-            if ($this->isXmlHttpRequest()) {
-                return $this->renderJson(array(
-                    'result' => 'ok',
-                    'objectId' => $this->admin->getNormalizedIdentifier($object)
-                ));
-            }
-
-            return new RedirectResponse($this->admin->generateUrl('list'));
-        }
-
-        return $this->render($this->admin->getTemplate('delete'), array(
-            'object' => $object,
-            'action' => 'delete'
-        ));
+        return $action;
     }
 }

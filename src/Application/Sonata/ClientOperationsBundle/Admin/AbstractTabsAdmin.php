@@ -159,6 +159,7 @@ abstract class AbstractTabsAdmin extends Admin
             $listMapper->add('_action', 'actions', array(
                 'actions' => array(
                     'clone' => array('template' => 'ApplicationSonataClientOperationsBundle:CRUD:clone_action.html.twig'),
+                    'delete' => array(),
                 )
             ));
         }
