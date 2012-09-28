@@ -77,6 +77,6 @@ security:
         - { path: ^/dashboard/client, role: [ROLE_DASHBOARD_CLIENT] }
         - { path: ^/sonata/client, role: [ROLE_EDIT_CLIENTS] }
 
-        - { path: ^/sonata/clientoperations, role: [ROLE_EDIT_CLIENTOPERATIONS] }
+        - { path: ^/sonata/clientoperations, role: [ROLE_EDIT_CLIENTOPERATIONS, ROLE_CLIENT_TOOLS] }
 
         - { path: ^/.*, role: [ROLE_SONATA_ADMIN] }
