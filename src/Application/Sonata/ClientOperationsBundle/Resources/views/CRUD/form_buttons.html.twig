@@ -51,6 +51,7 @@
 <script type="text/javascript">
     {% if admin.isGranted('ROLE_CLIENT_TOOLS') %}
     $("#btn_locking").click(function () {
+        $('#btn_client_alert').click();return;
         {% set text_lock_confirm = blocked ? 'verrouiller_confirm' : 'deverrouiller_confirm' %}
         if (confirm('{{ text_lock_confirm|trans}}')) {
             location.href = '{{ path('admin_sonata_clientoperations_'~active_tab~'_locking', {'filter[client_id][value]':client_id, 'client_id': client_id, 'month' : query_month, 'year' : year, 'blocked': blocked  }) }}';
