@@ -11,6 +11,9 @@ use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+use Sonata\AdminBundle\Validator\ErrorElement;
+use Application\Sonata\ClientBundle\Entity\ClientAlert;
+
 use Application\Sonata\ClientBundle\Admin\AbstractTabsAdmin as Admin;
 
 class DocumentAdmin extends Admin
@@ -84,6 +87,67 @@ class DocumentAdmin extends Admin
     public function postRemove($document)
     {
         $document->removeUpload();
+    }
+
+    /**
+     * @param ErrorElement $errorElement
+     * @param mixed $object
+     */
+    public function validate(ErrorElement $errorElement, $object)
+    {
+        /* @var $object \Application\Sonata\ClientBundle\Entity\Client */
+        parent::validate($errorElement, $object);
+
+        $this->_setupAlerts($errorElement, $object);
+    }
+
+    /**
+     * @param ErrorElement $errorElement
+     * @param mixed $object
+     */
+    protected function _setupAlerts(ErrorElement $errorElement, $object)
+    {
+        /* @var $object \Application\Sonata\ClientBundle\Entity\Document */
+
+        /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+        $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $doctrine->getManager();
+
+        /* @var $tab \Application\Sonata\ClientBundle\Entity\ListClientTabs */
+        $tab = $em->getRepository('ApplicationSonataClientBundle:ListClientTabs')->findOneByAlias('documents');
+
+        $em->getRepository('ApplicationSonataClientBundle:ClientAlert')
+            ->createQueryBuilder('c')
+            ->delete()
+            ->where('c.client_id = :client_id')
+            ->andWhere('c.tabs = :tab')
+            ->setParameters(array(
+            ':client_id'=>$object->getId(),
+            ':tab'=>$tab,
+        ))->getQuery()->execute();
+
+        $value = $object->getTypeDocument();
+        if (!$value) {
+            $alert = new ClientAlert();
+            $alert->setClientId($object->getId());
+            $alert->setTabs($tab);
+            $alert->setIsBlocked(true);
+            $alert->setText('Aucun document légal pour ce client');
+
+            $em->persist($alert);
+        }
+
+        $value = $object->getPreavis();
+        if (!$value) {
+            $alert = new ClientAlert();
+            $alert->setClientId($object->getId());
+            $alert->setTabs($tab);
+            $alert->setIsBlocked(true);
+            $alert->setText('Manque Mandat');
+
+            $em->persist($alert);
+        }
     }
 }
 

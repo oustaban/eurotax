@@ -68,7 +68,7 @@ class Document
     /**
      * @var string $preavis
      *
-     * @ORM\Column(name="preavis", type="string", length=100 )
+     * @ORM\Column(name="preavis", type="string", length=100, nullable=true )
      */
     private $preavis;
 
