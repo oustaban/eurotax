@@ -22,7 +22,8 @@
         "sonata-project/admin-bundle": "dev-master",
         "sonata-project/doctrine-orm-admin-bundle": "dev-master",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
-        "CodePlex/PHPExcel":"dev-master"
+        "CodePlex/PHPExcel":"dev-master",
+        "ensepar/html2pdf-bundle" : "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

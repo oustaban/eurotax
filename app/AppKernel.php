@@ -58,6 +58,8 @@ class AppKernel extends Kernel
             new Application\Sonata\ClientOperationsBundle\ApplicationSonataClientOperationsBundle(),
 
             new Application\Sonata\DashboardBundle\ApplicationSonataDashboardBundle(),
+
+            new Ensepar\Html2pdfBundle\EnseparHtml2pdfBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
