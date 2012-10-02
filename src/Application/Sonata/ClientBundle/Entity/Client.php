@@ -278,34 +278,6 @@ class Client
      */
     private $blocked_count = 0;
 
-    /**
-     * @var boolean $facturer
-     *
-     * @ORM\Column(name="facturer", type="boolean", nullable=true)
-     */
-    private $facturer = false;
-
-    /**
-     * @var boolean $invoice
-     *
-     * @ORM\Column(name="invoice", type="boolean", nullable=true)
-     */
-    private $invoice = false;
-
-    /**
-     * @var boolean $free_rate
-     *
-     * @ORM\Column(name="free_rate", type="boolean", nullable=true)
-     */
-    private $free_rate = false;
-
-    /**
-     * @var float $libelle
-     *
-     * @ORM\Column(name="libelle", type="string", length=255, nullable=true)
-     */
-    private $libelle;
-
 
     /**
      * Get id
@@ -1141,98 +1113,6 @@ class Client
     }
 
     /**
-     * Set facturer
-     *
-     * @param boolean $facturer
-     * @return Client
-     */
-    public function setFacturer($facturer)
-    {
-        $this->facturer = $facturer;
-
-        return $this;
-    }
-
-    /**
-     * Get facturer
-     *
-     * @return boolean
-     */
-    public function getFacturer()
-    {
-        return $this->facturer;
-    }
-
-    /**
-     * Set invoice
-     *
-     * @param boolean $invoice
-     * @return Client
-     */
-    public function setInvoice($invoice)
-    {
-        $this->invoice = $invoice;
-
-        return $this;
-    }
-
-    /**
-     * Get invoice
-     *
-     * @return boolean
-     */
-    public function getInvoice()
-    {
-        return $this->invoice;
-    }
-
-    /**
-     * Set free_rate
-     *
-     * @param boolean $free_rate
-     * @return Client
-     */
-    public function setFreeRate($free_rate)
-    {
-        $this->free_rate = $free_rate;
-
-        return $this;
-    }
-
-    /**
-     * Get free_rate
-     *
-     * @return boolean
-     */
-    public function getFreeRate()
-    {
-        return $this->free_rate;
-    }
-
-    /**
-     * Set libelle
-     *
-     * @param string $libelle
-     * @return Client
-     */
-    public function setLibelle($libelle)
-    {
-        $this->libelle = $libelle;
-
-        return $this;
-    }
-
-    /**
-     * Get libelle
-     *
-     * @return string
-     */
-    public function getLibelle()
-    {
-        return $this->libelle;
-    }
-
-    /**
      * Set blocked_count
      *
      * @param integer $blockedCount
@@ -1241,14 +1121,14 @@ class Client
     public function setBlockedCount($blockedCount)
     {
         $this->blocked_count = $blockedCount;
-    
+
         return $this;
     }
 
     /**
      * Get blocked_count
      *
-     * @return integer 
+     * @return integer
      */
     public function getBlockedCount()
     {
