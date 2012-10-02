@@ -31,6 +31,13 @@ class User extends AbstractedUser implements UserInterface
     protected $id;
 
     /**
+     * Encrypted password. Must be persisted.
+     *
+     * @var string
+     */
+    protected $password = "";
+
+    /**
      * @var \DateTime
      */
     protected $createdAt;
