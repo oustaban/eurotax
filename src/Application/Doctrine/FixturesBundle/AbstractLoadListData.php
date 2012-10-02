@@ -34,6 +34,7 @@ abstract class AbstractLoadListData extends AbstractFixture implements OrderedFi
             $repositoryName = $this->_budleName . ':' . $this->_className;
 
             $class = $manager->getClassMetadata($repositoryName)->getName();
+            $setAlias = method_exists($class, 'setAlias') && method_exists($this, 'nameToAlias');
 
             foreach ($this->_lists as $name) {
 
@@ -42,6 +43,9 @@ abstract class AbstractLoadListData extends AbstractFixture implements OrderedFi
                 if (!$is_name) {
                     $list = new $class();
                     $list->setName($name);
+                    if ($setAlias) {
+                        $list->setAlias($this->nameToAlias($name));
+                    }
                     $manager->persist($list);
                 }
             }

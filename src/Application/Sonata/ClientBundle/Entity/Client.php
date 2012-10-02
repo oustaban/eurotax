@@ -55,7 +55,7 @@ class Client
     /**
      * @var string $raison_sociale
      *
-     * @ORM\Column(name="raison_sociale", type="string", length=100, nullable=true)
+     * @ORM\Column(name="raison_sociale", type="string", length=100)
      */
     private $raison_sociale = "";
 
@@ -197,7 +197,7 @@ class Client
      *
      * @ORM\Column(name="N_TVA_CEE_facture", type="string", length=100, nullable=true)
      */
-    private $N_TVA_CEE_facture = "";
+    private $N_TVA_CEE_facture;
 
     /**
      * @var string $adresse_1_facturation
@@ -252,14 +252,14 @@ class Client
     /**
      * @var string $N_TVA_CEE
      *
-     * @ORM\Column(name="N_TVA_CEE", type="string", length=100)
+     * @ORM\Column(name="N_TVA_CEE", type="string", length=100, nullable=true)
      */
-    private $N_TVA_CEE = "";
+    private $N_TVA_CEE;
 
     /**
      * @var integer $niveau_dobligation_id
      *
-     * @ORM\Column(name="niveau_dobligation_id", type="integer")
+     * @ORM\Column(name="niveau_dobligation_id", type="integer", nullable=true)
      */
     private $niveau_dobligation_id;
 

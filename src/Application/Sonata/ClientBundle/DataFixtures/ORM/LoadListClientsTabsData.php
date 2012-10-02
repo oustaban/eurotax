@@ -25,4 +25,22 @@ class LoadListClientsTabsData extends AbstractLoadListData
         'Commentaires',
         'Tarif',
     );
+
+    /**
+     * @var array
+     */
+    protected $_aliases = array(
+        'Général' => 'general',
+        'Contacts' => 'contacts',
+        'Documents légaux' => 'documents',
+        'Garanties' => 'garanties',
+        'Coordonnées Bancaires' => 'coordinates',
+        'Commentaires' => 'commentaires',
+        'Tarif' => 'tarif',
+    );
+
+    public function nameToAlias($name)
+    {
+        return $this->_aliases[$name];
+    }
 }

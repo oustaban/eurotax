@@ -28,6 +28,13 @@ class ListClientTabs
      */
     private $name;
 
+    /**
+     * @var string $name
+     *
+     * @ORM\Column(name="alias", type="string", length=200)
+     */
+    private $alias;
+
 
     /**
      * Get id
@@ -60,6 +67,29 @@ class ListClientTabs
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set alias
+     *
+     * @param string $alias
+     * @return ListClientTabs
+     */
+    public function setAlias($alias)
+    {
+        $this->alias = $alias;
+
+        return $this;
+    }
+
+    /**
+     * Get alias
+     *
+     * @return string
+     */
+    public function getAlias()
+    {
+        return $this->alias;
     }
 
     /**

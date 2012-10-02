@@ -12,6 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use Application\Form\Type\LocationPostalType;
 use Application\Form\Type\LocationFacturationType;
+use Sonata\AdminBundle\Validator\ErrorElement;
+use Application\Sonata\ClientBundle\Entity\ClientAlert;
 
 class ClientAdmin extends Admin
 {
@@ -54,7 +56,7 @@ class ClientAdmin extends Admin
             ->add('user', null, array('label' => 'form.user',))
             ->add('nom', null, array('label' => 'form.nom'))
             ->add('nature_du_client', null, array('label' => 'form.nature_du_client'))
-            ->add('raison_sociale', null, array('label' => 'form.raison_sociale', 'required' => false,))
+            ->add('raison_sociale', null, array('label' => 'form.raison_sociale'))
             ->add('location_postal', new LocationPostalType(), array(
                 'data_class' => 'Application\Sonata\ClientBundle\Entity\Client',
                 'label' => 'Location',
@@ -79,7 +81,7 @@ class ClientAdmin extends Admin
                 'choices' => array(1 => 'Oui', 0 => 'Non'),
                 'required' => false,)
         )
-            ->add('periodicite_CA3', null, array('label' => 'form.periodicite_CA3'))
+            ->add('periodicite_CA3', null, array('label' => 'form.periodicite_CA3', 'empty_value' => '', 'required' => false,))
             ->add('center_des_impots', null, array('label' => 'form.center_des_impots'))
             ->add('language', null, array('label' => 'form.language'))
 
@@ -104,7 +106,9 @@ class ClientAdmin extends Admin
             'attr' => array('class' => 'datepicker'.$class),
             'widget' => 'single_text',
             'input' => 'datetime',
-            'format' => $this->date_format_datetime
+            'format' => $this->date_format_datetime,
+            'empty_value' => '',
+            'required' => false,
         ));
 
 
@@ -113,10 +117,12 @@ class ClientAdmin extends Admin
             'choices' => array(15, 19, 24, 31),
             'attr' => array('class' => 'date_de_depot_id'),
         ))
-            ->add('N_TVA_CEE', null, array('label' => 'form.N_TVA_CEE', 'required' => false,))
+            ->add('N_TVA_CEE', null, array('label' => 'form.N_TVA_CEE'))
             ->add('niveau_dobligation_id', 'choice', array(
             'label' => 'form.niveau_dobligation_id',
-            'choices' => array(0, 1, 4)
+            'choices' => array(0, 1, 4),
+            'empty_value' => '',
+            'required' => false,
         ));
     }
 
@@ -192,5 +198,112 @@ class ClientAdmin extends Admin
         $res = parent::getBreadcrumbs($action);
         array_shift($res);
         return $res;
+    }
+
+    /**
+     * @param ErrorElement $errorElement
+     * @param mixed $object
+     */
+    public function validate(ErrorElement $errorElement, $object)
+    {
+        /* @var $object \Application\Sonata\ClientBundle\Entity\Client */
+        parent::validate($errorElement, $object);
+
+        $this->_setupAlerts($errorElement, $object);
+    }
+
+    /**
+     * @param ErrorElement $errorElement
+     * @param mixed $object
+     */
+    protected function _setupAlerts(ErrorElement $errorElement, $object)
+    {
+        /* @var $object \Application\Sonata\ClientBundle\Entity\Client */
+
+        /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+        $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $doctrine->getManager();
+
+        /* @var $tab \Application\Sonata\ClientBundle\Entity\ListClientTabs */
+        $tab = $em->getRepository('ApplicationSonataClientBundle:ListClientTabs')->findOneByAlias('general');
+
+        $em->getRepository('ApplicationSonataClientBundle:ClientAlert')
+            ->createQueryBuilder('c')
+            ->delete()
+            ->where('c.client_id = :client_id')
+            ->andWhere('c.tabs = :tab')
+            ->setParameters(array(
+            ':client_id'=>$object->getId(),
+            ':tab'=>$tab,
+        ))->getQuery()->execute();
+
+        $value = $object->getSiret();
+        if (!$value) {
+            $alert = new ClientAlert();
+            $alert->setClientId($object->getId());
+            $alert->setTabs($tab);
+            $alert->setIsBlocked(true);
+            $alert->setText('Manque SIRET');
+
+            $em->persist($alert);
+        }
+
+        $value = $object->getNTVACEE();
+        if (!$value) {
+            $alert = new ClientAlert();
+            $alert->setClientId($object->getId());
+            $alert->setTabs($tab);
+            $alert->setIsBlocked(true);
+            $alert->setText('Manque N° TVA FR');
+
+            $em->persist($alert);
+        }
+
+        $value = $object->getNumDossierFiscal();
+        if (!$value) {
+            $alert = new ClientAlert();
+            $alert->setClientId($object->getId());
+            $alert->setTabs($tab);
+            $alert->setIsBlocked(false);
+            $alert->setText('Manque Dossier fiscal');
+
+            $em->persist($alert);
+        }
+
+        $value = $object->getNiveauDobligationId();
+        if (!$value) {
+            $alert = new ClientAlert();
+            $alert->setClientId($object->getId());
+            $alert->setTabs($tab);
+            $alert->setIsBlocked(true);
+            $alert->setText('Clôture Manque Niveau Obligation DEB');
+
+            $em->persist($alert);
+        }
+
+        $value = $object->getPeriodiciteCA3();
+        if (!$value) {
+            $alert = new ClientAlert();
+            $alert->setClientId($object->getId());
+            $alert->setTabs($tab);
+            $alert->setIsBlocked(true);
+            $alert->setText('Clôture Manque périodicité CA3');
+
+            $em->persist($alert);
+        }
+
+        $value = $object->getActivite();
+        if (!$value) {
+            $alert = new ClientAlert();
+            $alert->setClientId($object->getId());
+            $alert->setTabs($tab);
+            $alert->setIsBlocked(false);
+            $alert->setText('Manque Activité');
+
+            $em->persist($alert);
+        }
+
+        $em->flush();
     }
 }
