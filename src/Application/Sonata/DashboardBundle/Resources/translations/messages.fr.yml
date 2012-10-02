@@ -1,4 +1,4 @@
 ApplicationSonataDashboardBundle:
     index:
-        show_projects: Voir tous les projets
-        hide_projects: Voir mes projets
+        show_projects: Voir tous les clients
+        hide_projects: Voir mes clients
