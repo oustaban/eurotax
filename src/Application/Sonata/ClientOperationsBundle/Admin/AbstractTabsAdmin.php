@@ -282,6 +282,7 @@ abstract class AbstractTabsAdmin extends Admin
         $collection->add('clone', '{id}/clone');
         $collection->add('importList', 'import-list');
         $collection->add('importRemove', 'import-remove/{id}');
+        $collection->add('pdf');
     }
 
     //customs fields

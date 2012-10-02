@@ -18,6 +18,8 @@
             <button id="btn_locking" class="btn">
                 <i class="icon icon-lock"></i> {{ text_lock|trans}}</button>
             {% endif %}
+
+            <button class="btn" id="downloadPDF"><i class="icon icon-print"></i> PDF</button>
         </div>
     </div>
 </form>
@@ -127,6 +129,10 @@
         field_dialog_form_add_{{ id }}(event, link);
         return false;
     });
+
+    $('#downloadPDF').click(function () {
+        location.href = '{{ admin.generateUrl('pdf', _filter_json) }}';
+    })
 </script>
 
 {% endblock form_buttons %}

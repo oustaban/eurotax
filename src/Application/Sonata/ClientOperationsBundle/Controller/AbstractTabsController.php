@@ -1079,6 +1079,28 @@ class AbstractTabsController extends Controller
     }
 
     /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function pdfAction()
+    {
+        $file_name = 'eurotax-' . md5(time() . rand(1, 99999999));
+
+        /** @var $pdfBundle \Ensepar\Html2pdfBundle\Service\Html2pdf */
+        $pdfBundle = $this->get('html2pdf');
+        $html2pdf = $pdfBundle->get();
+
+        try
+        {
+            $html2pdf->writeHTML($this->render('ApplicationSonataClientOperationsBundle::pdf.html.twig')->getContent());
+            $html2pdf->Output($file_name . '.pdf');
+        }
+        catch(\HTML2PDF_exception $e) {
+            echo $e;
+            exit;
+        }
+    }
+
+    /**
      * @param string $view
      * @param array $parameters
      * @param \Application\Sonata\ClientOperationsBundle\Controller\Response|null $response
