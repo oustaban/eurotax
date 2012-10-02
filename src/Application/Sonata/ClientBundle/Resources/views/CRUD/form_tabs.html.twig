@@ -38,6 +38,18 @@
         </li>
         {% endif %}
 
+        {% if client_id  %}
+        <li {% if active_tab=='compte' %}class="active"{% endif %}>
+            <a href="{{ url('admin_sonata_client_compte_list', _filter_json) }}">Compte</a>
+        </li>
+        {% endif %}
+
+        {% if client_id  %}
+        <li {% if active_tab=='compte_de_depot' %}class="active"{% endif %}>
+            <a href="{{ url('admin_sonata_client_comptededepot_list', _filter_json) }}">Compte de dépôt</a>
+        </li>
+        {% endif %}
+
     </ul>
 </div>
 {% endblock %}

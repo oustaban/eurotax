@@ -53,6 +53,17 @@ services:
             - { name: sonata.admin, manager_type: orm, group: Client, label: Client Alert }
         arguments: [null, Application\Sonata\ClientBundle\Entity\ClientAlert, ApplicationSonataClientBundle:ClientAlert]
 
+    application.sonata.admin.compte:
+        class : Application\Sonata\ClientBundle\Admin\CompteAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Client, label: Compte }
+        arguments: [null, Application\Sonata\ClientBundle\Entity\Compte, ApplicationSonataClientBundle:Compte]
+
+    application.sonata.admin.compte_de_depot:
+        class : Application\Sonata\ClientBundle\Admin\CompteDeDepotAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Client, label: CompteDeDepot }
+        arguments: [null, Application\Sonata\ClientBundle\Entity\CompteDeDepot, ApplicationSonataClientBundle:CompteDeDepot]
 
     security.access.all_clients_voter:
         class:      Application\Sonata\ClientBundle\Security\Authorization\Voter\AllClientsVoter
