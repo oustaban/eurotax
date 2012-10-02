@@ -97,6 +97,14 @@ form:
     text: Text
     is_blocked: Blocked
 
+  compte:
+    title: Compte
+    date: Date
+    operation: Opération
+    montant: Montant
+    commentaire: Commentaire
+    statut: Statut
+
 list:
   code_client: Code client
   user: Nom du gestionnaire
@@ -186,6 +194,15 @@ list:
       text: Text
       is_blocked: Blocked
 
+  compte:
+    title: Compte
+    date: Date
+    operation: Opération
+    montant: Montant
+    commentaire: Commentaire
+    statut: Statut
+
+
 filter:
   code_client: Code client
   user: Nom du gestionnaire
@@ -218,3 +235,5 @@ Garantie List: Garanties
 Coordonnees List: Coordonnées Bancaires
 Commentaire List: Commentaires
 Tarif List : Tarif
+Compte List: Compte
+Compte De Depot List: Compte de dépôt

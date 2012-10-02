@@ -25,6 +25,7 @@ abstract class AbstractTabsController extends Controller
      * @var string
      */
     protected $_tabAlias = '';
+    protected $_template = null;
 
     /**
      * @var string
@@ -54,6 +55,10 @@ abstract class AbstractTabsController extends Controller
 
         if ($this->isXmlHttpRequest()) {
             return $data;
+        }
+
+        if($this->_template){
+            $template = $this->_template;
         }
 
         $client = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:Client')->find($this->client_id);
