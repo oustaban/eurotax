@@ -8,9 +8,8 @@
 
             {% set alert_count = client.getAlertCount()%}
             {% if alert_count %}
-            <button class="btn" id="btn_client_alert"><i
-                    class="icon icon-exclamation-sign"></i> {% trans with {'%count%': alert_count } %}Attention,
-                %count% alertes en cours{% endtrans %}</button>
+            <button rel="tooltip" title="{{alert_count}} alertes" class="btn" id="btn_client_alert">{% trans with {'%count%': alert_count } %}
+                <span class="badge badge-warning">%count%</span> Alertes{% endtrans %}</button>
             {% endif%}
 
             {% if admin.isGranted('ROLE_CLIENT_TOOLS') %}

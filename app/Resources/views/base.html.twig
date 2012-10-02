@@ -84,6 +84,7 @@
     {% endblock %}
 </div>
 
+{% use ':JS:bootstrap_tooltip.html.twig' %}
 {% use ':JS:list_totals_calculate.html.twig' %}
 {% use ':JS:list_format_numbers.html.twig' %}
 {% use ':JS:ajax_loading.html.twig' %}
@@ -94,6 +95,7 @@
 <script type="text/javascript">
     bootbox.setLocale('{{default_locale}}');
 </script>
+{{ block('bootstrapTooltip')}}
 {{ block('ajaxLoading')}}
 {{ block('totalsCalculate')}}
 {{ block('formatNumbers')}}
