@@ -28,8 +28,9 @@ class ClientAlertAdmin extends Admin
         $label = 'form.' . $this->_prefix_label . '.';
         $formMapper->with($label . 'title')
             ->add('client_id', 'hidden', array('data' => $filter['client_id']['value']))
-            ->add('tabs', null, array('label' => $label . 'tabs'))
-            ->add('text', null, array('label' => $label . 'text'));
+            ->add('tabs', null, array('label' => $label . 'tabs', 'empty_value' => '', 'required' => false))
+            ->add('text', null, array('label' => $label . 'text'))
+            ->add('is_blocked', null, array('label' => $label . 'is_blocked'));
     }
 
     //list

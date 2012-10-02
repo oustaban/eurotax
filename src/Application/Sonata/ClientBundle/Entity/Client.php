@@ -270,6 +270,14 @@ class Client
      */
     private $alert_count = 0;
 
+
+    /**
+     * @var integer $blocked_count
+     *
+     * @ORM\Column(name="blocked_count", type="integer", nullable=true)
+     */
+    private $blocked_count = 0;
+
     /**
      * @var boolean $facturer
      *
@@ -1222,5 +1230,28 @@ class Client
     public function getLibelle()
     {
         return $this->libelle;
+    }
+
+    /**
+     * Set blocked_count
+     *
+     * @param integer $blockedCount
+     * @return Client
+     */
+    public function setBlockedCount($blockedCount)
+    {
+        $this->blocked_count = $blockedCount;
+    
+        return $this;
+    }
+
+    /**
+     * Get blocked_count
+     *
+     * @return integer 
+     */
+    public function getBlockedCount()
+    {
+        return $this->blocked_count;
     }
 }

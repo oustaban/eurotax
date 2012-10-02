@@ -8,7 +8,8 @@
 
             {% set alert_count = client.getAlertCount()%}
             {% if alert_count %}
-            <button rel="tooltip" title="{{alert_count}} alertes" class="btn" id="btn_client_alert">{% trans with {'%count%': alert_count } %}
+            <button rel="tooltip" title="{{alert_count}} alertes" class="btn"
+                    id="btn_client_alert">{% trans with {'%count%': alert_count } %}
                 <span class="badge badge-warning">%count%</span> Alertes{% endtrans %}</button>
             {% endif%}
 
@@ -48,14 +49,22 @@
         <button class="btn btn-primary" id="doImport">importer</button>
     </div>
 </div>
+
 <script type="text/javascript">
     {% if admin.isGranted('ROLE_CLIENT_TOOLS') %}
     $("#btn_locking").click(function () {
-        $('#btn_client_alert').click();return;
-        {% set text_lock_confirm = blocked ? 'verrouiller_confirm' : 'deverrouiller_confirm' %}
-        if (confirm('{{ text_lock_confirm|trans}}')) {
-            location.href = '{{ path('admin_sonata_clientoperations_'~active_tab~'_locking', {'filter[client_id][value]':client_id, 'client_id': client_id, 'month' : query_month, 'year' : year, 'blocked': blocked  }) }}';
-        }
+
+        {% if client.getBlockedCount and blocked %}
+
+            $('#btn_client_alert').click();
+
+        {% else %}
+            {% set text_lock_confirm = blocked ? 'verrouiller_confirm' : 'deverrouiller_confirm' %}
+            if (confirm('{{ text_lock_confirm|trans}}')) {
+                location.href = '{{ path('admin_sonata_clientoperations_'~active_tab~'_locking', {'filter[client_id][value]':client_id, 'client_id': client_id, 'month' : query_month, 'year' : year, 'blocked': blocked  }) }}';
+            }
+        {% endif%}
+
     });
     {% endif %}
 

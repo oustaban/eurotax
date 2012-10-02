@@ -99,6 +99,7 @@ form:
     title: Client Alert
     tabs: Tabs
     text: Text
+    is_blocked: Blocked
 
 list:
   code_client: Code client
@@ -187,6 +188,7 @@ list:
       title: Client Alert
       tabs: Tabs
       text: Text
+      is_blocked: Blocked
 
 filter:
   code_client: Code client

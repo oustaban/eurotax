@@ -45,6 +45,14 @@ class ClientAlert
      */
     private $text;
 
+
+    /**
+     * @var boolean $is_blocked
+     *
+     * @ORM\Column(name="is_blocked", type="boolean", nullable=true)
+     */
+    private $is_blocked = NULL;
+
     /**
      * @return string
      */
@@ -130,5 +138,28 @@ class ClientAlert
     public function getText()
     {
         return $this->text;
+    }
+
+    /**
+     * Set is_blocked
+     *
+     * @param boolean $isBlocked
+     * @return ClientAlert
+     */
+    public function setIsBlocked($isBlocked)
+    {
+        $this->is_blocked = $isBlocked;
+    
+        return $this;
+    }
+
+    /**
+     * Get is_blocked
+     *
+     * @return boolean 
+     */
+    public function getIsBlocked()
+    {
+        return $this->is_blocked;
     }
 }
