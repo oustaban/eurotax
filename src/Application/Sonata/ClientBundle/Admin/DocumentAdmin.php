@@ -123,14 +123,14 @@ class DocumentAdmin extends Admin
             ->where('c.client_id = :client_id')
             ->andWhere('c.tabs = :tab')
             ->setParameters(array(
-            ':client_id'=>$object->getId(),
-            ':tab'=>$tab,
+            ':client_id' => $object->getClientId(),
+            ':tab' => $tab,
         ))->getQuery()->execute();
 
         $value = $object->getTypeDocument();
         if (!$value) {
             $alert = new ClientAlert();
-            $alert->setClientId($object->getId());
+            $alert->setClientId($object->getClientId());
             $alert->setTabs($tab);
             $alert->setIsBlocked(true);
             $alert->setText('Aucun document légal pour ce client');
@@ -141,7 +141,7 @@ class DocumentAdmin extends Admin
         $value = $object->getPreavis();
         if (!$value) {
             $alert = new ClientAlert();
-            $alert->setClientId($object->getId());
+            $alert->setClientId($object->getClientId());
             $alert->setTabs($tab);
             $alert->setIsBlocked(true);
             $alert->setText('Manque Mandat');
