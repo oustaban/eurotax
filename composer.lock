@@ -239,12 +239,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/doctrine/DoctrineBundle.git",
-                "reference": "db818ceec46d05fed4f944b957f82a4ab5197e27"
+                "reference": "64deb4921926f482976414895fe549a6b4c604bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/DoctrineBundle/zipball/db818ceec46d05fed4f944b957f82a4ab5197e27",
-                "reference": "db818ceec46d05fed4f944b957f82a4ab5197e27",
+                "url": "https://github.com/doctrine/DoctrineBundle/zipball/64deb4921926f482976414895fe549a6b4c604bb",
+                "reference": "64deb4921926f482976414895fe549a6b4c604bb",
                 "shasum": ""
             },
             "require": {
@@ -261,7 +261,7 @@
             "suggest": {
                 "doctrine/orm": "The Doctrine ORM integration is optional in the bundle."
             },
-            "time": "1348828243",
+            "time": "1349217332",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -311,8 +311,8 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/DoctrineFixturesBundle/zipball/186d605aa6b592bd577e07e0e9a2c420b02b2492",
-                "reference": "186d605aa6b592bd577e07e0e9a2c420b02b2492",
+                "url": "https://github.com/doctrine/DoctrineFixturesBundle/zipball/a5103a71bcd9b2f851ca6c16519a077784a3184a",
+                "reference": "a5103a71bcd9b2f851ca6c16519a077784a3184a",
                 "shasum": ""
             },
             "require": {
@@ -614,7 +614,7 @@
                 "symfony/framework-bundle": "2.*",
                 "jms/cg": "1.0.0"
             },
-            "time": "2012-01-01 20:50:26",
+            "time": "2012-01-01 00:50:26",
             "type": "symfony-bundle",
             "installation-source": "dist",
             "autoload": {
@@ -656,7 +656,7 @@
             "require": {
                 "php": ">=5.3.0"
             },
-            "time": "2012-01-01 20:40:52",
+            "time": "2012-01-01 00:40:52",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -758,7 +758,7 @@
             "require": {
                 "php": ">=5.3.0"
             },
-            "time": "2012-01-01 21:32:49",
+            "time": "2012-01-01 01:32:49",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -836,7 +836,7 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -939,7 +939,7 @@
                 "knplabs/knp-menu": "1.1.*",
                 "symfony/framework-bundle": ">=2.0,<2.2-dev"
             },
-            "time": "2012-05-15 11:56:49",
+            "time": "2012-05-13 19:56:49",
             "type": "symfony-bundle",
             "installation-source": "dist",
             "autoload": {
@@ -1938,12 +1938,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/symfony/symfony.git",
-                "reference": "5efe4037fac78107c041224138578a4a2447ced0"
+                "reference": "566ad10f675ae39a7260b99bd1da1c5e986cef69"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/symfony/zipball/5efe4037fac78107c041224138578a4a2447ced0",
-                "reference": "5efe4037fac78107c041224138578a4a2447ced0",
+                "url": "https://github.com/symfony/symfony/zipball/566ad10f675ae39a7260b99bd1da1c5e986cef69",
+                "reference": "566ad10f675ae39a7260b99bd1da1c5e986cef69",
                 "shasum": ""
             },
             "require": {
@@ -1992,7 +1992,7 @@
                 "propel/propel1": "dev-master",
                 "monolog/monolog": "dev-master"
             },
-            "time": "1349195972",
+            "time": "1349203503",
             "type": "library",
             "extra": {
                 "branch-alias": {
