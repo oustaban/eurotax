@@ -53,14 +53,14 @@ class Contact
     /**
      * @var string $telephone_1
      *
-     * @ORM\Column(name="telephone_1", type="string", length=20)
+     * @ORM\Column(name="telephone_1", type="string", length=20, nullable=true)
      */
     private $telephone_1;
 
     /**
      * @var string $telephone_2
      *
-     * @ORM\Column(name="telephone_2", type="string", length=20)
+     * @ORM\Column(name="telephone_2", type="string", length=20, nullable=true)
      */
     private $telephone_2;
 
