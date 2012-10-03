@@ -49,9 +49,11 @@ abstract class AbstractCompteAdmin extends Admin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('id', null);
-
-        $listMapper->add('date', null, array('label' => 'list.compte.date'))
+        $listMapper->add('id', null)
+            ->add('date', null, array(
+                'label' => 'list.compte.date',
+                'template' => 'ApplicationSonataClientBundle:CRUD:list_date.html.twig'
+        ))
             ->add('operation', null, array('label' => 'list.compte.operation'))
             ->add('montant', null, array('label' => 'list.compte.montant'))
             ->add('commentaire', null, array('label' => 'list.compte.commentaire'))
