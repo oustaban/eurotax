@@ -27,12 +27,9 @@ class GarantieAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
 
-        $filter = $this->getRequest()->query->get('filter');
-
-        $this->_form_label = 'form';
+        parent::configureFormFields($formMapper);
 
         $formMapper->with($this->getFieldLabel('title'))
-            ->add('client_id', 'hidden', array('data' => $filter['client_id']['value']))
             ->add('type_garantie', null, array('label' => $this->getFieldLabel('type_garantie')))
             ->add('montant', null, array('label' => $this->getFieldLabel('montant')))
             ->add('devise', null, array('label' => $this->getFieldLabel('devise')))
@@ -69,8 +66,9 @@ class GarantieAdmin extends Admin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
+        parent::configureListFields($listMapper);
+
         $listMapper->addIdentifier('id', null);
-        $this->_form_label = 'list';
 
         $listMapper
             ->add('type_garantie', null, array('label' => $this->getFieldLabel('type_garantie')))
