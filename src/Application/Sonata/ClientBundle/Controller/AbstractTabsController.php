@@ -22,7 +22,7 @@ abstract class AbstractTabsController extends Controller
     public $client_id = null;
 
     /**
-     * @var Client
+     * @var \Application\Sonata\ClientBundle\Entity\Client
      */
     protected $client = null;
 
@@ -54,7 +54,7 @@ abstract class AbstractTabsController extends Controller
     }
 
     /**
-     * @return Client|null
+     * @return \Application\Sonata\ClientBundle\Entity\Client|null
      */
     public function getClient()
     {

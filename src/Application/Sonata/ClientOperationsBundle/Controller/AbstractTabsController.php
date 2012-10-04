@@ -18,6 +18,12 @@ class AbstractTabsController extends Controller
      * @var int
      */
     public $client_id = null;
+
+    /**
+     * @var \Application\Sonata\ClientBundle\Entity\Client
+     */
+    protected $client = null;
+
     /**
      * @var string
      */
@@ -320,14 +326,14 @@ class AbstractTabsController extends Controller
             throw new NotFoundHttpException('Unable load page with no client_id');
         }
 
-        $this->client = $this->getDoctrine()->getManager()
-            ->getRepository('Application\Sonata\ClientBundle\Entity\Client')
-            ->find($this->admin->client_id);
+        $this->client_id = $this->admin->client_id;
+
+        $this->client = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:Client')->find($this->client_id);
+
         if (empty($this->client)) {
             throw new NotFoundHttpException(sprintf('unable to find Client with id : %s', $this->admin->client_id));
         }
-
-        $this->client_id = $this->admin->client_id;
+        
         $this->_month = $this->admin->month;
         $this->_query_month = $this->admin->query_month;
         $this->_year = $this->admin->year;
@@ -340,6 +346,13 @@ class AbstractTabsController extends Controller
 
     }
 
+    /**
+     * @return \Application\Sonata\ClientBundle\Entity\Client|null
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
 
     /**
      * @param $data
@@ -349,15 +362,13 @@ class AbstractTabsController extends Controller
      */
     protected function _action($data, $action = 'create', $template = 'standard_layout')
     {
-        $client = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:Client')->find($this->client_id);
-
         if ($this->isXmlHttpRequest()) {
             return $data;
         }
 
         return $this->render('ApplicationSonataClientOperationsBundle::' . $template . '.html.twig', array(
             'client_id' => $this->client_id,
-            'client' => $client,
+            'client' => $this->getClient(),
             'client_documents' => $this->_client_documents,
             'month_list' => $this->getMonthList(),
             'month' => $this->_month,
