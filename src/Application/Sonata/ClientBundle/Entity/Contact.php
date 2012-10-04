@@ -53,7 +53,7 @@ class Contact
     /**
      * @var string $telephone_1
      *
-     * @ORM\Column(name="telephone_1", type="string", length=20, nullable=true)
+     * @ORM\Column(name="telephone_1", type="string", length=20)
      */
     private $telephone_1;
 
@@ -67,7 +67,7 @@ class Contact
     /**
      * @var string $fax
      *
-     * @ORM\Column(name="fax", type="string", length=20)
+     * @ORM\Column(name="fax", type="string", length=20, nullable=true)
      */
     private $fax;
 
@@ -89,7 +89,7 @@ class Contact
     /**
      * @var string $raison_sociale_societe
      *
-     *@ORM\Column(name="raison_sociale_societe", type="string", length=100, nullable=true)
+     *@ORM\Column(name="raison_sociale_societe", type="string", length=100)
      */
     private $raison_sociale_societe;
 
@@ -247,7 +247,7 @@ class Contact
     /**
      * Set civilite
      *
-     * @param Application\Sonata\ClientBundle\Entity\ListCivilites $civilite
+     * @param \Application\Sonata\ClientBundle\Entity\ListCivilites $civilite
      * @return Contact
      */
     public function setCivilite(\Application\Sonata\ClientBundle\Entity\ListCivilites $civilite = null)
@@ -260,7 +260,7 @@ class Contact
     /**
      * Get civilite
      *
-     * @return Application\Sonata\ClientBundle\Entity\ListCivilites
+     * @return \Application\Sonata\ClientBundle\Entity\ListCivilites
      */
     public function getCivilite()
     {
