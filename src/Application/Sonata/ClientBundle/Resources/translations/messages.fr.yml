@@ -59,7 +59,7 @@ form:
     note: Note
     expire: Expiré
 
-  coordonnees:
+  Coordonnees:
       title: Ajouter / Modifier une coordonnées bancaire
       nom: Nom de la banque
       orders: Ordre de priorité
@@ -166,7 +166,7 @@ list:
     note: Note
     expire: Expiré
 
-  coordonnees:
+  Coordonnees:
     title: Ajouter une coordonnées bancaire
     orders: Ordre de priorité
     nom: Banque
