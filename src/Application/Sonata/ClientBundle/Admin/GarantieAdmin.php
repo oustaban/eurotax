@@ -11,6 +11,9 @@ use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+use Sonata\AdminBundle\Validator\ErrorElement;
+use Application\Sonata\ClientBundle\Entity\ClientAlert;
+
 use Application\Sonata\ClientBundle\Admin\AbstractTabsAdmin as Admin;
 
 class GarantieAdmin extends Admin
@@ -26,38 +29,38 @@ class GarantieAdmin extends Admin
 
         $filter = $this->getRequest()->query->get('filter');
 
-        $label = 'form.' . $this->_prefix_label . '.';
-        $formMapper->with($label . 'title')
+        $this->_form_label = 'form';
+
+        $formMapper->with($this->getFieldLabel('title'))
             ->add('client_id', 'hidden', array('data' => $filter['client_id']['value']))
-            ->add('type_garantie', null, array('label' => $label . 'type_garantie'))
-            ->add('montant', null, array('label' => $label . 'montant'))
-            ->add('devise', null, array('label' => $label . 'devise'))
-            ->add('nom_de_lemeteur', null, array('label' => $label . 'nom_de_lemeteur'))
+            ->add('type_garantie', null, array('label' => $this->getFieldLabel('type_garantie')))
+            ->add('montant', null, array('label' => $this->getFieldLabel('montant')))
+            ->add('devise', null, array('label' => $this->getFieldLabel('devise')))
+            ->add('nom_de_lemeteur', null, array('label' => $this->getFieldLabel('nom_de_lemeteur')))
             ->add('nom_de_la_banques_id', 'choice', array(
             'label' => ' ',
-            'required'  => false,
             'choices' => array(
-                'a établir',
+                1 => 'a établir',
                 'Nom demandé'
             )
         ))
-            ->add('num_de_ganrantie', null, array('label' => $label . 'num_de_ganrantie'))
+            ->add('num_de_ganrantie', null, array('label' => $this->getFieldLabel('num_de_ganrantie')))
             ->add('date_demission', null, array(
-            'label' => $label . 'date_demission',
+            'label' => $this->getFieldLabel('date_demission'),
             'attr' => array('class' => 'datepicker'),
             'widget' => 'single_text',
             'input' => 'datetime',
             'format' => $this->date_format_datetime
         ))
             ->add('date_decheance', null, array(
-            'label' => $label . 'date_decheance',
+            'label' => $this->getFieldLabel('date_decheance'),
             'attr' => array('class' => 'datepicker'),
             'widget' => 'single_text',
             'input' => 'datetime',
             'format' => $this->date_format_datetime
         ))
-        ->add('expire', null, array('label' => $label . 'expire'))
-        ->add('note', null, array('label' => $label . 'note'));
+            ->add('expire', null, array('label' => $this->getFieldLabel('expire')))
+            ->add('note', null, array('label' => $this->getFieldLabel('note')));
     }
 
     //list
@@ -67,13 +70,109 @@ class GarantieAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper->addIdentifier('id', null);
+        $this->_form_label = 'list';
 
-        $label = 'list.' . $this->_prefix_label . '.';
         $listMapper
-            ->add('type_garantie', null, array('label' => $label . 'type_garantie'))
-            ->add('montant', null, array('label' => $label . 'montant'))
-            ->add('devise', null, array('label' => $label . 'devise'));
+            ->add('type_garantie', null, array('label' => $this->getFieldLabel('type_garantie')))
+            ->add('montant', null, array('label' => $this->getFieldLabel('montant')))
+            ->add('devise', null, array('label' => $this->getFieldLabel('devise')));
+    }
 
+    /**
+     * @param ErrorElement $errorElement
+     * @param mixed $object
+     */
+    public function validate(ErrorElement $errorElement, $object)
+    {
+        /* @var $object \Application\Sonata\ClientBundle\Entity\Garantie */
+        parent::validate($errorElement, $object);
+
+        $this->_setupAlerts($errorElement, $object);
+    }
+
+
+    /**
+     * @param $errorElement
+     * @param $object
+     */
+    protected function _setupAlerts($errorElement, $object)
+    {
+        /** @var $doctrine  \Doctrine\Bundle\DoctrineBundle\Registry */
+        $doctrine = $this->getConfigurationPool()->getContainer()->get('doctrine');
+
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $doctrine->getManager();
+
+        /* @var $tab \Application\Sonata\ClientBundle\Entity\ListClientTabs */
+        $tab = $em->getRepository('ApplicationSonataClientBundle:ListClientTabs')->findOneByAlias('garanties');
+
+        $em->getRepository('ApplicationSonataClientBundle:ClientAlert')
+            ->createQueryBuilder('c')
+            ->delete()
+            ->where('c.client_id = :client_id')
+            ->andWhere('c.tabs = :tab')
+            ->setParameters(array(
+            ':client_id' => $object->getClientId(),
+            ':tab' => $tab,
+        ))->getQuery()->execute();
+
+        /* @var $object \Application\Sonata\ClientBundle\Entity\Garantie */
+        $value = $object->getTypeGarantie()->getId();
+
+        switch ($value) {
+
+            case 1:
+                $value = $object->getNomDeLaBanquesId();
+
+                if (0) {
+                    $alert = new ClientAlert();
+                    $alert->setClientId($object->getClientId());
+                    $alert->setTabs($tab);
+                    $alert->setIsBlocked(false);
+                    $alert->setText('Manque Garantie Bancaire');
+
+                    $em->persist($alert);
+                }
+
+                $value = $object->getDateDecheance();
+                if (0) {
+
+                    $alert = new ClientAlert();
+                    $alert->setClientId($object->getClientId());
+                    $alert->setTabs($tab);
+                    $alert->setIsBlocked(false);
+                    $alert->setText("Date d'échéance Garantie Bancaire proche");
+
+                    $em->persist($alert);
+                }
+                break;
+
+            case 3:
+                $value = $object->getNomDeLaBanquesId();
+
+                if (0) {
+                    $alert = new ClientAlert();
+                    $alert->setClientId($object->getClientId());
+                    $alert->setTabs($tab);
+                    $alert->setIsBlocked(false);
+                    $alert->setText('Manque Garantie Parentale');
+
+                    $em->persist($alert);
+                }
+
+                $value = $object->getDateDecheance();
+                if (0) {
+
+                    $alert = new ClientAlert();
+                    $alert->setClientId($object->getClientId());
+                    $alert->setTabs($tab);
+                    $alert->setIsBlocked(false);
+                    $alert->setText("Date d'échéance Garantie Parentale proche");
+
+                    $em->persist($alert);
+                }
+                break;
+        }
     }
 }
 

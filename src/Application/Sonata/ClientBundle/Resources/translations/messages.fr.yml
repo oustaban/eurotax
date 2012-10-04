@@ -24,7 +24,7 @@ form:
   N_TVA_CEE: N° TVA CEE
   niveau_dobligation_id: Niveau d'obligation
 
-  contact:
+  Contact:
     title: Ajouter / Modifier un contact
     civilite: Civilité
     nom: Nom
@@ -46,7 +46,7 @@ form:
     date_notaire: Notaire
     date_apostille: Apostille
 
-  garantie:
+  Garantie:
     title: Ajouter / Modifier une garantie
     type_garantie: Type
     montant: Montant
@@ -131,7 +131,7 @@ list:
   niveau_dobligation_id: Niveau d'obligation
   client_operations: Client Operations
 
-  contact:
+  Contact:
     title: Contact
     civilite: Civilité
     nom: Nom
@@ -153,7 +153,7 @@ list:
     date_notaire: Notaire
     date_apostille: Apostille
 
-  garantie:
+  Garantie:
     title: Ajouter une garantie
     type_garantie: Type
     montant: Montant

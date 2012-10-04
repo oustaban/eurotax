@@ -76,21 +76,21 @@ class Garantie
     /**
      * @var string $num_de_ganrantie
      *
-     * @ORM\Column(name="num_de_ganrantie", type="string", length=50)
+     * @ORM\Column(name="num_de_ganrantie", type="string", length=50, nullable=true)
      */
     private $num_de_ganrantie;
 
     /**
      * @var \DateTime $date_demission
      *
-     * @ORM\Column(name="date_demission", type="date")
+     * @ORM\Column(name="date_demission", type="date", nullable=true)
      */
     private $date_demission;
 
     /**
      * @var \DateTime $date_decheance
      *
-     * @ORM\Column(name="date_decheance", type="date")
+     * @ORM\Column(name="date_decheance", type="date", nullable=true)
      */
     private $date_decheance;
 
@@ -104,7 +104,7 @@ class Garantie
     public function __toString()
     {
 
-        return $this->getTypeGarantie()?:'-';
+        return $this->getTypeGarantie() ? : '-';
     }
 
     /**
@@ -161,29 +161,6 @@ class Garantie
     public function getMontant()
     {
         return $this->montant;
-    }
-
-    /**
-     * Set nom_de_la_banque
-     *
-     * @param string $nomDeLaBanque
-     * @return Garantie
-     */
-    public function setNomDeLaBanque($nomDeLaBanque)
-    {
-        $this->nom_de_la_banque = $nomDeLaBanque;
-
-        return $this;
-    }
-
-    /**
-     * Get nom_de_la_banque
-     *
-     * @return string
-     */
-    public function getNomDeLaBanque()
-    {
-        return $this->nom_de_la_banque;
     }
 
 
@@ -260,7 +237,7 @@ class Garantie
     /**
      * Set type_garantie
      *
-     * @param Application\Sonata\ClientBundle\Entity\ListTypeGaranties $typeGarantie
+     * @param \Application\Sonata\ClientBundle\Entity\ListTypeGaranties $typeGarantie
      * @return Garantie
      */
     public function setTypeGarantie(\Application\Sonata\ClientBundle\Entity\ListTypeGaranties $typeGarantie = null)
@@ -273,7 +250,7 @@ class Garantie
     /**
      * Get type_garantie
      *
-     * @return Application\Sonata\ClientBundle\Entity\ListTypeGaranties
+     * @return \Application\Sonata\ClientBundle\Entity\ListTypeGaranties
      */
     public function getTypeGarantie()
     {
@@ -283,7 +260,7 @@ class Garantie
     /**
      * Set devise
      *
-     * @param Application\Sonata\ClientBundle\Entity\ListDevises $devise
+     * @param \Application\Sonata\ClientBundle\Entity\ListDevises $devise
      * @return Garantie
      */
     public function setDevise(\Application\Sonata\ClientBundle\Entity\ListDevises $devise = null)
@@ -296,7 +273,7 @@ class Garantie
     /**
      * Get devise
      *
-     * @return Application\Sonata\ClientBundle\Entity\ListDevises
+     * @return \Application\Sonata\ClientBundle\Entity\ListDevises
      */
     public function getDevise()
     {
@@ -336,14 +313,14 @@ class Garantie
     public function setExpire($expire)
     {
         $this->expire = $expire;
-    
+
         return $this;
     }
 
     /**
      * Get expire
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getExpire()
     {
@@ -359,14 +336,14 @@ class Garantie
     public function setNomDeLemeteur($nomDeLemeteur)
     {
         $this->nom_de_lemeteur = $nomDeLemeteur;
-    
+
         return $this;
     }
 
     /**
      * Get nom_de_lemeteur
      *
-     * @return string 
+     * @return string
      */
     public function getNomDeLemeteur()
     {
@@ -382,14 +359,14 @@ class Garantie
     public function setNote($note)
     {
         $this->note = $note;
-    
+
         return $this;
     }
 
     /**
      * Get note
      *
-     * @return string 
+     * @return string
      */
     public function getNote()
     {

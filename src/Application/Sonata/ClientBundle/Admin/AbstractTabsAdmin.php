@@ -15,6 +15,7 @@ abstract class AbstractTabsAdmin extends Admin
     protected $_generate_url = true;
 
     protected $_bundle_name = 'ApplicationSonataClientBundle';
+    protected $_form_label = '';
 
 
     /**
@@ -149,4 +150,15 @@ abstract class AbstractTabsAdmin extends Admin
         array_shift($res);
         return $res;
     }
+
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    protected function getFieldLabel($name = 'title')
+    {
+        return $this->_form_label . '.' . str_replace('_', '', $this->getLabel()) . '.' . $name;
+    }
+
 }
