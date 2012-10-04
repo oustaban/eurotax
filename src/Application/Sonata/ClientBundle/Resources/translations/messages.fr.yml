@@ -74,7 +74,7 @@ form:
     categorie: Catégorie
     note: Note
 
-  tarif:
+  Tarif:
     title: Tarif
     mode_de_facturation: Mode de facturation
     value: Valeur
@@ -181,7 +181,7 @@ list:
     categorie: Catégorie
     note: Commentaire
 
-  tarif:
+  Tarif:
     title: Tarif
     mode_de_facturation: Mode de facturation
     value: Valeur

@@ -11,6 +11,9 @@ use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+use Sonata\AdminBundle\Validator\ErrorElement;
+use Application\Sonata\ClientBundle\Entity\ClientAlert;
+
 use Application\Sonata\ClientBundle\Admin\AbstractTabsAdmin as Admin;
 use Doctrine\ORM\EntityRepository;
 
@@ -25,15 +28,18 @@ class TarifAdmin extends Admin
     {
         parent::configureFormFields($formMapper);
 
-        $label = 'form.' . $this->_prefix_label . '.';
-        $formMapper->with($label . 'title')
-            ->add('mode_de_facturation', null, array('label' => $label . 'mode_de_facturation', 'query_builder' => function(EntityRepository $er)
-        {
-            return $er->createQueryBuilder('u')
-                ->orderBy('u.name', 'ASC');
-        },))
-            ->add('value', 'money', array('label' => $label . 'value'))
-            ->add('value_percentage', 'percent', array('label' => $label . 'value_percentage'));
+        $formMapper->with($this->getFieldLabel('title'))
+            ->add('mode_de_facturation', null, array(
+            'label' => $this->getFieldLabel('mode_de_facturation'),
+            'empty_value' => '',
+            'required' => false,
+            'query_builder' => function(EntityRepository $er)
+            {
+                return $er->createQueryBuilder('u')
+                    ->orderBy('u.name', 'ASC');
+            },))
+            ->add('value', 'money', array('label' => $this->getFieldLabel('value')))
+            ->add('value_percentage', 'percent', array('label' => $this->getFieldLabel('value_percentage')));
     }
 
     //list
@@ -44,18 +50,70 @@ class TarifAdmin extends Admin
     {
         parent::configureListFields($listMapper);
 
-        $label = 'list.' . $this->_prefix_label . '.';
         $listMapper
-            ->add('mode_de_facturation', null, array('label' => $label . 'mode_de_facturation'))
-            ->add('value', 'money', array('label' => $label . 'value'))
-            ->add('value_percentage', 'percent', array('label' => $label . 'value_percentage'))
-            ->add('mode_de_facturation.invoice_type.name', null, array('label' => $label . 'invoice_type'))
+            ->add('mode_de_facturation', null, array('label' => $this->getFieldLabel('mode_de_facturation')))
+            ->add('value', 'money', array('label' => $this->getFieldLabel('value')))
+            ->add('value_percentage', 'percent', array('label' => $this->getFieldLabel('value_percentage')))
+            ->add('mode_de_facturation.invoice_type.name', null, array('label' => $this->getFieldLabel('invoice_type')))
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'delete' => array(),
                 )
             )
         );
+    }
+
+    /**
+     * @param ErrorElement $errorElement
+     * @param mixed $object
+     */
+    public function validate(ErrorElement $errorElement, $object)
+    {
+        /* @var $object \Application\Sonata\ClientBundle\Entity\Tarif */
+        parent::validate($errorElement, $object);
+
+        $this->_setupAlerts($errorElement, $object);
+    }
+
+    /**
+     * @param $errorElement
+     * @param $object
+     */
+    protected function _setupAlerts($errorElement, $object)
+    {
+        /** @var $doctrine  \Doctrine\Bundle\DoctrineBundle\Registry */
+        $doctrine = $this->getConfigurationPool()->getContainer()->get('doctrine');
+
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $doctrine->getManager();
+
+        /* @var $tab \Application\Sonata\ClientBundle\Entity\ListClientTabs */
+        $tab = $em->getRepository('ApplicationSonataClientBundle:ListClientTabs')->findOneByAlias('tarif');
+
+        $em->getRepository('ApplicationSonataClientBundle:ClientAlert')
+            ->createQueryBuilder('c')
+            ->delete()
+            ->where('c.client_id = :client_id')
+            ->andWhere('c.tabs = :tab')
+            ->setParameters(array(
+            ':client_id' => $object->getClientId(),
+            ':tab' => $tab,
+        ))->getQuery()->execute();
+
+
+        /* @var $object \Application\Sonata\ClientBundle\Entity\Tarif */
+        $value = $object->getValuePercentage();
+        $value2 = $object->getValue();
+
+        if (empty($value) && empty($value2)) {
+            $alert = new ClientAlert();
+            $alert->setClientId($object->getClientId());
+            $alert->setTabs($tab);
+            $alert->setIsBlocked(true);
+            $alert->setText('Aucun tarif sélectionné');
+
+            $em->persist($alert);
+        }
     }
 }
 

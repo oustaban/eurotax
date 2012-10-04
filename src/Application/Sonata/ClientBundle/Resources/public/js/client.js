@@ -99,19 +99,23 @@ jQuery(document).ready(function ($) {
                     var tarif_value = $('#' + _uniqid + '_value');
 
                     $('#' + _uniqid + '_mode_de_facturation').change(function () {
-                        switch (Sonata.mode_de_facturation[$(this).val()].unit) {
 
-                            case '%':
-                                tarif_value_percentage.removeAttr('disabled');
-                                tarif_value.attr('disabled', 'disabled').val('');
-                                Admin.log('%');
-                                break;
+                        if (Sonata.mode_de_facturation[$(this).val()]) {
 
-                            case 'V':
-                                tarif_value.removeAttr('disabled');
-                                tarif_value_percentage.attr('disabled', 'disabled').val('');
-                                Admin.log('V');
-                                break;
+                            switch (Sonata.mode_de_facturation[$(this).val()].unit) {
+
+                                case '%':
+                                    tarif_value_percentage.removeAttr('disabled');
+                                    tarif_value.attr('disabled', 'disabled').val('');
+                                    Admin.log('%');
+                                    break;
+
+                                case 'V':
+                                    tarif_value.removeAttr('disabled');
+                                    tarif_value_percentage.attr('disabled', 'disabled').val('');
+                                    Admin.log('V');
+                                    break;
+                            }
                         }
                     }).trigger('change');
                 }
