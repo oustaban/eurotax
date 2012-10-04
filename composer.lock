@@ -1,5 +1,5 @@
 {
-    "hash": "1c9610cd9855ab4d7c2ae7eee2a2143b",
+    "hash": "e0a15e59278289eed78f626557527521",
     "packages": [
         {
             "name": "CodePlex/PHPExcel",
@@ -239,12 +239,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/doctrine/DoctrineBundle.git",
-                "reference": "db818ceec46d05fed4f944b957f82a4ab5197e27"
+                "reference": "64deb4921926f482976414895fe549a6b4c604bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/DoctrineBundle/zipball/db818ceec46d05fed4f944b957f82a4ab5197e27",
-                "reference": "db818ceec46d05fed4f944b957f82a4ab5197e27",
+                "url": "https://github.com/doctrine/DoctrineBundle/zipball/64deb4921926f482976414895fe549a6b4c604bb",
+                "reference": "64deb4921926f482976414895fe549a6b4c604bb",
                 "shasum": ""
             },
             "require": {
@@ -261,7 +261,7 @@
             "suggest": {
                 "doctrine/orm": "The Doctrine ORM integration is optional in the bundle."
             },
-            "time": "1348828243",
+            "time": "1349217332",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -365,12 +365,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/doctrine/doctrine2.git",
-                "reference": "ea2b28857830720460a345c80c6e7d3f6adae93a"
+                "reference": "04262e2b73cd449cf12b55f2e2c318c8c24c9dd4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/doctrine2/zipball/ea2b28857830720460a345c80c6e7d3f6adae93a",
-                "reference": "ea2b28857830720460a345c80c6e7d3f6adae93a",
+                "url": "https://github.com/doctrine/doctrine2/zipball/04262e2b73cd449cf12b55f2e2c318c8c24c9dd4",
+                "reference": "04262e2b73cd449cf12b55f2e2c318c8c24c9dd4",
                 "shasum": ""
             },
             "require": {
@@ -382,7 +382,7 @@
             "suggest": {
                 "symfony/yaml": "If you want to use YAML Metadata Mapping Driver"
             },
-            "time": "1348121015",
+            "time": "1349261302",
             "bin": [
                 "bin/doctrine",
                 "bin/doctrine.php"
@@ -1095,6 +1095,42 @@
             "keywords": [
                 "log",
                 "logging"
+            ]
+        },
+        {
+            "name": "mpdf/mpdf",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/finwe/mpdf.git",
+                "reference": "078f2c7fb8568f0af66483dba9685d559991aa7c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/finwe/mpdf/zipball/078f2c7fb8568f0af66483dba9685d559991aa7c",
+                "reference": "078f2c7fb8568f0af66483dba9685d559991aa7c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=4.3.10"
+            },
+            "time": "1347446802",
+            "type": "library",
+            "installation-source": "source",
+            "license": [
+                "GPL-1.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Ian Back"
+                }
+            ],
+            "description": "A PHP class to generate PDF files from HTML with Unicode/UTF-8 and CJK support",
+            "homepage": "http://www.mpdf1.com/mpdf/index.php",
+            "keywords": [
+                "php",
+                "pdf",
+                "utf-8"
             ]
         },
         {
@@ -1938,12 +1974,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/symfony/symfony.git",
-                "reference": "5efe4037fac78107c041224138578a4a2447ced0"
+                "reference": "2fd699e09754f50a92abbc9dd7fcc70097073aac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/symfony/zipball/5efe4037fac78107c041224138578a4a2447ced0",
-                "reference": "5efe4037fac78107c041224138578a4a2447ced0",
+                "url": "https://github.com/symfony/symfony/zipball/2fd699e09754f50a92abbc9dd7fcc70097073aac",
+                "reference": "2fd699e09754f50a92abbc9dd7fcc70097073aac",
                 "shasum": ""
             },
             "require": {
@@ -1992,7 +2028,7 @@
                 "propel/propel1": "dev-master",
                 "monolog/monolog": "dev-master"
             },
-            "time": "1349195972",
+            "time": "1349258232",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -2194,6 +2230,7 @@
         "sonata-project/doctrine-orm-admin-bundle": 20,
         "doctrine/doctrine-fixtures-bundle": 20,
         "codeplex/phpexcel": 20,
-        "ensepar/html2pdf-bundle": 20
+        "ensepar/html2pdf-bundle": 20,
+        "mpdf/mpdf": 20
     }
 }

@@ -1,4 +1,6 @@
 ApplicationSonataClientOperationsBundle:
+  pdf:
+
   imports:
     list_title: Liste des importations
     confirm_delete: Etes vous sur de vouloir effacer le dernier lot importé

@@ -1085,19 +1085,14 @@ class AbstractTabsController extends Controller
     {
         $file_name = 'eurotax-' . md5(time() . rand(1, 99999999));
 
-        /** @var $pdfBundle \Ensepar\Html2pdfBundle\Service\Html2pdf */
-        $pdfBundle = $this->get('html2pdf');
-        $html2pdf = $pdfBundle->get();
+        include VENDOR_PATH.'/mpdf/mpdf/mpdf.php';
+        $mpdf=new \mPDF('c');
+        //$mpdf->SetDisplayMode('fullpage');
 
-        try
-        {
-            $html2pdf->writeHTML($this->render('ApplicationSonataClientOperationsBundle::pdf.html.twig')->getContent());
-            $html2pdf->Output($file_name . '.pdf');
-        }
-        catch(\HTML2PDF_exception $e) {
-            echo $e;
-            exit;
-        }
+        $mpdf->WriteHTML($this->render('ApplicationSonataClientOperationsBundle::pdf.html.twig')->getContent());
+        $mpdf->Output($file_name);
+
+        exit;
     }
 
     /**
