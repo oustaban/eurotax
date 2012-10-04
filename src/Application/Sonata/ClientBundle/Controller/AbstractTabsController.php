@@ -22,6 +22,11 @@ abstract class AbstractTabsController extends Controller
     public $client_id = null;
 
     /**
+     * @var Client
+     */
+    protected $client = null;
+
+    /**
      * @var string
      */
     protected $_tabAlias = '';
@@ -32,16 +37,28 @@ abstract class AbstractTabsController extends Controller
      */
     protected $_jsSettingsJson = null;
 
-    protected $maxPerPage = 25;
-
-    public function __construct()
+    public function configure()
     {
-        $filter = Request::createFromGlobals()->query->get('filter');
-        if (!empty($filter['client_id']) && !empty($filter['client_id']['value'])) {
-            $this->client_id = $filter['client_id']['value'];
-        } else {
+        parent::configure();
+
+        if (empty($this->admin->client_id)) {
             throw new NotFoundHttpException('Unable load page with no client_id');
         }
+        $this->client_id = $this->admin->client_id;
+
+        $this->client = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:Client')->find($this->client_id);
+
+        if (empty($this->client)) {
+            throw new NotFoundHttpException(sprintf('unable to find Client with id : %s', $this->admin->client_id));
+        }
+    }
+
+    /**
+     * @return Client|null
+     */
+    public function getClient()
+    {
+        return $this->client;
     }
 
     /**
@@ -57,15 +74,13 @@ abstract class AbstractTabsController extends Controller
             return $data;
         }
 
-        if($this->_template){
+        if ($this->_template) {
             $template = $this->_template;
         }
 
-        $client = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:Client')->find($this->client_id);
-
         return $this->render('ApplicationSonataClientBundle::' . $template . '.html.twig', array(
             'client_id' => $this->client_id,
-            'client' => $client,
+            'client' => $this->getClient(),
             'content' => $data->getContent(),
             'active_tab' => $this->_tabAlias,
             'action' => $action,

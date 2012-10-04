@@ -1,5 +1,5 @@
 {
-    "hash": "e0a15e59278289eed78f626557527521",
+    "hash": "b56531bbcd6af789260ae51abc5f5c4d",
     "packages": [
         {
             "name": "CodePlex/PHPExcel",
@@ -239,12 +239,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/doctrine/DoctrineBundle.git",
-                "reference": "64deb4921926f482976414895fe549a6b4c604bb"
+                "reference": "e69a6fd75fa3979e35b7004e6da6e9aea3765997"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/DoctrineBundle/zipball/64deb4921926f482976414895fe549a6b4c604bb",
-                "reference": "64deb4921926f482976414895fe549a6b4c604bb",
+                "url": "https://github.com/doctrine/DoctrineBundle/zipball/e69a6fd75fa3979e35b7004e6da6e9aea3765997",
+                "reference": "e69a6fd75fa3979e35b7004e6da6e9aea3765997",
                 "shasum": ""
             },
             "require": {
@@ -261,7 +261,7 @@
             "suggest": {
                 "doctrine/orm": "The Doctrine ORM integration is optional in the bundle."
             },
-            "time": "1349217332",
+            "time": "1349273376",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -427,102 +427,6 @@
             "keywords": [
                 "database",
                 "orm"
-            ]
-        },
-        {
-            "name": "ensepar/html2pdf",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tmaindron/html2pdf",
-                "reference": "c945c97d9d70c3e05e1b361e4b0550807a38e9bb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/tmaindron/html2pdf/zipball/c945c97d9d70c3e05e1b361e4b0550807a38e9bb",
-                "reference": "c945c97d9d70c3e05e1b361e4b0550807a38e9bb",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.2",
-                "tcpdf/tcpdf": "dev-master"
-            },
-            "time": "1348964090",
-            "type": "library",
-            "extra": {
-                "branch-alias": [
-
-                ]
-            },
-            "installation-source": "source",
-            "autoload": {
-                "psr-0": {
-                    "HTML2PDF": "."
-                }
-            },
-            "license": [
-                "LGPL"
-            ],
-            "authors": [
-                {
-                    "name": "Spipu",
-                    "homepage": "http://sourceforge.net/users/spipu",
-                    "role": "Developer"
-                },
-                {
-                    "name": "tmaindron",
-                    "homepage": "http://www.github.com/tmaindron",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Unofficial fork of 'html2pdf' with Composer support. (Fixed composer dependency problem)",
-            "homepage": "https://github.com/jwronsky/html2pdf",
-            "keywords": [
-                "pdf",
-                "html",
-                "html2pdf"
-            ]
-        },
-        {
-            "name": "ensepar/html2pdf-bundle",
-            "version": "dev-master",
-            "target-dir": "Ensepar/Html2pdfBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tmaindron/EnseparHtml2pdfBundle",
-                "reference": "a98bb99b2989c2d88bfe17b4fe492e4883607953"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/tmaindron/EnseparHtml2pdfBundle/zipball/a98bb99b2989c2d88bfe17b4fe492e4883607953",
-                "reference": "a98bb99b2989c2d88bfe17b4fe492e4883607953",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2",
-                "symfony/framework-bundle": ">=2.0",
-                "ensepar/html2pdf": "dev-master"
-            },
-            "time": "1348966052",
-            "type": "symfony-bundle",
-            "installation-source": "source",
-            "autoload": {
-                "psr-0": {
-                    "Ensepar\\Html2pdfBundle": ""
-                }
-            },
-            "authors": [
-                {
-                    "name": "Tristan Maindron",
-                    "email": "tmaindron@gmail.com"
-                }
-            ],
-            "description": "Use HTML2PDF as a Symfony2 Service",
-            "homepage": "https://github.com/tmaindron/EnseparHtml2pdfBundle",
-            "keywords": [
-                "pdf",
-                "TCPDF",
-                "html2pdf"
             ]
         },
         {
@@ -1974,12 +1878,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/symfony/symfony.git",
-                "reference": "2fd699e09754f50a92abbc9dd7fcc70097073aac"
+                "reference": "b6dfa76b7dd313a6f407d0c0dd1c1942747d62d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/symfony/zipball/2fd699e09754f50a92abbc9dd7fcc70097073aac",
-                "reference": "2fd699e09754f50a92abbc9dd7fcc70097073aac",
+                "url": "https://github.com/symfony/symfony/zipball/b6dfa76b7dd313a6f407d0c0dd1c1942747d62d2",
+                "reference": "b6dfa76b7dd313a6f407d0c0dd1c1942747d62d2",
                 "shasum": ""
             },
             "require": {
@@ -2028,7 +1932,7 @@
                 "propel/propel1": "dev-master",
                 "monolog/monolog": "dev-master"
             },
-            "time": "1349258232",
+            "time": "1349274023",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -2059,67 +1963,6 @@
             "homepage": "http://symfony.com",
             "keywords": [
                 "framework"
-            ]
-        },
-        {
-            "name": "tcpdf/tcpdf",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "git://tcpdf.git.sourceforge.net/gitroot/tcpdf/tcpdf",
-                "reference": "f2aa41dd8252ad6321bad88776889b75b127a60c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/tcpdf/tcpdf/zipball/5.9.176",
-                "reference": "5.9.176",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "time": "1348597020",
-            "type": "library",
-            "installation-source": "source",
-            "autoload": {
-                "classmap": [
-                    "fonts",
-                    "config/lang",
-                    "config",
-                    "2dbarcodes.php",
-                    "barcodes.php",
-                    "datamatrix.php",
-                    "encodings_maps.php",
-                    "htmlcolors.php",
-                    "pdf417.php",
-                    "qrcode.php",
-                    "spotcolors.php",
-                    "tcpdf.php",
-                    "tcpdf_filters.php",
-                    "tcpdf_parser.php",
-                    "unicode_data.php"
-                ]
-            },
-            "license": [
-                "LGPLv3"
-            ],
-            "authors": [
-                {
-                    "name": "Nicola Asuni",
-                    "email": "info@tecnick.com",
-                    "homepage": "http://nicolaasuni.tecnick.com"
-                }
-            ],
-            "description": "TCPDF is a PHP class for generating PDF documents.",
-            "homepage": "http://www.tcpdf.org/",
-            "keywords": [
-                "pdf",
-                "TCPDF",
-                "qrcode",
-                "PDFD32000-2008",
-                "datamatrix",
-                "pdf417",
-                "barcodes"
             ]
         },
         {
@@ -2230,7 +2073,6 @@
         "sonata-project/doctrine-orm-admin-bundle": 20,
         "doctrine/doctrine-fixtures-bundle": 20,
         "codeplex/phpexcel": 20,
-        "ensepar/html2pdf-bundle": 20,
         "mpdf/mpdf": 20
     }
 }

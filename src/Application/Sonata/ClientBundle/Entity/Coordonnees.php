@@ -68,7 +68,7 @@ class Coordonnees
     /**
      * @var string $pays_id
      *
-     * @ORM\Column(name="pays_id", type="string", length=2)
+     * @ORM\Column(name="pays_id", type="string", length=2, nullable=true)
      */
     private $pays_id;
 

@@ -4,7 +4,7 @@
 {% include ':JS:list_layout.js.twig'%}
 <script type="text/javascript">
     $(function () {
-        $('.sonata-actions .sonata-action-element a').live('click', function (event) {
+        $('.sonata-actions .sonata-action-element').live('click', function (event) {
             var link = $(this).attr('href');
             field_dialog_form_add_{{ id }}(event, link);
             return false;
