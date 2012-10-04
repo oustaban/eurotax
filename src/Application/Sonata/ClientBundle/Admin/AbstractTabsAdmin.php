@@ -172,7 +172,7 @@ abstract class AbstractTabsAdmin extends Admin
 
         parent::configureFormFields($formMapper);
 
-        $formMapper->add('client_id', 'hidden', array('data' => $this->client_id));
+        $formMapper->add('client_id', 'hidden', array('data' => $this->client_id, 'attr' => array('class' => 'client_id'),));
     }
 
     /**

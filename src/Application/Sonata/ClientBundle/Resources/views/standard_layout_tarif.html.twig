@@ -1,10 +1,5 @@
 {% extends 'ApplicationSonataClientBundle::standard_layout.html.twig' %}
 
-{% use ':JS:ajax_edit.html.twig' %}
-{% use ':JS:ajax_create.html.twig' %}
-{% use ':JS:ajax_delete_action.html.twig' %}
-{% use ':popup:popup_form.html.twig' %}
-
 {% block sonata_admin_content %}
     {{ block('formTabs') }}
 
@@ -19,21 +14,3 @@
     {% endif %}
     {{ block('popup_form') }}
 {% endblock sonata_admin_content %}
-
-
-{% block javascriptsafter %}
-    {{ parent() }}
-    {{ block('ajaxCreate') }}
-    {{ block('ajaxEdit') }}
-    {{ block('ajaxDelete') }}
-<script type="text/javascript">
-    $(function () {
-        $('.sonata-ba-list-field-percent').each(function(){
-            if ($(this).html().replace(/[\n\r %,\.0]*/g, '') == ''){
-                $(this).html('');
-            }
-        });
-    });
-</script>
-{% endblock javascriptsafter %}
-

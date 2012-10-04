@@ -59,8 +59,6 @@ class ContactAdmin extends Admin
     {
         parent::configureListFields($listMapper);
 
-        $listMapper->addIdentifier('id', null);
-
         foreach ($this->_fields_list as $field) {
             $listMapper->add($field, null, array('label' => $this->getFieldLabel($field)));
         }

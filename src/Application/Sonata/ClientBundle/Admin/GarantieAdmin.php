@@ -68,8 +68,6 @@ class GarantieAdmin extends Admin
     {
         parent::configureListFields($listMapper);
 
-        $listMapper->addIdentifier('id', null);
-
         $listMapper
             ->add('type_garantie', null, array('label' => $this->getFieldLabel('type_garantie')))
             ->add('montant', null, array('label' => $this->getFieldLabel('montant')))

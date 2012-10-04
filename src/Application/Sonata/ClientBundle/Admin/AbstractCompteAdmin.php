@@ -21,10 +21,9 @@ abstract class AbstractCompteAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $filter = $this->getRequest()->query->get('filter');
+        parent::configureFormFields($formMapper);
 
         $formMapper->with('form.compte.title')
-            ->add('client_id', 'hidden', array('data' => $filter['client_id']['value']))
             ->add('date', null, array(
             'attr' => array('class' => 'datepicker'),
             'widget' => 'single_text',
@@ -49,6 +48,8 @@ abstract class AbstractCompteAdmin extends Admin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
+        parent::configureListFields($listMapper);
+
         $listMapper->add('date', null, array(
                 'label' => 'list.compte.date',
                 'template' => 'ApplicationSonataClientBundle:CRUD:list_date.html.twig'

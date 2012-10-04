@@ -23,14 +23,10 @@ class TarifAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $filter = $this->getRequest()->query->get('filter');
+        parent::configureFormFields($formMapper);
 
         $label = 'form.' . $this->_prefix_label . '.';
         $formMapper->with($label . 'title')
-            ->add('client_id', 'hidden', array(
-            'data' => $filter['client_id']['value'],
-            'attr' => array('class' => 'client_id'),
-        ))
             ->add('mode_de_facturation', null, array('label' => $label . 'mode_de_facturation', 'query_builder' => function(EntityRepository $er)
         {
             return $er->createQueryBuilder('u')
@@ -46,6 +42,8 @@ class TarifAdmin extends Admin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
+        parent::configureListFields($listMapper);
+
         $label = 'list.' . $this->_prefix_label . '.';
         $listMapper
             ->add('mode_de_facturation', null, array('label' => $label . 'mode_de_facturation'))

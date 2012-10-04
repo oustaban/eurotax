@@ -73,8 +73,6 @@ class CoordonneesAdmin extends Admin
     {
         parent::configureListFields($listMapper);
 
-        $listMapper->addIdentifier('id', null);
-
         $listMapper
             ->add('nom', null, array('label' => $this->getFieldLabel('nom')))
             ->add('no_de_compte', null, array('label' => $this->getFieldLabel('no_de_compte')))
