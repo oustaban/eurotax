@@ -1,18 +1,30 @@
 jQuery(document).ready(function ($) {
 
+
     //add class body
     if (active_tab) {
         $('body').addClass('js-' + active_tab);
     }
-    ;
 
     /**
      * document
      * */
-    $('#' + uniqid + '_type_document').change(function () {
-        $('#sonata-ba-field-container-' + uniqid + '_date_notaire, #sonata-ba-field-container-' + uniqid + '_date_apostille')[['show', 'hide'][$(this).val() == 2 ? 0 : 1]]();
-    }).change();
+    if ($('.js-document').size()) {
 
+        symfony_ajax.behaviors.type_document = {
+            attach:function (context) {
+                var _uniqid = symfony_ajax.get_uniqid();
+
+                if (_uniqid) {
+                    $('#' + _uniqid + '_type_document', context).change(function () {
+
+                        $('#sonata-ba-field-container-' + _uniqid + '_date_notaire, #sonata-ba-field-container-' + _uniqid + '_date_apostille')[['show', 'hide'][$(this).val() == 2 ? 0 : 1]]();
+
+                    }).trigger('change');
+                }
+            }
+        };
+    }
     /**
      * garantie
      * */
@@ -80,32 +92,34 @@ jQuery(document).ready(function ($) {
     if ($('.js-tarif').size()) {
         symfony_ajax.behaviors.tarif = {
             attach:function (context) {
-                var client_id_name = $('.client_id', context).attr('name');
-                if (client_id_name) {
-                    var tarif_uniqid = client_id_name.replace('[client_id]', '');
+                var _uniqid = symfony_ajax.get_uniqid();
 
-                    var tarif_value_percentage = $('#' + tarif_uniqid + '_value_percentage');
-                    var tarif_value = $('#' + tarif_uniqid + '_value');
+                if (_uniqid) {
+                    var tarif_value_percentage = $('#' + _uniqid + '_value_percentage');
+                    var tarif_value = $('#' + _uniqid + '_value');
 
-                    $('#' + tarif_uniqid + '_mode_de_facturation').change(function () {
-                        switch (Sonata.mode_de_facturation[$(this).val()].unit) {
+                    $('#' + _uniqid + '_mode_de_facturation').change(function () {
 
-                            case '%':
-                                tarif_value_percentage.removeAttr('disabled');
-                                tarif_value.attr('disabled', 'disabled').val('');
-                                Admin.log('%');
-                                break;
+                        if (Sonata.mode_de_facturation[$(this).val()]) {
 
-                            case 'V':
-                                tarif_value.removeAttr('disabled');
-                                tarif_value_percentage.attr('disabled', 'disabled').val('');
-                                Admin.log('V');
-                                break;
+                            switch (Sonata.mode_de_facturation[$(this).val()].unit) {
+
+                                case '%':
+                                    tarif_value_percentage.removeAttr('disabled');
+                                    tarif_value.attr('disabled', 'disabled').val('');
+                                    Admin.log('%');
+                                    break;
+
+                                case 'V':
+                                    tarif_value.removeAttr('disabled');
+                                    tarif_value_percentage.attr('disabled', 'disabled').val('');
+                                    Admin.log('V');
+                                    break;
+                            }
                         }
                     }).trigger('change');
                 }
             }
         };
     }
-    ;
 });

@@ -20,7 +20,8 @@ class ImpotsAdmin extends Admin
     /**
      * @return array
      */
-    public function getBatchActions(){
+    public function getBatchActions()
+    {
 
         return array();
     }
@@ -94,5 +95,21 @@ class ImpotsAdmin extends Admin
         $res = parent::getBreadcrumbs($action);
         array_shift($res);
         return $res;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return null|string
+     */
+    public function getTemplate($name)
+    {
+        $template = parent::getTemplate($name);
+        switch ($name) {
+            case 'layout':
+                $template = $this->_bundle_name . '::standard_layout.html.twig';
+                break;
+        }
+        return $template;
     }
 }

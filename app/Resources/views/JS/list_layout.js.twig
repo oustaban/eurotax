@@ -1,8 +1,22 @@
 <script type="text/javascript">
+
+    /**
+     *
+     * @type {Boolean}
+     * @private
+     */
     var field_dialog_{{ id }} = false;
 
+    /**
+     *
+     * @type {*}
+     */
     var symfony_ajax = symfony_ajax || {'behaviors': {}};
 
+    /**
+     *
+     * @param context
+     */
     symfony_attach_behaviors{{ id }} = function (context) {
         context = context || document;
         $.each(symfony_ajax.behaviors, function () {
@@ -12,6 +26,25 @@
         });
     };
 
+    /**
+     *
+     * @return {*}
+     */
+    symfony_ajax.get_uniqid = function(){
+
+        var _uniqid = null;
+        var client_id_name = $('.client_id').attr('name');
+
+        if (client_id_name) {
+            _uniqid = client_id_name.replace('[client_id]', '');
+        }
+        return _uniqid;
+    }
+
+    /**
+     *
+     * @private
+     */
     function initialize_popup_{{ id }}() {
             // initialize component
             if (!field_dialog_{{ id }}) {

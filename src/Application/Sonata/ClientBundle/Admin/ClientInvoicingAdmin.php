@@ -11,6 +11,9 @@ use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+use Sonata\AdminBundle\Validator\ErrorElement;
+use Application\Sonata\ClientBundle\Entity\ClientAlert;
+
 use Application\Sonata\ClientBundle\Admin\AbstractTabsAdmin as Admin;
 
 class ClientInvoicingAdmin extends Admin
@@ -76,6 +79,58 @@ class ClientInvoicingAdmin extends Admin
     {
 
         return '/sonata/client/tarif/list?filter[client_id][value]=' . $this->client_id;
+    }
+
+    /**
+     * @param ErrorElement $errorElement
+     * @param mixed $object
+     */
+    public function validate(ErrorElement $errorElement, $object)
+    {
+        /* @var $object \Application\Sonata\ClientBundle\Entity\Tarif */
+        parent::validate($errorElement, $object);
+
+        $this->_setupAlerts($errorElement, $object);
+    }
+
+    /**
+     * @param $errorElement
+     * @param $object
+     */
+    protected function _setupAlerts($errorElement, $object)
+    {
+        /** @var $doctrine  \Doctrine\Bundle\DoctrineBundle\Registry */
+        $doctrine = $this->getConfigurationPool()->getContainer()->get('doctrine');
+
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $doctrine->getManager();
+
+        /* @var $tab \Application\Sonata\ClientBundle\Entity\ListClientTabs */
+        $tab = $em->getRepository('ApplicationSonataClientBundle:ListClientTabs')->findOneByAlias('tarif');
+
+        $em->getRepository('ApplicationSonataClientBundle:ClientAlert')
+            ->createQueryBuilder('c')
+            ->delete()
+            ->where('c.client_id = :client_id')
+            ->andWhere('c.tabs = :tab')
+            ->setParameters(array(
+            ':client_id' => $object->getClientId(),
+            ':tab' => $tab,
+        ))->getQuery()->execute();
+
+
+        /* @var $object \Application\Sonata\ClientBundle\Entity\ClientInvoicing */
+        $value = false;
+
+        if ($value) {
+            $alert = new ClientAlert();
+            $alert->setClientId($object->getClientId());
+            $alert->setTabs($tab);
+            $alert->setIsBlocked(true);
+            $alert->setText('Manque Libéllé avance');
+
+            $em->persist($alert);
+        }
     }
 }
 

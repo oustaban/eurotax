@@ -76,7 +76,7 @@ class Coordonnees
     /**
      * @var string $no_de_compte
      *
-     * @ORM\Column(name="no_de_compte", type="string", length=100)
+     * @ORM\Column(name="no_de_compte", type="string", length=100, nullable=true)
      */
     private $no_de_compte;
 
@@ -99,7 +99,7 @@ class Coordonnees
     /**
      * @var string $SEPA
      *
-     * @ORM\Column(name="SEPA", type="string", length=100)
+     * @ORM\Column(name="SEPA", type="string", length=100, nullable=true)
      */
     private $SEPA;
 

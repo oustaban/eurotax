@@ -5,6 +5,8 @@ namespace Application\Sonata\ClientBundle\Admin;
 use Sonata\AdminBundle\Admin\Admin;
 use Symfony\Component\HttpFoundation\Request;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
+use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Datagrid\ListMapper;
 
 abstract class AbstractTabsAdmin extends Admin
 {
@@ -15,6 +17,7 @@ abstract class AbstractTabsAdmin extends Admin
     protected $_generate_url = true;
 
     protected $_bundle_name = 'ApplicationSonataClientBundle';
+    protected $_form_label = '';
 
 
     /**
@@ -148,5 +151,37 @@ abstract class AbstractTabsAdmin extends Admin
         $res = parent::getBreadcrumbs($action);
         array_shift($res);
         return $res;
+    }
+
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    protected function getFieldLabel($name = 'title')
+    {
+        return $this->_form_label . '.' . str_replace('_', '', $this->getLabel()) . '.' . $name;
+    }
+
+    /**
+     * @param FormMapper $formMapper
+     */
+    protected function configureFormFields(FormMapper $formMapper)
+    {
+        $this->_form_label = 'form';
+
+        parent::configureFormFields($formMapper);
+
+        $formMapper->add('client_id', 'hidden', array('data' => $this->client_id, 'attr' => array('class' => 'client_id'),));
+    }
+
+    /**
+     * @param ListMapper $listMapper
+     */
+    protected function configureListFields(ListMapper $listMapper)
+    {
+        $this->_form_label = 'list';
+
+        parent::configureListFields($listMapper);
     }
 }

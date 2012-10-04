@@ -14,6 +14,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Application\Form\Type\LocationType;
 use Sonata\AdminBundle\Route\RouteCollection;
 
+use Sonata\AdminBundle\Validator\ErrorElement;
+use Application\Sonata\ClientBundle\Entity\ClientAlert;
+
 use Application\Sonata\ClientBundle\Admin\AbstractTabsAdmin as Admin;
 
 class CoordonneesAdmin extends Admin
@@ -43,25 +46,23 @@ class CoordonneesAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
 
-        $filter = $this->getRequest()->query->get('filter');
+        parent::configureFormFields($formMapper);
 
-        $label = 'form.' . $this->_prefix_label . '.';
-        $formMapper->with($label . 'title')
-            ->add('client_id', 'hidden', array('data' => $filter['client_id']['value']))
+        $formMapper->with($this->getFieldLabel('title'))
+
             ->add('orders', 'hidden', array(
             'data' => null,
-            'label' => $label . 'orders'
+            'label' => $this->getFieldLabel('orders')
         ))
-            ->add('nom', null, array('label' => $label . 'nom'))
+            ->add('nom', null, array('label' => $this->getFieldLabel('nom')))
             ->add('location', new LocationType(), array(
                 'data_class' => 'Application\Sonata\ClientBundle\Entity\Coordonnees',
             ),
             array('type' => 'location'))
-            ->add('no_de_compte', null, array('label' => $label . 'no_de_compte'))
-            ->add('code_swift', null, array('label' => $label . 'code_swift'))
-            ->add('IBAN', null, array('label' => $label . 'IBAN'))
-            ->add('SEPA', null, array('label' => $label . 'SEPA'));
-
+            ->add('no_de_compte', null, array('label' => $this->getFieldLabel('no_de_compte')))
+            ->add('code_swift', null, array('label' => $this->getFieldLabel('code_swift')))
+            ->add('IBAN', null, array('label' => $this->getFieldLabel('IBAN')))
+            ->add('SEPA', null, array('label' => $this->getFieldLabel('SEPA')));
     }
 
     //list
@@ -70,20 +71,66 @@ class CoordonneesAdmin extends Admin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('id', null);
+        parent::configureListFields($listMapper);
 
-        $label = 'list.' . $this->_prefix_label . '.';
         $listMapper
-            ->add('nom', null, array('label' => $label . 'nom'))
-            ->add('no_de_compte', null, array('label' => $label . 'no_de_compte'))
-            ->add('code_swift', null, array('label' => $label . 'code_swift'));
+            ->add('nom', null, array('label' => $this->getFieldLabel('nom')))
+            ->add('no_de_compte', null, array('label' => $this->getFieldLabel('no_de_compte')))
+            ->add('code_swift', null, array('label' => $this->getFieldLabel('code_swift')));
+    }
+
+
+    public function validate(ErrorElement $errorElement, $object)
+    {
+        /* @var $object \Application\Sonata\ClientBundle\Entity\Contact */
+        parent::validate($errorElement, $object);
+
+        $this->_setupAlerts($errorElement, $object);
+    }
+
+    /**
+     * @param $errorElement
+     * @param $object
+     */
+    protected function _setupAlerts($errorElement, $object)
+    {
+        /** @var $doctrine  \Doctrine\Bundle\DoctrineBundle\Registry */
+        $doctrine = $this->getConfigurationPool()->getContainer()->get('doctrine');
+
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $doctrine->getManager();
+
+        /* @var $tab \Application\Sonata\ClientBundle\Entity\ListClientTabs */
+        $tab = $em->getRepository('ApplicationSonataClientBundle:ListClientTabs')->findOneByAlias('coordinates');
+
+        $em->getRepository('ApplicationSonataClientBundle:ClientAlert')
+            ->createQueryBuilder('c')
+            ->delete()
+            ->where('c.client_id = :client_id')
+            ->andWhere('c.tabs = :tab')
+            ->setParameters(array(
+            ':client_id' => $object->getClientId(),
+            ':tab' => $tab,
+        ))->getQuery()->execute();
+
+
+        $value = $object->getIBAN();
+        if (0) {
+            $alert = new ClientAlert();
+            $alert->setClientId($object->getClientId());
+            $alert->setTabs($tab);
+            $alert->setIsBlocked(false);
+            $alert->setText('Manque coordonnées bancaires pour remboursement TVA');
+
+            $em->persist($alert);
+        }
     }
 
     /**
      * @param RouteCollection $collection
      */
-    protected function configureRoutes(RouteCollection $collection){
-
+    protected function configureRoutes(RouteCollection $collection)
+    {
         $collection->add('sortable');
     }
 }

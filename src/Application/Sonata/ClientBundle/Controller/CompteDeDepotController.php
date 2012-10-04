@@ -14,5 +14,4 @@ class CompteDeDepotController extends Controller
      * @var string
      */
     protected $_tabAlias = 'compte_de_depot';
-    protected $_template = 'standard_layout_add_edit_ajax';
 }

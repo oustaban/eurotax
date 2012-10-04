@@ -23,12 +23,10 @@ class CommentaireAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-
-        $filter = $this->getRequest()->query->get('filter');
+        parent::configureFormFields($formMapper);
 
         $label = 'form.' . $this->_prefix_label . '.';
         $formMapper->with($label . 'title')
-            ->add('client_id', 'hidden', array('data' => $filter['client_id']['value']))
             ->add('date', null, array(
             'label' => $label . 'date',
             'attr' => array('class' => 'datepicker'),
@@ -46,7 +44,7 @@ class CommentaireAdmin extends Admin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('id', null);
+        parent::configureListFields($listMapper);
 
         $label = 'list.' . $this->_prefix_label . '.';
         $listMapper

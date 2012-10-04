@@ -24,10 +24,9 @@ class DocumentAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $filter = $this->getRequest()->query->get('filter');
+        parent::configureFormFields($formMapper);
 
         $formMapper->with('form.document.title')
-            ->add('client_id', 'hidden', array('data' => $filter['client_id']['value']))
             ->add('file', 'file', array('label' => 'form.document.document', 'required' => false))
             ->add('type_document', null, array('label' => 'form.document.type_document'))
             ->add('date_document', null, array(
@@ -39,8 +38,20 @@ class DocumentAdmin extends Admin
         ))
             ->add('preavis', null, array('label' => 'form.document.preavis'))
             ->add('particularite', null, array('label' => 'form.document.particularite'))
-            ->add('date_notaire', null, array('label' => 'form.document.date_notaire'))
-            ->add('date_apostille', null, array('label' => 'form.document.date_apostille'));
+            ->add('date_notaire', null, array(
+            'label' => 'form.document.date_notaire',
+            'attr' => array('class' => 'datepicker'),
+            'widget' => 'single_text',
+            'input' => 'datetime',
+            'format' => $this->date_format_datetime
+        ))
+            ->add('date_apostille', null, array(
+            'label' => 'form.document.date_apostille',
+            'attr' => array('class' => 'datepicker'),
+            'widget' => 'single_text',
+            'input' => 'datetime',
+            'format' => $this->date_format_datetime
+        ));
     }
 
     //list
@@ -49,7 +60,7 @@ class DocumentAdmin extends Admin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('id', null);
+        parent::configureListFields($listMapper);
 
         $listMapper->add('document', null, array(
             'label' => 'list.document.document',

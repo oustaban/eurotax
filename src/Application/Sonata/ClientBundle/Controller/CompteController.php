@@ -14,5 +14,4 @@ class CompteController extends Controller
      * @var string
      */
     protected $_tabAlias = 'compte';
-    protected $_template = 'standard_layout_add_edit_ajax';
 }
