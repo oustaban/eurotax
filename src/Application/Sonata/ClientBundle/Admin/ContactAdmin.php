@@ -29,10 +29,9 @@ class ContactAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $this->_form_label = 'form';
+        parent::configureFormFields($formMapper);
 
         $formMapper->with($this->getFieldLabel('title'))
-            ->add('client_id', 'hidden', array('data' => $this->client_id))
             ->add('civilite', null, array('label' => $this->getFieldLabel('civilite')))
             ->add('nom', null, array('label' => $this->getFieldLabel('nom')))
             ->add('prenom', null, array('label' => $this->getFieldLabel('prenom')))
@@ -58,10 +57,12 @@ class ContactAdmin extends Admin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
+        parent::configureListFields($listMapper);
+
         $listMapper->addIdentifier('id', null);
 
         foreach ($this->_fields_list as $field) {
-            $listMapper->add($field, null, array('label' => 'list.contact.' . $field));
+            $listMapper->add($field, null, array('label' => $this->getFieldLabel($field)));
         }
     }
 
