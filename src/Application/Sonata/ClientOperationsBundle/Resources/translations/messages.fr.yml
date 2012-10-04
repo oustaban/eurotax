@@ -1,9 +1,51 @@
 ApplicationSonataClientOperationsBundle:
   pdf:
+    address: 77-79 Avenue Aristide Briand<br />94110-ARCUEIL-France<br />France
+    vat_entity: DECLARANT #VAT-Registered Entity
+    summ: RESUME de la Période #SUMMARY of the Period
+    fin_situation: Situation Financière #Financial Situation
+    vat_situation: Situation  TVA en EUROS #VAT Situation in EUROS
+    total_header_output: TVA à PAYER (€) #Total Output TVA
+    total_header_input: TVA DEDUCTIBLE (€) #Total Input TVA
+    sales: Ventes France #Sales with French TVA
+    vat_purchases: Achats et importations en France #Purchases & importation with VAT
+    period_this_month: Période courante #of the month
+    period_prev_month: Périodes antérieures #of previous months
+    period_this: de la période #of the period
+    from_period_prev: (Fin de période précédente) #from previous period
+    negative_nett: HT négatif #Negative nett
+    negative_vat: TVA négative #Negative VAT
+    charge_header: Achats en France Art 283-I : TVA due par preneur #Reverse charge Art 283-I
+    acquisitions_header: Acquisitions Intra-UE #Intra-EU Acquisitions of goods
+    credit: Crédit de TVA #Credit of VAT
+    credit_carried: Crédit TVA à reporter #Credit of VAT carried forward
+    total: TOTAL #TOTAL
+    balance_title: SOLDE TVA #VAT BALANCE
+    claim: Demande de remboursement #French VAT Claim
+    operations_header: OPERATIONS NON IMPOSABLES #TAXABLE OPERATIONS
+    exports_header: Exportations #Exports
+    deliveries_header: Livraisons Intra-UE #Intra-EU Deliveries of goods
+    no_tva_header: Ventes Art 283-I #Sales withtout TVA (Art. 283-1)
+    other_header: Autres opérations non imposables #Other non taxable operations
+    quota_header: Achats en Franchise #Quota Free Purchases
+    ruling_header: RESCRIT autoliquidation #REVERSE CHARGE RULING
+    ruling_nett_title: HT (€) #Nett (€)
+    ruling_vat_title: TVA (€) - ligne 21 Ca3 #VAT (€) - line 21 Ca3
+
+    balance:
+      tva: TVA #TVA
+      additional_taxes: TAXES ADDITIONNELLES #ADDITIONAL TAXES
+      account_balance: SOLDE DU COMPTE #BALANCE OF ACCOUNT
+      total: TOTAL DU #TOTAL
+
+    th:
+      nett: HT #Nett
+      tva: TVA #TVA
 
   imports:
     list_title: Liste des importations
     confirm_delete: Etes vous sur de vouloir effacer le dernier lot importé
+
   form:
     Month: Mois
     Year:  Année

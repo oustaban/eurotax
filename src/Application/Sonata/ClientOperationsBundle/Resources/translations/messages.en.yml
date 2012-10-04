@@ -1,0 +1,43 @@
+ApplicationSonataClientOperationsBundle:
+  pdf:
+    address: 77-79 Avenue Aristide Briand<br />94110-ARCUEIL-France<br />France
+    vat_entity: VAT-Registered Entity
+    summ: SUMMARY of the Period
+    fin_situation: Financial Situation
+    vat_situation: VAT Situation in EUROS
+    total_header_output: Total Output TVA
+    total_header_input: Total Input TVA
+    sales: Sales with French TVA
+    vat_purchases: Purchases&importation with VAT
+    period_this_month: of the month
+    period_prev_month: of previous months
+    period_this: of the period
+    from_period_prev: from previous period
+    negative_nett: Negative nett
+    negative_vat: Negative VAT
+    charge_header: Reverse charge Art 283-I
+    acquisitions_header: Intra-EU Acquisitions of goods
+    credit: Credit of VAT
+    credit_carried: Credit of VAT carried forward
+    total: TOTAL
+    balance_title: VAT BALANCE
+    claim: French VAT Claim
+    operations_header: TAXABLE OPERATIONS
+    exports_header: Exports
+    deliveries_header: Intra-EU Deliveries of goods
+    no_tva_header: Sales withtout TVA (Art. 283-1)
+    other_header: Other non taxable operations
+    quota_header: Quota Free Purchases
+    ruling_header: REVERSE CHARGE RULING
+    ruling_nett_title: Nett (€)
+    ruling_vat_title: VAT (€) - line 21 Ca3
+
+    balance:
+      tva: TVA
+      additional_taxes: ADDITIONAL TAXES
+      account_balance: BALANCE OF ACCOUNT
+      total: TOTAL
+
+    th:
+      nett: Nett
+      tva: TVA

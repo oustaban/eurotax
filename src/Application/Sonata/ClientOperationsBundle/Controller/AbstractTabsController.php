@@ -333,7 +333,7 @@ class AbstractTabsController extends Controller
         if (empty($this->client)) {
             throw new NotFoundHttpException(sprintf('unable to find Client with id : %s', $this->admin->client_id));
         }
-        
+
         $this->_month = $this->admin->month;
         $this->_query_month = $this->admin->query_month;
         $this->_year = $this->admin->year;
@@ -1094,16 +1094,37 @@ class AbstractTabsController extends Controller
      */
     public function pdfAction()
     {
-        $file_name = 'eurotax-' . md5(time() . rand(1, 99999999));
+        $client = $this->getClient();
+        $this->get('request')->setLocale(strtolower($client->getLanguage()));
 
-        include VENDOR_PATH.'/mpdf/mpdf/mpdf.php';
-        $mpdf=new \mPDF('c');
-        //$mpdf->SetDisplayMode('fullpage');
+        /** @var $em \Doctrine\ORM\EntityManager */
+        $em = $this->getDoctrine()->getManager();
 
-        $mpdf->WriteHTML($this->render('ApplicationSonataClientOperationsBundle::pdf.html.twig')->getContent());
-        $mpdf->Output($file_name);
+        /** @var $bank \Application\Sonata\ClientBundle\Entity\Coordonnees */
+        $bank = $em->getRepository('ApplicationSonataClientBundle:Coordonnees')->findOneBy(array());
 
-        exit;
+        $debug = isset($_GET['d']);
+        $page = $this->render('ApplicationSonataClientOperationsBundle::pdf.html.twig', array(
+            'debug' => $debug,
+            'client' => $client,
+            'bank' => $bank,
+        ));
+
+
+        if (!$debug) {
+            $file_name = 'eurotax-' . md5(time() . rand(1, 99999999));
+
+            include VENDOR_PATH . '/mpdf/mpdf/mpdf.php';
+            $mpdf = new \mPDF('c', 'A4', 0, '', 15, 15, 13, 13, 9, 2);
+            //$mpdf->SetDisplayMode('fullpage');
+
+            $mpdf->WriteHTML($page->getContent());
+            $mpdf->Output();
+
+            exit;
+        }
+
+        return $page;
     }
 
     /**
