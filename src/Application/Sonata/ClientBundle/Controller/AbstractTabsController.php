@@ -114,6 +114,23 @@ abstract class AbstractTabsController extends Controller
     }
 
     /**
+     * @param mixed $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteAction($id)
+    {
+        $action = parent::deleteAction($id);
+
+        if ($this->getRequest()->getMethod() == 'DELETE' && $this->isXmlHttpRequest()) {
+            return $this->renderJson(array(
+                'result' => 'ok',
+            ));
+        }
+
+        return $action;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function redirectTo($object)
