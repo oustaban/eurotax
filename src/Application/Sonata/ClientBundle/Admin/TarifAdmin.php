@@ -54,13 +54,7 @@ class TarifAdmin extends Admin
             ->add('mode_de_facturation', null, array('label' => $this->getFieldLabel('mode_de_facturation')))
             ->add('value', 'money', array('label' => $this->getFieldLabel('value')))
             ->add('value_percentage', 'percent', array('label' => $this->getFieldLabel('value_percentage')))
-            ->add('mode_de_facturation.invoice_type.name', null, array('label' => $this->getFieldLabel('invoice_type')))
-            ->add('_action', 'actions', array(
-                'actions' => array(
-                    'delete' => array(),
-                )
-            )
-        );
+            ->add('mode_de_facturation.invoice_type.name', null, array('label' => $this->getFieldLabel('invoice_type')));
     }
 
     /**

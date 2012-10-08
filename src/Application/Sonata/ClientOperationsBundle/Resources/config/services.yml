@@ -1,15 +1,15 @@
 services:
     application.sonata.admin.clientoperations:
-            class : Application\Sonata\ClientOperationsBundle\Admin\ClientAdmin
-            tags:
-                - { name: sonata.admin, manager_type: orm, group: Client Operations, label: Client Operations }
-            arguments: [null, Application\Sonata\ClientBundle\Entity\Client, ApplicationSonataClientOperationsBundle:Client]
+        class : Application\Sonata\ClientOperationsBundle\Admin\ClientAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Client Operations, label: Client Operations }
+        arguments: [null, Application\Sonata\ClientBundle\Entity\Client, ApplicationSonataClientOperationsBundle:Client]
 
     application.sonata.admin.clientoperations_clientalert:
-            class : Application\Sonata\ClientOperationsBundle\Admin\ClientAlertAdmin
-            tags:
-                - { name: sonata.admin, manager_type: orm, group: Client Operations, label: Client Alert }
-            arguments: [null, Application\Sonata\ClientBundle\Entity\ClientAlert, ApplicationSonataClientOperationsBundle:ClientAlert]
+        class : Application\Sonata\ClientOperationsBundle\Admin\ClientAlertAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Client Operations, label: Client Alert }
+        arguments: [null, Application\Sonata\ClientBundle\Entity\ClientAlert, ApplicationSonataClientOperationsBundle:ClientAlert]
 
     application.sonata.admin.v01tva:
         class : Application\Sonata\ClientOperationsBundle\Admin\V01TVAAdmin

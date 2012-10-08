@@ -183,12 +183,12 @@ abstract class AbstractTabsAdmin extends Admin
     {
         $this->_form_label = 'list';
 
-        parent::configureListFields($listMapper);
-
         $listMapper->add('_action', 'actions', array(
             'actions' => array(
                 'delete' => array(),
             )
         ));
+
+        parent::configureListFields($listMapper);
     }
 }

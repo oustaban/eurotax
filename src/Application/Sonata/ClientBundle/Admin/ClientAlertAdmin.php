@@ -45,13 +45,7 @@ class ClientAlertAdmin extends Admin
         $label = 'list.' . $this->_prefix_label . '.';
         $listMapper
             ->add('tabs.name', null, array('label' => $label . 'tabs'))
-            ->add('text', null, array('label' => $label . 'text'))
-            ->add('_action', 'actions', array(
-                'actions' => array(
-                    'delete' => array(),
-                )
-            )
-        );
+            ->add('text', null, array('label' => $label . 'text'));
     }
 
 
