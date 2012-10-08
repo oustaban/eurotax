@@ -40,6 +40,7 @@ class ClientAlertAdmin extends Admin
     {
         parent::configureListFields($listMapper);
 
+        $listMapper->remove('_action');
         $listMapper->addIdentifier('id', null);
 
         $label = 'list.' . $this->_prefix_label . '.';
