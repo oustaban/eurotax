@@ -15,6 +15,11 @@ use Application\Sonata\ClientBundle\Admin\AbstractTabsAdmin as Admin;
 
 abstract class AbstractCompteAdmin extends Admin
 {
+    protected $datagridValues = array(
+        '_sort_order' => 'DESC',
+        '_sort_by' => 'date'
+    );
+
     //create & edit form
     /**
      * @param FormMapper $formMapper
