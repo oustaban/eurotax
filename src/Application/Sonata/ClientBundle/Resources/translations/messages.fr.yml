@@ -75,7 +75,7 @@ form:
     note: Note
 
   Tarif:
-    title: Tarif
+    title: Ajouter / Modifier un tarif
     mode_de_facturation: Mode de facturation
     value: Valeur
     value_percentage: Valeur %
@@ -97,8 +97,16 @@ form:
     text: Text
     is_blocked: Blocked
 
-  compte:
-    title: Compte
+  Compte:
+    title: Ajouter / Modifier un compte
+    date: Date
+    operation: Opération
+    montant: Montant
+    commentaire: Commentaire
+    statut: Statut
+
+  CompteDeDepot:
+    title: Ajouter / Modifier un compte de dépôt
     date: Date
     operation: Opération
     montant: Montant
@@ -194,7 +202,7 @@ list:
       text: Text
       is_blocked: Blocked
 
-  compte:
+  Compte:
     title: Compte
     date: Date
     operation: Opération
@@ -202,6 +210,13 @@ list:
     commentaire: Commentaire
     statut: Statut
 
+  CompteDeDepot:
+    title: Ajouter / Modifier un compte de dépôt
+    date: Date
+    operation: Opération
+    montant: Montant
+    commentaire: Commentaire
+    statut: Statut
 
 filter:
   code_client: Code client

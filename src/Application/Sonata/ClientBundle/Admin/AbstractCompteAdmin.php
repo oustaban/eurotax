@@ -28,19 +28,19 @@ abstract class AbstractCompteAdmin extends Admin
     {
         parent::configureFormFields($formMapper);
 
-        $formMapper->with('form.compte.title')
+        $formMapper->with($this->getFieldLabel('title'))
             ->add('date', null, array(
             'attr' => array('class' => 'datepicker'),
             'widget' => 'single_text',
             'input' => 'datetime',
             'format' => $this->date_format_datetime,
-            'label' => 'form.compte.date'
+            'label' => $this->getFieldLabel('date'),
         ))
-            ->add('operation', null, array('label' => 'form.compte.operation'))
-            ->add('montant', 'money', array('label' => 'form.compte.montant'))
-            ->add('commentaire', null, array('label' => 'form.compte.commentaire'))
+            ->add('operation', null, array('label' => $this->getFieldLabel('operation')))
+            ->add('montant', 'money', array('label' => $this->getFieldLabel('montant')))
+            ->add('commentaire', null, array('label' => $this->getFieldLabel('commentaire')))
             ->add('statut', null, array(
-            'label' => 'form.compte.statut',
+            'label' => $this->getFieldLabel('statut'),
             'empty_value' => '',
             'required' => false,
         ));
@@ -56,13 +56,13 @@ abstract class AbstractCompteAdmin extends Admin
         parent::configureListFields($listMapper);
 
         $listMapper->add('date', null, array(
-                'label' => 'list.compte.date',
-                'template' => 'ApplicationSonataClientBundle:CRUD:list_date.html.twig'
+            'label' => $this->getFieldLabel('date'),
+            'template' => 'ApplicationSonataClientBundle:CRUD:list_date.html.twig'
         ))
-            ->add('operation', null, array('label' => 'list.compte.operation'))
-            ->add('montant', null, array('label' => 'list.compte.montant'))
-            ->add('commentaire', null, array('label' => 'list.compte.commentaire'))
-            ->add('statut.name', null, array('label' => 'list.compte.statut'));
+            ->add('operation', null, array('label' => $this->getFieldLabel('operation')))
+            ->add('montant', null, array('label' => $this->getFieldLabel('montant')))
+            ->add('commentaire', null, array('label' => $this->getFieldLabel('commentaire')))
+            ->add('statut.name', null, array('label' => $this->getFieldLabel('statut')));
     }
 }
 
