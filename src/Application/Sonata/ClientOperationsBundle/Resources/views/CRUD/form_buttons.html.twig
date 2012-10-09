@@ -125,13 +125,13 @@
     });
 
     $('#btn_client_alert').live('click', function (event) {
-        var link = '{{ path('admin_sonata_clientoperations_clientalert_list', _filter_json) }}';
+        var link = '{{ path('admin_sonata_clientoperations_clientalert_list', _filter_json).replace('&amp;', '&') }}';
         field_dialog_form_add_{{ id }}(event, link);
         return false;
     });
 
     $('#downloadPDF').click(function () {
-        location.href = '{{ admin.generateUrl('pdf', _filter_json) }}';
+        location.href = '{{ admin.generateUrl('pdf', _filter_json).replace('&amp;', '&') }}';
     })
 </script>
 
