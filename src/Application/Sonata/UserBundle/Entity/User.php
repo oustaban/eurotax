@@ -60,6 +60,11 @@ class User extends AbstractedUser implements UserInterface
     /**
      * @var string
      */
+    protected $phone;
+
+    /**
+     * @var string
+     */
     protected $token;
 
     /**
@@ -208,6 +213,22 @@ class User extends AbstractedUser implements UserInterface
     public function getFullname()
     {
         return sprintf("%s %s", $this->getFirstname(), $this->getLastname());
+    }
+
+    /**
+     * @param string $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
     }
 
     /**
