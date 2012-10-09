@@ -91,10 +91,6 @@
 
 {% block javascriptsafter %}
 <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/bootbox.min.js') }}"></script>
-<script type="text/javascript">
-    bootbox.setLocale('{{default_locale}}');
-</script>
 {{ block('bootstrapTooltip')}}
 {{ block('ajaxLoading')}}
 {{ block('totalsCalculate')}}

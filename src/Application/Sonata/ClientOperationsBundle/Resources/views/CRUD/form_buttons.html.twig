@@ -126,7 +126,7 @@
 
     $('#btn_client_alert').live('click', function (event) {
         var link = '{{ path('admin_sonata_clientoperations_clientalert_list', _filter_json) }}'.replace('&amp;', '&');
-        field_dialog_form_add_{{ id }}(event, link);
+        field_dialog_form_add_{{ id }}(event, link, {title : '{{ 'ApplicationSonataClientOperationsBundle.list.Alerts'|trans()}}' });
         return false;
     });
 

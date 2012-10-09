@@ -58,7 +58,14 @@
     }
 
     // handle the add link
-    var field_dialog_form_add_{{ id }} = function (event, link) {
+    var field_dialog_form_add_{{ id }} = function (event, link, options) {
+        options = options || {};
+        options = $.extend({
+            title : ''
+        }, options);
+
+        $('#popup_form_title').html(options.title);
+
         event.preventDefault();
         event.stopPropagation();
 

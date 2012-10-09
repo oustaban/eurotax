@@ -276,6 +276,7 @@ ApplicationSonataClientOperationsBundle:
       commentaires: Commentaires
 
   list:
+    Alerts: Alertes
     V01TVA:
       title: V01-TVA
       tiers: Tiers
