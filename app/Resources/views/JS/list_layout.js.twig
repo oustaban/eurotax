@@ -7,11 +7,6 @@
     var field_dialog_{{ id }} = false;
 
     /**
-     * @type {Boolean}
-     */
-    var ajax_dialog_load = true;
-
-    /**
      * @type {*}
      */
     var symfony_ajax = symfony_ajax || {'behaviors': {}};
@@ -59,8 +54,6 @@
 
     // handle the add link
     var field_dialog_form_add_{{ id }} = function (event, link, options) {
-
-        if(!ajax_dialog_load) return ;
 
         options = options || {};
         options = $.extend({

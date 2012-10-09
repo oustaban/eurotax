@@ -6,7 +6,6 @@
     $(function () {
         $('.sonata-ba-list .delete_link').live('click', function (event) {
             var link = $(this).attr('href');
-            ajax_dialog_load = true;
             field_dialog_form_add_{{ id }}(event, link);
             return false;
         });
