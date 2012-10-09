@@ -28,6 +28,7 @@ class CoordonneesController extends Controller
 
     /**
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function sortableAction()
     {

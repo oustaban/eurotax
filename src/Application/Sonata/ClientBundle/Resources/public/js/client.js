@@ -65,11 +65,16 @@ jQuery(document).ready(function ($) {
                 });
                 return ui;
             },
-            update:function (event, ui) {
+            update: function (event, ui) {
                 var sort_data = [];
-                $('.sonata-ba-list .table tbody .sonata-ba-list-field input[type="checkbox"]').each(function () {
-                    sort_data.push($(this).val());
+                $('.sonata-ba-list .ui-sortable tr').each(function (i) {
+                    var objectid = $(this).find('td[objectid]:last').attr('objectid');
+                    if (objectid) {
+                        sort_data.push(objectid);
+                    }
                 });
+
+                ajax_dialog_load = false;
 
                 $.ajax({
                     url:Sonata.url.sortable,
