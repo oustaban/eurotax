@@ -75,6 +75,7 @@ jQuery(document).ready(function ($) {
                 });
 
                 ajax_dialog_load = false;
+                alert(1);
 
                 $.ajax({
                     url:Sonata.url.sortable,
