@@ -6,7 +6,7 @@
     </thead>
     <tbody>
     <tr>
-        <td>{{ info.year~'-'~info.month~' - T'~info.quarter }}</td>
+        <td>{{ info.time|date('Y-m') }} - T{{ info.quarter }}</td>
     </tr>
     </tbody>
 </table>

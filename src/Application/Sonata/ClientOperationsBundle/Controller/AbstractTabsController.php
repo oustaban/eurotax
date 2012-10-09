@@ -1105,7 +1105,11 @@ class AbstractTabsController extends Controller
 
         $debug = isset($_GET['d']);
         $page = $this->render('ApplicationSonataClientOperationsBundle::pdf.html.twig', array(
-            'info' => array('month' => $this->_month, 'year' => $this->_year, 'quarter' => floor(($this->_month-1)/3)+1),
+            'info' => array(
+                'time' => strtotime($this->_year . '-' . $this->_month . '-01'),
+                'month' => $this->_month,
+                'year' => $this->_year,
+                'quarter' => floor(($this->_month-1)/3)+1),
             'debug' => $debug,
             'client' => $client,
             'bank' => $bank,
