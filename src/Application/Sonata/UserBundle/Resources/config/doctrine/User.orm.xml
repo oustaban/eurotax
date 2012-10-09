@@ -15,6 +15,7 @@
         <!-- Profile fields -->
         <field name="firstname" type="string" column="firstname" length="64" nullable="true"/>
         <field name="lastname" type="string" column="lastname" length="64" nullable="true"/>
+        <field name="phone" type="string" column="phone" length="64" nullable="true" />
 
         <!-- extra security fields -->
         <field name="token" type="string" length="255" column="token" nullable="true"/>
