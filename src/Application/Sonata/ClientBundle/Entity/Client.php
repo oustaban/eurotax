@@ -32,7 +32,7 @@ class Client
     /**
      * @var integer $user_id
      *
-     * @ORM\ManyToOne(targetEntity="\Application\Sonata\UserBundle\Entity\User", inversedBy="client")
+     * @ORM\ManyToOne(targetEntity="\Application\Sonata\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
@@ -47,7 +47,7 @@ class Client
     /**
      * @var integer $nature_du_client_id
      *
-     * @ORM\ManyToOne(targetEntity="ListNatureDuClients", inversedBy="client")
+     * @ORM\ManyToOne(targetEntity="ListNatureDuClients")
      * @ORM\JoinColumn(name="nature_du_client_id" , referencedColumnName="id")
      */
     protected $nature_du_client;
@@ -111,7 +111,7 @@ class Client
     /**
      * @var integer $mode_denregistrement_id
      *
-     * @ORM\ManyToOne(targetEntity="ListModeDenregistrements", inversedBy="client")
+     * @ORM\ManyToOne(targetEntity="ListModeDenregistrements")
      * @ORM\JoinColumn(name="mode_denregistrement_id", referencedColumnName="id")
      */
 
@@ -127,7 +127,7 @@ class Client
     /**
      * @var integer $periodicite_facturation_id
      *
-     * @ORM\ManyToOne(targetEntity="ListPeriodiciteFacturations", inversedBy="client")
+     * @ORM\ManyToOne(targetEntity="ListPeriodiciteFacturations")
      * @ORM\JoinColumn(name="periodicite_facturation_id", referencedColumnName="id")
      */
     private $periodicite_facturation;
@@ -149,7 +149,7 @@ class Client
     /**
      * @var integer $periodicite_CA3_id
      *
-     * @ORM\ManyToOne(targetEntity="ListPeriodiciteFacturations", inversedBy="client")
+     * @ORM\ManyToOne(targetEntity="ListPeriodiciteFacturations")
      * @ORM\JoinColumn(name="periodicite_CA3_id", referencedColumnName="id")
      */
     private $periodicite_CA3;
@@ -157,7 +157,7 @@ class Client
     /**
      * @var integer $center_des_impots
      *
-     * @ORM\ManyToOne(targetEntity="\Application\Sonata\ImpotsBundle\Entity\Impots", inversedBy="client")
+     * @ORM\ManyToOne(targetEntity="\Application\Sonata\ImpotsBundle\Entity\Impots")
      * @ORM\JoinColumn(name="center_des_impots_id", referencedColumnName="id")
      */
     private $center_des_impots;
