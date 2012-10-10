@@ -52,6 +52,16 @@ class ClientController extends Controller
      */
     public function createAction()
     {
+        if ($this->getRequest()->query->get('TEST', null)) {
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Hello Email')
+                ->setFrom('defan.hypernaut@gmail.com')
+                ->setTo('recipient@example.com')
+                ->setBody('xxxxxx');
+
+            $this->get('mailer')->send($message);
+        }
+
         return $this->_action(parent::createAction());
     }
 
@@ -74,7 +84,7 @@ class ClientController extends Controller
     protected function _action($object, $id = null, $template = 'standard_layout_client')
     {
         $client = null;
-        if($id){
+        if ($id) {
             $client = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:Client')->find($id);
         }
 
