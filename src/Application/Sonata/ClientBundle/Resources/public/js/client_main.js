@@ -1,11 +1,18 @@
 jQuery(document).ready(function ($) {
 
+    $('#sonata-ba-field-container-' + uniqid + '_N_TVA_CEE, #sonata-ba-field-container-' + uniqid + '_N_TVA_CEE_facture').after('<hr />');
+
     $('.form-horizontal table td div.control-group').each(function (i) {
         $(this).addClass('field-' + i);
         $('.hidden').parent().parent().remove();
     });
 
-    $('.field-22').before('<input type="button" value="Copier les information postales" name="clone_address" id="clone_address" class="btn" />');
+    $('#'+uniqid+'_nom')
+        .keypress(required_spaces)
+        .blur(replace_spaces)
+        .trigger('blur');
+
+    $('#sonata-ba-field-container-' + uniqid + '_contact').before('<input type="button" value="Copier les information postales" name="clone_address" id="clone_address" class="btn" />');
 
     copy_address();
 
@@ -19,6 +26,7 @@ jQuery(document).ready(function ($) {
                 rm_label_required($('#sonata-ba-field-container-' + uniqid + '_location_facturation_' + field + '_facturation label'));
             });
             $('#' + uniqid + '_raison_sociale_2').attr('disabled', 'disabled').val('');
+            $('#' + uniqid + '_N_TVA_CEE_facture').attr('disabled', 'disabled').val('');
 
 
         }
@@ -29,6 +37,7 @@ jQuery(document).ready(function ($) {
                 add_label_required($('#sonata-ba-field-container-' + uniqid + '_location_facturation_' + field + '_facturation label'));
             });
             $('#' + uniqid + '_raison_sociale_2').removeAttr('disabled');
+            $('#' + uniqid + '_N_TVA_CEE_facture').removeAttr('disabled');
         }
 
 
@@ -63,6 +72,7 @@ function copy_address() {
         });
 
         $('#' + uniqid + '_raison_sociale_2').val($('#' + uniqid + '_raison_sociale').val());
+        $('#' + uniqid + '_N_TVA_CEE_facture').val($('#' + uniqid + '_N_TVA_CEE').val());
 
         return false;
     });
@@ -78,4 +88,20 @@ function add_label_required(field) {
 
 function rm_label_required(field) {
     field.text(field.text().replace('*', ''));
+}
+
+/**
+ * @param event
+ * @return {Boolean}
+ */
+function required_spaces(e) {
+    var chr = String.fromCharCode(e.charCode == undefined ? e.keyCode : e.charCode);
+    return chr != ' ';
+}
+
+/**
+ * @param event
+ */
+function replace_spaces(e) {
+    $(this).val($(this).val().replace(/\s+/, ''));
 }

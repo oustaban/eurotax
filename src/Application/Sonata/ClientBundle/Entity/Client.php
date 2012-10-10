@@ -23,13 +23,6 @@ class Client
 
 
     /**
-     * @var string $code_client
-     *
-     * @ORM\Column(name="code_client", type="string", length=200, nullable=true)
-     */
-    private $code_client;
-
-    /**
      * @var integer $user_id
      *
      * @ORM\ManyToOne(targetEntity="\Application\Sonata\UserBundle\Entity\User")
@@ -947,28 +940,6 @@ class Client
         return $this->getNom() ? : '-';
     }
 
-    /**
-     * Set code_client
-     *
-     * @param string $codeClient
-     * @return Client
-     */
-    public function setCodeClient($codeClient)
-    {
-        $this->code_client = $codeClient;
-
-        return $this;
-    }
-
-    /**
-     * Get code_client
-     *
-     * @return string
-     */
-    public function getCodeClient()
-    {
-        return $this->code_client;
-    }
 
     /**
      * Set autre_destinataire_de_facturation

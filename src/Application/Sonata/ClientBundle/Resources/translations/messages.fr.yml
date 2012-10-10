@@ -1,6 +1,5 @@
 form:
   client: Ajouter / Modifier un client
-  code_client: Code client
   user: Nom du gestionnaire
   nom: Nom
   nature_du_client: Nature du client
@@ -114,7 +113,6 @@ form:
     statut: Statut
 
 list:
-  code_client: Code client
   user: Nom du gestionnaire
   nom: Nom
   nature_du_client: Nature du client
@@ -219,7 +217,6 @@ list:
     statut: Statut
 
 filter:
-  code_client: Code client
   user: Nom du gestionnaire
   nom: Nom
   nature_du_client: Nature du client

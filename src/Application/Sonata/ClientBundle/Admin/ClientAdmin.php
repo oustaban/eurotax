@@ -52,7 +52,6 @@ class ClientAdmin extends Admin
 
         $formMapper
             ->with('form.client')
-            ->add('code_client', null, array('label' => 'form.code_client',))
             ->add('user', null, array('label' => 'form.user',))
             ->add('nom', null, array('label' => 'form.nom'))
             ->add('nature_du_client', null, array('label' => 'form.nature_du_client'))
@@ -63,6 +62,7 @@ class ClientAdmin extends Admin
                 'required' => true,
             ),
             array('type' => 'location'))
+            ->add('N_TVA_CEE', null, array('label' => 'form.N_TVA_CEE'))
             ->add('activite', null, array('label' => 'form.activite', 'required' => false,))
             ->add('date_debut_mission', 'date', array(
             'label' => 'form.date_debut_mission',
@@ -117,7 +117,6 @@ class ClientAdmin extends Admin
             'choices' => array(15, 19, 24, 31),
             'attr' => array('class' => 'date_de_depot_id'),
         ))
-            ->add('N_TVA_CEE', null, array('label' => 'form.N_TVA_CEE'))
             ->add('niveau_dobligation_id', 'choice', array(
             'label' => 'form.niveau_dobligation_id',
             'choices' => array(0, 1, 4),
