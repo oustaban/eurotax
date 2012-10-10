@@ -52,16 +52,6 @@ class ClientController extends Controller
      */
     public function createAction()
     {
-        if ($this->getRequest()->query->get('TEST', null)) {
-            $message = \Swift_Message::newInstance()
-                ->setSubject('Hello Email')
-                ->setFrom('defan.hypernaut@gmail.com')
-                ->setTo('defan.hypernaut@gmail.com')
-                ->setBody('xxxxxx');
-
-            $this->get('mailer')->send($message);
-        }
-
         return $this->_action(parent::createAction());
     }
 
