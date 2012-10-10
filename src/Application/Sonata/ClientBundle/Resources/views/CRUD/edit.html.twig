@@ -19,8 +19,10 @@
 
     <table class="form-table">
         <tr>
+            {% set field_index = 0 %}
             {% for name, form_group in admin.formgroups %}
-            <td {% if form_group.collapsed %}class="sonata-ba-fielset-collapsed"{% endif %}>
+            {% set field_index = field_index + 1 %}
+            <td {% if form_group.collapsed %}class="sonata-ba-fielset-collapsed"{% endif %} class="td-{{ field_index }}">
                 {% if form_group.collapsed %}
                 <a href="" class="sonata-ba-collapsed"
                 title="{{ 'link_expand'|trans({}, 'SonataAdminBundle') }}">{{ name|trans({}, admin.translationdomain) }}</a>
