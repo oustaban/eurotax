@@ -56,7 +56,7 @@ class ClientController extends Controller
             $message = \Swift_Message::newInstance()
                 ->setSubject('Hello Email')
                 ->setFrom('defan.hypernaut@gmail.com')
-                ->setTo('recipient@example.com')
+                ->setTo('defan.hypernaut@gmail.com')
                 ->setBody('xxxxxx');
 
             $this->get('mailer')->send($message);
