@@ -62,10 +62,10 @@ doctrine:
 # Swiftmailer Configuration
 swiftmailer:
     transport: %mailer_transport%
-#    host:      %mailer_host%
-#    username:  %mailer_user%
-#    password:  %mailer_password%
-#    spool:     { type: memory }
+    host:      %mailer_host%
+    username:  %mailer_user%
+    password:  %mailer_password%
+    spool:     { type: memory }
 
 monolog:
     handlers:
@@ -88,7 +88,7 @@ monolog:
             handler: swift
         swift:
             type:       swift_mailer
-            from_email: defan.hypernaut@gmail.com
+            from_email: eurotax@hypernaut.com
             to_email:   defan.hypernaut@gmail.com
             subject:    An Error Occurred!
             level:      debug

@@ -74,7 +74,7 @@ class ClientController extends Controller
     protected function _action($object, $id = null, $template = 'standard_layout_client')
     {
         $client = null;
-        if ($id) {
+        if($id){
             $client = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:Client')->find($id);
         }
 
