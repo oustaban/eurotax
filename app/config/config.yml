@@ -88,7 +88,7 @@ monolog:
             handler: swift
         swift:
             type:       swift_mailer
-            from_email: defan.hypernaut@gmail.com
+            from_email: eurotax@hypernaut.com
             to_email:   defan.hypernaut@gmail.com
             subject:    An Error Occurred!
             level:      debug
