@@ -10,14 +10,3 @@
     {% endif %}
 </div>
 {% endblock actions %}
-
-{% block form %}
-{{ parent() }}
-{% if action == 'create' %}
-<script type="text/javascript">
-    $(function () {
-        $('#{{admin.uniqid}}_groups_0').click();
-    });
-</script>
-{% endif %}
-{% endblock %}

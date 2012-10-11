@@ -72,6 +72,15 @@ class User extends AbstractedUser implements UserInterface
      */
     protected $twoStepVerificationCode;
 
+
+    public function __construct(){
+
+        parent::__construct();
+
+        $group = \AppKernel::getStaticContainer()->get('doctrine')->getRepository('ApplicationSonataUserBundle:Group')->find(1);
+        $this->addGroup($group);
+    }
+
     /**
      * Get id
      *
