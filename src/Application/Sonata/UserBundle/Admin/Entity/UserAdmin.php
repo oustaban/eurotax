@@ -21,10 +21,11 @@ class UserAdmin extends BaseUserAdmin
             ->addIdentifier('username')
             ->add('email')
             ->add('groups')
-            ->add('enabled')
-            ->add('locked')
+            ->add('locked', 'boolean', array(
+            'template' => 'ApplicationSonataUserBundle:CRUD:list_boolean_locked.html.twig',
+        ))
             ->add('createdAt', 'date', array(
-            'template' => 'ApplicationSonataUserBundle:CRUD:list_created_at.html.twig'
+            'template' => 'ApplicationSonataUserBundle:CRUD:list_created_at.html.twig',
         ));
 
 //        if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
