@@ -135,6 +135,10 @@ class UserAdmin extends BaseUserAdmin
         switch ($name) {
             case 'list':
                 return 'ApplicationSonataUserBundle:CRUD:list.html.twig';
+
+            case 'create':
+            case 'edit':
+                return 'ApplicationSonataUserBundle:CRUD:edit.html.twig';
         }
         return parent::getTemplate($name);
     }
