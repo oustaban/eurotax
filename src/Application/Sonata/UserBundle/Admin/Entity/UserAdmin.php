@@ -123,4 +123,19 @@ class UserAdmin extends BaseUserAdmin
         array_shift($res);
         return $res;
     }
+
+
+    /**
+     * @param string $name
+     *
+     * @return null|string
+     */
+    public function getTemplate($name)
+    {
+        switch ($name) {
+            case 'list':
+                return 'ApplicationSonataUserBundle:CRUD:list.html.twig';
+        }
+        return parent::getTemplate($name);
+    }
 }

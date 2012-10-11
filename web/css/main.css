@@ -122,3 +122,8 @@ td.sonata-ba-list-field-number{
 .popup-form .popup-body .sonata-medium-date select{
      width: 85px;
  }
+
+.sonata-ba-list .table .sonata-ba-list-field-header-batch{
+    padding-left:14px;
+    width: 80px;
+}
