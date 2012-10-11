@@ -76,7 +76,6 @@ class UserAdmin extends BaseUserAdmin
 //            ))
                 ->add('locked', null, array('required' => false))
                 ->add('expired', null, array('required' => false))
-                ->add('enabled', null, array('required' => false))
                 ->add('credentialsExpired', null, array('required' => false))
                 ->end();
         }

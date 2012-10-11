@@ -275,6 +275,7 @@ class User extends AbstractedUser implements UserInterface
     {
         $this->createdAt = new \DateTime;
         $this->updatedAt = new \DateTime;
+        $this->enabled = 1;
     }
 
     /**
