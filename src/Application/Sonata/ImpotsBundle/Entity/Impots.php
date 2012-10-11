@@ -72,7 +72,7 @@ class Impots
     /**
      * @var string $adresse_2
      *
-     * @ORM\Column(name="adresse_2", type="string", length=100)
+     * @ORM\Column(name="adresse_2", type="string", length=100, nullable=true)
      */
     private $adresse_2 = "";
 
