@@ -142,4 +142,13 @@ class UserAdmin extends BaseUserAdmin
         }
         return parent::getTemplate($name);
     }
+
+
+    /**
+     * @return array
+     */
+    public function getFormTheme()
+    {
+        return array( 'ApplicationSonataUserBundle:Form:form_admin_fields.html.twig');
+    }
 }

@@ -1,0 +1,7 @@
+{% extends 'SonataAdminBundle:Form:form_admin_fields.html.twig' %}
+
+{% block sonata_admin_orm_many_to_many_widget %}
+{% if sonata_admin.field_description.associationadmin %}
+    {{ form_widget(form) }}
+{% endif %}
+{% endblock %}
