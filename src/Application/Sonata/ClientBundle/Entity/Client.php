@@ -62,7 +62,7 @@ class Client
     /**
      * @var string $adresse_2_postal
      *
-     * @ORM\Column(name="adresse_2_postal", type="string", length=100)
+     * @ORM\Column(name="adresse_2_postal", type="string", length=100, nullable=true)
      */
     private $adresse_2_postal = "";
 
