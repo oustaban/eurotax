@@ -11,12 +11,6 @@
     width: 400px;
 }
 
-.js-garantie .control-group input,
-.js-garantie .control-group select,
-.js-garantie .control-group textarea {
-    width: 100%;
-}
-
 .js-garantie .field-1 input {
     width: 206px;
 }
