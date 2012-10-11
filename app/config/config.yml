@@ -67,32 +67,11 @@ swiftmailer:
 #    password:  %mailer_password%
 #    spool:     { type: memory }
 
-monolog:
-    handlers:
-        main:
-            type:         fingers_crossed
-            action_level: critical
-            handler:      grouped
-        grouped:
-            type:    group
-            members: [streamed, buffered]
-        firephp:
-            type:  firephp
-            level: info
-        streamed:
-            type:  stream
-            path:  "%kernel.logs_dir%/%kernel.environment%.log"
-            level: debug
-        buffered:
-            type:    buffer
-            handler: swift
-        swift:
-            type:       swift_mailer
-            from_email: eurotax@hypernaut.com
-            to_email:   defan.hypernaut@gmail.com
-            subject:    An Error Occurred!
-            level:      debug
-
+services:
+    kernel.listener.send_error_to_mail_listener_name:
+        class: Application\Listener\SendErrorToMailListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
 fos_user:
     db_driver: orm
     firewall_name: main
@@ -151,3 +130,31 @@ sonata_block:
 #            prefix: test     # prefix to ensure there is no clash between instances
 #            servers:
 #                - { domain: kooqit.local, ip: 127.0.0.1, port: 80}
+
+
+
+#monolog:
+#    handlers:
+#        main:
+#            type:         fingers_crossed
+#            action_level: critical
+#            handler:      grouped
+#        grouped:
+#            type:    group
+#            members: [streamed, buffered]
+#        firephp:
+#            type:  firephp
+#            level: info
+#        streamed:
+#            type:  stream
+#            path:  "%kernel.logs_dir%/%kernel.environment%.log"
+#            level: debug
+#        buffered:
+#            type:    buffer
+#            handler: swift
+#        swift:
+#            type:       swift_mailer
+#            from_email: eurotax@hypernaut.com
+#            to_email:   defan.hypernaut@gmail.com
+#            subject:    An Error Occurred!
+#            level:      debug
