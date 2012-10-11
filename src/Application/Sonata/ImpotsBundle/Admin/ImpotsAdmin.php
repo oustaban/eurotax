@@ -22,7 +22,6 @@ class ImpotsAdmin extends Admin
      */
     public function getBatchActions()
     {
-
         return array();
     }
 
@@ -63,7 +62,7 @@ class ImpotsAdmin extends Admin
     {
         $label = 'list.';
         $listMapper
-            ->addIdentifier('id', null, array('label' => $label . 'id'))
+            ->add('id', null, array('label' => $label . 'id'))
             ->add('nom', null, array('label' => $label . 'nom'))
             ->add('nom_de_la_banque', null, array('label' => $label . 'nom_de_la_banque'))
             ->add('adresse_1', null, array('label' => $label . 'adresse_1'))

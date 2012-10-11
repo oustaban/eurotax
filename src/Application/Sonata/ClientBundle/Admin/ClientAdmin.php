@@ -103,7 +103,7 @@ class ClientAdmin extends Admin
 
         $formMapper->add('date_fin_mission', 'date', array(
             'label' => 'form.date_fin_mission',
-            'attr' => array('class' => 'datepicker'.$class),
+            'attr' => array('class' => 'datepicker' . $class),
             'widget' => 'single_text',
             'input' => 'datetime',
             'format' => $this->date_format_datetime,
@@ -158,10 +158,18 @@ class ClientAdmin extends Admin
     {
         $listMapper->addIdentifier('id');
 
-        foreach ($this->_fields_list as $field => $options) {
-            $options['label'] = 'filter.' . $field;
-            $listMapper->add($field, null, $options);
-        }
+        $listMapper->add('raison_sociale', null, array('label' => 'filter.raison_sociale'))
+            ->add('nature_du_client.name', null, array('label' => 'filter.nature_du_client'))
+            ->add('date_de_depot_id', null, array('label' => 'filter.date_de_depot_id'))
+            ->add('date_debut_mission', null, array(
+            'template' => 'ApplicationSonataClientBundle:CRUD:list_date_debut_mission.html.twig',
+            'label' => 'filter.date_debut_mission'
+        ))
+            ->add('date_fin_mission', null, array(
+            'template' => 'ApplicationSonataClientBundle:CRUD:list_date_fin_mission.html.twig',
+            'label' => 'filter.date_fin_mission'
+        ))
+            ->add('user', null, array('label' => 'filter.user'));
     }
 
     /**
@@ -239,8 +247,8 @@ class ClientAdmin extends Admin
             ->where('c.client_id = :client_id')
             ->andWhere('c.tabs = :tab')
             ->setParameters(array(
-            ':client_id'=>$object->getId(),
-            ':tab'=>$tab,
+            ':client_id' => $object->getId(),
+            ':tab' => $tab,
         ))->getQuery()->execute();
 
         $value = $object->getSiret();
