@@ -19,7 +19,7 @@ class SendErrorToMailListener
         $messages = array();
 
         $server = array();
-        $allow_parameter =  array(
+        $allow_parameter = array(
             'HTTP_HOST',
             'REQUEST_URI',
             'REQUEST_METHOD',
@@ -39,8 +39,8 @@ class SendErrorToMailListener
             'REQUEST_TIME',
         );
 
-        foreach($allow_parameter as $p){
-            if(isset($_SERVER[$p])){
+        foreach ($allow_parameter as $p) {
+            if (isset($_SERVER[$p])) {
                 $server[$p] = $_SERVER[$p];
             }
         }
@@ -48,14 +48,20 @@ class SendErrorToMailListener
         $messages[] = $this->getArrayForatView(array('$_DATE' => $date));
         $messages[] = $this->getArrayForatView(array('$_ERROR MESSAGE' => $event->getException()->getMessage()));
         $messages[] = $this->getArrayForatView(array('$_SERVER' => $server));
-        $messages[] = $this->getArrayForatView(array('$_GET' => $_GET));
-        $messages[] = $this->getArrayForatView(array('$_POST' => $_POST));
+
+        if (!empty($_GET)) {
+            $messages[] = $this->getArrayForatView(array('$_GET' => $_GET));
+        }
+
+        if (!empty($_POST)) {
+            $messages[] = $this->getArrayForatView(array('$_POST' => $_POST));
+        }
 
         $content = implode("\n\n", $messages);
 
         $message = \Swift_Message::newInstance()
-            ->setSubject('Eurotax error '.$date)
-            ->setFrom('eurotex@hypernaut.com')
+            ->setSubject('Eurotax error ' . $date)
+            ->setFrom('eurotax@hypernaut.com')
             ->setTo(array('vladimir@hypernaut.net', 'defan.hypernaut@gmail.com'))
             ->setBody($content);
 
