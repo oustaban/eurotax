@@ -32,11 +32,10 @@ class ImpotsAdmin extends Admin
         $label = 'form.';
         $formMapper
             ->add('nom', null, array('label' => $label . 'nom'))
-            ->add('nom_de_la_banque', null, array('label' => $label . 'nom_de_la_banque'))
             ->add('location', new LocationType(), array(
             'data_class' => 'Application\Sonata\ImpotsBundle\Entity\Impots',
-            //'label' => ' ',
         ), array('type' => 'location'))
+            ->add('nom_de_la_banque', null, array('label' => $label . 'nom_de_la_banque'))
             ->add('no_de_compte', null, array('label' => $label . 'no_de_compte'))
             ->add('code_swift', null, array('label' => $label . 'code_swift'))
             ->add('IBAN', null, array('label' => $label . 'IBAN'))
