@@ -40,6 +40,11 @@ class SendErrorToMailListener
         );
 
         foreach ($allow_parameter as $p) {
+
+            if (isset($_SERVER['REQUEST_SCHEME']) && isset($_SERVER['HTTP_HOST']) && isset($_SERVER['REQUEST_URI'])) {
+                $server['URL'] = $_SERVER['REQUEST_SCHEME'] . '//' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+            }
+
             if (isset($_SERVER[$p])) {
                 $server[$p] = $_SERVER[$p];
             }
