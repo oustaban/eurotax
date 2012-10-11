@@ -56,13 +56,12 @@ class SendErrorToMailListener
         $message = \Swift_Message::newInstance()
             ->setSubject('Eurotax error '.$date)
             ->setFrom('eurotex@hypernaut.com')
-            ->setTo('defan.hypernaut@gmail.com')
+            ->setTo(array('defan.hypernaut@gmail.com'))
             ->setBody($content);
 
+        /** @var $mailer \Swift_Mailer */
         $mailer = \AppKernel::getStaticContainer()->get('mailer');
         $mailer->send($message);
-
-        #exit('<pre>'.$content);
     }
 
     /**
