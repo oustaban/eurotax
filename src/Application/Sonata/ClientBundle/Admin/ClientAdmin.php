@@ -207,15 +207,21 @@ class ClientAdmin extends Admin
     {
         /* @var $object \Application\Sonata\ClientBundle\Entity\Client */
         parent::validate($errorElement, $object);
-
-        $this->_setupAlerts($errorElement, $object);
     }
 
     /**
-     * @param ErrorElement $errorElement
+     * {@inheritdoc}
+     */
+    public function postPersist($object)
+    {
+        /* @var $object \Application\Sonata\ClientBundle\Entity\Client */
+        $this->_setupAlerts($object);
+    }
+
+    /**
      * @param mixed $object
      */
-    protected function _setupAlerts(ErrorElement $errorElement, $object)
+    protected function _setupAlerts($object)
     {
         /* @var $object \Application\Sonata\ClientBundle\Entity\Client */
 
