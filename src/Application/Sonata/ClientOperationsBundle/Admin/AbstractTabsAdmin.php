@@ -166,8 +166,7 @@ abstract class AbstractTabsAdmin extends Admin
 
         $listMapper
             ->add('status.name', null, array('label' => 'Statut'))
-            ->add('imports.id', null)
-        ;
+            ->add('imports.id', null);
     }
 
     /**
@@ -258,6 +257,10 @@ abstract class AbstractTabsAdmin extends Admin
         switch ($name) {
             case 'list':
                 return $this->_bundle_name . ':CRUD:list.html.twig';
+
+            case 'create':
+            case 'edit':
+                return $this->_bundle_name . ':CRUD:form_abstract_tabs_edit.html.twig';
         }
 
         return parent::getTemplate($name);

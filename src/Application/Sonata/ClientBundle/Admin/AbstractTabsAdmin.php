@@ -100,7 +100,11 @@ abstract class AbstractTabsAdmin extends Admin
     {
         switch ($name) {
             case 'list':
-                return 'ApplicationSonataClientBundle:CRUD:list.html.twig';
+                return $this->_bundle_name . ':CRUD:list.html.twig';
+
+            case 'create':
+            case 'edit':
+                return $this->_bundle_name . ':CRUD:form_abstract_tabs_edit.html.twig';
         }
         return parent::getTemplate($name);
     }

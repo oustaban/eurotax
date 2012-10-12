@@ -107,6 +107,9 @@ class ImpotsAdmin extends Admin
             case 'layout':
                 $template = $this->_bundle_name . '::standard_layout.html.twig';
                 break;
+            case 'create':
+            case 'edit':
+                return $this->_bundle_name . ':CRUD:edit.html.twig';
         }
         return $template;
     }
