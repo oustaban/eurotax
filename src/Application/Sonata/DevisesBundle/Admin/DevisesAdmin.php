@@ -71,7 +71,12 @@ class DevisesAdmin extends Admin
 
         foreach ($this->_money_arr as $field => $labelData) {
 
-            $formMapper->add($field, 'money', array('label' => $this->_bundle_name . '.form.' . $labelData['label'], 'divisor' => 1, 'currency' => 'EUR'));
+            $formMapper->add($field, 'money', array(
+                'label' => $this->_bundle_name . '.form.' . $labelData['label'],
+                'precision' => 5,
+                'divisor' => 1,
+                'currency' => 'EUR',
+            ));
         }
     }
 
