@@ -21,10 +21,11 @@ class UserAdmin extends BaseUserAdmin
             ->addIdentifier('username')
             ->add('email')
             ->add('groups')
-            ->add('enabled')
-            ->add('locked')
+            ->add('locked', 'boolean', array(
+            'template' => 'ApplicationSonataUserBundle:CRUD:list_boolean_locked.html.twig',
+        ))
             ->add('createdAt', 'date', array(
-            'template' => 'ApplicationSonataUserBundle:CRUD:list_created_at.html.twig'
+            'template' => 'ApplicationSonataUserBundle:CRUD:list_created_at.html.twig',
         ));
 
 //        if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
@@ -75,7 +76,6 @@ class UserAdmin extends BaseUserAdmin
 //            ))
                 ->add('locked', null, array('required' => false))
                 ->add('expired', null, array('required' => false))
-                ->add('enabled', null, array('required' => false))
                 ->add('credentialsExpired', null, array('required' => false))
                 ->end();
         }
@@ -121,5 +121,33 @@ class UserAdmin extends BaseUserAdmin
         $res = parent::getBreadcrumbs($action);
         array_shift($res);
         return $res;
+    }
+
+
+    /**
+     * @param string $name
+     *
+     * @return null|string
+     */
+    public function getTemplate($name)
+    {
+        switch ($name) {
+            case 'list':
+                return 'ApplicationSonataUserBundle:CRUD:list.html.twig';
+
+            case 'create':
+            case 'edit':
+                return 'ApplicationSonataUserBundle:CRUD:edit.html.twig';
+        }
+        return parent::getTemplate($name);
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getFormTheme()
+    {
+        return array( 'ApplicationSonataUserBundle:Form:form_admin_fields.html.twig');
     }
 }

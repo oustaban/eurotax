@@ -6,6 +6,12 @@
                 <source>link_reset_filter</source>
                 <target>Oter filtre</target>
             </trans-unit>
+
+
+            <trans-unit id="btn_batch_delete">
+                <source>btn_batch_delete</source>
+                <target>Supprimer</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

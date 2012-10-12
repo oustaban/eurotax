@@ -287,7 +287,7 @@ class Document
     /**
      * Set type_document
      *
-     * @param Application\Sonata\ClientBundle\Entity\ListTypeDocuments $typeDocument
+     * @param \Application\Sonata\ClientBundle\Entity\ListTypeDocuments $typeDocument
      * @return Document
      */
     public function setTypeDocument(\Application\Sonata\ClientBundle\Entity\ListTypeDocuments $typeDocument = null)
@@ -300,7 +300,7 @@ class Document
     /**
      * Get type_document
      *
-     * @return Application\Sonata\ClientBundle\Entity\ListTypeDocuments
+     * @return \Application\Sonata\ClientBundle\Entity\ListTypeDocuments
      */
     public function getTypeDocument()
     {

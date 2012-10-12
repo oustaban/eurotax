@@ -115,3 +115,15 @@ td.sonata-ba-list-field-number{
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
     display: block;
 }
+
+
+.popup-form .popup-body .form-actions{ display: none}
+.popup-form .modal-footer .action-buttons form{ display: inline; }
+.popup-form .popup-body .sonata-medium-date select{
+     width: 85px;
+ }
+
+.sonata-ba-list .table .sonata-ba-list-field-header-batch{
+    padding-left:14px;
+    width: 80px;
+}
