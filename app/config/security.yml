@@ -46,7 +46,6 @@ security:
         - { path: ^/_profiler, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/_configurator, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/core, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/sonata/cache, role: IS_AUTHENTICATED_ANONYMOUSLY }
         #- { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
         # -> custom access control for the admin area of the URL
