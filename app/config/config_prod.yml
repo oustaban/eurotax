@@ -26,3 +26,8 @@ monolog:
             path:  %kernel.logs_dir%/%kernel.environment%.log
             level: debug
 
+services:
+    kernel.listener.send_error_to_mail_listener_name:
+        class: Application\Listener\SendErrorToMailListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }

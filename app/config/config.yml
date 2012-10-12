@@ -67,11 +67,6 @@ swiftmailer:
 #    password:  %mailer_password%
 #    spool:     { type: memory }
 
-services:
-    kernel.listener.send_error_to_mail_listener_name:
-        class: Application\Listener\SendErrorToMailListener
-        tags:
-            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
 fos_user:
     db_driver: orm
     firewall_name: main
