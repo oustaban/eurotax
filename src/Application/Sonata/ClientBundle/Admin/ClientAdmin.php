@@ -32,6 +32,11 @@ class ClientAdmin extends Admin
         'user' => array(),
     );
 
+    protected $datagridValues = array(
+        '_sort_order' => 'ASC',
+        '_sort_by' => 'raison_sociale'
+    );
+
     /**
      * @return array
      */
