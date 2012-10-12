@@ -69,7 +69,8 @@ security:
         - { path: ^/dashboard$, role: [ROLE_SUPER_ADMIN] }
 
         - { path: ^/dashboard/admin, role: [ROLE_DASHBOARD_ADMIN] }
-        - { path: ^/sonata/user, role: [ROLE_EDIT_USERS] }
+        - { path: ^/sonata/user/user, role: [ROLE_EDIT_USERS] }
+        - { path: ^/sonata/user/group, role: [ROLE_SUPER_ADMIN] }
         - { path: ^/sonata/devises, role: [ROLE_EDIT_DEVISES] }
         - { path: ^/sonata/impots, role: [ROLE_EDIT_IMPOTS] }
 
