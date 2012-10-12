@@ -79,4 +79,4 @@ security:
 
         - { path: ^/sonata/clientoperations, role: [ROLE_EDIT_CLIENTOPERATIONS] }
 
-        - { path: ^/.*, role: [ROLE_SONATA_ADMIN] }
+        - { path: ^/.*, role: [ROLE_USER] }
