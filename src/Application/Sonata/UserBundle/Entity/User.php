@@ -73,7 +73,8 @@ class User extends AbstractedUser implements UserInterface
     protected $twoStepVerificationCode;
 
 
-    public function __construct(){
+    public function __construct()
+    {
 
         parent::__construct();
 
@@ -169,7 +170,8 @@ class User extends AbstractedUser implements UserInterface
      */
     public function __toString()
     {
-        return $this->getUsername() ? : '-';
+        $fullName = trim($this->getFullname());
+        return $fullName ? : $this->getUsername();
     }
 
     /**
