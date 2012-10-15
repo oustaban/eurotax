@@ -46,14 +46,14 @@ class UserController extends Controller
             $em = $this->getDoctrine()->getManager();
             $clients = $em->getRepository('ApplicationSonataClientBundle:Client')->findByUser($user);
             if ($clients) {
-                $editUrl = '<a href="' . $this->admin->generateUrl('edit', array('id' => $id)) . '">' . $user->getFullname() . '</a>';
+                $editUrl = '<a href="' . $this->admin->generateUrl('edit', array('id' => $id)) . '">' . $user . '</a>';
                 $messages = array();
                 foreach ($clients as $client) {
                     /** @var $client \Application\Sonata\ClientBundle\Entity\Client */
                     $messages[] = '<a href="' . $this->generateUrl('admin_sonata_client_client_edit', array('id' => $client->getId())) . '">' . $client->getNom() . '</a>';
                 }
 
-                $this->get('session')->getFlashBag()->add('sonata_flash_error|raw', 'Cet utilisateur [' . $editUrl . '] est le gestionnaire du/des client(s) [' . implode(', ', $messages) . ']!');
+                $this->get('session')->getFlashBag()->add('sonata_flash_error|raw', 'L\'utilisateur ' . $editUrl . ' est le gestionnaire du/des client(s) ' . implode(', ', $messages) . '!');
                 return false;
             }
         }

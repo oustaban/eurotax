@@ -19,6 +19,8 @@ class UserAdmin extends BaseUserAdmin
     {
         $listMapper
             ->addIdentifier('username')
+            ->add('firstname', null, array('label' => 'form.label_firstname'))
+            ->add('lastname', null, array('label' => 'form.label_lastname'))
             ->add('email')
             ->add('groups')
             ->add('locked', 'boolean', array(
