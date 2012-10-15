@@ -271,6 +271,13 @@ class Client
      */
     private $blocked_count = 0;
 
+    /**
+     * @var string $teledeclaration
+     *
+     * @ORM\Column(name="teledeclaration", type="boolean", nullable=true)
+     */
+    private $teledeclaration;
+
 
     /**
      * Get id
@@ -942,7 +949,7 @@ class Client
 
 
     /**
-     * Set autre_destinataire_de_facturation
+     * Set $teledeclaration
      *
      * @param boolean $autreDestinataireDeFacturation
      * @return Client
@@ -1104,5 +1111,28 @@ class Client
     public function getBlockedCount()
     {
         return $this->blocked_count;
+    }
+
+    /**
+     * Set teledeclaration
+     *
+     * @param boolean $teledeclaration
+     * @return Client
+     */
+    public function setTeledeclaration($teledeclaration)
+    {
+        $this->teledeclaration = $teledeclaration;
+
+        return $this;
+    }
+
+    /**
+     * Get teledeclaration
+     *
+     * @return boolean
+     */
+    public function getTeledeclaration()
+    {
+        return $this->teledeclaration;
     }
 }

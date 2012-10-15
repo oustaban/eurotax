@@ -128,6 +128,7 @@ class ClientAdmin extends Admin
             'choices' => array(15, 19, 24, 31),
             'attr' => array('class' => 'date_de_depot_id'),
         ))
+            ->add('teledeclaration', null, array('label' => 'form.teledeclaration'))
             ->add('niveau_dobligation_id', 'choice', array(
             'label' => 'form.niveau_dobligation_id',
             'choices' => array(0, 1, 4),
