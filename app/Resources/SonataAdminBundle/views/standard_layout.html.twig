@@ -38,7 +38,7 @@
 {{ parent() }}
 <script type="text/javascript">
     $(function () {
-        $('.datepicker').datepicker({language:'{{default_locale}}', format:'{{default_date_format_js}}'});
+        $('.datepicker').datepicker({language:'{{default_locale}}', format:'{{default_date_format_js}}', autoclose:true});
     });
 </script>
 {% endblock %}

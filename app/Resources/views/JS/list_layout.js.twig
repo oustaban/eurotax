@@ -121,7 +121,7 @@ var field_dialog_form_content_{{ id }} = function (html) {
 
     field_dialog_{{ id }}.find('.title').html(dialog_title);
 
-    jQuery('.datepicker').datepicker({language:'{{default_locale}}', format:'{{default_date_format_js}}'});
+    jQuery('.datepicker').datepicker({language:'{{default_locale}}', format:'{{default_date_format_js}}', autoclose:true});
 
     // capture the submit event to make an ajax call, ie : POST data to the
     // related create admin
