@@ -53,7 +53,7 @@ class UserController extends Controller
                     $messages[] = '<a href="' . $this->generateUrl('admin_sonata_client_client_edit', array('id' => $client->getId())) . '">' . $client->getNom() . '</a>';
                 }
 
-                $this->get('session')->getFlashBag()->add('sonata_flash_error|raw', 'Cet utilisateur ' . $editUrl . ' est le gestionnaire du/des client(s) ' . implode(', ', $messages) . '!');
+                $this->get('session')->getFlashBag()->add('sonata_flash_error|raw', 'L\'utilisateur ' . $editUrl . ' est le gestionnaire du/des client(s) ' . implode(', ', $messages) . '!');
                 return false;
             }
         }
