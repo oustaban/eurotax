@@ -10,6 +10,11 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class SendErrorToMailListener
 {
+    protected $_deny_filter = array(
+        '\Symfony\Component\HttpKernel\Exception\NotFoundHttpException',
+        '\Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException',
+    );
+
     /**
      * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
      */
@@ -50,8 +55,19 @@ class SendErrorToMailListener
             }
         }
 
+
+        //DBALException
+        //if( instanceof NotFoundHttpException)
+        /** @var $exception \Exception */
+        $exception = $event->getException();
+
+        if ($this->filterExceptionInstanceOf($exception)) {
+            return;
+        }
+
+
         $messages[] = $this->getArrayForatView(array('$_DATE' => $date));
-        $messages[] = $this->getArrayForatView(array('$_ERROR MESSAGE' => $event->getException()->getMessage()));
+        $messages[] = $this->getArrayForatView(array('$_ERROR MESSAGE' => $exception->getMessage()));
         $messages[] = $this->getArrayForatView(array('$_SERVER' => $server));
 
         if (!empty($_GET)) {
@@ -73,6 +89,21 @@ class SendErrorToMailListener
         /** @var $mailer \Swift_Mailer */
         $mailer = \AppKernel::getStaticContainer()->get('mailer');
         $mailer->send($message);
+    }
+
+    /**
+     * @param \Exception $e
+     * @return bool
+     */
+    function filterExceptionInstanceOf(\Exception $e)
+    {
+        foreach ($this->_deny_filter as $name) {
+            if ($e instanceof $name) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
