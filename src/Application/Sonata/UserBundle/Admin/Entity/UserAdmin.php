@@ -148,6 +148,6 @@ class UserAdmin extends BaseUserAdmin
      */
     public function getFormTheme()
     {
-        return array( 'ApplicationSonataUserBundle:Form:form_admin_fields.html.twig');
+        return array('ApplicationSonataUserBundle:Form:form_admin_fields.html.twig');
     }
 }

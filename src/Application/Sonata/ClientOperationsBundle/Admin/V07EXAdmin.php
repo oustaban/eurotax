@@ -54,7 +54,7 @@ class V07EXAdmin extends Admin
             'label' => $this->getFieldLabel('date_piece'),
             'template' => $this->_bundle_name . ':CRUD:list_date_piece.html.twig'
         ))
-            ->add('devise', null, array('label' => $this->getFieldLabel('devise_id')))
+            ->add('devise.name', null, array('label' => $this->getFieldLabel('devise_id')))
             ->add('montant_HT_en_devise', 'money', array('label' => $this->getFieldLabel('montant_HT_en_devise'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:montant_HT_en_devise.html.twig'))
             ->add('mois', null, array(
             'label' => $this->getFieldLabel('mois'),
