@@ -62,6 +62,11 @@ class ClientController extends Controller
      */
     public function editAction($id = null)
     {
+        $object = $this->admin->getObject($id);
+        if (!$object) {
+            return $this->redirect($this->admin->generateUrl('list'));
+        }
+
         return $this->_action(parent::editAction($id), $id);
     }
 
