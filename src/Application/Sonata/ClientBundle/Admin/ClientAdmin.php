@@ -14,6 +14,7 @@ use Application\Form\Type\LocationPostalType;
 use Application\Form\Type\LocationFacturationType;
 use Sonata\AdminBundle\Validator\ErrorElement;
 use Application\Sonata\ClientBundle\Entity\ClientAlert;
+use Doctrine\ORM\EntityRepository;
 
 class ClientAdmin extends Admin
 {
@@ -57,7 +58,11 @@ class ClientAdmin extends Admin
 
         $formMapper
             ->with('form.client')
-            ->add('user', null, array('label' => 'form.user',))
+            ->add('user', null, array('label' => 'form.user', 'query_builder' => function(EntityRepository $er)
+            {
+                return $er->createQueryBuilder('u')
+                    ->orderBy('u.username', 'ASC');
+            },))
             ->add('nom', null, array('label' => 'form.nom'))
             ->add('nature_du_client', null, array('label' => 'form.nature_du_client'))
             ->add('raison_sociale', null, array('label' => 'form.raison_sociale'))
