@@ -77,6 +77,7 @@ sonata_user:
 
 parameters:
     sonata.user.admin.user.class: Application\Sonata\UserBundle\Admin\Entity\UserAdmin
+    sonata.user.admin.user.controller: ApplicationSonataUserBundle:User
     sonata.user.admin.group.class: Application\Sonata\UserBundle\Admin\Entity\GroupAdmin
 
 sonata_block:
