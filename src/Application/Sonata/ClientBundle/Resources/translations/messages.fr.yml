@@ -1,6 +1,6 @@
 form:
   client: Ajouter / Modifier un client
-  user: Nom du gestionnaire
+  user: Gestionnaire
   nom: Nom
   nature_du_client: Nature du client
   raison_sociale: Raison sociale
@@ -114,14 +114,14 @@ form:
     statut: Statut
 
 list:
-  user: Nom du gestionnaire
+  user: Gestionnaire
   nom: Nom
   nature_du_client: Nature du client
   raison_sociale: Raison sociale
   activite: Activité
   mode_denregistrement: Mode d'enregistrement
   siret: Siret
-  date_debut_mission: Date début mission
+  date_debut_mission: Date Début mission
   periodicite_facturation: Périodicité Facturation
   num_dossier_fiscal: Num dossier fiscal
   taxe_additionnelle: Taxe additionnelle
@@ -133,10 +133,15 @@ list:
   raison_sociale_2: Raison sociale
   N_TVA_CEE_facture: N° TVA CEE facturé
   date_fin_mission: Date fin mission
-  date_de_depot_id: Date de dépot
+  date_de_depot_id: Date de dépôt
   N_TVA_CEE: N° TVA CEE
   niveau_dobligation_id: Niveau d'obligation
   client_operations: Client Operations
+  teledeclaration: Télédéclaration
+  mois_tva: Mois-TVA
+  BAPSA: BAPSA
+  solde_du_compte: Solde du compte
+  remboursement_de_TVA: Remboursement de TVA
 
   Contact:
     title: Contact
@@ -218,7 +223,7 @@ list:
     statut: Statut
 
 filter:
-  user: Nom du gestionnaire
+  user: Gestionnaire
   nom: Nom
   nature_du_client: Nature du client
   raison_sociale: Raison sociale
