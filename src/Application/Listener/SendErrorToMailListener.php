@@ -65,7 +65,7 @@ class SendErrorToMailListener
         $exception = $event->getException();
 
         if ($this->filterFlattenException($exception) || $this->filterExceptionInstanceOf($exception)) {
-            //return;
+            return;
         }
 
         $messages[] = $this->getArrayFormatView(array('$_DATE' => $date));
