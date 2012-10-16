@@ -1,0 +1,5 @@
+{% extends 'ApplicationSonataErrorsBundle::layout.html.twig' %}
+
+{% block body_content %}
+<h1 class="error-handle-text error-handle-{{ status_code }}">{{ ('ApplicationSonataErrorsBundle.message.' ~ status_text)|trans() }}</h1>
+{% endblock body_content %}

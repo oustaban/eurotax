@@ -31,3 +31,6 @@ services:
         class: Application\Listener\SendErrorToMailListener
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
+twig:
+    exception_controller: Application\Sonata\ErrorsBundle\Controller\ErrorsController::showAction

@@ -47,6 +47,7 @@ class AppKernel extends Kernel
             new Sonata\jQueryBundle\SonatajQueryBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 
+            new Application\Sonata\ErrorsBundle\ApplicationSonataErrorsBundle(),
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
             new Application\Sonata\DevisesBundle\ApplicationSonataDevisesBundle(),
             new Application\Sonata\ImpotsBundle\ApplicationSonataImpotsBundle(),
