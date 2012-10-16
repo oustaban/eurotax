@@ -10,9 +10,12 @@
 
     <div style="float: right;">
         {% if alert_count %}
-        <div class="alert-count"></i> {% trans with {'%count%': alert_count } %}Attention, %count% alertes en cours{% endtrans %}</div>
+        <div class="alert-count"></i> {% trans with {'%count%': alert_count } %}Attention, %count% alertes en
+            cours{% endtrans %}</div>
         {% endif %}
-        <button id="show_hide_all_clients" class="btn">{{ ('ApplicationSonataDashboardBundle.index.'~label_all_clients)|trans() }} ...</button>
+        <button id="show_hide_all_clients" class="btn">{{ ('ApplicationSonataDashboardBundle.index.'~label_all_clients)|trans() }}
+            ...
+        </button>
     </div>
 </div>
 <div style="clear:both;float: none;">
@@ -23,19 +26,40 @@
         <tr class="sonata-ba-list-field-header">
             {% spaceless %}
             <th class="sonata-ba-list-field-header-text">
-                <a href="#">Raison sociale</a>
+                <a href="#">{{ 'list.raison_sociale'|trans() }}</a>
             </th>
-            <th class="sonata-ba-list-field-header-orm_many_to_one">
-                <a href="#">Nature du client</a>
+            <th class="sonata-ba-list-field-header-text">
+                <a href="#">{{ 'list.nature_du_client'|trans() }}</a>
+            </th>
+            <th class="sonata-ba-list-field-header-text">
+                <a href="#">{{ 'list.user'|trans() }}</a>
+            </th>
+            <th class="sonata-ba-list-field-header-text">
+                <a href="#">{{ 'list.center_des_impots'|trans() }}</a>
             </th>
             <th class="sonata-ba-list-field-header-integer">
-                <a href="#">Date de dépot</a>
+                <a href="#">{{ 'list.date_de_depot_id'|trans() }}</a>
+            </th>
+            <th class="sonata-ba-list-field-header-boolean">
+                <a href="#">{{ 'list.teledeclaration'|trans() }}</a>
+            </th>
+            <th class="sonata-ba-list-field-header-text">
+                <a href="#">{{ 'list.mois_tva'|trans() }}</a>
+            </th>
+            <th class="sonata-ba-list-field-header-text">
+                <a href="#">{{ 'list.BAPSA'|trans() }}</a>
+            </th>
+            <th class="sonata-ba-list-field-header-text">
+                <a href="#">{{ 'list.solde_du_compte'|trans() }}</a>
+            </th>
+            <th class="sonata-ba-list-field-header-text">
+                <a href="#">{{ 'list.remboursement_de_TVA'|trans() }}</a>
             </th>
             <th class="sonata-ba-list-field-header-date">
-                <a href="#">Date début mission </a>
+                <a href="#">{{ 'list.date_debut_mission'|trans() }}</a>
             </th>
             <th class="sonata-ba-list-field-header-date">
-                <a href="#">Date fin mission </a>
+                <a href="#">{{ 'list.date_fin_mission'|trans() }}</a>
             </th>
             {% endspaceless %}
         </tr>
@@ -46,19 +70,42 @@
         <tbody>
         {% for client in clients %}
         <tr>
-            <td class="sonata-ba-list-field sonata-ba-list-field-text" objectId="{{ client.id }}">
+
+            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client.id }}">
                 {{ client.getRaisonSociale }}
             </td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-orm_many_to_one" objectId="{{ client.id }}">
+            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client.id }}">
                 {{ client.getNatureDuClient }}
             </td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-integer" objectId="{{ client.id }}">
+            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client.id }}">
+                {{ client.user }}
+            </td>
+            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client.id }}">
+                {{ client.getCenterDesImpots }}
+            </td>
+            <td class="sonata-ba-list-field sonata-ba-list-field-integer"  objectId="{{ client.id }}">
                 {{ client.getDateDeDepot }}
             </td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-date" objectId="{{ client.id }}">
+            <td class="sonata-ba-list-field sonata-ba-list-field-boolean"  objectId="{{ client.id }}">
+                {% set img = client.teledeclaration ? 'accept' : 'exclamation' %}
+                <img alt="{{ ('ApplicationSonataDashboardBundle.alt.' ~ img)|trans() }}" src="{{ asset('/bundles/sonataadmin/famfamfam/' ~ img|trans() ~ '.png') }}">
+            </td>
+            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client.id }}">
+                {#{{ client.mois_tva }}#}
+            </td>
+            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client.id }}">
+                {#{{ client.BAPSA }}#}
+            </td>
+            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client.id }}">
+                {#{{ client.solde_du_compte }}#}
+            </td>
+            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client.id }}">
+                {#{{ client.remboursement_de_TVA }}#}
+            </td>
+            <td class="sonata-ba-list-field sonata-ba-list-field-date"  objectId="{{ client.id }}">
                 {{ client.getDateDebutMission|datefmt_format(default_date_format) }}
             </td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-date" objectId="{{ client.id }}">
+            <td class="sonata-ba-list-field sonata-ba-list-field-date"  objectId="{{ client.id }}">
                 {{ client.getDateFinMission|datefmt_format(default_date_format) }}
             </td>
         </tr>
@@ -96,11 +143,11 @@
         });
     });
     $(function () {
-        $('#show_hide_all_clients').click(function(){
+        $('#show_hide_all_clients').click(function () {
             {% if cookies.get('show_all_clients') %}
-                $.removeCookie('show_all_clients');
+            $.removeCookie('show_all_clients');
             {% else%}
-                $.cookie('show_all_clients', '1', { expires: 1, path: '/' });
+            $.cookie('show_all_clients', '1', { expires:1, path:'/' });
             {% endif %}
             location.reload();
         });
