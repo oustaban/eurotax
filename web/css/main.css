@@ -148,3 +148,7 @@ tr.sonata-ba-list-field-header .headerSortUp:hover {
 tr.sonata-ba-list-field-header .headerSortDown:hover {
     background: url("../bundles/sonataadmin/famfamfam/bullet_arrow_up.png") no-repeat scroll left center transparent;
 }
+
+.error-handle-text{
+    text-align: center;
+}
