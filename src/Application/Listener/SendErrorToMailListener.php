@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\HttpKernel\Exception\FlattenException;
 
 class SendErrorToMailListener
 {
@@ -14,6 +15,8 @@ class SendErrorToMailListener
         '\Symfony\Component\HttpKernel\Exception\NotFoundHttpException',
         '\Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException',
     );
+
+    protected $_get_status_code;
 
     /**
      * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
@@ -61,30 +64,35 @@ class SendErrorToMailListener
         /** @var $exception \Exception */
         $exception = $event->getException();
 
-        if ($this->filterExceptionInstanceOf($exception)) {
-            return;
+        if ($this->filterFlattenException($exception) || $this->filterExceptionInstanceOf($exception)) {
+            //return;
         }
 
-
-        $messages[] = $this->getArrayForatView(array('$_DATE' => $date));
-        $messages[] = $this->getArrayForatView(array('$_ERROR MESSAGE' => $exception->getMessage()));
-        $messages[] = $this->getArrayForatView(array('$_SERVER' => $server));
+        $messages[] = $this->getArrayFormatView(array('$_DATE' => $date));
+        $messages[] = $this->getArrayFormatView(array('$_ERROR MESSAGE' => sprintf('Exception thrown when handling an exception (%s: %s)', get_class($exception), $exception->getMessage())));
+        $messages[] = $this->getArrayFormatView(array('$_SERVER' => $server));
 
         if (!empty($_GET)) {
-            $messages[] = $this->getArrayForatView(array('$_GET' => $_GET));
+            $messages[] = $this->getArrayFormatView(array('$_GET' => $_GET));
         }
 
         if (!empty($_POST)) {
-            $messages[] = $this->getArrayForatView(array('$_POST' => $_POST));
+            $messages[] = $this->getArrayFormatView(array('$_POST' => $_POST));
         }
 
         $content = implode("\n\n", $messages);
 
+        $subject = 'Eurotax error code ' . $this->_get_status_code . ' date ' . $date;
         $message = \Swift_Message::newInstance()
-            ->setSubject('Eurotax error ' . $date)
+            ->setSubject($subject)
             ->setFrom('eurotax@hypernaut.com')
             ->setTo(array('vladimir@hypernaut.net', 'defan.hypernaut@gmail.com'))
             ->setBody($content);
+
+
+        echo '<pre>';
+        echo $subject . "\n";
+        exit($content);
 
         /** @var $mailer \Swift_Mailer */
         $mailer = \AppKernel::getStaticContainer()->get('mailer');
@@ -92,13 +100,13 @@ class SendErrorToMailListener
     }
 
     /**
-     * @param \Exception $e
+     * @param \Exception $exception
      * @return bool
      */
-    function filterExceptionInstanceOf(\Exception $e)
+    public function filterExceptionInstanceOf(\Exception $exception)
     {
         foreach ($this->_deny_filter as $name) {
-            if ($e instanceof $name) {
+            if ($exception instanceof $name) {
                 return true;
             }
         }
@@ -107,17 +115,35 @@ class SendErrorToMailListener
     }
 
     /**
+     * @param \Exception $exception
+     * @return mixed
+     */
+    public function filterFlattenException(\Exception $exception)
+    {
+        if (!$exception instanceof FlattenException) {
+            $exception = FlattenException::create($exception);
+        }
+
+        $this->_get_status_code = $exception->getStatusCode();
+        if ($this->_get_status_code < 500) {
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
      * @param $array
      * @param int $count
      * @return string
      */
-    protected function getArrayForatView($array, $count = 0)
+    protected function getArrayFormatView($array, $count = 0)
     {
         $messages = array();
         foreach ($array as $key => $value) {
 
             if (is_array($value)) {
-                $messages[] = str_repeat(' ', $count) . $key . "\n" . $this->getArrayForatView($value, $count + 2);
+                $messages[] = str_repeat(' ', $count) . $key . "\n" . $this->getArrayFormatView($value, $count + 2);
             } else {
                 $messages[] = str_repeat(' ', $count) . $key . ' => ' . $value;
             }
