@@ -1,4 +1,8 @@
 ApplicationSonataDashboardBundle:
+    alt:
+        accept: oui
+        exclamation: non
+
     index:
         show_projects: Voir tous les clients
         hide_projects: Voir mes clients

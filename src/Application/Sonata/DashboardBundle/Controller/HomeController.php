@@ -16,10 +16,16 @@ class HomeController extends Controller
      */
     public function indexAction()
     {
+        /** @var $em \Doctrine\ORM\EntityManager */
         $em = $this->getDoctrine()->getManager();
 
         $clients = $em->getRepository('ApplicationSonataClientBundle:Client')
-            ->findAll();
+            ->createQueryBuilder('c')
+            ->select('c, cdi, u, ndc')
+            ->leftJoin('c.center_des_impots', 'cdi')
+            ->leftJoin('c.user', 'u')
+            ->leftJoin('c.nature_du_client', 'ndc')
+            ->getQuery()->execute();
 
         $dql = "SELECT SUM(c.alert_count) AS counts FROM ApplicationSonataClientBundle:Client c";
         $sql = $em->createQuery($dql);
