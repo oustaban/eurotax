@@ -25,16 +25,20 @@ class HomeController extends Controller
             ->leftJoin('c.center_des_impots', 'cdi')
             ->leftJoin('c.user', 'u')
             ->leftJoin('c.nature_du_client', 'ndc')
+            ->andWhere('(NOT c.date_fin_mission BETWEEN :date_lowest AND :date_highest) OR (c.date_fin_mission IS NULL)')
+            ->setParameter(':date_lowest', new \DateTime('1000-01-01'))
+            ->setParameter(':date_highest', new \DateTime())
             ->getQuery()->execute();
 
-        $dql = "SELECT SUM(c.alert_count) AS counts FROM ApplicationSonataClientBundle:Client c";
-        $sql = $em->createQuery($dql);
-        list($result) = $sql->getArrayResult();
+        $alerts = $em->getRepository('ApplicationSonataClientBundle:Client')
+            ->createQueryBuilder('c')
+            ->select('SUM(c.alert_count) as cnt')
+            ->getQuery()->execute();
 
         return array(
             'clients' => $clients,
             'cookies' => $this->getRequest()->cookies,
-            'alert_count' => $result['counts'],
+            'alert_count' => $alerts[0]['cnt'],
         );
     }
 
