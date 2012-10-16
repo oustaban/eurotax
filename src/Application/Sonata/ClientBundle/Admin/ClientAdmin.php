@@ -168,20 +168,26 @@ class ClientAdmin extends Admin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('id');
-
-        $listMapper->add('raison_sociale', null, array('label' => 'filter.raison_sociale'))
-            ->add('nature_du_client.name', null, array('label' => 'filter.nature_du_client'))
-            ->add('date_de_depot_id', null, array('label' => 'filter.date_de_depot_id'))
+        $listMapper->addIdentifier('id')
+            ->add('raison_sociale', null, array('label' => 'list.raison_sociale'))
+            ->add('nature_du_client.name', null, array('label' => 'list.nature_du_client'))
+            ->add('user', null, array('label' => 'list.user'))
+            ->add('center_des_impots.nom', null, array('label' => 'list.center_des_impots'))
+            ->add('date_de_depot_id', null, array('label' => 'list.date_de_depot_id'))
+            ->add('teledeclaration', null, array('label' => 'list.teledeclaration'))
+            ->add('mois_tva', null, array('label' => 'list.mois_tva'))
+            ->add('BAPSA', null, array('label' => 'list.BAPSA'))
+            ->add('solde_du_compte', null, array('label' => 'list.solde_du_compte'))
+            ->add('remboursement_de_TVA', null, array('label' => 'list.remboursement_de_TVA'))
             ->add('date_debut_mission', null, array(
             'template' => 'ApplicationSonataClientBundle:CRUD:list_date_debut_mission.html.twig',
-            'label' => 'filter.date_debut_mission'
+            'label' => 'list.date_debut_mission'
         ))
             ->add('date_fin_mission', null, array(
             'template' => 'ApplicationSonataClientBundle:CRUD:list_date_fin_mission.html.twig',
-            'label' => 'filter.date_fin_mission'
+            'label' => 'list.date_fin_mission'
         ))
-            ->add('user', null, array('label' => 'filter.user'));
+            ;
     }
 
     /**
