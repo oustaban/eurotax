@@ -47,7 +47,6 @@ class AppKernel extends Kernel
             new Sonata\jQueryBundle\SonatajQueryBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 
-            new Application\Sonata\ErrorsBundle\ApplicationSonataErrorsBundle(),
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
             new Application\Sonata\DevisesBundle\ApplicationSonataDevisesBundle(),
             new Application\Sonata\ImpotsBundle\ApplicationSonataImpotsBundle(),
@@ -59,6 +58,10 @@ class AppKernel extends Kernel
 
             new Application\Sonata\DashboardBundle\ApplicationSonataDashboardBundle(),
         );
+
+        if (in_array($this->getEnvironment(), array('prod'))) {
+            $bundles[] = new Application\Sonata\ErrorsBundle\ApplicationSonataErrorsBundle();
+        }
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
             $bundles[] = new Acme\DemoBundle\AcmeDemoBundle();
