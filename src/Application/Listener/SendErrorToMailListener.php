@@ -89,11 +89,6 @@ class SendErrorToMailListener
             ->setTo(array('vladimir@hypernaut.net', 'defan.hypernaut@gmail.com'))
             ->setBody($content);
 
-
-        echo '<pre>';
-        echo $subject . "\n";
-        exit($content);
-
         /** @var $mailer \Swift_Mailer */
         $mailer = \AppKernel::getStaticContainer()->get('mailer');
         $mailer->send($message);
