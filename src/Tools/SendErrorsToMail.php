@@ -23,7 +23,7 @@ class SendErrorsToMail
 
     protected $_mailTo = array(
         'vladimir@hypernaut.net',
-        'defan.hypernaut@gmail.com'
+        'defan.hypernaut@gmail.com',
     );
 
     /**
