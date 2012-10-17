@@ -18,9 +18,14 @@ jQuery(document).ready(function ($) {
                 if (_uniqid) {
                     $('#' + _uniqid + '_type_document', context).change(function () {
 
-                        $('#sonata-ba-field-container-' + _uniqid + '_date_notaire, #sonata-ba-field-container-' + _uniqid + '_date_apostille')[['show', 'hide'][$(this).val() == 2 ? 0 : 1]]();
+                        $('#sonata-ba-field-container-' + _uniqid + '_date_notaire, #sonata-ba-field-container-' + _uniqid + '_date_apostille, #sonata-ba-field-container-' + _uniqid + '_statut_document_notaire, #sonata-ba-field-container-' + _uniqid + '_statut_document_apostille')[['show', 'hide'][$(this).val() == 2 ? 0 : 1]]();
 
                     }).trigger('change');
+
+                    $('#sonata-ba-field-container-'+_uniqid+'_date_notaire').addClass('date_notaire');
+                    $('#sonata-ba-field-container-' + _uniqid + '_statut_document_notaire').after('<div style="clear:both"></div>').addClass('statut_document_notaire');
+                    $('#sonata-ba-field-container-'+_uniqid+'_date_apostille').addClass('date_apostille');
+                    $('#sonata-ba-field-container-' + _uniqid + '_statut_document_apostille').addClass('statut_document_apostille');
                 }
             }
         };
@@ -65,7 +70,7 @@ jQuery(document).ready(function ($) {
                 });
                 return ui;
             },
-            update: function (event, ui) {
+            update:function (event, ui) {
                 var sort_data = [];
                 $('.sonata-ba-list .ui-sortable tr').each(function (i) {
                     var objectid = $(this).find('td[objectid]:last').attr('objectid');

@@ -135,3 +135,25 @@
 .js-tarif .form-client-invoicing .field-4 .span5{
     width: 100px;
 }
+
+
+.date_notaire,
+.date_apostille,
+.statut_document_notaire,
+.statut_document_apostille{
+    float: left;
+}
+
+.statut_document_notaire select,
+.statut_document_apostille select{
+    width: auto;
+}
+
+.statut_document_notaire .control-label,
+.statut_document_apostille .control-label{
+    width: 28%;
+}
+.statut_document_notaire .controls,
+.statut_document_apostille .controls{
+    margin-left: 75px;
+}
