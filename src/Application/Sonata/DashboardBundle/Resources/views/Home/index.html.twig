@@ -1,5 +1,7 @@
 {% extends 'ApplicationSonataDashboardBundle::layout.html.twig' %}
 
+{% use ':JS:list_table_fix_layout.html.twig' %}
+
 {% set label_all_clients = cookies.get('show_all_clients') ? 'hide_projects' : 'show_projects' %}
 
 
@@ -18,7 +20,7 @@
         </button>
     </div>
 </div>
-<div style="clear:both;float: none;">
+<div style="clear:both;float: none;" class="sonata-ba-list">
     {% if clients %}
     <table id="clientList" class="table table-bordered table-striped table-hover" style="width: auto;">
         {% block table_header %}
@@ -121,6 +123,7 @@
 {{parent()}}
 <script src="{{ asset('bundles/applicationsonataclientoperations/js/jquery.tablesorter.js') }}" type="text/javascript"></script>
 <script src="{{ asset('bundles/applicationsonataclientoperations/js/jquery.columnfilters.js') }}" type="text/javascript"></script>
+{{ block('tableFixLayout_js')}}
 <script type="text/javascript">
     $(function () {
         $('#clientList').tablesorter({
@@ -155,3 +158,8 @@
 
 </script>
 {% endblock javascripts %}
+
+{% block javascriptsafter %}
+{{ parent()}}
+{{ block('tableFixLayout')}}
+{% endblock javascriptsafter %}
