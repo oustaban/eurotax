@@ -17,5 +17,6 @@ if (APPLICATION_CACHE_MODE) {
 use Symfony\Component\HttpFoundation\Request;
 
 $kernel = new AppKernel(APP_KERNEL_ENVIRONMENT, APPLICATION_ERROR_MODE);
+require_once '../setup.php';
 $kernel->loadClassCache();
 $kernel->handle(Request::createFromGlobals())->send();

@@ -94,6 +94,24 @@ class Document
     private $date_apostille;
 
 
+    /**
+     * @var integer $statut_document_notaire
+     *
+     * @ORM\ManyToOne(targetEntity="ListStatutDocuments", inversedBy="document")
+     * @ORM\JoinColumn(name="statut_document_notaire_id", referencedColumnName="id")
+     */
+
+    private $statut_document_notaire;
+
+    /**
+     * @var integer $statut_document_apostille
+     *
+     * @ORM\ManyToOne(targetEntity="ListStatutDocuments", inversedBy="document")
+     * @ORM\JoinColumn(name="statut_document_apostille_id", referencedColumnName="id")
+     */
+
+    private $statut_document_apostille;
+
     public $replace_extension = 'txt';
 
     public $allowed_extensions = null;
@@ -412,5 +430,53 @@ class Document
     public function getFileAlias()
     {
         return $this->file_alias;
+    }
+
+
+
+    /**
+     * Set statut_document_notaire
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\ListStatutDocuments $statutDocumentNotaire
+     * @return Document
+     */
+    public function setStatutDocumentNotaire(\Application\Sonata\ClientBundle\Entity\ListStatutDocuments $statutDocumentNotaire = null)
+    {
+        $this->statut_document_notaire = $statutDocumentNotaire;
+    
+        return $this;
+    }
+
+    /**
+     * Get statut_document_notaire
+     *
+     * @return \Application\Sonata\ClientBundle\Entity\ListStatutDocuments
+     */
+    public function getStatutDocumentNotaire()
+    {
+        return $this->statut_document_notaire;
+    }
+
+    /**
+     * Set statut_document_apostille
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\ListStatutDocuments $statutDocumentApostille
+     * @return Document
+     */
+    public function setStatutDocumentApostille(\Application\Sonata\ClientBundle\Entity\ListStatutDocuments $statutDocumentApostille = null)
+    {
+        $this->statut_document_apostille = $statutDocumentApostille;
+    
+        return $this;
+    }
+
+    /**
+     * Get statut_document_apostille
+     *
+     * @return \Application\Sonata\ClientBundle\Entity\ListStatutDocuments
+     */
+    public function getStatutDocumentApostille()
+    {
+        return $this->statut_document_apostille;
     }
 }

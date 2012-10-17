@@ -36,7 +36,7 @@ form:
     raison_sociale_societe: Raison Sociale Société
     affichage_facture_id: Affichage Facture
 
-  document:
+  Document:
     title: Ajouter / Modifier un document
     document: Document
     type_document: Type document
@@ -45,6 +45,8 @@ form:
     particularite: Particularité
     date_notaire: Notaire
     date_apostille: Apostille
+    statut_document_notaire: Statut
+    statut_document_apostille: Statut
 
   Garantie:
     title: Ajouter / Modifier une garantie
@@ -155,7 +157,7 @@ list:
     raison_sociale_societe: Raison Sociale Société
     affichage_facture_id: Affichage Facture
 
-  document:
+  Document:
     title: Ajouter un document
     document: Document
     type_document: Type document
@@ -164,6 +166,8 @@ list:
     particularite: Particularité
     date_notaire: Notaire
     date_apostille: Apostille
+    statut_document_notaire: Statut
+    statut_document_apostille: Statut
 
   Garantie:
     title: Ajouter une garantie

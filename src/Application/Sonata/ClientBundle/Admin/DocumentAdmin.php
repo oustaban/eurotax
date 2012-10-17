@@ -26,32 +26,45 @@ class DocumentAdmin extends Admin
     {
         parent::configureFormFields($formMapper);
 
-        $formMapper->with('form.document.title')
-            ->add('file', 'file', array('label' => 'form.document.document', 'required' => false))
-            ->add('type_document', null, array('label' => 'form.document.type_document'))
+        $formMapper->with($this->getFieldLabel('title'))
+            ->add('file', 'file', array('label' => $this->getFieldLabel('document'), 'required' => false))
+            ->add('type_document', null, array('label' => $this->getFieldLabel('type_document')))
             ->add('date_document', null, array(
-            'label' => 'form.document.date_document',
+            'label' => $this->getFieldLabel('date_document'),
             'attr' => array('class' => 'datepicker'),
             'widget' => 'single_text',
             'input' => 'datetime',
             'format' => $this->date_format_datetime
         ))
-            ->add('preavis', null, array('label' => 'form.document.preavis'))
-            ->add('particularite', null, array('label' => 'form.document.particularite'))
+            ->add('preavis', null, array('label' => $this->getFieldLabel('preavis')))
+            ->add('particularite', null, array('label' => $this->getFieldLabel('particularite')))
             ->add('date_notaire', null, array(
-            'label' => 'form.document.date_notaire',
+            'label' => $this->getFieldLabel('date_notaire'),
             'attr' => array('class' => 'datepicker'),
             'widget' => 'single_text',
             'input' => 'datetime',
             'format' => $this->date_format_datetime
         ))
+            ->add('statut_document_notaire', null, array(
+            'label' => $this->getFieldLabel('statut_document_notaire'),
+            'empty_value' => '',
+            'required' => false,
+        ))
+
             ->add('date_apostille', null, array(
-            'label' => 'form.document.date_apostille',
+            'label' => $this->getFieldLabel('date_apostille'),
             'attr' => array('class' => 'datepicker'),
             'widget' => 'single_text',
             'input' => 'datetime',
             'format' => $this->date_format_datetime
-        ));
+        ))
+
+            ->add('statut_document_apostille', null, array(
+            'label' => $this->getFieldLabel('statut_document_apostille'),
+            'empty_value' => '',
+            'required' => false,
+        ))
+        ;
     }
 
     //list
@@ -63,14 +76,17 @@ class DocumentAdmin extends Admin
         parent::configureListFields($listMapper);
 
         $listMapper->add('document', null, array(
-            'label' => 'list.document.document',
+            'label' => $this->getFieldLabel('document'),
             'template' => 'ApplicationSonataClientBundle:CRUD:document_link.html.twig'
-        ));
-        $listMapper->add('date_document', null, array(
-            'label' => 'list.document.date_document',
+        ))
+        ->add('date_document', null, array(
+            'label' => $this->getFieldLabel('date_document'),
             'template' => 'ApplicationSonataClientBundle:CRUD:list_date_document.html.twig'
-        ));
-        $listMapper->add('date_notaire', null, array('label' => 'list.document.date_notaire'));
+        ))
+        ->add('date_notaire', null, array('label' => $this->getFieldLabel('date_notaire')))
+        ->add('statut_document_notaire.name', null, array('label' => $this->getFieldLabel('statut_document_notaire')))
+        ->add('date_apostille', null, array('label' => $this->getFieldLabel('date_apostille')))
+        ->add('statut_document_apostille.name', null, array('label' => $this->getFieldLabel('statut_document_apostille')));
     }
 
     /**
