@@ -9,6 +9,9 @@ use Application\Sonata\ClientBundle\Admin\ClientAlertAdmin as ClientAlertAdminBa
 
 class ClientAlertAdmin extends ClientAlertAdminBase
 {
+    protected $_bundle_name = 'ApplicationSonataClientOperationsBundle';
+
+    protected $maxPerPage = 10000000;
 
     /**
      * @param ListMapper $listMapper
