@@ -1,6 +1,6 @@
 <?php
 
-namespace Tools;
+namespace Application\Sonata\ErrorsBundle\Tools;
 
 use Symfony\Component\HttpKernel\Exception\FlattenException;
 
@@ -69,6 +69,17 @@ class SendErrorsToMail
 
     private function __wakeup()
     {
+    }
+
+    /**
+     * @static
+     *
+     */
+    public static function shutdown() {
+        $error = error_get_last();
+        if (isset($error)) {
+            SendErrorsToMail::byException(new \ErrorException($error['message'], $error['type'], null, $error['file'], $error['line']));
+        }
     }
 
     /**

@@ -41,13 +41,3 @@ function do_dump($value, $level = 0)
     if ($level == 0)
         echo '</pre>';
 }
-
-
-function shutdownOnFatalError() {
-    $error = error_get_last();
-    if (isset($error)) {
-        \Tools\SendErrorsToMail::byException(new \ErrorException($error['message'], $error['type'], null, $error['file'], $error['line']));
-    }
-}
-
-register_shutdown_function('shutdownOnFatalError');
