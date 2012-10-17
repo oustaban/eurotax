@@ -6,7 +6,7 @@ use Twig_Extension;
 use Twig_Filter_Method;
 
 
-class DateFmtFormatExtension extends Twig_Extension
+class DateExtension extends Twig_Extension
 {
     /**
      * @return array
@@ -48,6 +48,6 @@ class DateFmtFormatExtension extends Twig_Extension
 
     public function getName()
     {
-        return 'datefmt_extension';
+        return 'date_extension';
     }
 }

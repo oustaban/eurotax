@@ -61,6 +61,10 @@ abstract class AbstractCompteAdmin extends Admin
         ))
             ->add('operation', null, array('label' => $this->getFieldLabel('operation')))
             ->add('montant', 'money', array('label' => $this->getFieldLabel('montant')))
+            ->add('solde', 'money', array(
+            'label' => $this->getFieldLabel('solde'),
+            'template' => 'ApplicationSonataClientBundle:CRUD:list_solde.html.twig'
+        ))
             ->add('commentaire', null, array('label' => $this->getFieldLabel('commentaire')))
             ->add('statut.name', null, array('label' => $this->getFieldLabel('statut')));
     }

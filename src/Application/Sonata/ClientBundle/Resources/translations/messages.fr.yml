@@ -211,6 +211,7 @@ list:
     date: Date
     operation: Opération
     montant: Montant
+    solde: Solde
     commentaire: Commentaire
     statut: Statut
 
@@ -219,6 +220,7 @@ list:
     date: Date
     operation: Opération
     montant: Montant
+    solde: Solde
     commentaire: Commentaire
     statut: Statut
 

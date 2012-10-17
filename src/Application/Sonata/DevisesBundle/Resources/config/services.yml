@@ -6,6 +6,6 @@ services:
         arguments: [null, Application\Sonata\DevisesBundle\Entity\Devises, ApplicationSonataDevisesBundle:Devises]
 
     application.sonata.admin.devises.twig:
-        class : Application\Twig\DateFmtFormatExtension
+        class : Application\Twig\DateExtension
         tags:
             - { name: twig.extension }

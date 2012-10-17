@@ -71,3 +71,8 @@ services:
         public:     true
         tags:
             - { name: security.voter }
+
+    application.sonata.admin.compte.twig:
+        class : Application\Twig\GlobalsExtension
+        tags:
+            - { name: twig.extension }
