@@ -24,7 +24,6 @@ class CacheClearCommand extends BaseCacheClearCommand
 
         /** @var $configurator \Sensio\Bundle\DistributionBundle\Configurator\Configurator */
         $configurator = $this->getContainer()->get('sensio.distribution.webconfigurator');
-
         $configurator->mergeParameters(array(
             'assets_version' => $version
         ));
