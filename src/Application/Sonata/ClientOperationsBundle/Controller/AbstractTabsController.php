@@ -1076,7 +1076,6 @@ class AbstractTabsController extends Controller
             ->leftJoin('i.user', 'u')
             ->where('i.client_id = :client_id')
             ->addOrderBy('i.date', 'DESC')
-            ->setMaxResults(10)
             ->setParameters(array(
             ':client_id' => $this->client_id,
         ))

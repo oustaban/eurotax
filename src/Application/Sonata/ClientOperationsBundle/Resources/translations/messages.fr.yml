@@ -276,6 +276,8 @@ ApplicationSonataClientOperationsBundle:
       commentaires: Commentaires
 
   list:
+    import_id: ImportID
+    status: Statut
     Alerts: Alertes
     V01TVA:
       title: V01-TVA

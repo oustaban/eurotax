@@ -165,8 +165,8 @@ abstract class AbstractTabsAdmin extends Admin
         }
 
         $listMapper
-            ->add('status.name', null, array('label' => 'Statut'))
-            ->add('imports.id', null);
+            ->add('status.name', null, array('label' => 'ApplicationSonataClientOperationsBundle.list.status'))
+            ->add('imports.id', null, array('label' => 'ApplicationSonataClientOperationsBundle.list.import_id'));
     }
 
     /**
