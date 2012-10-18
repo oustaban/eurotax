@@ -411,11 +411,12 @@ class AbstractTabsController extends Controller
         $id = $this->get('request')->get($this->admin->getIdParameter());
         $object = $this->admin->getObject($id);
 
-        $date_piece = $object->getDatePiece();
-
-        if ($date_piece) {
-            $this->_month = $date_piece->format('m');
-            $this->_year = $date_piece->format('Y');
+        if ($object){
+            $date_piece = $object->getDatePiece();
+            if ($date_piece) {
+                $this->_month = $date_piece->format('m');
+                $this->_year = $date_piece->format('Y');
+            }
         }
     }
 
@@ -1076,7 +1077,6 @@ class AbstractTabsController extends Controller
             ->leftJoin('i.user', 'u')
             ->where('i.client_id = :client_id')
             ->addOrderBy('i.date', 'DESC')
-            ->setMaxResults(10)
             ->setParameters(array(
             ':client_id' => $this->client_id,
         ))

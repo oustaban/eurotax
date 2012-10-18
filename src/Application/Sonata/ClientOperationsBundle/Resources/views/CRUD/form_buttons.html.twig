@@ -114,7 +114,7 @@
 
                 // populate the popup container
                 field_dialog_{{ id }}.find('.popup-body').html('').append($table);
-                field_dialog_{{ id }}.find('#title').html(json.title);
+                field_dialog_{{ id }}.find('.title').html(json.title);
                 field_dialog_{{ id }}.modal('toggle');
 
                 $table.find('a.import_del').click(function () {
