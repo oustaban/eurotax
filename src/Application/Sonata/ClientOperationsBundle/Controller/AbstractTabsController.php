@@ -413,11 +413,10 @@ class AbstractTabsController extends Controller
 
         if ($object){
             $date_piece = $object->getDatePiece();
-        }
-
-        if ($date_piece) {
-            $this->_month = $date_piece->format('m');
-            $this->_year = $date_piece->format('Y');
+            if ($date_piece) {
+                $this->_month = $date_piece->format('m');
+                $this->_year = $date_piece->format('Y');
+            }
         }
     }
 
