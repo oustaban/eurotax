@@ -60,10 +60,10 @@ class ClientAdmin extends Admin
         $formMapper
             ->with('form.client')
             ->add('user', null, array('label' => 'form.user', 'query_builder' => function(EntityRepository $er)
-            {
-                return $er->createQueryBuilder('u')
-                    ->orderBy('u.username', 'ASC');
-            },))
+        {
+            return $er->createQueryBuilder('u')
+                ->orderBy('u.username', 'ASC');
+        },))
             ->add('nom', null, array('label' => 'form.nom'))
             ->add('nature_du_client', null, array('label' => 'form.nature_du_client'))
             ->add('raison_sociale', null, array('label' => 'form.raison_sociale'))
@@ -186,8 +186,7 @@ class ClientAdmin extends Admin
             ->add('date_fin_mission', null, array(
             'template' => 'ApplicationSonataClientBundle:CRUD:list_date_fin_mission.html.twig',
             'label' => 'list.date_fin_mission'
-        ))
-            ;
+        ));
     }
 
     /**
@@ -245,6 +244,24 @@ class ClientAdmin extends Admin
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function postUpdate($object)
+    {
+        /* @var $object \Application\Sonata\ClientBundle\Entity\Client */
+        $this->_setupAlerts($object);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function postRemove($object)
+    {
+        /* @var $object \Application\Sonata\ClientBundle\Entity\Client */
+        $this->_setupAlerts($object);
+    }
+
+    /**
      * @param mixed $object
      */
     protected function _setupAlerts($object)
@@ -262,79 +279,81 @@ class ClientAdmin extends Admin
         $em->getRepository('ApplicationSonataClientBundle:ClientAlert')
             ->createQueryBuilder('c')
             ->delete()
-            ->where('c.client_id = :client_id')
+            ->andWhere('c.client_id = :client_id')
             ->andWhere('c.tabs = :tab')
-            ->setParameters(array(
-            ':client_id' => $object->getId(),
-            ':tab' => $tab,
-        ))->getQuery()->execute();
+            ->setParameter(':client_id', $object->getId())
+            ->setParameter(':tab', $tab)
+            ->getQuery()->execute();
 
-        $value = $object->getSiret();
-        if (!$value) {
-            $alert = new ClientAlert();
-            $alert->setClientId($object->getId());
-            $alert->setTabs($tab);
-            $alert->setIsBlocked(true);
-            $alert->setText('Manque SIRET');
+        if ($object) {
 
-            $em->persist($alert);
+            $value = $object->getSiret();
+            if (!$value) {
+                $alert = new ClientAlert();
+                $alert->setClientId($object->getId());
+                $alert->setTabs($tab);
+                $alert->setIsBlocked(true);
+                $alert->setText('Manque SIRET');
+
+                $em->persist($alert);
+            }
+
+            $value = $object->getNTVACEE();
+            if (!$value) {
+                $alert = new ClientAlert();
+                $alert->setClientId($object->getId());
+                $alert->setTabs($tab);
+                $alert->setIsBlocked(true);
+                $alert->setText('Manque N° TVA FR');
+
+                $em->persist($alert);
+            }
+
+            $value = $object->getNumDossierFiscal();
+            if (!$value) {
+                $alert = new ClientAlert();
+                $alert->setClientId($object->getId());
+                $alert->setTabs($tab);
+                $alert->setIsBlocked(false);
+                $alert->setText('Manque Dossier fiscal');
+
+                $em->persist($alert);
+            }
+
+            $value = $object->getNiveauDobligationId();
+            if (!$value) {
+                $alert = new ClientAlert();
+                $alert->setClientId($object->getId());
+                $alert->setTabs($tab);
+                $alert->setIsBlocked(true);
+                $alert->setText('Clôture Manque Niveau Obligation DEB');
+
+                $em->persist($alert);
+            }
+
+            $value = $object->getPeriodiciteCA3();
+            if (!$value) {
+                $alert = new ClientAlert();
+                $alert->setClientId($object->getId());
+                $alert->setTabs($tab);
+                $alert->setIsBlocked(true);
+                $alert->setText('Clôture Manque périodicité CA3');
+
+                $em->persist($alert);
+            }
+
+            $value = $object->getActivite();
+            if (!$value) {
+                $alert = new ClientAlert();
+                $alert->setClientId($object->getId());
+                $alert->setTabs($tab);
+                $alert->setIsBlocked(false);
+                $alert->setText('Manque Activité');
+
+                $em->persist($alert);
+            }
+
+            $em->flush();
         }
-
-        $value = $object->getNTVACEE();
-        if (!$value) {
-            $alert = new ClientAlert();
-            $alert->setClientId($object->getId());
-            $alert->setTabs($tab);
-            $alert->setIsBlocked(true);
-            $alert->setText('Manque N° TVA FR');
-
-            $em->persist($alert);
-        }
-
-        $value = $object->getNumDossierFiscal();
-        if (!$value) {
-            $alert = new ClientAlert();
-            $alert->setClientId($object->getId());
-            $alert->setTabs($tab);
-            $alert->setIsBlocked(false);
-            $alert->setText('Manque Dossier fiscal');
-
-            $em->persist($alert);
-        }
-
-        $value = $object->getNiveauDobligationId();
-        if (!$value) {
-            $alert = new ClientAlert();
-            $alert->setClientId($object->getId());
-            $alert->setTabs($tab);
-            $alert->setIsBlocked(true);
-            $alert->setText('Clôture Manque Niveau Obligation DEB');
-
-            $em->persist($alert);
-        }
-
-        $value = $object->getPeriodiciteCA3();
-        if (!$value) {
-            $alert = new ClientAlert();
-            $alert->setClientId($object->getId());
-            $alert->setTabs($tab);
-            $alert->setIsBlocked(true);
-            $alert->setText('Clôture Manque périodicité CA3');
-
-            $em->persist($alert);
-        }
-
-        $value = $object->getActivite();
-        if (!$value) {
-            $alert = new ClientAlert();
-            $alert->setClientId($object->getId());
-            $alert->setTabs($tab);
-            $alert->setIsBlocked(false);
-            $alert->setText('Manque Activité');
-
-            $em->persist($alert);
-        }
-
-        $em->flush();
     }
 }
