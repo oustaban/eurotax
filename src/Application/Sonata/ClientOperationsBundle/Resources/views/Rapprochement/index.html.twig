@@ -85,7 +85,7 @@
                 (Math.round((
                         Number($plus.replace(',', '.')) -
                         Number($minus.replace(',', '.'))
-                )*100)/100).toString().replace('.', ',')
+                )*100)/100).toFixed(2).toString().replace('.', ',')
         );
 
         var $plus = $('.rapprochement_content_no_deb .rapprochement_content_input table.table tr.totals_row div b :last');
@@ -96,7 +96,7 @@
                 (Math.round((
                         Number($plus.replace(',', '.')) -
                                 Number($minus.replace(',', '.'))
-                        )*100)/100).toString().replace('.', ',')
+                        )*100)/100).toFixed(2).toString().replace('.', ',')
         );
 
         var $plus = $('.rapprochement_content_no_deb .rapprochement_content_output table.table tr.totals_row div b :first');
@@ -107,7 +107,7 @@
                 (Math.round((
                         Number($plus.replace(',', '.')) -
                                 Number($minus.replace(',', '.'))
-                        )*100)/100).toString().replace('.', ',')
+                        )*100)/100).toFixed(2).toString().replace('.', ',')
         );
 
         var $plus = $('.rapprochement_content_no_deb .rapprochement_content_output table.table tr.totals_row div b :last');
@@ -118,7 +118,7 @@
                 (Math.round((
                         Number($plus.replace(',', '.')) -
                                 Number($minus.replace(',', '.'))
-                        )*100)/100).toString().replace('.', ',')
+                        )*100)/100).toFixed(2).toString().replace('.', ',')
         );
     });
 </script>
