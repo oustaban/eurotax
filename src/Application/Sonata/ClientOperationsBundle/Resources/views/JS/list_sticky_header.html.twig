@@ -27,8 +27,14 @@
             }).each(function () {
                 $(this).attr('id', 'clone' + $(this).attr('id'));
             });
-            $('.sticky_header ._filterText').keyup(function () {
+            $('.sticky_header_orig ._filterText').keyup(function () {
                 $('#clone' + $(this).attr('id')).val($(this).val());
+            });
+            $('.sticky_header_clone a').click(function () {
+                var href = $(this).attr('href');
+                $('.sticky_header_orig a[href="' + href + '"]').click();
+
+                return false;
             });
         }
     });

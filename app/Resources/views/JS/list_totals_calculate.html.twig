@@ -2,8 +2,11 @@
 <script type="text/javascript">
     $(function () {
         $('.sonata-ba-list .table').each(function(){
-            var $table = $(this).find('tbody:first');
-            var $tr = $table.find('tr:first').clone();
+            var $tfoot = $(this).find('tfoot:first');
+            if (!$tfoot.length) {
+                $tfoot = $('<tfoot />').appendTo(this);
+            }
+            var $tr = $(this).find('tbody tr:first').clone();
 
             var add_total_rows = false;
             $tr.addClass('totals_row').children().each(function () {
@@ -27,7 +30,7 @@
             });
 
             if (add_total_rows) {
-                $tr.appendTo($table);
+                $tr.appendTo($tfoot);
             }
             else {
                 $tr.remove();

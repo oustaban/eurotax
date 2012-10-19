@@ -5,7 +5,7 @@
  *
  */
 (function($) { // hide the namespace
-    
+
     var PROP_NAME = 'sticky-header';
 
     function StickyHeader() {
@@ -14,6 +14,7 @@
         this.columnsClassName = 'sticky_columns_target';
         this.columnsCloneClassName = 'sticky_columns_clone';
         this.cloneClassName = 'sticky_header_clone';
+        this.origClassName = 'sticky_header_orig';
         this.rowTag = 'tr';
         this.colTag = 'td,th';
         this._defaults = { // Global defaults
@@ -69,10 +70,10 @@
                 .appendTo(document.body)
                 .hide()
                 ;
-                
+
                 var table = $("<table />").appendTo(cb);
                 table.attr('class', inst.target.attr('class'));
-                
+
                 inst.target.find($.stickyHeader.rowTag).each(function(index){
                     if (!this.id) this.id = 'shhc' + new Date().getTime();
                     var row = $('<' + this.nodeName.toLowerCase() + ' id="' + this.id + '_clone_col" />').appendTo(table);
@@ -91,10 +92,10 @@
                     });
                 });
             }
-            
+
             inst.target.addClass(this.className);
             this.log('.'+this._get(inst,'headerClassName'));
-            
+
             inst.target.find('.'+this._get(inst,'headerClassName')).each(function(index){
                 if (!this.id) this.id = 'shh' + new Date().getTime();
                 var clone = $(this).clone()
@@ -105,7 +106,9 @@
                 .css('z-index', 500+5*index)
                 .insertAfter(this)
                 .hide();
-                
+
+                $(this).addClass($.stickyHeader.origClassName);
+
                 if ($.stickyHeader._get(inst,'fixedColumns')>0){
                     clone.children($.stickyHeader.colTag).filter(':lt(' + $.stickyHeader._get(inst,'fixedColumns') + ')')
                     .each(function(index){
@@ -118,10 +121,12 @@
                         .css('z-index', Number(clone.css('z-index'))+10000)
                         .appendTo('#' + clone.attr('id') + '_col')
                         .hide();
+
+                        $(this).addClass($.stickyHeader.origClassName);
                     });
                 }
             });
-            
+
             $.data(target, PROP_NAME, inst);
         },
         updateTableHeaders: function (){
