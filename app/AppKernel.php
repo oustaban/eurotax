@@ -54,6 +54,7 @@ class AppKernel extends Kernel
 
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Application\Doctrine\FixturesBundle\ApplicationDoctrineFixturesBundle(),
+            new Application\Symfony\FrameworkBundle\ApplicationSymfonyFrameworkBundle(),
             new Application\Sonata\ClientOperationsBundle\ApplicationSonataClientOperationsBundle(),
 
             new Application\Sonata\DashboardBundle\ApplicationSonataDashboardBundle(),
