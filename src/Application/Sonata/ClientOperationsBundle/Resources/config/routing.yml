@@ -1,0 +1,3 @@
+rapprochement_index:
+    pattern: /rapprochement/{client_id}/{month}
+    defaults: { _controller: ApplicationSonataClientOperationsBundle:Rapprochement:index }

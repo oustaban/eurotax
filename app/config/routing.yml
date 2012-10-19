@@ -38,6 +38,10 @@ home:
     pattern: /
     defaults: { _controller: ApplicationSonataDashboardBundle:Home:index }
 
+application_sonata_clientoperations:
+    resource: '@ApplicationSonataClientOperationsBundle/Resources/config/routing.yml'
+    prefix: /sonata/clientoperations
+
 application_sonata_dashboards:
     resource: '@ApplicationSonataDashboardBundle/Resources/config/routing.yml'
     prefix: /dashboard

@@ -1,0 +1,52 @@
+{% set rnd = random() %}
+<div class="rapprochement_content_body_table">
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr class="sonata-ba-list-field-header">
+            <th class="sonata-ba-list-field-header-text" width="40%">
+                Dans {{ typeName }}
+            </th>
+            <th class="sonata-ba-list-field-header-money" width="20%">
+                HT (&#8364;)
+            </th>
+            <th class="sonata-ba-list-field-header-integer" width="20%">
+                Nb lignes
+            </th>
+            <th class="sonata-ba-list-field-header-money" width="20%">
+                HT (&#8364;)
+            </th>
+        </tr>
+        </thead>
+
+        {% if table %}
+            <tbody>
+                {% set noDEB = not table[0].DEB %}
+                {% for object in table %}
+                {% if (object.DEB and noDEB) %}
+                    {% set noDEB = 0 %}
+                    <tr><td colspan="4">&nbsp;</td></tr>
+                {% endif%}
+                <tr>
+                    <td class="sonata-ba-list-field sonata-ba-list-field-text">
+                        {{ object.DEB? preRegime ~ 'Régime ' ~ object.DEB ~ postRegime : 'pour DEB "NON"' }}
+                    </td>
+                    <td class="sonata-ba-list-field sonata-ba-list-field-money">
+                        <div class="totals v1_{{ rnd }}">
+                            {{ object.v1 ? object.v1 : 0 }}
+                        </div>
+                    </td>
+                    <td class="sonata-ba-list-field sonata-ba-list-field-integer">
+                        {{ object.nb }}
+                    </td>
+                    <td class="sonata-ba-list-field sonata-ba-list-field-money">
+                        <div class="totals v2_{{ rnd }}">
+                            {{ object.v2 ? object.v2 : 0  }}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+                <tr><td colspan="4">&nbsp;</td></tr>
+            </tbody>
+        {% endif%}
+    </table>
+</div>

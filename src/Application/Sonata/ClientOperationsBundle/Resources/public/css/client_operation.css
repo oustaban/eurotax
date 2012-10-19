@@ -46,3 +46,36 @@
 .alert-count{
    margin-left: 20px;
 }
+
+.rapprochement_content_body {
+    clear: both;
+    float: none;
+}
+.rapprochement_content_no_deb {
+    clear: both;
+    float: none;
+}
+.rapprochement_content_deb {
+    clear: both;
+    float: none;
+}
+.rapprochement_content_input {
+    width: 45%;
+    float: left;
+    clear: left;
+}
+.rapprochement_content_output {
+    width: 45%;
+    float: right;
+    clear: right;
+}
+.rapprochement_content_stat {
+    clear: both;
+    float: none;
+}
+.rapprochement_content_body_table {
+    margin-bottom: 50px;
+}
+table.table td.sonata-ba-list-field-money {
+    text-align: right;
+}

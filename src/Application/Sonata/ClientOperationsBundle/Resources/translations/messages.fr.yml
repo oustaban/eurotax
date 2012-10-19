@@ -503,6 +503,10 @@ ApplicationSonataClientOperationsBundle:
       mois: Mois
       commentaires: Commentaires
 
+  rapprochement:
+    input_title: Analyse de l'écart entre A06 et DEB Intro
+    output_title: Analyse de l'écart entre V05 et DEB Exped
+
 
 V11 I N T List: V11-INT
 V11 I N T Edit: Edit

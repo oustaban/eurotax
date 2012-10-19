@@ -1,0 +1,125 @@
+{% extends 'ApplicationSonataClientOperationsBundle::layout.html.twig' %}
+
+
+
+{% set content%}
+<div class="rapprochement_content">
+    <h2>{{ client }}</h2>
+
+    <h3>{{ info.time|date('Y-m') }} - T{{ info.quarter }}</h3>
+
+    <div class="rapprochement_content_body">
+        <div class="rapprochement_content_no_deb">
+            <div class="rapprochement_content_input">
+                <h4>{{ 'ApplicationSonataClientOperationsBundle.rapprochement.input_title'|trans() }}</h4>
+                {% include 'ApplicationSonataClientOperationsBundle::rapprochement/table.html.twig' with {'table': a06_aib, 'typeName': 'A06-AIB', preRegime: 'pour ', postRegime: ' - DEB "OUI"'} %}
+            </div>
+            <div class="rapprochement_content_output">
+                <h4>{{ 'ApplicationSonataClientOperationsBundle.rapprochement.input_title'|trans() }}</h4>
+                {% include 'ApplicationSonataClientOperationsBundle::rapprochement/table.html.twig' with {'table': v05_lic, 'typeName': 'V05-LIC', preRegime: 'pour ', postRegime: ' - DEB "OUI"'} %}
+            </div>
+        </div>
+        <div class="rapprochement_content_deb">
+            <div class="rapprochement_content_input">
+                {% include 'ApplicationSonataClientOperationsBundle::rapprochement/table.html.twig' with {'table': deb_intro, 'typeName': 'DEB-Intro', preRegime: ' ', postRegime: ''} %}
+            </div>
+            <div class="rapprochement_content_output">
+                {% include 'ApplicationSonataClientOperationsBundle::rapprochement/table.html.twig' with {'table': deb_exped, 'typeName': 'DEB-Exped', preRegime: '', postRegime: ''} %}
+            </div>
+        </div>
+    </div>
+    <div class="rapprochement_content_stat">
+        <div class="rapprochement_content_input">
+            <table class="table table-bordered table-striped">
+                <tbody>
+                <tr>
+                    <td width="40%">
+                        ECART
+                    </td>
+                    <td class="sonata-ba-list-field sonata-ba-list-field-money" width="20%">
+                        <div id="totals_input_v1"></div>
+                    </td>
+                    <td width="20%">
+                        &nbsp;
+                    </td>
+                    <td class="sonata-ba-list-field sonata-ba-list-field-money" width="20%">
+                        <div id="totals_input_v2"></div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="rapprochement_content_output">
+            <table class="table table-bordered table-striped">
+                <tbody>
+                <tr>
+                    <td width="40%">
+                        ECART
+                    </td>
+                    <td class="sonata-ba-list-field sonata-ba-list-field-money" width="20%">
+                        <div id="totals_output_v1"></div>
+                    </td>
+                    <td width="20%">
+                        &nbsp;
+                    </td>
+                    <td class="sonata-ba-list-field sonata-ba-list-field-money" width="20%">
+                        <div id="totals_output_v2"></div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endset %}
+
+{% block javascriptsafter %}
+{{ parent() }}
+<script type="text/javascript">
+    $(function(){
+        var $plus = $('.rapprochement_content_no_deb .rapprochement_content_input table.table tr.totals_row div b :first');
+        $plus = $plus.length?$plus.html():'0';
+        var $minus = $('.rapprochement_content_deb .rapprochement_content_input table.table tr.totals_row div b :first');
+        $minus = $minus.length?$minus.html():'0';
+        $('#totals_input_v1').html(
+                (Math.round((
+                        Number($plus.replace(',', '.')) -
+                        Number($minus.replace(',', '.'))
+                )*100)/100).toString().replace('.', ',')
+        );
+
+        var $plus = $('.rapprochement_content_no_deb .rapprochement_content_input table.table tr.totals_row div b :last');
+        $plus = $plus.length?$plus.html():'0';
+        var $minus = $('.rapprochement_content_deb .rapprochement_content_input table.table tr.totals_row div b :last');
+        $minus = $minus.length?$minus.html():'0';
+        $('#totals_input_v2').html(
+                (Math.round((
+                        Number($plus.replace(',', '.')) -
+                                Number($minus.replace(',', '.'))
+                        )*100)/100).toString().replace('.', ',')
+        );
+
+        var $plus = $('.rapprochement_content_no_deb .rapprochement_content_output table.table tr.totals_row div b :first');
+        $plus = $plus.length?$plus.html():'0';
+        var $minus = $('.rapprochement_content_deb .rapprochement_content_output table.table tr.totals_row div b :first');
+        $minus = $minus.length?$minus.html():'0';
+        $('#totals_output_v1').html(
+                (Math.round((
+                        Number($plus.replace(',', '.')) -
+                                Number($minus.replace(',', '.'))
+                        )*100)/100).toString().replace('.', ',')
+        );
+
+        var $plus = $('.rapprochement_content_no_deb .rapprochement_content_output table.table tr.totals_row div b :last');
+        $plus = $plus.length?$plus.html():'0';
+        var $minus = $('.rapprochement_content_deb .rapprochement_content_output table.table tr.totals_row div b :last');
+        $minus = $minus.length?$minus.html():'0';
+        $('#totals_output_v2').html(
+                (Math.round((
+                        Number($plus.replace(',', '.')) -
+                                Number($minus.replace(',', '.'))
+                        )*100)/100).toString().replace('.', ',')
+        );
+    });
+</script>
+{% endblock %}
