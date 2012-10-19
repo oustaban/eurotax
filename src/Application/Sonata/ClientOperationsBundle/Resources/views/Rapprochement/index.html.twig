@@ -12,19 +12,19 @@
         <div class="rapprochement_content_no_deb">
             <div class="rapprochement_content_input">
                 <h4>{{ 'ApplicationSonataClientOperationsBundle.rapprochement.input_title'|trans() }}</h4>
-                {% include 'ApplicationSonataClientOperationsBundle::rapprochement/table.html.twig' with {'table': a06_aib, 'typeName': 'A06-AIB', preRegime: 'pour ', postRegime: ' - DEB "OUI"'} %}
+                {% include 'ApplicationSonataClientOperationsBundle::Rapprochement/table.html.twig' with {'table': a06_aib, 'typeName': 'A06-AIB', preRegime: 'pour ', postRegime: ' - DEB "OUI"'} %}
             </div>
             <div class="rapprochement_content_output">
                 <h4>{{ 'ApplicationSonataClientOperationsBundle.rapprochement.input_title'|trans() }}</h4>
-                {% include 'ApplicationSonataClientOperationsBundle::rapprochement/table.html.twig' with {'table': v05_lic, 'typeName': 'V05-LIC', preRegime: 'pour ', postRegime: ' - DEB "OUI"'} %}
+                {% include 'ApplicationSonataClientOperationsBundle::Rapprochement/table.html.twig' with {'table': v05_lic, 'typeName': 'V05-LIC', preRegime: 'pour ', postRegime: ' - DEB "OUI"'} %}
             </div>
         </div>
         <div class="rapprochement_content_deb">
             <div class="rapprochement_content_input">
-                {% include 'ApplicationSonataClientOperationsBundle::rapprochement/table.html.twig' with {'table': deb_intro, 'typeName': 'DEB-Intro', preRegime: ' ', postRegime: ''} %}
+                {% include 'ApplicationSonataClientOperationsBundle::Rapprochement/table.html.twig' with {'table': deb_intro, 'typeName': 'DEB-Intro', preRegime: ' ', postRegime: ''} %}
             </div>
             <div class="rapprochement_content_output">
-                {% include 'ApplicationSonataClientOperationsBundle::rapprochement/table.html.twig' with {'table': deb_exped, 'typeName': 'DEB-Exped', preRegime: '', postRegime: ''} %}
+                {% include 'ApplicationSonataClientOperationsBundle::Rapprochement/table.html.twig' with {'table': deb_exped, 'typeName': 'DEB-Exped', preRegime: '', postRegime: ''} %}
             </div>
         </div>
     </div>
