@@ -242,7 +242,9 @@ class Garantie
      */
     public function setTypeGarantie(\Application\Sonata\ClientBundle\Entity\ListTypeGaranties $typeGarantie = null)
     {
-        $this->type_garantie = $typeGarantie;
+        if ($typeGarantie) {
+            $this->type_garantie = $typeGarantie;
+        }
 
         return $this;
     }
