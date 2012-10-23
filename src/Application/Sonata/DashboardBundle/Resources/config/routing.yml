@@ -1,7 +1,0 @@
-application_sonata_dashboard_admin:
-    pattern: /admin
-    defaults: { _controller: ApplicationSonataDashboardBundle:Admin:dashboard }
-
-application_sonata_dashboard_client:
-    pattern: /client
-    defaults: { _controller: ApplicationSonataDashboardBundle:Client:dashboard }
