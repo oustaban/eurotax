@@ -28,6 +28,7 @@ class HomeController extends Controller
             ->andWhere('(NOT c.date_fin_mission BETWEEN :date_lowest AND :date_highest) OR (c.date_fin_mission IS NULL)')
             ->setParameter(':date_lowest', new \DateTime('1000-01-01'))
             ->setParameter(':date_highest', new \DateTime())
+            ->orderBy('c.raison_sociale')
             ->getQuery()->execute();
 
         $alerts = $em->getRepository('ApplicationSonataClientBundle:Client')
