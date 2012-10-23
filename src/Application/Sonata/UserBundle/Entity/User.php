@@ -25,6 +25,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User extends AbstractedUser implements UserInterface
 {
+
+    const GroupId = 1;
+    const SuperUserId = 1;
+
     /**
      * @var integer $id
      */
@@ -78,8 +82,10 @@ class User extends AbstractedUser implements UserInterface
 
         parent::__construct();
 
-        $group = \AppKernel::getStaticContainer()->get('doctrine')->getRepository('ApplicationSonataUserBundle:Group')->find(1);
-        $this->addGroup($group);
+        $group = \AppKernel::getStaticContainer()->get('doctrine')->getRepository('ApplicationSonataUserBundle:Group')->find(static::GroupId);
+        if ($group) {
+            $this->addGroup($group);
+        }
     }
 
     /**
