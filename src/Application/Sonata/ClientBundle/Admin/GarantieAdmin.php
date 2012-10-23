@@ -70,7 +70,7 @@ class GarantieAdmin extends Admin
 
         $listMapper
             ->add('type_garantie.name', null, array('label' => $this->getFieldLabel('type_garantie')))
-            ->add('montant', null, array('label' => $this->getFieldLabel('montant')))
+            ->add('montant', 'money', array('label' => $this->getFieldLabel('montant')))
             ->add('devise.name', null, array('label' => $this->getFieldLabel('devise')));
     }
 
