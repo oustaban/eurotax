@@ -29,8 +29,14 @@ class GarantieAdmin extends Admin
 
         parent::configureFormFields($formMapper);
 
+        $is_disabled = $this->getRequest()->get($this->getIdParameter()) ? array('disabled' => 'disabled') : array();
+
         $formMapper->with($this->getFieldLabel('title'))
-            ->add('type_garantie', null, array('label' => $this->getFieldLabel('type_garantie')))
+            ->add('type_garantie', null,
+            array(
+                'label' => $this->getFieldLabel('type_garantie'),
+                'attr' => $is_disabled,
+            ))
             ->add('montant', null, array('label' => $this->getFieldLabel('montant')))
             ->add('devise', null, array('label' => $this->getFieldLabel('devise')))
             ->add('nom_de_lemeteur', null, array('label' => $this->getFieldLabel('nom_de_lemeteur')))
@@ -70,7 +76,7 @@ class GarantieAdmin extends Admin
 
         $listMapper
             ->add('type_garantie.name', null, array('label' => $this->getFieldLabel('type_garantie')))
-            ->add('montant', null, array('label' => $this->getFieldLabel('montant')))
+            ->add('montant', 'money', array('label' => $this->getFieldLabel('montant')))
             ->add('devise.name', null, array('label' => $this->getFieldLabel('devise')));
     }
 
@@ -113,61 +119,64 @@ class GarantieAdmin extends Admin
         ))->getQuery()->execute();
 
         /* @var $object \Application\Sonata\ClientBundle\Entity\Garantie */
-        $value = $object->getTypeGarantie()->getId();
 
-        switch ($value) {
+        if ($object->getTypeGarantie()) {
 
-            case 1:
-                $value = $object->getNomDeLaBanquesId();
+            $value = $object->getTypeGarantie()->getId();
+            switch ($value) {
 
-                if (0) {
-                    $alert = new ClientAlert();
-                    $alert->setClientId($object->getClientId());
-                    $alert->setTabs($tab);
-                    $alert->setIsBlocked(false);
-                    $alert->setText('Manque Garantie Bancaire');
+                case 1:
+                    $value = $object->getNomDeLaBanquesId();
 
-                    $em->persist($alert);
-                }
+                    if (0) {
+                        $alert = new ClientAlert();
+                        $alert->setClientId($object->getClientId());
+                        $alert->setTabs($tab);
+                        $alert->setIsBlocked(false);
+                        $alert->setText('Manque Garantie Bancaire');
 
-                $value = $object->getDateDecheance();
-                if (0) {
+                        $em->persist($alert);
+                    }
 
-                    $alert = new ClientAlert();
-                    $alert->setClientId($object->getClientId());
-                    $alert->setTabs($tab);
-                    $alert->setIsBlocked(false);
-                    $alert->setText("Date d'échéance Garantie Bancaire proche");
+                    $value = $object->getDateDecheance();
+                    if (0) {
 
-                    $em->persist($alert);
-                }
-                break;
+                        $alert = new ClientAlert();
+                        $alert->setClientId($object->getClientId());
+                        $alert->setTabs($tab);
+                        $alert->setIsBlocked(false);
+                        $alert->setText("Date d'échéance Garantie Bancaire proche");
 
-            case 3:
-                $value = $object->getNomDeLaBanquesId();
+                        $em->persist($alert);
+                    }
+                    break;
 
-                if (0) {
-                    $alert = new ClientAlert();
-                    $alert->setClientId($object->getClientId());
-                    $alert->setTabs($tab);
-                    $alert->setIsBlocked(false);
-                    $alert->setText('Manque Garantie Parentale');
+                case 3:
+                    $value = $object->getNomDeLaBanquesId();
 
-                    $em->persist($alert);
-                }
+                    if (0) {
+                        $alert = new ClientAlert();
+                        $alert->setClientId($object->getClientId());
+                        $alert->setTabs($tab);
+                        $alert->setIsBlocked(false);
+                        $alert->setText('Manque Garantie Parentale');
 
-                $value = $object->getDateDecheance();
-                if (0) {
+                        $em->persist($alert);
+                    }
 
-                    $alert = new ClientAlert();
-                    $alert->setClientId($object->getClientId());
-                    $alert->setTabs($tab);
-                    $alert->setIsBlocked(false);
-                    $alert->setText("Date d'échéance Garantie Parentale proche");
+                    $value = $object->getDateDecheance();
+                    if (0) {
 
-                    $em->persist($alert);
-                }
-                break;
+                        $alert = new ClientAlert();
+                        $alert->setClientId($object->getClientId());
+                        $alert->setTabs($tab);
+                        $alert->setIsBlocked(false);
+                        $alert->setText("Date d'échéance Garantie Parentale proche");
+
+                        $em->persist($alert);
+                    }
+                    break;
+            }
         }
     }
 }

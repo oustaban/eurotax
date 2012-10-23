@@ -12,6 +12,12 @@ class UserAdmin extends BaseUserAdmin
 {
     public $dashboards = array('Admin');
 
+    protected $datagridValues = array(
+        '_sort_order' => 'ASC',
+        '_sort_by' => 'username'
+    );
+
+
     /**
      * {@inheritdoc}
      */
@@ -23,9 +29,6 @@ class UserAdmin extends BaseUserAdmin
             ->add('lastname', null, array('label' => 'form.label_lastname'))
             ->add('email')
             ->add('groups')
-            ->add('locked', 'boolean', array(
-            'template' => 'ApplicationSonataUserBundle:CRUD:list_boolean_locked.html.twig',
-        ))
             ->add('createdAt', 'date', array(
             'template' => 'ApplicationSonataUserBundle:CRUD:list_created_at.html.twig',
         ));
@@ -68,25 +71,6 @@ class UserAdmin extends BaseUserAdmin
             ->add('phone', null, array('required' => false))
             ->add('groups', 'sonata_type_model', array('required' => false, 'expanded' => true, 'multiple' => true))
             ->end();
-
-        if (!$this->getSubject()->hasRole('ROLE_SUPER_ADMIN')) {
-            $formMapper->with('Management')
-//                ->add('roles', 'sonata_security_roles', array(
-//                'expanded' => true,
-//                'multiple' => true,
-//                'required' => false
-//            ))
-                ->add('locked', null, array('required' => false))
-                ->add('expired', null, array('required' => false))
-                ->add('credentialsExpired', null, array('required' => false))
-                ->end();
-        }
-
-//        $formMapper
-//            ->with('Security')
-//            ->add('token', null, array('required' => false))
-//            ->add('twoStepVerificationCode', null, array('required' => false))
-//            ->end();
     }
 
     /**

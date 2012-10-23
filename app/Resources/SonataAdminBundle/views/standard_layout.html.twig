@@ -80,10 +80,6 @@
         {% endfor %}
         {% endblock %}
 
-        <div style="float: right">
-            {%block actions %}{% endblock %}
-        </div>
-
         {% if _title is not empty or action is defined %}
         <div class="page-header">
             <h1>
@@ -127,7 +123,11 @@
                 {% endif %}
 
                 {% if _form is not empty %}
-                <div class="sonata-ba-form">{{ _form|raw }}</div>
+                    <div class="sonata-actions-base sonata-actions-edit">
+                        {{ block('actions') }}
+                    </div>
+
+                    <div class="sonata-ba-form">{{ _form|raw }}</div>
                 {% endif %}
 
                 {% if _list_table is not empty or _list_filters is not empty %}
@@ -135,6 +135,11 @@
                     {{ _list_filters|raw }}
                 </div>
                 <div class="sonata-ba-list">
+
+                    <div class="sonata-actions-base sonata-actions-list">
+                        {{ block('actions') }}
+                    </div>
+
                     {{ _list_table|raw }}
                 </div>
                 {% endif %}

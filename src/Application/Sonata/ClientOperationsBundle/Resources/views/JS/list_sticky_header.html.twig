@@ -10,9 +10,11 @@
             var $tr = $('<tr />').prependTo($thead);
             var $th = $('<th />')
                     .attr('colspan', $thead.children(':last').children().length)
-                    .append($('#block_actions'))
                     .append($('.clientoperations_tabs_types_block'))
                     .appendTo($tr);
+
+            $('.clientoperations_tabs_types_block #client-topinfo').after($('#block_actions'));
+
             var depth = 0;
             $thead.children().addClass('sticky_header').each(function () {
                 $(this).attr('depth', depth++);

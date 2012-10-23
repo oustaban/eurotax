@@ -152,3 +152,15 @@ tr.sonata-ba-list-field-header .headerSortDown:hover {
 .error-handle-text{
     text-align: center;
 }
+
+.sonata-actions-base{
+    margin-bottom:10px;
+}
+.sonata-actions-edit{
+    float: right;
+}
+
+.sonata-actions-clientoperations{
+    margin-top: -60px;
+    margin-left: 700px;
+}
