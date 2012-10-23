@@ -23,9 +23,6 @@ class UserAdmin extends BaseUserAdmin
             ->add('lastname', null, array('label' => 'form.label_lastname'))
             ->add('email')
             ->add('groups')
-            ->add('locked', 'boolean', array(
-            'template' => 'ApplicationSonataUserBundle:CRUD:list_boolean_locked.html.twig',
-        ))
             ->add('createdAt', 'date', array(
             'template' => 'ApplicationSonataUserBundle:CRUD:list_created_at.html.twig',
         ));
