@@ -159,3 +159,8 @@ tr.sonata-ba-list-field-header .headerSortDown:hover {
 .sonata-actions-edit{
     float: right;
 }
+
+.sonata-actions-clientoperations{
+    margin-top: -60px;
+    margin-left: 700px;
+}
