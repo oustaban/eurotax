@@ -12,6 +12,12 @@ class UserAdmin extends BaseUserAdmin
 {
     public $dashboards = array('Admin');
 
+    protected $datagridValues = array(
+        '_sort_order' => 'ASC',
+        '_sort_by' => 'username'
+    );
+
+
     /**
      * {@inheritdoc}
      */
