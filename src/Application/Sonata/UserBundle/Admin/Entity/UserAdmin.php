@@ -68,25 +68,6 @@ class UserAdmin extends BaseUserAdmin
             ->add('phone', null, array('required' => false))
             ->add('groups', 'sonata_type_model', array('required' => false, 'expanded' => true, 'multiple' => true))
             ->end();
-
-        if (!$this->getSubject()->hasRole('ROLE_SUPER_ADMIN')) {
-            $formMapper->with('Management')
-//                ->add('roles', 'sonata_security_roles', array(
-//                'expanded' => true,
-//                'multiple' => true,
-//                'required' => false
-//            ))
-                ->add('locked', null, array('required' => false))
-                ->add('expired', null, array('required' => false))
-                ->add('credentialsExpired', null, array('required' => false))
-                ->end();
-        }
-
-//        $formMapper
-//            ->with('Security')
-//            ->add('token', null, array('required' => false))
-//            ->add('twoStepVerificationCode', null, array('required' => false))
-//            ->end();
     }
 
     /**
