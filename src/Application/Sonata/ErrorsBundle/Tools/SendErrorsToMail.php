@@ -22,6 +22,7 @@ class SendErrorsToMail
     protected $_mailFrom = 'eurotax@hypernaut.com';
 
     protected $_mailTo = array(
+        'Pierre.DeLespinay@masao.eu',
         'vladimir@hypernaut.net',
         'defan.hypernaut@gmail.com',
     );
