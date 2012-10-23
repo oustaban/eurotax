@@ -20,6 +20,7 @@
             {% endif %}
 
             <button class="btn" id="downloadPDF"><i class="icon icon-print"></i> PDF</button>
+            <button class="btn" id="raprochement"><i class="icon icon-list-alt"></i> Prévisualisation</button>
         </div>
     </div>
 </form>
@@ -132,6 +133,10 @@
 
     $('#downloadPDF').click(function () {
         location.href = '{{ admin.generateUrl('pdf', _filter_json) }}'.replace('&amp;', '&');
+    })
+
+    $('#raprochement').click(function () {
+        location.href = '{{ path('rapprochement_index', {client_id: client_id, month: month~'|'~year } ) }}'.replace('&amp;', '&');
     })
 </script>
 
