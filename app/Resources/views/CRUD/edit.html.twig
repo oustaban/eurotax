@@ -1,21 +1,29 @@
 {% extends 'SonataAdminBundle:CRUD:base_edit.html.twig' %}
 
 {% block form %}
- {{parent()}}
+    {% set notice_level  = 'error' %}
+    {% set session_var = 'sonata_flash_' ~ notice_level %}
+    {% for flash in app.session.flashbag.get(session_var) %}
+        <div class="alert {{ 'alert-' ~ notice_level }}">
+            {{ flash|trans([], 'SonataAdminBundle') }}
+        </div>
+    {% endfor %}
 
-{# focus first element #}
-{% block form_js %}
-{% if app.request.isxmlhttprequest is empty %}
-<script type="text/javascript">
-    $(function () {
-        $('form input[type="text"], form select').first().focus();
-    });
-</script>
-{% endif %}
-{% endblock form_js %}
-{# end focus first element #}
+    {{ parent() }}
 
-{% endblock form%}
+    {# focus first element #}
+    {% block form_js %}
+        {% if app.request.isxmlhttprequest is empty %}
+            <script type="text/javascript">
+                $(function () {
+                    $('form input[type="text"], form select').first().focus();
+                });
+            </script>
+        {% endif %}
+    {% endblock form_js %}
+    {# end focus first element #}
+
+{% endblock form %}
 
 
 {% block formactions %}

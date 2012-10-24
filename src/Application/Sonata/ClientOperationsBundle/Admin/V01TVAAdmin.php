@@ -99,13 +99,13 @@ class V01TVAAdmin extends Admin
 
         $value = $object->getMois();
         if (!$value) {
-            $errorElement->addViolation('"Mois" should not be null');
+            $errorElement->with('mois')->addViolation('"Mois" should not be null')->end();
         }
 
         $value = $object->getNoTVATiers();
         if ($value) {
             if (!preg_match('/^FR.*/', $value)) {
-                $errorElement->addViolation('"N° TVA Tiers" should begin with "FR"');
+                $errorElement->with('no_TVA_tiers')->addViolation('"N° TVA Tiers" should begin with "FR"')->end();
             }
         }
 
@@ -113,7 +113,7 @@ class V01TVAAdmin extends Admin
         if ($value) {
 
             if (!($value == $this->getNumberRound($object->getMontantHTEnDevise() * $object->getTauxDeTVA()))) {
-                $errorElement->addViolation('Wrong "Montant TVA Francaise"');
+                $errorElement->with('montant_TVA_francaise')->addViolation('Wrong "Montant TVA Francaise"')->end();
             }
         }
 
@@ -121,18 +121,18 @@ class V01TVAAdmin extends Admin
         if ($value) {
             if (!($value == $this->getNumberRound($object->getMontantHTEnDevise() + $object->getMontantTVAFrancaise()))) {
 
-                $errorElement->addViolation('Wrong "Montant TTC"');
+                $errorElement->with('montant_TTC')->addViolation('Wrong "Montant TTC"')->end();
             }
         }
 
         $value = $object->getPaiementMontant();
         if ($value) {
             if (!$object->getPaiementDevise()) {
-                $errorElement->addViolation('"Paiement Devise" can\'t be empty');
+                $errorElement->with('paiement_montant')->addViolation('"Paiement Devise" can\'t be empty')->end();
             }
 
             if (!$object->getPaiementDate()) {
-                $errorElement->addViolation('"Paiement Date" can\'t be empty');
+                $errorElement->with('paiement_montant')->addViolation('"Paiement Date" can\'t be empty')->end();
             }
 
             $mois = $object->getMois();
@@ -147,7 +147,7 @@ class V01TVAAdmin extends Admin
                 }
 
                 if ($year . '-' . $month != date('Y-n', strtotime('-1 month'))) {
-                    $errorElement->addViolation('Wrong "Mois"');
+                    $errorElement->with('mois')->addViolation('Wrong "Mois"')->end();
                 }
             }
         }
@@ -155,7 +155,7 @@ class V01TVAAdmin extends Admin
         $value = $object->getHT();
         if ($value) {
             if (!($value == $this->getNumberRound($object->getMontantHTEnDevise() / $object->getTauxDeChange()))) {
-                $errorElement->addViolation('Wrong "HT"');
+                $errorElement->with('HT')->addViolation('Wrong "HT"')->end();
             }
         }
 
@@ -175,7 +175,7 @@ class V01TVAAdmin extends Admin
                 }
             }
             if ($error) {
-                $errorElement->addViolation('No Devise for this month');
+                $errorElement->with('devise')->addViolation('No Devise for this month')->end();
             }
         }
     }

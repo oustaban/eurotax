@@ -104,31 +104,31 @@ class A02TVAAdmin extends Admin
 
         $value = $object->getMois();
         if (!$value) {
-            $errorElement->addViolation('"Mois" should not be null');
+            $errorElement->with('mois')->addViolation('"Mois" should not be null')->end();
         }
 
         $value = $object->getMontantTVAFrancaise();
         if ($value) {
             if (!($value == $this->getNumberRound($object->getMontantHTEnDevise() * $object->getTauxDeTVA()))) {
-                $errorElement->addViolation('Wrong "Montant TVA Francaise"');
+                $errorElement->with('montant_TVA_francaise')->addViolation('Wrong "Montant TVA Francaise"')->end();
             }
         }
 
         $value = $object->getMontantTTC();
         if ($value) {
             if (!($value == $this->getNumberRound($object->getMontantHTEnDevise() + $object->getMontantTVAFrancaise()))) {
-                $errorElement->addViolation('Wrong "Montant TTC"');
+                $errorElement->with('montant_TTC')->addViolation('Wrong "Montant TTC"')->end();
             }
         }
 
         $value = $object->getPaiementMontant();
         if ($value) {
             if (!$object->getPaiementDevise()) {
-                $errorElement->addViolation('"Paiement Devise" can\'t be empty');
+                $errorElement->with('paiement_montant')->addViolation('"Paiement Devise" can\'t be empty')->end();
             }
 
             if (!$object->getPaiementDate()) {
-                $errorElement->addViolation('"Paiement Date" can\'t be empty');
+                $errorElement->with('paiement_montant')->addViolation('"Paiement Date" can\'t be empty')->end();
             }
 
             $mois = $object->getMois();
@@ -142,7 +142,7 @@ class A02TVAAdmin extends Admin
                 }
 
                 if ($year . '-' . $month != date('Y-n', strtotime('-1 month'))) {
-                    $errorElement->addViolation('Wrong "Mois"');
+                    $errorElement->with('mois')->addViolation('Wrong "Mois"')->end();
                 }
             }
         }
@@ -150,7 +150,7 @@ class A02TVAAdmin extends Admin
         $value = $object->getHT();
         if ($value) {
             if (!($value == $object->getMontantHTEnDevise() / $object->getTauxDeChange())) {
-                $errorElement->addViolation('Wrong "HT"');
+                $errorElement->with('HT')->addViolation('Wrong "HT"')->end();
             }
         }
 
@@ -172,7 +172,7 @@ class A02TVAAdmin extends Admin
                 }
             }
             if ($error) {
-                $errorElement->addViolation('No Devise for this month');
+                $errorElement->with('devise')->addViolation('No Devise for this month')->end();
             }
         }
     }

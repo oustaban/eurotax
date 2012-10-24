@@ -106,14 +106,14 @@ class A06AIBAdmin extends Admin
             }
 
             if ($year . '-' . $month != date('Y-n', strtotime('-1 month'))) {
-                $errorElement->addViolation('Wrong "Mois"');
+                $errorElement->with('mois')->addViolation('Wrong "Mois"')->end();
             }
         }
 
         $value = $object->getHT();
         if ($value) {
             if (!($value == $this->getNumberRound($object->getMontantHTEnDevise()/$object->getTauxDeChange()))) {
-                $errorElement->addViolation('Wrong "HT"');
+               $errorElement->with('HT')->addViolation('Wrong "HT"')->end();
             }
         }
 
@@ -133,7 +133,7 @@ class A06AIBAdmin extends Admin
                 }
             }
             if ($error){
-                $errorElement->addViolation('No Devise for this month');
+                $errorElement->with('devise')->addViolation('No Devise for this month')->end();
             }
         }
     }
