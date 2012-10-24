@@ -2,25 +2,22 @@
 <form id="mass-buttons" onsubmit="return false">
     <div>
         <div class="btn-group inline">
-            <button class="btn" id="btn_more_info"><i class="icon icon-list-alt"></i> Voir la fiche</button>
-            <button class="btn" id="toggleImportModal"><i class="icon icon-hdd"></i> Importer un fichier</button>
-            <button class="btn" id="deleteImport"><i class="icon icon-trash"></i> Supprimer un lot importé</button>
+            <button rel="tooltip" title="{{ 'Voir la fiche'|trans }}" class="btn" id="btn_more_info"><i class="icon icon-list-alt"></i> {{ 'Fiche'|trans }}</button>
+            <button rel="tooltip" title="{{ 'Importer un fichier'|trans }}" class="btn" id="toggleImportModal"><i class="icon icon-hdd"></i> {{ 'Importer'|trans }}</button>
+            <button rel="tooltip" title="{{ 'Supprimer un lot importé'|trans }}" class="btn" id="deleteImport"><i class="icon icon-trash"></i> {{ 'Supprimer'|trans }}</button>
 
             {% set alert_count = client.getAlertCount()%}
             {% if alert_count %}
-            <button rel="tooltip" title="{{alert_count}} alertes" class="btn"
-                    id="btn_client_alert">{% trans with {'%count%': alert_count } %}
-                <span class="badge badge-warning">%count%</span> Alertes{% endtrans %}</button>
+            <button rel="tooltip" title="{{alert_count}} {{ 'alertes' }}" class="btn" id="btn_client_alert"><span class="badge badge-warning">{{ alert_count }}</span> {{ 'Alertes'|trans }}</button>
             {% endif%}
 
             {% if admin.isGranted('ROLE_CLIENT_TOOLS') %}
             {% set text_lock = blocked ? 'Verrouiller' : 'Déverrouiller' %}
-            <button id="btn_locking" class="btn">
-                <i class="icon icon-lock"></i> {{ text_lock|trans}}</button>
+            <button id="btn_locking" class="btn"><i class="icon icon-lock"></i> {{ text_lock|trans }}</button>
             {% endif %}
 
-            <button class="btn" id="downloadPDF"><i class="icon icon-print"></i> PDF</button>
-            <button class="btn" id="raprochement"><i class="icon icon-list-alt"></i> Prévisualisation</button>
+            <button class="btn" id="downloadPDF"><i class="icon icon-print"></i> {{ 'PDF'|trans }}</button>
+            <button class="btn" id="raprochement"><i class="icon icon-list-alt"></i> {{ 'Prévisualisation'|trans }}</button>
         </div>
     </div>
 </form>
