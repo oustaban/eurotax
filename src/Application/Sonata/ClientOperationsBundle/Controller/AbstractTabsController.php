@@ -762,9 +762,9 @@ class AbstractTabsController extends Controller
         $file_name = $file['name'];
 
         /* example file_name */
-        //$file_name = 'from CLIENT1_Import BDD_201209_1.xlsx';
+//        $file_name = 'FUJITSU-Import TVA-2012-09-1.xlsx';
 
-        if (preg_match('/from\s+(.*)_Import\s+BDD_(\d{4}+)(\d{2}+)_(\d+)\.xlsx/i', $file_name, $matches)) {
+        if (preg_match('/(.*)\-Import\s+TVA\-(\d{4}+)\-(\d{2}+)\-(\d+)\.xlsx/i', $file_name, $matches)) {
 
             array_shift($matches);
             list($nom_client, $year, $month, $version) = $matches;
@@ -1072,7 +1072,7 @@ class AbstractTabsController extends Controller
 
         $iDB = $em->getRepository('ApplicationSonataClientOperationsBundle:Imports')->createQueryBuilder('i');
 
-        /* @var $lastImport Application\Sonata\Client\Operations\Bundle\Imports */
+        /* @var $lastImport Imports */
         $lastImports = $iDB->select('i, u.username')
             ->leftJoin('i.user', 'u')
             ->where('i.client_id = :client_id')
@@ -1135,7 +1135,7 @@ class AbstractTabsController extends Controller
     /**
      * @param string $view
      * @param array $parameters
-     * @param \Application\Sonata\ClientOperationsBundle\Controller\Response|null $response
+     * @param \Symfony\Component\HttpFoundation\Response $response
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function render($view, array $parameters = array(), Response $response = null)
@@ -1161,7 +1161,6 @@ class AbstractTabsController extends Controller
      */
     public function jsSettingsJson(array $data)
     {
-
         $this->_jsSettingsJson = json_encode($data);
     }
 }
