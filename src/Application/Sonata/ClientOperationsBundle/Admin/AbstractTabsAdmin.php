@@ -184,7 +184,7 @@ abstract class AbstractTabsAdmin extends Admin
             $this->year = $value->format('Y');
 
             if ($this->getLocking()) {
-                $errorElement->addViolation('Sorry with month is locked');
+                $errorElement->with('date_piece')->addViolation('Sorry with month is locked')->end();
             }
         }
     }

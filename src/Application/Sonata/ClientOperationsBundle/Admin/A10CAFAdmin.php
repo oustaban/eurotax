@@ -71,7 +71,7 @@ class A10CAFAdmin extends Admin
 //        $value = $object->getHT();
 //        if ($value) {
 //            if (!($value == $object->getMontantHTEnDevise()/$object->getTauxDeChange())) {
-//                $errorElement->addViolation('Wrong "HT"');
+//               $errorElement->with('HT')->addViolation('Wrong "HT"')->end();
 //            }
 //        }
     }

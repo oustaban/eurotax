@@ -19,6 +19,8 @@ abstract class AbstractLoadListData extends AbstractFixture implements OrderedFi
      */
     protected $_className = '';
 
+    protected $_repositoryName;
+
     /**
      * @var array
      */
@@ -29,16 +31,24 @@ abstract class AbstractLoadListData extends AbstractFixture implements OrderedFi
      */
     public function load(ObjectManager $manager)
     {
+        $this->setRepositoryName($this->_budleName . ':' . $this->_className);
+
+        $this->saveFixtures($manager);
+    }
+
+    /**
+     * @param $manager
+     */
+    protected function saveFixtures($manager)
+    {
+        $class = $this->getClass($manager);
+
+        $setAlias = method_exists($class, 'setAlias') && method_exists($this, 'nameToAlias');
+
         if ($this->_lists) {
-
-            $repositoryName = $this->_budleName . ':' . $this->_className;
-
-            $class = $manager->getClassMetadata($repositoryName)->getName();
-            $setAlias = method_exists($class, 'setAlias') && method_exists($this, 'nameToAlias');
-
             foreach ($this->_lists as $name) {
 
-                $is_name = $manager->getRepository($repositoryName)->findOneByName($name);
+                $is_name = $manager->getRepository($this->getRepositoryName())->findOneByName($name);
 
                 if (!$is_name) {
                     $list = new $class();
@@ -49,10 +59,33 @@ abstract class AbstractLoadListData extends AbstractFixture implements OrderedFi
                     $manager->persist($list);
                 }
             }
-
             $manager->flush();
         }
+    }
 
+    /**
+     * @param $name
+     */
+    protected function setRepositoryName($name)
+    {
+        $this->_repositoryName = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getRepositoryName()
+    {
+        return $this->_repositoryName;
+    }
+
+    /**
+     * @param $manager
+     * @return mixed
+     */
+    protected function getClass($manager)
+    {
+        return $manager->getClassMetadata($this->getRepositoryName())->getName();
     }
 
     /**

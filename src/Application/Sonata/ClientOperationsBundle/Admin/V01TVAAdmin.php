@@ -48,7 +48,13 @@ class V01TVAAdmin extends Admin
             'days' => range(1, 1),
             'format' => 'dd MMMM yyyy',
         ))
-            ->add('taux_de_change', 'percent', array('label' => $this->getFieldLabel('taux_de_change')))
+            ->add('taux_de_change', 'money', array(
+            'label' => $this->getFieldLabel('taux_de_change'),
+            'precision' => 5,
+            'divisor' => 1,
+            'currency' => 'EUR',
+            'required' => false,
+        ))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT')))
             ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA')))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
@@ -83,7 +89,7 @@ class V01TVAAdmin extends Admin
             'label' => $this->getFieldLabel('mois'),
             'template' => $this->_bundle_name . ':CRUD:list_mois.html.twig',
         ))
-            ->add('taux_de_change', 'percent', array('label' => $this->getFieldLabel('taux_de_change')))
+            ->add('taux_de_change', 'money', array('label' => $this->getFieldLabel('taux_de_change')))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:HT.html.twig'))
             ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:TVA.html.twig'));
     }
@@ -99,13 +105,13 @@ class V01TVAAdmin extends Admin
 
         $value = $object->getMois();
         if (!$value) {
-            $errorElement->addViolation('"Mois" should not be null');
+            $errorElement->with('mois')->addViolation('"Mois" should not be null')->end();
         }
 
         $value = $object->getNoTVATiers();
         if ($value) {
             if (!preg_match('/^FR.*/', $value)) {
-                $errorElement->addViolation('"N° TVA Tiers" should begin with "FR"');
+                $errorElement->with('no_TVA_tiers')->addViolation('"N° TVA Tiers" should begin with "FR"')->end();
             }
         }
 
@@ -113,7 +119,7 @@ class V01TVAAdmin extends Admin
         if ($value) {
 
             if (!($value == $this->getNumberRound($object->getMontantHTEnDevise() * $object->getTauxDeTVA()))) {
-                $errorElement->addViolation('Wrong "Montant TVA Francaise"');
+                $errorElement->with('montant_TVA_francaise')->addViolation('Wrong "Montant TVA Francaise"')->end();
             }
         }
 
@@ -121,18 +127,18 @@ class V01TVAAdmin extends Admin
         if ($value) {
             if (!($value == $this->getNumberRound($object->getMontantHTEnDevise() + $object->getMontantTVAFrancaise()))) {
 
-                $errorElement->addViolation('Wrong "Montant TTC"');
+                $errorElement->with('montant_TTC')->addViolation('Wrong "Montant TTC"')->end();
             }
         }
 
         $value = $object->getPaiementMontant();
         if ($value) {
             if (!$object->getPaiementDevise()) {
-                $errorElement->addViolation('"Paiement Devise" can\'t be empty');
+                $errorElement->with('paiement_montant')->addViolation('"Paiement Devise" can\'t be empty')->end();
             }
 
             if (!$object->getPaiementDate()) {
-                $errorElement->addViolation('"Paiement Date" can\'t be empty');
+                $errorElement->with('paiement_montant')->addViolation('"Paiement Date" can\'t be empty')->end();
             }
 
             $mois = $object->getMois();
@@ -147,37 +153,47 @@ class V01TVAAdmin extends Admin
                 }
 
                 if ($year . '-' . $month != date('Y-n', strtotime('-1 month'))) {
-                    $errorElement->addViolation('Wrong "Mois"');
+                    $errorElement->with('mois')->addViolation('Wrong "Mois"')->end();
                 }
             }
         }
+
+        if ($object->getPaiementMontant() && !$object->getTauxDeChange()) {
+
+            $currency = $object->getDevise()->getAlias();
+
+            if ($currency == 'euro') {
+                $taux_de_change = 1;
+            } else {
+                $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+                $em = $doctrine->getManager();
+                /* @var $devise \Application\Sonata\DevisesBundle\Entity\Devises */
+                $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($object->getDatePieceFormat());
+
+                if ($devise) {
+                    $method = 'getMoney' . ucfirst($currency);
+                    if (method_exists($devise, $method)) {
+                        $taux_de_change = $devise->$method();
+                    }
+                }
+            }
+
+            if (!empty($taux_de_change)) {
+                $object->setTauxDeChange($taux_de_change);
+            } else {
+                $errorElement->with('taux_de_change')->addViolation('Wrong "Taux de change"')->end();
+            }
+        }
+
 
         $value = $object->getHT();
         if ($value) {
             if (!($value == $this->getNumberRound($object->getMontantHTEnDevise() / $object->getTauxDeChange()))) {
-                $errorElement->addViolation('Wrong "HT"');
+                $errorElement->with('HT')->addViolation('Wrong "HT"')->end();
             }
         }
 
-        $value = $object->getDevise()->getAlias();
-        if ($value != 'euro') {
-            /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
-            $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
-            $em = $doctrine->getManager();
-            /* @var $devise \Application\Sonata\DevisesBundle\Entity\Devises */
-            $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($object->getDatePieceFormat());
 
-            $error = true;
-            if ($devise) {
-                $method = 'getMoney' . ucfirst($value);
-                if (method_exists($devise, $method)) {
-                    $error = !$devise->$method();
-                }
-            }
-            if ($error) {
-                $errorElement->addViolation('No Devise for this month');
-            }
-        }
     }
 
 }
