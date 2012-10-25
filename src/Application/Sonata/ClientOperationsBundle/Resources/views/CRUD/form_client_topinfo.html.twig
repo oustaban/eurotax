@@ -22,7 +22,8 @@
 
 <script type="text/javascript">
     $('#selected_month, #selected_year').change(function () {
-        window.location = $('#selected_month :selected').val() ? '{{ path }}' + '&month=' + $('#selected_month :selected').val() : '{{ path }}';
+        var path = '{{ path }}';
+        window.location = $('#selected_month :selected').val() ? path + '&month=' + $('#selected_month :selected').val() : path;
     });
 </script>
 {% endblock form_client_topinfo %}

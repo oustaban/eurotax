@@ -12,7 +12,13 @@
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.cookie.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
-    {% endblock %}
+
+    <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/init/bootstrap.tooltip.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/init/ajax.loading.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/init/totals.calculate.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/init/format.numbers.js') }}"></script>
+    {% endblock javascripts %}
 </head>
 <body>
 <div class="container-fluid" id="container">
@@ -94,19 +100,7 @@
     </div>
     {% endblock %}
 </div>
-
-{% use ':JS:bootstrap_tooltip.html.twig' %}
-{% use ':JS:list_totals_calculate.html.twig' %}
-{% use ':JS:list_format_numbers.html.twig' %}
-{% use ':JS:ajax_loading.html.twig' %}
-
-{% block javascriptsafter %}
-<script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
-{{ block('bootstrapTooltip')}}
-{{ block('ajaxLoading')}}
-{{ block('totalsCalculate')}}
-{{ block('formatNumbers')}}
-{% endblock %}
+{% block javascriptsafter %}{% endblock %}
 </body>
 </html>
 

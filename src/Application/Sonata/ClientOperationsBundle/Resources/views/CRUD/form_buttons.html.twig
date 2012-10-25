@@ -2,8 +2,8 @@
 <form id="mass-buttons" onsubmit="return false">
     <div>
         <div class="btn-group inline">
-            <button class="btn" id="btn_more_info"><i class="icon icon-list-alt"></i> Voir la fiche</button>
-            <button class="btn" id="toggleImportModal"><i class="icon icon-hdd"></i> Importer un fichier</button>
+            <button class="btn" id="btn_more_info" onclick="javascript:location.href = '{{ path('admin_sonata_client_client_edit', {'id':client_id}) }}';"><i class="icon icon-list-alt"></i> Voir la fiche</button>
+            <button class="btn" id="toggleImportModal" onclick="javascript:$('#importModal').modal('toggle');"><i class="icon icon-hdd"></i> Importer un fichier</button>
             <button class="btn" id="deleteImport"><i class="icon icon-trash"></i> Supprimer un lot importé</button>
 
             {% set alert_count = client.getAlertCount()%}
@@ -19,8 +19,8 @@
                 <i class="icon icon-lock"></i> {{ text_lock|trans}}</button>
             {% endif %}
 
-            <button class="btn" id="downloadPDF"><i class="icon icon-print"></i> PDF</button>
-            <button class="btn" id="raprochement"><i class="icon icon-list-alt"></i> Prévisualisation</button>
+            <button class="btn" id="downloadPDF" onclick="javascript:location.href = '{{ admin.generateUrl('pdf', _filter_json) }}'.replace('&amp;', '&');"><i class="icon icon-print"></i> PDF</button>
+            <button class="btn" id="raprochement" onclick="javascript:location.href = '{{ path('rapprochement_index', {client_id: client_id, month: month~'|'~year } ) }}'.replace('&amp;', '&');"><i class="icon icon-list-alt"></i> Prévisualisation</button>
         </div>
     </div>
 </form>
@@ -48,96 +48,33 @@
         </p>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" id="doImport">{{ 'Importer'|trans}}</button>
+        <button class="btn btn-primary" id="doImport" onclick="javascript:$('#importForm').submit();">{{ 'Importer'|trans}}</button>
         <button class="btn" data-dismiss="modal" aria-hidden="true">{{ 'Fermer'|trans }}</button>
     </div>
 </div>
 
 <script type="text/javascript">
-    {% if admin.isGranted('ROLE_CLIENT_TOOLS') %}
-    $("#btn_locking").click(function () {
-
-        {% if client.getBlockedCount and blocked %}
-
-            $('#btn_client_alert').click();
-
-        {% else %}
-            {% set text_lock_confirm = blocked ? 'verrouiller_confirm' : 'deverrouiller_confirm' %}
-            if (confirm('{{ text_lock_confirm|trans}}')) {
-                location.href = '{{ path('admin_sonata_clientoperations_'~active_tab~'_locking', {'filter[client_id][value]':client_id, 'client_id': client_id, 'month' : query_month, 'year' : year, 'blocked': blocked  }) }}';
-            }
-        {% endif%}
-
-    });
-    {% endif %}
-
-    $("#toggleImportModal").click(function () {
-        $("#importModal").modal('toggle');
-    });
-
-    $("#doImport").click(function () {
-        $("#importForm").submit();
-    });
-
-    $('input[id=inputFile]').change(function () {
-        $('#inputFileCover').val($(this).val());
-    });
-
-    $('#btn_more_info').click(function () {
-        location.href = '{{ path('admin_sonata_client_client_edit', {'id':client_id}) }}';
-    });
-
-    $('#deleteImport').click(function () {
-        $.ajax({
-            url:'{{ path('admin_sonata_clientoperations_'~active_tab~'_importList', _filter_json) }}',
-            dataType:'json',
-            success:function (json) {
-                var $table = $('<table class="table table-bordered table-striped table-hover" style="width: auto;"><thead></thead></table>');
-                $('<tr class="sonata-ba-list-field-header" />')
-                        .append('<th class="sonata-ba-list-field-header-integer">Id</th>')
-                        .append('<th class="sonata-ba-list-field-header-date">Date</th>')
-                        .append('<th class="sonata-ba-list-field-header-orm_many_to_one">User</th>')
-                        .append('<th class="sonata-ba-list-field-header-actions">Action</th>')
-                        .appendTo($table.children('thead'));
-
-                var $tbody = $('<tbody />');
-                for (i in json.imports) {
+    $(function(){
+        init_clientoperations_buttons({
+            alert:{
+                link: '{{ path('admin_sonata_clientoperations_clientalert_list', _filter_json) }}'.replace('&amp;', '&'),
+                title: '{{ 'ApplicationSonataClientOperationsBundle.list.Alerts'|trans()}}'
+            },
+            blocking: {
+                link: '{{ path('admin_sonata_clientoperations_'~active_tab~'_locking', {'filter[client_id][value]':client_id, 'client_id': client_id, 'month' : query_month, 'year' : year, 'blocked': blocked  }) }}',
+                permit: {% if admin.isGranted('ROLE_CLIENT_TOOLS') %}true{% else %}false{% endif%},
+                hasBlocking: {% if client.getBlockedCount %}true{% else %}false{% endif%},
+                isBlocked: {% if blocked %}true{% else %}false{% endif%},
+                text: '{{ (blocked ? 'verrouiller_confirm' : 'deverrouiller_confirm')|trans }}'
+            },
+            import: {
+                link: '{{ path('admin_sonata_clientoperations_'~active_tab~'_importList', _filter_json) }}',
                 {% set import_delete_params = _filter_json|merge({'id':'__id__'}) %}
-                    var deleteUrl = '{{ path('admin_sonata_clientoperations_'~active_tab~'_importRemove', import_delete_params) }}'.replace("__id__", json.imports[i].id);
-                    $('<tr />')
-                            .append('<td class="sonata-ba-list-field-header-integer">' + json.imports[i][0].id + '</td>')
-                            .append('<td class="sonata-ba-list-field-header-date"><b>' + json.imports[i][0].date.date + '</b></td>')
-                            .append('<td class="sonata-ba-list-field-header-orm_many_to_one">' + json.imports[i].username + '</td>')
-                            .append('<td class="sonata-ba-list-field-header-actions"><a style="display: inline;" class="import_del" href="' + deleteUrl + '">Supprimer</a></td>')
-                            .appendTo($tbody);
-                }
-                $table.append($tbody);
-
-                // populate the popup container
-                field_dialog_{{ id }}.find('.popup-body').html('').append($table);
-                field_dialog_{{ id }}.find('.title').html(json.title);
-                field_dialog_{{ id }}.modal('toggle');
-
-                $table.find('a.import_del').click(function () {
-                    return confirm('{{ 'ApplicationSonataClientOperationsBundle.imports.confirm_delete'|trans() }}');
-                });
+                delete: '{{ path('admin_sonata_clientoperations_'~active_tab~'_importRemove', import_delete_params) }}',
+                confirm: '{{ 'ApplicationSonataClientOperationsBundle.imports.confirm_delete'|trans() }}'
             }
-        });
+        })
     });
-
-    $('#btn_client_alert').live('click', function (event) {
-        var link = '{{ path('admin_sonata_clientoperations_clientalert_list', _filter_json) }}'.replace('&amp;', '&');
-        field_dialog_form_add_{{ id }}(event, link, {title : '{{ 'ApplicationSonataClientOperationsBundle.list.Alerts'|trans()}}' });
-        return false;
-    });
-
-    $('#downloadPDF').click(function () {
-        location.href = '{{ admin.generateUrl('pdf', _filter_json) }}'.replace('&amp;', '&');
-    })
-
-    $('#raprochement').click(function () {
-        location.href = '{{ path('rapprochement_index', {client_id: client_id, month: month~'|'~year } ) }}'.replace('&amp;', '&');
-    })
 </script>
 
 {% endblock form_buttons %}

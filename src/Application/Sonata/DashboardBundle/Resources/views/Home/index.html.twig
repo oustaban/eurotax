@@ -1,9 +1,6 @@
 {% extends 'ApplicationSonataDashboardBundle::layout.html.twig' %}
 
-{% use ':JS:list_table_fix_layout.html.twig' %}
-
 {% set label_all_clients = cookies.get('show_all_clients') ? 'hide_projects' : 'show_projects' %}
-
 
 {% block body_content %}
 {{ parent() }}
@@ -123,43 +120,17 @@
 {{parent()}}
 <script src="{{ asset('bundles/applicationsonataclientoperations/js/jquery.tablesorter.js') }}" type="text/javascript"></script>
 <script src="{{ asset('bundles/applicationsonataclientoperations/js/jquery.columnfilters.js') }}" type="text/javascript"></script>
-{{ block('tableFixLayout_js')}}
 <script type="text/javascript">
-    $(function () {
-        $('#clientList').tablesorter({
-            cancelSelection:false
-        });
-        $('#clientList').columnFilters({
-            wildCard:false,
-            underline:true,
-            alternateRowClassNames:['rowa', 'rowb']
-        });
-    });
-    $(function () {
-        var editObjectAbstractUrl = '{{ url('admin_sonata_clientoperations_v01tva_list', {'filter[client_id][value]' : '__id__'}) }}';
-        var $table = $('#clientList tbody:first');
-        $table.find('tr').css('cursor', 'pointer').click(function () {
-            var objectid = $(this).children(':last').attr('objectid');
-            if (objectid) {
-                location.href = editObjectAbstractUrl.replace("__id__", objectid);
-            }
-        });
-    });
-    $(function () {
-        $('#show_hide_all_clients').click(function () {
-            {% if cookies.get('show_all_clients') %}
-            $.removeCookie('show_all_clients');
-            {% else%}
-            $.cookie('show_all_clients', '1', { expires:1, path:'/' });
-            {% endif %}
-            location.reload();
-        });
-    });
-
+    var editObjectAbstractUrl = '{{ url('admin_sonata_clientoperations_v01tva_list', {'filter[client_id][value]' : '__id__'}) }}';
+    init_home_page();
 </script>
 {% endblock javascripts %}
 
 {% block javascriptsafter %}
 {{ parent()}}
-{{ block('tableFixLayout')}}
+<script type="text/javascript">
+    $(function () {
+        tableFixLayout();
+    });
+</script>
 {% endblock javascriptsafter %}
