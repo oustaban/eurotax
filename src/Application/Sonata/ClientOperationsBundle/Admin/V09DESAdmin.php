@@ -86,7 +86,8 @@ class V09DESAdmin extends Admin
         /* @var $object \Application\Sonata\ClientOperationsBundle\Entity\V09DES */
         parent::validate($errorElement, $object);
 
-        ErrorElements::getInstance($errorElement, $object)
+        $error = new ErrorElements($errorElement, $object);
+        $error
             ->validateMois()
             ->validateMoisComplementaire()
             ->validateTauxDeChange()

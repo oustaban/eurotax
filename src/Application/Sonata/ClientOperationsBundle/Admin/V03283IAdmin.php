@@ -82,7 +82,8 @@ class V03283IAdmin extends Admin
         /* @var $object \Application\Sonata\ClientOperationsBundle\Entity\V03283I */
         parent::validate($errorElement, $object);
 
-        ErrorElements::getInstance($errorElement, $object)
+        $error = new ErrorElements($errorElement, $object);
+        $error
             ->validateNoTVATiers()
             ->validateMois()
             ->validateTauxDeChange()

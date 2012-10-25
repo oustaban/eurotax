@@ -78,7 +78,7 @@ class A08IMAdmin extends Admin
         /* @var $object \Application\Sonata\ClientOperationsBundle\Entity\A08IM */
         parent::validate($errorElement, $object);
 
-         ErrorElements::getInstance($errorElement, $object)
-             ->validateMois();
+        $error = new ErrorElements($errorElement, $object);
+        $error->validateMois();
     }
 }

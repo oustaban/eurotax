@@ -99,7 +99,8 @@ class V05LICAdmin extends Admin
         /* @var $object \Application\Sonata\ClientOperationsBundle\Entity\V05LIC */
         parent::validate($errorElement, $object);
 
-        ErrorElements::getInstance($errorElement, $object)
+        $error = new ErrorElements($errorElement, $object);
+        $error
             ->validateMois()
             ->validateTauxDeChange()
             ->validateHT();

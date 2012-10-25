@@ -108,7 +108,8 @@ class V01TVAAdmin extends Admin
         /* @var $object \Application\Sonata\ClientOperationsBundle\Entity\V01TVA */
         parent::validate($errorElement, $object);
 
-        ErrorElements::getInstance($errorElement, $object)
+        $error = new ErrorElements($errorElement, $object);
+        $error
             ->validateMoisIsNotNULL()
             ->validateNoTVATiers()
             ->validateMontantTVAFrancaise()

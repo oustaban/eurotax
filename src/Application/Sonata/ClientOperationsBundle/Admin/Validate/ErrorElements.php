@@ -6,30 +6,28 @@ use Sonata\AdminBundle\Validator\ErrorElement;
 
 class ErrorElements
 {
-    private static $_instance;
     protected $_errorElement;
     protected $_object;
-    protected $_translator;
 
-    private function __construct(ErrorElement $errorElement, $object)
-    {
-        $this->_errorElement = $errorElement;
-        $this->_object = $object;
-
-        $this->_translator = \AppKernel::getStaticContainer()->get('translator');
-    }
 
     /**
      * @param \Sonata\AdminBundle\Validator\ErrorElement $errorElement
      * @param $object
-     * @return ErrorElements
      */
-    public static function getInstance(ErrorElement $errorElement, $object)
+    public function __construct(ErrorElement $errorElement, $object)
     {
-        if (is_null(self::$_instance)) {
-            self::$_instance = new self($errorElement, $object);
-        }
-        return self::$_instance;
+        $this->_errorElement = $errorElement;
+        $this->_object = $object;
+    }
+
+    /**
+     * @param $value
+     * @param int $precision
+     * @return float
+     */
+    protected function getNumberRound($value, $precision = 2)
+    {
+        return round($value, $precision);
     }
 
     /**
@@ -37,12 +35,9 @@ class ErrorElements
      */
     public function validateTauxDeChange()
     {
-        $errorElement = $this->_errorElement;
-        $object = $this->_object;
+        if ($this->_object->getPaiementMontant() && !$this->_object->getTauxDeChange()) {
 
-        if ($object->getPaiementMontant() && !$object->getTauxDeChange()) {
-
-            $currency = $object->getDevise()->getAlias();
+            $currency = $this->_object->getDevise()->getAlias();
 
             $taux_de_change = 0;
             if ($currency == 'euro') {
@@ -51,7 +46,7 @@ class ErrorElements
                 $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
                 $em = $doctrine->getManager();
                 /* @var $devise \Application\Sonata\DevisesBundle\Entity\Devises */
-                $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($object->getDatePieceFormat());
+                $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($this->_object->getDatePieceFormat());
 
                 if ($devise) {
                     $method = 'getMoney' . ucfirst($currency);
@@ -61,10 +56,10 @@ class ErrorElements
                 }
             }
 
-            $object->setTauxDeChange($taux_de_change);
+            $this->_object->setTauxDeChange($taux_de_change);
 
             if (empty($taux_de_change)) {
-                $errorElement->with('taux_de_change')->addViolation('Wrong "Taux de change"')->end();
+                $this->_errorElement->with('taux_de_change')->addViolation('Wrong "Taux de change"')->end();
             }
         }
 
@@ -76,32 +71,25 @@ class ErrorElements
      */
     public function validateHT()
     {
-        $errorElement = $this->_errorElement;
-        $object = $this->_object;
-
-        $value = $object->getHT();
+        $value = $this->_object->getHT();
         if ($value) {
-            if ($object->getTauxDeChange() && !($value == $this->getNumberRound($object->getMontantHTEnDevise() / $object->getTauxDeChange()))) {
-                $errorElement->with('HT')->addViolation($this->trans('Wrong "HT" (must be "Montant HT en devise" / "Taux de change")'))->end();
+            if ($this->_object->getTauxDeChange() && !($value == $this->getNumberRound($this->_object->getMontantHTEnDevise() / $this->_object->getTauxDeChange()))) {
+                $this->_errorElement->with('HT')->addViolation('Wrong "HT" (must be "Montant HT en devise" / "Taux de change")')->end();
             }
         }
         return $this;
     }
-
 
     /**
      * @return ErrorElements
      */
     public function validateMontantTVAFrancaise()
     {
-        $errorElement = $this->_errorElement;
-        $object = $this->_object;
-
-        $value = $object->getMontantTVAFrancaise();
+        $value = $this->_object->getMontantTVAFrancaise();
         if ($value) {
 
-            if (!($value == $this->getNumberRound($object->getMontantHTEnDevise() * $object->getTauxDeTVA()))) {
-                $errorElement->with('montant_TVA_francaise')->addViolation('Wrong "Montant TVA Francaise" (must be "Montant HT en devise" * "Taux de TVA")')->end();
+            if (!($value == $this->getNumberRound($this->_object->getMontantHTEnDevise() * $this->_object->getTauxDeTVA()))) {
+                $this->_errorElement->with('montant_TVA_francaise')->addViolation('Wrong "Montant TVA française" (must be "Montant HT en devise" * "Taux de TVA / 100")')->end();
             }
         }
 
@@ -113,13 +101,10 @@ class ErrorElements
      */
     public function validateMontantTTC()
     {
-        $errorElement = $this->_errorElement;
-        $object = $this->_object;
-
-        $value = $object->getMontantTTC();
+        $value = $this->_object->getMontantTTC();
         if ($value) {
-            if (!($value == $this->getNumberRound($object->getMontantHTEnDevise() + $object->getMontantTVAFrancaise()))) {
-                $errorElement->with('montant_TTC')->addViolation('Wrong "Montant TTC" (must be "Montant HT en devise" + "Montant TVA française")')->end();
+            if (!($value == $this->getNumberRound($this->_object->getMontantHTEnDevise() + $this->_object->getMontantTVAFrancaise()))) {
+                $this->_errorElement->with('montant_TTC')->addViolation('Wrong "Montant TTC" (must be "Montant HT en devise" + "Montant TVA française")')->end();
             }
         }
 
@@ -131,28 +116,24 @@ class ErrorElements
      */
     public function validateMoisIsNotNULL()
     {
-        $errorElement = $this->_errorElement;
-        $object = $this->_object;
-
-        $value = $object->getMois();
+        $value = $this->_object->getMois();
         if (!$value) {
-            $errorElement->with('mois')->addViolation('"Mois" should not be null')->end();
+            $this->_errorElement->with('mois')->addViolation('"Mois" should not be null')->end();
         }
 
         return $this;
     }
 
 
+    /**
+     * @return ErrorElements
+     */
     public function validateNoTVATiers()
     {
-
-        $errorElement = $this->_errorElement;
-        $object = $this->_object;
-
-        $value = $object->getNoTVATiers();
+        $value = $this->_object->getNoTVATiers();
         if ($value) {
             if (!preg_match('/^FR.*/', $value)) {
-                $errorElement->with('no_TVA_tiers')->addViolation('"N° TVA Tiers" should begin with "FR"')->end();
+                $this->_errorElement->with('no_TVA_tiers')->addViolation('"N° TVA Tiers" should begin with "FR"')->end();
             }
         }
 
@@ -164,17 +145,14 @@ class ErrorElements
      */
     public function validatePaiementMontantMois()
     {
-        $errorElement = $this->_errorElement;
-        $object = $this->_object;
-
-        $value = $object->getPaiementMontant();
+        $value = $this->_object->getPaiementMontant();
         if ($value) {
-            if (!$object->getPaiementDevise()) {
-                $errorElement->with('paiement_montant')->addViolation('"Paiement Devise" can\'t be empty')->end();
+            if (!$this->_object->getPaiementDevise()) {
+                $this->_errorElement->with('paiement_montant')->addViolation('"Paiement Devise" can\'t be empty')->end();
             }
 
-            if (!$object->getPaiementDate()) {
-                $errorElement->with('paiement_montant')->addViolation('"Paiement Date" can\'t be empty')->end();
+            if (!$this->_object->getPaiementDate()) {
+                $this->_errorElement->with('paiement_montant')->addViolation('"Paiement Date" can\'t be empty')->end();
             }
 
             $this->validateMois();
@@ -190,10 +168,7 @@ class ErrorElements
      */
     public function validateMois()
     {
-        $errorElement = $this->_errorElement;
-        $object = $this->_object;
-
-        $value = $object->getMois();
+        $value = $this->_object->getMois();
         if (!$value) {
             if ($value instanceof \DateTime) {
                 $month = $value->format('n');
@@ -204,7 +179,7 @@ class ErrorElements
             }
 
             if ($year . '-' . $month != date('Y-n', strtotime('-1 month'))) {
-                $errorElement->with('mois')->addViolation('Wrong "Mois"')->end();
+                $this->_errorElement->with('mois')->addViolation('Wrong "Mois"')->end();
             }
         }
 
@@ -217,33 +192,11 @@ class ErrorElements
      */
     public function validateMoisComplementaire()
     {
-
-        $errorElement = $this->_errorElement;
-        $object = $this->_object;
-
-        $value = $object->getMois();
-        if ($value == $object->getMoisComplementaire()) {
-            $errorElement->with('mois_complementaire')->addViolation('"Mois Complementaire" should be different that "Mois"')->end();
+        $value = $this->_object->getMois();
+        if ($value == $this->_object->getMoisComplementaire()) {
+            $this->_errorElement->with('mois_complementaire')->addViolation('"Mois Complementaire" should be different that "Mois"')->end();
         }
 
         return $this;
-    }
-
-    /**
-     * @param $value
-     * @param int $precision
-     * @return float
-     */
-    protected function getNumberRound($value, $precision = 2)
-    {
-        return round($value, $precision);
-    }
-
-    /**
-     * @param $value
-     */
-    protected function trans($value)
-    {
-        $this->_translator->trans($value);
     }
 }

@@ -103,7 +103,8 @@ class A06AIBAdmin extends Admin
         /* @var $object \Application\Sonata\ClientOperationsBundle\Entity\A06AIB */
         parent::validate($errorElement, $object);
 
-        ErrorElements::getInstance($errorElement, $object)
+        $error = new ErrorElements($errorElement, $object);
+        $error
             ->validateMois()
             ->validateTauxDeChange()
             ->validateHT();
