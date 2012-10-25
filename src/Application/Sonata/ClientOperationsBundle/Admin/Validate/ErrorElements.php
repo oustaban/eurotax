@@ -199,4 +199,32 @@ class ErrorElements
 
         return $this;
     }
+
+    /**
+     * @return ErrorElements
+     */
+    public function validateDevise()
+    {
+        $value = $this->_object->getDevise()->getAlias();
+        if ($value != 'euro') {
+            /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+            $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+            $em = $doctrine->getManager();
+            /* @var $devise \Application\Sonata\DevisesBundle\Entity\Devises */
+            $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($this->_object->getDatePieceFormat());
+
+            $error = true;
+            if ($devise) {
+                $method = 'getMoney' . ucfirst($value);
+                if (method_exists($devise, $method)) {
+                    $error = !$devise->$method();
+                }
+            }
+            if ($error) {
+                $this->errorElement->with('devise')->addViolation('No Devise for this month')->end();
+            }
+        }
+
+        return $this;
+    }
 }

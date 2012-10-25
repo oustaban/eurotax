@@ -90,7 +90,7 @@ class V09DESAdmin extends Admin
         $error
             ->validateMois()
             ->validateMoisComplementaire()
-            ->validateTauxDeChange()
+            ->validateDevise()
             ->validateHT();
     }
 }

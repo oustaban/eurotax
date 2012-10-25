@@ -85,7 +85,7 @@ class V11INTAdmin extends Admin
         $error = new ErrorElements($errorElement, $object);
         $error
             ->validateMois()
-            ->validateTauxDeChange()
+            ->validateDevise()
             ->validateHT();
     }
 }

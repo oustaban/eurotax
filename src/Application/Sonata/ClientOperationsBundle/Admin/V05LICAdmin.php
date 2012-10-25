@@ -102,7 +102,7 @@ class V05LICAdmin extends Admin
         $error = new ErrorElements($errorElement, $object);
         $error
             ->validateMois()
-            ->validateTauxDeChange()
+            ->validateDevise()
             ->validateHT();
     }
 }

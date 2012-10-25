@@ -13,7 +13,8 @@ class A08IMAdmin extends Admin
 {
 
     /**
-     * @param FormMapper $formMapper
+     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
+     * @return \Sonata\AdminBundle\Form\FormMapper|void
      */
     protected function configureFormFields(FormMapper $formMapper)
     {

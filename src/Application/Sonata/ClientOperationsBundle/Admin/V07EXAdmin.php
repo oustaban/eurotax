@@ -84,7 +84,7 @@ class V07EXAdmin extends Admin
         $error = new ErrorElements($errorElement, $object);
         $error
             ->validateMois()
-            ->validateTauxDeChange()
+            ->validateDevise()
             ->validateHT();
     }
 }

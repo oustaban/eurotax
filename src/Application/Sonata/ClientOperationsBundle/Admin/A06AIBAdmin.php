@@ -33,6 +33,10 @@ class A06AIBAdmin extends Admin
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
             ->add('devise', null, array('label' => $this->getFieldLabel('devise_id')))
             ->add('montant_HT_en_devise', 'money', array('label' => $this->getFieldLabel('montant_HT_en_devise')))
+            ->add('taux_de_TVA', 'percent', array(
+            'label' => $this->getFieldLabel('taux_de_TVA'),
+            'precision' => 3,
+        ))
             ->add('mois', 'date', array(
             'label' => $this->getFieldLabel('mois'),
             'days' => range(1, 1),
@@ -46,6 +50,7 @@ class A06AIBAdmin extends Admin
             'required' => false,
         ))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT')))
+            ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA')))
             ->add('regime', null, array('label' => $this->getFieldLabel('regime')))
             ->add('DEB', null, array('label' => $this->getFieldLabel('DEB')))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')))
@@ -78,12 +83,14 @@ class A06AIBAdmin extends Admin
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
             ->add('devise.name', null, array('label' => $this->getFieldLabel('devise_id')))
             ->add('montant_HT_en_devise', 'money', array('label' => $this->getFieldLabel('montant_HT_en_devise'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:montant_HT_en_devise.html.twig'))
+            ->add('taux_de_TVA', 'percent', array('label' => $this->getFieldLabel('taux_de_TVA')))
             ->add('mois', null, array(
             'label' => $this->getFieldLabel('mois'),
             'template' => $this->_bundle_name . ':CRUD:list_mois.html.twig',
         ))
             ->add('taux_de_change', 'money', array('label' => $this->getFieldLabel('taux_de_change')))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:HT.html.twig'))
+            ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA')))
             ->add('regime', null, array('label' => $this->getFieldLabel('regime')))
             ->add('DEB', null, array('label' => $this->getFieldLabel('DEB')))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
@@ -106,7 +113,7 @@ class A06AIBAdmin extends Admin
         $error = new ErrorElements($errorElement, $object);
         $error
             ->validateMois()
-            ->validateTauxDeChange()
+            ->validateDevise()
             ->validateHT();
     }
 }

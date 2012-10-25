@@ -86,7 +86,7 @@ class V03283IAdmin extends Admin
         $error
             ->validateNoTVATiers()
             ->validateMois()
-            ->validateTauxDeChange()
+            ->validateDevise()
             ->validateHT();
     }
 }
