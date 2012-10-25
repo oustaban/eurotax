@@ -189,6 +189,7 @@ abstract class AbstractTabsAdmin extends Admin
         }
     }
 
+
     /**
      * @return mixed
      */
@@ -336,17 +337,6 @@ abstract class AbstractTabsAdmin extends Admin
 
         return $value;
     }
-
-    /**
-     * @param $value
-     * @param int $precision
-     * @return float
-     */
-    public function getNumberRound($value, $precision = 2)
-    {
-        return round($value, $precision);
-    }
-
     /**
      * @param $value
      * @param int $precision

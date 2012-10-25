@@ -6,13 +6,15 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
+use Application\Sonata\ClientOperationsBundle\Admin\Validate\ErrorElements;
 
 use Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin as Admin;
 
 class V01TVAAdmin extends Admin
 {
     /**
-     * @param FormMapper $formMapper
+     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
+     * @return \Sonata\AdminBundle\Form\FormMapper|void
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
@@ -31,7 +33,10 @@ class V01TVAAdmin extends Admin
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
             ->add('devise', null, array('label' => $this->getFieldLabel('devise_id')))
             ->add('montant_HT_en_devise', 'money', array('label' => $this->getFieldLabel('montant_HT_en_devise')))
-            ->add('taux_de_TVA', 'percent', array('label' => $this->getFieldLabel('taux_de_TVA')))
+            ->add('taux_de_TVA', 'percent', array(
+            'label' => $this->getFieldLabel('taux_de_TVA'),
+            'precision' => 3,
+        ))
             ->add('montant_TVA_francaise', 'money', array('label' => $this->getFieldLabel('montant_TVA_francaise')))
             ->add('montant_TTC', 'money', array('label' => $this->getFieldLabel('montant_TTC')))
             ->add('paiement_montant', 'money', array('label' => $this->getFieldLabel('paiement_montant')))
@@ -103,97 +108,13 @@ class V01TVAAdmin extends Admin
         /* @var $object \Application\Sonata\ClientOperationsBundle\Entity\V01TVA */
         parent::validate($errorElement, $object);
 
-        $value = $object->getMois();
-        if (!$value) {
-            $errorElement->with('mois')->addViolation('"Mois" should not be null')->end();
-        }
-
-        $value = $object->getNoTVATiers();
-        if ($value) {
-            if (!preg_match('/^FR.*/', $value)) {
-                $errorElement->with('no_TVA_tiers')->addViolation('"N° TVA Tiers" should begin with "FR"')->end();
-            }
-        }
-
-        $value = $object->getMontantTVAFrancaise();
-        if ($value) {
-
-            if (!($value == $this->getNumberRound($object->getMontantHTEnDevise() * $object->getTauxDeTVA()))) {
-                $errorElement->with('montant_TVA_francaise')->addViolation('Wrong "Montant TVA Francaise"')->end();
-            }
-        }
-
-        $value = $object->getMontantTTC();
-        if ($value) {
-            if (!($value == $this->getNumberRound($object->getMontantHTEnDevise() + $object->getMontantTVAFrancaise()))) {
-
-                $errorElement->with('montant_TTC')->addViolation('Wrong "Montant TTC"')->end();
-            }
-        }
-
-        $value = $object->getPaiementMontant();
-        if ($value) {
-            if (!$object->getPaiementDevise()) {
-                $errorElement->with('paiement_montant')->addViolation('"Paiement Devise" can\'t be empty')->end();
-            }
-
-            if (!$object->getPaiementDate()) {
-                $errorElement->with('paiement_montant')->addViolation('"Paiement Date" can\'t be empty')->end();
-            }
-
-            $mois = $object->getMois();
-
-            if (!$mois) {
-                if ($mois instanceof \DateTime) {
-                    $month = $mois->format('n');
-                    $year = $mois->format('Y');
-                } else {
-                    $month = $mois['month'];
-                    $year = $mois['year'];
-                }
-
-                if ($year . '-' . $month != date('Y-n', strtotime('-1 month'))) {
-                    $errorElement->with('mois')->addViolation('Wrong "Mois"')->end();
-                }
-            }
-        }
-
-        if ($object->getPaiementMontant() && !$object->getTauxDeChange()) {
-
-            $currency = $object->getDevise()->getAlias();
-
-            if ($currency == 'euro') {
-                $taux_de_change = 1;
-            } else {
-                $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
-                $em = $doctrine->getManager();
-                /* @var $devise \Application\Sonata\DevisesBundle\Entity\Devises */
-                $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($object->getDatePieceFormat());
-
-                if ($devise) {
-                    $method = 'getMoney' . ucfirst($currency);
-                    if (method_exists($devise, $method)) {
-                        $taux_de_change = $devise->$method();
-                    }
-                }
-            }
-
-            if (!empty($taux_de_change)) {
-                $object->setTauxDeChange($taux_de_change);
-            } else {
-                $errorElement->with('taux_de_change')->addViolation('Wrong "Taux de change"')->end();
-            }
-        }
-
-
-        $value = $object->getHT();
-        if ($value) {
-            if (!($value == $this->getNumberRound($object->getMontantHTEnDevise() / $object->getTauxDeChange()))) {
-                $errorElement->with('HT')->addViolation('Wrong "HT"')->end();
-            }
-        }
-
-
+        ErrorElements::getInstance($errorElement, $object)
+            ->validateMoisIsNotNULL()
+            ->validateNoTVATiers()
+            ->validateMontantTVAFrancaise()
+            ->validateMontantTTC()
+            ->validatePaiementMontantMois()
+            ->validateTauxDeChange()
+            ->validateHT();
     }
-
 }
