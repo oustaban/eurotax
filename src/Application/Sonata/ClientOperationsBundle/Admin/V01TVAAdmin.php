@@ -48,7 +48,13 @@ class V01TVAAdmin extends Admin
             'days' => range(1, 1),
             'format' => 'dd MMMM yyyy',
         ))
-            ->add('taux_de_change', 'percent', array('label' => $this->getFieldLabel('taux_de_change')))
+            ->add('taux_de_change', 'money', array(
+            'label' => $this->getFieldLabel('taux_de_change'),
+            'precision' => 5,
+            'divisor' => 1,
+            'currency' => 'EUR',
+            'required' => false,
+        ))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT')))
             ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA')))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
@@ -83,7 +89,7 @@ class V01TVAAdmin extends Admin
             'label' => $this->getFieldLabel('mois'),
             'template' => $this->_bundle_name . ':CRUD:list_mois.html.twig',
         ))
-            ->add('taux_de_change', 'percent', array('label' => $this->getFieldLabel('taux_de_change')))
+            ->add('taux_de_change', 'money', array('label' => $this->getFieldLabel('taux_de_change')))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:HT.html.twig'))
             ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:TVA.html.twig'));
     }
@@ -152,6 +158,34 @@ class V01TVAAdmin extends Admin
             }
         }
 
+        if ($object->getPaiementMontant() && !$object->getTauxDeChange()) {
+
+            $currency = $object->getDevise()->getAlias();
+
+            if ($currency == 'euro') {
+                $taux_de_change = 1;
+            } else {
+                $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+                $em = $doctrine->getManager();
+                /* @var $devise \Application\Sonata\DevisesBundle\Entity\Devises */
+                $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($object->getDatePieceFormat());
+
+                if ($devise) {
+                    $method = 'getMoney' . ucfirst($currency);
+                    if (method_exists($devise, $method)) {
+                        $taux_de_change = $devise->$method();
+                    }
+                }
+            }
+
+            if (!empty($taux_de_change)) {
+                $object->setTauxDeChange($taux_de_change);
+            } else {
+                $errorElement->with('taux_de_change')->addViolation('Wrong "Taux de change"')->end();
+            }
+        }
+
+
         $value = $object->getHT();
         if ($value) {
             if (!($value == $this->getNumberRound($object->getMontantHTEnDevise() / $object->getTauxDeChange()))) {
@@ -159,25 +193,7 @@ class V01TVAAdmin extends Admin
             }
         }
 
-        $value = $object->getDevise()->getAlias();
-        if ($value != 'euro') {
-            /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
-            $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
-            $em = $doctrine->getManager();
-            /* @var $devise \Application\Sonata\DevisesBundle\Entity\Devises */
-            $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($object->getDatePieceFormat());
 
-            $error = true;
-            if ($devise) {
-                $method = 'getMoney' . ucfirst($value);
-                if (method_exists($devise, $method)) {
-                    $error = !$devise->$method();
-                }
-            }
-            if ($error) {
-                $errorElement->with('devise')->addViolation('No Devise for this month')->end();
-            }
-        }
     }
 
 }
