@@ -5,40 +5,7 @@
 {% block stickyHeader %}
 <script type="text/javascript">
     $(function () {
-        var $thead = $('.sonata-ba-list .table thead:first');
-        if ($thead.length > 0) {
-            var $tr = $('<tr />').prependTo($thead);
-            var $th = $('<th />')
-                    .attr('colspan', $thead.children(':last').children().length)
-                    .append($('.clientoperations_tabs_types_block'))
-                    .appendTo($tr);
-
-            $('.clientoperations_tabs_types_block #client-topinfo').after($('#block_actions'));
-
-            var depth = 0;
-            $thead.children().addClass('sticky_header').each(function () {
-                $(this).attr('depth', depth++);
-            });
-            $('.sonata-ba-list .table').stickyHeader({
-                'headerClassName':'sticky_header',
-                'depth':[1, 1, 1]
-            });
-            $('.sticky_header_clone ._filterText').keyup(function () {
-                var id = $(this).attr('id').replace("clone_", "_");
-                $('#' + id).val($(this).val()).keyup();
-            }).each(function () {
-                $(this).attr('id', 'clone' + $(this).attr('id'));
-            });
-            $('.sticky_header_orig ._filterText').keyup(function () {
-                $('#clone' + $(this).attr('id')).val($(this).val());
-            });
-            $('.sticky_header_clone a').click(function () {
-                var href = $(this).attr('href');
-                $('.sticky_header_orig a[href="' + href + '"]').click();
-
-                return false;
-            });
-        }
+        init_tabs_filters_sticky_header();
     });
 </script>
 {% endblock stickyHeader %}

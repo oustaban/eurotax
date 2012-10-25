@@ -1,8 +1,6 @@
 {% extends 'SonataAdminBundle::standard_layout.html.twig' %}
 
-{% use ':JS:ajax_edit.html.twig' %}
-{% use ':JS:ajax_create.html.twig' %}
-{% use ':JS:ajax_delete_action.html.twig' %}
+{% use ':JS:ajax_init_popup.html.twig' %}
 {% use ':popup:popup_form.html.twig' %}
 
 {% set id =  admin.uniqid %}
@@ -41,6 +39,7 @@
 
 {% block javascripts %}
 {{ parent() }}
+<script type="text/javascript" src="{{ asset('js/init/ajax.popup.js') }}"></script>
 <script type="text/javascript">
     var uniqid = '{{ admin.uniqid }}';
     var active_tab = '{{ active_tab }}';
@@ -58,14 +57,4 @@
 {{ block('ajaxCreate') }}
 {{ block('ajaxEdit') }}
 {{ block('ajaxDelete') }}
-
-<script type="text/javascript">
-    $(function () {
-        $('.sonata-ba-list-field-percent').each(function(){
-            if ($(this).html().replace(/[\n\r %,\.0]*/g, '') == ''){
-                $(this).html('');
-            }
-        });
-    });
-</script>
 {% endblock javascriptsafter %}

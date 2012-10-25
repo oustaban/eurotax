@@ -1,0 +1,24 @@
+{% block ajaxEdit %}
+<script type="text/javascript">
+    var editObjectAbstractUrl = '{{ admin.generateUrl('edit', {'id':'__id__'}) }}';
+    $(function () {
+        init_ajax_edit_popup();
+    });
+</script>
+{% endblock ajaxEdit %}
+
+{% block ajaxCreate %}
+<script type="text/javascript">
+    $(function () {
+        init_ajax_create_popup();
+    });
+</script>
+{% endblock ajaxCreate %}
+
+{% block ajaxDelete %}
+<script type="text/javascript">
+    $(function () {
+        init_ajax_delete_popup();
+    });
+</script>
+{% endblock ajaxDelete %}

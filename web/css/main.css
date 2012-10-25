@@ -137,16 +137,16 @@ tr.sonata-ba-list-field-header th {
 }
 
 tr.sonata-ba-list-field-header .headerSortUp {
-    background: url("../bundles/sonataadmin/famfamfam/bullet_arrow_up.png") no-repeat scroll left center transparent;
+    background: url("../bundles/sonataadmin/famfamfam/bullet_arrow_down.png") no-repeat scroll left center transparent;
 }
 tr.sonata-ba-list-field-header .headerSortDown {
-    background: url("../bundles/sonataadmin/famfamfam/bullet_arrow_down.png") no-repeat scroll left center transparent;
+    background: url("../bundles/sonataadmin/famfamfam/bullet_arrow_up.png") no-repeat scroll left center transparent;
 }
 tr.sonata-ba-list-field-header .headerSortUp:hover {
-    background: url("../bundles/sonataadmin/famfamfam/bullet_arrow_down.png") no-repeat scroll left center transparent;
+    background: url("../bundles/sonataadmin/famfamfam/bullet_arrow_up.png") no-repeat scroll left center transparent;
 }
 tr.sonata-ba-list-field-header .headerSortDown:hover {
-    background: url("../bundles/sonataadmin/famfamfam/bullet_arrow_up.png") no-repeat scroll left center transparent;
+    background: url("../bundles/sonataadmin/famfamfam/bullet_arrow_down.png") no-repeat scroll left center transparent;
 }
 
 .error-handle-text{

@@ -4,11 +4,8 @@
 {% use 'ApplicationSonataClientOperationsBundle:CRUD:form_client_topinfo.html.twig' %}
 {% use 'ApplicationSonataClientOperationsBundle:JS:list_table_sort.html.twig' %}
 {% use 'ApplicationSonataClientOperationsBundle:JS:list_table_filter.html.twig' %}
-{% use ':JS:list_table_fix_layout.html.twig' %}
 {% use 'ApplicationSonataClientOperationsBundle:JS:list_sticky_header.html.twig' %}
-{% use ':JS:ajax_edit.html.twig' %}
-{% use ':JS:ajax_create.html.twig' %}
-{% use ':JS:ajax_delete_action.html.twig' %}
+{% use ':JS:ajax_init_popup.html.twig' %}
 
 {% block panel_block %}
 {{ block('formPanels')}}
@@ -16,30 +13,26 @@
 
 {% block javascripts %}
 {{parent()}}
+<script type="text/javascript" src="{{ asset('js/init/ajax.popup.js') }}"></script>
 {{ block('tableSort_js')}}
 {{ block('tableFilter_js')}}
-{{ block('tableFixLayout_js')}}
 {{ block('stickyHeader_js')}}
-{% if not admin.getLocking %}
-    {{ block('ajaxEdit_js')}}
-{% endif %}
-{{ block('ajaxCreate_js')}}
 {% endblock javascripts %}
 
 {% block javascriptsafter %}
 {{ parent()}}
 {{ block('tableSort')}}
 {{ block('tableFilter')}}
-{{ block('tableFixLayout')}}
+<script type="text/javascript">
+    $(function () {
+        tableFixLayout();
+        $('a.clone_link, a.delete_link').tooltip();
+    });
+</script>
 {{ block('stickyHeader')}}
 {{ block('ajaxCreate')}}
 {% if not admin.getLocking %}
     {{ block('ajaxEdit')}}
     {{ block('ajaxDelete') }}
 {% endif %}
-<script type="text/javascript">
-    $(function () {
-        $('a.clone_link, a.delete_link').tooltip();
-    });
-</script>
 {% endblock javascriptsafter %}

@@ -764,7 +764,7 @@ class AbstractTabsController extends Controller
         /* example file_name */
 //        $file_name = 'FUJITSU-Import TVA-2012-09-1.xlsx';
 
-        if (preg_match('/(.*)\-Import\s+TVA\-(\d{4}+)\-(\d{2}+)\-(\d+)\.xlsx/i', $file_name, $matches)) {
+        if (preg_match('/(.*)\-Import\-TVA\-(\d{4}+)\-(\d{2}+)\-(\d+)\.xlsx/i', $file_name, $matches)) {
 
             array_shift($matches);
             list($nom_client, $year, $month, $version) = $matches;
