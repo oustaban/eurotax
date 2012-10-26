@@ -1,9 +1,12 @@
 {% extends 'ApplicationSonataClientOperationsBundle::layout.html.twig' %}
 
-
-
 {% set content%}
 <div class="rapprochement_content">
+    <div class="rapprochement_buttons">
+        <button class="btn" onclick="javascript:history.length>1?history.back():location.href = '{{ url('admin_sonata_clientoperations_v01tva_list', {'filter[client_id][value]': client.id, 'month': info.month~'|'~info.year}) }}'.replace('&amp;', '&');"><i class="icon icon-arrow-left"></i> {{ 'Retour'|trans }}</button>
+        <button class="btn" id="rapprochement_validation" style="display: none;"><i class="icon icon-asterisk"></i> {{ 'Validation'|trans }}</button>
+    </div>
+
     <h2>{{ client }}</h2>
 
     <h3>{{ info.time|date('Y-m') }} - T{{ info.quarter }}</h3>
