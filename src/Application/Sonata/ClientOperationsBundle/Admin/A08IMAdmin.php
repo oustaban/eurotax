@@ -13,7 +13,8 @@ class A08IMAdmin extends Admin
 {
 
     /**
-     * @param FormMapper $formMapper
+     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
+     * @return \Sonata\AdminBundle\Form\FormMapper|void
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
@@ -29,7 +30,10 @@ class A08IMAdmin extends Admin
                 'format' => $this->date_format_datetime)
         )
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
-            ->add('taux_de_TVA', 'percent', array('label' => $this->getFieldLabel('taux_de_TVA')))
+            ->add('taux_de_TVA', 'percent', array(
+            'label' => $this->getFieldLabel('taux_de_TVA'),
+            'precision' => 3,
+        ))
             ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA')))
             ->add('mois', 'date', array(
             'label' => $this->getFieldLabel('mois'),
@@ -75,26 +79,7 @@ class A08IMAdmin extends Admin
         /* @var $object \Application\Sonata\ClientOperationsBundle\Entity\A08IM */
         parent::validate($errorElement, $object);
 
-        $value = $object->getMois();
-        if (!$value) {
-            if ($value instanceof \DateTime) {
-                $month = $value->format('n');
-                $year = $value->format('Y');
-            } else {
-                $month = $value['month'];
-                $year = $value['year'];
-            }
-
-            if ($year . '-' . $month != date('Y-n', strtotime('-1 month'))) {
-                $errorElement->with('mois')->addViolation('Wrong "Mois"')->end();
-            }
-        }
-
-//        $value = $object->getHT();
-//        if ($value) {
-//            if (!($value == $this->getNumberRound($object->getMontantHTEnDevise()/$object->getTauxDeChange()))) {
-//               $errorElement->with('HT')->addViolation('Wrong "HT"')->end();
-//            }
-//        }
+        $error = new ErrorElements($errorElement, $object);
+        $error->validateMois();
     }
 }

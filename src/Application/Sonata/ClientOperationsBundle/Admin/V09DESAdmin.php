@@ -6,6 +6,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
+use Application\Sonata\ClientOperationsBundle\Admin\Validate\ErrorElements;
 
 use Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin as Admin;
 
@@ -13,7 +14,8 @@ class V09DESAdmin extends Admin
 {
 
     /**
-     * @param FormMapper $formMapper
+     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
+     * @return \Sonata\AdminBundle\Form\FormMapper|void
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
@@ -38,7 +40,13 @@ class V09DESAdmin extends Admin
             'format' => 'dd MMMM yyyy',
         ))
             ->add('mois_complementaire', null, array('label' => $this->getFieldLabel('mois_complementaire')))
-            ->add('taux_de_change', 'percent', array('label' => $this->getFieldLabel('taux_de_change')))
+            ->add('taux_de_change', 'money', array(
+            'label' => $this->getFieldLabel('taux_de_change'),
+            'precision' => 5,
+            'divisor' => 1,
+            'currency' => 'EUR',
+            'required' => false,
+        ))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT')))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
     }
@@ -64,7 +72,7 @@ class V09DESAdmin extends Admin
             'template' => $this->_bundle_name . ':CRUD:list_mois.html.twig',
         ))
             ->add('mois_complementaire', null, array('label' => $this->getFieldLabel('mois_complementaire')))
-            ->add('taux_de_change', 'percent', array('label' => $this->getFieldLabel('taux_de_change')))
+            ->add('taux_de_change', 'money', array('label' => $this->getFieldLabel('taux_de_change')))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:HT.html.twig'))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
     }
@@ -78,50 +86,11 @@ class V09DESAdmin extends Admin
         /* @var $object \Application\Sonata\ClientOperationsBundle\Entity\V09DES */
         parent::validate($errorElement, $object);
 
-        $value = $object->getMois();
-        if (!$value) {
-            if ($value instanceof \DateTime) {
-                $month = $value->format('n');
-                $year = $value->format('Y');
-            } else {
-                $month = $value['month'];
-                $year = $value['year'];
-            }
-
-            if ($year . '-' . $month != date('Y-n', strtotime('-1 month'))) {
-                $errorElement->with('mois')->addViolation('Wrong "Mois"')->end();
-            }
-        }
-
-        if ($value == $object->getMoisComplementaire()) {
-            $errorElement->with('mois_complementaire')->addViolation('"Mois Complementaire" should be different that "Mois"')->end();
-        }
-
-        $value = $object->getHT();
-        if ($value) {
-            if (!($value == $this->getNumberRound($object->getMontantHTEnDevise()/$object->getTauxDeChange()))) {
-                $errorElement->with('HT')->addViolation('Wrong "HT"')->end();
-            }
-        }
-
-        $value = $object->getDevise()->getAlias();
-        if ($value != 'euro') {
-            /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
-            $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
-            $em = $doctrine->getManager();
-            /* @var $devise \Application\Sonata\DevisesBundle\Entity\Devises */
-            $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($object->getDatePieceFormat());
-
-            $error = true;
-            if ($devise){
-                $method = 'getMoney' . ucfirst($value);
-                if (method_exists($devise, $method)) {
-                    $error = !$devise->$method();
-                }
-            }
-            if ($error){
-                $errorElement->with('devise')->addViolation('No Devise for this month')->end();
-            }
-        }
+        $error = new ErrorElements($errorElement, $object);
+        $error
+            ->validateMois()
+            ->validateMoisComplementaire()
+            ->validateDevise()
+            ->validateHT();
     }
 }

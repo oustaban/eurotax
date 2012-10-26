@@ -13,7 +13,8 @@ class A10CAFAdmin extends Admin
 {
 
     /**
-     * @param FormMapper $formMapper
+     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
+     * @return \Sonata\AdminBundle\Form\FormMapper|void
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
@@ -67,12 +68,5 @@ class A10CAFAdmin extends Admin
     {
         /* @var $object \Application\Sonata\ClientOperationsBundle\Entity\A10CAF */
         parent::validate($errorElement, $object);
-
-//        $value = $object->getHT();
-//        if ($value) {
-//            if (!($value == $object->getMontantHTEnDevise()/$object->getTauxDeChange())) {
-//               $errorElement->with('HT')->addViolation('Wrong "HT"')->end();
-//            }
-//        }
     }
 }

@@ -237,6 +237,8 @@ ApplicationSonataClientOperationsBundle:
       mode_transport: Mode Transport
       departement: Département
       pays_id_origine: Pays d'Origine
+      taux_de_TVA: Taux de TVA
+      TVA: TVA
 
     DEBIntro:
       title: DEB Intro
@@ -465,6 +467,8 @@ ApplicationSonataClientOperationsBundle:
       mode_transport: Mode Transport
       departement: Département
       pays_id_origine: Pays d'Origine
+      taux_de_TVA: Taux de TVA
+      TVA: TVA
 
     DEBIntro:
       title: DEB Intro
