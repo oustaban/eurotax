@@ -17,6 +17,7 @@ abstract class AbstractSellEntity extends AbstractBaseEntity
     /**
      * @var string $tiers
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="tiers", type="string", length=255)
      */
     private $tiers;
@@ -40,6 +41,7 @@ abstract class AbstractSellEntity extends AbstractBaseEntity
     /**
      * @var float $HT
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="HT", type="float", nullable=true)
      */
     private $HT;
@@ -47,6 +49,7 @@ abstract class AbstractSellEntity extends AbstractBaseEntity
     /**
      * @var integer $devise
      *
+     * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="\Application\Sonata\ClientBundle\Entity\ListDevises")
      * @ORM\JoinColumn(name="devise_id", referencedColumnName="id")
      */
@@ -56,6 +59,7 @@ abstract class AbstractSellEntity extends AbstractBaseEntity
     /**
      * @var float $montant_HT_en_devise
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="montant_HT_en_devise", type="float")
      */
     private $montant_HT_en_devise;

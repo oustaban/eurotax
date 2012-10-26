@@ -2,6 +2,7 @@
 
 namespace Application\Sonata\ClientOperationsBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -32,7 +33,7 @@ abstract class AbstractBaseEntity
     /**
      * @var \DateTime $date_piece
      *
-     * @ORM\Column(name="date_piece", type="date")
+     * @ORM\Column(name="date_piece", type="date", nullable=true)
      */
     private $date_piece;
 

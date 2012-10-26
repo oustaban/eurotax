@@ -2,6 +2,7 @@
 
 namespace Application\Sonata\ClientOperationsBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,6 +17,7 @@ class A04283I extends AbstractBuyEntity
     /**
      * @var integer $devise
      *
+     * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="\Application\Sonata\ClientBundle\Entity\ListDevises", inversedBy="BaseListDevises")
      * @ORM\JoinColumn(name="devise_id", referencedColumnName="id")
      */
@@ -25,6 +27,7 @@ class A04283I extends AbstractBuyEntity
     /**
      * @var float $montant_HT_en_devise
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="montant_HT_en_devise", type="float")
      */
     private $montant_HT_en_devise;
@@ -32,6 +35,7 @@ class A04283I extends AbstractBuyEntity
     /**
      * @var float $taux_de_TVA
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="taux_de_TVA", type="float")
      */
     private $taux_de_TVA;
@@ -47,6 +51,7 @@ class A04283I extends AbstractBuyEntity
     /**
      * @var float $HT
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="HT", type="float", nullable=true)
      */
     private $HT;
@@ -54,6 +59,7 @@ class A04283I extends AbstractBuyEntity
     /**
      * @var float $TVA
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="TVA", type="float")
      */
     private $TVA;

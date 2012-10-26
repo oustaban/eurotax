@@ -2,6 +2,7 @@
 
 namespace Application\Sonata\ClientOperationsBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,6 +17,7 @@ class A08IM extends AbstractBuyEntity
     /**
      * @var float $taux_de_TVA
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="taux_de_TVA", type="float")
      */
     private $taux_de_TVA;
@@ -23,6 +25,7 @@ class A08IM extends AbstractBuyEntity
     /**
      * @var float $TVA
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="TVA", type="float")
      */
     private $TVA;
