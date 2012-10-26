@@ -3,7 +3,7 @@
 {% set content%}
 <div class="rapprochement_content">
     <div class="rapprochement_buttons">
-        <button class="btn" onclick="javascript:history.length>1?history.back():location.href = '{{ url('admin_sonata_clientoperations_v01tva_list', {'filter[client_id][value]': client.id, 'month': info.month~'|'~info.year}) }}'.replace('&amp;', '&');"><i class="icon icon-arrow-left"></i> {{ 'Retour'|trans }}</button>
+        <button class="btn" onclick="javascript:history.length>1?history.back():location.href = '{{ path('admin_sonata_clientoperations_v01tva_list', {'filter[client_id][value]': client.id, 'month': info.month~'|'~info.year}) }}'.replace('&amp;', '&');"><i class="icon icon-arrow-left"></i> {{ 'Retour'|trans }}</button>
         <button class="btn" id="rapprochement_validation" style="display: none;"><i class="icon icon-asterisk"></i> {{ 'Validation'|trans }}</button>
     </div>
 

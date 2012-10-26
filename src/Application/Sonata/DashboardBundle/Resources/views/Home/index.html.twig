@@ -121,7 +121,7 @@
 <script src="{{ asset('bundles/applicationsonataclientoperations/js/jquery.tablesorter.js') }}" type="text/javascript"></script>
 <script src="{{ asset('bundles/applicationsonataclientoperations/js/jquery.columnfilters.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
-    var editObjectAbstractUrl = '{{ url('admin_sonata_clientoperations_v01tva_list', {'filter[client_id][value]' : '__id__'}) }}';
+    var editObjectAbstractUrl = '{{ path('admin_sonata_clientoperations_v01tva_list', {'filter[client_id][value]' : '__id__'}) }}';
     init_home_page();
 </script>
 {% endblock javascripts %}

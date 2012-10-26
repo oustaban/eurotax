@@ -43,19 +43,19 @@
                             </a>
                             <ul class="dropdown-menu">
                                 {% if is_granted('ROLE_EDIT_USERS') %}
-                                <li><a href="{{ url('admin_sonata_user_user_list') }}">Utilisateurs</a></li>
+                                <li><a href="{{ path('admin_sonata_user_user_list') }}">Utilisateurs</a></li>
                                 {% endif %}
                                 {% if is_granted('ROLE_SUPER_ADMIN') %}
-                                <li><a href="{{ url('admin_sonata_user_group_list') }}">Groupes</a></li>
+                                <li><a href="{{ path('admin_sonata_user_group_list') }}">Groupes</a></li>
                                 {% endif %}
                                 {% if is_granted('ROLE_EDIT_DEVISES') %}
-                                <li><a href="{{ url('admin_sonata_devises_devises_create') }}">Devises</a></li>
+                                <li><a href="{{ path('admin_sonata_devises_devises_create') }}">Devises</a></li>
                                 {% endif %}
                                 {% if is_granted('ROLE_EDIT_IMPOTS') %}
-                                <li><a href="{{ url('admin_sonata_impots_impots_list') }}">Centres des Impôts</a></li>
+                                <li><a href="{{ path('admin_sonata_impots_impots_list') }}">Centres des Impôts</a></li>
                                 {% endif %}
                                 {% if is_granted('ROLE_EDIT_CLIENTS') %}
-                                <li><a href="{{ url('admin_sonata_client_client_list') }}">Clients</a></li>
+                                <li><a href="{{ path('admin_sonata_client_client_list') }}">Clients</a></li>
                                 {% endif %}
                             </ul>
                         </li>
