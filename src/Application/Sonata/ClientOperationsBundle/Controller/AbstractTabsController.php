@@ -411,7 +411,7 @@ class AbstractTabsController extends Controller
         $id = $this->get('request')->get($this->admin->getIdParameter());
         $object = $this->admin->getObject($id);
 
-        if ($object){
+        if ($object) {
             $date_piece = $object->getDatePiece();
             if ($date_piece) {
                 $this->_month = $date_piece->format('m');
@@ -739,10 +739,10 @@ class AbstractTabsController extends Controller
                                 $this->setCountImports($class, 'success');
                             }
                         } catch (\Exception $e) {
-                            //$this->setCountImports($class, 'errors', $e->getMessage());
+
+                            $this->setCountImports($class, 'errors', $this->getErrorsAsString($class, $form, $key + 2, 0, 0, $e->getMessage()));
                         }
                     } else {
-
                         $this->setCountImports($class, 'errors', $this->getErrorsAsString($class, $form, $key + 2));
                     }
                     unset($formData, $form, $form_builder, $object);
@@ -762,7 +762,7 @@ class AbstractTabsController extends Controller
         $file_name = $file['name'];
 
         /* example file_name */
-//        $file_name = 'FUJITSU-Import TVA-2012-09-1.xlsx';
+//        $file_name = 'FUJITSU-Import-TVA-2012-09-1.xlsx';
 
         if (preg_match('/(.*)\-Import\-TVA\-(\d{4}+)\-(\d{2}+)\-(\d+)\.xlsx/i', $file_name, $matches)) {
 
@@ -814,17 +814,24 @@ class AbstractTabsController extends Controller
         return false;
     }
 
-    public function getErrorsAsString($class, $form, $line, $level = 0, $key = 0)
+    public function getErrorsAsString($class, $form, $line, $level = 0, $key = 0, $message = '')
     {
         $row = $this->_config_excel[$this->admin->trans('ApplicationSonataClientOperationsBundle.form.' . $class . '.title')]['fields'];
 
         $errors = '';
 
-        foreach ($form->getErrors() as $error) {
-            $repeat = str_repeat(' ', $level);
-            $field = isset($row[$key]) ? '(' . (($row[$key] ? chr($row[$key] + 65) : '') . ':' . $line) . ') ' : '';
-            $errors .= $repeat . 'VALUE : ' . $field . ($form->getViewData() ? : 'empty') . "\n";
-            $errors .= $repeat . 'ERROR : ' . $error->getMessage() . "\n\n";
+        $clone = array();
+        foreach ($form->getErrors() as $keys => $error) {
+
+            if (empty($clone) || (isset($clone[$keys - 1]) && $clone[$keys - 1] != $error->getMessage())) {
+
+                $repeat = str_repeat(' ', $level);
+                $field = isset($row[$key]) ? '(' . (($row[$key] ? chr($row[$key] + 65) : '') . ':' . $line) . ') ' : '';
+                $errors .= $repeat . 'VALUE : ' . $field . ($form->getViewData() ? : 'empty') . "\n";
+                $errors .= $repeat . 'ERROR : ' . $error->getMessage() . "\n\n";
+
+                $clone[] = $error->getMessage();
+            }
         }
 
         foreach ($form->getChildren() as $key => $child) {
@@ -835,6 +842,11 @@ class AbstractTabsController extends Controller
                 $errors .= $err;
             }
         }
+
+        if (!empty($message)) {
+            $errors .= $message;
+        }
+
         return $errors;
     }
 
@@ -869,7 +881,7 @@ class AbstractTabsController extends Controller
             if (!empty($data[$i]) && $line = $data[$i]) {
                 foreach ($line as $value) {
                     $value = trim($value);
-                    if (empty($value)) {
+                    if (empty($value) || $value == '#VALUE!') {
                         $line_counter = true;
                     } else {
                         $line_counter = false;
@@ -1109,7 +1121,7 @@ class AbstractTabsController extends Controller
                 'time' => strtotime($this->_year . '-' . $this->_month . '-01'),
                 'month' => $this->_month,
                 'year' => $this->_year,
-                'quarter' => floor(($this->_month-1)/3)+1),
+                'quarter' => floor(($this->_month - 1) / 3) + 1),
             'debug' => $debug,
             'client' => $client,
             'bank' => $bank,
