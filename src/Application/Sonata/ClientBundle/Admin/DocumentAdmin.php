@@ -30,7 +30,7 @@ class DocumentAdmin extends Admin
 
         $formMapper->with($this->getFieldLabel('title'))
             ->add('file', 'file', array('label' => $this->getFieldLabel('document'), 'required' => !$id))
-            ->add('type_document', null, array('label' => $this->getFieldLabel('type_document')))
+            ->add('type_document', null, array('label' => $this->getFieldLabel('type_document'), 'disabled' => !!$id))
             ->add('date_document', null, array(
             'label' => $this->getFieldLabel('date_document'),
             'attr' => array('class' => 'datepicker'),

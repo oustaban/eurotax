@@ -29,13 +29,13 @@ class GarantieAdmin extends Admin
 
         parent::configureFormFields($formMapper);
 
-        $is_disabled = $this->getRequest()->get($this->getIdParameter()) ? array('disabled' => 'disabled') : array();
+        $id = $this->getRequest()->get($this->getIdParameter());
 
         $formMapper->with($this->getFieldLabel('title'))
             ->add('type_garantie', null,
             array(
                 'label' => $this->getFieldLabel('type_garantie'),
-                'attr' => $is_disabled,
+                'disabled' => !!$id,
             ))
             ->add('montant', null, array('label' => $this->getFieldLabel('montant')))
             ->add('devise', null, array('label' => $this->getFieldLabel('devise')))
