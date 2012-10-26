@@ -2,7 +2,10 @@
     clear: both;
     float: none;
 }
-
+.client_tabs_block button{
+    float: right;
+    margin-top: -60px;
+}
 .js-coordonnees .sonata-ba-list tbody {
     cursor: move;
 }
