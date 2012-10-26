@@ -2,6 +2,7 @@
 
 namespace Application\Sonata\ClientOperationsBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -24,6 +25,7 @@ abstract class AbstractSellEntity extends AbstractBaseEntity
     /**
      * @var string $numero_piece
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="numero_piece", type="string", length=255)
      */
     private $numero_piece;
