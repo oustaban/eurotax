@@ -26,8 +26,10 @@ class DocumentAdmin extends Admin
     {
         parent::configureFormFields($formMapper);
 
+        $id = $this->getRequest()->get($this->getIdParameter());
+
         $formMapper->with($this->getFieldLabel('title'))
-            ->add('file', 'file', array('label' => $this->getFieldLabel('document'), 'required' => false))
+            ->add('file', 'file', array('label' => $this->getFieldLabel('document'), 'required' => !$id))
             ->add('type_document', null, array('label' => $this->getFieldLabel('type_document')))
             ->add('date_document', null, array(
             'label' => $this->getFieldLabel('date_document'),

@@ -16,7 +16,7 @@ use Application\Sonata\ClientBundle\Admin\AbstractTabsAdmin as Admin;
 abstract class AbstractCompteAdmin extends Admin
 {
     protected $datagridValues = array(
-        '_sort_order' => 'DESC',
+        '_sort_order' => 'ASC',
         '_sort_by' => 'date'
     );
 
@@ -55,12 +55,21 @@ abstract class AbstractCompteAdmin extends Admin
     {
         parent::configureListFields($listMapper);
 
+        $filterParameters = $this->getFilterParameters();
+        if ($filterParameters['_sort_order'] == $this->datagridValues['_sort_order'] && $filterParameters['_sort_by'] == $this->datagridValues['_sort_by']){
+            global $SonataAdminBundle_Compte_list_solde;
+            $SonataAdminBundle_Compte_list_solde = 0;
+        }
+
         $listMapper->add('date', null, array(
             'label' => $this->getFieldLabel('date'),
             'template' => 'ApplicationSonataClientBundle:CRUD:list_date.html.twig'
         ))
             ->add('operation', null, array('label' => $this->getFieldLabel('operation')))
-            ->add('montant', 'money', array('label' => $this->getFieldLabel('montant')))
+            ->add('montant', 'money', array(
+            'label' => $this->getFieldLabel('montant'),
+            'template' => 'ApplicationSonataClientBundle:CRUD:list_montant.html.twig',
+        ))
             ->add('solde', 'money', array(
             'label' => $this->getFieldLabel('solde'),
             'template' => 'ApplicationSonataClientBundle:CRUD:list_solde.html.twig'

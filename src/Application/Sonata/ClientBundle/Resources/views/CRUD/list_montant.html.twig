@@ -1,0 +1,9 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% set value = object.getMontant %}
+
+{% block field %}
+<div class="totals montant" {% if value<0 %}style="color:red;"{% endif %}>
+    {{ value }}
+</div>
+{% endblock field %}

@@ -71,49 +71,51 @@ function init_clientoperations_buttons(o){
 
 function init_rapprochement_sums()
 {
+    var ECARTsumm = 0;
+
     var $plus = $('.rapprochement_content_no_deb .rapprochement_content_input table.table tr.totals_row div b :first');
     $plus = $plus.length?$plus.html():'0';
     var $minus = $('.rapprochement_content_deb .rapprochement_content_input table.table tr.totals_row div b :first');
     $minus = $minus.length?$minus.html():'0';
+    var diff = Number($plus.replace(',', '.')) - Number($minus.replace(',', '.'));
+    ECARTsumm += diff;
     $('#totals_input_v1').html(
-        (Math.round((
-            Number($plus.replace(',', '.')) -
-                Number($minus.replace(',', '.'))
-            )*100)/100).toFixed(2).toString().replace('.', ',')
+        (Math.round((diff)*100)/100).toFixed(2).toString().replace('.', ',')
     );
 
     var $plus = $('.rapprochement_content_no_deb .rapprochement_content_input table.table tr.totals_row div b :last');
     $plus = $plus.length?$plus.html():'0';
     var $minus = $('.rapprochement_content_deb .rapprochement_content_input table.table tr.totals_row div b :last');
     $minus = $minus.length?$minus.html():'0';
+    var diff = Number($plus.replace(',', '.')) - Number($minus.replace(',', '.'));
+    ECARTsumm += diff;
     $('#totals_input_v2').html(
-        (Math.round((
-            Number($plus.replace(',', '.')) -
-                Number($minus.replace(',', '.'))
-            )*100)/100).toFixed(2).toString().replace('.', ',')
+        (Math.round((diff)*100)/100).toFixed(2).toString().replace('.', ',')
     );
 
     var $plus = $('.rapprochement_content_no_deb .rapprochement_content_output table.table tr.totals_row div b :first');
     $plus = $plus.length?$plus.html():'0';
     var $minus = $('.rapprochement_content_deb .rapprochement_content_output table.table tr.totals_row div b :first');
     $minus = $minus.length?$minus.html():'0';
+    var diff = Number($plus.replace(',', '.')) - Number($minus.replace(',', '.'));
+    ECARTsumm += diff;
     $('#totals_output_v1').html(
-        (Math.round((
-            Number($plus.replace(',', '.')) -
-                Number($minus.replace(',', '.'))
-            )*100)/100).toFixed(2).toString().replace('.', ',')
+        (Math.round((diff)*100)/100).toFixed(2).toString().replace('.', ',')
     );
 
     var $plus = $('.rapprochement_content_no_deb .rapprochement_content_output table.table tr.totals_row div b :last');
     $plus = $plus.length?$plus.html():'0';
     var $minus = $('.rapprochement_content_deb .rapprochement_content_output table.table tr.totals_row div b :last');
     $minus = $minus.length?$minus.html():'0';
+    var diff = Number($plus.replace(',', '.')) - Number($minus.replace(',', '.'));
+    ECARTsumm += diff;
     $('#totals_output_v2').html(
-        (Math.round((
-            Number($plus.replace(',', '.')) -
-                Number($minus.replace(',', '.'))
-            )*100)/100).toFixed(2).toString().replace('.', ',')
+        (Math.round((diff)*100)/100).toFixed(2).toString().replace('.', ',')
     );
+
+    if (ECARTsumm == 0) {
+        $("#rapprochement_validation").show();
+    }
 }
 
 function init_tabs_filters_sticky_header(){

@@ -1,5 +1,5 @@
 {% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
 
 {% block field %}
-<a href="{{ url('admin_sonata_clientoperations_v01tva_list', {'filter[client_id][value]' : object.id}) }}">Operations</a>
+<a href="{{ path('admin_sonata_clientoperations_v01tva_list', {'filter[client_id][value]' : object.id}) }}">Operations</a>
 {% endblock field %}

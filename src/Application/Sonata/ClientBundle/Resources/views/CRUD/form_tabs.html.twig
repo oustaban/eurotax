@@ -5,51 +5,37 @@
 <div class="client_tabs_block">
     <ul class="nav nav-tabs">
         <li {% if active_tab=='client' %}class="active"{% endif %}>
-            <a href="{{ url('admin_sonata_client_client_'~action, {'id':client_id}) }}">Général</a>
+            <a href="{{ path('admin_sonata_client_client_'~action, {'id':client_id}) }}">Général</a>
         </li>
         {% if client_id  %}
         <li {% if active_tab=='contact' %}class="active"{% endif %}>
-            <a href="{{ url('admin_sonata_client_contact_list', _filter_json) }}">Contacts</a>
+            <a href="{{ path('admin_sonata_client_contact_list', _filter_json) }}">Contacts</a>
         </li>
-        {% endif %}
-        {% if client_id  %}
         <li {% if active_tab=='document' %}class="active"{% endif %}>
-            <a href="{{ url('admin_sonata_client_document_list', _filter_json) }}">Documents légaux</a>
+            <a href="{{ path('admin_sonata_client_document_list', _filter_json) }}">Documents légaux</a>
         </li>
-        {% endif %}
-        {% if client_id  %}
         <li {% if active_tab=='garantie' %}class="active"{% endif %}>
-            <a href="{{ url('admin_sonata_client_garantie_list', _filter_json) }}">Garanties</a>
+            <a href="{{ path('admin_sonata_client_garantie_list', _filter_json) }}">Garanties</a>
         </li>
-        {% endif %}
-        {% if client_id  %}
         <li {% if active_tab=='coordonnees' %}class="active"{% endif %}>
-            <a href="{{ url('admin_sonata_client_coordonnees_list', _filter_json) }}">Coordonnées Bancaires</a>
+            <a href="{{ path('admin_sonata_client_coordonnees_list', _filter_json) }}">Coordonnées Bancaires</a>
         </li>
-        {% endif %}
-        {% if client_id  %}
         <li {% if active_tab=='commentaire' %}class="active"{% endif %}>
-            <a href="{{ url('admin_sonata_client_commentaire_list', _filter_json) }}">Commentaires</a>
+            <a href="{{ path('admin_sonata_client_commentaire_list', _filter_json) }}">Commentaires</a>
         </li>
-        {% endif %}
-        {% if client_id  %}
         <li {% if active_tab=='tarif' %}class="active"{% endif %}>
-            <a href="{{ url('admin_sonata_client_tarif_list', _filter_json) }}">Tarif</a>
+            <a href="{{ path('admin_sonata_client_tarif_list', _filter_json) }}">Tarif</a>
         </li>
-        {% endif %}
-
-        {% if client_id  %}
         <li {% if active_tab=='compte' %}class="active"{% endif %}>
-            <a href="{{ url('admin_sonata_client_compte_list', _filter_json) }}">Compte</a>
+            <a href="{{ path('admin_sonata_client_compte_list', _filter_json) }}">Compte</a>
         </li>
-        {% endif %}
-
-        {% if client_id  %}
         <li {% if active_tab=='compte_de_depot' %}class="active"{% endif %}>
-            <a href="{{ url('admin_sonata_client_comptededepot_list', _filter_json) }}">Compte de dépôt</a>
+            <a href="{{ path('admin_sonata_client_comptededepot_list', _filter_json) }}">Compte de dépôt</a>
         </li>
         {% endif %}
-
     </ul>
+    {% if client_id  %}
+        <button class="btn" onclick="javascript:location.href = '{{ path('admin_sonata_clientoperations_v01tva_list', _filter_json) }}'.replace('&amp;', '&');"><i class="icon icon-th-list"></i> Voir les opérations</button>
+    {% endif %}
 </div>
 {% endblock %}
