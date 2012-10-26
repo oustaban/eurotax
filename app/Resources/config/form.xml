@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="form.type.money" class="Application\Form\Type\MoneyType">
+            <tag name="form.type" alias="money" />
+        </service>
+        <service id="form.type.number" class="Application\Form\Type\NumberType">
+            <tag name="form.type" alias="number" />
+        </service>
+        <service id="form.type.percent" class="Application\Form\Type\PercentType">
+            <tag name="form.type" alias="percent" />
+        </service>
+    </services>
+
+</container>
