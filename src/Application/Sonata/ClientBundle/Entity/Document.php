@@ -75,7 +75,7 @@ class Document
     /**
      * @var string $particularite
      *
-     * @ORM\Column(name="particularite", type="text")
+     * @ORM\Column(name="particularite", type="text", nullable=true)
      */
     private $particularite;
 
@@ -368,7 +368,7 @@ class Document
 
         $this->file->move($this->getUploadDir(), $this->file_alias);
 
-        $this->document = $pathinfo['filename']; #substr($this->file->getClientOriginalName(), 0, strpos($this->file->getClientOriginalName(), '.'));
+        $this->document = $pathinfo['filename'];
 
         unset($this->file);
     }
