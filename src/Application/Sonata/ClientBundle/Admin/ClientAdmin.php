@@ -24,6 +24,11 @@ class ClientAdmin extends Admin
     public $date_format_php = 'd/m/Y';
 
     protected $_bundle_name = 'ApplicationSonataClientBundle';
+    protected $_niveau_dobligation_list = array(
+        0 => 'pas de DEB In ni DEB Out',
+        1 => 'DEB In et/ou DEB Out complète',
+        4 => 'DEB Out simplifiée (uniquement si Client-DEB)',
+    );
 
     protected $_fields_list = array(
         'raison_sociale' => array(),
@@ -44,7 +49,6 @@ class ClientAdmin extends Admin
      */
     public function getBatchActions()
     {
-
         return array();
     }
 
@@ -122,10 +126,9 @@ class ClientAdmin extends Admin
             'required' => false,
         ));
 
-
         $formMapper->add('date_de_depot_id', 'choice', array(
             'label' => 'form.date_de_depot_id',
-            'choices' => array(15, 19, 24, 31),
+            'choices' => array(15=>15, 19=>19, 24=>24, 31=>31),
             'attr' => array('class' => 'date_de_depot_id'),
         ))
             ->add('teledeclaration', null, array('label' => 'form.teledeclaration'))
@@ -134,9 +137,30 @@ class ClientAdmin extends Admin
             'choices' => $this->getNiveauDobligationIdChoise(),
             'empty_value' => '',
             'required' => false,
+            'help' => ' ',
         ));
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function getNiveauDobligationIdListHelp()
+    {
+        return $this->_niveau_dobligation_list;
+    }
+
+    /**
+     * @return array
+     */
+    private function getNiveauDobligationIdChoise()
+    {
+        $rows = array();
+        foreach ($this->_niveau_dobligation_list as $key => $value) {
+            $rows[$key] = $key;
+        }
+        return $rows;
+    }
 
     /**
      * {@inheritdoc}
