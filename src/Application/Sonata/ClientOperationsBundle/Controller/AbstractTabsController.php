@@ -46,7 +46,6 @@ class AbstractTabsController extends Controller
             'skip_line' => 1,
             'fields' => array(
                 'tiers',
-                'no_TVA_tiers',
                 'date_piece',
                 'numero_piece',
                 'devise',

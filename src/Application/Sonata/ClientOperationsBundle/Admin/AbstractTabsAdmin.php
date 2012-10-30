@@ -302,7 +302,6 @@ abstract class AbstractTabsAdmin extends Admin
         /** @var $fieldDescription \Sonata\DoctrineORMAdminBundle\Admin\FieldDescription */
         $fieldDescription = $this->getFormFieldDescription($field);
 
-        $type = $fieldDescription->getType();
 
         $method = 'get' . ucfirst($field) . 'FormValue';
         $v = method_exists($this, $method) ? $this->$method($value) : $value;
@@ -310,8 +309,11 @@ abstract class AbstractTabsAdmin extends Admin
             $v = trim($v);
         }
 
-        $method = 'get' . ucfirst($type) . 'TypeFormValue';
-        $v = method_exists($this, $method) ? $this->$method($v) : $v;
+        if ($fieldDescription && $type = $fieldDescription->getType()) {
+
+            $method = 'get' . ucfirst($type) . 'TypeFormValue';
+            $v = method_exists($this, $method) ? $this->$method($v) : $v;
+        }
 
         return $v;
     }
