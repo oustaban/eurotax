@@ -163,3 +163,6 @@
 .statut_document_apostille .controls{
     margin-left: 75px;
 }
+.js-coordonnees .table {
+    width: auto;
+}
