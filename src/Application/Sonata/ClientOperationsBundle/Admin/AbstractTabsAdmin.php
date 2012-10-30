@@ -36,6 +36,8 @@ abstract class AbstractTabsAdmin extends Admin
     public $devise = array();
     public $date_format_datetime = 'dd/MM/yyyy';
     public $date_format_php = 'd/m/Y';
+    protected $_is_validate_import = false;
+    protected $_index_import = 0;
 
     /**
      * @param string $code
@@ -67,7 +69,6 @@ abstract class AbstractTabsAdmin extends Admin
             list($this->month, $this->year) = $this->getQueryMonth($this->query_month);
         }
     }
-
 
     /**
      * @param $query_month
@@ -337,6 +338,7 @@ abstract class AbstractTabsAdmin extends Admin
 
         return $value;
     }
+
     /**
      * @param $value
      * @param int $precision
@@ -345,8 +347,9 @@ abstract class AbstractTabsAdmin extends Admin
     protected function getNumberFormat($value, $precision = 2)
     {
         if ($value) {
-            $value = number_format($value, $precision, ',', '');
+            $value = number_format((double)$value, $precision, ',', '');
         }
+
         return $value;
     }
 
@@ -440,10 +443,9 @@ abstract class AbstractTabsAdmin extends Admin
      */
     protected function getDevise($value)
     {
-        $value = strtolower($value);
+        $devise = strtolower($value);
 
         $value_assoc = array(
-            'eur' => 'euro',
             'usd' => 'dollar',
             'jpy' => 'yen',
             'gbr' => 'british',
@@ -453,9 +455,9 @@ abstract class AbstractTabsAdmin extends Admin
             'chf' => 'swiss_franc',
         );
 
-        $value = isset($value_assoc[$value]) ? $value_assoc[$value] : $value;
+        $devise = isset($value_assoc[$devise]) ? $value_assoc[$devise] : $devise;
 
-        return isset($this->devise[$value]) ? $this->devise[$value]->getId() : '';
+        return isset($this->devise[$devise]) ? $this->devise[$devise]->getId() : $value;
     }
 
     /**
@@ -497,4 +499,36 @@ abstract class AbstractTabsAdmin extends Admin
         return $value;
     }
 
+
+    /**
+     * @param bool $value
+     */
+    public function setValidateImport($value = true)
+    {
+        $this->_is_validate_import = $value;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function getValidateImport()
+    {
+        return $this->_is_validate_import;
+    }
+
+    /**
+     * @param $value
+     */
+    public function setIndexImport($value)
+    {
+        $this->_index_import = $value;
+    }
+
+    /**
+     * @return int
+     */
+    protected function getIndexImport()
+    {
+        return $this->_index_import;
+    }
 }

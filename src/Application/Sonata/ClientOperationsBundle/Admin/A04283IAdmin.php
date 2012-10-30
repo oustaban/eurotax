@@ -99,5 +99,10 @@ class A04283IAdmin extends Admin
             ->validateMois()
             ->validateDevise()
             ->validateHT();
+
+        if ($this->getValidateImport()) {
+            list($month, $year) = $this->getQueryMonth($this->query_month);
+            $error->validateMoisImport($month, $year);
+        }
     }
 }

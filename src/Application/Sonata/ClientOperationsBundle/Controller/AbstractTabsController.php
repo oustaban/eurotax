@@ -345,7 +345,6 @@ class AbstractTabsController extends Controller
         if ($this->admin->setQueryMonth()) {
             $this->_parameters_url['month'] = $this->_query_month;
         }
-
     }
 
     /**
@@ -690,20 +689,15 @@ class AbstractTabsController extends Controller
 
                 $config_excel = $this->_config_excel[$title];
                 $class = $config_excel['entity'];
-
-                $adminCode = 'application.sonata.admin.' . strtolower($class);
-
                 $fields = $config_excel['fields'];
 
-                $skip_line = $config_excel['skip_line'];
-                for ($i = 0; $i < $skip_line; $i++) {
-                    array_shift($data);
-                }
+                $data = $this->skipLine($config_excel, $data);
 
-
+                $adminCode = 'application.sonata.admin.' . strtolower($class);
                 /* @var $admin \Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin */
                 $admin = $this->container->get('sonata.admin.pool')->getAdminByAdminCode($adminCode);
                 $admin->setDeviseList($this->devise_list);
+                $admin->setValidateImport();
 
                 foreach ($data as $key => $line) {
 
@@ -714,13 +708,13 @@ class AbstractTabsController extends Controller
                     $object = $admin->getNewInstance();
 
                     $admin->setSubject($object);
+                    $admin->setIndexImport($key + 1);
 
                     /* @var $form \Symfony\Component\Form\Form */
                     $form_builder = $admin->getFormBuilder();
                     $form = $form_builder->getForm();
 
                     $form->setData($object);
-
 
                     $formData = array('client_id' => $this->client_id, '_token' => $this->get('form.csrf_provider')->generateCsrfToken('unknown'));
 
@@ -754,6 +748,20 @@ class AbstractTabsController extends Controller
         }
     }
 
+
+    /**
+     * @param $config_excel
+     * @param $data
+     * @return mixed
+     */
+    private function skipLine($config_excel, $data)
+    {
+        $skip_line = $config_excel['skip_line'];
+        for ($i = 0; $i < $skip_line; $i++) {
+            array_shift($data);
+        }
+        return $data;
+    }
 
     /**
      * @param $file
@@ -805,6 +813,7 @@ class AbstractTabsController extends Controller
 
                 if (!empty($ver)) {
                     $ver = array_shift($ver);
+
                     if ($ver['counts'] == $version) {
                         return true;
                     }
@@ -816,6 +825,15 @@ class AbstractTabsController extends Controller
         return false;
     }
 
+    /**
+     * @param $class
+     * @param $form
+     * @param $line
+     * @param int $level
+     * @param int $key
+     * @param string $message
+     * @return string
+     */
     public function getErrorsAsString($class, $form, $line, $level = 0, $key = 0, $message = '')
     {
         $row = $this->_config_excel[$this->admin->trans('ApplicationSonataClientOperationsBundle.form.' . $class . '.title')]['fields'];
@@ -829,7 +847,17 @@ class AbstractTabsController extends Controller
 
                 $repeat = str_repeat(' ', $level);
                 $field = isset($row[$key]) ? '(' . (($row[$key] ? chr($row[$key] + 65) : '') . ':' . $line) . ') ' : '';
-                $errors .= $repeat . 'VALUE : ' . $field . ($form->getViewData() ? : 'empty') . "\n";
+
+                $data = $form->getViewData();
+
+                if (is_array($data)) {
+                    $data = ''; //print_r($data, 1);
+                }
+
+                if ($data) {
+                    $errors .= $repeat . 'VALUE : ' . $field . ($data ? : 'empty') . "\n";
+                }
+
                 $errors .= $repeat . 'ERROR : ' . $error->getMessage() . "\n\n";
 
                 $clone[] = $error->getMessage();

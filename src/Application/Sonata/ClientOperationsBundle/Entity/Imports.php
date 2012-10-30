@@ -45,7 +45,7 @@ class Imports
 
 
     /**
-     * @return \Application\Sonata\UserBundle\Entity\User
+     * @return string
      */
     public function __toString()
     {

@@ -186,6 +186,65 @@ class ErrorElements
         return $this;
     }
 
+    /**
+     * @param $current_month
+     * @param $current_year
+     * @return ErrorElements
+     */
+    public function validateMoisImport($current_month, $current_year)
+    {
+        $value = $this->_object->getMois();
+        if ($value) {
+
+            if ($value instanceof \DateTime) {
+                $month = $value->format('n');
+                $year = $value->format('Y');
+            } else {
+                $month = $value['month'];
+                $year = $value['year'];
+            }
+
+            if (!($year == $current_year && $month == $current_month)) {
+
+                $this->_errorElement->with('mois')->addViolation('Mois TVA = ' . $this->formatMonth($month) . '-' . $this->formatYear($year) . ' au lieu de ' . $this->formatMonth($current_month) . '-' . $this->formatYear($current_year))->end();
+            }
+        }
+        return $this;
+    }
+
+
+    /**
+     * @param $index
+     * @return ErrorElements
+     */
+    public function validateNLigne($index)
+    {
+        $value = $this->_object->getNLigne();
+        if ($value && $value != $index) {
+
+            $this->_errorElement->with('n_ligne')->addViolation('Numérotation illogique (Should be sequential: 1, 2, 3, 4, ...)')->end();
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function formatYear($value)
+    {
+        return substr($value, -2);
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function formatMonth($value)
+    {
+        return sprintf('%02d', $value);
+    }
 
     /**
      * @return ErrorElements

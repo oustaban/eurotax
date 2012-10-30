@@ -71,14 +71,6 @@ class DEBExpedAdmin extends Admin
     }
 
     /**
-     * @param DatagridMapper $datagridMapper
-     */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
-    {
-        $datagridMapper->add('client_id');
-    }
-
-    /**
      * @param ErrorElement $errorElement
      * @param mixed $object
      */

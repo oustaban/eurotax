@@ -15,15 +15,6 @@ class V01TVA extends AbstractSellEntity
 {
 
     /**
-     * @var string $no_TVA_tiers
-     *
-     * @Assert\NotBlank()
-     * @ORM\Column(name="no_TVA_tiers", type="string", length=255)
-     */
-    private $no_TVA_tiers;
-
-
-    /**
      * @var float $taux_de_TVA
      *
      * @Assert\NotBlank()
@@ -79,30 +70,6 @@ class V01TVA extends AbstractSellEntity
      * @ORM\Column(name="TVA", type="float")
      */
     private $TVA;
-
-
-    /**
-     * Set no_TVA_tiers
-     *
-     * @param string $noTVATiers
-     * @return V01_TVA
-     */
-    public function setNoTVATiers($noTVATiers)
-    {
-        $this->no_TVA_tiers = $noTVATiers;
-
-        return $this;
-    }
-
-    /**
-     * Get no_TVA_tiers
-     *
-     * @return string
-     */
-    public function getNoTVATiers()
-    {
-        return $this->no_TVA_tiers;
-    }
 
 
     /**
@@ -253,7 +220,7 @@ class V01TVA extends AbstractSellEntity
     public function setPaiementDevise(\Application\Sonata\ClientBundle\Entity\ListDevises $paiementDevise = null)
     {
         $this->paiement_devise = $paiementDevise;
-    
+
         return $this;
     }
 
