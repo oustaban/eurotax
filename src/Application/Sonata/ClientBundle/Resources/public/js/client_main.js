@@ -7,7 +7,7 @@ jQuery(document).ready(function ($) {
         $('.hidden').parent().parent().remove();
     });
 
-    $('#'+uniqid+'_nom')
+    $('#' + uniqid + '_nom')
         .keypress(required_spaces)
         .blur(replace_spaces)
         .trigger('blur');
@@ -60,6 +60,12 @@ jQuery(document).ready(function ($) {
 
     }).trigger('change');
 
+
+    $('#' + uniqid + '_niveau_dobligation_id').change(function () {
+
+        $('#sonata-ba-field-container-' + uniqid + '_niveau_dobligation_id .help-block').text(Sonata.niveau_dobligation[$(this).val()] ? Sonata.niveau_dobligation[$(this).val()] : '');
+
+    }).trigger('change');
 });
 
 var fields_address = ['adresse_1', 'adresse_2', 'code_postal', 'ville', 'pays_id'];
