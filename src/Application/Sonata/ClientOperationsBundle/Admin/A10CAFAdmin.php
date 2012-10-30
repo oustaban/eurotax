@@ -6,6 +6,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
+use Application\Sonata\ClientOperationsBundle\Admin\Validate\ErrorElements;
 
 use Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin as Admin;
 
@@ -68,5 +69,12 @@ class A10CAFAdmin extends Admin
     {
         /* @var $object \Application\Sonata\ClientOperationsBundle\Entity\A10CAF */
         parent::validate($errorElement, $object);
+
+        $error = new ErrorElements($errorElement, $object);
+
+        if ($this->getValidateImport()) {
+            list($month, $year) = $this->getQueryMonth($this->query_month);
+            $error->validateMoisImport($month, $year);
+        }
     }
 }

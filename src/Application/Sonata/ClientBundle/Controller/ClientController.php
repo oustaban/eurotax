@@ -85,6 +85,7 @@ class ClientController extends Controller
 
         $this->jsSettingsJson(array(
             'country_eu' => $this->_CountryEU,
+            'niveau_dobligation' => $this->admin->getNiveauDobligationIdListHelp(),
         ));
 
         return $this->render('ApplicationSonataClientBundle::' . $template . '.html.twig', array(

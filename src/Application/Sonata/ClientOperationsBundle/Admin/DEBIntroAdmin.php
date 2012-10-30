@@ -71,9 +71,19 @@ class DEBIntroAdmin extends Admin
             ->add('CEE', null, array('label' => $this->getFieldLabel('CEE')));
     }
 
+    /**
+     * @param \Sonata\AdminBundle\Validator\ErrorElement $errorElement
+     * @param mixed $object
+     */
     public function validate(ErrorElement $errorElement, $object)
     {
         /* @var $object \Application\Sonata\ClientOperationsBundle\Entity\DEBIntro */
         parent::validate($errorElement, $object);
+
+        $error = new ErrorElements($errorElement, $object);
+
+        if ($this->getValidateImport()) {
+            $error->validateNLigne($this->getIndexImport());
+        }
     }
 }

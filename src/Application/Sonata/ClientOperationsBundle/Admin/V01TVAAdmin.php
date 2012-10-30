@@ -22,7 +22,6 @@ class V01TVAAdmin extends Admin
 
         $formMapper
             ->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
-            ->add('no_TVA_tiers', null, array('label' => $this->getFieldLabel('no_TVA_tiers')))
             ->add('date_piece', null, array(
                 'label' => $this->getFieldLabel('date_piece'),
                 'attr' => array('class' => 'datepicker'),
@@ -73,7 +72,6 @@ class V01TVAAdmin extends Admin
         parent::configureListFields($listMapper);
 
         $listMapper->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
-            ->add('no_TVA_tiers', null, array('label' => $this->getFieldLabel('no_TVA_tiers')))
             ->add('date_piece', null, array(
             'label' => $this->getFieldLabel('date_piece'),
             'template' => $this->_bundle_name . ':CRUD:list_date_piece.html.twig'
@@ -111,7 +109,6 @@ class V01TVAAdmin extends Admin
         $error = new ErrorElements($errorElement, $object);
         $error
             ->validateMoisIsNotNULL()
-            ->validateNoTVATiers()
             ->validateMontantTVAFrancaise()
             ->validateMontantTTC()
             ->validatePaiementMontantMois()
