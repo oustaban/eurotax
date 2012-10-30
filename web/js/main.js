@@ -34,7 +34,7 @@ function init_home_page() {
                 $.removeCookie('show_all_clients');
             }
             else {
-                $.cookie('show_all_clients', '1', { expires:1, path:'/' });
+                $.cookie('show_all_clients', '1', { path:'/' });
                 location.reload();
             }
         });
