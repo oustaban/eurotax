@@ -120,7 +120,11 @@ function init_rapprochement_sums()
 
 function init_tabs_filters_sticky_header(){
     var $thead = $('.sonata-ba-list .table thead:first');
-    if ($thead.length > 0) {
+    if ($thead.length == 0) {
+        var $table = $('<table class="table table-bordered table-striped table-hover" />').prependTo('.sonata-ba-list:first');
+        $thead = $('<thead />').appendTo($table);
+    }
+
         var $tr = $('<tr />').prependTo($thead);
         var $th = $('<th />')
             .attr('colspan', $thead.children(':last').children().length)
@@ -152,5 +156,4 @@ function init_tabs_filters_sticky_header(){
 
             return false;
         });
-    }
 }
