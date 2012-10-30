@@ -2,6 +2,7 @@
 
 namespace Application\Sonata\ClientOperationsBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,6 +17,7 @@ class V05LIC extends AbstractSellEntity
     /**
      * @var string $no_TVA_tiers
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="no_TVA_tiers", type="string", length=255)
      */
     private $no_TVA_tiers;
@@ -67,6 +69,7 @@ class V05LIC extends AbstractSellEntity
     /**
      * @var float $valeur_statistique
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="valeur_statistique", type="float")
      */
     private $valeur_statistique;

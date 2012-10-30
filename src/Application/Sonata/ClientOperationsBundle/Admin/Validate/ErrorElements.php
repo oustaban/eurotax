@@ -222,11 +222,27 @@ class ErrorElements
                     }
                 }
                 if ($error) {
-                    $this->errorElement->with('devise')->addViolation('No Devise for this month')->end();
+                    $this->_errorElement->with('devise')->addViolation('No Devise for this month')->end();
                 }
             }
         }
 
         return $this;
     }
+
+
+    /**
+     * @return ErrorElements
+     */
+    public function validateNomenclature()
+    {
+        $regime = $this->_object->getRegime();
+        if ($regime == 31 && $this->_object->getNomenclature()) {
+
+            $this->_errorElement->with('nomenclature')->addViolation('Cellules devant être vide car régime = ' . $regime)->end();
+        }
+
+        return $this;
+    }
 }
+

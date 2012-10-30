@@ -2,6 +2,7 @@
 
 namespace Application\Sonata\ClientOperationsBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,6 +17,7 @@ class V01TVA extends AbstractSellEntity
     /**
      * @var string $no_TVA_tiers
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="no_TVA_tiers", type="string", length=255)
      */
     private $no_TVA_tiers;
@@ -24,6 +26,7 @@ class V01TVA extends AbstractSellEntity
     /**
      * @var float $taux_de_TVA
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="taux_de_TVA", type="float")
      */
     private $taux_de_TVA;
@@ -31,6 +34,7 @@ class V01TVA extends AbstractSellEntity
     /**
      * @var float $montant_TVA_francaise
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="montant_TVA_francaise", type="float")
      */
     private $montant_TVA_francaise;
@@ -38,6 +42,7 @@ class V01TVA extends AbstractSellEntity
     /**
      * @var float $montant_TTC
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="montant_TTC", type="float")
      */
     private $montant_TTC;
@@ -45,6 +50,7 @@ class V01TVA extends AbstractSellEntity
     /**
      * @var float $paiement_montant
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="paiement_montant", type="float")
      */
     private $paiement_montant;
@@ -52,6 +58,7 @@ class V01TVA extends AbstractSellEntity
     /**
      * @var integer $paiement_devise
      *
+     * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="\Application\Sonata\ClientBundle\Entity\ListDevises", inversedBy="BaseListDevises")
      * @ORM\JoinColumn(name="paiement_devise_id", referencedColumnName="id")
      */
@@ -60,6 +67,7 @@ class V01TVA extends AbstractSellEntity
     /**
      * @var \DateTime $paiement_date
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="paiement_date", type="date")
      */
     private $paiement_date;
@@ -67,6 +75,7 @@ class V01TVA extends AbstractSellEntity
     /**
      * @var float $TVA
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="TVA", type="float")
      */
     private $TVA;

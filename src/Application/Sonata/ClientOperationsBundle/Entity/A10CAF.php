@@ -2,6 +2,7 @@
 
 namespace Application\Sonata\ClientOperationsBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,6 +17,7 @@ class A10CAF extends AbstractBuyEntity
     /**
      * @var float $HT
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="HT", type="float", nullable=true)
      */
     private $HT;

@@ -2,6 +2,7 @@
 
 namespace Application\Sonata\ClientOperationsBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -37,6 +38,8 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     /**
      * @var float $valeur_fiscale
      *
+     * @Assert\NotBlank()
+     * @Assert\Min(limit = "0", message = "Montants < 0")
      * @ORM\Column(name="valeur_fiscale", type="float", nullable=true)
      */
     private $valeur_fiscale;
@@ -51,6 +54,8 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     /**
      * @var float $valeur_statistique
      *
+     * @Assert\NotBlank()
+     * @Assert\Min(limit = "0", message = "Montants < 0")
      * @ORM\Column(name="valeur_statistique", type="float", nullable=true)
      */
     private $valeur_statistique;
@@ -131,14 +136,14 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     public function setNLigne($nLigne)
     {
         $this->n_ligne = $nLigne;
-    
+
         return $this;
     }
 
     /**
      * Get n_ligne
      *
-     * @return string 
+     * @return string
      */
     public function getNLigne()
     {
@@ -154,14 +159,14 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     public function setNomenclature($nomenclature)
     {
         $this->nomenclature = $nomenclature;
-    
+
         return $this;
     }
 
     /**
      * Get nomenclature
      *
-     * @return string 
+     * @return string
      */
     public function getNomenclature()
     {
@@ -177,14 +182,14 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     public function setPaysIdDestination($paysIdDestination)
     {
         $this->pays_id_destination = $paysIdDestination;
-    
+
         return $this;
     }
 
     /**
      * Get pays_id_destination
      *
-     * @return string 
+     * @return string
      */
     public function getPaysIdDestination()
     {
@@ -200,14 +205,14 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     public function setValeurFiscale($valeurFiscale)
     {
         $this->valeur_fiscale = $valeurFiscale;
-    
+
         return $this;
     }
 
     /**
      * Get valeur_fiscale
      *
-     * @return float 
+     * @return float
      */
     public function getValeurFiscale()
     {
@@ -223,14 +228,14 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     public function setRegime($regime)
     {
         $this->regime = $regime;
-    
+
         return $this;
     }
 
     /**
      * Get regime
      *
-     * @return string 
+     * @return string
      */
     public function getRegime()
     {
@@ -246,14 +251,14 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     public function setValeurStatistique($valeurStatistique)
     {
         $this->valeur_statistique = $valeurStatistique;
-    
+
         return $this;
     }
 
     /**
      * Get valeur_statistique
      *
-     * @return float 
+     * @return float
      */
     public function getValeurStatistique()
     {
@@ -269,14 +274,14 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     public function setMasseMette($masseMette)
     {
         $this->masse_mette = $masseMette;
-    
+
         return $this;
     }
 
     /**
      * Get masse_mette
      *
-     * @return float 
+     * @return float
      */
     public function getMasseMette()
     {
@@ -292,14 +297,14 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     public function setUnitesSupplementaires($unitesSupplementaires)
     {
         $this->unites_supplementaires = $unitesSupplementaires;
-    
+
         return $this;
     }
 
     /**
      * Get unites_supplementaires
      *
-     * @return float 
+     * @return float
      */
     public function getUnitesSupplementaires()
     {
@@ -315,14 +320,14 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     public function setNatureTransaction($natureTransaction)
     {
         $this->nature_transaction = $natureTransaction;
-    
+
         return $this;
     }
 
     /**
      * Get nature_transaction
      *
-     * @return string 
+     * @return string
      */
     public function getNatureTransaction()
     {
@@ -338,14 +343,14 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     public function setConditionsLivraison($conditionsLivraison)
     {
         $this->conditions_livraison = $conditionsLivraison;
-    
+
         return $this;
     }
 
     /**
      * Get conditions_livraison
      *
-     * @return string 
+     * @return string
      */
     public function getConditionsLivraison()
     {
@@ -361,14 +366,14 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     public function setModeTransport($modeTransport)
     {
         $this->mode_transport = $modeTransport;
-    
+
         return $this;
     }
 
     /**
      * Get mode_transport
      *
-     * @return string 
+     * @return string
      */
     public function getModeTransport()
     {
@@ -384,14 +389,14 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     public function setDepartement($departement)
     {
         $this->departement = $departement;
-    
+
         return $this;
     }
 
     /**
      * Get departement
      *
-     * @return string 
+     * @return string
      */
     public function getDepartement()
     {
@@ -407,14 +412,14 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     public function setPaysIdOrigine($paysIdOrigine)
     {
         $this->pays_id_origine = $paysIdOrigine;
-    
+
         return $this;
     }
 
     /**
      * Get pays_id_origine
      *
-     * @return string 
+     * @return string
      */
     public function getPaysIdOrigine()
     {
@@ -430,14 +435,14 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     public function setCEE($cEE)
     {
         $this->CEE = $cEE;
-    
+
         return $this;
     }
 
     /**
      * Get CEE
      *
-     * @return string 
+     * @return string
      */
     public function getCEE()
     {

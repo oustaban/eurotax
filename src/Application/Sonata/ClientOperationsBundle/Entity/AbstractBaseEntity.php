@@ -2,6 +2,7 @@
 
 namespace Application\Sonata\ClientOperationsBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 

@@ -97,7 +97,7 @@ class AbstractTabsController extends Controller
                 'mois',
                 'taux_de_change',
                 'HT',
-                'regime', //TODO 2 fields
+                'regime',
                 'DEB',
                 'commentaires',
                 'n_ligne',
@@ -240,10 +240,12 @@ class AbstractTabsController extends Controller
                 'numero_piece',
                 'devise',
                 'montant_HT_en_devise',
+                'taux_de_TVA',
                 'mois',
                 'taux_de_change',
-                'regime', //TODO 2 columns
+                'regime',
                 'HT',
+                'TVA',
                 'DEB',
                 'commentaires',
                 'n_ligne',

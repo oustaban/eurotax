@@ -5,6 +5,8 @@ namespace Application\Sonata\ClientOperationsBundle\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Validator\ErrorElement;
+use Application\Sonata\ClientOperationsBundle\Admin\Validate\ErrorElements;
 
 use Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin as Admin;
 
@@ -31,7 +33,7 @@ class DEBIntroAdmin extends Admin
             ->add('pays_id_destination', 'country', array('label' => $this->getFieldLabel('pays_id_destination')))
             ->add('valeur_fiscale', 'money', array('label' => $this->getFieldLabel('valeur_fiscale')))
             ->add('regime', null, array('label' => $this->getFieldLabel('regime')))
-            ->add('valeur_statistique', null, array('label' => $this->getFieldLabel('valeur_statistique')))
+            ->add('valeur_statistique', 'money', array('label' => $this->getFieldLabel('valeur_statistique')))
             ->add('masse_mette', null, array('label' => $this->getFieldLabel('masse_mette')))
             ->add('unites_supplementaires', null, array('label' => $this->getFieldLabel('unites_supplementaires')))
             ->add('nature_transaction', null, array('label' => $this->getFieldLabel('nature_transaction')))
@@ -58,7 +60,7 @@ class DEBIntroAdmin extends Admin
             ->add('pays_id_destination', null, array('label' => $this->getFieldLabel('pays_id_destination')))
             ->add('valeur_fiscale', 'money', array('label' => $this->getFieldLabel('valeur_fiscale'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:valeur_fiscale.html.twig'))
             ->add('regime', null, array('label' => $this->getFieldLabel('regime')))
-            ->add('valeur_statistique', null, array('label' => $this->getFieldLabel('valeur_statistique')))
+            ->add('valeur_statistique', 'money', array('label' => $this->getFieldLabel('valeur_statistique')))
             ->add('masse_mette', null, array('label' => $this->getFieldLabel('masse_mette')))
             ->add('unites_supplementaires', null, array('label' => $this->getFieldLabel('unites_supplementaires')))
             ->add('nature_transaction', null, array('label' => $this->getFieldLabel('nature_transaction')))
@@ -67,5 +69,11 @@ class DEBIntroAdmin extends Admin
             ->add('departement', null, array('label' => $this->getFieldLabel('departement')))
             ->add('pays_id_origine', 'country', array('label' => $this->getFieldLabel('pays_id_origine')))
             ->add('CEE', null, array('label' => $this->getFieldLabel('CEE')));
+    }
+
+    public function validate(ErrorElement $errorElement, $object)
+    {
+        /* @var $object \Application\Sonata\ClientOperationsBundle\Entity\DEBIntro */
+        parent::validate($errorElement, $object);
     }
 }
