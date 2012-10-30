@@ -6,9 +6,7 @@
     {% for field_description in admin.list.elements %}
     {% if field_description.getOption('code') == '_batch' and batchactions|length > 0%}
     <th class="sonata-ba-list-field-header sonata-ba-list-field-header-batch">
-        <label for="list_batch_checkbox">
-           <input style="width: auto;" type="checkbox" id="list_batch_checkbox" />
-        </label>
+       <input style="width: auto;" type="checkbox" id="list_batch_checkbox" />
     </th>
     {% else %}
     {% set sortable = false %}
