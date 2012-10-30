@@ -59,8 +59,8 @@ class ClientAdmin extends Admin
 
         $formMapper
             ->with('form.client')
-            ->add('user', null, array('label' => 'form.user', 'query_builder' => function(EntityRepository $er)
-        {
+            ->add('code_client', null, array('label' => 'form.code_client', 'disabled' => true))
+            ->add('user', null, array('label' => 'form.user', 'query_builder' => function (EntityRepository $er) {
             return $er->createQueryBuilder('u')
                 ->orderBy('u.username', 'ASC');
         },))
@@ -168,7 +168,7 @@ class ClientAdmin extends Admin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('id')
+        $listMapper->addIdentifier('code_client')
             ->add('raison_sociale', null, array('label' => 'list.raison_sociale'))
             ->add('nature_du_client.name', null, array('label' => 'list.nature_du_client'))
             ->add('user', null, array('label' => 'list.user'))

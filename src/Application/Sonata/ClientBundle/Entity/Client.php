@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table("et_client")
  * @ORM\Entity(repositoryClass="Application\Sonata\ClientBundle\Entity\ClientRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Client
 {
@@ -21,6 +22,13 @@ class Client
      */
     private $id;
 
+
+    /**
+     * @var string  $code_client
+     *
+     * @ORM\Column(name="code_client", type="string", length=20)
+     */
+    protected $code_client;
 
     /**
      * @var integer $user_id
@@ -995,7 +1003,6 @@ class Client
     }
 
 
-
     /**
      * Set N_TVA_CEE_facture
      *
@@ -1018,7 +1025,6 @@ class Client
     {
         return $this->N_TVA_CEE_facture;
     }
-
 
 
     /**
@@ -1134,5 +1140,53 @@ class Client
     public function getTeledeclaration()
     {
         return $this->teledeclaration;
+    }
+
+    /**
+     * Set code_client
+     *
+     * @param string $codeClient
+     * @return Client
+     */
+    public function setCodeClient($codeClient)
+    {
+        $this->code_client = $codeClient;
+
+        return $this;
+    }
+
+    /**
+     * Get code_client
+     *
+     * @return string
+     */
+    public function getCodeClient()
+    {
+        return $this->code_client;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist()
+    {
+        /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+        $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $doctrine->getManager();
+
+        list($code_client) = $em->getRepository('ApplicationSonataClientBundle:Client')
+            ->createQueryBuilder('c')
+            ->select('c.code_client as code_client')
+            ->addOrderBy('c.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->execute();
+
+        /**
+         * UPDATE et_client SET code_client = id
+         */
+        $this->setCodeClient($code_client['code_client'] + 1);
     }
 }

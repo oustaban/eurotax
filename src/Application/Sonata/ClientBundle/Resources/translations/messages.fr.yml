@@ -23,6 +23,7 @@ form:
   N_TVA_CEE: N° TVA CEE
   niveau_dobligation_id: Niveau d'obligation
   teledeclaration: Télédéclaration
+  code_client: Code Client
 
   Contact:
     title: Ajouter / Modifier un contact
@@ -144,6 +145,7 @@ list:
   BAPSA: BAPSA
   solde_du_compte: Solde du compte
   remboursement_de_TVA: Remboursement de TVA
+  code_client: Code Client
 
   Contact:
     title: Contact
