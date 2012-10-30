@@ -55,6 +55,18 @@ class ClientController extends Controller
         return $this->_action(parent::createAction());
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function redirectTo($object)
+    {
+        if ($this->get('request')->get('btn_update_and_list')) {
+            return $this->render(':redirects:history.html.twig', array('depth' => 2, 'default' => $this->admin->generateUrl('list')));
+        }
+
+        return parent::redirectTo($object);
+    }
+
 
     /**
      * @param null $id

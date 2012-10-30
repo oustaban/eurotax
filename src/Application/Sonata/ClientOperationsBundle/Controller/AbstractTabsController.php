@@ -673,7 +673,7 @@ class AbstractTabsController extends Controller
             $this->get('session')->setFlash('sonata_flash_info|raw', implode("<br/>", $messages));
         }
 
-        return $this->render('ApplicationSonataClientOperationsBundle:redirects:back.html.twig');
+        return $this->render(':redirects:back.html.twig');
     }
 
     /**
@@ -1100,7 +1100,7 @@ class AbstractTabsController extends Controller
             unset($import);
             $em->flush();
         }
-        return $this->render('ApplicationSonataClientOperationsBundle:redirects:back.html.twig');
+        return $this->render(':redirects:back.html.twig');
     }
 
     /**

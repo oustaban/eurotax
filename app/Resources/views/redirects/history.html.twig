@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Redirect</title>
+</head>
+<body>
+<script type="text/javascript">
+    history.length > {{ depth }} ?
+            history.go(-{{ depth }}) :
+            location.replace('{{ default }}');
+</script>
+</body>
+</html>

@@ -2,11 +2,8 @@
     clear: both;
     float: none;
 }
-.client_tabs_block .buttons_block {
+.client_tabs_block button {
     margin-top: -60px;
-    float: right;
-}
-.client_tabs_block button{
     float: right;
 }
 .js-coordonnees .sonata-ba-list tbody {
