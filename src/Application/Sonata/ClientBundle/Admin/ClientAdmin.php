@@ -125,13 +125,13 @@ class ClientAdmin extends Admin
 
         $formMapper->add('date_de_depot_id', 'choice', array(
             'label' => 'form.date_de_depot_id',
-            'choices' => array(15, 19, 24, 31),
+            'choices' => array(15=>15, 19=>19, 24=>24, 31=>31),
             'attr' => array('class' => 'date_de_depot_id'),
         ))
             ->add('teledeclaration', null, array('label' => 'form.teledeclaration'))
             ->add('niveau_dobligation_id', 'choice', array(
             'label' => 'form.niveau_dobligation_id',
-            'choices' => array(0, 1, 4),
+            'choices' => array(0=>0, 1=>1, 4=>4),
             'empty_value' => '',
             'required' => false,
         ));
