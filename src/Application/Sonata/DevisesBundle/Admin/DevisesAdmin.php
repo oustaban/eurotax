@@ -18,6 +18,7 @@ class DevisesAdmin extends Admin
      */
     public $dashboards = array('Admin');
     protected $_bundle_name = 'ApplicationSonataDevisesBundle';
+    protected $_current_devises = null;
 
     /**
      * @var array
@@ -56,11 +57,30 @@ class DevisesAdmin extends Admin
     //form create and edit
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $months = date('m');
-        $years = date('Y');
+        /** @var $entity_devises \Application\Sonata\DevisesBundle\Entity\Devises */
+        $entity_devises = $this->getEntityDevises();
 
-        $formMapper
-            ->with($this->_bundle_name . '.form.Devises')
+        $create_years = date('Y');
+        $create_months = date('m');
+
+        $this->_current_devises = $this->getCurrentDevises($create_years . '-' . $create_months);
+
+        $months = $entity_devises ? $entity_devises->getDate()->format('n') : $create_months;
+        $years = $entity_devises ? $entity_devises->getDate()->format('Y') : $create_years;
+
+        $disables = array();
+        if (!($months == $create_months && $years == $create_years)) {
+            $disables = array('disabled' => true);
+        }
+
+        $formMapper->with($this->_bundle_name . '.form.Devises')
+
+            ->add('date_change', 'choice', array(
+            'label' => $this->_bundle_name . '.form.DateChange',
+            'choices' => $this->getDateChange(),
+            'data' => $entity_devises ? $this->generateObjectUrl('edit', $entity_devises) : $this->generateUrl('create'),
+            'attr' => array('style' => 'width:auto'),
+        ))
             ->add('date', 'date', array(
             'format' => 'dd MMMM yyyy',
             'days' => range(1, 1),
@@ -76,8 +96,85 @@ class DevisesAdmin extends Admin
                 'precision' => 5,
                 'divisor' => 1,
                 'currency' => 'EUR',
-            ));
+            ) + $disables);
         }
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDateChange()
+    {
+        /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+        $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $doctrine->getManager();
+
+        $devises = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findBy(array(), array('id' => 'DESC'));
+        $rows = array();
+
+        if (!$this->_current_devises) {
+            $rows[$this->generateUrl('create')] = $this->datefmtFormatFilter(new \DateTime(), 'MMMM YYYY');
+        }
+
+        foreach ($devises as $value) {
+
+            /** @var $value \Application\Sonata\DevisesBundle\Entity\Devises */
+            $rows[$this->generateObjectUrl('edit', $value)] = $this->datefmtFormatFilter($value->getDate(), 'MMMM YYYY');
+        }
+
+        return $rows;
+    }
+
+    /**
+     * @param $datetime
+     * @param null $format
+     * @return string
+     */
+    public function datefmtFormatFilter($datetime, $format = null)
+    {
+        $dateFormat = is_int($format) ? $format : \IntlDateFormatter::MEDIUM;
+        $timeFormat = \IntlDateFormatter::NONE;
+        $calendar = \IntlDateFormatter::GREGORIAN;
+        $pattern = is_string($format) ? $format : null;
+
+        $formatter = new \IntlDateFormatter(
+            \Locale::getDefault(),
+            $dateFormat,
+            $timeFormat,
+            null,
+            $calendar,
+            $pattern
+        );
+        $formatter->setLenient(false);
+        $timestamp = $datetime->getTimestamp();
+
+        return $formatter->format($timestamp);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getEntityDevises()
+    {
+        $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $doctrine->getManager();
+        return $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneById($this->getRequest()->get($this->getIdParameter()));
+    }
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    public function getCurrentDevises($value)
+    {
+        $date = new \DateTime($value . '-01');
+
+        $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $doctrine->getManager();
+        return $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($date);
     }
 
     /**
@@ -85,7 +182,7 @@ class DevisesAdmin extends Admin
      */
     public function getFormTheme()
     {
-        return array('ApplicationSonataDevisesBundle:Form:form_admin_fields.html.twig');
+        return array($this->_bundle_name . ':Form:form_admin_fields.html.twig');
     }
 
     /**

@@ -6,6 +6,7 @@ ApplicationSonataDevisesBundle:
     Month: Mois
     Year:  Année
     Devises: Ajouter / Modifier les devises
+    DateChange: Mois
 
   list:
     Dollar: Dollar
