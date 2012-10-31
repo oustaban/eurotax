@@ -70,7 +70,7 @@ jQuery(document).ready(function ($) {
 
     $('#' + uniqid + '_nature_du_client').change(function () {
         //DEB => 2 id
-        if ($(this).val() == 2) {
+        if ($(this).val() != 2) {
 
             if ($('#' + uniqid + '_niveau_dobligation_id').val() == 4) {
                 $('#' + uniqid + '_niveau_dobligation_id').val('');
