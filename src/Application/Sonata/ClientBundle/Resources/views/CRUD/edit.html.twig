@@ -17,30 +17,33 @@
 
     {% block sonata_pre_fieldsets %}{% endblock %}
 
-    <table class="form-table">
-        <tr>
-            {% set field_index = 0 %}
-            {% for name, form_group in admin.formgroups %}
-            {% set field_index = field_index + 1 %}
-            <td {% if form_group.collapsed %}class="sonata-ba-fielset-collapsed"{% endif %} class="td-{{ field_index }}">
-                {% if form_group.collapsed %}
-                <a href="" class="sonata-ba-collapsed"
-                title="{{ 'link_expand'|trans({}, 'SonataAdminBundle') }}">{{ name|trans({}, admin.translationdomain) }}</a>
-                {% elseif name|trim is not empty %}
-                <legend>
-                {{ name|trans({}, admin.translationdomain) }}
-                </legend>
-                {% endif %}
+    {% set column_length = 0 %}
+    {% for name, form_group in admin.formgroups %}
+        {% set column_length = column_length>form_group.fields|length?column_length:form_group.fields|length %}
+    {% endfor %}
 
+    <legend>
+        {{ 'form.client'|trans({}, admin.translationdomain) }}
+    </legend>
+
+    <table class="form-table">
+        {% for name, form_group in admin.formgroups %}
+        {% set form_group_fields_keys = form_group.fields|keys %}
+        <tr {% if form_group.collapsed %}class="sonata-ba-fielset-collapsed"{% endif %}>
+        {% for i in 1..column_length %}
+            {% set field_name = form_group_fields_keys|length>=i?form_group.fields[form_group_fields_keys[i-1]]:'' %}
+            <td class="td-{{field_name}}">
                 <div class="sonata-ba-collapsed-fields">
-                    {% for field_name in form_group.fields %}
-                    {% if admin.formfielddescriptions[field_name] is defined %}
-                    {{ form_row(form[field_name])}}
-                    {% endif %}
-                    {% endfor %}
+                {% if field_name and admin.formfielddescriptions[field_name] is defined %}
+                {{ form_row(form[field_name])}}
+                {% else %}
+                &nbsp;
+                {% endif %}
                 </div>
-                {% endfor %}
+            </td>
+        {% endfor %}
         </tr>
+        {% endfor %}
     </table>
 
     {% block sonata_post_fieldsets %}{% endblock %}

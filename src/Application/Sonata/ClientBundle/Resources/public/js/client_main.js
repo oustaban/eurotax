@@ -12,7 +12,7 @@ jQuery(document).ready(function ($) {
         .blur(replace_spaces)
         .trigger('blur');
 
-    $('#sonata-ba-field-container-' + uniqid + '_contact').before('<input type="button" value="Copier les information postales" name="clone_address" id="clone_address" class="btn" />');
+    $('td.td-nom').next().append('<input type="button" value="Copier les information postales" name="clone_address" id="clone_address" class="btn" />');
 
     copy_address();
 

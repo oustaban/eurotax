@@ -5,7 +5,6 @@
     width: 210px
 }
 .form-horizontal table td {
-
     vertical-align: top;
     padding-left: 20px;
     padding-right: 20px;
@@ -31,21 +30,5 @@
 }
 
 .form-horizontal #clone_address {
-    margin: 0 0 18px 230px;
-}
-
-.form-horizontal .td-2 {
-    padding-top: 70px;
-}
-
-.form-horizontal .field-31 {
-    margin-top: 71px;
-}
-
-.form-horizontal .field-32 {
-    margin-top: 71px;
-}
-
-.form-horizontal .field-33 {
-    margin-top: 220px;
+    margin-left: 230px;
 }
