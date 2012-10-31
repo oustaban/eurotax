@@ -31,10 +31,10 @@ function init_home_page() {
     $(function () {
         $('#show_hide_all_clients').click(function () {
             if ($.cookie('show_all_clients')) {
-                $.removeCookie('show_all_clients');
+                $.removeCookie('show_all_clients', { path:'/' });
             }
             else {
-                $.cookie('show_all_clients', '1', { path:'/' });
+                $.cookie('show_all_clients', $.cookie('PHPSESSID'), { path:'/' });
             }
             location.reload();
         });
@@ -43,4 +43,7 @@ function init_home_page() {
 
 $(function () {
     $('input#username[name="_username"]').focus();
+    if ($.cookie('show_all_clients') != $.cookie('PHPSESSID')){
+        $.removeCookie('show_all_clients', { path:'/' });
+    }
 });

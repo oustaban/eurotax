@@ -38,7 +38,7 @@ class AllClientsVoter implements VoterInterface
 
         foreach ($attributes as $attribute) {
             if ($this->supportsAttribute($attribute)) {
-                return ($request->getPathInfo() != '/' || $request->cookies->get('show_all_clients')) ? self::ACCESS_GRANTED : self::ACCESS_DENIED;
+                return ($request->getPathInfo() != '/' || $request->cookies->get('show_all_clients')) == session_id() ? self::ACCESS_GRANTED : self::ACCESS_DENIED;
             }
         }
 

@@ -1,6 +1,6 @@
 {% extends 'ApplicationSonataDashboardBundle::layout.html.twig' %}
 
-{% set label_all_clients = cookies.get('show_all_clients') ? 'hide_projects' : 'show_projects' %}
+{% set label_all_clients = cookies.get('show_all_clients')==cookies.get('PHPSESSID') ? 'hide_projects' : 'show_projects' %}
 
 {% block body_content %}
 {{ parent() }}
