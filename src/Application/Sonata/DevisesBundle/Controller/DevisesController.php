@@ -23,19 +23,12 @@ class DevisesController extends Controller
         return parent::createAction();
     }
 
-
     /**
-     * @param string $view
-     * @param array $parameters
-     * @param \Symfony\Component\HttpFoundation\Response $response
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return mixed|string
      */
-    public function render($view, array $parameters = array(), Response $response = null)
+    public function getBaseTemplate()
     {
-        echo $parameters['base_template'] = 'ApplicationSonataDevisesBundle::layout.html.twig ';
-        exit;
-
-        return parent::render($view, $parameters, $response);
+        return str_replace('SonataAdminBundle', 'ApplicationSonataDevisesBundle', parent::getBaseTemplate());
     }
 
     /**
