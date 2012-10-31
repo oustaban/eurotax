@@ -35,8 +35,8 @@ function init_home_page() {
             }
             else {
                 $.cookie('show_all_clients', '1', { path:'/' });
-                location.reload();
             }
+            location.reload();
         });
     });
 }

@@ -1,3 +1,9 @@
+.form-horizontal table.form-table .controls {
+    margin-left: 230px;
+}
+.form-horizontal table.form-table .control-label {
+    width: 210px
+}
 .form-horizontal table td {
 
     vertical-align: top;
@@ -25,18 +31,11 @@
 }
 
 .form-horizontal #clone_address {
-    margin: 0 0 18px 180px;
+    margin: 0 0 18px 230px;
 }
 
 .form-horizontal .td-2 {
     padding-top: 70px;
-}
-
-.form-horizontal .field-21 label {
-    float: right;
-    margin: 0 42px 0 0;
-    padding: 3px;
-    white-space: nowrap;
 }
 
 .form-horizontal .field-31 {

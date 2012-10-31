@@ -34,11 +34,8 @@
         </li>
         {% endif %}
     </ul>
-    <div class="buttons_block">
-    <button class="btn" onclick="javascript:history.length>1?history.back():location.href = '{{ path('admin_sonata_client_client_list') }}'.replace('&amp;', '&');"><i class="icon icon-arrow-left"></i> Mettre à jour et fermer</button>
     {% if client_id  %}
         <button class="btn" onclick="javascript:location.href = '{{ path('admin_sonata_clientoperations_v01tva_list', _filter_json) }}'.replace('&amp;', '&');"><i class="icon icon-th-list"></i> Voir les opérations</button>
     {% endif %}
-    </div>
 </div>
 {% endblock %}

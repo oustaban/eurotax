@@ -128,7 +128,7 @@ class ClientAdmin extends Admin
 
         $formMapper->add('date_de_depot_id', 'choice', array(
             'label' => 'form.date_de_depot_id',
-            'choices' => array(15, 19, 24, 31),
+            'choices' => array(15=>15, 19=>19, 24=>24, 31=>31),
             'attr' => array('class' => 'date_de_depot_id'),
         ))
             ->add('teledeclaration', null, array('label' => 'form.teledeclaration'))
@@ -161,7 +161,6 @@ class ClientAdmin extends Admin
         }
         return $rows;
     }
-
 
     /**
      * {@inheritdoc}
