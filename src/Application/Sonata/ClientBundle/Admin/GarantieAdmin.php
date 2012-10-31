@@ -160,8 +160,6 @@ class GarantieAdmin extends Admin
             list($compte_de_depot) = $em->getRepository('ApplicationSonataClientBundle:CompteDeDepot')
                 ->createQueryBuilder('c')
                 ->select('SUM(c.montant) as total')
-                ->andWhere('c.garantie = :id')
-                ->setParameter(':id', $object->getId())
                 ->setMaxResults(1)
                 ->getQuery()
                 ->execute();
