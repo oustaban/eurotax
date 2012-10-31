@@ -44,3 +44,15 @@ function init_home_page() {
 $(function () {
     $('input#username[name="_username"]').focus();
 });
+
+
+function add_label_required(field) {
+
+    if (field.text().indexOf('*') < 0) {
+        field.text(field.text() + '*');
+    }
+}
+
+function rm_label_required(field) {
+    field.text(field.text().replace('*', ''));
+}

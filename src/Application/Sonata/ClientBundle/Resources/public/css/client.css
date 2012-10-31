@@ -10,56 +10,6 @@
     cursor: move;
 }
 
-.js-garantie .control-group {
-    width: 400px;
-}
-
-.js-garantie .field-1 input {
-    width: 206px;
-}
-
-.js-garantie .field-3,
-.js-garantie .field-4 {
-    float: left;
-}
-
-.js-garantie .form-horizontal .field-4 {
-    width: 200px;
-}
-
-.js-garantie .form-horizontal .field-4 .controls {
-    margin: 0 0 0 20px;
-}
-
-.js-garantie .field-7,
-.js-garantie .field-8 {
-    float: left;
-}
-
-.js-garantie .field-8 label,
-.js-garantie .field-8 input {
-    width: auto;
-}
-
-.js-garantie .field-8 {
-    width: 80px;
-}
-
-.js-garantie .field-8 label {
-    float: right;
-    margin: 0;
-    padding: 3px;
-    width: auto;
-}
-
-.js-garantie .form-horizontal .field-8 .controls {
-    margin: 0 0 0 20px;
-}
-
-.js-garantie .field-9 {
-    width: 600px;
-    clear: both;
-}
 
 .sonata-filter-form  #filter_client_id_row {
     display: none;

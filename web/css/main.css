@@ -165,3 +165,10 @@ tr.sonata-ba-list-field-header .headerSortDown:hover {
 .form-horizontal .sonata-ba-form-error li{
     margin-left: 10px;
 }
+
+.form-horizontal .devise{
+    width: auto;
+}
+.form-horizontal .montant{
+    margin-right: 5px;;
+}
