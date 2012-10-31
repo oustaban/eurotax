@@ -32,7 +32,8 @@ class DevisesController extends Controller
      */
     public function render($view, array $parameters = array(), Response $response = null)
     {
-        $parameters['base_template'] = 'ApplicationSonataDevisesBundle::standard_layout.html.twig ';
+        $parameters['base_template'] = 'ApplicationSonataDevisesBundle::layout.html.twig ';
+
         return parent::render($view, $parameters, $response);
     }
 
