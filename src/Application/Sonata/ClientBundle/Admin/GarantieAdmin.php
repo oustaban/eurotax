@@ -165,7 +165,7 @@ class GarantieAdmin extends Admin
                 ->execute();
 
             if ($compte_de_depot['total'] != 0) {
-                echo 'Transfert du compte courant';
+                echo '<div class="alert alert-error">Transfert du compte courant</div>';
                 exit;
             } else {
 
