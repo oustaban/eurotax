@@ -449,14 +449,9 @@ abstract class AbstractTabsAdmin extends Admin
 
         //  code => alias
         $value_assoc = array(
-            'euro' => 'eur',
-            'usd' => 'usd',
-            'jpy' => 'jpy',
-            'gbr' => 'gbp',
-            'chf' => 'chf',
         );
 
-        $devise = isset($value_assoc[$devise]) ? $value_assoc[$devise] : null;
+        $devise = isset($value_assoc[$devise]) ? $value_assoc[$devise] : $devise;
 
         // $this->devise[alias] = object
         return isset($this->devise[$devise]) ? $this->devise[$devise]->getId() : $value;
