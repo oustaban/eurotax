@@ -76,8 +76,19 @@ class GarantieAdmin extends Admin
 
         $listMapper
             ->add('type_garantie.name', null, array('label' => $this->getFieldLabel('type_garantie')))
-            ->add('montant', 'money', array('label' => $this->getFieldLabel('montant')))
-            ->add('devise.name', null, array('label' => $this->getFieldLabel('devise')));
+            ->add('montant', 'money', array(
+                'label' => $this->getFieldLabel('montant'),
+                'template' => 'ApplicationSonataClientBundle:CRUD:list_garantie_montant.html.twig',
+            ))
+            ->add('date_decheance', 'date', array(
+                'label' => $this->getFieldLabel('date_decheance'),
+                'template' => 'ApplicationSonataClientBundle:CRUD:list_date_decheance.html.twig',
+            ))
+            ->add('expire', null, array(
+                'label' => $this->getFieldLabel('expire'),
+                'template' => 'ApplicationSonataClientBundle:CRUD:list_boolean_expire.html.twig',
+            ))
+        ;
     }
 
     /**

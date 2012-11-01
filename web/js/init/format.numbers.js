@@ -9,10 +9,14 @@ $(function () {
         if ($this.hasClass('sonata-ba-list-field-money')) {
             repl = repl.toFixed(2);
         }
-        repl = repl.toString();
+        repl = repl.toString().split('.');
+        var pattern = /(-?\d+)(\d{3})/;
+        while (pattern.test(repl[0])){
+            repl[0] = repl[0].replace(pattern, "$1 $2");
+        }
+        repl = repl.join(',');
 
         $this.html($this.html().replace(val, repl));
-        $this.html($this.html().replace('.', ','));
     });
 
     $('.sonata-ba-list-field-percent').each(function(){

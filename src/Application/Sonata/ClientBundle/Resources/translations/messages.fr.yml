@@ -182,7 +182,7 @@ list:
     date_demission: Date d'émission
     date_decheance: Date d'échéance
     note: Note
-    expire: Expiré
+    expire: Validité
 
   Coordonnees:
     title: Ajouter une coordonnées bancaire
