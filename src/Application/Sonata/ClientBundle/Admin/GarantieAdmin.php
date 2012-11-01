@@ -13,6 +13,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Sonata\AdminBundle\Validator\ErrorElement;
 use Application\Sonata\ClientBundle\Entity\ClientAlert;
+use Application\Form\Type\AmountType;
+
+use Application\Sonata\ClientBundle\Entity\Compte;
+use Application\Sonata\ClientBundle\Entity\CompteDeDepot;
 
 use Application\Sonata\ClientBundle\Admin\AbstractTabsAdmin as Admin;
 
@@ -20,13 +24,11 @@ class GarantieAdmin extends Admin
 {
     protected $_prefix_label = 'garantie';
 
-    //create & edit form
     /**
      * @param FormMapper $formMapper
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-
         parent::configureFormFields($formMapper);
 
         $id = $this->getRequest()->get($this->getIdParameter());
@@ -37,16 +39,19 @@ class GarantieAdmin extends Admin
                 'label' => $this->getFieldLabel('type_garantie'),
                 'disabled' => !!$id,
             ))
-            ->add('montant', null, array('label' => $this->getFieldLabel('montant')))
-            ->add('devise', null, array('label' => $this->getFieldLabel('devise')))
+            ->add('montant', new AmountType(), array(
+            'data_class' => 'Application\Sonata\ClientBundle\Entity\Garantie',
+            'label' => $this->getFieldLabel('montant'),
+        ))
             ->add('nom_de_lemeteur', null, array('label' => $this->getFieldLabel('nom_de_lemeteur')))
             ->add('nom_de_la_banques_id', 'choice', array(
-            'label' => ' ',
-            'choices' => array(
-                1 => 'a établir',
-                'Nom demandé'
-            )
-        ))
+                'label' => $this->getFieldLabel('nom_de_la_banques_id'),
+                'data' => $id ? null : 1,
+                'choices' => array(
+                    0 => '',
+                    1 => 'A établir',
+                ))
+        )
             ->add('num_de_ganrantie', null, array('label' => $this->getFieldLabel('num_de_ganrantie')))
             ->add('date_demission', null, array(
             'label' => $this->getFieldLabel('date_demission'),
@@ -89,6 +94,114 @@ class GarantieAdmin extends Admin
                 'template' => 'ApplicationSonataClientBundle:CRUD:list_boolean_expire.html.twig',
             ))
         ;
+    }
+
+    /**
+     * @param mixed $object
+     * @return mixed|void
+     */
+    public function postPersist($object)
+    {
+        /** @var $object  \Application\Sonata\ClientBundle\Entity\Garantie */
+        if ($object->getTypeGarantie()) {
+
+            //2 => Dépôt de Garantie
+            if ($object->getTypeGarantie()->getId() == 2) {
+
+                /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+                $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+
+                /* @var $em \Doctrine\ORM\EntityManager */
+                $em = $doctrine->getManager();
+
+                //example: http://redmine.testenm.com/issues/880
+
+                //1
+                $compte = new Compte();
+                $compte->setDate($object->getDateDemission());
+                $compte->setMontant($object->getMontant());
+                $compte->setOperation('Versement du dépôt de garantie');
+                $compte->setClientId($object->getClientId());
+                $compte->setGarantie($object);
+                $em->persist($compte);
+
+
+                //2
+                $compte = new Compte();
+                $compte->setDate($object->getDateDemission());
+                $compte->setMontant(-$object->getMontant());
+                $compte->setOperation('Transfert dans compte de dépôt');
+                $compte->setClientId($object->getClientId());
+                $compte->setGarantie($object);
+                $em->persist($compte);
+
+                //3
+                $compte_de_depot = new CompteDeDepot();
+                $compte_de_depot->setDate($object->getDateDemission());
+                $compte_de_depot->setMontant($object->getMontant());
+                $compte_de_depot->setOperation('Transfert du compte courant');
+                $compte_de_depot->setClientId($object->getClientId());
+                $compte_de_depot->setGarantie($object);
+                $em->persist($compte_de_depot);
+
+                $em->flush();
+
+                unset($compte, $compte_de_depot);
+            }
+        }
+    }
+
+    /**
+     * @param mixed $object
+     * @return mixed|void
+     */
+    public function preRemove($object)
+    {
+        /** @var $object  \Application\Sonata\ClientBundle\Entity\Garantie */
+
+        //2 => Dépôt de Garantie
+        if ($object->getTypeGarantie() && $object->getTypeGarantie()->getId() == 2) {
+            /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+            $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+
+            /* @var $em \Doctrine\ORM\EntityManager */
+            $em = $doctrine->getManager();
+
+            /** @var $compte_de_depot CompteDeDepot */
+            list($compte_de_depot) = $em->getRepository('ApplicationSonataClientBundle:CompteDeDepot')
+                ->createQueryBuilder('c')
+                ->select('SUM(c.montant) as total')
+                ->setMaxResults(1)
+                ->getQuery()
+                ->execute();
+
+            if ($compte_de_depot['total'] != 0) {
+                echo '<div class="alert alert-error">Transfert du compte courant</div>';
+                exit;
+            } else {
+
+                //DELETE
+                /** @var $compte Compte */
+                $compte = $em->getRepository('ApplicationSonataClientBundle:Compte')->findByGarantie($object->getId());
+
+                foreach ($compte as $c) {
+                    $c->setGarantie(NULL);
+                    $em->persist($c);
+                }
+
+                /** @var $compte_de_depot CompteDeDepot */
+                $compte_de_depot = $em->getRepository('ApplicationSonataClientBundle:CompteDeDepot')->findByGarantie($object->getId());
+
+                foreach ($compte_de_depot as $c) {
+                    $c->setGarantie(NULL);
+                    $em->persist($c);
+                }
+
+                $em->flush();
+
+                unset($c, $compte_de_depot, $compte);
+            }
+        }
     }
 
     /**

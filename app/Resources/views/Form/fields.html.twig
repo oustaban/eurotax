@@ -64,3 +64,29 @@
 </div>
 {% endif %}
 {% endblock location_row %}
+
+
+{% block amount_widget %}
+    {% spaceless %}
+    <div class="controls sonata-ba-field sonata-ba-field-{{ sonata_admin.edit }}-{{ sonata_admin.inline }} {% if errors|length > 0 %}sonata-ba-field-error{% endif %}">
+        {% for child in form %}
+            {{ form_widget(child) }}
+        {% endfor %}
+    </div>
+    {% endspaceless %}
+{% endblock amount_widget %}
+
+{% block amount_row %}
+     <div class="control-group{% if errors|length > 0%} error{%endif%}" id="sonata-ba-field-container-{{ id }}">
+        {{ form_label(form, label|default(null)) }}
+
+         {{ form_errors(form) }}
+        {{ form_widget(form) }}
+
+        {% if errors|length > 0 %}
+            <div class="help-inline sonata-ba-field-error-messages">
+                {{ form_errors(form) }}
+            </div>
+        {% endif %}
+    </div>
+{% endblock amount_row %}

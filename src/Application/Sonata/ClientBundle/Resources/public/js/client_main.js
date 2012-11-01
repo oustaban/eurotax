@@ -66,6 +66,32 @@ jQuery(document).ready(function ($) {
         $('#sonata-ba-field-container-' + uniqid + '_niveau_dobligation_id .help-block').text(Sonata.niveau_dobligation[$(this).val()] ? Sonata.niveau_dobligation[$(this).val()] : '');
 
     }).trigger('change');
+
+
+    $('#' + uniqid + '_nature_du_client').change(function () {
+        //DEB => 2 id
+        if ($(this).val() != 2) {
+
+            if ($('#' + uniqid + '_niveau_dobligation_id').val() == 4) {
+                $('#' + uniqid + '_niveau_dobligation_id').val('');
+                $('#sonata-ba-field-container-' + uniqid + '_niveau_dobligation_id .help-block').text('');
+            }
+
+            $('#' + uniqid + '_niveau_dobligation_id option').each(function () {
+                if ($(this).val() == 4) {
+                    $(this).hide();
+                }
+            });
+        }
+        else {
+            $('#' + uniqid + '_niveau_dobligation_id option').each(function () {
+                if ($(this).val() == 4) {
+                    $(this).show();
+                }
+            });
+        }
+    }).trigger('change');
+
 });
 
 var fields_address = ['adresse_1', 'adresse_2', 'code_postal', 'ville', 'pays_id'];
@@ -84,20 +110,8 @@ function copy_address() {
     });
 }
 
-
-function add_label_required(field) {
-
-    if (field.text().indexOf('*') < 0) {
-        field.text(field.text() + '*');
-    }
-}
-
-function rm_label_required(field) {
-    field.text(field.text().replace('*', ''));
-}
-
 /**
- * @param event
+  * @param e
  * @return {Boolean}
  */
 function required_spaces(e) {
@@ -106,7 +120,8 @@ function required_spaces(e) {
 }
 
 /**
- * @param event
+
+ * @param e
  */
 function replace_spaces(e) {
     $(this).val($(this).val().replace(/\s+/, ''));

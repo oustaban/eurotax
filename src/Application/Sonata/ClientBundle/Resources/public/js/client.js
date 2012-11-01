@@ -32,23 +32,137 @@ jQuery(document).ready(function ($) {
             }
         };
     }
+
     /**
      * garantie
      * */
 
     if ($('.js-garantie').size()) {
 
+        /**
+         * @type {Object}
+         */
+        symfony_ajax.behaviors.garantie = {
+            attach:function (context) {
+                var _uniqid = symfony_ajax.get_uniqid();
 
-        $('#' + uniqid + '_nom_de_lemeteur').keyup(function () {
-            $('#sonata-ba-field-container-' + uniqid + '_nom_de_la_banques_id')[['hide', 'show'][$(this).val() ? 0 : 1]]();
-        }).keyup();
+                $('#' + _uniqid + '_num_de_ganrantie').attr('placeholder', 'sans référence');
 
-        $('.form-horizontal div.control-group').each(function (i) {
-            $(this).addClass('field-' + i);
-        });
-        $('.field-4 label').remove();
+                $('.form-horizontal div.control-group [name]', context).each(function (i) {
+                    var name = $(this).attr('name').split('[').pop();
+                    $(this).addClass(name.substr(0, name.length - 1));
+                });
+
+                $('#' + _uniqid + '_type_garantie', context).change(function () {
+                    symfony_ajax.garantie(_uniqid, context);
+                }).trigger('change');
+
+
+                $('#' + _uniqid + '_nom_de_la_banques_id', context).change(function () {
+                    symfony_ajax.garantie(_uniqid, context);
+                }).trigger('change');
+
+
+                $('#' + _uniqid + '_nom_de_lemeteur', context).keyup(function () {
+                    $('#sonata-ba-field-container-' + _uniqid + '_nom_de_la_banques_id')[['hide', 'show'][$(this).val() ? 0 : 1]]();
+                }).keyup();
+            }
+        }
+
+        /**
+         * @param _uniqid
+         * @param context
+         * @param id
+         */
+        symfony_ajax.garantie_valute = function (_uniqid, context, id) {
+
+            $('#' + _uniqid + '_montant_devise option', context).each(function () {
+                if (id == 0) {
+                    $(this).show();
+                }
+                else {
+                    if ($(this).val() == id) {
+                        $(this).show();
+                    }
+                    else {
+                        $(this).hide();
+                    }
+                }
+            });
+        }
+
+        /**
+         * @param _uniqid
+         * @param context
+         */
+        symfony_ajax.garantie = function (_uniqid, context) {
+
+            var type = $('#' + _uniqid + '_type_garantie :selected', context).val();
+            var status = $('#' + _uniqid + '_nom_de_la_banques_id :selected', context).val();
+
+            var $show_block = $('#sonata-ba-field-container-' + _uniqid + '_nom_de_lemeteur, ' +
+                '#sonata-ba-field-container-' + _uniqid + '_num_de_ganrantie,' +
+                '#sonata-ba-field-container-' + _uniqid + '_date_demission,' +
+                '#sonata-ba-field-container-' + _uniqid + '_date_decheance,' +
+                '#sonata-ba-field-container-' + _uniqid + '_expire', context);
+
+            var $require_block = $('#sonata-ba-field-container-' + _uniqid + '_nom_de_lemeteur input, ' +
+                '#sonata-ba-field-container-' + _uniqid + '_num_de_ganrantie input,' +
+                '#sonata-ba-field-container-' + _uniqid + '_date_demission input,' +
+                '#sonata-ba-field-container-' + _uniqid + '_date_decheance input', context);
+
+            if ((type == 1 || type == 3)) {
+
+                var valute_all = 0;
+                symfony_ajax.garantie_valute(_uniqid, context, valute_all);
+
+                $('#sonata-ba-field-container-' + _uniqid + '_nom_de_la_banques_id').show();
+
+                if (status == 1) {
+                    $require_block.removeAttr('required');
+
+                    rm_label_required($('#sonata-ba-field-container-' + _uniqid + '_nom_de_lemeteur label', context));
+                    rm_label_required($('#sonata-ba-field-container-' + _uniqid + '_num_de_ganrantie label', context));
+                    rm_label_required($('#sonata-ba-field-container-' + _uniqid + '_date_demission label', context));
+                    rm_label_required($('#sonata-ba-field-container-' + _uniqid + '_date_decheance label', context));
+
+                    $show_block.hide();
+                }
+                else {
+                    $require_block.attr('required', 'required');
+
+                    add_label_required($('#sonata-ba-field-container-' + _uniqid + '_nom_de_lemeteur label', context));
+                    add_label_required($('#sonata-ba-field-container-' + _uniqid + '_num_de_ganrantie label', context));
+                    add_label_required($('#sonata-ba-field-container-' + _uniqid + '_date_demission label', context));
+                    add_label_required($('#sonata-ba-field-container-' + _uniqid + '_date_decheance label', context));
+
+                    $show_block.show();
+                }
+            }
+            else if (type == 2) {
+                $require_block.removeAttr('required');
+
+                $('#sonata-ba-field-container-' + _uniqid + '_nom_de_la_banques_id, ' +
+                    '#sonata-ba-field-container-' + _uniqid + '_nom_de_lemeteur, ' +
+                    '#sonata-ba-field-container-' + _uniqid + '_num_de_ganrantie, ' +
+                    '#sonata-ba-field-container-' + _uniqid + '_date_decheance, ' +
+                    '#sonata-ba-field-container-' + _uniqid + '_expire', context).hide();
+
+                rm_label_required($('#sonata-ba-field-container-' + _uniqid + '_nom_de_lemeteur label', context));
+                rm_label_required($('#sonata-ba-field-container-' + _uniqid + '_num_de_ganrantie label', context));
+                rm_label_required($('#sonata-ba-field-container-' + _uniqid + '_date_decheance label', context));
+
+                add_label_required($('#sonata-ba-field-container-' + _uniqid + '_date_demission label', context));
+                $('#sonata-ba-field-container-' + _uniqid + '_date_demission', context).show();
+                $('#sonata-ba-field-container-' + _uniqid + '_date_demission input', context).attr('required', 'required');
+
+                //Euro
+                var valute_euro = 1;
+                symfony_ajax.garantie_valute(_uniqid, context, valute_euro);
+                $('#' + _uniqid + '_montant_devise', context).val(valute_euro);
+            }
+        }
     }
-
 
     if ($('.js-tarif').size()) {
 

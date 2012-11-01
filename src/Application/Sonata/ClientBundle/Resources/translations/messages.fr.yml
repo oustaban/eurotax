@@ -54,13 +54,14 @@ form:
     type_garantie: Type
     montant: Montant
     devise: Devise
-    nom_de_lemeteur: Nom de l'éméteur
+    nom_de_lemeteur: Émetteur
     nom_de_la_banques: Nom de la banque
     num_de_ganrantie: Num de garantie
     date_demission: Date d'émission
     date_decheance: Date d'échéance
     note: Note
     expire: Expiré
+    nom_de_la_banques_id: Statut
 
   Coordonnees:
       title: Ajouter / Modifier une coordonnées bancaire
@@ -176,13 +177,14 @@ list:
     type_garantie: Type
     montant: Montant
     devise: Devise
-    nom_de_lemeteur: Nom de l'éméteur
+    nom_de_lemeteur: Émetteur
     nom_de_la_banques: Nom de la banque
     num_de_ganrantie: Num de garantie
     date_demission: Date d'émission
     date_decheance: Date d'échéance
     note: Note
     expire: Validité
+    nom_de_la_banques_id: Statut
 
   Coordonnees:
     title: Ajouter une coordonnées bancaire

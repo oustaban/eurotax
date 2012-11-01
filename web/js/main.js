@@ -47,3 +47,15 @@ $(function () {
         $.removeCookie('show_all_clients', { path:'/' });
     }
 });
+
+
+function add_label_required(field) {
+
+    if (field.text().indexOf('*') < 0) {
+        field.text(field.text() + '*');
+    }
+}
+
+function rm_label_required(field) {
+    field.text(field.text().replace('*', ''));
+}

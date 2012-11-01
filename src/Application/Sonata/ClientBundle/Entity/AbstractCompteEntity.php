@@ -54,7 +54,7 @@ abstract class AbstractCompteEntity
     /**
      * @var string $commentaire
      *
-     * @ORM\Column(name="commentaire", type="string", length=155)
+     * @ORM\Column(name="commentaire", type="string", length=155, nullable=true)
      */
     private $commentaire;
 
@@ -67,6 +67,14 @@ abstract class AbstractCompteEntity
      */
     private $statut;
 
+
+    /**
+     * @var integer $garantie_id
+     *
+     * @ORM\ManyToOne(targetEntity="Garantie")
+     * @ORM\JoinColumn(name="garantie_id", referencedColumnName="id")
+     */
+    private $garantie;
 
 
     /**
@@ -227,5 +235,30 @@ abstract class AbstractCompteEntity
     public function getStatut()
     {
         return $this->statut;
+    }
+
+
+
+    /**
+     * Set garantie
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\Garantie $garantie
+     * @return AbstractCompteEntity
+     */
+    public function setGarantie(\Application\Sonata\ClientBundle\Entity\Garantie $garantie = null)
+    {
+        $this->garantie = $garantie;
+    
+        return $this;
+    }
+
+    /**
+     * Get garantie
+     *
+     * @return \Application\Sonata\ClientBundle\Entity\Garantie
+     */
+    public function getGarantie()
+    {
+        return $this->garantie;
     }
 }

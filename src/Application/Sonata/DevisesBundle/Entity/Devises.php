@@ -161,4 +161,22 @@ class Devises
     {
         return (string)$this->getId() ? : '-';
     }
+
+    /**
+     * @return null
+     */
+    public function getDateChange()
+    {
+
+        return null;
+    }
+
+    /**
+     * @param $value
+     */
+    public function setDateChange($value)
+    {
+
+    }
+
 }
