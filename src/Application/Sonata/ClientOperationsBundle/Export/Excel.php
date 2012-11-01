@@ -103,7 +103,7 @@ class Excel
             $value = call_user_func(array($row, $this->getMethod($field)));
 
             if ($value instanceof \Application\Sonata\ClientBundle\Entity\ListDevises) {
-                $ceil[$field] = $value->getAlias();
+                $ceil[] = $value->getAlias();
             } elseif ($value instanceof \DateTime) {
                 //excel time
                 $date = \PHPExcel_Shared_Date::PHPToExcel($value);
@@ -112,10 +112,10 @@ class Excel
                 } else {
                     $this->_sheet->getStyle($k . $inc)->getNumberFormat()->setFormatCode('dd.mm.YYYY');
                 }
-                $ceil[$field] = $date > 0 ? $date : '';
+                $ceil[] = $date > 0 ? $date : '';
 
             } else {
-                $ceil[$field] = (float)$value;
+                $ceil[] = (double)$value;
             }
 
             $k++;
