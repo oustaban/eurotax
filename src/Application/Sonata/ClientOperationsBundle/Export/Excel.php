@@ -10,6 +10,7 @@ class Excel
     private $_config_excel;
     private $_file_name;
     private $translator;
+    private $_sheet;
 
     public function __construct()
     {
@@ -48,11 +49,19 @@ class Excel
         return (string)$this->getFileName();
     }
 
+    protected function getProperties()
+    {
+
+        $this->_excel->getProperties()->setCreator("Eurotax");
+    }
+
     /**
      *
      */
     public function getData()
     {
+        $this->getProperties();
+
         $i = 0;
         foreach ($this->get('_config_excel') as $table => $params) {
             if ($i > 0) {
@@ -60,66 +69,35 @@ class Excel
             }
             $this->_excel->setActiveSheetIndex($i);
 
-            $sheet = $this->_excel->getActiveSheet();
+            $this->_sheet = $this->_excel->getActiveSheet();
 
 
-            $sheet->setTitle($table);
+            $this->_sheet->setTitle($table);
 
-            $rows = $this->fromArray($params);
-            $sheet->fromArray($rows);
+            $this->_sheet->fromArray($this->fromArray($params));
 
-            $this->fieldFormat($sheet, $rows);
-
-            $toCol = $sheet->getColumnDimension($sheet->getHighestColumn())->getColumnIndex();
+            $toCol = $this->_sheet->getColumnDimension($this->_sheet->getHighestColumn())->getColumnIndex();
             $toCol++;
             for ($k = 'A'; $k !== $toCol; $k++) {
-                $sheet->getColumnDimension($k)->setAutoSize(true);
+                $this->_sheet->getColumnDimension($k)->setAutoSize(true);
             }
             $i++;
         }
+
+        $this->_excel->setActiveSheetIndex(0);
     }
 
-    /**
-     * @param $sheet
-     * @param $rows
-     */
-    protected function fieldFormat(&$sheet, $rows)
-    {
-        if (!empty($rows)) {
-            foreach ($rows as $inc => $value) {
-
-                $k = 'A';
-                foreach ($value as $field => $v) {
-
-//                    print_r($field);                    echo '<br/>';
-                    switch ($field) {
-
-                        //date format
-                        case 'date_piece':
-                        case 'paiement_date':
-                            $sheet->getStyle($k . ($inc + 1))->getNumberFormat()->setFormatCode('dd.mm.YYYY');
-                            break;
-
-                        case 'mois':
-                            $sheet->getStyle($k . ($inc + 1))->getNumberFormat()->setFormatCode('MM-YY');
-                            break;
-
-                    }
-                    $k++;
-                }
-            }
-        }
-//        exit;
-    }
 
     /**
+     * @param $inc
      * @param $row
      * @param $params
      * @return array
      */
-    protected function getCell($row, $params)
+    protected function getCell($inc, $row, $params)
     {
         $ceil = array();
+        $k = 'A';
         foreach ($params['fields'] as $field) {
 
             $value = call_user_func(array($row, $this->getMethod($field)));
@@ -127,12 +105,20 @@ class Excel
             if ($value instanceof \Application\Sonata\ClientBundle\Entity\ListDevises) {
                 $ceil[$field] = $value->getAlias();
             } elseif ($value instanceof \DateTime) {
+                //excel time
                 $date = \PHPExcel_Shared_Date::PHPToExcel($value);
+                if ($field == 'mois') {
+                    $this->_sheet->getStyle($k . $inc)->getNumberFormat()->setFormatCode('MM-YY');
+                } else {
+                    $this->_sheet->getStyle($k . $inc)->getNumberFormat()->setFormatCode('dd.mm.YYYY');
+                }
                 $ceil[$field] = $date > 0 ? $date : '';
 
             } else {
                 $ceil[$field] = (float)$value;
             }
+
+            $k++;
         }
         return $ceil;
     }
@@ -213,9 +199,11 @@ class Excel
         //header
         $rows[] = $this->headers($params);
 
+        $count = count($rows) + 1;
+
         //default result
-        foreach ($result as $row) {
-            $rows[] = $this->getCell($row, $params);
+        foreach ($result as $key => $row) {
+            $rows[] = $this->getCell($key + $count, $row, $params);
         }
 
         $rows[] = $this->getTotal($result, $params);
