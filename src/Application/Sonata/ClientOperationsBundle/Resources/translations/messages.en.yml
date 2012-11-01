@@ -1,5 +1,5 @@
 ApplicationSonataClientOperationsBundle:
-  pdf:
+  declaration:
     address: 77-79 Avenue Aristide Briand<br />94110-ARCUEIL-France<br />France
     vat_entity: VAT-Registered Entity
     summ: SUMMARY of the Period

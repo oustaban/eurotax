@@ -1133,7 +1133,7 @@ class AbstractTabsController extends Controller
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function pdfAction()
+    public function declarationAction()
     {
         $client = $this->getClient();
         $this->get('request')->setLocale(strtolower($client->getLanguage()));
@@ -1145,7 +1145,7 @@ class AbstractTabsController extends Controller
         $bank = $em->getRepository('ApplicationSonataClientBundle:Coordonnees')->findOneBy(array());
 
         $debug = isset($_GET['d']);
-        $page = $this->render('ApplicationSonataClientOperationsBundle::pdf.html.twig', array(
+        $page = $this->render('ApplicationSonataClientOperationsBundle::declaration.html.twig', array(
             'info' => array(
                 'time' => strtotime($this->_year . '-' . $this->_month . '-01'),
                 'month' => $this->_month,
@@ -1162,6 +1162,38 @@ class AbstractTabsController extends Controller
 
             include VENDOR_PATH . '/mpdf/mpdf/mpdf.php';
             $mpdf = new \mPDF('c', 'A4', 0, '', 15, 15, 13, 13, 9, 2);
+            //$mpdf->SetDisplayMode('fullpage');
+
+            $mpdf->WriteHTML($page->getContent());
+            $mpdf->Output();
+
+            exit;
+        }
+
+        return $page;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function attestationAction()
+    {
+        $debug = isset($_GET['d']);
+        $page = $this->render('ApplicationSonataClientOperationsBundle::attestation.html.twig', array(
+            'info' => array(
+                'time' => strtotime($this->_year . '-' . $this->_month . '-01'),
+                'month' => $this->_month,
+                'year' => $this->_year,
+                'quarter' => floor(($this->_month - 1) / 3) + 1),
+            'debug' => $debug,
+        ));
+
+
+        if (!$debug) {
+            $file_name = 'eurotax-' . md5(time() . rand(1, 99999999));
+
+            include VENDOR_PATH . '/mpdf/mpdf/mpdf.php';
+            $mpdf = new \mPDF('c', 'A4', 0, '', 5, 10, 13, 13, 9, 2);
             //$mpdf->SetDisplayMode('fullpage');
 
             $mpdf->WriteHTML($page->getContent());

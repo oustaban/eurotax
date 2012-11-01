@@ -1,0 +1,260 @@
+{% spaceless %}
+
+{% set font = 12 %}
+{% set w = 736 %}
+{% set c = 406 %}
+{% set fw = {'header':350, 'agent':155, 'tva':140, 'invoice':165, 'month':240, 'info':240, 'sum':180, 'rate':180, 'footer':240} %}
+
+<style type="text/css">
+<!--
+{#
+.block_vat_acquisitions {
+    page-break-before: always;
+}
+#}
+
+{% if debug %}
+body {
+    background-color: gray;
+}
+
+div {
+    overflow: hidden;
+}
+
+#page {
+    background-color: white;
+    width: 800px;
+    margin: 0 auto;
+    padding: 60px 0;
+}
+{%endif%}
+
+div {
+    clear: both;
+    float: none;
+    margin-bottom: 25px;
+}
+
+.left {
+    text-align: left;
+    vertical-align: top;
+}
+
+.right {
+    text-align: right;
+    vertical-align: top;
+}
+
+.center {
+    text-align: center;
+    font-weight: bold;
+    vertical-align: bottom;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+#content {
+    width: {{ w+1 }}px;
+    margin: 0 auto;
+}
+
+{% for block, width in fw%}
+.{{block}}_f{
+    width: {{ 2*c-w+fw[block] }}px;
+}
+
+.{{block}}_c{
+    width: {{ 2*(w-c-fw[block])-10 }}px;
+}
+
+.{{block}}_e{
+    width: {{ fw[block] }}px;
+}
+{% endfor %}
+
+table {
+    width: 100%;
+    font-size: {{ font }}px;
+    font-family: arial;
+}
+.block_header table,
+.block_agent table,
+.block_tva table,
+.block_invoice table,
+.block_month table,
+.block_info table,
+.block_footer table {
+    line-height: {{ font*1.8 }}px;
+}
+
+.block_header {
+    border: 2px solid black;
+}
+
+.block_header table tr td {
+    font-weight: bold;
+}
+
+.block_sum table tr td,
+.block_rater table tr td {
+    vertical-align: middle;
+}
+
+.block_footer {
+    border: 2px solid black;
+}
+
+-->
+</style>
+<div id="page">
+    <div id="content">
+        <div class="block_header">
+            <table><tr>
+                <td class="header_f left">
+                    Attestation de T.V.A .française
+                </td>
+                <td class="header_c center">
+                    &nbsp;
+                </td>
+                <td class="header_e right">
+                    French TVA Certificate
+                </td>
+            </tr></table>
+        </div>
+        <div class="block_body">
+
+            <div class="block_agent">
+                <table><tr>
+                    <td class="agent_f left">
+                        En tant que mandataire / représentant fiscal<br />
+                        en France de :
+                    </td>
+                    <td class="agent_c center">
+                        VIAD Service Companies Ltd
+                    </td>
+                    <td class="agent_e right">
+                        As fiscal repr. / Tax Agent<br />
+                        in France of
+                    </td>
+                </tr></table>
+            </div>
+
+            <div class="block_tva">
+                <table><tr>
+                    <td class="tva_f left">
+                        dont le N° de TVA en France est:
+                    </td>
+                    <td class="tva_c center">
+                        FR 65 424 353 B13
+                    </td>
+                    <td class="tva_e right">
+                        with French TVA number
+                    </td>
+                </tr></table>
+            </div>
+
+            <div class="block_invoice">
+                <table><tr>
+                    <td class="invoice_f left">
+                        Nous atlestons que la TVA française<br />
+                        sur ia facture numéro:<br />
+                        datée du :
+                    </td>
+                    <td class="invoice_c center">
+                        AS 18264<br />
+                        07/08/2012
+                    </td>
+                    <td class="invoice_e right">
+                        We certify that the French TVA<br />
+                        on invoice number<br />
+                        dated
+                    </td>
+                </tr></table>
+            </div>
+
+            <div class="block_month">
+                <table><tr>
+                    <td class="month_f left">
+                        a bien été acquittée auprès des impôts Français<br />
+                        sur la déclaration de TVA du mois de :
+                    </td>
+                    <td class="month_c center">
+                        09/2012
+                    </td>
+                    <td class="month_e right">
+                        has been paid to the French Tax Authorities<br />
+                        on the TVA return for the month of
+                    </td>
+                </tr></table>
+            </div>
+
+            <div class="block_sum">
+                <table><tr>
+                    <td class="sum_f">
+                        <table class="sum_f"><tr><td class="left">pour un montant de :</td><td class="right bold">€</td></tr></table>
+                    </td>
+                    <td class="sum_c center">
+                        8 371
+                    </td>
+                    <td class="sum_e right">
+                        in the sum of
+                    </td>
+                </tr></table>
+            </div>
+
+            <div class="block_rate">
+                <table><tr>
+                    <td class="rate_f">
+                        <table class="rate_f"><tr><td class="left">au taux de :</td><td class="right bold">USD - Euro</td></tr></table>
+                    </td>
+                    <td class="rate_c center">
+                        1,00000
+                    </td>
+                    <td class="rate_e right">
+                        at the rate of
+                    </td>
+                </tr></table>
+            </div>
+
+            <div class="block_info">
+                <table><tr>
+                    <td class="info_f left">
+                        Cette attestation est délivrée en un seul exemplaire<br />
+                        et n'a de valeur que si elle est attachée à l'originale<br />
+                        de la facture où notre nom doit être mentionné.
+                    </td>
+                    <td class="info_c center">
+                        &nbsp;
+                    </td>
+                    <td class="info_e right">
+                        This certificate is issued in ONE COPY ONLY<br />
+                        and is valid ONLY if attached to the Original<br />
+                        Invoice on which our name must appear
+                    </td>
+                </tr></table>
+            </div>
+
+        </div>
+        <div class="block_footer">
+            <table><tr>
+                <td class="footer_f left">
+                    <span class="bold">eurotax</span><br />
+                    &nbsp;79 Avenue Aristide Briand<br />
+                    &nbsp;94110 ARCUEIL - France<br />
+                </td>
+                <td class="footer_c center">
+                    FR 66 332 089 218
+                </td>
+                <td class="footer_e right">
+                    Tel.: +33 1 41 98 48 18<br />
+                    Fax : +33 1 41 98 48 19<br />
+                    <span class="bold">info@eurotax.fr</span>
+                </td>
+            </tr></table>
+        </div>
+    </div>
+</div>
+{% endspaceless %}
