@@ -288,6 +288,7 @@ abstract class AbstractTabsAdmin extends Admin
         $collection->add('importList', 'import-list');
         $collection->add('importRemove', 'import-remove/{id}');
         $collection->add('pdf');
+        $collection->add('exportExcel', 'export-excel');
     }
 
     //customs fields
