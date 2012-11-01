@@ -11,6 +11,9 @@ class Excel
     private $_file_name;
     private $translator;
     private $_sheet;
+    private $_sumHT = NULL;
+    private $_sumTVA = NULL;
+    private $_ABC = array();
 
     public function __construct()
     {
@@ -74,6 +77,8 @@ class Excel
 
             $this->_sheet->setTitle($table);
 
+            $this->_sumHT = NULL;
+            $this->_sumTVA = NULL;
             $this->_sheet->fromArray($this->fromArray($params));
 
             $toCol = $this->_sheet->getColumnDimension($this->_sheet->getHighestColumn())->getColumnIndex();
@@ -98,12 +103,13 @@ class Excel
     {
         $ceil = array();
         $k = 'A';
-        foreach ($params['fields'] as $field) {
+        $this->_ABC = array();
+        foreach ($params['fields'] as $key => $field) {
 
             $value = call_user_func(array($row, $this->getMethod($field)));
 
             if ($value instanceof \Application\Sonata\ClientBundle\Entity\ListDevises) {
-                $ceil[] = $value->getAlias();
+                $ceil[$field] = $value->getAlias();
             } elseif ($value instanceof \DateTime) {
                 //excel time
                 $date = \PHPExcel_Shared_Date::PHPToExcel($value);
@@ -112,16 +118,45 @@ class Excel
                 } else {
                     $this->_sheet->getStyle($k . $inc)->getNumberFormat()->setFormatCode('dd.mm.YYYY');
                 }
-                $ceil[] = $date > 0 ? $date : '';
+                $ceil[$field] = $date > 0 ? $date : '';
 
             } else {
-                $ceil[] = (double)$value;
+                $ceil[$field] = (double)$value;
             }
 
+            if ($field == 'HT') {
+                $this->_sumHT = $key;
+            }
+            if ($field == 'TVA') {
+                $this->_sumTVA = $key;
+            }
+
+            $this->_ABC[$key] = $k;
             $k++;
         }
+
         return $ceil;
     }
+
+
+    protected function getTotal($count, $key, $left = NULL, $right = NULL)
+    {
+        if (isset($this->_ABC[$key]) && $sum = $this->_ABC[$key]) {
+
+            if ($left) {
+                $this->_sheet->setCellValue($this->_ABC[$key - 1] . ($count), $left);
+            }
+
+
+            if ($right) {
+                $this->_sheet->setCellValue($this->_ABC[$key + 1] . ($count), $right);
+            }
+
+            $this->_sheet->setCellValue($sum . ($count), '=SUM(' . $sum . '1:' . $sum . ($count - 1) . ')')
+                ->getStyle($sum . ($count))->getNumberFormat()->setFormatCode('# ##0\ "€";[Red]-# ##0\ "€"');
+        }
+    }
+
 
     /**
      * @param $params
@@ -206,21 +241,14 @@ class Excel
             $rows[] = $this->getCell($key + $count, $row, $params);
         }
 
-        $rows[] = $this->getTotal($result, $params);
+//        for ($i = 0; $i < 3; $i++) {
+//            $rows[] = $this->getSkipLine($params);
+//        }
+//
+//        $this->getTotal(count($rows) + 1, $this->_sumHT, 'TOTAL du mois');
+//        $this->getTotal(count($rows) + 1, $this->_sumTVA, NULL, 'selon filtre');
 
         return $rows;
-    }
-
-    /**
-     * @param $result
-     * @param $params
-     * @return array
-     */
-    protected function getTotal($result, $params)
-    {
-
-        $ceil = array();
-        return $ceil;
     }
 
 
