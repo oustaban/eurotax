@@ -225,11 +225,11 @@ class Excel
     {
         $rows = array();
         //skip line
-        if ($params['skip_line'] > 1) {
-            for ($i = 1; $i < $params['skip_line']; $i++) {
-                $rows[] = $this->getSkipLine($params);
-            }
-        }
+//        if ($params['skip_line'] > 1) {
+//            for ($i = 1; $i < $params['skip_line']; $i++) {
+//                $rows[] = $this->getSkipLine($params);
+//            }
+//        }
 
         //header
         $rows[] = $this->headers($params);
