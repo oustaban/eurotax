@@ -93,3 +93,6 @@ services:
         class : Application\Twig\DateExtension
         tags:
             - { name: twig.extension }
+
+    client.operation.excel:
+        class: Application\Sonata\ClientOperationsBundle\Export\Excel

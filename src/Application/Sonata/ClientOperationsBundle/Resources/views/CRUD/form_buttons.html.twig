@@ -16,6 +16,7 @@
             <button id="btn_locking" class="btn"><i class="icon icon-lock"></i> {{ text_lock|trans}}</button>
             {% endif %}
 
+            <button class="btn" id="exportExcel" onclick="javascript:location.href = '{{ admin.generateUrl('exportExcel', _filter_json) }}'.replace('&amp;', '&');"><i class="icon icon-download-alt"></i> {{ 'Export'|trans }}</button>
             <button class="btn" id="downloadDeclaration" onclick="javascript:location.href = '{{ admin.generateUrl('declaration', _filter_json) }}'.replace('&amp;', '&');"><i class="icon icon-print"></i> {{ 'Déclaration'|trans }}</button>
             <button class="btn" id="downloadAttestation" onclick="javascript:location.href = '{{ admin.generateUrl('attestation', _filter_json) }}'.replace('&amp;', '&');"><i class="icon icon-print"></i> {{ 'Attestation'|trans }}</button>
             <button class="btn" id="raprochement" onclick="javascript:location.href = '{{ path('rapprochement_index', {client_id: client_id, month: month~'|'~year } ) }}'.replace('&amp;', '&');"><i class="icon icon-list-alt"></i> {{ 'Prévisualisation'|trans }}</button>
@@ -33,15 +34,15 @@
         <p>
 
         <form class="form-inline" id="importForm" method="post"
-              action="{{ path('admin_sonata_clientoperations_'~active_tab~'_import', _filter_json) }}"
+              action="{{ admin.generateUrl('import', _filter_json) }}"
               enctype="multipart/form-data">
             <input id="inputFile" type="file" name="inputFile" style="display:none"/>
             <input id="inputFileCover" class="input-large" type="text"/>
-            <a class="btn" onclick="$('input[id=inputFile]').click();">choisir le fichier</a>
+            <a class="btn" onclick="$('input[id=inputFile]').click();">{{ 'choisir le fichier'|trans }}</a>
         </form>
         <button class="btn"
-                onclick="location.href='{{ path('admin_sonata_clientoperations_'~active_tab~'_blank', _filter_json) }}'">
-            <i class="icon icon-exclamation-sign"></i> télécharger échantillon
+                onclick="location.href='{{ admin.generateUrl('blank', _filter_json) }}'">
+            <i class="icon icon-exclamation-sign"></i> {{ 'télécharger échantillon'|trans }}
         </button>
         </p>
     </div>

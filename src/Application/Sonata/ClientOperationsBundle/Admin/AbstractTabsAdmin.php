@@ -289,6 +289,7 @@ abstract class AbstractTabsAdmin extends Admin
         $collection->add('importRemove', 'import-remove/{id}');
         $collection->add('declaration');
         $collection->add('attestation');
+        $collection->add('exportExcel', 'export-excel');
     }
 
     //customs fields

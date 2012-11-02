@@ -1022,6 +1022,19 @@ class AbstractTabsController extends Controller
     }
 
     /**
+     *  exportExcelAction
+     */
+    public function exportExcelAction()
+    {
+        $excel = $this->get('client.operation.excel');
+        $excel->set('_client', $this->client);
+        $excel->set('_config_excel', $this->_config_excel);
+
+        $excel->render();
+        exit;
+    }
+
+    /**
      * @param $client_id
      * @param $month
      * @param $year

@@ -266,7 +266,7 @@ class ErrorElements
     {
         if ($this->_object->getDevise()) {
             $value = $this->_object->getDevise()->getAlias();
-            if ($value != 'euro') {
+            if ($value != 'eur') {
                 /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
                 $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
                 $em = $doctrine->getManager();
