@@ -63,15 +63,15 @@ div {
 
 {% for block, width in fw%}
 .{{block}}_f{
-    width: {{ 2*c-w+fw[block] }}px;
+    width: {{ 2*c-w+width }}px;
 }
 
 .{{block}}_c{
-    width: {{ 2*(w-c-fw[block])-10 }}px;
+    width: {{ 2*(w-c-width)-10 }}px;
 }
 
 .{{block}}_e{
-    width: {{ fw[block] }}px;
+    width: {{ width }}px;
 }
 {% endfor %}
 
