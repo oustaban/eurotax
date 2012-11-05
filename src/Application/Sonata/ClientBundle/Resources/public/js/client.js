@@ -31,6 +31,8 @@ jQuery(document).ready(function ($) {
                 }
             }
         };
+
+        $('.sonata-ba-list-field-text').removeAttr('objectid');
     }
 
     /**
