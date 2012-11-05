@@ -3,7 +3,7 @@
 {% set value = object.getMontant %}
 
 {% block field %}
-<div class="totals montant" {% if value<0 %}style="color:red;"{% endif %}>
+<div class="totals montant{% if value<0 %} negative_value{% endif %}">
     {{ value }}
 </div>
 {% endblock field %}
