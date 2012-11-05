@@ -3,6 +3,7 @@
 namespace Application\Sonata\ClientBundle\Controller;
 
 use Application\Sonata\ClientBundle\Controller\AbstractTabsController as Controller;
+
 /**
  * Coordonnees controller.
  *
@@ -16,13 +17,13 @@ class CoordonneesController extends Controller
 
     public function configure()
     {
-
         parent::configure();
 
         $this->jsSettingsJson(array(
             'url' => array(
-                'sortable' => $this->admin->generateUrl('sortable', array('filter' => array('client_id' => array('value' => $this->client_id))))
-            )
+                'sortable' => $this->admin->generateUrl('sortable', array('filter' => array('client_id' => array('value' => $this->client_id)))),
+            ),
+            'country_sepa' => $this->admin->getListCountrySepa(),
         ));
     }
 
