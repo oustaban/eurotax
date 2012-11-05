@@ -195,4 +195,25 @@ abstract class AbstractTabsAdmin extends Admin
 
         parent::configureListFields($listMapper);
     }
+
+    /**
+     * @return array
+     */
+    public function getListCountrySepa()
+    {
+        /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+        $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $doctrine->getManager();
+
+        $rows = $em->getRepository('ApplicationSonataClientBundle:ListCountries')->findAll();
+        $_rows = array();
+        foreach ($rows as $row) {
+            /** @var $row \Application\Sonata\ClientBundle\Entity\ListCountries() */
+            $_rows[$row->getCode()] = $row->__toString();
+        }
+
+        return $_rows;
+    }
+
 }
