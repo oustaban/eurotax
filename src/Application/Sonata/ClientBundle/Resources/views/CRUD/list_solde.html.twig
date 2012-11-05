@@ -5,7 +5,7 @@
 {% block field %}
     {% if not globalsGet('SonataAdminBundle_Compte_list_solde') is null %}
         {% set value = globalsInc('SonataAdminBundle_Compte_list_solde', object.getMontant) %}
-        <span {% if value<0 %}style="color:red;"{% endif %}>
+        <span {% if value<0 %}class="negative_value"{% endif %}>
             {{ value }}
         </span>
     {% else %}

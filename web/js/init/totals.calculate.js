@@ -5,6 +5,7 @@ $(function () {
             $tfoot = $('<tfoot />').appendTo(this);
         }
         var $tr = $(this).find('tbody tr:first').clone();
+        $tr.find('.negative_value').removeClass('negative_value');
 
         var add_total_rows = false;
         $tr.addClass('totals_row').children().each(function () {
@@ -24,6 +25,9 @@ $(function () {
                     sum += parseFloat($(this).html());
                 });
                 $div.html('<b>' + sum + '</b>');
+                if (sum < 0) {
+                    $div.addClass('negative_value');
+                }
             }
         });
 
