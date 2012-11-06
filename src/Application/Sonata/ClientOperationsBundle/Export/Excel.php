@@ -769,9 +769,24 @@ class Excel
             }
         }
 
-        $this->_sheet->getRowDimension($header)->setRowHeight(38);
+        $this->setRowHeight($header);
 
         return $col;
+    }
+
+    /**
+     * @param $header
+     */
+    protected function setRowHeight($header)
+    {
+        $params = $this->getParams();
+
+        if ($params['entity'] == 'DEBIntro' || $params['entity'] == 'DEBExped') {
+            $this->_sheet->getRowDimension($header)->setRowHeight(52);
+
+        } else {
+            $this->_sheet->getRowDimension($header)->setRowHeight(38);
+        }
     }
 
     /**
