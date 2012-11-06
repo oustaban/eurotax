@@ -14,6 +14,7 @@ class Excel
     private $_sheet;
     private $_sum = array();
     private $_header_cell = array();
+    private $_params = array();
     protected $_styleBorders = array(
         'borders' => array(
             'top' => array(
@@ -99,6 +100,23 @@ class Excel
         $this->_excel->getDefaultStyle()->getFont()->setSize(10);
     }
 
+
+    /**
+     * @param $value
+     */
+    protected function setParams($value)
+    {
+        $this->_params = $value;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getParams()
+    {
+        return $this->_params;
+    }
+
     /**
      *
      */
@@ -108,6 +126,8 @@ class Excel
 
         $i = 0;
         foreach ($this->get('_config_excel') as $table => $params) {
+
+            $this->setParams($params);
             if ($i > 0) {
                 $this->_excel->createSheet(null, $i);
             }
@@ -119,6 +139,7 @@ class Excel
             $this->setTabsColor($params);
 
             $this->_sum = array();
+
             $this->_sheet->fromArray($this->fromArray($params));
 
             $i++;
@@ -168,6 +189,8 @@ class Excel
 
             $value = call_user_func(array($row, $this->getMethod($field)));
 
+            $this->_sheet->getStyle($k . $inc)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
             if ($value instanceof \Application\Sonata\ClientBundle\Entity\ListDevises) {
                 $ceil[$field] = $value->getAlias();
             } elseif ($value instanceof \DateTime) {
@@ -184,18 +207,12 @@ class Excel
                 if (is_float($value)) {
                     $ceil[$field] = (double)$value;
                     $this->_sheet->getStyle($k . $inc)->getNumberFormat()->setFormatCode('#\ ##0\ ;[Red]-#\ ##0\ ');
-
                 } else {
                     $ceil[$field] = (string)$value;
                 }
             }
 
-            if ($field == 'HT' || $field == 'TVA' || $field == 'valeur_fiscale' || $field == 'valeur_statistique') {
-                $this->_sum[$field] = $key;
-            }
-
-            if (in_array($field, array('mois', 'montant_TTC', 'montant_TVA_francaise', 'paiement_montant', 'paiement_devise')) || isset($this->_sum[$field])) {
-
+            if ((in_array($field, array('mois', 'montant_TTC', 'montant_TVA_francaise', 'paiement_montant', 'paiement_devise')) || isset($this->_sum[$field]) && !($params['entity'] == 'DEBIntro' || $params['entity'] == 'DEBExped'))) {
                 $this->_sheet->getStyle($k . $inc)->applyFromArray($this->_styleArrayGray);
             } else {
                 $this->_sheet->getStyle($k . $inc)->applyFromArray($this->_styleBorders);
@@ -294,19 +311,22 @@ class Excel
      */
     protected function getFormula($value, $cell, $number)
     {
+        $params = $this->getParams();
+        $index = $params['skip_line'] + 1;
+
         switch ($value) {
 
             case 'SUM':
-                return '=SUM(' . $cell . '2:' . $cell . ($number - $this->_skip) . ')';
+                return '=SUM(' . $cell . $index . ':' . $cell . ($number - $this->_skip) . ')';
                 break;
 
             case 'SUMIFGreaterThanZero':
-                return '=SUMIF(' . $cell . '2:' . $cell . ($number - $this->_skip) . ', ">0")';
+                return '=SUMIF(' . $cell . $index . ':' . $cell . ($number - $this->_skip) . ', ">0")';
                 break;
 
 
             case 'SUMIFLessThanZero':
-                return '=SUMIF(' . $cell . '2:' . $cell . ($number - $this->_skip) . ', "<0")';
+                return '=SUMIF(' . $cell . $index . ':' . $cell . ($number - $this->_skip) . ', "<0")';
                 break;
 
             default:
@@ -403,13 +423,19 @@ class Excel
 
         $count = count($rows) + 1;
 
+        foreach ($params['fields'] as $key => $field) {
+            if ($field == 'HT' || $field == 'TVA' || $field == 'valeur_fiscale' || $field == 'valeur_statistique') {
+                $this->_sum[$field] = $key;
+            }
+        }
+
         //default result
         foreach ($result as $key => $row) {
             $rows[] = $this->getCell($key + $count, $row, $params);
         }
 
         $count = count($rows) + 1;
-        $this->footer($count);
+        $this->footer($params, $count);
 
         return $rows;
     }
@@ -422,72 +448,135 @@ class Excel
         $this->_skip = $value;
     }
 
-    protected function footer($count)
+    protected function footer($params, $count)
     {
-        //sum
-        if (isset($this->_sum['HT'])) {
-            $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUM', 'TOTAL du mois', 'left');
-        }
-        if (isset($this->_sum['valeur_fiscale'])) {
-            $this->getTotal($count + $this->_skip, $this->_sum['valeur_fiscale'], 'SUM', 'TOTAL du mois', 'left');
-        }
+        if ($params['entity'] == 'DEBExped' || $params['entity'] == 'DEBIntro') {
+            $styleArray = array(
+                'borders' => array(
+                    'top' => array(
+                        'style' => \PHPExcel_Style_Border::BORDER_MEDIUM,
+                    ),
+                    'bottom' => array(
+                        'style' => \PHPExcel_Style_Border::BORDER_MEDIUM,
+                    ),
+                    'left' => array(
+                        'style' => \PHPExcel_Style_Border::BORDER_MEDIUM,
+                    ),
+                    'right' => array(
+                        'style' => \PHPExcel_Style_Border::BORDER_MEDIUM,
+                    ),
+                ),
+                'fill' => array(
+                    'type' => \PHPExcel_Style_Fill::FILL_SOLID,
+                    'color' => array(
+                        'argb' => 'ffff00',
+                    ),
+                ),
+                'font' => array(
+                    'bold' => true,
+                    'color' => array(
+                        'argb' => 'ff0000',
+                    ),
+                )
+            );
 
-        if (isset($this->_sum['TVA'])) {
-            $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUM', 'selon filtre', 'right');
-        } elseif (isset($this->_sum['HT'])) {
-            $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUM', 'selon filtre', 'right');
-        }
+            if (isset($this->_sum['valeur_fiscale'])) {
 
-        if (isset($this->_sum['valeur_statistique'])) {
-            $this->getTotal($count + $this->_skip, $this->_sum['valeur_statistique'], 'SUM', 'selon filtre', 'right');
-        } elseif (isset($this->_sum['valeur_fiscale'])) {
-            $this->getTotal($count + $this->_skip, $this->_sum['valeur_fiscale'], 'SUM', 'selon filtre', 'right');
-        }
+                $key = $this->_sum['valeur_fiscale'];
+                $cell = $this->_header_cell[$key];
+                $number = $count + $this->_skip;
 
-        //sum_positive
-        $count += 2;
-        if (isset($this->_sum['HT'])) {
-            $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUMIFGreaterThanZero', 'Dont factures', 'left', false);
-        }
+                $this->_sheet->setCellValue($this->_header_cell[$key - 2] . $number, 'Totaux');
+                $this->_sheet->setCellValue($cell . $number, $this->getFormula('SUM', $cell, $number));
+                $this->_sheet->getStyle($this->_header_cell[$key - 2] . $number . ':' . $this->_header_cell[$key] . $number)->applyFromArray($styleArray);
+            }
+            if (isset($this->_sum['valeur_statistique'])) {
 
-        if (isset($this->_sum['valeur_fiscale'])) {
-            $this->getTotal($count + $this->_skip, $this->_sum['valeur_fiscale'], 'SUMIFGreaterThanZero', 'Dont factures', 'left', false);
-        }
+                $key = $this->_sum['valeur_statistique'];
+                $cell = $this->_header_cell[$key];
+                $number = $count + $this->_skip;
 
-        if (isset($this->_sum['TVA'])) {
+                $this->_sheet->setCellValue($cell . $number, $this->getFormula('SUM', $cell, $number));
+                $this->_sheet->getStyle($this->_header_cell[$key - 1] . $number . ':' . $this->_header_cell[$key] . $number)->applyFromArray($styleArray);
+            }
+        } else {
+            //sum
+            if (isset($this->_sum['HT'])) {
+                $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUM', 'TOTAL du mois', 'left');
 
-            $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUMIFGreaterThanZero', 'tout data', 'right', false);
+            }
+            if (isset($this->_sum['valeur_fiscale'])) {
+                $this->getTotal($count + $this->_skip, $this->_sum['valeur_fiscale'], 'SUM', 'TOTAL du mois', 'left');
+            }
 
-        } elseif (isset($this->_sum['HT'])) {
-            $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUMIFGreaterThanZero', 'tout data', 'right', false);
-        }
+            if (isset($this->_sum['TVA'])) {
+                if ($params['entity'] == 'A08IM') {
+                    $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUM', 'TOTAL du mois', 'left');
+                }
+                $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUM', 'selon filtre', 'right');
+            } elseif (isset($this->_sum['HT'])) {
+                $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUM', 'selon filtre', 'right');
+            }
 
-        if (isset($this->_sum['valeur_statistique'])) {
-            $this->getTotal($count + $this->_skip, $this->_sum['valeur_statistique'], 'SUMIFGreaterThanZero', 'tout data', 'right', false);
-        }
+            if (isset($this->_sum['valeur_statistique'])) {
+                $this->getTotal($count + $this->_skip, $this->_sum['valeur_statistique'], 'SUM', 'selon filtre', 'right');
+            } elseif (isset($this->_sum['valeur_fiscale'])) {
+                $this->getTotal($count + $this->_skip, $this->_sum['valeur_fiscale'], 'SUM', 'selon filtre', 'right');
+            }
+
+            //sum_positive
+            $count += 2;
+            if (isset($this->_sum['HT'])) {
+                $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUMIFGreaterThanZero', 'Dont factures', 'left', false);
+
+            }
+
+            if (isset($this->_sum['valeur_fiscale'])) {
+                $this->getTotal($count + $this->_skip, $this->_sum['valeur_fiscale'], 'SUMIFGreaterThanZero', 'Dont factures', 'left', false);
+            }
+
+            if (isset($this->_sum['TVA'])) {
+
+                if ($params['entity'] == 'A08IM') {
+                    $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUMIFGreaterThanZero', 'Dont factures', 'left');
+                }
+                $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUMIFGreaterThanZero', 'tout data', 'right', false);
+
+            } elseif (isset($this->_sum['HT'])) {
+                $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUMIFGreaterThanZero', 'tout data', 'right', false);
+            }
+
+            if (isset($this->_sum['valeur_statistique'])) {
+                $this->getTotal($count + $this->_skip, $this->_sum['valeur_statistique'], 'SUMIFGreaterThanZero', 'tout data', 'right', false);
+            }
 
 
-        //sum_negative
-        $count += 2;
-        if (isset($this->_sum['HT'])) {
-            $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUMIFLessThanZero', 'Dont avoirs', 'left', false);
-        }
+            //sum_negative
+            $count += 2;
+            if (isset($this->_sum['HT'])) {
+                $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUMIFLessThanZero', 'Dont avoirs', 'left', false);
+            }
 
-        if (isset($this->_sum['valeur_fiscale'])) {
-            $this->getTotal($count + $this->_skip, $this->_sum['valeur_fiscale'], 'SUMIFLessThanZero', 'Dont avoirs', 'left', false);
-        }
+            if (isset($this->_sum['valeur_fiscale'])) {
+                $this->getTotal($count + $this->_skip, $this->_sum['valeur_fiscale'], 'SUMIFLessThanZero', 'Dont avoirs', 'left', false);
+            }
 
 
-        if (isset($this->_sum['TVA'])) {
+            if (isset($this->_sum['TVA'])) {
 
-           $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUMIFLessThanZero', 'tout data', 'right', false);
+                if ($params['entity'] == 'A08IM') {
+                    $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUMIFLessThanZero', 'avoirs', 'left');
+                }
+                $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUMIFLessThanZero', 'tout data', 'right', false);
 
-        } elseif (isset($this->_sum['HT'])) {
-            $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUMIFLessThanZero', 'tout data', 'right', false);
-        }
 
-        if (isset($this->_sum['valeur_statistique'])) {
-            $this->getTotal($count + $this->_skip, $this->_sum['valeur_statistique'], 'SUMIFLessThanZero', 'tout data', 'right', false);
+            } elseif (isset($this->_sum['HT'])) {
+                $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUMIFLessThanZero', 'tout data', 'right', false);
+            }
+
+            if (isset($this->_sum['valeur_statistique'])) {
+                $this->getTotal($count + $this->_skip, $this->_sum['valeur_statistique'], 'SUMIFLessThanZero', 'tout data', 'right', false);
+            }
         }
     }
 
@@ -499,6 +588,7 @@ class Excel
     {
         $col = array();
         $k = 'A';
+        $last = '';
         $header = $params['skip_line'];
         $styleHeader = array();
         foreach ($params['fields'] as $field) {
@@ -542,6 +632,7 @@ class Excel
             }
 
             if ($params['entity'] == 'DEBIntro' || $params['entity'] == 'DEBExped') {
+
                 if (in_array($field, array('n_ligne',
                     'nomenclature',
                     'pays_id_destination',
@@ -588,13 +679,92 @@ class Excel
                 }
             }
 
-            $this->_sheet->getStyle($k . $header)->applyFromArray($this->_styleBorders + (isset($styleHeader[$field]) ? $styleHeader[$field] : array()))
-                ->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+            $this->_sheet->getStyle($k . $header)
+                ->applyFromArray($this->_styleBorders + (isset($styleHeader[$field]) ? $styleHeader[$field] : array()))
+                ->getAlignment()
+                ->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER)
+                ->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
             $this->_sheet->getColumnDimension($k)->setAutoSize(true);
 
+            $last = $k;
             $k++;
         }
+
+        if ($params['entity'] == 'DEBIntro' || $params['entity'] == 'DEBExped') {
+
+            $index = 1;
+            $objRichText = new \PHPExcel_RichText();
+            $objPayable = $objRichText->createTextRun("DECLARATION D'ECHANGES DE BIENS ENTRE ETATS MEMBRES DE LA C.E.E. (DEB)");
+            $objPayable->getFont()
+                ->setName('Arial')
+                ->setBold(true)
+                ->setSize(10);
+            $this->_sheet->getCell('A' . $index)->setValue($objRichText);
+            $this->_sheet->mergeCells('A' . $index . ':' . $last . $index);
+            $this->_sheet->getStyle('A' . $index . ':' . $last . $index)
+                ->getAlignment()
+                ->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER)
+                ->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $this->_sheet->getRowDimension(1)->setRowHeight(25);
+
+
+            $index = 3;
+            $objRichText = new \PHPExcel_RichText();
+            $objPayable = $objRichText->createTextRun("FLUX");
+            $objPayable->getFont()
+                ->setName('Arial')
+                ->setBold(true)
+                ->setSize(10);
+            $this->_sheet->getCell('A' . $index)->setValue($objRichText);
+            $this->_sheet->mergeCells('A' . $index . ':' . $last . $index);
+            $this->_sheet->getStyle('A' . $index . ':' . $last . $index)
+                ->getAlignment()
+                ->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER)
+                ->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $this->_sheet->getStyle('A' . $index . ':' . $last . $index)->applyFromArray($this->_styleBorders);
+            $this->_sheet->getRowDimension($index)->setRowHeight(25);
+
+
+            $index = 4;
+            $objRichText = new \PHPExcel_RichText();
+            $objPayable = $objRichText->createTextRun($params['entity'] == 'DEBExped' ? "EXPEDITION" : 'INTRODUCTION');
+            $objPayable->getFont()
+                ->setName('Arial')
+                ->setSize(10);
+            $this->_sheet->getCell('A' . $index)->setValue($objRichText);
+            $this->_sheet->mergeCells('A' . $index . ':' . $last . $index);
+            $this->_sheet->getStyle('A' . $index . ':' . $last . $index)
+                ->getAlignment()
+                ->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER)
+                ->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $this->_sheet->getStyle('A' . $index . ':' . $last . $index)->applyFromArray($this->_styleBorders);
+            $this->_sheet->getRowDimension($index)->setRowHeight(25);
+
+            $k = 'A';
+            $index = 6;
+            foreach ($params['fields'] as $key => $field) {
+
+                $this->_sheet->getCell($k . $index)->setValue($key + 1);
+                $this->_sheet->getStyle($k . $index)->applyFromArray($this->_styleBorders + array('fill' => array(
+                    'type' => \PHPExcel_Style_Fill::FILL_SOLID,
+                    'color' => array(
+                        'argb' => '000000',
+                    ),
+                ),
+                    'font' => array(
+                        'bold' => true,
+                        'color' => array(
+                            'argb' => 'ffffff',
+                        ),
+                    ),));
+
+                $this->_sheet->getStyle($k . $index)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+                $k++;
+            }
+        }
+
         $this->_sheet->getRowDimension($header)->setRowHeight(38);
 
         return $col;
