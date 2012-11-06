@@ -131,9 +131,11 @@ class Excel
             if ($i > 0) {
                 $this->_excel->createSheet(null, $i);
             }
+
             $this->_excel->setActiveSheetIndex($i);
 
             $this->_sheet = $this->_excel->getActiveSheet();
+            $this->_sheet->getDefaultColumnDimension()->setWidth(10);
 
             $this->_sheet->setTitle($table);
             $this->setTabsColor($params);
@@ -683,9 +685,11 @@ class Excel
                 ->applyFromArray($this->_styleBorders + (isset($styleHeader[$field]) ? $styleHeader[$field] : array()))
                 ->getAlignment()
                 ->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER)
-                ->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                ->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER)
+                ->setWrapText(true);
 
-            $this->_sheet->getColumnDimension($k)->setAutoSize(true);
+            $this->setWidthSize($k, $field);
+//            $this->_sheet->getColumnDimension($k)->setAutoSize(true);
 
             $last = $k;
             $k++;
@@ -769,6 +773,39 @@ class Excel
 
         return $col;
     }
+
+    /**
+     * @param $ABC
+     * @param $field
+     */
+    protected function setWidthSize($ABC, $field)
+    {
+        $params = $this->getParams();
+
+        switch ($field) {
+
+            case 'commentaires':
+                $this->_sheet->getColumnDimension($ABC)->setWidth(16);
+                break;
+        }
+
+        if ($params['entity'] == 'DEBIntro' || $params['entity'] == 'DEBExped') {
+            switch ($field) {
+
+                case 'CEE':
+                case 'valeur_statistique':
+                    $this->_sheet->getColumnDimension($ABC)->setWidth(16);
+                    break;
+
+                case 'conditions_livraison':
+                case 'nature_transaction':
+                    $this->_sheet->getColumnDimension($ABC)->setWidth(15);
+                    break;
+
+            }
+        }
+    }
+
 
     /**
      * @param $params
