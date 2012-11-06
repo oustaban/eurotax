@@ -486,9 +486,9 @@ class Excel
 
                 $key = $this->_sum['valeur_fiscale'];
                 $cell = $this->_header_cell[$key];
-                $number = $count + $this->_skip;
+                if (isset($this->_header_cell[$key])) {
+                    $number = $count + $this->_skip;
 
-                if (isset($this->_header_cell[$key - 2])) {
                     $this->_sheet->setCellValue($this->_header_cell[$key - 2] . $number, 'Totaux');
                     $this->_sheet->setCellValue($cell . $number, $this->getFormula('SUM', $cell, $number));
                     $this->_sheet->getStyle($this->_header_cell[$key - 2] . $number . ':' . $this->_header_cell[$key] . $number)->applyFromArray($styleArray);
@@ -497,10 +497,10 @@ class Excel
             if (isset($this->_sum['valeur_statistique'])) {
 
                 $key = $this->_sum['valeur_statistique'];
-                $cell = $this->_header_cell[$key];
-                $number = $count + $this->_skip;
+                if (isset($this->_header_cell[$key])) {
+                    $cell = $this->_header_cell[$key];
+                    $number = $count + $this->_skip;
 
-                if (isset($this->_header_cell[$key - 1])) {
                     $this->_sheet->setCellValue($cell . $number, $this->getFormula('SUM', $cell, $number));
                     $this->_sheet->getStyle($this->_header_cell[$key - 1] . $number . ':' . $this->_header_cell[$key] . $number)->applyFromArray($styleArray);
                 }
