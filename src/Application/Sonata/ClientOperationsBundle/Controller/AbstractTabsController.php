@@ -774,7 +774,7 @@ class AbstractTabsController extends Controller
         $file_name = $file['name'];
 
         /* example file_name */
-//        $file_name = 'FUJITSU-Import-TVA-2012-09-1.xlsx';
+//        $file_name = 'FUJITSU-Importation-TVA-2012-10-01.xlsx';
 
         if (preg_match('/(.*)\-[Import|Importation]+\-TVA\-(\d{4}+)\-(\d{2}+)\-(\d+)\.xlsx/i', $file_name, $matches)) {
 
@@ -821,9 +821,14 @@ class AbstractTabsController extends Controller
                     }
                 }
             }
+            else {
+                $this->get('session')->setFlash('sonata_flash_info', $this->admin->trans('Client "' . $nom_client . '" pas trouvé'));
+            }
+        }
+        else {
+            $this->get('session')->setFlash('sonata_flash_info', $this->admin->trans('Nom de fichier invalide'));
         }
 
-        $this->get('session')->setFlash('sonata_flash_info', $this->admin->trans('Nom de fichier invalide'));
         return false;
     }
 
