@@ -7,6 +7,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
 use Application\Sonata\ClientOperationsBundle\Admin\Validate\ErrorElements;
+use Doctrine\ORM\EntityRepository;
 
 use Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin as Admin;
 
@@ -32,7 +33,10 @@ class V09DESAdmin extends Admin
                 'format' => $this->date_format_datetime)
         )
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
-            ->add('devise', null, array('label' => $this->getFieldLabel('devise_id')))
+            ->add('devise', null, array('label' => $this->getFieldLabel('devise_id'), 'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('d')
+                    ->orderBy('d.alias', 'ASC');
+            },))
             ->add('montant_HT_en_devise', 'money', array('label' => $this->getFieldLabel('montant_HT_en_devise')))
             ->add('mois', 'date', array(
             'label' => $this->getFieldLabel('mois'),
@@ -65,7 +69,7 @@ class V09DESAdmin extends Admin
             'template' => $this->_bundle_name . ':CRUD:list_date_piece.html.twig'
         ))
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
-            ->add('devise.name', null, array('label' => $this->getFieldLabel('devise_id')))
+            ->add('devise.alias', null, array('label' => $this->getFieldLabel('devise_id')))
             ->add('montant_HT_en_devise', 'money', array('label' => $this->getFieldLabel('montant_HT_en_devise'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:montant_HT_en_devise.html.twig'))
             ->add('mois', null, array(
             'label' => $this->getFieldLabel('mois'),

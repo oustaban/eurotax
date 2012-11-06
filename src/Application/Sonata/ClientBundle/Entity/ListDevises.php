@@ -65,7 +65,7 @@ class ListDevises
 
     public function __toString()
     {
-        return $this->getSymbol() . ' (' . strtoupper($this->getAlias()) . ')';
+        return strtoupper($this->getAlias());
     }
 
     /**

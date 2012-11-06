@@ -7,6 +7,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
 use Application\Sonata\ClientOperationsBundle\Admin\Validate\ErrorElements;
+use Doctrine\ORM\EntityRepository;
 
 use Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin as Admin;
 
@@ -31,7 +32,10 @@ class A02TVAAdmin extends Admin
                 'format' => $this->date_format_datetime)
         )
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
-            ->add('devise', null, array('label' => $this->getFieldLabel('devise_id')))
+            ->add('devise', null, array('label' => $this->getFieldLabel('devise_id'), 'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('d')
+                    ->orderBy('d.alias', 'ASC');
+            },))
             ->add('montant_HT_en_devise', 'money', array('label' => $this->getFieldLabel('montant_HT_en_devise')))
             ->add('taux_de_TVA', 'percent', array(
             'label' => $this->getFieldLabel('taux_de_TVA'),
@@ -40,7 +44,10 @@ class A02TVAAdmin extends Admin
             ->add('montant_TVA_francaise', 'money', array('label' => $this->getFieldLabel('montant_TVA_francaise')))
             ->add('montant_TTC', 'money', array('label' => $this->getFieldLabel('montant_TTC')))
             ->add('paiement_montant', 'money', array('label' => $this->getFieldLabel('paiement_montant')))
-            ->add('paiement_devise', null, array('label' => $this->getFieldLabel('paiement_devise_id')))
+            ->add('paiement_devise', null, array('label' => $this->getFieldLabel('paiement_devise_id'), 'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('d')
+                    ->orderBy('d.alias', 'ASC');
+            },))
             ->add('paiement_date', null, array('label' =>
             $this->getFieldLabel('paiement_date'),
                 'attr' => array('class' => 'datepicker'),
@@ -78,13 +85,13 @@ class A02TVAAdmin extends Admin
             'template' => $this->_bundle_name . ':CRUD:list_date_piece.html.twig'
         ))
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
-            ->add('devise.name', null, array('label' => $this->getFieldLabel('devise_id')))
+            ->add('devise.alias', null, array('label' => $this->getFieldLabel('devise_id')))
             ->add('montant_HT_en_devise', 'money', array('label' => $this->getFieldLabel('montant_HT_en_devise'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:montant_HT_en_devise.html.twig'))
             ->add('taux_de_TVA', 'percent', array('label' => $this->getFieldLabel('taux_de_TVA')))
             ->add('montant_TVA_francaise', 'money', array('label' => $this->getFieldLabel('montant_TVA_francaise'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:montant_TVA_francaise.html.twig'))
             ->add('montant_TTC', 'money', array('label' => $this->getFieldLabel('montant_TTC'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:montant_TTC.html.twig'))
             ->add('paiement_montant', 'money', array('label' => $this->getFieldLabel('paiement_montant'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:paiement_montant.html.twig'))
-            ->add('paiement_devise.name', null, array('label' => $this->getFieldLabel('paiement_devise_id')))
+            ->add('paiement_devise.alias', null, array('label' => $this->getFieldLabel('paiement_devise_id')))
             ->add('paiement_date', null, array(
             'label' => $this->getFieldLabel('paiement_date'),
             'template' => $this->_bundle_name . ':CRUD:list_paiement_date.html.twig'
