@@ -25,6 +25,11 @@ class AbstractTabsController extends Controller
     protected $client = null;
 
     /**
+     * @var null|array
+     */
+    protected $devise = null;
+
+    /**
      * @var string
      */
     protected $_tabAlias = '';
@@ -654,8 +659,6 @@ class AbstractTabsController extends Controller
                     }
                     unset($sheets, $objPHPExcel, $objReader);
 
-                    $this->devise_list = $this->getDeviseList();
-
                     file_put_contents($tmpFile, '');
                     $this->importValidateAndSave($content_arr);
 
@@ -695,7 +698,7 @@ class AbstractTabsController extends Controller
                 $adminCode = 'application.sonata.admin.' . strtolower($class);
                 /* @var $admin \Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin */
                 $admin = $this->container->get('sonata.admin.pool')->getAdminByAdminCode($adminCode);
-                $admin->setDeviseList($this->devise_list);
+                $admin->setDeviseList($this->getDeviseList());
                 $admin->setValidateImport();
 
                 foreach ($data as $key => $line) {
@@ -884,10 +887,11 @@ class AbstractTabsController extends Controller
      */
     public function getDeviseList()
     {
-        $objects = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:ListDevises')->findAll();
-        foreach ($objects as $object) {
-
-            $this->devise[$object->getAlias()] = $object;
+        if (is_null($this->devise)){
+            $objects = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:ListDevises')->findAll();
+            foreach ($objects as $object) {
+                $this->devise[$object->getAlias()] = $object;
+            }
         }
 
         return $this->devise;
