@@ -5,6 +5,7 @@ namespace Application\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Doctrine\ORM\EntityRepository;
 
 class AmountType extends AbstractType
 {
@@ -20,6 +21,10 @@ class AmountType extends AbstractType
             ->add('devise' . $this->_extension, 'entity', array(
             'class' => 'ApplicationSonataClientBundle:ListDevises',
             'attr' => array('class' => 'devise'),
+            'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('d')
+                    ->orderBy('d.alias', 'ASC');
+            },
         ));
     }
 
