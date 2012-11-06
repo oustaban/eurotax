@@ -17,45 +17,45 @@ class LoadListDevisesData extends AbstractLoadListData
      * @var array
      */
     protected $_lists = array(
-        'eur' => array(
+        'EUR' => array(
             'name' => 'Euro',
             'symbol' => '€',
         ),
 
-        'usd' => array(
+        'USD' => array(
             'name' => 'US Dollar',
             'symbol' => '$',
         ),
 
-        'gbp' => array(
+        'GBP' => array(
             'name' => 'British Pound',
             'symbol' => '$',
         ),
 
-        'inr' => array(
+        'INR' => array(
             'name' => 'Indian Rupee',
             'symbol' => 'INR',
         ),
 
-        'aud' => array(
+        'AUD' => array(
             'name' => 'Australian Dollar',
             'symbol' => '$',
         ),
 
-        'cad' => array(
+        'CAD' => array(
             'name' => 'Canadian Dollar',
             'symbol' => '$',
         ),
 
-        'aed' => array(
+        'AED' => array(
             'name' => 'Emirati Dirham',
             'symbol' => 'د.إ',
         ),
-        'chf' => array(
+        'CHF' => array(
             'name' => 'Swiss Franc',
             'symbol' => 'CHF',
         ),
-        'jpy' => array(
+        'JPY' => array(
             'name' => 'Japanese Yen',
             'symbol' => '¥',
         ),

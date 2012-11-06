@@ -890,7 +890,7 @@ class AbstractTabsController extends Controller
         if (is_null($this->devise)){
             $objects = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:ListDevises')->findAll();
             foreach ($objects as $object) {
-                $this->devise[$object->getAlias()] = $object;
+                $this->devise[strtolower($object->getAlias())] = $object;
             }
         }
 
