@@ -126,7 +126,7 @@ class A02TVAAdmin extends Admin
             ->validateMontantTVAFrancaise()
             ->validateMontantTTC()
             ->validatePaiementMontantMois()
-            ->validateTauxDeChange()
+            //->validateTauxDeChange()
             ->validateHT();
 
         if ($this->getValidateImport()) {
