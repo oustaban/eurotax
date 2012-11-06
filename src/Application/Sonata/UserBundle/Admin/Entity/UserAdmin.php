@@ -70,6 +70,7 @@ class UserAdmin extends BaseUserAdmin
             ->add('lastname', null, array('required' => false))
             ->add('phone', null, array('required' => false))
             ->add('groups', 'sonata_type_model', array('required' => false, 'expanded' => true, 'multiple' => true))
+            ->add('enabled', null, array('required' => false))
             ->end();
     }
 
