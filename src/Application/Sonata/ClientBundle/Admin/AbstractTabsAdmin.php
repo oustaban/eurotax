@@ -210,7 +210,7 @@ abstract class AbstractTabsAdmin extends Admin
         $_rows = array();
         foreach ($rows as $row) {
             /** @var $row \Application\Sonata\ClientBundle\Entity\ListCountries() */
-            $_rows[$row->getCode()] = $row->__toString();
+            $_rows[$row->getCode()] = $row->getSepa();
         }
 
         return $_rows;

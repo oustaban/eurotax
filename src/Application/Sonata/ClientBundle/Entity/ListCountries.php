@@ -27,13 +27,22 @@ class ListCountries
      */
     private $sepa;
 
+
+    /**
+     * @var string $name
+     *
+     * @ORM\Column(name="name", type="string", length=200)
+     */
+    private $name;
+
     /**
      * @return string
      */
-    public function __toString()
-    {
-        return (string)$this->getSepa();
+    public function __toString(){
+
+        return (string)$this->getName();
     }
+
 
     /**
      * Set code
@@ -47,6 +56,7 @@ class ListCountries
 
         return $this;
     }
+
 
     /**
      * Get code
@@ -79,5 +89,28 @@ class ListCountries
     public function getSepa()
     {
         return $this->sepa;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return ListCountries
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }

@@ -8,12 +8,52 @@ class Excel
     private $_excel;
     private $_client;
     private $_config_excel;
+    protected $_skip = 3;
     private $_file_name;
     private $translator;
     private $_sheet;
-    private $_sumHT = NULL;
-    private $_sumTVA = NULL;
+    private $_sum = array();
     private $_ABC = array();
+    protected $_styleBorders = array(
+        'borders' => array(
+            'top' => array(
+                'style' => \PHPExcel_Style_Border::BORDER_THIN,
+            ),
+            'bottom' => array(
+                'style' => \PHPExcel_Style_Border::BORDER_THIN,
+            ),
+            'left' => array(
+                'style' => \PHPExcel_Style_Border::BORDER_THIN,
+            ),
+            'right' => array(
+                'style' => \PHPExcel_Style_Border::BORDER_THIN,
+            ),
+        ),
+    );
+
+    protected $_styleArrayGray = array(
+        'borders' => array(
+            'top' => array(
+                'style' => \PHPExcel_Style_Border::BORDER_THIN,
+            ),
+            'bottom' => array(
+                'style' => \PHPExcel_Style_Border::BORDER_THIN,
+            ),
+            'left' => array(
+                'style' => \PHPExcel_Style_Border::BORDER_THIN,
+            ),
+            'right' => array(
+                'style' => \PHPExcel_Style_Border::BORDER_THIN,
+            ),
+        ),
+        'fill' => array(
+            'type' => \PHPExcel_Style_Fill::FILL_SOLID,
+            'color' => array(
+                'argb' => 'bfbfbf',
+            ),
+        ),
+    );
+
 
     public function __construct()
     {
@@ -54,8 +94,9 @@ class Excel
 
     protected function getProperties()
     {
-
         $this->_excel->getProperties()->setCreator("Eurotax");
+        $this->_excel->getDefaultStyle()->getFont()->setName('Arial');
+        $this->_excel->getDefaultStyle()->getFont()->setSize(10);
     }
 
     /**
@@ -77,15 +118,9 @@ class Excel
 
             $this->_sheet->setTitle($table);
 
-            $this->_sumHT = NULL;
-            $this->_sumTVA = NULL;
+            $this->_sum = array();
             $this->_sheet->fromArray($this->fromArray($params));
 
-            $toCol = $this->_sheet->getColumnDimension($this->_sheet->getHighestColumn())->getColumnIndex();
-            $toCol++;
-            for ($k = 'A'; $k !== $toCol; $k++) {
-                $this->_sheet->getColumnDimension($k)->setAutoSize(true);
-            }
             $i++;
         }
 
@@ -104,6 +139,7 @@ class Excel
         $ceil = array();
         $k = 'A';
         $this->_ABC = array();
+
         foreach ($params['fields'] as $key => $field) {
 
             $value = call_user_func(array($row, $this->getMethod($field)));
@@ -121,14 +157,22 @@ class Excel
                 $ceil[$field] = $date > 0 ? $date : '';
 
             } else {
-                $ceil[$field] = (double)$value;
+                if (is_float($value)) {
+                    $ceil[$field] = (double)$value;
+                } else {
+                    $ceil[$field] = (string)$value;
+                }
             }
 
-            if ($field == 'HT') {
-                $this->_sumHT = $key;
+            if ($field == 'HT' || $field == 'TVA') {
+                $this->_sum[$field] = $key;
             }
-            if ($field == 'TVA') {
-                $this->_sumTVA = $key;
+
+            if (in_array($field, array('HT', 'TVA', 'mois', 'montant_TTC', 'montant_TVA_francaise', 'paiement_montant', 'paiement_devise'))) {
+
+                $this->_sheet->getStyle($k . $inc)->applyFromArray($this->_styleArrayGray);
+            } else {
+                $this->_sheet->getStyle($k . $inc)->applyFromArray($this->_styleBorders);
             }
 
             $this->_ABC[$key] = $k;
@@ -139,21 +183,77 @@ class Excel
     }
 
 
-    protected function getTotal($count, $key, $left = NULL, $right = NULL)
+    protected function getTotal($count, $key, $text = '', $position = 'left')
     {
+        $styleArray = array(
+            'font' => array(
+                'bold' => true,
+            ),
+            'borders' => array(
+                'top' => array(
+                    'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                ),
+                'bottom' => array(
+                    'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                ),
+                'left' => array(
+                    'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                ),
+                'right' => array(
+                    'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                ),
+            ),
+            'fill' => array(
+                'type' => \PHPExcel_Style_Fill::FILL_SOLID,
+                'color' => array(
+                    'argb' => 'bfbfbf',
+                ),
+            ),
+        );
+
+
         if (isset($this->_ABC[$key]) && $sum = $this->_ABC[$key]) {
 
-            if ($left) {
-                $this->_sheet->setCellValue($this->_ABC[$key - 1] . ($count), $left);
+            if ($position == 'left') {
+                $this->_sheet->setCellValue($this->_ABC[$key - 1] . $count, $text);
+                $this->_sheet->getStyle($this->_ABC[$key - 1] . $count)->applyFromArray(array(
+                    'font' => array(
+                        'bold' => true,
+                    ),
+                    'borders' => array(
+                        'top' => array(
+                            'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                        ),
+                        'bottom' => array(
+                            'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                        ),
+                        'left' => array(
+                            'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                        ),
+                        'right' => array(
+                            'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                        ),
+                    ),
+                ));
+            } else {
+                $this->_sheet->setCellValue($this->_ABC[$key + 1] . ($count), $text);
+                $this->_sheet->getStyle($this->_ABC[$key + 1] . $count)->applyFromArray(array(
+                    'font' => array(
+                        'bold' => true,
+                    ),
+                ));
             }
 
 
-            if ($right) {
-                $this->_sheet->setCellValue($this->_ABC[$key + 1] . ($count), $right);
-            }
+            $this->_sheet->setCellValue($sum . $count, '=SUM(' . $sum . '2:' . $sum . ($count - $this->_skip) . ')')
+                ->getStyle($sum . $count)->getNumberFormat()->setFormatCode('# ##0\ "€";[Red]-# ##0\ "€"');
 
-            $this->_sheet->setCellValue($sum . ($count), '=SUM(' . $sum . '1:' . $sum . ($count - 1) . ')')
-                ->getStyle($sum . ($count))->getNumberFormat()->setFormatCode('# ##0\ "€";[Red]-# ##0\ "€"');
+
+            $this->_sheet->getStyle($sum . $count)->applyFromArray($styleArray);
+
+            #$this->_sheet->getStyle($sum . '2:' . $sum . ($count - 3))->applyFromArray($styleArray2);
+//                ->setFillType(\PHPExcel_Style_Fill::FILL_SOLID);
+
         }
     }
 
@@ -241,16 +341,30 @@ class Excel
             $rows[] = $this->getCell($key + $count, $row, $params);
         }
 
-//        for ($i = 0; $i < 3; $i++) {
-//            $rows[] = $this->getSkipLine($params);
-//        }
-//
-//        $this->getTotal(count($rows) + 1, $this->_sumHT, 'TOTAL du mois');
-//        $this->getTotal(count($rows) + 1, $this->_sumTVA, NULL, 'selon filtre');
+        $count = count($rows) + 1;
+        $this->footer($count);
 
         return $rows;
     }
 
+    /**
+     * @param $value
+     */
+    protected function setSkip($value)
+    {
+        $this->_skip = $value;
+    }
+
+    protected function footer($count)
+    {
+        if (isset($this->_sum['HT'])) {
+            $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'TOTAL du mois', 'left');
+        }
+
+        if (isset($this->_sum['TVA'])) {
+            $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'selon filtre', 'right');
+        }
+    }
 
     /**
      * @param $params
@@ -258,11 +372,20 @@ class Excel
      */
     protected function headers($params)
     {
-
         $col = array();
+        $k = 'A';
+        $header = 1;
         foreach ($params['fields'] as $field) {
             $col[] = $this->translator->trans('ApplicationSonataClientOperationsBundle.list.' . $params['entity'] . '.' . $field);
+            $this->_sheet->getStyle($k . $header)->applyFromArray($this->_styleBorders)
+                ->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+            $this->_sheet->getColumnDimension($k)->setAutoSize(true);
+
+            $k++;
         }
+        $this->_sheet->getRowDimension($header)->setRowHeight(38);
+
         return $col;
     }
 
