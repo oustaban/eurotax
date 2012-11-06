@@ -815,10 +815,16 @@ class AbstractTabsController extends Controller
 
                 if (!empty($ver)) {
                     $ver = array_shift($ver);
+                }
+                else {
+                    $ver = array('counts' => 1);
+                }
 
-                    if ($ver['counts'] == $version) {
-                        return true;
-                    }
+                if ((int)$ver['counts'] == (int)$version) {
+                    return true;
+                }
+                else {
+                    $this->get('session')->setFlash('sonata_flash_info', $this->admin->trans('Version "' . $version . '" invalide'));
                 }
             }
             else {
