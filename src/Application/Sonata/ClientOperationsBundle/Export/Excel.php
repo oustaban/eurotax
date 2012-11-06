@@ -143,7 +143,6 @@ class Excel
             $this->_sum = array();
 
             $this->_sheet->fromArray($this->fromArray($params));
-
             $i++;
         }
 
@@ -362,49 +361,11 @@ class Excel
     {
         $result = $this->queryResult($params);
 
-        $method = 'result' . $params['entity'];
-        if (method_exists($this, $method)) {
-            $rows = $this->$method($result, $params);
-        } else {
-            $rows = $this->resultDefault($result, $params);
-        }
+        $rows = $this->resultDefault($result, $params);
 
         unset($result);
         return $rows;
     }
-
-    /**
-     * @param $result
-     * @param $params
-     * @return array
-     */
-//    protected function resultDEBExped($result, $params)
-//    {
-//        $rows = array();
-//        return $rows;
-//    }
-//
-//
-//    /**
-//     * @param $result
-//     * @param $params
-//     * @return array
-//     */
-//    protected function resultDEBIntro($result, $params)
-//    {
-//        $rows = array();
-//        return $rows;
-//    }
-
-//    protected function resultDEB(){
-//
-//        //skip line
-//        if ($params['skip_line'] > 1) {
-//            for ($i = 1; $i < $params['skip_line']; $i++) {
-//                $rows[] = $this->getSkipLine($params);
-//            }
-//        }
-//    }
 
     /**
      * @param $result
@@ -694,7 +655,6 @@ class Excel
 
             $this->setWidthSize($k, $field);
 //            $this->_sheet->getColumnDimension($k)->setAutoSize(true);
-
             $last = $k;
             $k++;
         }
@@ -774,6 +734,9 @@ class Excel
         }
 
         $this->setRowHeight($header);
+
+        //autofilter
+        $this->_sheet->setAutoFilter('A' . $header . ':' . $last . $header);
 
         return $col;
     }
