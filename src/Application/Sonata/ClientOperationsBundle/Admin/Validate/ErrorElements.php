@@ -37,29 +37,32 @@ class ErrorElements
     {
         if ($this->_object->getPaiementMontant() && !$this->_object->getTauxDeChange()) {
 
-            $currency = $this->_object->getDevise()->getAlias();
+            $devise = $this->_object->getDevise();
+            if ($devise) {
+                $currency = $devise->getAlias();
 
-            $taux_de_change = 0;
-            if ($currency == 'euro') {
-                $taux_de_change = 1;
-            } else {
-                $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
-                $em = $doctrine->getManager();
-                /* @var $devise \Application\Sonata\DevisesBundle\Entity\Devises */
-                $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($this->_object->getDatePieceFormat());
+                $taux_de_change = 0;
+                if ($currency == 'euro') {
+                    $taux_de_change = 1;
+                } else {
+                    $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+                    $em = $doctrine->getManager();
+                    /* @var $devise \Application\Sonata\DevisesBundle\Entity\Devises */
+                    $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($this->_object->getDatePieceFormat());
 
-                if ($devise) {
-                    $method = 'getMoney' . ucfirst($currency);
-                    if (method_exists($devise, $method)) {
-                        $taux_de_change = $devise->$method();
+                    if ($devise) {
+                        $method = 'getMoney' . ucfirst($currency);
+                        if (method_exists($devise, $method)) {
+                            $taux_de_change = $devise->$method();
+                        }
                     }
                 }
-            }
 
-            $this->_object->setTauxDeChange($taux_de_change);
+                $this->_object->setTauxDeChange($taux_de_change);
 
-            if (empty($taux_de_change)) {
-                $this->_errorElement->with('taux_de_change')->addViolation('Wrong "Taux de change"')->end();
+                if (empty($taux_de_change)) {
+                    $this->_errorElement->with('taux_de_change')->addViolation('Wrong "Taux de change"')->end();
+                }
             }
         }
 
