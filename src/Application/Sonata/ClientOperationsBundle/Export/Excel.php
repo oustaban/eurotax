@@ -485,8 +485,8 @@ class Excel
             if (isset($this->_sum['valeur_fiscale'])) {
 
                 $key = $this->_sum['valeur_fiscale'];
-                $cell = $this->_header_cell[$key];
                 if (isset($this->_header_cell[$key])) {
+                    $cell = $this->_header_cell[$key];
                     $number = $count + $this->_skip;
 
                     $this->_sheet->setCellValue($this->_header_cell[$key - 2] . $number, 'Totaux');
