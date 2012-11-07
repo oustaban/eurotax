@@ -41,3 +41,71 @@ ApplicationSonataClientOperationsBundle:
     th:
       nett: Imponibile
       tva: IVA
+
+V11 I N T List: V11-INT
+V11 I N T Edit: Edit
+V09 D E S List: V09-DES
+V09 D E S Edit: Edit
+V07 E X List: V07-EX
+V07 E X Edit: Edit
+D E B Exped List: DEB Exped
+D E B Exped Edit: Edit
+V05 L I C List: V05-LIC
+V05 L I C Edit: Edit
+V03283 I List: V03-283-I
+V03283 I Edit: Edit
+V01 T V A List: V01-TVA
+V01 T V A Edit: Edit
+A02 T V A List: A02-TVA
+A02 T V A Edit: Edit
+A04283 I List: A04-283-I
+A04283 I Edit: Edit
+A06 A I B List: A06-AIB
+A06 A I B Edit: Edit
+D E B Intro List: DEB Intro
+D E B Intro Edit: Edit
+A08 I M List: A08-IM
+A08 I M Edit: Edit
+A10 C A F List: A10-CAF
+A10 C A F Edit: Edit
+verrouiller_confirm: Etes-vous sur de vouloir verrouiller toutes les operations pour ce mois ?
+deverrouiller_confirm: Etes-vous sur de vouloir déverrouiller toutes les operations pour ce mois ?
+
+v01tva:
+  title: V01-TVA
+
+v03283i:
+  title: V03-283-I
+
+v05lic:
+  title: V05-LIC
+
+debexped:
+  title: DEB Exped
+
+v07ex:
+ title: V07-EX
+
+v09des:
+  title: V09-DES
+
+v11int:
+  title: V11-INT
+
+a02tva:
+  title: A02-TVA
+
+a04283i:
+  title: A04-283-I
+
+a06aib:
+  title: A06-AIB
+
+debintro:
+  title: DEB Intro
+
+a08im:
+  title: A08-IM
+
+a10caf:
+  title: A10-CAF

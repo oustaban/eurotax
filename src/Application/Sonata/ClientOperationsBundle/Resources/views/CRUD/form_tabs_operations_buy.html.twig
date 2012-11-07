@@ -1,36 +1,38 @@
 {% block form_tabs %}
+{% spaceless %}
 <div class="clientoperations_tabs_types_block">
     <ul class="nav nav-pills">
         {% if client_id %}
         <li {% if active_tab=='a02tva' %}class="active"{% endif %}>
-            <a href="{{ path('admin_sonata_clientoperations_a02tva_list', _filter_json) }}">A02-TVA</a>
+            <a href="{{ path('admin_sonata_clientoperations_a02tva_list', _filter_json) }}">{{ 'a02tva.title'|trans }}</a>
         </li>
         {% endif %}
         {% if client_id %}
         <li {% if active_tab=='a04283i' %}class="active"{% endif %}>
-            <a href="{{ path('admin_sonata_clientoperations_a04283i_list', _filter_json) }}">A04-283-I</a>
+            <a href="{{ path('admin_sonata_clientoperations_a04283i_list', _filter_json) }}">{{ 'a04283i.title'|trans }}</a>
         </li>
         {% endif %}
         {% if client_id %}
         <li {% if active_tab=='a06aib' %}class="active"{% endif %}>
-            <a href="{{ path('admin_sonata_clientoperations_a06aib_list', _filter_json) }}">A06-AIB</a>
+            <a href="{{ path('admin_sonata_clientoperations_a06aib_list', _filter_json) }}">{{ 'a06aib.title'|trans }}</a>
         </li>
         {% endif %}
         {% if client_id %}
         <li {% if active_tab=='debintro' %}class="active"{% endif %}>
-            <a href="{{ path('admin_sonata_clientoperations_debintro_list', _filter_json) }}">DEB Intro</a>
+            <a href="{{ path('admin_sonata_clientoperations_debintro_list', _filter_json) }}">{{ 'debintro.title'|trans }}</a>
         </li>
         {% endif %}
         {% if client_id %}
         <li {% if active_tab=='a08im' %}class="active"{% endif %}>
-            <a href="{{ path('admin_sonata_clientoperations_a08im_list', _filter_json) }}">A08-IM</a>
+            <a href="{{ path('admin_sonata_clientoperations_a08im_list', _filter_json) }}">{{ 'a08im.title'|trans }}</a>
         </li>
         {% endif %}
         {% if client_id %}
         <li {% if active_tab=='a10caf' %}class="active"{% endif %}>
-            <a href="{{ path('admin_sonata_clientoperations_a10caf_list', _filter_json) }}">A10-CAF</a>
+            <a href="{{ path('admin_sonata_clientoperations_a10caf_list', _filter_json) }}">{{ 'a10caf.title'|trans }}</a>
         </li>
         {% endif %}
     </ul>
 </div>
+{% endspaceless %}
 {% endblock %}
