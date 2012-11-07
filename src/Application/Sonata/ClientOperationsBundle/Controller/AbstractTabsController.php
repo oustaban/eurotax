@@ -41,6 +41,7 @@ class AbstractTabsController extends Controller
     protected $_import_counts = array();
     protected $_import_reports = array();
     protected $_client_documents = array();
+    protected $_client_dir = '';
     protected $_imports = null;
     protected $_parameters_url = array();
 
@@ -375,6 +376,7 @@ class AbstractTabsController extends Controller
             'client_id' => $this->client_id,
             'client' => $this->getClient(),
             'client_documents' => $this->_client_documents,
+            'client_dir' => $this->_client_dir,
             'month_list' => $this->getMonthList(),
             'month' => $this->_month,
             'query_month' => $this->_query_month,
@@ -588,15 +590,9 @@ class AbstractTabsController extends Controller
      */
     protected function _initClientDocuments()
     {
-        /* @var $em \Doctrine\ORM\EntityManager */
-        $em = $this->getDoctrine()->getManager();
-        $qb = $em->createQueryBuilder();
+        $this->_client_documents = $this->getClient()->getFiles();
 
-        $this->_client_documents = $qb->select('d')
-            ->from('Application\Sonata\ClientBundle\Entity\Document', 'd')
-            ->where('d.client_id = :client_id')
-            ->setParameter(':client_id', $this->client_id)
-            ->getQuery()->getResult();
+        $this->_client_dir = \Application\Sonata\ClientBundle\Entity\Client::getFilesWebDir($this->getClient());
 
         return $this;
     }

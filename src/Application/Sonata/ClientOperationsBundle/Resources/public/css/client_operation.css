@@ -100,3 +100,6 @@ table.table td.sonata-ba-list-field-money {
     list-style-type: none;
     margin-left: 10px;
 }
+#client_folder ul li{
+    white-space: nowrap;
+}

@@ -14,6 +14,12 @@ class PercentType extends BaseType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $attr = $builder->getAttribute('sonata_admin');
+        if (isset($attr['class'])){
+            $attr['class'] .= ' percent';
+            $builder->setAttribute('sonata_admin', $attr);
+        }
+
         $builder->addViewTransformer(new PercentToLocalizedStringTransformer($options['precision'], $options['type']));
     }
 
