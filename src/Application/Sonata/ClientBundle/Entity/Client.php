@@ -1221,6 +1221,32 @@ class Client
     }
 
     /**
+     * Get files directory absolute path
+     *
+     * @param int|Client $client
+     * @return string
+     */
+    public static function getFilesAbsoluteDir($client)
+    {
+        return DOCUMENT_ROOT . self::getFilesWebDir($client);
+    }
+
+    /**
+     * Get files directory web path
+     *
+     * @param int|Client $client
+     * @return string
+     */
+    public static function getFilesWebDir($client)
+    {
+        if ($client instanceof Client) {
+            $client = $client->getId();
+        }
+
+        return UPLOAD_DOCUMENTS_WEB_PATH . '/' . $client;
+    }
+
+    /**
      * Move file
      *
      * @param string $fromFile
@@ -1229,9 +1255,11 @@ class Client
      */
     public function moveFile($fromFile, $toFile)
     {
-        //$files = $this->getFiles();
+        if (is_file($fromFile)) {
+            rename($fromFile, str_replace(array('//', '/\\'), '/', self::getFilesAbsoluteDir($this) . '/' . $toFile));
 
-        self::scanFilesTree($this);
+            self::scanFilesTree($this);
+        }
 
         return $this;
     }
