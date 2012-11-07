@@ -181,7 +181,19 @@ jQuery(document).ready(function ($) {
      * */
     if ($('.js-coordonnees').size()) {
 
-        $(' .sonata-ba-list .table tbody').sortable({
+        var $tbody = $(' .sonata-ba-list .table tbody');
+        var handle = '<td><div href="#" title="' + Sonata.drag_text + '" class="tabledrag-handle handle">&nbsp;</div></td>';
+
+        $('.sonata-ba-list .table thead tr').append('<th></th>');
+
+        $('.sonata-ba-list .table tbody tr').append(handle);
+
+        $('.sonata-ba-list .table thead a').click(function () {
+            return false;
+        })
+
+        $tbody.sortable({
+            handle:'.handle',
             helper:function (e, ui) {
                 ui.children().each(function () {
                     $(this).width($(this).width());
