@@ -15,8 +15,10 @@ class MoneyType extends BaseType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $attr = $builder->getAttribute('sonata_admin');
-        $attr['class'] .= ' money';
-        $builder->setAttribute('sonata_admin', $attr);
+        if (isset($attr['class'])){
+            $attr['class'] .= ' money';
+            $builder->setAttribute('sonata_admin', $attr);
+        }
 
         $builder->addViewTransformer(new MoneyToLocalizedStringTransformer(
             $options['precision'],
