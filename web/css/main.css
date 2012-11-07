@@ -176,3 +176,6 @@ tr.sonata-ba-list-field-header .headerSortDown:hover {
 .negative_value {
     color: red;
 }
+form input.money {
+    text-align: right;
+}

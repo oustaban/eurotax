@@ -14,6 +14,10 @@ class NumberType extends BaseType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $attr = $builder->getAttribute('sonata_admin');
+        $attr['class'] .= ' number';
+        $builder->setAttribute('sonata_admin', $attr);
+
         $builder->addViewTransformer(new NumberToLocalizedStringTransformer(
             $options['precision'],
             $options['grouping'],
