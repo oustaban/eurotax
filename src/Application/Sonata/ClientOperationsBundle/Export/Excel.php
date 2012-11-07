@@ -88,6 +88,9 @@ class Excel
         $this->_file_name = $this->_client . '-Exportation-TVA-' . date('Y-m') . '-1';
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return (string)$this->getFileName();
@@ -263,23 +266,26 @@ class Excel
         if (isset($this->_header_cell[$key]) && $cell = $this->_header_cell[$key]) {
 
             if ($position == 'left') {
-                $this->_sheet->setCellValue($this->_header_cell[$key - 1] . $number, $text);
-                $this->_sheet->getStyle($this->_header_cell[$key - 1] . $number)->applyFromArray(array(
-                    'borders' => array(
-                        'top' => array(
-                            'style' => \PHPExcel_Style_Border::BORDER_THIN,
+
+                if (isset($this->_header_cell[$key - 1])) {
+                    $this->_sheet->setCellValue($this->_header_cell[$key - 1] . $number, $text);
+                    $this->_sheet->getStyle($this->_header_cell[$key - 1] . $number)->applyFromArray(array(
+                        'borders' => array(
+                            'top' => array(
+                                'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                            ),
+                            'bottom' => array(
+                                'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                            ),
+                            'left' => array(
+                                'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                            ),
+                            'right' => array(
+                                'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                            ),
                         ),
-                        'bottom' => array(
-                            'style' => \PHPExcel_Style_Border::BORDER_THIN,
-                        ),
-                        'left' => array(
-                            'style' => \PHPExcel_Style_Border::BORDER_THIN,
-                        ),
-                        'right' => array(
-                            'style' => \PHPExcel_Style_Border::BORDER_THIN,
-                        ),
-                    ),
-                ));
+                    ));
+                }
 
                 if ($bold) {
                     $styleArray += array(
@@ -289,12 +295,14 @@ class Excel
                 }
 
             } else {
-                $this->_sheet->setCellValue($this->_header_cell[$key + 1] . ($number), $text);
-                $this->_sheet->getStyle($this->_header_cell[$key + 1] . $number)->applyFromArray(array(
-                    'font' => array(
-                        'bold' => true,
-                    ),
-                ));
+                if (isset($this->_header_cell[$key + 1])) {
+                    $this->_sheet->setCellValue($this->_header_cell[$key + 1] . ($number), $text);
+                    $this->_sheet->getStyle($this->_header_cell[$key + 1] . $number)->applyFromArray(array(
+                        'font' => array(
+                            'bold' => true,
+                        ),
+                    ));
+                }
             }
 
             $this->_sheet->setCellValue($cell . $number, $this->getFormula($value, $cell, $number))
@@ -556,7 +564,7 @@ class Excel
         $col = array();
         $k = 'A';
         $last = '';
-        $header = $params['skip_line'];
+        $wRows = $params['skip_line'];
         $styleHeader = array();
         foreach ($params['fields'] as $field) {
             $col[] = $this->translator->trans('ApplicationSonataClientOperationsBundle.list.' . $params['entity'] . '.' . $field);
@@ -646,14 +654,14 @@ class Excel
                 }
             }
 
-            $this->_sheet->getStyle($k . $header)
+            $this->_sheet->getStyle($k . $wRows)
                 ->applyFromArray($this->_styleBorders + (isset($styleHeader[$field]) ? $styleHeader[$field] : array()))
                 ->getAlignment()
                 ->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER)
                 ->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER)
                 ->setWrapText(true);
 
-            $this->setWidthSize($k, $field);
+            $this->setWidthSize($k, $field, $params);
 //            $this->_sheet->getColumnDimension($k)->setAutoSize(true);
             $last = $k;
             $k++;
@@ -733,41 +741,44 @@ class Excel
             }
         }
 
-        $this->setRowHeight($header);
+        $this->setRowHeight($wRows, $params);
 
         //autofilter
-        $this->_sheet->setAutoFilter('A' . $header . ':' . $last . $header);
+        $this->_sheet->setAutoFilter('A' . $wRows . ':' . $last . $wRows);
 
         return $col;
     }
 
     /**
-     * @param $header
+     * @param $wRows
+     * @param $params
      */
-    protected function setRowHeight($header)
+    protected function setRowHeight($wRows, $params)
     {
-        $params = $this->getParams();
+        switch ($params['entity']) {
 
-        if ($params['entity'] == 'DEBIntro' || $params['entity'] == 'DEBExped') {
-            $this->_sheet->getRowDimension($header)->setRowHeight(52);
+            case 'DEBIntro':
+            case 'DEBExped':
+                $this->_sheet->getRowDimension($wRows)->setRowHeight(52);
+                break;
 
-        } else {
-            $this->_sheet->getRowDimension($header)->setRowHeight(38);
+            default:
+                $this->_sheet->getRowDimension($wRows)->setRowHeight(38);
+                break;
         }
     }
 
     /**
-     * @param $ABC
+     * @param $wColumn
      * @param $field
+     * @param $params
      */
-    protected function setWidthSize($ABC, $field)
+    protected function setWidthSize($wColumn, $field, $params)
     {
-        $params = $this->getParams();
-
         switch ($field) {
 
             case 'commentaires':
-                $this->_sheet->getColumnDimension($ABC)->setWidth(16);
+                $this->_sheet->getColumnDimension($wColumn)->setWidth(16);
                 break;
         }
 
@@ -776,12 +787,12 @@ class Excel
 
                 case 'CEE':
                 case 'valeur_statistique':
-                    $this->_sheet->getColumnDimension($ABC)->setWidth(16);
+                    $this->_sheet->getColumnDimension($wColumn)->setWidth(16);
                     break;
 
                 case 'conditions_livraison':
                 case 'nature_transaction':
-                    $this->_sheet->getColumnDimension($ABC)->setWidth(15);
+                    $this->_sheet->getColumnDimension($wColumn)->setWidth(15);
                     break;
 
             }
