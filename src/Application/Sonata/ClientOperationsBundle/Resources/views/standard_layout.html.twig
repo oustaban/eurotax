@@ -5,12 +5,23 @@
 {% use ':popup:popup_form.html.twig' %}
 
 {% block javascripts %}
-{{ parent() }}
-<script type="text/javascript">
-    var uniqid = '{{ admin.uniqid }}';
-    {% if js_settings_json is defined and js_settings_json is not empty %}
-    var Sonata = {};
-    jQuery.extend(Sonata, {{ js_settings_json|raw }});
-    {% endif%}
-</script>
+    {{ parent() }}
+    <script type="text/javascript">
+        var uniqid = '{{ admin.uniqid }}';
+        {% if js_settings_json is defined and js_settings_json is not empty %}
+        var Sonata = {};
+        jQuery.extend(Sonata, {{ js_settings_json|raw }});
+        {% endif%}
+    </script>
 {% endblock javascripts %}
+
+
+{% block title %}
+{% spaceless %}
+{% if client is defined %}
+    {% set active_tab_title = active_tab~'.title' %}
+    {% set label = client ~ ' - Operations - ' ~ active_tab_title|trans %}
+{% endif %}
+{{ label }}
+{% endspaceless %}
+{% endblock title %}

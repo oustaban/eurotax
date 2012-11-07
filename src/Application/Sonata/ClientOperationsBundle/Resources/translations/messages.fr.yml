@@ -540,3 +540,42 @@ A10 C A F List: A10-CAF
 A10 C A F Edit: Edit
 verrouiller_confirm: Etes-vous sur de vouloir verrouiller toutes les operations pour ce mois ?
 deverrouiller_confirm: Etes-vous sur de vouloir déverrouiller toutes les operations pour ce mois ?
+
+v01tva:
+  title: V01-TVA
+
+v03283i:
+  title: V03-283-I
+
+v05lic:
+  title: V05-LIC
+
+debexped:
+  title: DEB Exped
+
+v07ex:
+ title: V07-EX
+
+v09des:
+  title: V09-DES
+
+v11int:
+  title: V11-INT
+
+a02tva:
+  title: A02-TVA
+
+a04283i:
+  title: A04-283-I
+
+a06aib:
+  title: A06-AIB
+
+debintro:
+  title: DEB Intro
+
+a08im:
+  title: A08-IM
+
+a10caf:
+  title: A10-CAF
