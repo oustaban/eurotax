@@ -3,12 +3,12 @@
         {% if folder == '.' %}
             {% for file in subfiles %}
                 <li>
-                    <i class="icon icon-file"></i> <a href="{{ root~'/'~file }}" target="_blank">{{ file }}</a>
+                    <i class="icon icon-file"></i><a href="{{ root~'/'~file }}" target="_blank">{{ file }}</a>
                 </li>
             {% endfor %}
         {% else %}
             <li>
-                <i class="icon icon-folder-open"></i> {{ folder }}
+                <i class="icon icon-folder-open"></i>{{ folder }}
                 {% include "ApplicationSonataClientOperationsBundle::CRUD/directory_tree.html.twig" with {'files': subfiles, 'root': root~'/'~folder} %}
             </li>
         {% endif %}
