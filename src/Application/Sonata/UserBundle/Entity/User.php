@@ -79,8 +79,9 @@ class User extends AbstractedUser implements UserInterface
 
     public function __construct()
     {
-
         parent::__construct();
+
+        $this->enabled = true;
 
         $group = \AppKernel::getStaticContainer()->get('doctrine')->getRepository('ApplicationSonataUserBundle:Group')->find(static::GroupId);
         if ($group) {
@@ -292,7 +293,6 @@ class User extends AbstractedUser implements UserInterface
     {
         $this->createdAt = new \DateTime;
         $this->updatedAt = new \DateTime;
-        $this->enabled = 1;
     }
 
     /**
