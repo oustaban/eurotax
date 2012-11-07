@@ -1221,12 +1221,12 @@ class Client
     }
 
     /**
-     * Add file
+     * Move file
      *
      * @param string $file
      * @return Client
      */
-    public function addFiles($file)
+    public function moveFile($file)
     {
         //$files = $this->getFiles();
 
@@ -1235,9 +1235,8 @@ class Client
 
     /**
      * @static
-     *
+     * @param int|Client $client
      */
-    public static function scanFilesTree(){
-
+    public static function scanFilesTree($client){
     }
 }
