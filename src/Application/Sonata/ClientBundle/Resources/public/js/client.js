@@ -48,8 +48,6 @@ jQuery(document).ready(function ($) {
             attach:function (context) {
                 var _uniqid = symfony_ajax.get_uniqid();
 
-                $('#' + _uniqid + '_num_de_ganrantie').attr('placeholder', 'sans référence');
-
                 $('.form-horizontal div.control-group [name]', context).each(function (i) {
                     var name = $(this).attr('name').split('[').pop();
                     $(this).addClass(name.substr(0, name.length - 1));

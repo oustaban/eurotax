@@ -52,7 +52,10 @@ class GarantieAdmin extends Admin
                     1 => 'A établir',
                 ))
         )
-            ->add('num_de_ganrantie', null, array('label' => $this->getFieldLabel('num_de_ganrantie')))
+            ->add('num_de_ganrantie', null, array(
+            'label' => $this->getFieldLabel('num_de_ganrantie'),
+            'data' => $id ? null : 'sans référence',
+        ))
             ->add('date_demission', null, array(
             'label' => $this->getFieldLabel('date_demission'),
             'attr' => array('class' => 'datepicker'),
@@ -82,18 +85,17 @@ class GarantieAdmin extends Admin
         $listMapper
             ->add('type_garantie.name', null, array('label' => $this->getFieldLabel('type_garantie')))
             ->add('montant', 'money', array(
-                'label' => $this->getFieldLabel('montant'),
-                'template' => 'ApplicationSonataClientBundle:CRUD:list_garantie_montant.html.twig',
-            ))
+            'label' => $this->getFieldLabel('montant'),
+            'template' => 'ApplicationSonataClientBundle:CRUD:list_garantie_montant.html.twig',
+        ))
             ->add('date_decheance', 'date', array(
-                'label' => $this->getFieldLabel('date_decheance'),
-                'template' => 'ApplicationSonataClientBundle:CRUD:list_date_decheance.html.twig',
-            ))
+            'label' => $this->getFieldLabel('date_decheance'),
+            'template' => 'ApplicationSonataClientBundle:CRUD:list_date_decheance.html.twig',
+        ))
             ->add('expire', null, array(
-                'label' => $this->getFieldLabel('expire'),
-                'template' => 'ApplicationSonataClientBundle:CRUD:list_boolean_expire.html.twig',
-            ))
-        ;
+            'label' => $this->getFieldLabel('expire'),
+            'template' => 'ApplicationSonataClientBundle:CRUD:list_boolean_expire.html.twig',
+        ));
     }
 
     /**
@@ -115,6 +117,7 @@ class GarantieAdmin extends Admin
                 $em = $doctrine->getManager();
 
                 //example: http://redmine.testenm.com/issues/880
+                $status_object = $em->getRepository('ApplicationSonataClientBundle:ListCompteStatuts')->find(1);
 
                 //1
                 $compte = new Compte();
@@ -123,6 +126,7 @@ class GarantieAdmin extends Admin
                 $compte->setOperation('Versement du dépôt de garantie');
                 $compte->setClientId($object->getClientId());
                 $compte->setGarantie($object);
+                $compte->setStatut($status_object);
                 $em->persist($compte);
 
 
@@ -133,6 +137,7 @@ class GarantieAdmin extends Admin
                 $compte->setOperation('Transfert dans compte de dépôt');
                 $compte->setClientId($object->getClientId());
                 $compte->setGarantie($object);
+                $compte->setStatut($status_object);
                 $em->persist($compte);
 
                 //3
@@ -142,6 +147,7 @@ class GarantieAdmin extends Admin
                 $compte_de_depot->setOperation('Transfert du compte courant');
                 $compte_de_depot->setClientId($object->getClientId());
                 $compte_de_depot->setGarantie($object);
+                $compte_de_depot->setStatut($status_object);
                 $em->persist($compte_de_depot);
 
                 $em->flush();
@@ -176,7 +182,7 @@ class GarantieAdmin extends Admin
                 ->execute();
 
             if ($compte_de_depot['total'] != 0) {
-                echo '<div class="alert alert-error">Transfert du compte courant</div>';
+                echo '<div class="alert alert-error">'.$this->trans("Impossible de supprimer le dépot de garantie car le solde du compte de dépot n'est pas nul").'</div>';
                 exit;
             } else {
 
