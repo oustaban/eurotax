@@ -1228,7 +1228,13 @@ class Client
      */
     public static function getFilesAbsoluteDir($client)
     {
-        return DOCUMENT_ROOT . self::getFilesWebDir($client);
+        $dir = DOCUMENT_ROOT . self::getFilesWebDir($client);
+
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        return $dir;
     }
 
     /**
