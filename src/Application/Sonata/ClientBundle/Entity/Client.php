@@ -1223,12 +1223,15 @@ class Client
     /**
      * Move file
      *
-     * @param string $file
+     * @param string $fromFile
+     * @param string $toFile
      * @return Client
      */
-    public function moveFile($file)
+    public function moveFile($fromFile, $toFile)
     {
         //$files = $this->getFiles();
+
+        self::scanFilesTree($this);
 
         return $this;
     }
