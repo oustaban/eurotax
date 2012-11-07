@@ -291,7 +291,7 @@ class Client
      *
      * @ORM\Column(name="files", type="text")
      */
-    protected $files = '[]';
+    protected $files = '{".":[]}';
 
 
     /**
@@ -1200,22 +1200,22 @@ class Client
     /**
      * Get files
      *
-     * @return string
+     * @return \stdClass|array
      */
     public function getFiles()
     {
-        return json_decode($this->files);
+        return json_decode($this->files?:'{".":[]}', true);
     }
 
     /**
      * Set files
      *
-     * @param array $files
+     * @param \stdClass|array $files
      * @return Client
      */
     public function setFiles($files)
     {
-        $this->files = json_encode($files);
+        $this->files = json_encode($files, JSON_UNESCAPED_UNICODE);
 
         return $this;
     }
@@ -1275,5 +1275,36 @@ class Client
      * @param int|Client $client
      */
     public static function scanFilesTree($client){
+        /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+        $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $doctrine->getManager();
+
+        if (!($client instanceof Client)) {
+            $client = $em->getRepository('ApplicationSonataClientBundle:Client')->find($client);
+        }
+        $client->setFiles(self::recursiveScanDir(self::getFilesAbsoluteDir($client)));
+
+        $em->persist($client);
+        $em->flush();
+    }
+
+    protected static function recursiveScanDir($dir){
+        $files = array('.' => array());
+        foreach (new \DirectoryIterator($dir) as $fileInfo) {
+            /** @var $fileInfo \DirectoryIterator */
+            if(!$fileInfo->isDot()) {
+                if ($fileInfo->isFile()){
+                    $files['.'][] = mb_convert_encoding($fileInfo->getFilename(), 'UTF-8');
+                }
+                elseif ($fileInfo->isDir()){
+                    $files[mb_convert_encoding($fileInfo->getFilename(), 'UTF-8')] = self::recursiveScanDir($fileInfo->getPathname());
+                }
+            }
+        }
+
+        krsort($files);
+
+        return $files;
     }
 }

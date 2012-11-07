@@ -331,7 +331,7 @@ class Document
      */
     public function getAbsolutePath()
     {
-        return null === $this->file_alias ? null : $this->getUploadDir() . '/' . $this->file_alias;
+        return null === $this->file_alias ? null : Client::getFilesAbsoluteDir($this->client_id) . '/' . $this->file_alias;
     }
 
     /**
@@ -339,17 +339,9 @@ class Document
      */
     public function getWebPath()
     {
-        return null === $this->file_alias ? null : UPLOAD_DOCUMENTS_WEB_PATH . '/' . $this->file_alias;
+        return null === $this->file_alias ? null : Client::getFilesWebDir($this->client_id) . '/' . $this->file_alias;
     }
 
-
-    /**
-     * @return string
-     */
-    protected function getUploadDir()
-    {
-        return UPLOAD_DOCUMENTS_PATH;
-    }
 
     /**
      * @return mixed
@@ -366,7 +358,8 @@ class Document
 
         $this->file_alias = md5($this->document) . time() . '.' . $extension;
 
-        $this->file->move($this->getUploadDir(), $this->file_alias);
+        $this->file->move(Client::getFilesAbsoluteDir($this->client_id), $this->file_alias);
+        Client::scanFilesTree($this->client_id);
 
         $this->document = $pathinfo['filename'];
 
@@ -443,7 +436,7 @@ class Document
     public function setStatutDocumentNotaire(\Application\Sonata\ClientBundle\Entity\ListStatutDocuments $statutDocumentNotaire = null)
     {
         $this->statut_document_notaire = $statutDocumentNotaire;
-    
+
         return $this;
     }
 
@@ -466,7 +459,7 @@ class Document
     public function setStatutDocumentApostille(\Application\Sonata\ClientBundle\Entity\ListStatutDocuments $statutDocumentApostille = null)
     {
         $this->statut_document_apostille = $statutDocumentApostille;
-    
+
         return $this;
     }
 

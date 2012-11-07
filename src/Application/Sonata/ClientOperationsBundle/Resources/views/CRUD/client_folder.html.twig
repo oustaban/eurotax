@@ -1,13 +1,9 @@
 {% block client_folder %}
 <div id="client_folder" class="pull-right">
     <ul>
-        <li><i class="icon icon-folder-open"></i>
-            Répertoire Client
-            <ul>
-                {% for object in client_documents %}
-                <li><i class="icon icon-file"></i><a href="{{ object.webPath }}" target="_blank">{{ object.document }}</a></li>
-                {% endfor %}
-            </ul>
+        <li>
+            <i class="icon icon-folder-open"></i> Répertoire Client
+            {% include "ApplicationSonataClientOperationsBundle::CRUD/directory_tree.html.twig" with {'files': client_documents, 'root': client_dir} %}
         </li>
     </ul>
 </div>
