@@ -8,6 +8,7 @@ class Excel
     private $_excel;
     private $_client;
     private $_config_excel;
+    private $_locking = false;
     protected $_skip = 3;
     private $_file_name;
     private $translator;
@@ -83,9 +84,17 @@ class Excel
     /**
      *
      */
-    protected function getFileName()
+    protected function setFileName()
     {
         $this->_file_name = $this->_client . '-Exportation-TVA-' . date('Y-m') . '-1';
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFileNameExt()
+    {
+        return $this->_file_name . '.xlsx';
     }
 
     /**
@@ -93,7 +102,7 @@ class Excel
      */
     public function __toString()
     {
-        return (string)$this->getFileName();
+        return (string)$this->getFileNameExt();
     }
 
     protected function getProperties()
@@ -178,22 +187,22 @@ class Excel
     }
 
     /**
-     * @param $inc
+     * @param $wRow
      * @param $row
      * @param $params
      * @return array
      */
-    protected function getCell($inc, $row, $params)
+    protected function getCell($wRow, $row, $params)
     {
         $ceil = array();
-        $k = 'A';
+        $wColumn = 'A';
         $this->_header_cell = array();
 
         foreach ($params['fields'] as $key => $field) {
 
-            $value = call_user_func(array($row, $this->getMethod($field)));
+            $this->_sheet->getStyle($wColumn . $wRow)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-            $this->_sheet->getStyle($k . $inc)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $value = call_user_func(array($row, $this->getMethod($field)));
 
             if ($value instanceof \Application\Sonata\ClientBundle\Entity\ListDevises) {
                 $ceil[$field] = $value->getAlias();
@@ -201,36 +210,36 @@ class Excel
                 //excel time
                 $date = \PHPExcel_Shared_Date::PHPToExcel($value);
                 if ($field == 'mois') {
-                    $this->_sheet->getStyle($k . $inc)->getNumberFormat()->setFormatCode('MM-YY');
+                    $this->_sheet->getStyle($wColumn . $wRow)->getNumberFormat()->setFormatCode('MM-YY');
                 } else {
-                    $this->_sheet->getStyle($k . $inc)->getNumberFormat()->setFormatCode('dd.mm.YYYY');
+                    $this->_sheet->getStyle($wColumn . $wRow)->getNumberFormat()->setFormatCode('dd.mm.YYYY');
                 }
                 $ceil[$field] = $date > 0 ? $date : '';
 
             } else {
                 if (is_float($value)) {
                     $ceil[$field] = (double)$value;
-                    $this->_sheet->getStyle($k . $inc)->getNumberFormat()->setFormatCode('#\ ##0\ ;[Red]-#\ ##0\ ');
+                    $this->_sheet->getStyle($wColumn . $wRow)->getNumberFormat()->setFormatCode('#\ ##0\ ;[Red]-#\ ##0\ ');
                 } else {
                     $ceil[$field] = (string)$value;
                 }
             }
 
             if ((in_array($field, array('mois', 'montant_TTC', 'montant_TVA_francaise', 'paiement_montant', 'paiement_devise')) || isset($this->_sum[$field]) && !($params['entity'] == 'DEBIntro' || $params['entity'] == 'DEBExped'))) {
-                $this->_sheet->getStyle($k . $inc)->applyFromArray($this->_styleArrayGray);
+                $this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_styleArrayGray);
             } else {
-                $this->_sheet->getStyle($k . $inc)->applyFromArray($this->_styleBorders);
+                $this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_styleBorders);
             }
 
-            $this->_header_cell[$key] = $k;
-            $k++;
+            $this->_header_cell[$key] = $wColumn;
+            $wColumn++;
         }
 
         return $ceil;
     }
 
 
-    protected function getTotal($number, $key, $value = 'SUM', $text = '', $position = 'left', $bold = true)
+    protected function getTotal($wRow, $key, $value = 'SUM', $text = '', $position = 'left', $bold = true)
     {
         $styleArray = array(
             'borders' => array(
@@ -268,8 +277,8 @@ class Excel
             if ($position == 'left') {
 
                 if (isset($this->_header_cell[$key - 1])) {
-                    $this->_sheet->setCellValue($this->_header_cell[$key - 1] . $number, $text);
-                    $this->_sheet->getStyle($this->_header_cell[$key - 1] . $number)->applyFromArray(array(
+                    $this->_sheet->setCellValue($this->_header_cell[$key - 1] . $wRow, $text);
+                    $this->_sheet->getStyle($this->_header_cell[$key - 1] . $wRow)->applyFromArray(array(
                         'borders' => array(
                             'top' => array(
                                 'style' => \PHPExcel_Style_Border::BORDER_THIN,
@@ -296,8 +305,8 @@ class Excel
 
             } else {
                 if (isset($this->_header_cell[$key + 1])) {
-                    $this->_sheet->setCellValue($this->_header_cell[$key + 1] . ($number), $text);
-                    $this->_sheet->getStyle($this->_header_cell[$key + 1] . $number)->applyFromArray(array(
+                    $this->_sheet->setCellValue($this->_header_cell[$key + 1] . ($wRow), $text);
+                    $this->_sheet->getStyle($this->_header_cell[$key + 1] . $wRow)->applyFromArray(array(
                         'font' => array(
                             'bold' => true,
                         ),
@@ -305,20 +314,20 @@ class Excel
                 }
             }
 
-            $this->_sheet->setCellValue($cell . $number, $this->getFormula($value, $cell, $number))
-                ->getStyle($cell . $number)->getNumberFormat()->setFormatCode('# ##0\ "€";[Red]-# ##0\ "€"');
+            $this->_sheet->setCellValue($cell . $wRow, $this->getFormula($value, $cell, $wRow))
+                ->getStyle($cell . $wRow)->getNumberFormat()->setFormatCode('# ##0\ "€";[Red]-# ##0\ "€"');
 
-            $this->_sheet->getStyle($cell . $number)->applyFromArray($styleArray);
+            $this->_sheet->getStyle($cell . $wRow)->applyFromArray($styleArray);
         }
     }
 
     /**
      * @param $value
      * @param $cell
-     * @param $number
+     * @param $wRow
      * @return string
      */
-    protected function getFormula($value, $cell, $number)
+    protected function getFormula($value, $cell, $wRow)
     {
         $params = $this->getParams();
         $index = $params['skip_line'] + 1;
@@ -326,16 +335,16 @@ class Excel
         switch ($value) {
 
             case 'SUM':
-                return '=SUM(' . $cell . $index . ':' . $cell . ($number - $this->_skip) . ')';
+                return '=SUM(' . $cell . $index . ':' . $cell . ($wRow - $this->_skip) . ')';
                 break;
 
             case 'SUMIFGreaterThanZero':
-                return '=SUMIF(' . $cell . $index . ':' . $cell . ($number - $this->_skip) . ', ">0")';
+                return '=SUMIF(' . $cell . $index . ':' . $cell . ($wRow - $this->_skip) . ', ">0")';
                 break;
 
 
             case 'SUMIFLessThanZero':
-                return '=SUMIF(' . $cell . $index . ':' . $cell . ($number - $this->_skip) . ', "<0")';
+                return '=SUMIF(' . $cell . $index . ':' . $cell . ($wRow - $this->_skip) . ', "<0")';
                 break;
 
             default:
@@ -456,11 +465,11 @@ class Excel
                 $key = $this->_sum['valeur_fiscale'];
                 if (isset($this->_header_cell[$key])) {
                     $cell = $this->_header_cell[$key];
-                    $number = $count + $this->_skip;
+                    $wRow = $count + $this->_skip;
 
-                    $this->_sheet->setCellValue($this->_header_cell[$key - 2] . $number, 'Totaux');
-                    $this->_sheet->setCellValue($cell . $number, $this->getFormula('SUM', $cell, $number));
-                    $this->_sheet->getStyle($this->_header_cell[$key - 2] . $number . ':' . $this->_header_cell[$key] . $number)->applyFromArray($styleArray);
+                    $this->_sheet->setCellValue($this->_header_cell[$key - 2] . $wRow, 'Totaux');
+                    $this->_sheet->setCellValue($cell . $wRow, $this->getFormula('SUM', $cell, $wRow));
+                    $this->_sheet->getStyle($this->_header_cell[$key - 2] . $wRow . ':' . $this->_header_cell[$key] . $wRow)->applyFromArray($styleArray);
                 }
             }
             if (isset($this->_sum['valeur_statistique'])) {
@@ -468,10 +477,10 @@ class Excel
                 $key = $this->_sum['valeur_statistique'];
                 if (isset($this->_header_cell[$key])) {
                     $cell = $this->_header_cell[$key];
-                    $number = $count + $this->_skip;
+                    $wRow = $count + $this->_skip;
 
-                    $this->_sheet->setCellValue($cell . $number, $this->getFormula('SUM', $cell, $number));
-                    $this->_sheet->getStyle($this->_header_cell[$key - 1] . $number . ':' . $this->_header_cell[$key] . $number)->applyFromArray($styleArray);
+                    $this->_sheet->setCellValue($cell . $wRow, $this->getFormula('SUM', $cell, $wRow));
+                    $this->_sheet->getStyle($this->_header_cell[$key - 1] . $wRow . ':' . $this->_header_cell[$key] . $wRow)->applyFromArray($styleArray);
                 }
             }
         } else {
@@ -562,7 +571,7 @@ class Excel
     protected function headers($params)
     {
         $col = array();
-        $k = 'A';
+        $wColumn = 'A';
         $last = '';
         $wRows = $params['skip_line'];
         $styleHeader = array();
@@ -654,17 +663,17 @@ class Excel
                 }
             }
 
-            $this->_sheet->getStyle($k . $wRows)
+            $this->_sheet->getStyle($wColumn . $wRows)
                 ->applyFromArray($this->_styleBorders + (isset($styleHeader[$field]) ? $styleHeader[$field] : array()))
                 ->getAlignment()
                 ->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER)
                 ->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER)
                 ->setWrapText(true);
 
-            $this->setWidthSize($k, $field, $params);
-//            $this->_sheet->getColumnDimension($k)->setAutoSize(true);
-            $last = $k;
-            $k++;
+            $this->setWidthSize($wColumn, $field, $params);
+//            $this->_sheet->getColumnDimension($wColumn)->setAutoSize(true);
+            $last = $wColumn;
+            $wColumn++;
         }
 
         if ($params['entity'] == 'DEBIntro' || $params['entity'] == 'DEBExped') {
@@ -717,12 +726,12 @@ class Excel
             $this->_sheet->getStyle('A' . $index . ':' . $last . $index)->applyFromArray($this->_styleBorders);
             $this->_sheet->getRowDimension($index)->setRowHeight(25);
 
-            $k = 'A';
+            $wColumn = 'A';
             $index = 6;
             foreach ($params['fields'] as $key => $field) {
 
-                $this->_sheet->getCell($k . $index)->setValue($key + 1);
-                $this->_sheet->getStyle($k . $index)->applyFromArray($this->_styleBorders + array('fill' => array(
+                $this->_sheet->getCell($wColumn . $index)->setValue($key + 1);
+                $this->_sheet->getStyle($wColumn . $index)->applyFromArray($this->_styleBorders + array('fill' => array(
                     'type' => \PHPExcel_Style_Fill::FILL_SOLID,
                     'color' => array(
                         'argb' => '000000',
@@ -735,9 +744,9 @@ class Excel
                         ),
                     ),));
 
-                $this->_sheet->getStyle($k . $index)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $this->_sheet->getStyle($wColumn . $index)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-                $k++;
+                $wColumn++;
             }
         }
 
@@ -827,16 +836,26 @@ class Excel
      */
     public function render()
     {
-        $this->getFileName();
+        $this->setFileName();
         $this->getData();
 
-        header('Content-Type: application/excel');
-        header('Content-Disposition: attachment; filename="' . $this->_file_name . '.xlsx"');
-        header('Cache-Control: max-age=0');
+        if (!$this->get('_locking')) {
+            header('Content-Type: application/excel');
+            header('Content-Disposition: attachment; filename="' . $this->getFileNameExt() . '"');
+            header('Cache-Control: max-age=0');
+        }
 
         $writer = new \PHPExcel_Writer_Excel2007($this->_excel);
-        $writer->save('php://output');
+        $writer->save($this->get('_locking') ? $this->getFileAbsolute() : 'php://output');
 
         unset($this->_excel);
+    }
+
+    /**
+     * @return string
+     */
+    public function getFileAbsolute()
+    {
+        return TMP_UPLOAD_PATH . '/' . $this->getFileNameExt();
     }
 }
