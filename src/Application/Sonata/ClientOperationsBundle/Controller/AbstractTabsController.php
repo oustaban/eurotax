@@ -815,23 +815,19 @@ class AbstractTabsController extends Controller
 
                 if (!empty($ver)) {
                     $ver = array_shift($ver);
-                }
-                else {
+                } else {
                     $ver = array('counts' => 1);
                 }
 
                 if ((int)$ver['counts'] == (int)$version) {
                     return true;
-                }
-                else {
+                } else {
                     $this->get('session')->setFlash('sonata_flash_info', $this->admin->trans('Version "' . $version . '" invalide'));
                 }
-            }
-            else {
+            } else {
                 $this->get('session')->setFlash('sonata_flash_info', $this->admin->trans('Client "' . $nom_client . '" pas trouvé'));
             }
-        }
-        else {
+        } else {
             $this->get('session')->setFlash('sonata_flash_info', $this->admin->trans('Nom de fichier invalide'));
         }
 
@@ -898,7 +894,7 @@ class AbstractTabsController extends Controller
      */
     public function getDeviseList()
     {
-        if (is_null($this->devise)){
+        if (is_null($this->devise)) {
             $objects = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:ListDevises')->findAll();
             foreach ($objects as $object) {
                 $this->devise[strtolower($object->getAlias())] = $object;
@@ -1044,8 +1040,16 @@ class AbstractTabsController extends Controller
         $excel = $this->get('client.operation.excel');
         $excel->set('_client', $this->client);
         $excel->set('_config_excel', $this->_config_excel);
-
+        $excel->set('_locking', $this->getLocking());
         $excel->render();
+
+        if ($this->getLocking()) {
+
+            $this->client->moveFile($excel->getFileAbsolute(), $excel->getFileNameExt());
+
+            $this->get('session')->setFlash('sonata_flash_success', $this->admin->trans('File %name% was successfully saved at Client directory', array('%name%' => $excel)));
+            return new RedirectResponse($this->admin->generateUrl('list'));
+        }
         exit;
     }
 
