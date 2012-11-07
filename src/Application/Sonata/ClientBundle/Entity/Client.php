@@ -286,6 +286,13 @@ class Client
      */
     private $teledeclaration;
 
+    /**
+     * @var string  $files
+     *
+     * @ORM\Column(name="files", type="text")
+     */
+    protected $files = '[]';
+
 
     /**
      * Get id
@@ -1188,5 +1195,49 @@ class Client
          * UPDATE et_client SET code_client = id
          */
         $this->setCodeClient($code_client['code_client'] + 1);
+    }
+
+    /**
+     * Get files
+     *
+     * @return string
+     */
+    public function getFiles()
+    {
+        return json_decode($this->files);
+    }
+
+    /**
+     * Set files
+     *
+     * @param array $files
+     * @return Client
+     */
+    public function setFiles($files)
+    {
+        $this->files = json_encode($files);
+
+        return $this;
+    }
+
+    /**
+     * Add file
+     *
+     * @param string $file
+     * @return Client
+     */
+    public function addFiles($file)
+    {
+        //$files = $this->getFiles();
+
+        return $this;
+    }
+
+    /**
+     * @static
+     *
+     */
+    public static function scanFilesTree(){
+
     }
 }
