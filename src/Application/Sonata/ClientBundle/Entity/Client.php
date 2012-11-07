@@ -1215,6 +1215,7 @@ class Client
      */
     public function setFiles($files)
     {
+        var_dump(JSON_UNESCAPED_UNICODE);exit;
         $this->files = json_encode($files, JSON_UNESCAPED_UNICODE);
 
         return $this;
