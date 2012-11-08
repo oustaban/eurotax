@@ -100,7 +100,6 @@ class EtatsController extends Controller
 
         $this->_sheet = $excel->getActiveSheet();
 
-        $this->_sheet->getDefaultColumnDimension()->setWidth(10);
         $this->_sheet->setTitle($tabs_title);
         $this->_sheet->getTabColor()->setARGB('FFc3e59e');
 
