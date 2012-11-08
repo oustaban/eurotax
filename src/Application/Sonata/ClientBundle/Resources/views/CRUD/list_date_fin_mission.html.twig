@@ -1,5 +1,5 @@
 {% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
 
 {% block field %}
-{{ object.getDateDebutMission|datefmt_format(default_date_format) }}
+{{ object.getDateFinMission|datefmt_format(default_date_format) }}
 {% endblock field %}

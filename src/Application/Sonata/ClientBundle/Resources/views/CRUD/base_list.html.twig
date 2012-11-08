@@ -1,0 +1,19 @@
+{% extends 'SonataAdminBundle:CRUD:base_list.html.twig' %}
+
+{% block table_footer %}{% endblock table_footer %}
+
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript" src="{{ asset('bundles/applicationsonataclient/js/clients.js') }}"></script>
+{% endblock javascripts %}
+
+{% block javascriptsafter %}
+{{ parent() }}
+<script type="text/javascript">
+    var clientsDimmed = {{ globalsGet('clientsDimmed')|raw }};
+    for(var i in clientsDimmed){
+        addClient(clientsDimmed[i], 'dimmed')
+    }
+
+</script>
+{% endblock javascriptsafter %}

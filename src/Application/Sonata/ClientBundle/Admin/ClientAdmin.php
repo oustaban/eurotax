@@ -19,6 +19,8 @@ use Doctrine\ORM\EntityRepository;
 
 class ClientAdmin extends Admin
 {
+    protected $maxPerPage = 100000;
+
     public $dashboards = array('Admin');
     public $date_format_datetime = 'dd/MM/yyyy';
     public $date_format_php = 'd/m/Y';
@@ -243,6 +245,8 @@ class ClientAdmin extends Admin
             case 'create':
             case 'edit':
                 return $this->_bundle_name . ':CRUD:edit.html.twig';
+            case 'list':
+                return $this->_bundle_name . ':CRUD:base_list.html.twig';
         }
 
         return parent::getTemplate($name);
@@ -390,5 +394,23 @@ class ClientAdmin extends Admin
 
             $em->flush();
         }
+    }
+
+    public function createQuery($context = 'list')
+    {
+        /** @var $query \Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery */
+        $query = parent::createQuery($context);
+
+        if ($context == 'list'){
+            /** @var $builder \Doctrine\ORM\QueryBuilder */
+            $builder = $query->getQueryBuilder();
+            $builder
+                ->andWhere('(NOT ' . $builder->getRootAlias() . '.date_fin_mission BETWEEN :date_lowest AND :date_highest) OR (' . $builder->getRootAlias() . '.date_fin_mission IS NULL)')
+                ->setParameter(':date_lowest', new \DateTime('1000-01-01'))
+                ->setParameter(':date_highest', new \DateTime())
+            ;
+        }
+
+        return $query;
     }
 }

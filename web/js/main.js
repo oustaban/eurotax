@@ -63,3 +63,22 @@ function add_label_required(field) {
 function rm_label_required(field) {
     field.text(field.text().replace('*', ''));
 }
+
+function formatDate(date, format){
+    var val = {
+        'd': date.getDate(),
+        'm': date.getMonth() + 1,
+        'yy': date.getFullYear().toString().substring(2),
+        'yyyy': date.getFullYear()
+    };
+    val['dd'] = (val.d < 10 ? '0' : '') + val.d;
+    val['mm'] = (val.m < 10 ? '0' : '') + val.m;
+
+    var parts = ['yyyy', 'mm', 'dd', 'yy', 'm', 'd'];
+
+    for (var p in parts){
+        format = format.replace(parts[p], val[parts[p]]);
+    }
+
+    return format;
+}

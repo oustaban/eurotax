@@ -21,11 +21,23 @@ class HomeController extends Controller
 
         $clients = $em->getRepository('ApplicationSonataClientBundle:Client')
             ->createQueryBuilder('c')
-            ->select('c, cdi, u, ndc')
+            ->select('c, cdi, u, ndc, 0 as dimmed')
             ->leftJoin('c.center_des_impots', 'cdi')
             ->leftJoin('c.user', 'u')
             ->leftJoin('c.nature_du_client', 'ndc')
             ->andWhere('(NOT c.date_fin_mission BETWEEN :date_lowest AND :date_highest) OR (c.date_fin_mission IS NULL)')
+            ->setParameter(':date_lowest', new \DateTime('1000-01-01'))
+            ->setParameter(':date_highest', new \DateTime())
+            ->orderBy('c.raison_sociale')
+            ->getQuery()->execute();
+
+        $clientsDimmed = $em->getRepository('ApplicationSonataClientBundle:Client')
+            ->createQueryBuilder('c')
+            ->select('c, cdi, u, ndc, 1 as dimmed')
+            ->leftJoin('c.center_des_impots', 'cdi')
+            ->leftJoin('c.user', 'u')
+            ->leftJoin('c.nature_du_client', 'ndc')
+            ->andWhere('c.date_fin_mission BETWEEN :date_lowest AND :date_highest')
             ->setParameter(':date_lowest', new \DateTime('1000-01-01'))
             ->setParameter(':date_highest', new \DateTime())
             ->orderBy('c.raison_sociale')
@@ -37,7 +49,7 @@ class HomeController extends Controller
             ->getQuery()->execute();
 
         return array(
-            'clients' => $clients,
+            'clients' => array_merge($clients, $clientsDimmed),
             'cookies' => $this->getRequest()->cookies,
             'alert_count' => $alerts[0]['cnt'],
         );

@@ -68,44 +68,43 @@
         {% block table_body %}
         <tbody>
         {% for client in clients %}
-        <tr>
-
-            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client.id }}">
-                {{ client.getRaisonSociale }}
+        <tr class="{% if client.dimmed%}dimmed{% endif %}">
+            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client[0].id }}">
+                {{ client[0].getRaisonSociale }}
             </td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client.id }}">
-                {{ client.getNatureDuClient }}
+            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client[0].id }}">
+                {{ client[0].getNatureDuClient }}
             </td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client.id }}">
-                {{ client.user }}
+            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client[0].id }}">
+                {{ client[0].user }}
             </td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client.id }}">
-                {{ client.getCenterDesImpots }}
+            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client[0].id }}">
+                {{ client[0].getCenterDesImpots }}
             </td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-integer"  objectId="{{ client.id }}">
-                {{ client.getDateDeDepot }}
+            <td class="sonata-ba-list-field sonata-ba-list-field-integer"  objectId="{{ client[0].id }}">
+                {{ client[0].getDateDeDepot }}
             </td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-boolean"  objectId="{{ client.id }}">
-                {% set img = client.teledeclaration ? 'accept' : 'exclamation' %}
+            <td class="sonata-ba-list-field sonata-ba-list-field-boolean"  objectId="{{ client[0].id }}">
+                {% set img = client[0].teledeclaration ? 'accept' : 'exclamation' %}
                 <img alt="{{ ('ApplicationSonataDashboardBundle.alt.' ~ img)|trans() }}" src="{{ asset('/bundles/sonataadmin/famfamfam/' ~ img|trans() ~ '.png') }}">
             </td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client.id }}">
-                {#{{ client.mois_tva }}#}
+            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client[0].id }}">
+                {#{{ client[0].mois_tva }}#}
             </td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client.id }}">
-                {#{{ client.BAPSA }}#}
+            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client[0].id }}">
+                {#{{ client[0].BAPSA }}#}
             </td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client.id }}">
-                {#{{ client.solde_du_compte }}#}
+            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client[0].id }}">
+                {#{{ client[0].solde_du_compte }}#}
             </td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client.id }}">
-                {#{{ client.remboursement_de_TVA }}#}
+            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client[0].id }}">
+                {#{{ client[0].remboursement_de_TVA }}#}
             </td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-date"  objectId="{{ client.id }}">
-                {{ client.getDateDebutMission|datefmt_format(default_date_format) }}
+            <td class="sonata-ba-list-field sonata-ba-list-field-date"  objectId="{{ client[0].id }}">
+                {{ client[0].getDateDebutMission|datefmt_format(default_date_format) }}
             </td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-date"  objectId="{{ client.id }}">
-                {{ client.getDateFinMission|datefmt_format(default_date_format) }}
+            <td class="sonata-ba-list-field sonata-ba-list-field-date"  objectId="{{ client[0].id }}">
+                {{ client[0].getDateFinMission|datefmt_format(default_date_format) }}
             </td>
         </tr>
         {% endfor %}
