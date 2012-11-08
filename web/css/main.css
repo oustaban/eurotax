@@ -182,3 +182,6 @@ form input.money {
 tr.dimmed, tr.dimmed a {
     color: gray;
 }
+.filterColumns {
+    white-space: nowrap;
+}

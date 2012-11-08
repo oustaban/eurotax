@@ -18,7 +18,7 @@ function init_home_page() {
             underline:true,
             alternateRowClassNames:['rowa', 'rowb']
         });
-        $('#clientList .filterColumns td:first').append('<button style="margin-top:10px;" class="btn" id="emptyColumnFilters"><i class="icon icon-trash"></i></button>');
+        $('#clientList .filterColumns td:first').prepend('<button style="margin-right:10px;" class="btn" id="emptyColumnFilters"><i class="icon icon-remove"></i></button>');
         $("#emptyColumnFilters").click(function(){
             $(this).parent().parent().find("._filterText").val("").keyup();
         });
