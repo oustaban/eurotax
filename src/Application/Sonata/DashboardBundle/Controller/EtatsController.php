@@ -21,6 +21,7 @@ class EtatsController extends Controller
         'client' => array(
             'title' => "Client",
             'width' => 13.14,
+            'aligment' => \PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
         ),
         'date_decheance' => array(
             'title' => "Echéance",
@@ -35,6 +36,7 @@ class EtatsController extends Controller
         'nom_de_la_banques_id' => array(
             'title' => "Banque",
             'width' => 37.86,
+            'aligment' => \PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
         ),
         'num_de_ganrantie' => array(
             'title' => "Numéro",
