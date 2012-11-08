@@ -44,6 +44,12 @@ class Document
 
 
     /**
+     * @var string $file_alias
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $file_alias;
+
+    /**
      * @var integer $type_document
      *
      * @ORM\ManyToOne(targetEntity="ListTypeDocuments", inversedBy="document")
@@ -325,7 +331,7 @@ class Document
      */
     public function getAbsolutePath()
     {
-        return null === $this->getDocument() ? null : Client::getFilesAbsoluteDir($this->client_id) . '/' . $this->getDocument();
+        return null === $this->file_alias ? null : Client::getFilesAbsoluteDir($this->client_id) . '/' . $this->file_alias;
     }
 
     /**
@@ -333,7 +339,7 @@ class Document
      */
     public function getWebPath()
     {
-        return null === $this->getDocument() ? null : Client::getFilesWebDir($this->client_id) . '/' . $this->getDocument();
+        return null === $this->file_alias ? null : Client::getFilesWebDir($this->client_id) . '/' . $this->file_alias;
     }
 
 
@@ -347,10 +353,15 @@ class Document
         }
 
         $pathinfo = pathinfo($this->file->getClientOriginalName());
-        $this->setDocument($pathinfo['filename']);
 
-        $this->file->move(Client::getFilesAbsoluteDir($this->client_id), $this->getDocument());
+        $extension = $this->getAllowedExtension($pathinfo['extension']);
+
+        $this->file_alias = $pathinfo['filename'] . '.' . $extension;
+
+        $this->file->move(Client::getFilesAbsoluteDir($this->client_id), $this->file_alias);
         Client::scanFilesTree($this->client_id);
+
+        $this->document = $pathinfo['filename'];
 
         unset($this->file);
     }
@@ -390,6 +401,31 @@ class Document
             @unlink($file);
         }
     }
+
+    /**
+     * Set file_alias
+     *
+     * @param string $fileAlias
+     * @return Document
+     */
+    public function setFileAlias($fileAlias)
+    {
+        $this->file_alias = $fileAlias;
+
+        return $this;
+    }
+
+    /**
+     * Get file_alias
+     *
+     * @return string
+     */
+    public function getFileAlias()
+    {
+        return $this->file_alias;
+    }
+
+
 
     /**
      * Set statut_document_notaire
