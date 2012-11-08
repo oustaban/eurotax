@@ -193,6 +193,7 @@ list:
     no_de_compte: N° de compte
     code_swift: Code Swift
     IBAN: IBAN
+    pays_id: Pays
     SEPA: SEPA
 
   commentaire:
