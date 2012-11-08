@@ -2,14 +2,11 @@
     clear: both;
     float: none;
 }
+
 .client_tabs_block button {
     margin-top: -60px;
     float: right;
 }
-.js-coordonnees .sonata-ba-list tbody {
-    cursor: move;
-}
-
 
 .sonata-filter-form  #filter_client_id_row {
     display: none;
@@ -34,13 +31,13 @@
 
 .js-tarif .form-client-invoicing .field-2 label,
 .js-tarif .form-client-invoicing .field-4 label,
-.js-tarif .form-client-invoicing .field-5 label{
+.js-tarif .form-client-invoicing .field-5 label {
     width: 80px;
 }
 
 .js-tarif .form-client-invoicing .field-2 .controls,
 .js-tarif .form-client-invoicing .field-4 .controls,
-.js-tarif .form-client-invoicing .field-5 .controls{
+.js-tarif .form-client-invoicing .field-5 .controls {
     margin-left: 100px;
 }
 
@@ -66,7 +63,6 @@
     top: 180px;
 }
 
-
 .js-tarif .form-client-invoicing .field-6 {
     position: absolute;
     left: 400px;
@@ -77,42 +73,56 @@
     min-height: 280px;
 }
 
-.js-tarif .row-fluid .span5{
+.js-tarif .row-fluid .span5 {
     width: 220px;
 }
 
-.js-tarif .form-client-invoicing .field-0 .span5{
+.js-tarif .form-client-invoicing .field-0 .span5 {
     width: 100px;
 }
 
-.js-tarif .form-client-invoicing .field-4 .span5{
+.js-tarif .form-client-invoicing .field-4 .span5 {
     width: 100px;
 }
-
 
 .date_notaire,
 .date_apostille,
 .statut_document_notaire,
-.statut_document_apostille{
+.statut_document_apostille {
     float: left;
 }
 
 .statut_document_notaire select,
-.statut_document_apostille select{
+.statut_document_apostille select {
     width: auto;
 }
 
 .statut_document_notaire .control-label,
-.statut_document_apostille .control-label{
+.statut_document_apostille .control-label {
     width: 28%;
 }
+
 .statut_document_notaire .controls,
-.statut_document_apostille .controls{
+.statut_document_apostille .controls {
     margin-left: 75px;
 }
+
 .js-coordonnees .table {
     width: auto;
 }
+
 .js-garantie .table {
     width: auto;
+}
+
+.tabledrag-handle,
+.tabledrag-handle:hover {
+    text-decoration: none;
+    cursor: move;
+}
+
+.handle {
+    height: 20px;
+    width: 20px;
+    background: url(../images/draggable.png) 0px 0px no-repeat;
 }

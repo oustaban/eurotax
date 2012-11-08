@@ -24,6 +24,7 @@ class CoordonneesController extends Controller
                 'sortable' => $this->admin->generateUrl('sortable', array('filter' => array('client_id' => array('value' => $this->client_id)))),
             ),
             'country_sepa' => $this->admin->getListCountrySepa(),
+            'drag_text' => $this->admin->trans('Drag to re-order'),
         ));
     }
 
@@ -39,14 +40,14 @@ class CoordonneesController extends Controller
             throw $this->createNotFoundException("No data coordonnees");
         }
 
+        $em = $this->getDoctrine()->getManager();
         foreach ($ids as $weight => $id) {
-            $em = $this->getDoctrine()->getManager();
 
-            $coordonnees = $em->getRepository('ApplicationSonataClientBundle:Coordonnees')->find($id);
-            $coordonnees->setOrders($weight + 1);
-
-            $em->flush();
+            $object = $em->getRepository('ApplicationSonataClientBundle:Coordonnees')->find($id);
+            $object->setOrders($weight + 1);
+            $em->persist($object);
         }
+        $em->flush();
 
         return $this->renderJson(array(
             'status' => 1,

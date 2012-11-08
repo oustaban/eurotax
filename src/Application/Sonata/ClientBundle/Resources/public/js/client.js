@@ -48,8 +48,6 @@ jQuery(document).ready(function ($) {
             attach:function (context) {
                 var _uniqid = symfony_ajax.get_uniqid();
 
-                $('#' + _uniqid + '_num_de_ganrantie').attr('placeholder', 'sans référence');
-
                 $('.form-horizontal div.control-group [name]', context).each(function (i) {
                     var name = $(this).attr('name').split('[').pop();
                     $(this).addClass(name.substr(0, name.length - 1));
@@ -181,7 +179,19 @@ jQuery(document).ready(function ($) {
      * */
     if ($('.js-coordonnees').size()) {
 
-        $(' .sonata-ba-list .table tbody').sortable({
+        var $tbody = $(' .sonata-ba-list .table tbody');
+        var handle = '<td><div href="#" title="' + Sonata.drag_text + '" class="tabledrag-handle handle">&nbsp;</div></td>';
+
+        $('.sonata-ba-list .table thead tr').append('<th></th>');
+
+        $('.sonata-ba-list .table tbody tr').append(handle);
+
+        $('.sonata-ba-list .table thead a').click(function () {
+            return false;
+        })
+
+        $tbody.sortable({
+            handle:'.handle',
             helper:function (e, ui) {
                 ui.children().each(function () {
                     $(this).width($(this).width());

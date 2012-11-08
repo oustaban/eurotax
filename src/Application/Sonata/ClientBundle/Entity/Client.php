@@ -295,6 +295,10 @@ class Client
 
 
     /**
+     * @ORM\OneToMany (targetEntity="Garantie", mappedBy="client")
+     */
+    public $garantie;
+    /**
      * Get id
      *
      * @return integer
@@ -959,7 +963,13 @@ class Client
      */
     public function __toString()
     {
-        return $this->getNom() ? : '-';
+        return (string)$this->getNom() ? : '-';
+    }
+
+
+    public function __construct(){
+
+        $this->garantie = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 

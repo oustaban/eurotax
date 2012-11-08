@@ -10,6 +10,20 @@ use Sonata\AdminBundle\Controller\CRUDController as Controller;
  */
 class UserController extends Controller
 {
+
+    /**
+     * @param object $object
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function redirectTo($object)
+    {
+        if ($this->get('request')->get('btn_create_and_edit')) {
+            $this->get('request')->query->set('btn_update_and_list', $this->get('request')->get('btn_create_and_edit'));
+        }
+
+        return parent::redirectTo($object);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -29,7 +43,7 @@ class UserController extends Controller
      */
     public function batchActionDeleteIsRelevant($idx, $all_elements)
     {
-        foreach($idx as $index => $id) {
+        foreach ($idx as $index => $id) {
             if (!$this->_canUserBeDeleted($id)) {
                 unset($idx[$index]);
             }
@@ -38,7 +52,8 @@ class UserController extends Controller
         return count($idx) || $all_elements;
     }
 
-    protected function _canUserBeDeleted($id) {
+    protected function _canUserBeDeleted($id)
+    {
         /** @var $user \Application\Sonata\UserBundle\Entity\User */
         $user = $this->admin->getObject($id);
 

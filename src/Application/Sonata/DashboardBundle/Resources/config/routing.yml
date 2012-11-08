@@ -1,0 +1,7 @@
+etats:
+    pattern: /etats
+    defaults: { _controller: ApplicationSonataDashboardBundle:Etats:index }
+
+etats_export:
+    pattern: /etats/garanties
+    defaults: { _controller: ApplicationSonataDashboardBundle:Etats:garanties }

@@ -31,6 +31,15 @@ class Garantie
     /**
      * @var integer $type_garantie
      *
+     * @ORM\ManyToOne(targetEntity="Client", inversedBy="garantie")
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
+     */
+
+    private $client;
+
+    /**
+     * @var integer $type_garantie
+     *
      * @ORM\ManyToOne(targetEntity="ListTypeGaranties", inversedBy="garantie")
      * @ORM\JoinColumn(name="type_garantie_id", referencedColumnName="id")
      */
@@ -100,6 +109,15 @@ class Garantie
      * @ORM\Column(name="note", type="text", nullable=true)
      */
     private $note;
+
+    /**
+     * @var array
+     */
+    private static $nom_de_la_banques = array(
+        0 => '',
+        1 => 'A établir',
+    );
+
 
     public function __toString()
     {
@@ -371,5 +389,38 @@ class Garantie
     public function getNote()
     {
         return $this->note;
+    }
+
+    /**
+     * Get nom_de_la_banques
+     *
+     * @return array
+     */
+    public static function getNomDeLaBanques()
+    {
+        return self::$nom_de_la_banques;
+    }
+
+    /**
+     * Set client
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\Client $client
+     * @return Garantie
+     */
+    public function setClient(\Application\Sonata\ClientBundle\Entity\Client $client = null)
+    {
+        $this->client = $client;
+    
+        return $this;
+    }
+
+    /**
+     * Get client
+     *
+     * @return \Application\Sonata\ClientBundle\Entity\Client
+     */
+    public function getClient()
+    {
+        return $this->client;
     }
 }

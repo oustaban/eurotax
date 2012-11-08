@@ -57,6 +57,9 @@
                                 {% if is_granted('ROLE_EDIT_CLIENTS') %}
                                 <li><a href="{{ path('admin_sonata_client_client_list') }}">Clients</a></li>
                                 {% endif %}
+                                {% if is_granted('ROLE_EDIT_ETATS') %}
+                                <li><a href="{{ path('etats') }}">{{ 'Etats'|trans }}</a></li>
+                                {% endif %}
                             </ul>
                         </li>
                         {% endif %}

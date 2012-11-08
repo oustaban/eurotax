@@ -31,6 +31,7 @@ class CoordonneesAdmin extends Admin
      */
     protected $_prefix_label = 'coordonnees';
 
+
     /**
      * @var array
      */
@@ -39,7 +40,7 @@ class CoordonneesAdmin extends Admin
         '_sort_by' => 'orders'
     );
 
-    //create & edit form
+
     /**
      * @param FormMapper $formMapper
      */
@@ -63,6 +64,20 @@ class CoordonneesAdmin extends Admin
             ->add('code_swift', null, array('label' => $this->getFieldLabel('code_swift')))
             ->add('IBAN', null, array('label' => $this->getFieldLabel('IBAN')))
             ->add('SEPA', null, array('label' => $this->getFieldLabel('SEPA')));
+    }
+
+    /**
+     * @return array
+     */
+    public function getFilterParameters()
+    {
+        $filter = $this->request->query->get('filter', array());
+        unset($filter['_sort_by'], $filter['_sort_order']);
+
+        $this->request->query->set('filter', $filter);
+        $parameters = parent::getFilterParameters();
+
+        return $parameters;
     }
 
     //list

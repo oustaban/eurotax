@@ -7,7 +7,7 @@ security:
         FOS\UserBundle\Model\UserInterface: sha512
 
     role_hierarchy:
-        ROLE_SUPER_ADMIN: [ROLE_EDIT_USERS, ROLE_EDIT_DEVISES, ROLE_EDIT_IMPOTS, ROLE_EDIT_CLIENTS, ROLE_EDIT_CLIENTOPERATIONS, ROLE_CLIENT_TOOLS]
+        ROLE_SUPER_ADMIN: [ROLE_EDIT_USERS, ROLE_EDIT_DEVISES, ROLE_EDIT_IMPOTS, ROLE_EDIT_CLIENTS, ROLE_EDIT_CLIENTOPERATIONS, ROLE_CLIENT_TOOLS, ROLE_EDIT_ETATS]
         ROLE_EDIT_USERS: [ROLE_USER, ROLE_SONATA_ADMIN]
         ROLE_EDIT_DEVISES: [ROLE_USER, ROLE_SONATA_ADMIN]
         ROLE_EDIT_IMPOTS: [ROLE_USER, ROLE_SONATA_ADMIN]
@@ -70,6 +70,7 @@ security:
         - { path: ^/sonata/user/group, role: [ROLE_SUPER_ADMIN] }
         - { path: ^/sonata/devises, role: [ROLE_EDIT_DEVISES] }
         - { path: ^/sonata/impots, role: [ROLE_EDIT_IMPOTS] }
+        - { path: ^/dashboard/etats, role: [ROLE_EDIT_ETATS] }
 
         - { path: ^/sonata/client, role: [ROLE_EDIT_CLIENTS] }
 
