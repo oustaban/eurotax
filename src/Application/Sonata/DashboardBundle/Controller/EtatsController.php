@@ -24,13 +24,11 @@ class EtatsController extends Controller
         ),
         'date_decheance' => array(
             'title' => "Echéance",
-            'width' => 11,
             'aligment' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
             'format' => 'dd.mm.YYYY',
         ),
         'montant' => array(
             'title' => "Montant",
-            'width' => 8.43,
             'aligment' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
             'format' => '# ##0\ €',
         ),
@@ -56,7 +54,6 @@ class EtatsController extends Controller
         ),
         'calc_day_date_decheance' => array(
             'title' => "Nb de jour",
-            'width' => 11,
             'aligment' => \PHPExcel_Style_Alignment::HORIZONTAL_RIGHT,
             'format' => '# ##0.00;[Red](###0.00)',
         )
@@ -196,7 +193,7 @@ class EtatsController extends Controller
         $this->_sheet->getRowDimension($wRow)->setRowHeight($this->_headerHeight);
 
         $wColumn = 'A';
-        foreach ($this->_headers as $field => $value) {
+        foreach ($this->_headers as $value) {
 
             $this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_styleBorders);
             $this->_sheet->getStyle($wColumn . $wRow)->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
@@ -219,8 +216,13 @@ class EtatsController extends Controller
     protected function excelWidth()
     {
         $wColumn = 'A';
-        foreach ($this->_headers as $field => $value) {
-            $this->_sheet->getColumnDimension($wColumn++)->setWidth($value['width']); //->setAutoSize(true);
+        foreach ($this->_headers as $value) {
+            if (isset($value['width'])) {
+                $this->_sheet->getColumnDimension($wColumn)->setWidth($value['width']);
+            } else {
+                $this->_sheet->getColumnDimension($wColumn)->setAutoSize(true);
+            }
+            $wColumn++;
         }
     }
 }
