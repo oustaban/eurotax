@@ -17,6 +17,7 @@ use Application\Form\Type\AmountType;
 
 use Application\Sonata\ClientBundle\Entity\Compte;
 use Application\Sonata\ClientBundle\Entity\CompteDeDepot;
+use Application\Sonata\ClientBundle\Entity\Garantie;
 
 use Application\Sonata\ClientBundle\Admin\AbstractTabsAdmin as Admin;
 
@@ -47,10 +48,7 @@ class GarantieAdmin extends Admin
             ->add('nom_de_la_banques_id', 'choice', array(
                 'label' => $this->getFieldLabel('nom_de_la_banques_id'),
                 'data' => $id ? null : 1,
-                'choices' => array(
-                    0 => '',
-                    1 => 'A établir',
-                ))
+                'choices' => Garantie::getNomDeLaBanques())
         )
             ->add('num_de_ganrantie', null, array(
             'label' => $this->getFieldLabel('num_de_ganrantie'),
@@ -182,7 +180,7 @@ class GarantieAdmin extends Admin
                 ->execute();
 
             if ($compte_de_depot['total'] != 0) {
-                echo '<div class="alert alert-error">'.$this->trans("Impossible de supprimer le dépot de garantie car le solde du compte de dépot n'est pas nul").'</div>';
+                echo '<div class="alert alert-error">' . $this->trans("Impossible de supprimer le dépot de garantie car le solde du compte de dépot n'est pas nul") . '</div>';
                 exit;
             } else {
 

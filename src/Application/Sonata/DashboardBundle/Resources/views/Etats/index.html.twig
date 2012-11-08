@@ -1,0 +1,13 @@
+{% extends 'ApplicationSonataDashboardBundle::layout.html.twig' %}
+
+{% block body_content %}
+{{ parent() }}
+   <form id="mass-buttons" onsubmit="return false">
+        <div>
+            <div class="btn-group inline">
+                <button rel="tooltip" title="{{ 'Suivi des Garanties Bancaires'|trans }}" class="btn" id="exportExcel" onclick="javascript:location.href = '{{ path('etats_export') }}';"><i class="icon icon-download-alt"></i> {{ 'Suivi GB'|trans }}</button>
+            </div>
+        </div>
+    </form>
+
+{% endblock body_content %}
