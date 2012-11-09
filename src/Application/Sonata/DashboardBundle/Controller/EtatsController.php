@@ -91,7 +91,7 @@ class EtatsController extends Controller
      */
     public function garantiesAction()
     {
-        $file = 'Suivi GB - ' . date('d/m/Y') . '.xlsx';
+        $file = 'Suivi GB - ' . date('d-m-Y') . '.xlsx';
         $tabs_title = 'Suivi GB';
 
         $excel = new \PHPExcel();
