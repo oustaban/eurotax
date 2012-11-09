@@ -68,9 +68,10 @@ class Coordonnees
     /**
      * @var string $pays_id
      *
-     * @ORM\Column(name="pays_id", type="string", length=2, nullable=true)
+     * @ORM\ManyToOne(targetEntity="ListCountries")
+     * @ORM\JoinColumn(name="pays_id", referencedColumnName="code")
      */
-    private $pays_id;
+    private $pays;
 
 
     /**
@@ -88,7 +89,7 @@ class Coordonnees
      */
     private $code_swift;
 
- /**
+    /**
      * @var string $IBAN
      *
      * @ORM\Column(name="IBAN", type="string", length=100)
@@ -114,14 +115,16 @@ class Coordonnees
     /**
      * @return string
      */
-    public function __toString(){
+    public function __toString()
+    {
 
-        return $this->getNom()?:'-';
+        return $this->getNom() ? : '-';
     }
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -137,14 +140,14 @@ class Coordonnees
     public function setNom($nom)
     {
         $this->nom = $nom;
-    
+
         return $this;
     }
 
     /**
      * Get nom
      *
-     * @return string 
+     * @return string
      */
     public function getNom()
     {
@@ -160,14 +163,14 @@ class Coordonnees
     public function setAdresse1($adresse1)
     {
         $this->adresse_1 = $adresse1;
-    
+
         return $this;
     }
 
     /**
      * Get adresse_1
      *
-     * @return string 
+     * @return string
      */
     public function getAdresse1()
     {
@@ -183,14 +186,14 @@ class Coordonnees
     public function setAdresse2($adresse2)
     {
         $this->adresse_2 = $adresse2;
-    
+
         return $this;
     }
 
     /**
      * Get adresse_2
      *
-     * @return string 
+     * @return string
      */
     public function getAdresse2()
     {
@@ -206,14 +209,14 @@ class Coordonnees
     public function setCodePostal($codePostal)
     {
         $this->code_postal = $codePostal;
-    
+
         return $this;
     }
 
     /**
      * Get code_postal
      *
-     * @return string 
+     * @return string
      */
     public function getCodePostal()
     {
@@ -229,43 +232,19 @@ class Coordonnees
     public function setVille($ville)
     {
         $this->ville = $ville;
-    
+
         return $this;
     }
 
     /**
      * Get ville
      *
-     * @return string 
+     * @return string
      */
     public function getVille()
     {
         return $this->ville;
     }
-
-    /**
-     * Set pays_id
-     *
-     * @param string $paysId
-     * @return Coordonnees
-     */
-    public function setPaysId($paysId)
-    {
-        $this->pays_id = $paysId;
-    
-        return $this;
-    }
-
-    /**
-     * Get pays_id
-     *
-     * @return string 
-     */
-    public function getPaysId()
-    {
-        return $this->pays_id;
-    }
-
 
     /**
      * Set no_de_compte
@@ -276,14 +255,14 @@ class Coordonnees
     public function setNoDeCompte($noDeCompte)
     {
         $this->no_de_compte = $noDeCompte;
-    
+
         return $this;
     }
 
     /**
      * Get no_de_compte
      *
-     * @return string 
+     * @return string
      */
     public function getNoDeCompte()
     {
@@ -299,14 +278,14 @@ class Coordonnees
     public function setIBAN($iBAN)
     {
         $this->IBAN = $iBAN;
-    
+
         return $this;
     }
 
     /**
      * Get IBAN
      *
-     * @return string 
+     * @return string
      */
     public function getIBAN()
     {
@@ -322,14 +301,14 @@ class Coordonnees
     public function setSEPA($sEPA)
     {
         $this->SEPA = $sEPA;
-    
+
         return $this;
     }
 
     /**
      * Get SEPA
      *
-     * @return string 
+     * @return string
      */
     public function getSEPA()
     {
@@ -345,14 +324,14 @@ class Coordonnees
     public function setCodeSwift($codeSwift)
     {
         $this->code_swift = $codeSwift;
-    
+
         return $this;
     }
 
     /**
      * Get code_swift
      *
-     * @return string 
+     * @return string
      */
     public function getCodeSwift()
     {
@@ -368,14 +347,14 @@ class Coordonnees
     public function setClientId($clientId)
     {
         $this->client_id = $clientId;
-    
+
         return $this;
     }
 
     /**
      * Get client_id
      *
-     * @return integer 
+     * @return integer
      */
     public function getClientId()
     {
@@ -392,17 +371,40 @@ class Coordonnees
     public function setOrders($orders)
     {
         $this->orders = $orders;
-    
+
         return $this;
     }
 
     /**
      * Get orders
      *
-     * @return integer 
+     * @return integer
      */
     public function getOrders()
     {
         return $this->orders;
+    }
+
+    /**
+     * Set pays
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\ListCountries $pays
+     * @return Coordonnees
+     */
+    public function setPays(\Application\Sonata\ClientBundle\Entity\ListCountries $pays = null)
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    /**
+     * Get pays
+     *
+     * @return \Application\Sonata\ClientBundle\Entity\ListCountries
+     */
+    public function getPays()
+    {
+        return $this->pays;
     }
 }

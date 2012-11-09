@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\CountryType;
 
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Application\Form\Type\LocationType;
+use Application\Form\Type\LocationsType;
 use Sonata\AdminBundle\Route\RouteCollection;
 
 use Sonata\AdminBundle\Validator\ErrorElement;
@@ -46,7 +46,6 @@ class CoordonneesAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-
         parent::configureFormFields($formMapper);
 
         $formMapper->with($this->getFieldLabel('title'))
@@ -56,7 +55,7 @@ class CoordonneesAdmin extends Admin
             'label' => $this->getFieldLabel('orders')
         ))
             ->add('nom', null, array('label' => $this->getFieldLabel('nom')))
-            ->add('location', new LocationType(), array(
+            ->add('location', new LocationsType(), array(
                 'data_class' => 'Application\Sonata\ClientBundle\Entity\Coordonnees',
             ),
             array('type' => 'location'))
@@ -92,9 +91,8 @@ class CoordonneesAdmin extends Admin
             ->add('nom', null, array('label' => $this->getFieldLabel('nom')))
             ->add('no_de_compte', null, array('label' => $this->getFieldLabel('no_de_compte')))
             ->add('code_swift', null, array('label' => $this->getFieldLabel('code_swift')))
-            ->add('pays_id', null, array('label' => $this->getFieldLabel('pays_id')))
+            ->add('pays.name', null, array('label' => $this->getFieldLabel('pays_id')))
             ->add('SEPA', null, array('label' => $this->getFieldLabel('SEPA')));
-        ;
     }
 
 

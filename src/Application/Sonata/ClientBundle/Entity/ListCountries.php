@@ -38,9 +38,9 @@ class ListCountries
     /**
      * @return string
      */
-    public function __toString(){
-
-        return (string)$this->getName();
+    public function __toString()
+    {
+        return (string)$this->getName() ? : '';
     }
 
 
@@ -100,14 +100,14 @@ class ListCountries
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
