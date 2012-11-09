@@ -117,8 +117,13 @@ class Coordonnees
      */
     public function __toString()
     {
-
         return $this->getNom() ? : '-';
+    }
+
+
+    public function __construct()
+    {
+        $this->pays = ListCountries::getDefault();
     }
 
     /**

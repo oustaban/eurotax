@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\CountryType;
 
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Application\Form\Type\LocationsType;
+use Application\Form\Type\LocationType;
 use Sonata\AdminBundle\Route\RouteCollection;
 
 use Sonata\AdminBundle\Validator\ErrorElement;
@@ -55,7 +55,7 @@ class CoordonneesAdmin extends Admin
             'label' => $this->getFieldLabel('orders')
         ))
             ->add('nom', null, array('label' => $this->getFieldLabel('nom')))
-            ->add('location', new LocationsType(), array(
+            ->add('location', new LocationType(), array(
                 'data_class' => 'Application\Sonata\ClientBundle\Entity\Coordonnees',
             ),
             array('type' => 'location'))

@@ -31,7 +31,7 @@ class DEBExpedAdmin extends Admin
                 'format' => $this->date_format_datetime)
         )
             ->add('nomenclature', null, array('label' => $this->getFieldLabel('nomenclature')))
-            ->add('pays_id_destination', 'country', array('label' => $this->getFieldLabel('pays_id_destination')))
+            ->add('pays_destination', null, array('label' => $this->getFieldLabel('pays_id_destination')))
             ->add('valeur_fiscale', 'money', array('label' => $this->getFieldLabel('valeur_fiscale')))
             ->add('regime', null, array('label' => $this->getFieldLabel('regime')))
             ->add('valeur_statistique', 'money', array('label' => $this->getFieldLabel('valeur_statistique')))
@@ -41,7 +41,7 @@ class DEBExpedAdmin extends Admin
             ->add('conditions_livraison', null, array('label' => $this->getFieldLabel('conditions_livraison')))
             ->add('mode_transport', null, array('label' => $this->getFieldLabel('mode_transport')))
             ->add('departement', null, array('label' => $this->getFieldLabel('departement')))
-            ->add('pays_id_origine', 'country', array('label' => $this->getFieldLabel('pays_id_origine')))
+            ->add('pays_origine', null, array('label' => $this->getFieldLabel('pays_id_origine')))
             ->add('CEE', null, array('label' => $this->getFieldLabel('CEE')));
     }
 
@@ -57,7 +57,7 @@ class DEBExpedAdmin extends Admin
             'label' => $this->getFieldLabel('date_piece'),
             'template' => $this->_bundle_name . ':CRUD:list_date_piece.html.twig'
         ))->add('nomenclature', null, array('label' => $this->getFieldLabel('nomenclature')))
-            ->add('pays_id_destination', null, array('label' => $this->getFieldLabel('pays_id_destination')))
+            ->add('pays_destination.name', null, array('label' => $this->getFieldLabel('pays_id_destination')))
             ->add('valeur_fiscale', 'money', array('label' => $this->getFieldLabel('valeur_fiscale'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:valeur_fiscale.html.twig'))
             ->add('regime', null, array('label' => $this->getFieldLabel('regime')))
             ->add('valeur_statistique', 'money', array('label' => $this->getFieldLabel('valeur_statistique')))
@@ -67,7 +67,7 @@ class DEBExpedAdmin extends Admin
             ->add('conditions_livraison', null, array('label' => $this->getFieldLabel('conditions_livraison')))
             ->add('mode_transport', null, array('label' => $this->getFieldLabel('mode_transport')))
             ->add('departement', null, array('label' => $this->getFieldLabel('departement')))
-            ->add('pays_id_origine', 'country', array('label' => $this->getFieldLabel('pays_id_origine')))
+            ->add('pays_origine.name', null, array('label' => $this->getFieldLabel('pays_id_origine')))
             ->add('CEE', null, array('label' => $this->getFieldLabel('CEE')));
     }
 

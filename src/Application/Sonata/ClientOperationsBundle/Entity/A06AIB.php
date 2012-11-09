@@ -78,9 +78,10 @@ class A06AIB extends AbstractBuyEntity
     /**
      * @var string $pays_id_destination
      *
-     * @ORM\Column(name="pays_id_destination", type="string", length=2, nullable=true)
+     * @ORM\ManyToOne(targetEntity="\Application\Sonata\ClientBundle\Entity\ListCountries")
+     * @ORM\JoinColumn(name="pays_id_destination", referencedColumnName="code")
      */
-    private $pays_id_destination;
+    private $pays_destination;
 
     /**
      * @var float $valeur_fiscale
@@ -142,9 +143,10 @@ class A06AIB extends AbstractBuyEntity
     /**
      * @var string $pays_id_origine
      *
-     * @ORM\Column(name="pays_id_origine", type="string", length=2, nullable=true)
+     * @ORM\ManyToOne(targetEntity="\Application\Sonata\ClientBundle\Entity\ListCountries")
+     * @ORM\JoinColumn(name="pays_id_origine", referencedColumnName="code")
      */
-    private $pays_id_origine;
+    private $pays_origine;
 
 
     /**
@@ -172,7 +174,6 @@ class A06AIB extends AbstractBuyEntity
         return $this->getTiers();
     }
 
-
     /**
      * Set montant_HT_en_devise
      *
@@ -195,7 +196,6 @@ class A06AIB extends AbstractBuyEntity
     {
         return $this->montant_HT_en_devise;
     }
-
 
 
     /**
@@ -291,7 +291,6 @@ class A06AIB extends AbstractBuyEntity
     }
 
 
-
     /**
      * Set n_ligne
      *
@@ -339,26 +338,26 @@ class A06AIB extends AbstractBuyEntity
     }
 
     /**
-     * Set pays_id_destination
+     * Set pays_destination
      *
      * @param string $paysIdDestination
      * @return A06AIB
      */
     public function setPaysIdDestination($paysIdDestination)
     {
-        $this->pays_id_destination = $paysIdDestination;
+        $this->pays_destination = $paysIdDestination;
 
         return $this;
     }
 
     /**
-     * Get pays_id_destination
+     * Get pays_destination
      *
      * @return string
      */
     public function getPaysIdDestination()
     {
-        return $this->pays_id_destination;
+        return $this->pays_destination->getCode();
     }
 
     /**
@@ -546,28 +545,27 @@ class A06AIB extends AbstractBuyEntity
     }
 
     /**
-     * Set pays_id_origine
+     * Set pays_origine
      *
      * @param string $paysIdOrigine
      * @return A06AIB
      */
     public function setPaysIdOrigine($paysIdOrigine)
     {
-        $this->pays_id_origine = $paysIdOrigine;
+        $this->pays_origine = $paysIdOrigine;
 
         return $this;
     }
 
     /**
-     * Get pays_id_origine
+     * Get pays_origine
      *
      * @return string
      */
     public function getPaysIdOrigine()
     {
-        return $this->pays_id_origine;
+        return $this->pays_origine->getCode();
     }
-
 
 
     /**
@@ -602,14 +600,14 @@ class A06AIB extends AbstractBuyEntity
     public function setTauxDeTVA($tauxDeTVA)
     {
         $this->taux_de_TVA = $tauxDeTVA;
-    
+
         return $this;
     }
 
     /**
      * Get taux_de_TVA
      *
-     * @return float 
+     * @return float
      */
     public function getTauxDeTVA()
     {
@@ -625,17 +623,63 @@ class A06AIB extends AbstractBuyEntity
     public function setTVA($tVA)
     {
         $this->TVA = $tVA;
-    
+
         return $this;
     }
 
     /**
      * Get TVA
      *
-     * @return float 
+     * @return float
      */
     public function getTVA()
     {
         return $this->TVA;
+    }
+
+    /**
+     * Set pays_destination
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\ListCountries $paysDestination
+     * @return A06AIB
+     */
+    public function setPaysDestination(\Application\Sonata\ClientBundle\Entity\ListCountries $paysDestination = null)
+    {
+        $this->pays_destination = $paysDestination;
+
+        return $this;
+    }
+
+    /**
+     * Get pays_destination
+     *
+     * @return \Application\Sonata\ClientBundle\Entity\ListCountries
+     */
+    public function getPaysDestination()
+    {
+        return $this->pays_destination;
+    }
+
+    /**
+     * Set pays_origine
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\ListCountries $paysOrigine
+     * @return A06AIB
+     */
+    public function setPaysOrigine(\Application\Sonata\ClientBundle\Entity\ListCountries $paysOrigine = null)
+    {
+        $this->pays_origine = $paysOrigine;
+
+        return $this;
+    }
+
+    /**
+     * Get pays_origine
+     *
+     * @return \Application\Sonata\ClientBundle\Entity\ListCountries
+     */
+    public function getPaysOrigine()
+    {
+        return $this->pays_origine;
     }
 }

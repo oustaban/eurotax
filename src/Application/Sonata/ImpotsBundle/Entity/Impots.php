@@ -2,6 +2,7 @@
 namespace Application\Sonata\ImpotsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Application\Sonata\ClientBundle\Entity\ListCountries;
 
 /**
  * Application\Sonata\ImpotsBundle\Entity\Impots
@@ -90,12 +91,34 @@ class Impots
      */
     private $ville = "";
 
+
     /**
      * @var string $pays_id
      *
-     * @ORM\Column(name="pays_id", type="string",  length=2)
+     * @ORM\ManyToOne(targetEntity="\Application\Sonata\ClientBundle\Entity\ListCountries")
+     * @ORM\JoinColumn(name="pays_id", referencedColumnName="code")
      */
-    private $pays_id = "FR";
+    private $pays;
+
+
+    /**
+     *
+     */
+    public function __construct()
+    {
+        $this->pays = ListCountries::getDefault();
+    }
+
+    /**
+     * Returns a string representation
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getNom() ? : '-';
+    }
+
 
     /**
      * Get id
@@ -360,13 +383,27 @@ class Impots
         return $this->pays_id;
     }
 
+
     /**
-     * Returns a string representation
+     * Set pays
      *
-     * @return string
+     * @param \Application\Sonata\ClientBundle\Entity\ListCountries $pays
+     * @return Impots
      */
-    public function __toString()
+    public function setPays(\Application\Sonata\ClientBundle\Entity\ListCountries $pays = null)
     {
-        return $this->getNom() ? : '-';
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    /**
+     * Get pays
+     *
+     * @return \Application\Sonata\ClientBundle\Entity\ListCountries
+     */
+    public function getPays()
+    {
+        return $this->pays;
     }
 }
