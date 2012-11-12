@@ -91,9 +91,10 @@ class Client
     /**
      * @var string $pays_id_postal
      *
-     * @ORM\Column(name="pays_id_postal", type="string",  length=2)
+     * @ORM\ManyToOne(targetEntity="ListCountries")
+     * @ORM\JoinColumn(name="pays_id_postal", referencedColumnName="code")
      */
-    private $pays_id_postal = "FR";
+    private $pays_postal;
 
     /**
      * @var string $activite
@@ -231,9 +232,10 @@ class Client
     /**
      * @var string $pays_id_facturation
      *
-     * @ORM\Column(name="pays_id_facturation", type="string", length=2, nullable=true)
+     * @ORM\ManyToOne(targetEntity="ListCountries")
+     * @ORM\JoinColumn(name="pays_id_facturation", referencedColumnName="code")
      */
-    private $pays_id_facturation = "FR";
+    private $pays_facturation;
 
     /**
      * @var \DateTime $date_fin_mission
@@ -298,6 +300,25 @@ class Client
      * @ORM\OneToMany (targetEntity="Garantie", mappedBy="client")
      */
     public $garantie;
+
+    /**
+     * Returns a string representation
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string)$this->getNom() ? : '-';
+    }
+
+
+    public function __construct()
+    {
+        $this->garantie = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->pays_postal = ListCountries::getDefault();
+    }
+
+
     /**
      * Get id
      *
@@ -956,21 +977,6 @@ class Client
         return $this->center_des_impots;
     }
 
-    /**
-     * Returns a string representation
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return (string)$this->getNom() ? : '-';
-    }
-
-
-    public function __construct(){
-
-        $this->garantie = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
 
     /**
@@ -1214,7 +1220,7 @@ class Client
      */
     public function getFiles()
     {
-        return json_decode($this->files?:'{".":[]}', true);
+        return json_decode($this->files ? : '{".":[]}', true);
     }
 
     /**
@@ -1284,7 +1290,8 @@ class Client
      * @static
      * @param int|Client $client
      */
-    public static function scanFilesTree($client){
+    public static function scanFilesTree($client)
+    {
         /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
         $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
         /* @var $em \Doctrine\ORM\EntityManager */
@@ -1299,15 +1306,15 @@ class Client
         $em->flush();
     }
 
-    protected static function recursiveScanDir($dir){
+    protected static function recursiveScanDir($dir)
+    {
         $files = array('.' => array());
         foreach (new \DirectoryIterator($dir) as $fileInfo) {
             /** @var $fileInfo \DirectoryIterator */
-            if(!$fileInfo->isDot()) {
-                if ($fileInfo->isFile()){
+            if (!$fileInfo->isDot()) {
+                if ($fileInfo->isFile()) {
                     $files['.'][] = mb_convert_encoding($fileInfo->getFilename(), 'UTF-8');
-                }
-                elseif ($fileInfo->isDir()){
+                } elseif ($fileInfo->isDir()) {
                     $files[mb_convert_encoding($fileInfo->getFilename(), 'UTF-8')] = self::recursiveScanDir($fileInfo->getPathname());
                 }
             }
@@ -1316,5 +1323,84 @@ class Client
         krsort($files);
 
         return $files;
+    }
+
+    /**
+     * Set pays_postal
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\ListCountries $paysPostal
+     * @return Client
+     */
+    public function setPaysPostal(\Application\Sonata\ClientBundle\Entity\ListCountries $paysPostal = null)
+    {
+        $this->pays_postal = $paysPostal;
+
+        return $this;
+    }
+
+    /**
+     * Get pays_postal
+     *
+     * @return \Application\Sonata\ClientBundle\Entity\ListCountries
+     */
+    public function getPaysPostal()
+    {
+        return $this->pays_postal;
+    }
+
+    /**
+     * Add garantie
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\Garantie $garantie
+     * @return Client
+     */
+    public function addGarantie(\Application\Sonata\ClientBundle\Entity\Garantie $garantie)
+    {
+        $this->garantie[] = $garantie;
+
+        return $this;
+    }
+
+    /**
+     * Remove garantie
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\Garantie $garantie
+     */
+    public function removeGarantie(\Application\Sonata\ClientBundle\Entity\Garantie $garantie)
+    {
+        $this->garantie->removeElement($garantie);
+    }
+
+    /**
+     * Get garantie
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGarantie()
+    {
+        return $this->garantie;
+    }
+
+    /**
+     * Set pays_facturation
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\ListCountries $paysFacturation
+     * @return Client
+     */
+    public function setPaysFacturation(\Application\Sonata\ClientBundle\Entity\ListCountries $paysFacturation = null)
+    {
+        $this->pays_facturation = $paysFacturation;
+
+        return $this;
+    }
+
+    /**
+     * Get pays_facturation
+     *
+     * @return \Application\Sonata\ClientBundle\Entity\ListCountries
+     */
+    public function getPaysFacturation()
+    {
+        return $this->pays_facturation;
     }
 }

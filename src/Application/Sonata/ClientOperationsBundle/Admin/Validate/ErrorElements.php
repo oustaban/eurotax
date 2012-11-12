@@ -6,6 +6,8 @@ use Sonata\AdminBundle\Validator\ErrorElement;
 
 class ErrorElements
 {
+    const Device = 'EUR';
+
     protected $_errorElement;
     protected $_object;
 
@@ -42,7 +44,7 @@ class ErrorElements
                 $currency = $devise->getAlias();
 
                 $taux_de_change = 0;
-                if ($currency == 'euro') {
+                if ($currency == static::Device) {
                     $taux_de_change = 1;
                 } else {
                     $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
@@ -269,7 +271,7 @@ class ErrorElements
     {
         if ($this->_object->getDevise()) {
             $value = $this->_object->getDevise()->getAlias();
-            if ($value != 'eur') {
+            if ($value != static::Device) {
                 /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
                 $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
                 $em = $doctrine->getManager();

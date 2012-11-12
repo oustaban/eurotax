@@ -68,90 +68,89 @@ class ClientAdmin extends Admin
 
         $formMapper
             ->with('form.client.row1')
-                ->add('code_client', null, array('label' => 'form.code_client', 'disabled' => true))
-                ->add('autre_destinataire_de_facturation', null, array('label' => 'form.autre_destinataire_de_facturation'))
+            ->add('code_client', null, array('label' => 'form.code_client', 'disabled' => true))
+            ->add('autre_destinataire_de_facturation', null, array('label' => 'form.autre_destinataire_de_facturation'))
             ->with('form.client.row2')
-                ->add('user', null, array('label' => 'form.user', 'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('u')
-                    ->orderBy('u.username', 'ASC');
-                },))
+            ->add('user', null, array('label' => 'form.user', 'query_builder' => function (EntityRepository $er) {
+            return $er->createQueryBuilder('u')
+                ->orderBy('u.username', 'ASC');
+        },))
             ->with('form.client.row3')
-                ->add('nom', null, array('label' => 'form.nom'))
+            ->add('nom', null, array('label' => 'form.nom'))
             ->with('form.client.row4')
-                ->add('nature_du_client', null, array('label' => 'form.nature_du_client'))
-                ->add('contact', null, array('label' => 'form.contacts'))
+            ->add('nature_du_client', null, array('label' => 'form.nature_du_client'))
+            ->add('contact', null, array('label' => 'form.contacts'))
             ->with('form.client.row5')
-                ->add('raison_sociale', null, array('label' => 'form.raison_sociale'))
-                ->add('raison_sociale_2', null, array('label' => 'form.raison_sociale_2'))
+            ->add('raison_sociale', null, array('label' => 'form.raison_sociale'))
+            ->add('raison_sociale_2', null, array('label' => 'form.raison_sociale_2'))
             ->with('form.client.row6')
-                ->add('location_postal', new LocationPostalType(), array(
-                    'data_class' => 'Application\Sonata\ClientBundle\Entity\Client',
-                    'label' => 'Location',
-                    'required' => true,
-                ),
-                array('type' => 'location'))
-                ->add('location_facturation', new LocationFacturationType(), array(
-                    'data_class' => 'Application\Sonata\ClientBundle\Entity\Client',
-                    'label' => 'Location',
-                    'required' => true,
-                ), array('type' => 'location'))
+            ->add('location_postal', new LocationPostalType(), array(
+                'data_class' => 'Application\Sonata\ClientBundle\Entity\Client',
+                'label' => 'Location',
+                'required' => true,
+            ),
+            array('type' => 'location'))
+            ->add('location_facturation', new LocationFacturationType(), array(
+            'data_class' => 'Application\Sonata\ClientBundle\Entity\Client',
+            'label' => 'Location',
+            'required' => true,
+        ), array('type' => 'location'))
             ->with('form.client.row7')
-                ->add('N_TVA_CEE', null, array('label' => 'form.N_TVA_CEE'))
-                ->add('N_TVA_CEE_facture', null, array('label' => 'form.N_TVA_CEE_facture'))
+            ->add('N_TVA_CEE', null, array('label' => 'form.N_TVA_CEE'))
+            ->add('N_TVA_CEE_facture', null, array('label' => 'form.N_TVA_CEE_facture'))
             ->with('form.client.row8')
-                ->add('activite', null, array('label' => 'form.activite', 'required' => false,))
+            ->add('activite', null, array('label' => 'form.activite', 'required' => false,))
             ->with('form.client.row9')
-                ->add('date_debut_mission', 'date', array(
-                    'label' => 'form.date_debut_mission',
-                    'attr' => array('class' => 'datepicker'),
-                    'widget' => 'single_text',
-                    'input' => 'datetime',
-                    'format' => $this->date_format_datetime
-                ))
-                ->add('date_fin_mission', 'date', array(
-                    'label' => 'form.date_fin_mission',
-                    'attr' => array('class' => 'datepicker' . $class),
-                    'widget' => 'single_text',
-                    'input' => 'datetime',
-                    'format' => $this->date_format_datetime,
-                    'empty_value' => '',
-                    'required' => false,
-                ))
+            ->add('date_debut_mission', 'date', array(
+            'label' => 'form.date_debut_mission',
+            'attr' => array('class' => 'datepicker'),
+            'widget' => 'single_text',
+            'input' => 'datetime',
+            'format' => $this->date_format_datetime
+        ))
+            ->add('date_fin_mission', 'date', array(
+            'label' => 'form.date_fin_mission',
+            'attr' => array('class' => 'datepicker' . $class),
+            'widget' => 'single_text',
+            'input' => 'datetime',
+            'format' => $this->date_format_datetime,
+            'empty_value' => '',
+            'required' => false,
+        ))
             ->with('form.client.row10')
-                ->add('mode_denregistrement', null, array('label' => 'form.mode_denregistrement'))
+            ->add('mode_denregistrement', null, array('label' => 'form.mode_denregistrement'))
             ->with('form.client.row11')
-                ->add('siret', null, array('label' => 'form.siret', 'required' => false,))
+            ->add('siret', null, array('label' => 'form.siret', 'required' => false,))
             ->with('form.client.row12')
-                ->add('periodicite_facturation', null, array('label' => 'form.periodicite_facturation'))
+            ->add('periodicite_facturation', null, array('label' => 'form.periodicite_facturation'))
             ->with('form.client.row13')
-                ->add('num_dossier_fiscal', null, array('label' => 'form.num_dossier_fiscal', 'required' => false,))
+            ->add('num_dossier_fiscal', null, array('label' => 'form.num_dossier_fiscal', 'required' => false,))
             ->with('form.client.row14')
-                ->add('taxe_additionnelle', 'choice',
-                    array('expanded' => true,
-                        'label' => 'form.taxe_additionnelle',
-                        'choices' => array(1 => 'Oui', 0 => 'Non'),
-                        'required' => false,
-                ))
+            ->add('taxe_additionnelle', 'choice',
+            array('expanded' => true,
+                'label' => 'form.taxe_additionnelle',
+                'choices' => array(1 => 'Oui', 0 => 'Non'),
+                'required' => false,
+            ))
             ->with('form.client.row15')
-                ->add('periodicite_CA3', null, array('label' => 'form.periodicite_CA3', 'empty_value' => '', 'required' => false,))
-                ->add('date_de_depot_id', 'choice', array(
-                    'label' => 'form.date_de_depot_id',
-                    'choices' => array(15=>15, 19=>19, 24=>24, 31=>31),
-                    'attr' => array('class' => 'date_de_depot_id'),
-                ))
+            ->add('periodicite_CA3', null, array('label' => 'form.periodicite_CA3', 'empty_value' => '', 'required' => false,))
+            ->add('date_de_depot_id', 'choice', array(
+            'label' => 'form.date_de_depot_id',
+            'choices' => array(15 => 15, 19 => 19, 24 => 24, 31 => 31),
+            'attr' => array('class' => 'date_de_depot_id'),
+        ))
             ->with('form.client.row16')
-                ->add('center_des_impots', null, array('label' => 'form.center_des_impots'))
-                ->add('teledeclaration', null, array('label' => 'form.teledeclaration'))
+            ->add('center_des_impots', null, array('label' => 'form.center_des_impots'))
+            ->add('teledeclaration', null, array('label' => 'form.teledeclaration'))
             ->with('form.client.row17')
-                ->add('language', null, array('label' => 'form.language'))
-                ->add('niveau_dobligation_id', 'choice', array(
-                    'label' => 'form.niveau_dobligation_id',
-                    'choices' => $this->getNiveauDobligationIdChoise(),
-                    'empty_value' => '',
-                    'required' => false,
-                    'help' => ' ',
-                ))
-            ;
+            ->add('language', null, array('label' => 'form.language'))
+            ->add('niveau_dobligation_id', 'choice', array(
+            'label' => 'form.niveau_dobligation_id',
+            'choices' => $this->getNiveauDobligationIdChoise(),
+            'empty_value' => '',
+            'required' => false,
+            'help' => ' ',
+        ));
     }
 
 
@@ -401,14 +400,13 @@ class ClientAdmin extends Admin
         /** @var $query \Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery */
         $query = parent::createQuery($context);
 
-        if ($context == 'list'){
+        if ($context == 'list') {
             /** @var $builder \Doctrine\ORM\QueryBuilder */
             $builder = $query->getQueryBuilder();
             $builder
                 ->andWhere('(NOT ' . $builder->getRootAlias() . '.date_fin_mission BETWEEN :date_lowest AND :date_highest) OR (' . $builder->getRootAlias() . '.date_fin_mission IS NULL)')
                 ->setParameter(':date_lowest', new \DateTime('1000-01-01'))
-                ->setParameter(':date_highest', new \DateTime())
-            ;
+                ->setParameter(':date_highest', new \DateTime());
         }
 
         return $query;

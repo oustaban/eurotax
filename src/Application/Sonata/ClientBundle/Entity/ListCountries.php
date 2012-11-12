@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ListCountries
 {
+    const PaysCode = 'fr';
+
     /**
      * @var string $code
      *s
@@ -35,12 +37,19 @@ class ListCountries
      */
     private $name;
 
+    public static function getDefault()
+    {
+
+        return \AppKernel::getStaticContainer()->get('doctrine')->getRepository('ApplicationSonataClientBundle:ListCountries')->findOneByCode(static::PaysCode);
+    }
+
+
     /**
      * @return string
      */
-    public function __toString(){
-
-        return (string)$this->getName();
+    public function __toString()
+    {
+        return (string)$this->getName() ? : '';
     }
 
 
@@ -100,14 +109,14 @@ class ListCountries
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {

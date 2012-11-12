@@ -55,9 +55,10 @@ class V05LIC extends AbstractSellEntity
     /**
      * @var string $pays_id_destination
      *
-     * @ORM\Column(name="pays_id_destination", type="string", length=2, nullable=true)
+     * @ORM\ManyToOne(targetEntity="\Application\Sonata\ClientBundle\Entity\ListCountries")
+     * @ORM\JoinColumn(name="pays_id_destination", referencedColumnName="code")
      */
-    private $pays_id_destination;
+    private $pays_destination;
 
     /**
      * @var float $valeur_fiscale
@@ -117,11 +118,12 @@ class V05LIC extends AbstractSellEntity
     private $departement;
 
     /**
-     * @var integer $pays_id_origine
+     * @var string $pays_id_origine
      *
-     * @ORM\Column(name="pays_id_origine", type="string", length=2, nullable=true)
+     * @ORM\ManyToOne(targetEntity="\Application\Sonata\ClientBundle\Entity\ListCountries")
+     * @ORM\JoinColumn(name="pays_id_origine", referencedColumnName="code")
      */
-    private $pays_id_origine;
+    private $pays_origine;
 
     /**
      * @var string $CEE
@@ -129,9 +131,6 @@ class V05LIC extends AbstractSellEntity
      * @ORM\Column(name="CEE", type="string", length=255, nullable=true)
      */
     private $CEE;
-
-
-
 
     /**
      * Set no_TVA_tiers
@@ -443,7 +442,7 @@ class V05LIC extends AbstractSellEntity
      */
     public function setPaysIdDestination($paysIdDestination)
     {
-        $this->pays_id_destination = $paysIdDestination;
+        $this->pays_destination = $paysIdDestination;
 
         return $this;
     }
@@ -455,30 +454,30 @@ class V05LIC extends AbstractSellEntity
      */
     public function getPaysIdDestination()
     {
-        return $this->pays_id_destination;
+        return $this->pays_destination->getCode();
     }
 
     /**
-     * Set pays_id_origine
+     * Set pays_origine
      *
      * @param string $paysIdOrigine
      * @return V05LIC
      */
     public function setPaysIdOrigine($paysIdOrigine)
     {
-        $this->pays_id_origine = $paysIdOrigine;
+        $this->pays_origine = $paysIdOrigine;
 
         return $this;
     }
 
     /**
-     * Get pays_id_origine
+     * Get pays_origine
      *
      * @return string
      */
     public function getPaysIdOrigine()
     {
-        return $this->pays_id_origine;
+        return $this->pays_origine->getCode();
     }
 
     /**
@@ -504,4 +503,50 @@ class V05LIC extends AbstractSellEntity
         return $this->CEE;
     }
 
+
+    /**
+     * Set pays_destination
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\ListCountries $paysDestination
+     * @return V05LIC
+     */
+    public function setPaysDestination(\Application\Sonata\ClientBundle\Entity\ListCountries $paysDestination = null)
+    {
+        $this->pays_destination = $paysDestination;
+    
+        return $this;
+    }
+
+    /**
+     * Get pays_destination
+     *
+     * @return \Application\Sonata\ClientBundle\Entity\ListCountries
+     */
+    public function getPaysDestination()
+    {
+        return $this->pays_destination;
+    }
+
+    /**
+     * Set pays_origine
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\ListCountries $paysOrigine
+     * @return V05LIC
+     */
+    public function setPaysOrigine(\Application\Sonata\ClientBundle\Entity\ListCountries $paysOrigine = null)
+    {
+        $this->pays_origine = $paysOrigine;
+    
+        return $this;
+    }
+
+    /**
+     * Get pays_origine
+     *
+     * @return \Application\Sonata\ClientBundle\Entity\ListCountries
+     */
+    public function getPaysOrigine()
+    {
+        return $this->pays_origine;
+    }
 }

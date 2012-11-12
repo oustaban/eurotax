@@ -94,7 +94,7 @@ jQuery(document).ready(function ($) {
 
 });
 
-var fields_address = ['adresse_1', 'adresse_2', 'code_postal', 'ville', 'pays_id'];
+var fields_address = ['adresse_1', 'adresse_2', 'code_postal', 'ville', 'pays'];
 
 function copy_address() {
     $('#clone_address').live('click', function () {

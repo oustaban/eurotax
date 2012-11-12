@@ -1,0 +1,3 @@
+services:
+  bashboard.garanties.excel:
+    class: Application\Sonata\DashboardBundle\Export\Excel
