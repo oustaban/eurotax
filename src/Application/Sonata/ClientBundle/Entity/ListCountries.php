@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Application\Sonata\ClientBundle\Entity\ListCountries
  *
  * @ORM\Table("et_list_countries")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Sonata\ClientBundle\Entity\ListCountriesRepository")
  */
 class ListCountries
 {
