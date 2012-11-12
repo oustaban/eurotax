@@ -18,7 +18,12 @@ function init_home_page() {
             underline:true,
             alternateRowClassNames:['rowa', 'rowb']
         });
-        $('#clientList .filterColumns td:first').prepend('<button style="margin-right:10px;" class="btn" id="emptyColumnFilters"><i class="icon icon-remove"></i></button>');
+
+        var $btn = $('<button rel="tooltip" title="Oter filtre" style="margin-right:10px;" class="btn" id="emptyColumnFilters"><i class="icon icon-remove"></i></button>');
+        $('.sonata-ba-list .table .filterColumns td:first').prepend($btn);
+        $('#clientList .filterColumns td:first').prepend($btn);
+        $btn.tooltip();
+
         $("#emptyColumnFilters").click(function(){
             $(this).parent().parent().find("._filterText").val("").keyup();
         });
