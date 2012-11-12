@@ -29,7 +29,7 @@ class Garantie
     private $client_id;
 
     /**
-     * @var integer $client_id
+     * @var integer $client
      *
      * @ORM\ManyToOne(targetEntity="Client", inversedBy="garantie")
      * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
