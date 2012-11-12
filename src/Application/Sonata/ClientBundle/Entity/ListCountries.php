@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ListCountries
 {
-    const PaysCode = 'fr';
+    const PaysCode = 'FR';
 
     /**
      * @var string $code
