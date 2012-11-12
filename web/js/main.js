@@ -20,7 +20,6 @@ function init_home_page() {
         });
 
         var $btn = $('<button rel="tooltip" title="Oter filtre" style="margin-right:10px;" class="btn" id="emptyColumnFilters"><i class="icon icon-remove"></i></button>');
-        $('.sonata-ba-list .table .filterColumns td:first').prepend($btn);
         $('#clientList .filterColumns td:first').prepend($btn);
         $btn.tooltip();
 
