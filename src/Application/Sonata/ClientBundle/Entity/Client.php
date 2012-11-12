@@ -299,7 +299,7 @@ class Client
     /**
      * @ORM\OneToMany (targetEntity="Garantie", mappedBy="client")
      */
-    public $garantie;
+    protected $garantie;
 
     /**
      * Returns a string representation
@@ -976,7 +976,6 @@ class Client
     {
         return $this->center_des_impots;
     }
-
 
 
     /**
