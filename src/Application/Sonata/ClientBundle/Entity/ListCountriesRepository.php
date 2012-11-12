@@ -10,5 +10,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class ListCountriesRepository extends EntityRepository
 {
-
+    /**
+     * Finds all entities in the repository.
+     *
+     * @return array The entities.
+     */
+    public function findAll()
+    {
+        return $this->findBy(array(), array('name' => 'ASC'));
+    }
 }
