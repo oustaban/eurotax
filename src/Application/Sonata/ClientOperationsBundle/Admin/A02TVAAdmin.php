@@ -121,7 +121,7 @@ class A02TVAAdmin extends Admin
         parent::validate($errorElement, $object);
 
         $error = new ErrorElements($errorElement, $object);
-        $error
+        $error->setValidateImport($this->getValidateImport())
             ->validateMoisIsNotNULL()
             ->validateMontantTVAFrancaise()
             ->validateMontantTTC()

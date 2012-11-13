@@ -10,6 +10,7 @@ class ErrorElements
 
     protected $_errorElement;
     protected $_object;
+    protected $_is_validate_import = false;
 
 
     /**
@@ -152,7 +153,7 @@ class ErrorElements
     {
         $value = $this->_object->getPaiementMontant();
         if ($value) {
-            if (!$this->_object->getPaiementDevise()) {
+            if (!$this->_object->getPaiementDevise() && !$this->getValidateImport()) {
                 $this->_errorElement->with('paiement_montant')->addViolation('"Paiement Devise" can\'t be empty')->end();
             }
 
@@ -161,7 +162,6 @@ class ErrorElements
             }
 
             $this->validateMois();
-
         }
 
         return $this;
@@ -307,6 +307,24 @@ class ErrorElements
         }
 
         return $this;
+    }
+
+    /**
+     * @param bool $value
+     * @return ErrorElements
+     */
+    public function setValidateImport($value = true)
+    {
+        $this->_is_validate_import = $value;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function getValidateImport()
+    {
+        return $this->_is_validate_import;
     }
 }
 
