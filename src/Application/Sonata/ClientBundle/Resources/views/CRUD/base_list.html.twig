@@ -17,3 +17,12 @@
 
 </script>
 {% endblock javascriptsafter %}
+
+
+{% block actions %}
+{% if is_granted('ROLE_ADD_CLIENTS') %}
+<div class="sonata-actions">
+    {% include 'SonataAdminBundle:Core:create_button.html.twig' %}
+</div>
+{% endif %}
+{% endblock %}
