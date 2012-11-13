@@ -13,6 +13,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class ListDevises
 {
+    const Device = 'EUR';
+
     /**
      * @var integer $id
      *
@@ -50,6 +52,19 @@ class ListDevises
      * @ORM\Column(name="symbol", type="string", length=3)
      */
     private $symbol;
+
+    /**
+     * @return object
+     */
+    public static function getDefault()
+    {
+        /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+        $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $doctrine->getManager();
+
+        return $em->getRepository('ApplicationSonataClientBundle:ListDevises')->findOneByAlias(static::Device);
+    }
 
     /***
      *

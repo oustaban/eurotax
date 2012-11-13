@@ -119,10 +119,16 @@ class Garantie
         1 => 'A établir',
     );
 
+    public function __construct()
+    {
+        $this->setDevise(ListDevises::getDefault());
+    }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
-
         return $this->getTypeGarantie() ? : '-';
     }
 
