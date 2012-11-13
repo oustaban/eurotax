@@ -3,7 +3,7 @@ function addClient(client, cls){
         '<a href="/sonata/client/client/'+client.id+'/edit">'+client.code_client+'</a>',
         client.raison_sociale,
         client.nature_du_client.name,
-        '<a href="/sonata/user/user/'+client.user.id+'/edit">'+client.user.firstname+' '+client.user.lastname+'</a>',
+        '<a href="/sonata/user/user/'+client.user.id+'/edit">'+(client.user.firstname||client.user.lastname?($.trim(client.user.firstname+' '+client.user.lastname)):client.user.username)+'</a>',
         client.center_des_impots.nom,
         client.date_de_depot_id,
         '<img alt="'+(client.teledeclaration?'oui':'non')+'" src="/bundles/sonataadmin/famfamfam/'+(client.teledeclaration?'accept':'exclamation')+'.png">',
