@@ -210,7 +210,8 @@ class Excel
                 //devise symbol
                 if ($field == 'montant') {
                     /** @var $row Garantie */
-                    $value['format'] = '# ##0\ ' . $row->getDevise()->getSymbol();
+                    $symbol = $row->getDevise()->getSymbol() ? : '€';
+                    $value['format'] = '# ##0\ ' . $symbol;
                 }
                 $this->_sheet->getStyle($wColumn . $wRow)->getNumberFormat()->setFormatCode($value['format']);
             }
