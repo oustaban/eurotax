@@ -3,7 +3,6 @@
 namespace Application\Sonata\ClientBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Application\Sonata\ClientBundle\Entity\ListDevises
@@ -71,7 +70,7 @@ class ListDevises
      */
     public function __construct()
     {
-        $this->garantie = new ArrayCollection();
+        $this->garantie = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

@@ -180,7 +180,7 @@ class Excel
             );
 
             //format
-            $this->excelCellFormat($key + 2);
+            $this->excelCellFormat($key + 2, $row);
             $rows[] = $cell;
         }
 
@@ -189,13 +189,14 @@ class Excel
 
     /**
      * @param $wRow
+     * @param $row
      */
-    protected function excelCellFormat($wRow)
+    protected function excelCellFormat($wRow, $row)
     {
         $this->_sheet->getRowDimension($wRow)->setRowHeight($this->_headerHeight);
 
         $wColumn = 'A';
-        foreach ($this->_headers as $value) {
+        foreach ($this->_headers as $field => $value) {
 
             $this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_styleBorders);
             $this->_sheet->getStyle($wColumn . $wRow)->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
@@ -205,6 +206,12 @@ class Excel
             }
 
             if (isset($value['format'])) {
+
+                //devise symbol
+                if ($field == 'montant') {
+                    /** @var $row Garantie */
+                    $value['format'] = '# ##0\ ' . $row->getDevise()->getSymbol();
+                }
                 $this->_sheet->getStyle($wColumn . $wRow)->getNumberFormat()->setFormatCode($value['format']);
             }
 
