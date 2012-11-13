@@ -103,3 +103,6 @@ table.table td.sonata-ba-list-field-money {
 #client_folder ul li{
     white-space: nowrap;
 }
+.table td.emptyColumnFiltersFirstTD{
+    padding: 3px 2px 2px 2px;
+}

@@ -3,7 +3,6 @@
 namespace Application\Sonata\ClientBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Application\Sonata\ClientBundle\Entity\ListTypeGaranties
@@ -39,8 +38,7 @@ class ListTypeGaranties
      */
     public function __construct()
     {
-
-        $this->garantie = new ArrayCollection();
+        $this->garantie = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -49,7 +47,6 @@ class ListTypeGaranties
 
     public function __toString()
     {
-
         return $this->getName();
     }
 

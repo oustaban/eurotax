@@ -3,7 +3,6 @@
 namespace Application\Sonata\ClientBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Application\Sonata\ClientBundle\Entity\ListDevises
@@ -13,6 +12,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class ListDevises
 {
+    const Device = 'EUR';
+
     /**
      * @var integer $id
      *
@@ -51,12 +52,25 @@ class ListDevises
      */
     private $symbol;
 
+    /**
+     * @return object
+     */
+    public static function getDefault()
+    {
+        /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+        $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $doctrine->getManager();
+
+        return $em->getRepository('ApplicationSonataClientBundle:ListDevises')->findOneByAlias(static::Device);
+    }
+
     /***
      *
      */
     public function __construct()
     {
-        $this->garantie = new ArrayCollection();
+        $this->garantie = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

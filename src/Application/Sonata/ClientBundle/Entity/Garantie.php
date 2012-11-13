@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table("et_garantie")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class Garantie
 {
@@ -29,7 +30,7 @@ class Garantie
     private $client_id;
 
     /**
-     * @var integer $type_garantie
+     * @var integer $client
      *
      * @ORM\ManyToOne(targetEntity="Client", inversedBy="garantie")
      * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
@@ -118,10 +119,16 @@ class Garantie
         1 => 'A établir',
     );
 
+    public function __construct()
+    {
+        $this->setDevise(ListDevises::getDefault());
+    }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
-
         return $this->getTypeGarantie() ? : '-';
     }
 
@@ -410,7 +417,7 @@ class Garantie
     public function setClient(\Application\Sonata\ClientBundle\Entity\Client $client = null)
     {
         $this->client = $client;
-    
+
         return $this;
     }
 
@@ -422,5 +429,20 @@ class Garantie
     public function getClient()
     {
         return $this->client;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preSave()
+    {
+        /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+        $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $doctrine->getManager();
+
+        $client = $em->getRepository('ApplicationSonataClientBundle:Client')->find($this->getClientId());
+        $this->setClient($client);
     }
 }
