@@ -208,11 +208,11 @@ class Excel
             if (isset($value['format'])) {
 
                 //devise symbol
-                if ($field == 'montant') {
-                    /** @var $row Garantie */
-                    $symbol = $row->getDevise()->getSymbol() ? : '€';
-                    $value['format'] = '# ##0\ ' . $symbol;
-                }
+//                if ($field == 'montant') {
+//                    /** @var $row Garantie */
+//                    $symbol = $row->getDevise()->getSymbol() ? : '€';
+//                    $value['format'] = '# ##0\ ' . $symbol;
+//                }
                 $this->_sheet->getStyle($wColumn . $wRow)->getNumberFormat()->setFormatCode($value['format']);
             }
 
