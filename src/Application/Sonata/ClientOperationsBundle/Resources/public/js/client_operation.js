@@ -164,4 +164,11 @@ function init_tabs_filters_sticky_header() {
 
         return false;
     });
+
+    $('.emptyColumnFilters').tooltip();
+    $(".emptyColumnFilters").click(function(){
+        $(this).parent().parent().find("._filterText").val("").keyup();
+
+        return false;
+    });
 }
