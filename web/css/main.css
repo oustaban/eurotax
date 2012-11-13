@@ -187,3 +187,7 @@ tr.dimmed, tr.dimmed a {
 #list_batch_checkbox {
     width: auto;
 }
+
+.sonata-ba-list .sonata-ba-list-field-date{
+    text-align: center;
+}
