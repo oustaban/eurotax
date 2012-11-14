@@ -126,3 +126,24 @@
     width: 20px;
     background: url(../images/draggable.png) 0px 0px no-repeat;
 }
+
+.js-impression label {
+    float: left;
+}
+.etiquette_table {
+    width: auto;
+}
+.etiquette_table tr td {
+    text-align: center;
+    vertical-align: middle;
+    width: 150px;
+    height: 50px;
+    cursor: pointer;
+}
+.etiquette_table tr:hover td {
+    background-color: #F5F5F5;
+}
+
+#check_all {
+    float: left;
+}

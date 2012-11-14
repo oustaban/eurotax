@@ -42,6 +42,10 @@ application_sonata_clientoperations:
     resource: '@ApplicationSonataClientOperationsBundle/Resources/config/routing.yml'
     prefix: /sonata/clientoperations
 
+application_sonata_client:
+    resource: '@ApplicationSonataClientBundle/Resources/config/routing.yml'
+    prefix: /sonata/client
+
 application_sonata_dashboards:
     resource: '@ApplicationSonataDashboardBundle/Resources/config/routing.yml'
     prefix: /dashboard
