@@ -623,6 +623,7 @@ class AbstractTabsController extends Controller
 
         $this->_imports = new Imports();
         $this->_imports->setUser($users);
+        $this->_imports->setDate(new \DateTime($this->_year . '-' . $this->_month . '-' . date('d H:i:s')));
         $this->_imports->setClientId($this->client_id);
 
         $em->persist($this->_imports);
@@ -769,66 +770,174 @@ class AbstractTabsController extends Controller
     protected function importFileValidate($file)
     {
         $file_name = $file['name'];
+        $validate = false;
 
-        /* example file_name */
-//        $file_name = 'FUJITSU-Importation-TVA-2012-10-01.xlsx';
+        /**
+         *  example file_name
+         *  $file_name = 'FUJITSU-Importation-TVA-2012-10-01.xlsx';
+         */
 
+        $validate_fields = array();
         if (preg_match('/(.*)\-[Import|Importation]+\-TVA\-(\d{4}+)\-(\d{2}+)\-(\d+)\.xlsx/i', $file_name, $matches)) {
 
             array_shift($matches);
             list($nom_client, $year, $month, $version) = $matches;
 
-            /* @var $em \Doctrine\ORM\EntityManager */
-            $em = $this->getDoctrine()->getManager();
+            $client = $this->getImportFileValidateNomClient($nom_client);
 
-            $qb = $em->createQueryBuilder();
+            if ($year != $this->_year) {
+                $validate_fields[] = 'year';
+            }
 
-            $client = $qb->select('c')
-                ->from('Application\Sonata\ClientBundle\Entity\Client', 'c')
-                ->where('UPPER(c.nom) = UPPER(:nom)')
-                ->setParameter(':nom', $nom_client)
-                ->getQuery()
-                ->getResult();
+            if ($month != $this->_month) {
+                $validate_fields[] = 'month';
+            }
 
             if (!empty($client)) {
-                $client = array_shift($client);
-                /*
-                 * example source : http://www.simukti.net/blog/2012/04/05/how-to-select-year-month-day-in-doctrine2/
-                 */
-                $emConfig = $em->getConfiguration();
-                $emConfig->addCustomStringFunction('YEAR', 'Application\Sonata\ClientOperationsBundle\DQL\YearFunction');
-                $emConfig->addCustomDatetimeFunction('MONTH', 'Application\Sonata\ClientOperationsBundle\DQL\MonthFunction');
 
-                $dql = "SELECT count(i.client_id) + 1 AS counts FROM Application\Sonata\ClientOperationsBundle\Entity\Imports i
+                if ($this->client_id != $client->getId()) {
+                    $validate_fields[] = 'nom_client';
+                }
+
+                $ver = $this->getImportFileValidateVersion($client, $year, $month);
+                if ($ver == (int)$version) {
+                    $validate = true;
+                } else {
+                    $validate_fields[] = 'version';
+                }
+            } else {
+                $validate_fields[] = 'nom_client';
+            }
+
+            if (count($validate_fields) > 0) {
+                $this->getImportFileValidateMessage($validate_fields);
+                $validate = false;
+            }
+
+        } else {
+
+            $this->getImportFileValidateMessage(array(
+                'nom_client',
+                'year',
+                'month',
+                'version',
+            ));
+        }
+
+        return $validate;
+    }
+
+    /**
+     * @param array $fields
+     */
+    protected function getImportFileValidateMessage($fields = array())
+    {
+        $ver = $this->getImportFileValidateVersion($this->client, $this->_year, $this->_month);
+
+        if (is_array($fields)) {
+            $fields = array_flip($fields);
+        }
+
+        $data = array();
+        if (isset($fields['nom_client'])) {
+            $data['%nom_client%'] = $this->getImportFileValidateErrorFormat(strtoupper($this->client));
+        } else {
+            $data['%nom_client%'] = strtoupper($this->client);
+        }
+        if (isset($fields['year'])) {
+            $data['%year%'] = $this->getImportFileValidateErrorFormat($this->_year);
+        } else {
+            $data['%year%'] = $this->_year;
+        }
+        if (isset($fields['month'])) {
+            $data['%month%'] = $this->getImportFileValidateErrorFormat($this->_month);
+        } else {
+            $data['%month%'] = $this->_month;
+        }
+
+        if (isset($fields['version'])) {
+            $data['%version%'] = $this->getImportFileValidateErrorFormat($ver);
+        } else {
+            $data['%version%'] = $ver;
+        }
+
+        $filename = '<strong>' . strtr("%nom_client%-Importation-TVA-%year%-%month%-%version%.xlsx", $data) . '</strong>';
+
+        $this->get('session')->setFlash('sonata_flash_info|raw', $this->admin->trans('Nom de fichier invalide: Format requis %filename%', array('%filename%' => $filename)));
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    protected function getImportFileValidateErrorFormat($value)
+    {
+        return $value;
+//        return '<span class="error">' . $value . '</span>';
+    }
+
+    /**
+     * @param $nom_client
+     * @return mixed|null
+     */
+    protected function getImportFileValidateNomClient($nom_client)
+    {
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $this->getDoctrine()->getManager();
+
+        $qb = $em->createQueryBuilder();
+
+        $client = $qb->select('c')
+            ->from('Application\Sonata\ClientBundle\Entity\Client', 'c')
+            ->where('UPPER(c.nom) = UPPER(:nom)')
+            ->setParameter(':nom', $nom_client)
+            ->getQuery()
+            ->getResult();
+
+        if (!empty($client)) {
+            return array_shift($client);
+        }
+        return null;
+    }
+
+    /**
+     * @param $client
+     * @param $year
+     * @param $month
+     * @return int
+     */
+    protected function getImportFileValidateVersion($client, $year, $month)
+    {
+        /*
+        * example source : http://www.simukti.net/blog/2012/04/05/how-to-select-year-month-day-in-doctrine2/
+        */
+
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $this->getDoctrine()->getManager();
+
+        $emConfig = $em->getConfiguration();
+        $emConfig->addCustomStringFunction('YEAR', 'Application\Sonata\ClientOperationsBundle\DQL\YearFunction');
+        $emConfig->addCustomDatetimeFunction('MONTH', 'Application\Sonata\ClientOperationsBundle\DQL\MonthFunction');
+
+        $dql = "SELECT COUNT(i.client_id) + 1 AS counts FROM ApplicationSonataClientOperationsBundle:Imports i
                         WHERE i.client_id = :client_id
                         AND YEAR(i.date) = :year
                         AND MONTH(i.date) = :month";
 
-                $sql = $em->createQuery($dql);
-                $sql->setParameter(':client_id', $client->getId());
-                $sql->setParameter(':year', $year);
-                $sql->setParameter(':month', $month);
-                $ver = $sql->getArrayResult();
+        $sql = $em->createQuery($dql);
+        $sql->setParameter(':client_id', $client->getId());
+        $sql->setParameter(':year', $year);
+        $sql->setParameter(':month', $month);
 
-                if (!empty($ver)) {
-                    $ver = array_shift($ver);
-                } else {
-                    $ver = array('counts' => 1);
-                }
+        $ver = $sql->getArrayResult();
 
-                if ((int)$ver['counts'] == (int)$version) {
-                    return true;
-                } else {
-                    $this->get('session')->setFlash('sonata_flash_info', $this->admin->trans('Version "' . $version . '" invalide'));
-                }
-            } else {
-                $this->get('session')->setFlash('sonata_flash_info', $this->admin->trans('Client "' . $nom_client . '" pas trouvé'));
-            }
-        } else {
-            $this->get('session')->setFlash('sonata_flash_info', $this->admin->trans('Nom de fichier invalide'));
+        $version = 1;
+        if (!empty($ver)) {
+            $ver = array_shift($ver);
+            $version = $ver['counts'];
         }
 
-        return false;
+        return (int)$version;
     }
 
     /**
@@ -836,8 +945,8 @@ class AbstractTabsController extends Controller
      * @param $form
      * @param $line
      * @param int $level
-     * @param int $key
      * @param string $message
+     * @param int $key
      * @return string
      */
     public function getErrorsAsString($class, $form, $line, $level = 0, $key = 0, $message = '')
