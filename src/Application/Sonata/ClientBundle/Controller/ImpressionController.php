@@ -91,13 +91,19 @@ class ImpressionController extends Controller
     {
         $action = $this->_action();
 
-        if ($this->get('request')->getMethod() == 'POST'){
-            $page = $this->render('ApplicationSonataClientBundle::etiquette_pdf.html.twig', $action);
+        /** @var $request \Symfony\Component\HttpFoundation\Request */
+        $request = $this->get('request');
+
+        if ($request->getMethod() == 'POST'){
+            $page = $this->render('ApplicationSonataClientBundle:Impression:etiquette_pdf.html.twig', array_merge($action, array('post' => $request->request->all())));
 
             $file_name = 'eurotax-' . md5(time() . rand(1, 99999999));
 
             include VENDOR_PATH . '/mpdf/mpdf/mpdf.php';
             $mpdf = new \mPDF('c', 'A4', 0, '', 0, 0, 0, 0, 9, 2);
+//            echo '<pre>';
+//            print_r($mpdf);
+//            exit($mpdf->fw.' x '.$mpdf->fh);
             //$mpdf->SetDisplayMode('fullpage');
 
             $mpdf->WriteHTML($page->getContent());

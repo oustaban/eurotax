@@ -10,8 +10,9 @@
     <table border="1" align="center" class="etiquette_table">
         {% for i in 1..7 %}
         <tr>
-            <td><input type="checkbox" name="box[{{ i }}][1]" checked="checked"/></td>
-            <td><input type="checkbox" name="box[{{ i }}][2]" checked="checked"/></td>
+            {% for j in 1..2 %}
+            <td><input type="checkbox" name="box[{{ i }}][{{ j }}]" checked="checked"/></td>
+            {% endfor %}
         </tr>
         {% endfor %}
     </table>
