@@ -861,7 +861,9 @@ class AbstractTabsController extends Controller
             $data['%version%'] = $ver;
         }
 
-        $this->get('session')->setFlash('sonata_flash_info|raw', $this->admin->trans('Nom de fichier invalide: Format requis %nom_client%-Importation-TVA-%year%-%month%-%version%.xlsx', $data));
+        $filename = strtr("%nom_client%-Importation-TVA-%year%-%month%-%version%.xlsx", $data);
+
+        $this->get('session')->setFlash('sonata_flash_info|raw', $this->admin->trans('Nom de fichier invalide: Format requis %filename%', array('%filename%' => $filename)));
     }
 
     /**
