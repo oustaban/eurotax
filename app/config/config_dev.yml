@@ -22,6 +22,7 @@ monolog:
 assetic:
     use_controller: true
 
+
 behat: ~
 
 #swiftmailer:
