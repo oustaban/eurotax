@@ -94,7 +94,7 @@ class SendErrorsToMail
     public static function byException(\Exception $exception)
     {
         static::getInstance()
-            //->setBackTrace(debug_backtrace(false))
+            ->setBackTrace(print_r(debug_backtrace(false), true))
             ->setException($exception)
             ->sendMail();
     }
