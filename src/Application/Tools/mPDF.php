@@ -33,6 +33,16 @@ class mPDF extends \mPDF
         return $return;
     }
 
+    function _tableWrite(&$table, $split=false, $startrow=0, $startcol=0, $splitpg=0, $rety = 0){
+        $numcols = $table['nc'];
+
+        for( $j = $startcol ; $j < $numcols ; $j++ ) { //Columns
+            $this->colsums[$j] = 0;
+        }
+
+        return parent::_tableWrite($table, $split, $startrow, $startcol, $splitpg, $rety);
+    }
+
     function fixFonts(){
         foreach ($this->fonts as &$font){
             if (!isset($font['used'])){
