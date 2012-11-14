@@ -97,8 +97,8 @@ form:
 
   client_alert:
     title: Client Alert
-    tabs: Tabs
-    text: Text
+    tabs: Formulaire
+    text: Message
     is_blocked: Blocked
 
   Compte:
@@ -211,8 +211,8 @@ list:
 
   client_alert:
       title: Client Alert
-      tabs: Tabs
-      text: Text
+      tabs: Formulaire
+      text: Message
       is_blocked: Blocked
 
   Compte:

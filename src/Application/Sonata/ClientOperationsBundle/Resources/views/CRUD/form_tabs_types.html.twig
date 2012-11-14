@@ -7,10 +7,10 @@
 <div class="clientoperations_tabs_types_block">
     <ul class="nav nav-tabs">
         <li {% if operation_type=='sell' %}class="active"{% endif %}>
-            <a href="{{ path('admin_sonata_clientoperations_v01tva_list', _filter_json) }}">Ventes</a>
+            <a href="{{ path('admin_sonata_clientoperations_v01tva_list', _filter_json) }}">{{ 'Ventes'|trans }}</a>
         </li>
         <li {% if operation_type=='buy' %}class="active"{% endif %}>
-            <a href="{{ path('admin_sonata_clientoperations_a02tva_list', _filter_json) }}">Achat</a>
+            <a href="{{ path('admin_sonata_clientoperations_a02tva_list', _filter_json) }}">{{ 'Achats'|trans }}</a>
         </li>
     </ul>
     {{ block('form_client_topinfo')}}

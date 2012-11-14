@@ -14,7 +14,7 @@ function init_clientoperations_buttons(o) {
 
         symfony_ajax.behaviors.alert_popo = {
             attach:function (context) {
-                $('.modal-body .table td', context).removeAttr('objectid');
+                $('.modal-body .table td').removeAttr('objectid');
             }
         }
 
