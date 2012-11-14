@@ -29,6 +29,8 @@ class LoadGroupData extends AbstractLoadListData
             'ROLE_EDIT_CLIENTS',
             'ROLE_EDIT_CLIENTOPERATIONS',
             'ROLE_CLIENT_TOOLS',
+            'ROLE_ADD_CLIENTS',
+            'ROLE_EDIT_ETATS',
         ),
     );
 
