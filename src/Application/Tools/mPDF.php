@@ -34,8 +34,8 @@ class mPDF extends \mPDF
     }
 
     function _out($s,$ln=true) {
-        $d = debug_backtrace(false, 2);
-        if ($d[1]['function'] == '_tableWrite' && strpos($s, '___TABLE___BACKGROUNDS') === 0){
+        $backtrace = (version_compare(PHP_VERSION, '5.4.0') >= 0)?debug_backtrace (DEBUG_BACKTRACE_IGNORE_ARGS, 2):debug_backtrace (DEBUG_BACKTRACE_IGNORE_ARGS);
+        if ($backtrace[1]['function'] == '_tableWrite' && strpos($s, '___TABLE___BACKGROUNDS') === 0){
             for( $j = 0 ; $j < 5 ; $j++ ) { //Columns
                 $this->colsums[$j] = 0;
             }
