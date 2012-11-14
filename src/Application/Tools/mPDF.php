@@ -19,10 +19,32 @@ class mPDF extends \mPDF
         return $return;
     }
 
+    function OpenTag($tag,$attr)
+    {
+        $return = parent::OpenTag($tag,$attr);
+        $this->fixBlk();
+        return $return;
+    }
+
+    function CloseTag($tag)
+    {
+        $return = parent::CloseTag($tag);
+        $this->fixBlk();
+        return $return;
+    }
+
     function fixFonts(){
         foreach ($this->fonts as &$font){
             if (!isset($font['used'])){
                 $font['used'] = false;
+            }
+        }
+    }
+
+    function fixBlk(){
+        foreach ($this->blk as &$blk){
+            if (!isset($blk['direction'])){
+                $blk['direction'] = 'ltr';
             }
         }
     }
