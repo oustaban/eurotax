@@ -13,7 +13,7 @@
             {% endif%}
 
             {% if admin.isGranted('ROLE_CLIENT_TOOLS') %}
-            {% set text_lock = blocked ? 'Verrouiller' : 'Déverrouiller' %}
+            {% set text_lock = blocked ? 'Clôturer' : 'Déverrouiller' %}
             <button id="btn_locking" class="btn"><i class="icon icon-lock"></i> {{ text_lock|trans}}</button>
             {% endif %}
 
