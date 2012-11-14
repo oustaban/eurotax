@@ -861,7 +861,7 @@ class AbstractTabsController extends Controller
             $data['%version%'] = $ver;
         }
 
-        $filename = strtr("%nom_client%-Importation-TVA-%year%-%month%-%version%.xlsx", $data);
+        $filename = '<strong>' . strtr("%nom_client%-Importation-TVA-%year%-%month%-%version%.xlsx", $data) . '</strong>';
 
         $this->get('session')->setFlash('sonata_flash_info|raw', $this->admin->trans('Nom de fichier invalide: Format requis %filename%', array('%filename%' => $filename)));
     }
@@ -872,7 +872,8 @@ class AbstractTabsController extends Controller
      */
     protected function getImportFileValidateErrorFormat($value)
     {
-        return '<span class="error">' . $value . '</span>';
+        return $value;
+//        return '<span class="error">' . $value . '</span>';
     }
 
     /**
