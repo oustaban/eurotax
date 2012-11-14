@@ -14,6 +14,10 @@ class SendErrorsToMail
      * @var \Exception
      */
     protected $_exception;
+    /**
+     * @var string
+     */
+    protected $_backTrace;
     protected $_debug = false;
     protected $_date;
     protected $_get_status_code;
@@ -90,6 +94,7 @@ class SendErrorsToMail
     public static function byException(\Exception $exception)
     {
         static::getInstance()
+            ->setBackTrace(print_r(debug_backtrace(false), true))
             ->setException($exception)
             ->sendMail();
     }
@@ -138,6 +143,25 @@ class SendErrorsToMail
         }
 
         return $this;
+    }
+
+    /**
+     * @param $backTrace string
+     * @return SendErrorsToMail
+     */
+    public function setBackTrace($backTrace)
+    {
+        $this->_backTrace = $backTrace;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getBackTrace()
+    {
+        return $this->_backTrace;
     }
 
     /**
@@ -209,6 +233,8 @@ class SendErrorsToMail
         if (!empty($_POST)) {
             $messages[] = $this->getArrayFormatView(array('$_POST' => $_POST));
         }
+
+        $messages[] = $this->getBackTrace();
 
         return $messages;
     }

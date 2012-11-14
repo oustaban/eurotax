@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\SecurityContext;
 
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use Application\Form\Type\LocationPostalType;
@@ -204,10 +205,17 @@ class ClientAdmin extends Admin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
+        $fieldUserOptions = array('label' => 'list.user');
+        /* @var $securityContext SecurityContext */
+        $securityContext = \AppKernel::getStaticContainer()->get('security.context');
+        if (!$securityContext->isGranted('ROLE_EDIT_USERS')){
+            $fieldUserOptions['template'] = 'ApplicationSonataClientBundle:CRUD:list_user_text.html.twig';
+        }
+
         $listMapper->addIdentifier('code_client')
             ->add('raison_sociale', null, array('label' => 'list.raison_sociale'))
             ->add('nature_du_client.name', null, array('label' => 'list.nature_du_client'))
-            ->add('user', null, array('label' => 'list.user'))
+            ->add('user', null, $fieldUserOptions)
             ->add('center_des_impots.nom', null, array('label' => 'list.center_des_impots'))
             ->add('date_de_depot_id', null, array('label' => 'list.date_de_depot_id'))
             ->add('teledeclaration', null, array('label' => 'list.teledeclaration'))

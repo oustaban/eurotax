@@ -2,3 +2,4 @@ ApplicationSonataErrorsBundle:
     message:
         Internal Server Error: Une erreur fatale s'est produite
         Not Found: Vos droits sont insuffisants pour accéder à cette page
+        Forbidden: Droits insuffisants pour accéder à cette ressource
