@@ -14,7 +14,11 @@ class SendErrorsToMail
      * @var \Exception
      */
     protected $_exception;
-    protected $_debug = true;
+    /**
+     * @var string
+     */
+    protected $_backTrace;
+    protected $_debug = false;
     protected $_date;
     protected $_get_status_code;
     private $_server = array();
@@ -90,6 +94,7 @@ class SendErrorsToMail
     public static function byException(\Exception $exception)
     {
         static::getInstance()
+            //->setBackTrace(debug_backtrace(false))
             ->setException($exception)
             ->sendMail();
     }
@@ -129,7 +134,6 @@ class SendErrorsToMail
             if ($this->_debug) {
                 echo '<pre>';
                 echo $content;
-                pritn_r(debug_backtrace(false));
                 exit;
             }
 
@@ -139,6 +143,25 @@ class SendErrorsToMail
         }
 
         return $this;
+    }
+
+    /**
+     * @param $backTrace string
+     * @return SendErrorsToMail
+     */
+    public function setBackTrace($backTrace)
+    {
+        $this->_backTrace = $backTrace;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getBackTrace()
+    {
+        return $this->_backTrace;
     }
 
     /**
@@ -210,6 +233,8 @@ class SendErrorsToMail
         if (!empty($_POST)) {
             $messages[] = $this->getArrayFormatView(array('$_POST' => $_POST));
         }
+
+        $messages[] = $this->getBackTrace();
 
         return $messages;
     }
