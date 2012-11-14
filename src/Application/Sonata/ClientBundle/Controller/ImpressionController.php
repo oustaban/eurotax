@@ -101,9 +101,6 @@ class ImpressionController extends Controller
 
             include VENDOR_PATH . '/mpdf/mpdf/mpdf.php';
             $mpdf = new \mPDF('c', 'A4', 0, '', 0, 0, 0, 0, 9, 2);
-//            echo '<pre>';
-//            print_r($mpdf);
-//            exit($mpdf->fw.' x '.$mpdf->fh);
             //$mpdf->SetDisplayMode('fullpage');
 
             $mpdf->WriteHTML($page->getContent());
