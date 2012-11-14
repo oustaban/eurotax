@@ -33,14 +33,15 @@ class mPDF extends \mPDF
         return $return;
     }
 
-    function _tableWrite(&$table, $split=false, $startrow=0, $startcol=0, $splitpg=0, $rety = 0){
-        $numcols = $table['nc'];
-
-        for( $j = $startcol ; $j < $numcols ; $j++ ) { //Columns
-            $this->colsums[$j] = 0;
+    function _out($s,$ln=true) {
+        $d = debug_backtrace(false, 2);
+        if ($d[1]['function'] == '_tableWrite' && strpos($s, '___TABLE___BACKGROUNDS') === 0){
+            for( $j = 0 ; $j < 5 ; $j++ ) { //Columns
+                $this->colsums[$j] = 0;
+            }
         }
 
-        return parent::_tableWrite($table, $split, $startrow, $startcol, $splitpg, $rety);
+        return parent::_out($s, $ln);
     }
 
     function fixFonts(){
