@@ -1,0 +1,59 @@
+{% spaceless %}
+
+{% set font = 10 %}
+{% set A4 = {w: 595.28, h: 841.89} %}
+{% set k = 0.75 %}
+{% set n = 2 %}
+{% set m = 8 %}
+{% set pw = A4.w/k %}
+{% set ph = A4.h/k %}
+{% set cw = pw/n %}
+{% set ch = ph/m %}
+
+{% set sticker = ''
+~ client.nom ~ '<br/>'
+~ client.user.__toString ~ '<br/>'
+~ (client.adresse1Postal?client.adresse1Postal ~ '<br/>':'')
+~ (client.adresse2Postal?client.adresse2Postal ~ '<br/>':'')
+~ client.codePostalPostal ~ ' ' ~ client.villePostal ~ '<br/>'
+~ client.paysPostal.__toString|upper
+%}
+
+<style type="text/css">
+    #content {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    table {
+        width: 100%;
+        font-size: {{ font }}px;
+        font-family: arial;
+    }
+    table tr td {
+        text-align: center;
+        vertical-align: middle;
+        width: {{ cw }}px;
+        height: {{ ch }}px;
+    }
+</style>
+<div id="page">
+    <div id="content">
+        <table border="0" cellpadding="0" cellspacing="0">
+        {% for i in 1..m %}
+        <tr>
+            {% for j in 1..n %}
+            <td{%if i == m %}style="height: {{ ch-0.001 }};"{% endif %}>
+                {% if (post.box[i][j]  is defined ) %}
+                    {{ sticker|raw }}
+                {% else %}
+                    &nbsp;
+                {% endif %}
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        </table>
+    </div>
+</div>
+{% endspaceless %}

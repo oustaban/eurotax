@@ -1,0 +1,10 @@
+{% extends 'ApplicationSonataClientBundle:Impression:layout.html.twig' %}
+{% set _filter_json = {'filter[client_id][value]':client_id} %}
+
+{% block title %}
+{{ parent() }}
+{% endblock title %}
+
+{% block impression_content %}
+    <button rel="tooltip" title="{{ 'Etiquette'|trans }}" class="btn" onclick="javascript:location.href = '{{ path('impression_etiquette', _filter_json) }}';"><i class="icon icon-list-alt"></i> {{ 'Etiquette'|trans }}</button>
+{% endblock impression_content %}

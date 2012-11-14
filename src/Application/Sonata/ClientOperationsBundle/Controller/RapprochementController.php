@@ -22,7 +22,6 @@ class RapprochementController extends Controller
     protected $_client_id = null;
 
     /**
-     * @Route("/", name="_demo")
      * @Template()
      */
     public function indexAction($client_id, $month)

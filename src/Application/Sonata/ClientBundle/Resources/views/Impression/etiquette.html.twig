@@ -1,0 +1,37 @@
+{% extends 'ApplicationSonataClientBundle:Impression:layout.html.twig' %}
+
+{% block title %}
+{{ parent() ~ ' - Etiquette' }}
+{% endblock title %}
+
+{% block impression_content %}
+<input type="checkbox" id="check_all" name="check_all" checked="checked"/> <label for="check_all">Tout</label>
+<form method="post">
+    <table border="1" align="center" class="etiquette_table">
+        {% for i in 1..7 %}
+        <tr>
+            {% for j in 1..2 %}
+            <td><input type="checkbox" name="box[{{ i }}][{{ j }}]" checked="checked"/></td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    <input type="submit" value="Générer" style="float:right;clear: both;" />
+</form>
+{% endblock impression_content %}
+
+{% block javascriptsafter %}
+{{ parent() }}
+<script type="text/javascript">
+    $(function () {
+        $('.etiquette_table tr td').click(function (eventObject) {
+            if ($(eventObject.target).is('td')) {
+                $(this).children('input').click();
+            }
+        });
+        $('#check_all').click(function () {
+            $('.etiquette_table tr td input').attr('checked', $(this).is(':checked'));
+        });
+    });
+</script>
+{% endblock javascriptsafter %}

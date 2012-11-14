@@ -1,0 +1,7 @@
+impression_index:
+    pattern: /impression
+    defaults: { _controller: ApplicationSonataClientBundle:Impression:index }
+
+impression_etiquette:
+    pattern: /impression/etiquette
+    defaults: { _controller: ApplicationSonataClientBundle:Impression:etiquette }
