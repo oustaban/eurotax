@@ -14,7 +14,7 @@ class SendErrorsToMail
      * @var \Exception
      */
     protected $_exception;
-    protected $_debug = false;
+    protected $_debug = true;
     protected $_date;
     protected $_get_status_code;
     private $_server = array();
@@ -129,6 +129,7 @@ class SendErrorsToMail
             if ($this->_debug) {
                 echo '<pre>';
                 echo $content;
+                pritn_r(debug_backtrace(false));
                 exit;
             }
 
