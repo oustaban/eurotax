@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Application\Sonata\ClientOperationsBundle\Entity\Locking;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Application\Sonata\ClientOperationsBundle\Entity\Imports;
+use Application\Tools\mPDF;
 
 class AbstractTabsController extends Controller
 {
@@ -1186,12 +1187,8 @@ class AbstractTabsController extends Controller
 
 
         if (!$debug) {
-            $file_name = 'eurotax-' . md5(time() . rand(1, 99999999));
-
-            include VENDOR_PATH . '/mpdf/mpdf/mpdf.php';
-            $mpdf = new \mPDF('c', 'A4', 0, '', 15, 15, 13, 13, 9, 2);
+            $mpdf = new mPDF('c', 'A4', 0, '', 15, 15, 13, 13, 9, 2);
             //$mpdf->SetDisplayMode('fullpage');
-
             $mpdf->WriteHTML($page->getContent());
             $mpdf->Output();
 
@@ -1218,12 +1215,8 @@ class AbstractTabsController extends Controller
 
 
         if (!$debug) {
-            $file_name = 'eurotax-' . md5(time() . rand(1, 99999999));
-
-            include VENDOR_PATH . '/mpdf/mpdf/mpdf.php';
-            $mpdf = new \mPDF('c', 'A4', 0, '', 5, 10, 13, 13, 9, 2);
+            $mpdf = new mPDF('c', 'A4', 0, '', 5, 10, 13, 13, 9, 2);
             //$mpdf->SetDisplayMode('fullpage');
-
             $mpdf->WriteHTML($page->getContent());
             $mpdf->Output();
 

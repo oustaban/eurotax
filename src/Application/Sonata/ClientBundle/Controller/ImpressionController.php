@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Application\Tools\mPDF;
 
 // these import the "@Route" and "@Template" annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -97,12 +98,8 @@ class ImpressionController extends Controller
         if ($request->getMethod() == 'POST'){
             $page = $this->render('ApplicationSonataClientBundle:Impression:etiquette_pdf.html.twig', array_merge($action, array('post' => $request->request->all())));
 
-            $file_name = 'eurotax-' . md5(time() . rand(1, 99999999));
-
-            include VENDOR_PATH . '/mpdf/mpdf/mpdf.php';
-            $mpdf = new \mPDF('c', 'A4', 0, '', 0, 0, 0, 0, 9, 2);
+            $mpdf = new mPDF('c', 'A4', 0, '', 0, 0, 0, 0, 9, 2);
             //$mpdf->SetDisplayMode('fullpage');
-
             $mpdf->WriteHTML($page->getContent());
             $mpdf->Output();
 
