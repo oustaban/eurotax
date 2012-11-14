@@ -22,8 +22,7 @@ monolog:
 assetic:
     use_controller: true
 
-
-#behat: ~
+behat: ~
 
 #swiftmailer:
 #    delivery_address: me@example.com
