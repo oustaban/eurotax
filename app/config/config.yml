@@ -97,13 +97,6 @@ sonata_block:
         sonata.block.service.action:
         sonata.block.service.rss:
 
-    exception:
-        default:
-        filters:
-            ignore_all:
-        renderers:
-            page:
-
 #        # Some specific blocks from the SonataMediaBundle
         #sonata.media.block.media:
         #sonata.media.block.gallery:

@@ -1,5 +1,5 @@
 {
-    "hash": "a683b5bc3c50ae94d35030bcf28401b6",
+    "hash": "d42331e4b5d58b980b1e1870c6d51e33",
     "packages": [
         {
             "name": "CodePlex/PHPExcel",
@@ -205,6 +205,112 @@
                 "parser",
                 "DSL",
                 "Behat"
+            ]
+        },
+        {
+            "name": "behat/mink",
+            "version": "v1.3.4",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/Behat/Mink.git",
+                "reference": "v1.3.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/Behat/Mink/zipball/v1.3.4",
+                "reference": "v1.3.4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.1",
+                "symfony/browser-kit": ">=2.0,<2.2-dev",
+                "symfony/dom-crawler": ">=2.0,<2.2-dev",
+                "symfony/css-selector": ">=2.0,<2.2-dev",
+                "symfony/finder": ">=2.0,<2.2-dev",
+                "symfony/process": ">=2.1,<2.2-dev"
+            },
+            "require-dev": {
+                "fabpot/goutte": "*",
+                "behat/sahi-client": ">=1.0.1,<1.1-dev",
+                "alexandresalome/php-selenium": "*",
+                "facebook/php-webdriver": "*"
+            },
+            "suggest": {
+                "fabpot/goutte": "Goutte is needed to use the GoutteDriver",
+                "behat/sahi-client": "Sahi-Client is needed to use the SahiDriver",
+                "alexandresalome/php-selenium": "Php-Selenium is needed to use the SeleniumDriver",
+                "facebook/php-webdriver": "Php-Webdriver is needed to use the Selenium2Driver"
+            },
+            "time": "2012-05-03 07:01:09",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "Behat\\Mink": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Konstantin Kudryashov",
+                    "email": "ever.zet@gmail.com",
+                    "homepage": "http://everzet.com"
+                }
+            ],
+            "description": "Web acceptance testing framework for PHP 5.3",
+            "homepage": "http://mink.behat.org/",
+            "keywords": [
+                "testing",
+                "browser",
+                "web"
+            ]
+        },
+        {
+            "name": "behat/mink-bundle",
+            "version": "dev-master",
+            "target-dir": "Behat/MinkBundle",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/Behat/MinkBundle.git",
+                "reference": "b44df60a8533824469591a8d3b8e2dbc916a1d59"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/Behat/MinkBundle/archive/b44df60a8533824469591a8d3b8e2dbc916a1d59.zip",
+                "reference": "b44df60a8533824469591a8d3b8e2dbc916a1d59",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/framework-bundle": ">=2.0.0",
+                "behat/mink": ">=1.3.2,<1.4.0-dev"
+            },
+            "time": "1344291139",
+            "type": "symfony-bundle",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Behat\\MinkBundle": ""
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Konstantin Kudryashov",
+                    "email": "ever.zet@gmail.com",
+                    "homepage": "http://everzet.com"
+                }
+            ],
+            "description": "Mink bundle for Symfony2",
+            "homepage": "http://mink.behat.org/bundle/index.html",
+            "keywords": [
+                "test",
+                "browser",
+                "web"
             ]
         },
         {
@@ -1437,12 +1543,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataBlockBundle",
-                "reference": "6448a72f29ba90007d1496b6dfe4ba2b409d9c1a"
+                "reference": "b482e9181d406f1c1c9a0e96fd0fdb868b6fdbbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/sonata-project/SonataBlockBundle/archive/6448a72f29ba90007d1496b6dfe4ba2b409d9c1a.zip",
-                "reference": "6448a72f29ba90007d1496b6dfe4ba2b409d9c1a",
+                "url": "https://github.com/sonata-project/SonataBlockBundle/archive/b482e9181d406f1c1c9a0e96fd0fdb868b6fdbbe.zip",
+                "reference": "b482e9181d406f1c1c9a0e96fd0fdb868b6fdbbe",
                 "shasum": ""
             },
             "require": {
@@ -1457,7 +1563,7 @@
                 "sonata-project/admin-bundle": "dev-master",
                 "sonata-project/cache-bundle": "dev-master"
             },
-            "time": "1352888052",
+            "time": "1352937267",
             "type": "symfony-bundle",
             "installation-source": "source",
             "autoload": {
@@ -2264,6 +2370,7 @@
         "doctrine/doctrine-fixtures-bundle": 20,
         "codeplex/phpexcel": 20,
         "mpdf/mpdf": 20,
-        "behat/behat-bundle": 20
+        "behat/behat-bundle": 20,
+        "behat/mink-bundle": 20
     }
 }

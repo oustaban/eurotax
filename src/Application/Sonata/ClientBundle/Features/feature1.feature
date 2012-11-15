@@ -1,7 +1,6 @@
-Feature: TEST ApplicationSonataClientBundle
+Feature: ApplicationSonataClientBundle
 
 Scenario: Open main page in dev
-Page "/app_dev.php"
-Status 200
-View admin
-
+Given I have done something with "/login"
+When Status "200"
+Then I should get "TEST"

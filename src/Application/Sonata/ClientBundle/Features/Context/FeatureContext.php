@@ -22,16 +22,18 @@ use Behat\Gherkin\Node\PyStringNode,
  */
 class FeatureContext extends BehatContext //MinkContext if you want to test web
 {
-//
+
 // Place your definition and hook methods here:
-//
-//    /**
-//     * @Given /^I have done something with "([^"]*)"$/
-//     */
+
+    /**
+     * @Given /^I have done something with "([^"]*)"$/
+     */
 //    public function iHaveDoneSomethingWith($argument)
 //    {
-//        $container = $this->getContainer();
-//        $container->get('some_service')->doSomethingWith($argument);
+//        print_r($argument);
+//        exit;
+////        $container = $this->getContainer();
+////        $container->get('some_service')->doSomethingWith($argument);
 //    }
-//
+
 }

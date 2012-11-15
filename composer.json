@@ -24,7 +24,8 @@
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "CodePlex/PHPExcel":"dev-master",
         "mpdf/mpdf" : "dev-master",
-        "behat/behat-bundle": "dev-master"
+        "behat/behat-bundle": "dev-master",
+        "behat/mink-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [
