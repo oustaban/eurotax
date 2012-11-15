@@ -156,7 +156,6 @@ class SendErrorsToMail
      */
     public function setBackTrace($backTrace)
     {
-        exit('OK - '.__LINE__);
         $this->_backTrace = $backTrace;
 
         return $this;
