@@ -1,4 +1,4 @@
-Feature:
+Feature: logged
 
   Scenario: Open main page in dev
     Given I logged in as "test" with password "test"

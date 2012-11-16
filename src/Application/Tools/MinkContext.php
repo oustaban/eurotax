@@ -45,6 +45,7 @@ abstract class MinkContext extends BaseMinkContext implements KernelAwareInterfa
     public function iLoggedInAsWithPassword($login, $password)
     {
         /** @var $session \Behat\Mink\Session */
+
         $session = $this->getSession();
         $session->visit($this->locatePath('/login'));
         $login = $this->fixStepArgument($login);
