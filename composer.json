@@ -1,9 +1,4 @@
 {
-    "name": "symfony/framework-standard-edition",
-    "description": "The \"Symfony Standard Edition\" distribution",
-    "autoload": {
-        "psr-0": { "": "src/" }
-    },
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.1.*",
@@ -24,8 +19,16 @@
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "CodePlex/PHPExcel":"dev-master",
         "mpdf/mpdf" : "dev-master",
-        "behat/behat-bundle": "dev-master",
-        "behat/mink-bundle": "dev-master"
+        "behat/behat": "2.4.*@stable",
+        "behat/mink": "1.4@stable",
+        "behat/symfony2-extension":"*",
+        "behat/mink-extension": "*",
+        "behat/mink-browserkit-driver": "*"
+    },
+    "name": "symfony/framework-standard-edition",
+    "description": "The \"Symfony Standard Edition\" distribution",
+    "autoload": {
+        "psr-0": { "": "src/" }
     },
     "scripts": {
         "post-install-cmd": [

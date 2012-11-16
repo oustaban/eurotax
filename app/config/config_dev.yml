@@ -22,18 +22,5 @@ monolog:
 assetic:
     use_controller: true
 
-behat: ~
-
-mink:
-    default_session:  goutte
-    goutte:           ~
-    browser_name:  chrome
-    sahi:          ~
-
-#behat_mink:
-#    base_url:  http://eurotax.local/app_test.php/
-#    goutte:     ~   # enable both Goutte
-#    sahi:       ~   # and Sahi session
-
 #swiftmailer:
 #    delivery_address: me@example.com

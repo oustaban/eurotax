@@ -1,5 +1,5 @@
 {
-    "hash": "d42331e4b5d58b980b1e1870c6d51e33",
+    "hash": "5d0037c98f300341057e208f9bd34f1f",
     "packages": [
         {
             "name": "CodePlex/PHPExcel",
@@ -61,21 +61,21 @@
         },
         {
             "name": "behat/behat",
-            "version": "v2.3.5",
+            "version": "v2.4.4",
             "source": {
                 "type": "git",
                 "url": "git://github.com/Behat/Behat.git",
-                "reference": "v2.3.5"
+                "reference": "v2.4.4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/Behat/Behat/zipball/v2.3.5",
-                "reference": "v2.3.5",
+                "url": "https://github.com/Behat/Behat/zipball/v2.4.4",
+                "reference": "v2.4.4",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.1",
-                "behat/gherkin": ">=2.1.1,<2.2.0-dev",
+                "behat/gherkin": ">=2.2.4,<2.3.0-dev",
                 "symfony/console": ">=2.0.0,<2.2.0-dev",
                 "symfony/config": ">=2.0.0,<2.2.0-dev",
                 "symfony/dependency-injection": ">=2.0.0,<2.2.0-dev",
@@ -84,7 +84,12 @@
                 "symfony/yaml": ">=2.0.0,<2.2.0-dev",
                 "symfony/finder": ">=2.0.0,<2.2.0-dev"
             },
-            "time": "2012-03-30 04:35:29",
+            "suggest": {
+                "behat/symfony2-extension": "for integration with Symfony2 web framework",
+                "behat/yii-extension": "for integration with Yii web framework",
+                "behat/mink-extension": "for integration with Mink testing framework"
+            },
+            "time": "2012-09-04 07:59:18",
             "bin": [
                 "bin/behat"
             ],
@@ -114,72 +119,34 @@
             ]
         },
         {
-            "name": "behat/behat-bundle",
-            "version": "dev-master",
-            "target-dir": "Behat/BehatBundle",
-            "source": {
-                "type": "git",
-                "url": "git://github.com/Behat/BehatBundle.git",
-                "reference": "63729b0b41ef4dce238207015cc9b33bbcc9b1a4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/Behat/BehatBundle/archive/63729b0b41ef4dce238207015cc9b33bbcc9b1a4.zip",
-                "reference": "63729b0b41ef4dce238207015cc9b33bbcc9b1a4",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2",
-                "symfony/framework-bundle": ">=2.0.0",
-                "behat/behat": ">=2.3.1,<=2.3.5"
-            },
-            "suggest": {
-                "behat/mink-bundle": "*"
-            },
-            "time": "1340834920",
-            "type": "symfony-bundle",
-            "installation-source": "source",
-            "autoload": {
-                "psr-0": {
-                    "Behat\\BehatBundle": ""
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Konstantin Kudryashov",
-                    "email": "ever.zet@gmail.com",
-                    "homepage": "http://everzet.com"
-                }
-            ],
-            "description": "Behat bundle for Symfony2",
-            "homepage": "http://docs.behat.org/bundle/index.html",
-            "keywords": [
-                "BDD",
-                "Behat"
-            ]
-        },
-        {
             "name": "behat/gherkin",
-            "version": "v2.1.1",
+            "version": "v2.2.5",
             "source": {
                 "type": "git",
                 "url": "git://github.com/Behat/Gherkin.git",
-                "reference": "v2.1.1"
+                "reference": "v2.2.5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/Behat/Gherkin/zipball/v2.1.1",
-                "reference": "v2.1.1",
+                "url": "https://github.com/Behat/Gherkin/zipball/v2.2.5",
+                "reference": "v2.2.5",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.1",
                 "symfony/finder": ">=2.0,<2.2-dev"
             },
-            "time": "2012-03-09 03:24:24",
+            "require-dev": {
+                "symfony/yaml": ">=2.0,<2.2-dev",
+                "symfony/translation": ">=2.0,<2.2-dev",
+                "symfony/config": ">=2.0,<2.2-dev"
+            },
+            "suggest": {
+                "symfony/yaml": "If you want to parse features, represented in YAML files",
+                "symfony/translation": "If you want to use Symfony2 translations adapter",
+                "symfony/config": "If you want to use Config component to manage resources"
+            },
+            "time": "2012-09-26 03:03:21",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -209,39 +176,38 @@
         },
         {
             "name": "behat/mink",
-            "version": "v1.3.4",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "git://github.com/Behat/Mink.git",
-                "reference": "v1.3.4"
+                "reference": "v1.4.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/Behat/Mink/zipball/v1.3.4",
-                "reference": "v1.3.4",
+                "url": "https://github.com/Behat/Mink/zipball/v1.4.0",
+                "reference": "v1.4.0",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.1",
-                "symfony/browser-kit": ">=2.0,<2.2-dev",
-                "symfony/dom-crawler": ">=2.0,<2.2-dev",
-                "symfony/css-selector": ">=2.0,<2.2-dev",
-                "symfony/finder": ">=2.0,<2.2-dev",
-                "symfony/process": ">=2.1,<2.2-dev"
+                "symfony/css-selector": ">=2.0.0,<2.2.0-dev"
             },
             "require-dev": {
-                "fabpot/goutte": "*",
-                "behat/sahi-client": ">=1.0.1,<1.1-dev",
-                "alexandresalome/php-selenium": "*",
-                "facebook/php-webdriver": "*"
+                "behat/mink-goutte-driver": "*",
+                "behat/mink-sahi-driver": "*",
+                "behat/mink-selenium-driver": "*",
+                "behat/mink-selenium2-driver": "*",
+                "behat/mink-zombie-driver": "*",
+                "symfony/finder": ">=2.0.0,<2.2.0-dev"
             },
             "suggest": {
-                "fabpot/goutte": "Goutte is needed to use the GoutteDriver",
-                "behat/sahi-client": "Sahi-Client is needed to use the SahiDriver",
-                "alexandresalome/php-selenium": "Php-Selenium is needed to use the SeleniumDriver",
-                "facebook/php-webdriver": "Php-Webdriver is needed to use the Selenium2Driver"
+                "behat/mink-goutte-driver": "to enable Goutte support",
+                "behat/mink-sahi-driver": "to enable Sahi.JS support",
+                "behat/mink-selenium-driver": "to enable Selenium1 support",
+                "behat/mink-selenium2-driver": "to enable Selenium2 (webdriver support)",
+                "behat/mink-zombie-driver": "to enable Zombie.js support"
             },
-            "time": "2012-05-03 07:01:09",
+            "time": "2012-05-29 15:50:10",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -268,31 +234,30 @@
             ]
         },
         {
-            "name": "behat/mink-bundle",
+            "name": "behat/mink-browserkit-driver",
             "version": "dev-master",
-            "target-dir": "Behat/MinkBundle",
             "source": {
                 "type": "git",
-                "url": "git://github.com/Behat/MinkBundle.git",
-                "reference": "b44df60a8533824469591a8d3b8e2dbc916a1d59"
+                "url": "git://github.com/Behat/MinkBrowserKitDriver.git",
+                "reference": "f2783df62edd22c380fb6f271acd21beb3ef4908"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/Behat/MinkBundle/archive/b44df60a8533824469591a8d3b8e2dbc916a1d59.zip",
-                "reference": "b44df60a8533824469591a8d3b8e2dbc916a1d59",
+                "url": "https://github.com/Behat/MinkBrowserKitDriver/archive/f2783df62edd22c380fb6f271acd21beb3ef4908.zip",
+                "reference": "f2783df62edd22c380fb6f271acd21beb3ef4908",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.2",
-                "symfony/framework-bundle": ">=2.0.0",
-                "behat/mink": ">=1.3.2,<1.4.0-dev"
+                "php": ">=5.3.1",
+                "symfony/browser-kit": ">=2.0.0,<2.2.0",
+                "symfony/dom-crawler": ">=2.0.0,<2.2.0"
             },
-            "time": "1344291139",
-            "type": "symfony-bundle",
+            "time": "1350380173",
+            "type": "mink-driver",
             "installation-source": "source",
             "autoload": {
                 "psr-0": {
-                    "Behat\\MinkBundle": ""
+                    "Behat\\Mink\\Driver": "src/"
                 }
             },
             "license": [
@@ -305,12 +270,112 @@
                     "homepage": "http://everzet.com"
                 }
             ],
-            "description": "Mink bundle for Symfony2",
-            "homepage": "http://mink.behat.org/bundle/index.html",
+            "description": "Symfony2 BrowserKit driver for Mink framework",
+            "homepage": "http://mink.behat.org/",
+            "keywords": [
+                "Symfony2",
+                "testing",
+                "browser"
+            ]
+        },
+        {
+            "name": "behat/mink-extension",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/Behat/MinkExtension.git",
+                "reference": "71fed8e03d403dbeedf74c8764f5d137f7dc9ffd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/Behat/MinkExtension/archive/71fed8e03d403dbeedf74c8764f5d137f7dc9ffd.zip",
+                "reference": "71fed8e03d403dbeedf74c8764f5d137f7dc9ffd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "behat/behat": ">=2.4.0,<2.5.0",
+                "behat/mink": ">=1.4.0,<1.5.0"
+            },
+            "require-dev": {
+                "behat/mink-goutte-driver": "*"
+            },
+            "time": "1352494042",
+            "type": "behat-extension",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Behat\\MinkExtension": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Konstantin Kudryashov",
+                    "email": "ever.zet@gmail.com",
+                    "homepage": "http://everzet.com"
+                }
+            ],
+            "description": "Mink extension for Behat",
+            "homepage": "http://mink.behat.org",
             "keywords": [
                 "test",
                 "browser",
-                "web"
+                "web",
+                "gui"
+            ]
+        },
+        {
+            "name": "behat/symfony2-extension",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/Behat/Symfony2Extension.git",
+                "reference": "f8326e8ca5e583ffe475a363ff4f2a7d63789182"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/Behat/Symfony2Extension/archive/f8326e8ca5e583ffe475a363ff4f2a7d63789182.zip",
+                "reference": "f8326e8ca5e583ffe475a363ff4f2a7d63789182",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "behat/behat": ">=2.4.0,<2.5.0-dev",
+                "symfony/framework-bundle": ">=2.0.0,<2.3-dev"
+            },
+            "require-dev": {
+                "symfony/symfony": "dev-master",
+                "behat/mink-extension": "dev-master",
+                "behat/mink-browserkit-driver": "dev-master",
+                "behat/mink": "1.4@stable"
+            },
+            "time": "1350380337",
+            "type": "behat-extension",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Behat\\Symfony2Extension": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Konstantin Kudryashov",
+                    "email": "ever.zet@gmail.com",
+                    "homepage": "http://everzet.com"
+                }
+            ],
+            "description": "Symfony2 framework extension for Behat",
+            "homepage": "http://behat.org",
+            "keywords": [
+                "framework",
+                "symfony",
+                "BDD"
             ]
         },
         {
@@ -685,12 +750,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle",
-                "reference": "a197484ad0b53a056e07a13b639ed69466c06c95"
+                "reference": "809734e26fa68023f27e3752d370092fb1160e59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/FriendsOfSymfony/FOSUserBundle/archive/a197484ad0b53a056e07a13b639ed69466c06c95.zip",
-                "reference": "a197484ad0b53a056e07a13b639ed69466c06c95",
+                "url": "https://github.com/FriendsOfSymfony/FOSUserBundle/archive/809734e26fa68023f27e3752d370092fb1160e59.zip",
+                "reference": "809734e26fa68023f27e3752d370092fb1160e59",
                 "shasum": ""
             },
             "require": {
@@ -711,7 +776,7 @@
                 "doctrine/doctrine-bundle": "*",
                 "doctrine/mongodb-odm-bundle": "*"
             },
-            "time": "1351955784",
+            "time": "1352986811",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -2174,12 +2239,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/symfony/symfony.git",
-                "reference": "2d488b79f2e46bfff057c73081a8e5c426b712a7"
+                "reference": "9a2edb9a6396dc8a549b26dce78bef655a90e176"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/symfony/archive/2d488b79f2e46bfff057c73081a8e5c426b712a7.zip",
-                "reference": "2d488b79f2e46bfff057c73081a8e5c426b712a7",
+                "url": "https://github.com/symfony/symfony/archive/9a2edb9a6396dc8a549b26dce78bef655a90e176.zip",
+                "reference": "9a2edb9a6396dc8a549b26dce78bef655a90e176",
                 "shasum": ""
             },
             "require": {
@@ -2228,7 +2293,7 @@
                 "propel/propel1": "dev-master",
                 "monolog/monolog": "1.*"
             },
-            "time": "1352824146",
+            "time": "1352985781",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -2370,7 +2435,7 @@
         "doctrine/doctrine-fixtures-bundle": 20,
         "codeplex/phpexcel": 20,
         "mpdf/mpdf": 20,
-        "behat/behat-bundle": 20,
-        "behat/mink-bundle": 20
+        "behat/behat": 0,
+        "behat/mink": 0
     }
 }
