@@ -93,8 +93,13 @@ class SendErrorsToMail
      */
     public static function byException(\Exception $exception)
     {
+        ob_start();
+        debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+        $backTrace = ob_get_contents();
+        ob_end_clean();
+
         static::getInstance()
-            ->setBackTrace(print_r(debug_backtrace(false), true))
+            ->setBackTrace($backTrace)
             ->setException($exception)
             ->sendMail();
     }
