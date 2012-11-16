@@ -7,5 +7,4 @@ use Application\Tools\MinkContext;
 
 class FeatureContext extends MinkContext implements KernelAwareInterface
 {
-
 }

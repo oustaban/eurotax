@@ -48,12 +48,11 @@ abstract class MinkContext extends BaseMinkContext implements KernelAwareInterfa
 
         $session = $this->getSession();
         $session->visit($this->locatePath('/login'));
+
         $login = $this->fixStepArgument($login);
         $password = $this->fixStepArgument($password);
         $session->getPage()->fillField('username', $login);
         $session->getPage()->fillField('password', $password);
         $session->getPage()->pressButton('_submit');
-
-        //throw new PendingException();
     }
 }
