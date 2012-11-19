@@ -212,7 +212,14 @@ class ClientAdmin extends Admin
             $fieldUserOptions['template'] = 'ApplicationSonataClientBundle:CRUD:list_user_text.html.twig';
         }
 
-        $listMapper->addIdentifier('code_client')
+        $listMapper
+            ->add('_action', 'actions', array(
+                'actions' => array(
+                    'operations' => array('template' => 'ApplicationSonataClientBundle:CRUD:operations_action.html.twig'),
+                    'edit' => array('template' => 'ApplicationSonataClientBundle:CRUD:edit_action.html.twig'),
+                )
+            ))
+            ->add('code_client')
             ->add('raison_sociale', null, array('label' => 'list.raison_sociale'))
             ->add('nature_du_client.name', null, array('label' => 'list.nature_du_client'))
             ->add('user', null, $fieldUserOptions)
