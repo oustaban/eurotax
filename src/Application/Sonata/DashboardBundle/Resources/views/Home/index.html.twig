@@ -24,6 +24,9 @@
         <thead>
         <tr class="sonata-ba-list-field-header">
             {% spaceless %}
+            <th>
+                &nbsp;
+            </th>
             <th class="sonata-ba-list-field-header-text">
                 <a href="#">{{ 'list.code_client'|trans() }}</a>
             </th>
@@ -72,6 +75,16 @@
         <tbody>
         {% for client in clients %}
         <tr class="{% if client.dimmed%}dimmed{% endif %}">
+            <td>
+                {% spaceless %}
+                <a href="{{ path('admin_sonata_clientoperations_v01tva_list', {'filter[client_id][value]' : client[0].id}) }}">
+                    <i rel="tooltip" title="Operations" class="icon icon-th-list"></i>
+                </a>
+                <a href="{{ path('admin_sonata_client_client_edit', {'id':client[0].id}) }}">
+                    <i rel="tooltip" title="Fiche" class="icon icon-list-alt"></i>
+                </a>
+                {% endspaceless %}
+            </td>
             <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client[0].id }}">
                 {{ client[0].getCodeClient }}
             </td>
@@ -126,7 +139,6 @@
 <script src="{{ asset('bundles/applicationsonataclientoperations/js/jquery.tablesorter.js') }}" type="text/javascript"></script>
 <script src="{{ asset('bundles/applicationsonataclientoperations/js/jquery.columnfilters.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
-    var editObjectAbstractUrl = '{{ path('admin_sonata_clientoperations_v01tva_list', {'filter[client_id][value]' : '__id__'}) }}';
     init_home_page();
 </script>
 {% endblock javascripts %}

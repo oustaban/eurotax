@@ -11,9 +11,11 @@ function tableFixLayout() {
 function init_home_page() {
     $(function () {
         $('#clientList').tablesorter({
+            headers:{ 0:{ sorter:false} },
             cancelSelection:false
         });
         $('#clientList').columnFilters({
+            excludeColumns: [0],
             wildCard:false,
             underline:true,
             alternateRowClassNames:['rowa', 'rowb']
@@ -25,15 +27,6 @@ function init_home_page() {
 
         $("#emptyColumnFilters").click(function(){
             $(this).parent().parent().find("._filterText").val("").keyup();
-        });
-    });
-    $(function () {
-        var $table = $('#clientList tbody:first');
-        $table.find('tr').css('cursor', 'pointer').click(function () {
-            var objectid = $(this).children(':last').attr('objectid');
-            if (objectid) {
-                location.href = editObjectAbstractUrl.replace("__id__", objectid);
-            }
         });
     });
     $(function () {
