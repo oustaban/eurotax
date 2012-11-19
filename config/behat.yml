@@ -1,0 +1,24 @@
+default:
+
+#  context:
+#    class: Application\Tools\MinkContext
+
+  paths:
+    features: ../src/Application/Sonata
+#    bootstrap: %behat.paths.features%/Context
+
+  formatter:
+    name: progress
+  extensions:
+
+    Behat\Symfony2Extension\Extension:
+      mink_driver: true
+      kernel:
+        env: test
+        debug: true
+
+    Behat\MinkExtension\Extension:
+      base_url: 'http://eurotax.local/index_test.php'
+      default_session: selenium2
+      selenium2:
+        browser: firefox

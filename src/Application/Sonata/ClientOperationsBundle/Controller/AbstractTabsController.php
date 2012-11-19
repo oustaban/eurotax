@@ -810,72 +810,32 @@ class AbstractTabsController extends Controller
             }
 
             if (count($validate_fields) > 0) {
-                $this->getImportFileValidateMessage($validate_fields);
+                $this->getImportFileValidateMessage();
                 $validate = false;
             }
 
         } else {
 
-            $this->getImportFileValidateMessage(array(
-                'nom_client',
-                'year',
-                'month',
-                'version',
-            ));
+            $this->getImportFileValidateMessage();
         }
 
         return $validate;
     }
 
-    /**
-     * @param array $fields
-     */
-    protected function getImportFileValidateMessage($fields = array())
+    protected function getImportFileValidateMessage()
     {
-        $ver = $this->getImportFileValidateVersion($this->client, $this->_year, $this->_month);
-
-        if (is_array($fields)) {
-            $fields = array_flip($fields);
-        }
-
-        $data = array();
-        if (isset($fields['nom_client'])) {
-            $data['%nom_client%'] = $this->getImportFileValidateErrorFormat(strtoupper($this->client));
-        } else {
-            $data['%nom_client%'] = strtoupper($this->client);
-        }
-        if (isset($fields['year'])) {
-            $data['%year%'] = $this->getImportFileValidateErrorFormat($this->_year);
-        } else {
-            $data['%year%'] = $this->_year;
-        }
-        if (isset($fields['month'])) {
-            $data['%month%'] = $this->getImportFileValidateErrorFormat($this->_month);
-        } else {
-            $data['%month%'] = $this->_month;
-        }
-        $data['%month%'] = ($data['%month%']<10?'0':'') . $data['%month%'];
-
-        if (isset($fields['version'])) {
-            $data['%version%'] = $this->getImportFileValidateErrorFormat($ver);
-        } else {
-            $data['%version%'] = $ver;
-        }
+        $data = array(
+            '%nom_client%' => strtoupper($this->client),
+            '%year%' => $this->_year,
+            '%month%' => ($this->_month<10?'0':'') . $this->_month,
+            '%version%' => $this->getImportFileValidateVersion($this->client, $this->_year, $this->_month),
+        );
 
         $filename = '<strong>' . strtr("%nom_client%-Importation-TVA-%year%-%month%-%version%.xlsx", $data) . '</strong>';
 
         $this->get('session')->setFlash('sonata_flash_info|raw', $this->admin->trans('Nom de fichier invalide: Format requis %filename%', array('%filename%' => $filename)));
     }
 
-    /**
-     * @param $value
-     * @return string
-     */
-    protected function getImportFileValidateErrorFormat($value)
-    {
-        return $value;
-//        return '<span class="error">' . $value . '</span>';
-    }
 
     /**
      * @param $nom_client
