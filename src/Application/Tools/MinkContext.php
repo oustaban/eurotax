@@ -55,4 +55,24 @@ abstract class MinkContext extends BaseMinkContext implements KernelAwareInterfa
         $session->getPage()->fillField('password', $password);
         $session->getPage()->pressButton('_submit');
     }
+
+
+    /**
+     * Fills in form field with specified id|name|label|value.
+     *
+     * @When /^(?:|I )fill field "(?P<field>(?:[^"]|\\")*)" with "(?P<value>(?:[^"]|\\")*)"$/
+     */
+    public function fillField($field, $value)
+    {
+//        $named = $this->getSession()->getPage()->find('method', 'POST');
+//
+//        print_r($named);
+//
+////        print_r($this->getSession()->getPage()->find('named', 'METHOD'));
+//        echo "\n\n";
+//        echo "$field, $value";
+//        exit;
+        parent::fillField($field, $value);
+    }
+
 }
