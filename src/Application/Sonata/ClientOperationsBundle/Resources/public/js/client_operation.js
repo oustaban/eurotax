@@ -47,9 +47,9 @@ function init_clientoperations_buttons(o) {
             success:function (json) {
                 var $table = $('<table class="table table-bordered table-striped table-hover" style="width: auto;"><thead></thead></table>');
                 $('<tr class="sonata-ba-list-field-header" />')
-                    .append('<th class="sonata-ba-list-field-header-integer">Id</th>')
+                    .append('<th class="sonata-ba-list-field-header-integer">N°</th>')
                     .append('<th class="sonata-ba-list-field-header-date">Date</th>')
-                    .append('<th class="sonata-ba-list-field-header-orm_many_to_one">User</th>')
+                    .append('<th class="sonata-ba-list-field-header-orm_many_to_one">Utilisateur</th>')
                     .append('<th class="sonata-ba-list-field-header-actions">Action</th>')
                     .appendTo($table.children('thead'));
 

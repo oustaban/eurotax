@@ -1263,7 +1263,7 @@ class AbstractTabsController extends Controller
             ->getArrayResult();
 
         return $this->renderJson(array(
-            'title' => $this->admin->trans('ApplicationSonataClientOperationsBundle.imports.list_title'),
+            'title' => '<span style="text-transform:none;">' . $this->admin->trans('ApplicationSonataClientOperationsBundle.imports.list_title').'</span>',
             'imports' => $lastImports ? $lastImports : array(),
         ));
     }
