@@ -854,6 +854,7 @@ class AbstractTabsController extends Controller
         } else {
             $data['%month%'] = $this->_month;
         }
+        $data['%month%'] = ($data['%month%']<10?'0':'') . $data['%month%'];
 
         if (isset($fields['version'])) {
             $data['%version%'] = $this->getImportFileValidateErrorFormat($ver);
