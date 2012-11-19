@@ -221,8 +221,8 @@ class ClientAdmin extends Admin
             ->add('teledeclaration', null, array('label' => 'list.teledeclaration'))
             ->add('mois_tva', null, array('label' => 'list.mois_tva'))
             ->add('BAPSA', null, array('label' => 'list.BAPSA'))
-            ->add('solde_du_compte', null, array('label' => 'list.solde_du_compte'))
             ->add('remboursement_de_TVA', null, array('label' => 'list.remboursement_de_TVA'))
+            ->add('solde_du_compte', null, array('label' => 'list.solde_du_compte'))
             ->add('date_debut_mission', null, array(
             'template' => 'ApplicationSonataClientBundle:CRUD:list_date_debut_mission.html.twig',
             'label' => 'list.date_debut_mission'

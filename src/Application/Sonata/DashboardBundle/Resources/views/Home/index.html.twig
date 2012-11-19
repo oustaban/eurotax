@@ -52,10 +52,10 @@
                 <a href="#">{{ 'list.BAPSA'|trans() }}</a>
             </th>
             <th class="sonata-ba-list-field-header-text">
-                <a href="#">{{ 'list.solde_du_compte'|trans() }}</a>
+                <a href="#">{{ 'list.remboursement_de_TVA'|trans() }}</a>
             </th>
             <th class="sonata-ba-list-field-header-text">
-                <a href="#">{{ 'list.remboursement_de_TVA'|trans() }}</a>
+                <a href="#">{{ 'list.solde_du_compte'|trans() }}</a>
             </th>
             <th class="sonata-ba-list-field-header-date">
                 <a href="#">{{ 'list.date_debut_mission'|trans() }}</a>
@@ -101,10 +101,10 @@
                 {#{{ client[0].BAPSA }}#}
             </td>
             <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client[0].id }}">
-                {#{{ client[0].solde_du_compte }}#}
+                {#{{ client[0].remboursement_de_TVA }}#}
             </td>
             <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client[0].id }}">
-                {#{{ client[0].remboursement_de_TVA }}#}
+                {#{{ client[0].solde_du_compte }}#}
             </td>
             <td class="sonata-ba-list-field sonata-ba-list-field-date"  objectId="{{ client[0].id }}">
                 {{ client[0].getDateDebutMission|datefmt_format(default_date_format) }}
