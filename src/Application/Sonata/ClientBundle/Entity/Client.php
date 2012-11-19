@@ -24,9 +24,9 @@ class Client
 
 
     /**
-     * @var string  $code_client
+     * @var integer  $code_client
      *
-     * @ORM\Column(name="code_client", type="string", length=20)
+     * @ORM\Column(name="code_client", type="integer")
      */
     protected $code_client;
 
