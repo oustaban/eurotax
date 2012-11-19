@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Sonata\ApplicationSonataImpotsBundle\Features\Context;
+namespace Application\Sonata\ImpotsBundle\Features\Context;
 
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
 use Application\Tools\MinkContext;
