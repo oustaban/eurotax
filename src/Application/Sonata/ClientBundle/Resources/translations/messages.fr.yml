@@ -120,32 +120,32 @@ form:
 list:
   user: Gestionnaire
   nom: Nom
-  nature_du_client: Nature du client
+  nature_du_client: Nature
   raison_sociale: Raison sociale
   activite: Activité
   mode_denregistrement: Mode d'enregistrement
   siret: Siret
-  date_debut_mission: Date Début mission
+  date_debut_mission: Début
   periodicite_facturation: Périodicité Facturation
   num_dossier_fiscal: Num dossier fiscal
   taxe_additionnelle: Taxe additionnelle
   periodicite_CA3: Périodicité CA3
-  center_des_impots: Centre des impôts
+  center_des_impots: Centre impôts
   language: Langue
   autre_destinataire_de_facturation: Autre destinataire de facturation
   contacts: Contact
   raison_sociale_2: Raison sociale
   N_TVA_CEE_facture: N° TVA CEE facturé
-  date_fin_mission: Date fin mission
-  date_de_depot_id: Date de dépôt
+  date_fin_mission: Fin
+  date_de_depot_id: Date dépôt
   N_TVA_CEE: N° TVA CEE
   niveau_dobligation_id: Niveau d'obligation
   client_operations: Client Operations
   teledeclaration: Télédéclaration
   mois_tva: Mois-TVA
   BAPSA: BAPSA
-  solde_du_compte: Solde du compte
-  remboursement_de_TVA: Remboursement de TVA
+  solde_du_compte: Solde compte
+  remboursement_de_TVA: Rbst TVA
   code_client: Code Client
 
   Contact:
