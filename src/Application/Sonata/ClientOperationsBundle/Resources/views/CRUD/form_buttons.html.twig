@@ -1,25 +1,34 @@
 {% block form_buttons %}
 <form id="mass-buttons" onsubmit="return false">
-    <div>
+    <div style="btn-group-nowrap">
         <div class="btn-group inline">
             <button rel="tooltip" title="{{ 'Voir la fiche'|trans }}" class="btn" id="btn_more_info" onclick="javascript:location.href = '{{ path('admin_sonata_client_client_edit', {'id':client_id}) }}';"><i class="icon icon-list-alt"></i> {{ 'Fiche'|trans }}</button>
+        </div>
+
+        <div class="btn-group inline">
             <button rel="tooltip" title="{{ 'Importer un fichier'|trans }}" class="btn" id="toggleImportModal" onclick="javascript:$('#importModal').modal('toggle');"><i class="icon icon-hdd"></i> {{ 'Importer'|trans }}</button>
             <button rel="tooltip" title="{{ 'Exporter les opérations'|trans }}" class="btn" id="exportExcel" onclick="javascript:location.href = '{{ admin.generateUrl('exportExcel', _filter_json) }}'.replace('&amp;', '&');"><i class="icon icon-download-alt"></i> {{ 'Exporter'|trans }}</button>
             <button rel="tooltip" title="{{ 'Supprimer un lot importé'|trans }}" class="btn" id="deleteImport"><i class="icon icon-trash"></i> {{ 'Supprimer'|trans }}</button>
+        </div>
 
             {% set alert_count = client.getAlertCount()%}
             {% if alert_count %}
-            <button rel="tooltip" title="{{alert_count}} {{ 'alertes'|trans }}" class="btn" id="btn_client_alert"><span class="badge badge-warning">{{ alert_count }}</span> {{ 'Alertes'|trans }}</button>
+            <div class="btn-group inline">
+                <button rel="tooltip" title="{{alert_count}} {{ 'alertes'|trans }}" class="btn" id="btn_client_alert"><span class="badge badge-warning">{{ alert_count }}</span> {{ 'Alertes'|trans }}</button>
+            </div>
             {% endif%}
 
+        <div class="btn-group inline">
+            <button class="btn" id="raprochement" onclick="javascript:location.href = '{{ path('rapprochement_index', {client_id: client_id, month: month~'|'~year } ) }}'.replace('&amp;', '&');"><i class="icon icon-list-alt"></i> {{ 'Prévisualisation'|trans }}</button>
+            <button class="btn" id="downloadDeclaration" onclick="javascript:location.href = '{{ admin.generateUrl('declaration', _filter_json) }}'.replace('&amp;', '&');"><i class="icon icon-print"></i> {{ 'Déclaration'|trans }}</button>
             {% if admin.isGranted('ROLE_CLIENT_TOOLS') %}
             {% set text_lock = blocked ? 'Clôturer' : 'Déverrouiller' %}
             <button id="btn_locking" class="btn"><i class="icon icon-lock"></i> {{ text_lock|trans}}</button>
             {% endif %}
+        </div>
 
-            <button class="btn" id="downloadDeclaration" onclick="javascript:location.href = '{{ admin.generateUrl('declaration', _filter_json) }}'.replace('&amp;', '&');"><i class="icon icon-print"></i> {{ 'Déclaration'|trans }}</button>
+        <div class="btn-group inline">
             <button class="btn" id="downloadAttestation" onclick="javascript:location.href = '{{ admin.generateUrl('attestation', _filter_json) }}'.replace('&amp;', '&');"><i class="icon icon-print"></i> {{ 'Attestation'|trans }}</button>
-            <button class="btn" id="raprochement" onclick="javascript:location.href = '{{ path('rapprochement_index', {client_id: client_id, month: month~'|'~year } ) }}'.replace('&amp;', '&');"><i class="icon icon-list-alt"></i> {{ 'Prévisualisation'|trans }}</button>
         </div>
     </div>
 </form>
