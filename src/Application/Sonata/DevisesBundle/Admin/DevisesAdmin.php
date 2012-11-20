@@ -80,13 +80,6 @@ class DevisesAdmin extends Admin
             'choices' => $this->getDateChange(),
             'data' => $entity_devises ? $this->generateObjectUrl('edit', $entity_devises) : $this->generateUrl('create'),
             'attr' => array('style' => 'width:auto'),
-        ))
-            ->add('date', 'date', array(
-            'format' => 'dd MMMM yyyy',
-            'days' => range(1, 1),
-            'months' => range($months, $months),
-            'years' => range($years, $years),
-            'label' => ' ',
         ));
 
         foreach ($this->_money_arr as $field => $labelData) {
@@ -110,7 +103,7 @@ class DevisesAdmin extends Admin
         /* @var $em \Doctrine\ORM\EntityManager */
         $em = $doctrine->getManager();
 
-        $devises = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findBy(array(), array('id' => 'DESC'));
+        $devises = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findBy(array(), array('date' => 'DESC'));
         $rows = array();
 
         if (!$this->_current_devises) {
