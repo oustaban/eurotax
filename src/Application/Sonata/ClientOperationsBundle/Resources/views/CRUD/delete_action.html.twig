@@ -1,0 +1,7 @@
+{% set query_month = admin.setQueryMonth() %}
+
+{% spaceless %}
+<a href="{{ admin.generateObjectUrl('delete', object, query_month ? {'month':query_month} : {} )}}">
+    <i rel="tooltip" title="Supprimer" class="icon icon-trash"></i>
+</a>
+{% endspaceless %}
