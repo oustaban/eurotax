@@ -14,6 +14,7 @@ abstract class AbstractTabsAdmin extends Admin
     public $date_format_datetime = 'dd/MM/yyyy';
     public $date_format_php = 'd/m/Y';
     public $client_id = '';
+    protected $_client;
     protected $_generate_url = true;
 
     protected $_bundle_name = 'ApplicationSonataClientBundle';
@@ -61,9 +62,28 @@ abstract class AbstractTabsAdmin extends Admin
         if (!empty($filter['client_id']) && !empty($filter['client_id']['value'])) {
 
             $this->client_id = $filter['client_id']['value'];
+            $this->setClient($this->client_id);
+
         }
     }
 
+    /**
+     * @param $client_id
+     */
+    protected function setClient($client_id)
+    {
+        /** @var $doctrine  \Doctrine\Bundle\DoctrineBundle\Registry */
+        $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+        $this->_client = $doctrine->getManager()->getRepository('ApplicationSonataClientBundle:Client')->find($client_id);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClient()
+    {
+        return $this->_client;
+    }
 
     /**
      * @param string $context

@@ -50,7 +50,7 @@ class Document
     private $file_alias;
 
     /**
-     * @var integer $type_document
+     * @var integer $type_document_id
      *
      * @ORM\ManyToOne(targetEntity="ListTypeDocuments", inversedBy="document")
      * @ORM\JoinColumn(name="type_document_id", referencedColumnName="id")

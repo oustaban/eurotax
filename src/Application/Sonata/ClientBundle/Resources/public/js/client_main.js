@@ -44,7 +44,7 @@ jQuery(document).ready(function ($) {
     }).trigger('change');
 
 
-    $('#' + uniqid + '_location_postal_pays_id_postal').change(function () {
+    $('#' + uniqid + '_location_postal_pays_postal').change(function () {
 
         var N_TVA_CEE = $('#' + uniqid + '_N_TVA_CEE');
         var N_TVA_CEE_label = $('#sonata-ba-field-container-' + uniqid + '_N_TVA_CEE label');

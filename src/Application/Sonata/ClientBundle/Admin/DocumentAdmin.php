@@ -13,6 +13,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Sonata\AdminBundle\Validator\ErrorElement;
 use Application\Sonata\ClientBundle\Entity\ClientAlert;
+use Application\Sonata\ClientBundle\Entity\ListCountries;
+use Application\Sonata\ClientBundle\Entity\ListTypeDocuments;
+use Application\Sonata\ClientBundle\Entity\ListNatureDuClients;
 
 use Application\Sonata\ClientBundle\Admin\AbstractTabsAdmin as Admin;
 
@@ -65,8 +68,7 @@ class DocumentAdmin extends Admin
             'label' => $this->getFieldLabel('statut_document_apostille'),
             'empty_value' => '',
             'required' => false,
-        ))
-        ;
+        ));
     }
 
     //list
@@ -81,14 +83,14 @@ class DocumentAdmin extends Admin
             'label' => $this->getFieldLabel('document'),
             'template' => 'ApplicationSonataClientBundle:CRUD:document_link.html.twig'
         ))
-        ->add('date_document', null, array(
+            ->add('date_document', null, array(
             'label' => $this->getFieldLabel('date_document'),
             'template' => 'ApplicationSonataClientBundle:CRUD:list_date_document.html.twig'
         ))
-        ->add('date_notaire', null, array('label' => $this->getFieldLabel('date_notaire')))
-        ->add('statut_document_notaire.name', null, array('label' => $this->getFieldLabel('statut_document_notaire')))
-        ->add('date_apostille', null, array('label' => $this->getFieldLabel('date_apostille')))
-        ->add('statut_document_apostille.name', null, array('label' => $this->getFieldLabel('statut_document_apostille')));
+            ->add('date_notaire', null, array('label' => $this->getFieldLabel('date_notaire')))
+            ->add('statut_document_notaire.name', null, array('label' => $this->getFieldLabel('statut_document_notaire')))
+            ->add('date_apostille', null, array('label' => $this->getFieldLabel('date_apostille')))
+            ->add('statut_document_apostille.name', null, array('label' => $this->getFieldLabel('statut_document_apostille')));
     }
 
     /**
@@ -165,18 +167,144 @@ class DocumentAdmin extends Admin
             $alert->setText('Aucun document légal pour ce client');
 
             $em->persist($alert);
+        } else {
+
+
+            // ListTypeDocuments::Pouvoir => Pouvoir
+            if ($value->getId() != ListTypeDocuments::Pouvoir) {
+
+                $this->ifSaveManquePouvoirAlertMessage($em, $object, $tab);
+
+            } else {
+                if ($this->getCountListTypeDocumentsIfNotType($em, $object, ListTypeDocuments::Pouvoir)) {
+                    $this->ifSaveManquePouvoirAlertMessage($em, $object, $tab);
+                }
+            }
+
+            $mandat_validate = true;
+            //ListTypeDocuments::Mandat => Mandat
+            if ($value->getId() != ListTypeDocuments::Mandat) {
+                $this->ifSaveManqueMandat($em, $object, $tab);
+            } else {
+
+                if ($this->getCountListTypeDocumentsIfNotType($em, $object, ListTypeDocuments::Mandat)) {
+                    $this->ifSaveManqueMandat($em, $object, $tab);
+                } elseif ($value->getId() == ListTypeDocuments::Mandat && !$object->getPreavis()) {
+                    $this->saveManqueMandatAlertMessage($em, $object, $tab);
+
+                } elseif ($this->getCountListTypeDocumentsIfTypePreavis($em, $object, ListTypeDocuments::Mandat)) {
+                    $this->saveManqueMandatAlertMessage($em, $object, $tab);
+                }
+            }
+        }
+    }
+
+    /**
+     * @param $em
+     * @param $object
+     * @param $type_document
+     * @return mixed
+     */
+    protected function getCountListTypeDocumentsIfNotType($em, $object, $type_document)
+    {
+        $dql = $em->createQueryBuilder()
+            ->select('count(d.id)')
+            ->from('ApplicationSonataClientBundle:Document', 'd')
+            ->where('d.client_id = :client_id')
+            ->andWhere('d.type_document != :type_document')
+            ->setParameters(array(
+            ':client_id' => $object->getClientId(),
+            ':type_document' => $em->getRepository('ApplicationSonataClientBundle:ListTypeDocuments')->findOneById($type_document),
+        ));
+
+        if ($object->getId()) {
+            $dql->andWhere('d.id != :id')->setParameter(':id', $object->getId());
         }
 
-        $value = $object->getPreavis();
-        if (!$value) {
+        return $dql->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @param $em
+     * @param $object
+     * @param $type_document
+     * @return mixed
+     */
+    protected function getCountListTypeDocumentsIfTypePreavis($em, $object, $type_document)
+    {
+        $dql = $em->createQueryBuilder()
+            ->select('count(d.id)')
+            ->from('ApplicationSonataClientBundle:Document', 'd')
+            ->where('d.client_id = :client_id')
+            ->andWhere('d.type_document = :type_document')
+            ->andWhere('d.preavis IS NULL')
+            ->setParameters(array(
+            ':client_id' => $object->getClientId(),
+            ':type_document' => $em->getRepository('ApplicationSonataClientBundle:ListTypeDocuments')->findOneById($type_document),
+        ));
+
+        if ($object->getId()) {
+            $dql->andWhere('d.id != :id')->setParameter(':id', $object->getId());
+        }
+
+        return $dql->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @param $em
+     * @param $object
+     * @param $tab
+     */
+    protected function ifSaveManquePouvoirAlertMessage($em, $object, $tab)
+    {
+        /** @var $client \Application\Sonata\ClientBundle\Entity\Client */
+        $client = $this->getClient();
+        //ListNatureDuClients::sixE => 6e
+        if ($client->getNatureDuClient() && $client->getNatureDuClient()->getId() == ListNatureDuClients::sixE && !in_array($client->getPaysPostal()->getCode(), array_keys(ListCountries::getCountryEU()))) {
+
             $alert = new ClientAlert();
             $alert->setClientId($object->getClientId());
             $alert->setTabs($tab);
             $alert->setIsBlocked(true);
-            $alert->setText('Manque Mandat');
+            $alert->setText('Manque Pouvoir');
 
             $em->persist($alert);
         }
+    }
+
+    /**
+     * @param $em
+     * @param $object
+     * @param $tab
+     */
+    protected function ifSaveManqueMandat($em, $object, $tab)
+    {
+        /** @var $client \Application\Sonata\ClientBundle\Entity\Client */
+        $client = $this->getClient();
+
+        //ListNatureDuClients::sixE => 6e
+        if ($client->getNatureDuClient() &&
+            ($client->getNatureDuClient()->getId() == ListNatureDuClients::sixE && in_array($client->getPaysPostal()->getCode(), array_keys(ListCountries::getCountryEU())))
+            ||
+            ($client->getNatureDuClient()->getId() == ListNatureDuClients::DEB || $client->getNatureDuClient()->getId() == ListNatureDuClients::DES)
+        ) {
+            $this->saveManqueMandatAlertMessage($em, $object, $tab);
+        }
+    }
+
+    /**
+     * @param $em
+     * @param $object
+     * @param $tab
+     */
+    protected function saveManqueMandatAlertMessage($em, $object, $tab)
+    {
+        $alert = new ClientAlert();
+        $alert->setClientId($object->getClientId());
+        $alert->setTabs($tab);
+        $alert->setIsBlocked(true);
+        $alert->setText('Manque Mandat');
+        $em->persist($alert);
     }
 }
 

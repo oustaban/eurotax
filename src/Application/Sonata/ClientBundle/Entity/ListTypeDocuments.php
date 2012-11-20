@@ -13,6 +13,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class ListTypeDocuments
 {
+    const Pouvoir = 2;
+    const Mandat = 1;
     /**
      * @var integer $id
      *

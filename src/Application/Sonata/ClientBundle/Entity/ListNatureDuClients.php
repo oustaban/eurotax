@@ -13,6 +13,9 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class ListNatureDuClients
 {
+    const sixE = 1;
+    const DEB = 2;
+    const DES = 3;
     /**
      * @var integer $id
      *

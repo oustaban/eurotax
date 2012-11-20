@@ -104,14 +104,42 @@ class ContactAdmin extends Admin
 
 
         $value = $object->getAffichageFactureId();
-        if ($value == 1 || $value == 2) {
-            $alert = new ClientAlert();
-            $alert->setClientId($object->getClientId());
-            $alert->setTabs($tab);
-            $alert->setIsBlocked(true);
-            $alert->setText('Aucun contact pour Facturation');
+        if (!$value) {
+            $this->saveAffichageFactureAlertMessage($em, $object, $tab);
+        } else {
 
-            $em->persist($alert);
+            $dql = $em->createQueryBuilder()
+                ->select('count(c.id)')
+                ->from('ApplicationSonataClientBundle:Contact', 'c')
+                ->where('c.client_id = :client_id')
+                ->andWhere('c.affichage_facture_id IS NULL')
+                ->setParameter(':client_id', $object->getClientId());
+
+            if ($object->getId()) {
+                $dql->andWhere('c.id != :id')->setParameter(':id', $object->getId());
+            }
+
+            $count = $dql->getQuery()->getSingleScalarResult();
+
+            if ($count) {
+                $this->saveAffichageFactureAlertMessage($em, $object, $tab);
+            }
         }
+    }
+
+    /**
+     * @param \Doctrine\ORM\EntityManager $em
+     * @param $object
+     * @param $tab
+     */
+    protected function saveAffichageFactureAlertMessage(\Doctrine\ORM\EntityManager $em, $object, $tab)
+    {
+        $alert = new ClientAlert();
+        $alert->setClientId($object->getClientId());
+        $alert->setTabs($tab);
+        $alert->setIsBlocked(true);
+        $alert->setText('Aucun contact pour Facturation');
+
+        $em->persist($alert);
     }
 }
