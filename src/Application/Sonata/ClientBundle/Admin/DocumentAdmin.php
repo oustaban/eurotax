@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Sonata\AdminBundle\Validator\ErrorElement;
 use Application\Sonata\ClientBundle\Entity\ClientAlert;
-use Application\Sonata\ClientBundle\Entity\ListCountries;
 use Application\Sonata\ClientBundle\Entity\ListTypeDocuments;
 use Application\Sonata\ClientBundle\Entity\ListNatureDuClients;
 
@@ -21,8 +20,7 @@ use Application\Sonata\ClientBundle\Admin\AbstractTabsAdmin as Admin;
 
 class DocumentAdmin extends Admin
 {
-    //create & edit form
-    /**
+     /**
      * @param FormMapper $formMapper
      */
     protected function configureFormFields(FormMapper $formMapper)
@@ -259,8 +257,9 @@ class DocumentAdmin extends Admin
     {
         /** @var $client \Application\Sonata\ClientBundle\Entity\Client */
         $client = $this->getClient();
+
         //ListNatureDuClients::sixE => 6e
-        if ($client->getNatureDuClient() && $client->getNatureDuClient()->getId() == ListNatureDuClients::sixE && !in_array($client->getPaysPostal()->getCode(), array_keys(ListCountries::getCountryEU()))) {
+        if ($client->getNatureDuClient() && $client->getNatureDuClient()->getId() == ListNatureDuClients::sixE && !in_array($client->getPaysPostal()->getCode(), $this->getListCountryEU())) {
 
             $alert = new ClientAlert();
             $alert->setClientId($object->getClientId());
@@ -284,7 +283,7 @@ class DocumentAdmin extends Admin
 
         //ListNatureDuClients::sixE => 6e
         if ($client->getNatureDuClient() &&
-            ($client->getNatureDuClient()->getId() == ListNatureDuClients::sixE && in_array($client->getPaysPostal()->getCode(), array_keys(ListCountries::getCountryEU())))
+            ($client->getNatureDuClient()->getId() == ListNatureDuClients::sixE && in_array($client->getPaysPostal()->getCode(), $this->getListCountryEU()))
             ||
             ($client->getNatureDuClient()->getId() == ListNatureDuClients::DEB || $client->getNatureDuClient()->getId() == ListNatureDuClients::DES)
         ) {

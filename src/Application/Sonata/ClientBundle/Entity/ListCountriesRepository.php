@@ -10,6 +10,8 @@ use Doctrine\ORM\EntityRepository;
  */
 class ListCountriesRepository extends EntityRepository
 {
+    protected $_sortBy = array('name' => 'ASC');
+
     /**
      * Finds all entities in the repository.
      *
@@ -17,6 +19,20 @@ class ListCountriesRepository extends EntityRepository
      */
     public function findAll()
     {
-        return $this->findBy(array(), array('name' => 'ASC'));
+        return $this->findBy(array(), $this->_sortBy);
+    }
+
+    /**
+     * @return array
+     */
+    public function findEU()
+    {
+        $EU = $this->findBy(array('EU' => 1), $this->_sortBy);
+
+        $rows = array();
+        foreach ($EU as $country) {
+            $rows[$country->getCode()] = (string)$country;
+        }
+        return $rows;
     }
 }
