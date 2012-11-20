@@ -45,8 +45,7 @@ abstract class AbstractTabsController extends Controller
             throw new NotFoundHttpException('Unable load page with no client_id');
         }
         $this->client_id = $this->admin->client_id;
-
-        $this->client = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:Client')->find($this->client_id);
+        $this->client = $this->admin->getClient();
 
         if (empty($this->client)) {
             throw new NotFoundHttpException(sprintf('unable to find Client with id : %s', $this->admin->client_id));

@@ -5,6 +5,7 @@ namespace Application\Sonata\ClientBundle\Controller;
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Application\Sonata\ClientBundle\Entity\ListCountries;
 use Symfony\Component\HttpFoundation\Request;
 
 
@@ -14,37 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ClientController extends Controller
 {
-    /** @var array('Code' => 'Country') */
-    protected $_CountryEU = array(
-        'AT' => 'Austria',
-        'BE' => 'Belgium',
-        'BG' => 'Bulgaria',
-        'CY' => 'Cyprus',
-        'CZ' => 'Czech Republic',
-        'DK' => 'Denmark',
-        'EE' => 'Estonia',
-        'FI' => 'Finland',
-        'FR' => 'France',
-        'DE' => 'Germany',
-        'GR' => 'Greece',
-        'HU' => 'Hungary',
-        'IE' => 'Ireland',
-        'IT' => 'Italy',
-        'LV' => 'Latvia',
-        'LT' => 'Lithuania',
-        'LU' => 'Luxembourg',
-        'MT' => 'Malta',
-        'NL' => 'Netherlands',
-        'PL' => 'Poland',
-        'PT' => 'Portugal',
-        'RO' => 'Romania',
-        'SK' => 'Slovakia',
-        'SI' => 'Slovenia',
-        'ES' => 'Spain',
-        'SE' => 'Sweden',
-        'GB' => 'United Kingdom',
-    );
-
     protected $_jsSettingsJson = null;
 
     /**
@@ -124,7 +94,7 @@ class ClientController extends Controller
         }
 
         $this->jsSettingsJson(array(
-            'country_eu' => $this->_CountryEU,
+            'country_eu' => ListCountries::getCountryEU(),
             'niveau_dobligation' => $this->admin->getNiveauDobligationIdListHelp(),
         ));
 
