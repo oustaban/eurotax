@@ -274,6 +274,43 @@ class LoadListCountriesData extends AbstractLoadListData
         "ZW" => "Zimbabwe"
     );
 
+    /**
+     * @var array
+     */
+    protected $_EU = array(
+        'DE',
+        'AT',
+        'BE',
+        'BG',
+        'CY',
+        'DK',
+        'ES',
+        'EE',
+        'FI',
+        'FR',
+        'GR',
+        'HU',
+        'IE',
+        'IT',
+        'LV',
+        'LT',
+        'LU',
+        'MT',
+        'MC',
+        'NL',
+        'PL',
+        'PT',
+        'CZ',
+        'RO',
+        'GB',
+        'SK',
+        'SI',
+        'SE',
+    );
+
+    /**
+     * @param $manager
+     */
     public function saveFixtures($manager)
     {
         $class = $this->getClass($manager);
@@ -291,6 +328,7 @@ class LoadListCountriesData extends AbstractLoadListData
                     $entity->setCode($this->upper($code));
                     $entity->setName($name);
                     $entity->setSepa(rand(1, 255) * 1000);
+                    $entity->setEU(isset($this->_EU[$entity->getCode()]) ? 1 : 0);
 
                     $manager->persist($entity);
                     $manager->flush();

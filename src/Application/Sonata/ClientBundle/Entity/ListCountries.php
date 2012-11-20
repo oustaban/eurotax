@@ -14,38 +14,6 @@ class ListCountries
 {
     const PaysCode = 'FR';
 
-    /** @var array('Code' => 'Country') */
-    protected static $_CountryEU = array(
-        'AT' => 'Austria',
-        'BE' => 'Belgium',
-        'BG' => 'Bulgaria',
-        'CY' => 'Cyprus',
-        'CZ' => 'Czech Republic',
-        'DK' => 'Denmark',
-        'EE' => 'Estonia',
-        'FI' => 'Finland',
-        'FR' => 'France',
-        'DE' => 'Germany',
-        'GR' => 'Greece',
-        'HU' => 'Hungary',
-        'IE' => 'Ireland',
-        'IT' => 'Italy',
-        'LV' => 'Latvia',
-        'LT' => 'Lithuania',
-        'LU' => 'Luxembourg',
-        'MT' => 'Malta',
-        'NL' => 'Netherlands',
-        'PL' => 'Poland',
-        'PT' => 'Portugal',
-        'RO' => 'Romania',
-        'SK' => 'Slovakia',
-        'SI' => 'Slovenia',
-        'ES' => 'Spain',
-        'SE' => 'Sweden',
-        'GB' => 'United Kingdom',
-    );
-
-
     /**
      * @var string $code
      *s
@@ -69,6 +37,14 @@ class ListCountries
      */
     private $name;
 
+
+    /**
+     * @var boolean $EU
+     *
+     * @ORM\Column(name="EU", type="boolean", nullable=true)
+     */
+    private $EU;
+
     /**
      * @return mixed
      */
@@ -80,8 +56,9 @@ class ListCountries
     /**
      * @return array
      */
-    public static function getCountryEU(){
-        return self::$_CountryEU;
+    public static function getCountryEU()
+    {
+        return \AppKernel::getStaticContainer()->get('doctrine')->getRepository('ApplicationSonataClientBundle:ListCountries')->findEU();
     }
 
 
@@ -162,5 +139,28 @@ class ListCountries
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set EU
+     *
+     * @param boolean $eU
+     * @return ListCountries
+     */
+    public function setEU($eU)
+    {
+        $this->EU = $eU;
+
+        return $this;
+    }
+
+    /**
+     * Get EU
+     *
+     * @return boolean
+     */
+    public function getEU()
+    {
+        return $this->EU;
     }
 }

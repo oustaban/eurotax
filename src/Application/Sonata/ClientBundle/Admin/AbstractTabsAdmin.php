@@ -19,6 +19,7 @@ abstract class AbstractTabsAdmin extends Admin
 
     protected $_bundle_name = 'ApplicationSonataClientBundle';
     protected $_form_label = '';
+    protected $_country_eu = null;
 
 
     /**
@@ -236,4 +237,15 @@ abstract class AbstractTabsAdmin extends Admin
         return $_rows;
     }
 
+    /**
+     * @return array|null
+     */
+    protected function getListCountryEU()
+    {
+        if (!$this->_country_eu) {
+            $this->_country_eu = array_keys(\Application\Sonata\ClientBundle\Entity\ListCountries::getCountryEU());
+        }
+
+        return $this->_country_eu;
+    }
 }
