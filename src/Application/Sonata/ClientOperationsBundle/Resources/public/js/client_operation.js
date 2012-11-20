@@ -55,11 +55,11 @@ function init_clientoperations_buttons(o) {
 
                 var $tbody = $('<tbody />');
                 for (i in json.imports) {
-                    var import_id = json.imports[i][0].id;
+                    var import_id = json.imports[i].id;
                     var deleteUrl = o.import.delete.replace("__id__", import_id);
                     $('<tr />')
                         .append('<td class="sonata-ba-list-field-header-integer">' + import_id + '</td>')
-                        .append('<td class="sonata-ba-list-field-header-date"><b>' + json.imports[i][0].date.date + '</b></td>')
+                        .append('<td class="sonata-ba-list-field-header-date"><b>' + json.imports[i].date.date + '</b></td>')
                         .append('<td class="sonata-ba-list-field-header-orm_many_to_one">' + json.imports[i].username + '</td>')
                         .append('<td class="sonata-ba-list-field-header-actions"><a style="display: inline;" class="import_del" href="' + deleteUrl + '">Supprimer</a></td>')
                         .appendTo($tbody);

@@ -31,7 +31,7 @@ class Imports
     /**
      * @var integer $user_id
      *
-     * @ORM\ManyToOne(targetEntity="\Application\Sonata\UserBundle\Entity\User", inversedBy="imports")
+     * @ORM\ManyToOne(targetEntity="\Application\Sonata\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;

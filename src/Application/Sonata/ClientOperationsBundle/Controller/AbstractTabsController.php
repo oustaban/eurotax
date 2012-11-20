@@ -1213,19 +1213,29 @@ class AbstractTabsController extends Controller
         $iDB = $em->getRepository('ApplicationSonataClientOperationsBundle:Imports')->createQueryBuilder('i');
 
         /* @var $lastImport Imports */
-        $lastImports = $iDB->select('i, u.username')
+        $lastImports = $iDB->select('i, u')
             ->leftJoin('i.user', 'u')
             ->where('i.client_id = :client_id')
             ->addOrderBy('i.date', 'DESC')
-            ->setParameters(array(
-            ':client_id' => $this->client_id,
-        ))
+            ->setParameter(':client_id', $this->client_id)
             ->getQuery()
-            ->getArrayResult();
+            //->getSQL();
+            ->getResult();
+
+        $lastImports = $lastImports ?: array();
+        $lastImportsArray = array();
+        foreach ($lastImports as $import) {
+            /** @var $import \Application\Sonata\ClientOperationsBundle\Entity\Imports */
+            $lastImportsArray[] = array(
+                'id' => $import->getId(),
+                'date' => $import->getDate(),
+                'username' => (string)$import->getUser(),
+            );
+        }
 
         return $this->renderJson(array(
             'title' => '<span style="text-transform:none;">' . $this->admin->trans('ApplicationSonataClientOperationsBundle.imports.list_title').'</span>',
-            'imports' => $lastImports ? $lastImports : array(),
+            'imports' => $lastImportsArray
         ));
     }
 
