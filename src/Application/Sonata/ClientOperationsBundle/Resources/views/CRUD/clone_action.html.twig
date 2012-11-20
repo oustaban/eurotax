@@ -1,7 +1,7 @@
-{% if admin.setQueryMonth() is not empty %}
-{% set url_parameter = {'filter[client_id][value]' : object.clientId, 'month' : admin.setQueryMonth()} %}
-{% else %}
-{% set url_parameter = {'filter[client_id][value]' : object.clientId} %}
-{% endif%}
+{% set query_month = admin.setQueryMonth() %}
 
-<a title="Dupliquer" href="{{ admin.generateObjectUrl('clone', object,  url_parameter)}}" class="clone_link"><i class="icon icon-th-list"></i></a>
+{% spaceless %}
+<a href="{{ admin.generateObjectUrl('clone', object, query_month ? {'month':query_month} : {})}}">
+    <i rel="tooltip" title="Dupliquer" class="icon icon-share-alt"></i>
+</a>
+{% endspaceless %}

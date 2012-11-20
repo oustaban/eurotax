@@ -5,6 +5,8 @@ use Sonata\UserBundle\Admin\Entity\UserAdmin as BaseUserAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\AdminBundle\Validator\ErrorElement;
+use Application\Sonata\UserBundle\Admin\Validate\ErrorElements;
 
 use FOS\UserBundle\Model\UserManagerInterface;
 
@@ -63,7 +65,7 @@ class UserAdmin extends BaseUserAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->with('General')
+            ->with('Profile')
             ->add('username')
             ->add('email')
             ->add('plainPassword', 'text', array('required' => false))
@@ -138,4 +140,18 @@ class UserAdmin extends BaseUserAdmin
     {
         return array('ApplicationSonataUserBundle:Form:fields.html.twig');
     }
+
+    /**
+     * @param ErrorElement $errorElement
+     * @param mixed $object
+     */
+    public function validate(ErrorElement $errorElement, $object)
+    {
+        exit('123');
+        /* @var $object \Application\Sonata\UserBundle\Entity\User */
+        parent::validate($errorElement, $object);
+
+        $error = new ErrorElements($errorElement, $object);
+        $error->validatePhone();
+     }
 }

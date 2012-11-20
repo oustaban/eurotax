@@ -160,7 +160,7 @@ abstract class AbstractTabsAdmin extends Admin
             $listMapper->add('_action', 'actions', array(
                 'actions' => array(
                     'clone' => array('template' => 'ApplicationSonataClientOperationsBundle:CRUD:clone_action.html.twig'),
-                    'delete' => array(),
+                    'delete' => array('template' => 'ApplicationSonataClientOperationsBundle:CRUD:delete_action.html.twig'),
                 )
             ));
         }
@@ -224,6 +224,7 @@ abstract class AbstractTabsAdmin extends Admin
             case 'edit':
             case 'delete':
             case 'batch':
+            case 'clone':
                 $parameters['filter']['client_id']['value'] = $this->client_id;
 
                 if ($month = $this->setQueryMonth()) {

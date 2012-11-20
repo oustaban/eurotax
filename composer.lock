@@ -33,21 +33,13 @@
             "authors": [
                 {
                     "name": "Maarten Balliauw",
-                    "email": null,
-                    "homepage": "http://blog.maartenballiauw.be",
-                    "role": null
+                    "homepage": "http://blog.maartenballiauw.be"
                 },
                 {
-                    "name": "Mark Baker",
-                    "email": null,
-                    "homepage": null,
-                    "role": null
+                    "name": "Mark Baker"
                 },
                 {
-                    "name": "Erit Tilt",
-                    "email": null,
-                    "homepage": null,
-                    "role": null
+                    "name": "Erit Tilt"
                 }
             ],
             "description": "PHPExcel - OpenXML - Create Excel2007 documents in PHP - Spreadsheet engine",
@@ -479,9 +471,9 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -976,7 +968,7 @@
                 "symfony/framework-bundle": "2.*",
                 "jms/cg": "1.0.0"
             },
-            "time": "2012-01-01 00:50:26",
+            "time": "2012-01-02 20:50:26",
             "type": "symfony-bundle",
             "installation-source": "dist",
             "autoload": {
@@ -992,7 +984,7 @@
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "https://github.com/schmittjoh",
-                    "role": null
+                    "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
             "description": "Adds AOP capabilities to Symfony2",
@@ -1018,7 +1010,7 @@
             "require": {
                 "php": ">=5.3.0"
             },
-            "time": "2012-01-01 00:40:52",
+            "time": "2012-01-02 20:40:52",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1033,8 +1025,8 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
-                    "role": null
+                    "homepage": "http://jmsyst.com",
+                    "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
             "description": "Toolset for generating PHP code",
@@ -1092,7 +1084,7 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1120,7 +1112,7 @@
             "require": {
                 "php": ">=5.3.0"
             },
-            "time": "2012-01-01 01:32:49",
+            "time": "2012-01-02 21:32:49",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1135,8 +1127,8 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
-                    "role": null
+                    "homepage": "http://jmsyst.com",
+                    "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
             "description": "Class/method/property metadata management in PHP",
@@ -1258,21 +1250,15 @@
             "authors": [
                 {
                     "name": "Christophe Coevoet",
-                    "email": "stof@notk.org",
-                    "homepage": null,
-                    "role": null
+                    "email": "stof@notk.org"
                 },
                 {
                     "name": "KnpLabs",
-                    "email": null,
-                    "homepage": "http://knplabs.com",
-                    "role": null
+                    "homepage": "http://knplabs.com"
                 },
                 {
                     "name": "Symfony Community",
-                    "email": null,
-                    "homepage": "https://github.com/KnpLabs/KnpMenu/contributors",
-                    "role": null
+                    "homepage": "https://github.com/KnpLabs/KnpMenu/contributors"
                 }
             ],
             "description": "An object oriented menu library",
@@ -1301,7 +1287,6 @@
                 "knplabs/knp-menu": "1.1.*",
                 "symfony/framework-bundle": ">=2.0,<2.3-dev"
             },
-            "time": "1351623131",
             "type": "symfony-bundle",
             "installation-source": "source",
             "autoload": {
@@ -1329,7 +1314,8 @@
             "description": "This bundle provides an integration of the KnpMenu library",
             "keywords": [
                 "menu"
-            ]
+            ],
+            "time": "1351623131"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -1589,12 +1575,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensio/SensioGeneratorBundle",
-                "reference": "56c2029d1f3f41b39dd0df40009cb448df010bf1"
+                "reference": "7efe50d35818a2ba72a7a05e40155b4789e5c3d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/sensio/SensioGeneratorBundle/archive/56c2029d1f3f41b39dd0df40009cb448df010bf1.zip",
-                "reference": "56c2029d1f3f41b39dd0df40009cb448df010bf1",
+                "url": "https://github.com/sensio/SensioGeneratorBundle/archive/7efe50d35818a2ba72a7a05e40155b4789e5c3d9.zip",
+                "reference": "7efe50d35818a2ba72a7a05e40155b4789e5c3d9",
                 "shasum": ""
             },
             "require": {
@@ -1606,7 +1592,7 @@
                 "doctrine/orm": ">=2.1,<2.4-dev",
                 "twig/twig": ">=1.8,<2.0-dev"
             },
-            "time": "1352464423",
+            "time": "1353341457",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -1637,12 +1623,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/sonata-project/SonataAdminBundle.git",
-                "reference": "60c2e450e5d350aa397052d565138c7b7b44f489"
+                "reference": "db6ba5b387ec1136c40167f23325912f8fd41faa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/sonata-project/SonataAdminBundle/archive/60c2e450e5d350aa397052d565138c7b7b44f489.zip",
-                "reference": "60c2e450e5d350aa397052d565138c7b7b44f489",
+                "url": "https://github.com/sonata-project/SonataAdminBundle/archive/db6ba5b387ec1136c40167f23325912f8fd41faa.zip",
+                "reference": "db6ba5b387ec1136c40167f23325912f8fd41faa",
                 "shasum": ""
             },
             "require": {
@@ -1667,7 +1653,7 @@
                 "sonata-project/doctrine-orm-admin-bundle": "dev-master",
                 "sonata-project/intl-bundle": "dev-master"
             },
-            "time": "1353162754",
+            "time": "1353373379",
             "type": "symfony-bundle",
             "installation-source": "source",
             "autoload": {
@@ -2336,12 +2322,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/symfony/symfony.git",
-                "reference": "8f33f2ea86cf4ecf2fb959ca80bd6fe0b5a71694"
+                "reference": "0a8c0eeb5ae3abefce9ba471f32c9c29ae090103"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/symfony/archive/8f33f2ea86cf4ecf2fb959ca80bd6fe0b5a71694.zip",
-                "reference": "8f33f2ea86cf4ecf2fb959ca80bd6fe0b5a71694",
+                "url": "https://github.com/symfony/symfony/archive/0a8c0eeb5ae3abefce9ba471f32c9c29ae090103.zip",
+                "reference": "0a8c0eeb5ae3abefce9ba471f32c9c29ae090103",
                 "shasum": ""
             },
             "require": {
@@ -2390,7 +2376,7 @@
                 "propel/propel1": "dev-master",
                 "monolog/monolog": "1.*"
             },
-            "time": "1353321329",
+            "time": "1353359615",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -2433,7 +2419,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/fabpot/Twig-extensions/zipball/f904575642b1213db69b4a98f08397e722ba1cae",
+                "url": "https://github.com/fabpot/Twig-extensions/zipball/dcdff02fbac1282e6b8f4d0558cc7e9580105688",
                 "reference": "dcdff02fbac1282e6b8f4d0558cc7e9580105688",
                 "shasum": ""
             },

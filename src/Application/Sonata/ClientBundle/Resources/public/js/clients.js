@@ -1,6 +1,12 @@
 function addClient(client, cls){
     var columns = [
-        '<a href="/sonata/client/client/'+client.id+'/edit">'+client.code_client+'</a>',
+        '<a href="/sonata/clientoperations/v01tva/list?filter[client_id][value]='+client.id+'">' +
+            '<i class="icon icon-th-list" rel="tooltip" data-original-title="Operations"></i>' +
+            '</a>' +
+            '<a href="/sonata/client/client/'+client.id+'/edit">' +
+            '<i class="icon icon-list-alt" rel="tooltip" data-original-title="Fiche"></i>' +
+            '</a>',
+        client.code_client,
         client.raison_sociale,
         client.nature_du_client.name,
         '<a href="/sonata/user/user/'+client.user.id+'/edit">'+(client.user.firstname||client.user.lastname?($.trim(client.user.firstname+' '+client.user.lastname)):client.user.username)+'</a>',
