@@ -23,7 +23,7 @@ class BehatCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('behat:bundle-all')
+            ->setName('behat:all')
             ->setDescription('behat bundle all');
     }
 
