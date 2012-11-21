@@ -31,7 +31,7 @@ class BehatCommand extends ContainerAwareCommand
     {
         foreach ($this->bundles as $bundle) {
             $text = '';
-            $command = 'php ' . ROOT_PATH . '/bin/behat @ApplicationSonata' . $bundle;
+            $command = 'php ' . ROOT_PATH . '/vendor/behat/behat/bin/behat @ApplicationSonata' . $bundle;
             exec($command, $text);
             $output->writeln($text);
         }
