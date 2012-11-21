@@ -7,7 +7,7 @@
     <class name="Application\Sonata\UserBundle\Entity\User">
         <property name="phone">
         <constraint name="Symfony\Component\Validator\Constraints\Regex">
-            <option name="pattern">/\+33\.(\d{2}+)\.(\d{2}+)\.(\d{2}+)\.(\d{2}+)\.(\d{2}+)/i</option>
+            <option name="pattern">/\+33\.(\d{1}+)\.(\d{2}+)\.(\d{2}+)\.(\d{2}+)\.(\d{2}+)/i</option>
             <option name="message">Téléphone invalide: Format requis +33.xx.xx.xx.xx.xx</option>
             <option name="groups">
                 <value>Registration</value>
