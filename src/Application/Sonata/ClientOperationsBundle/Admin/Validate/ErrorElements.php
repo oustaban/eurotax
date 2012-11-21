@@ -9,6 +9,9 @@ class ErrorElements
     const Device = 'EUR';
 
     protected $_errorElement;
+    /**
+     * @var \Application\Sonata\ClientOperationsBundle\Entity\AbstractBaseEntity
+     */
     protected $_object;
     protected $_is_validate_import = false;
 
@@ -38,32 +41,41 @@ class ErrorElements
      */
     public function validateTauxDeChange()
     {
-        if ($this->_object->getPaiementMontant() && !$this->_object->getTauxDeChange()) {
+        /** @var $_object \Application\Sonata\ClientOperationsBundle\Entity\A02TVA|\Application\Sonata\ClientOperationsBundle\Entity\V01TVA */
+        $_object = $this->_object;
 
-            $devise = $this->_object->getDevise();
-            if ($devise) {
-                $currency = $devise->getAlias();
+        if ($_object->getPaiementMontant() && !$_object->getTauxDeChange()) {
+
+            $listDevise = $_object->getDevise();
+            if ($listDevise) {
+                $currency = $listDevise->getAlias();
 
                 $taux_de_change = 0;
                 if ($currency == static::Device) {
                     $taux_de_change = 1;
                 } else {
+                    /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
                     $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+                    /* @var $em \Doctrine\ORM\EntityManager */
                     $em = $doctrine->getManager();
                     /* @var $devise \Application\Sonata\DevisesBundle\Entity\Devises */
-                    $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($this->_object->getDatePieceFormat());
+
+                    $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($_object->getDatePieceFormat());
 
                     if ($devise) {
-                        $method = 'getMoney' . ucfirst($currency);
+                        $method = 'getMoney' . $currency;
                         if (method_exists($devise, $method)) {
                             $taux_de_change = $devise->$method();
+                        } else {
+                            new \Exception('Currency is not found (Devises): ' . $method);
                         }
                     }
                 }
 
-                $this->_object->setTauxDeChange($taux_de_change);
+                // setTauxDeChange
+                $_object->setTauxDeChange($taux_de_change);
 
-                if (empty($taux_de_change)) {
+                if (!$taux_de_change) {
                     $this->_errorElement->with('taux_de_change')->addViolation('Wrong "Taux de change"')->end();
                 }
             }
@@ -269,18 +281,21 @@ class ErrorElements
      */
     public function validateDevise()
     {
-        if ($this->_object->getDevise()) {
-            $value = $this->_object->getDevise()->getAlias();
+        /** @var $_object \Application\Sonata\ClientOperationsBundle\Entity\A02TVA|\Application\Sonata\ClientOperationsBundle\Entity\V01TVA */
+        $_object = $this->_object;
+
+        if ($_object->getDevise()) {
+            $value = $_object->getDevise()->getAlias();
             if ($value != static::Device) {
                 /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
                 $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
                 $em = $doctrine->getManager();
                 /* @var $devise \Application\Sonata\DevisesBundle\Entity\Devises */
-                $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($this->_object->getDatePieceFormat());
+                $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($_object->getDatePieceFormat());
 
                 $error = true;
                 if ($devise) {
-                    $method = 'getMoney' . ucfirst($value);
+                    $method = 'getMoney' . $value;
                     if (method_exists($devise, $method)) {
                         $error = !$devise->$method();
                     }

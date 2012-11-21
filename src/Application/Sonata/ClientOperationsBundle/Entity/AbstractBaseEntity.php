@@ -107,8 +107,11 @@ abstract class AbstractBaseEntity
      */
     public function getDatePieceFormat()
     {
-        $date_piece = new \DateTime($this->date_piece->format('Y-m-01'));
-        return $date_piece;
+        if ($this->getDatePiece()) {
+            $date_piece = new \DateTime($this->getDatePiece()->format('Y-m-01'));
+            return $date_piece;
+        }
+        return null;
     }
 
     /**
