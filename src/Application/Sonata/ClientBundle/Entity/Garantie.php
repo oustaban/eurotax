@@ -30,7 +30,7 @@ class Garantie
     private $client_id;
 
     /**
-     * @var integer $client
+     * @var \Application\Sonata\ClientBundle\Entity\Client $client
      *
      * @ORM\ManyToOne(targetEntity="Client", inversedBy="garantie")
      * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
