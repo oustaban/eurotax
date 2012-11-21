@@ -646,7 +646,7 @@ class AbstractTabsController extends Controller
                     $objReader = \PHPExcel_IOFactory::createReaderForFile($file);
 
                     if (get_class($objReader) == 'PHPExcel_Reader_CSV') {
-                        $this->get('session')->setFlash('sonata_flash_error|raw', $this->admin->trans('Fichier non lisible'));
+                        $this->get('session')->setFlash('sonata_flash_error', $this->admin->trans('Fichier non lisible'));
                         return $this->render(':redirects:back.html.twig');
                     } else {
                         $objReader->setReadDataOnly(true);
