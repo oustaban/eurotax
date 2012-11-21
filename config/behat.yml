@@ -18,7 +18,7 @@ default:
         debug: true
 
     Behat\MinkExtension\Extension:
-      base_url: 'http://eurotax.local/index_test.php'
+      base_url: 'http://eurotax.testenm.com.local/index_test.php'
       default_session: selenium2
       selenium2:
         browser: firefox
