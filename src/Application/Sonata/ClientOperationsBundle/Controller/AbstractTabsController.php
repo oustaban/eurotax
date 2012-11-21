@@ -644,8 +644,13 @@ class AbstractTabsController extends Controller
                 if (move_uploaded_file($tmpFile, $file)) {
                     /* @var $objReader \PHPExcel_Reader_Excel2007 */
                     $objReader = \PHPExcel_IOFactory::createReaderForFile($file);
-                    /* @var $objPHPExcel \PHPExcel */
-                    $objReader->setReadDataOnly(true);
+
+                    if (get_class($objReader) == 'PHPExcel_Reader_CSV') {
+                        $this->get('session')->setFlash('sonata_flash_error', $this->admin->trans('Fichier non lisible'));
+                        return $this->render(':redirects:back.html.twig');
+                    } else {
+                        $objReader->setReadDataOnly(true);
+                    }
                     $objPHPExcel = $objReader->load($file);
                     $sheets = $objPHPExcel->getAllSheets();
 
@@ -827,7 +832,7 @@ class AbstractTabsController extends Controller
         $data = array(
             '%nom_client%' => strtoupper($this->client),
             '%year%' => $this->_year,
-            '%month%' => ($this->_month<10?'0':'') . $this->_month,
+            '%month%' => ($this->_month < 10 ? '0' : '') . $this->_month,
             '%version%' => $this->getImportFileValidateVersion($this->client, $this->_year, $this->_month),
         );
 
@@ -1219,10 +1224,10 @@ class AbstractTabsController extends Controller
             ->addOrderBy('i.date', 'DESC')
             ->setParameter(':client_id', $this->client_id)
             ->getQuery()
-            //->getSQL();
+        //->getSQL();
             ->getResult();
 
-        $lastImports = $lastImports ?: array();
+        $lastImports = $lastImports ? : array();
         $lastImportsArray = array();
         foreach ($lastImports as $import) {
             /** @var $import \Application\Sonata\ClientOperationsBundle\Entity\Imports */
@@ -1234,7 +1239,7 @@ class AbstractTabsController extends Controller
         }
 
         return $this->renderJson(array(
-            'title' => '<span style="text-transform:none;">' . $this->admin->trans('ApplicationSonataClientOperationsBundle.imports.list_title').'</span>',
+            'title' => '<span style="text-transform:none;">' . $this->admin->trans('ApplicationSonataClientOperationsBundle.imports.list_title') . '</span>',
             'imports' => $lastImportsArray
         ));
     }

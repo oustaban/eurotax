@@ -20,7 +20,7 @@ use Application\Sonata\ClientBundle\Admin\AbstractTabsAdmin as Admin;
 
 class DocumentAdmin extends Admin
 {
-     /**
+    /**
      * @param FormMapper $formMapper
      */
     protected function configureFormFields(FormMapper $formMapper)
@@ -167,32 +167,18 @@ class DocumentAdmin extends Admin
             $em->persist($alert);
         } else {
 
-
             // ListTypeDocuments::Pouvoir => Pouvoir
             if ($value->getId() != ListTypeDocuments::Pouvoir) {
-
                 $this->ifSaveManquePouvoirAlertMessage($em, $object, $tab);
-
-            } else {
-                if ($this->getCountListTypeDocumentsIfNotType($em, $object, ListTypeDocuments::Pouvoir)) {
-                    $this->ifSaveManquePouvoirAlertMessage($em, $object, $tab);
-                }
+            } elseif ($this->getCountListTypeDocumentsIfNotType($em, $object, ListTypeDocuments::Pouvoir)) {
+                $this->ifSaveManquePouvoirAlertMessage($em, $object, $tab);
             }
 
-            $mandat_validate = true;
             //ListTypeDocuments::Mandat => Mandat
             if ($value->getId() != ListTypeDocuments::Mandat) {
-                $this->ifSaveManqueMandat($em, $object, $tab);
-            } else {
-
-                if ($this->getCountListTypeDocumentsIfNotType($em, $object, ListTypeDocuments::Mandat)) {
-                    $this->ifSaveManqueMandat($em, $object, $tab);
-                } elseif ($value->getId() == ListTypeDocuments::Mandat && !$object->getPreavis()) {
-                    $this->saveManqueMandatAlertMessage($em, $object, $tab);
-
-                } elseif ($this->getCountListTypeDocumentsIfTypePreavis($em, $object, ListTypeDocuments::Mandat)) {
-                    $this->saveManqueMandatAlertMessage($em, $object, $tab);
-                }
+                $this->ifSaveManqueMandatAlertMessage($em, $object, $tab);
+            } elseif ($this->getCountListTypeDocumentsIfNotType($em, $object, ListTypeDocuments::Mandat)) {
+                $this->ifSaveManqueMandatAlertMessage($em, $object, $tab);
             }
         }
     }
@@ -210,32 +196,6 @@ class DocumentAdmin extends Admin
             ->from('ApplicationSonataClientBundle:Document', 'd')
             ->where('d.client_id = :client_id')
             ->andWhere('d.type_document != :type_document')
-            ->setParameters(array(
-            ':client_id' => $object->getClientId(),
-            ':type_document' => $em->getRepository('ApplicationSonataClientBundle:ListTypeDocuments')->findOneById($type_document),
-        ));
-
-        if ($object->getId()) {
-            $dql->andWhere('d.id != :id')->setParameter(':id', $object->getId());
-        }
-
-        return $dql->getQuery()->getSingleScalarResult();
-    }
-
-    /**
-     * @param $em
-     * @param $object
-     * @param $type_document
-     * @return mixed
-     */
-    protected function getCountListTypeDocumentsIfTypePreavis($em, $object, $type_document)
-    {
-        $dql = $em->createQueryBuilder()
-            ->select('count(d.id)')
-            ->from('ApplicationSonataClientBundle:Document', 'd')
-            ->where('d.client_id = :client_id')
-            ->andWhere('d.type_document = :type_document')
-            ->andWhere('d.preavis IS NULL')
             ->setParameters(array(
             ':client_id' => $object->getClientId(),
             ':type_document' => $em->getRepository('ApplicationSonataClientBundle:ListTypeDocuments')->findOneById($type_document),
@@ -276,7 +236,7 @@ class DocumentAdmin extends Admin
      * @param $object
      * @param $tab
      */
-    protected function ifSaveManqueMandat($em, $object, $tab)
+    protected function ifSaveManqueMandatAlertMessage($em, $object, $tab)
     {
         /** @var $client \Application\Sonata\ClientBundle\Entity\Client */
         $client = $this->getClient();
@@ -287,23 +247,13 @@ class DocumentAdmin extends Admin
             ||
             ($client->getNatureDuClient()->getId() == ListNatureDuClients::DEB || $client->getNatureDuClient()->getId() == ListNatureDuClients::DES)
         ) {
-            $this->saveManqueMandatAlertMessage($em, $object, $tab);
+            $alert = new ClientAlert();
+            $alert->setClientId($object->getClientId());
+            $alert->setTabs($tab);
+            $alert->setIsBlocked(true);
+            $alert->setText('Manque Mandat');
+            $em->persist($alert);
         }
-    }
-
-    /**
-     * @param $em
-     * @param $object
-     * @param $tab
-     */
-    protected function saveManqueMandatAlertMessage($em, $object, $tab)
-    {
-        $alert = new ClientAlert();
-        $alert->setClientId($object->getClientId());
-        $alert->setTabs($tab);
-        $alert->setIsBlocked(true);
-        $alert->setText('Manque Mandat');
-        $em->persist($alert);
     }
 }
 
