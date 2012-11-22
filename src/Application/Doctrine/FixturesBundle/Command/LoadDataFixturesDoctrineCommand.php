@@ -17,6 +17,10 @@ class LoadDataFixturesDoctrineCommand extends DoctrineCommand
         $this->addOption('fixture', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'The file to load data fixture from.');
     }
 
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $input->setOption('append', true);
@@ -28,6 +32,9 @@ class LoadDataFixturesDoctrineCommand extends DoctrineCommand
     }
 
 
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     */
     protected function fixFixturesPath(InputInterface $input)
     {
         $fixtures = $input->getOption('fixtures');
@@ -42,6 +49,9 @@ class LoadDataFixturesDoctrineCommand extends DoctrineCommand
         $input->setOption('fixtures', $fixtures);
     }
 
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     */
     protected function fixtureOption(InputInterface $input)
     {
         $fixtures = $input->getOption('fixtures');
