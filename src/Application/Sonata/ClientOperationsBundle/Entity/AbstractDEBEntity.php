@@ -125,7 +125,7 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
      */
     public function __toString()
     {
-        return $this->getNLigne();
+        return (string)$this->getNLigne() ? : '-';
     }
 
     /**
