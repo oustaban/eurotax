@@ -17,6 +17,7 @@ abstract class MinkContext extends BaseMinkContext implements KernelAwareInterfa
 
     protected $kernel;
     protected $parameters;
+    protected $_uniqid = null;
 
     /**
      * Initializes context with parameters from behat.yml.
@@ -64,15 +65,14 @@ abstract class MinkContext extends BaseMinkContext implements KernelAwareInterfa
      */
     public function fillField($field, $value)
     {
-//        $named = $this->getSession()->getPage()->find('method', 'POST');
-//
-//        print_r($named);
-//
-////        print_r($this->getSession()->getPage()->find('named', 'METHOD'));
-//        echo "\n\n";
-//        echo "$field, $value";
-//        exit;
-        parent::fillField($field, $value);
-    }
+        if (!$this->_uniqid) {
+            $content = $this->getSession()->getPage()->getContent();
 
+            if (preg_match('/\?uniqid=(.*?)\&/is', $content, $match)) {
+                $this->_uniqid = $match[1];
+            }
+        }
+
+        parent::fillField($this->_uniqid . '_' . $field, $value);
+    }
 }

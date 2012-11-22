@@ -29,26 +29,97 @@ class Devises
     private $date;
 
     /**
-     * @var string $money_dollar
+     * @var string $moneyUSD
      *
-     * @ORM\Column(name="money_dollar", type="float" )
+     * @ORM\Column(name="moneyUSD", type="float" , nullable=true)
      */
-    private $money_dollar;
+    private $moneyUSD;
 
     /**
-     * @var string $money_yen
+     * @var string $moneyGBP
      *
-     * @ORM\Column(name="money_yen", type="float")
+     * @ORM\Column(name="moneyGBP", type="float", nullable=true)
      */
-    private $money_yen;
+    private $moneyGBP;
 
     /**
-     * @var string $money_british
+     * @var string $moneyINR
      *
-     * @ORM\Column(name="money_british", type="float")
+     * @ORM\Column(name="moneyINR", type="float", nullable=true)
      */
-    private $money_british;
+    private $moneyINR;
 
+
+    /**
+     * @var string $moneyAUD
+     *
+     * @ORM\Column(name="moneyAUD", type="float", nullable=true)
+     */
+    private $moneyAUD;
+
+
+    /**
+     * @var string $moneyCAD
+     *
+     * @ORM\Column(name="moneyCAD", type="float", nullable=true)
+     */
+    private $moneyCAD;
+
+
+    /**
+     * @var string $moneyAED
+     *
+     * @ORM\Column(name="moneyAED", type="float", nullable=true)
+     */
+    private $moneyAED;
+
+
+    /**
+     * @var string $moneyCHF
+     *
+     * @ORM\Column(name="moneyCHF", type="float", nullable=true)
+     */
+    private $moneyCHF;
+
+    /**
+     * @var string $moneyJPY
+     *
+     * @ORM\Column(name="moneyJPY", type="float", nullable=true)
+     */
+    private $moneyJPY;
+
+    /**
+     *
+     */
+    public function __construct()
+    {
+        $this->date = new \DateTime(date('Y-m-01'));
+    }
+
+    /**
+     * Returns a string representation
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string)$this->getId() ? : '-';
+    }
+
+    /**
+     * @return null
+     */
+    public function getDateChange()
+    {
+        return null;
+    }
+
+    /**
+     * @param $value
+     */
+    public function setDateChange($value)
+    {
+    }
 
     /**
      * Get id
@@ -83,100 +154,188 @@ class Devises
         return $this->date;
     }
 
+
     /**
-     * Set money_dollar
+     * Set moneyUSD
      *
-     * @param string $moneyDollar
+     * @param float $moneyUSD
      * @return Devises
      */
-    public function setMoneyDollar($moneyDollar)
+    public function setMoneyUSD($moneyUSD)
     {
-        $this->money_dollar = $moneyDollar;
+        $this->moneyUSD = $moneyUSD;
 
         return $this;
     }
 
     /**
-     * Get money_dollar
+     * Get moneyUSD
      *
-     * @return string
+     * @return float
      */
-    public function getMoneyDollar()
+    public function getMoneyUSD()
     {
-        return $this->money_dollar;
+        return $this->moneyUSD;
     }
 
     /**
-     * Set money_yen
+     * Set moneyGBP
      *
-     * @param string $moneyYen
+     * @param float $moneyGBP
      * @return Devises
      */
-    public function setMoneyYen($moneyYen)
+    public function setMoneyGBP($moneyGBP)
     {
-        $this->money_yen = $moneyYen;
+        $this->moneyGBP = $moneyGBP;
 
         return $this;
     }
 
     /**
-     * Get money_yen
+     * Get moneyGBP
      *
-     * @return string
+     * @return float
      */
-    public function getMoneyYen()
+    public function getMoneyGBP()
     {
-        return $this->money_yen;
+        return $this->moneyGBP;
     }
 
     /**
-     * Set money_british
+     * Set moneyINR
      *
-     * @param string $moneyBritish
+     * @param float $moneyINR
      * @return Devises
      */
-    public function setMoneyBritish($moneyBritish)
+    public function setMoneyINR($moneyINR)
     {
-        $this->money_british = $moneyBritish;
+        $this->moneyINR = $moneyINR;
 
         return $this;
     }
 
     /**
-     * Get money_british
+     * Get moneyINR
      *
-     * @return string
+     * @return float
      */
-    public function getMoneyBritish()
+    public function getMoneyINR()
     {
-        return $this->money_british;
+        return $this->moneyINR;
     }
 
     /**
-     * Returns a string representation
+     * Set moneyAUD
      *
-     * @return string
+     * @param float $moneyAUD
+     * @return Devises
      */
-    public function __toString()
+    public function setMoneyAUD($moneyAUD)
     {
-        return (string)$this->getId() ? : '-';
+        $this->moneyAUD = $moneyAUD;
+
+        return $this;
     }
 
     /**
-     * @return null
+     * Get moneyAUD
+     *
+     * @return float
      */
-    public function getDateChange()
+    public function getMoneyAUD()
     {
-
-        return null;
+        return $this->moneyAUD;
     }
 
     /**
-     * @param $value
+     * Set moneyCAD
+     *
+     * @param float $moneyCAD
+     * @return Devises
      */
-    public function setDateChange($value)
+    public function setMoneyCAD($moneyCAD)
     {
+        $this->moneyCAD = $moneyCAD;
 
+        return $this;
     }
 
+    /**
+     * Get moneyCAD
+     *
+     * @return float
+     */
+    public function getMoneyCAD()
+    {
+        return $this->moneyCAD;
+    }
+
+    /**
+     * Set moneyAED
+     *
+     * @param float $moneyAED
+     * @return Devises
+     */
+    public function setMoneyAED($moneyAED)
+    {
+        $this->moneyAED = $moneyAED;
+
+        return $this;
+    }
+
+    /**
+     * Get moneyAED
+     *
+     * @return float
+     */
+    public function getMoneyAED()
+    {
+        return $this->moneyAED;
+    }
+
+    /**
+     * Set moneyCHF
+     *
+     * @param float $moneyCHF
+     * @return Devises
+     */
+    public function setMoneyCHF($moneyCHF)
+    {
+        $this->moneyCHF = $moneyCHF;
+
+        return $this;
+    }
+
+    /**
+     * Get moneyCHF
+     *
+     * @return float
+     */
+    public function getMoneyCHF()
+    {
+        return $this->moneyCHF;
+    }
+
+    /**
+     * Set moneyJPY
+     *
+     * @param float $moneyJPY
+     * @return Devises
+     */
+    public function setMoneyJPY($moneyJPY)
+    {
+        $this->moneyJPY = $moneyJPY;
+
+        return $this;
+    }
+
+    /**
+     * Get moneyJPY
+     *
+     * @return float
+     */
+    public function getMoneyJPY()
+    {
+        return $this->moneyJPY;
+    }
 }

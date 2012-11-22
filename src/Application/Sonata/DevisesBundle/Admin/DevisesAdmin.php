@@ -9,7 +9,11 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 
+
 use Knp\Menu\ItemInterface as MenuItemInterface;
+
+use Application\Sonata\ClientBundle\DataFixtures\ORM\LoadListDevisesData;
+use Application\Sonata\ClientBundle\Entity\ListDevises;
 
 class DevisesAdmin extends Admin
 {
@@ -30,17 +34,17 @@ class DevisesAdmin extends Admin
 
 
     //create & edit form
-    protected $_money_arr = array(
-        'money_dollar' => array(
-            'label' => 'Dollar',
-        ),
-        'money_yen' => array(
-            'label' => 'Yen',
-        ),
-        'money_british' => array(
-            'label' => 'British Pound',
-        ),
-    );
+    /*    protected $_money_arr = array(
+            'moneyUSD' => array(
+                'label' => 'Dollar',
+            ),
+            'money_yen' => array(
+                'label' => 'Yen',
+            ),
+            'moneyGBP' => array(
+                'label' => 'British Pound',
+            ),
+        );*/
 
 
     /**
@@ -82,10 +86,15 @@ class DevisesAdmin extends Admin
             'attr' => array('style' => 'width:auto'),
         ));
 
-        foreach ($this->_money_arr as $field => $labelData) {
+        $devisesList = LoadListDevisesData::getStaticList();
 
-            $formMapper->add($field, 'money', array(
-                'label' => $this->_bundle_name . '.form.' . $labelData['label'],
+        unset($devisesList[ListDevises::Device]);
+
+        foreach ($devisesList as $field => $labelData) {
+
+            /** @var $entity  \Application\Sonata\ClientBundle\Entity\ListDevises */
+            $formMapper->add('money' . $field, 'money', array(
+                'label' => $labelData['name'],
                 'precision' => 5,
                 'divisor' => 1,
                 'currency' => 'EUR',

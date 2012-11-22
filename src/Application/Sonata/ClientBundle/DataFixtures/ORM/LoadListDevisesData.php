@@ -14,9 +14,10 @@ class LoadListDevisesData extends AbstractLoadListData
     protected $_className = 'ListDevises';
 
     /**
+     * Before add new Devise be sure You added it to \Application\Sonata\DevisesBundle\Entity\Devises
      * @var array
      */
-    protected $_lists = array(
+    protected static $_static_lists = array(
         'EUR' => array(
             'name' => 'Euro',
             'symbol' => '€',
@@ -59,15 +60,16 @@ class LoadListDevisesData extends AbstractLoadListData
             'name' => 'Japanese Yen',
             'symbol' => '¥',
         ),
+        // Before add new Devise be sure You added it to \Application\Sonata\DevisesBundle\Entity\Devises
     );
 
     public function saveFixtures($manager)
     {
         $class = $this->getClass($manager);
 
-        if ($this->_lists) {
+        if (self::$_static_lists) {
 
-            foreach ($this->_lists as $alias => $rows) {
+            foreach (self::$_static_lists as $alias => $rows) {
                 /** @var $entity ListDevises */
                 $entity = $manager->getRepository($this->getRepositoryName())->findOneByAlias($alias);
 
@@ -84,5 +86,13 @@ class LoadListDevisesData extends AbstractLoadListData
                 }
             }
         }
+    }
+
+    /**
+     * @return array
+     */
+    public static function getStaticList()
+    {
+        return self::$_static_lists;
     }
 }
