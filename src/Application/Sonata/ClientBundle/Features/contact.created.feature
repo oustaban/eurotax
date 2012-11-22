@@ -1,6 +1,6 @@
-Feature: Client Admin - Garanties Create Error 500
+Feature: Create new contact
 
-  Scenario: load page Garanties and create Garanties
+  Scenario: Create new contact
     Given I logged in as "admin" with password "12345"
     When I go to "/sonata/client/contact/create?filter[client_id][value]=1"
     And I select "Mr." from "Civilité"
