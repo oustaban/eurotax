@@ -77,57 +77,7 @@ class ClientInvoicingAdmin extends Admin
 
     public function getLinkTarif()
     {
-
         return '/sonata/client/tarif/list?filter[client_id][value]=' . $this->client_id;
-    }
-
-    /**
-     * @param ErrorElement $errorElement
-     * @param mixed $object
-     */
-    public function validate(ErrorElement $errorElement, $object)
-    {
-        /* @var $object \Application\Sonata\ClientBundle\Entity\Tarif */
-        parent::validate($errorElement, $object);
-
-        $this->_setupAlerts($errorElement, $object);
-    }
-
-    /**
-     * @param $errorElement
-     * @param $object \Application\Sonata\ClientBundle\Entity\ClientInvoicing
-     */
-    protected function _setupAlerts($errorElement, $object)
-    {
-        /** @var $doctrine  \Doctrine\Bundle\DoctrineBundle\Registry */
-        $doctrine = $this->getConfigurationPool()->getContainer()->get('doctrine');
-
-        /* @var $em \Doctrine\ORM\EntityManager */
-        $em = $doctrine->getManager();
-
-        /* @var $tab \Application\Sonata\ClientBundle\Entity\ListClientTabs */
-        $tab = $em->getRepository('ApplicationSonataClientBundle:ListClientTabs')->findOneByAlias('tarif');
-
-        $em->getRepository('ApplicationSonataClientBundle:ClientAlert')
-            ->createQueryBuilder('c')
-            ->delete()
-            ->where('c.client = :client')
-            ->andWhere('c.tabs = :tab')
-            ->setParameters(array(
-            ':client' => $object->getClient(),
-            ':tab' => $tab,
-        ))->getQuery()->execute();
-
-        $value = false;
-        if ($value) {
-            $alert = new ClientAlert();
-            $alert->setClient($object->getClient());
-            $alert->setTabs($tab);
-            $alert->setIsBlocked(true);
-            $alert->setText('Manque Libéllé avance');
-
-            $em->persist($alert);
-        }
     }
 }
 
