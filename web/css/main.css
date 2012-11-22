@@ -191,3 +191,7 @@ tr.dimmed, tr.dimmed a {
 .sonata-ba-list .sonata-ba-list-field-date{
     text-align: center;
 }
+
+.important_hidden {
+    display: none !important;
+}
