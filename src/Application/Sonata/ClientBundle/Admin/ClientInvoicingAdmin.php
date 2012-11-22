@@ -29,7 +29,7 @@ class ClientInvoicingAdmin extends Admin
 
         $label = 'form.' . $this->_prefix_label . '.';
         $formMapper->with($label . 'title')
-            //->add('client', null, array('data' => $filter['client_id']['value']))
+            ->add('client', null, array('data' => $this->getClient()))
             ->add('facturation_du_client', null, array('label' => $label . 'facturation_du_client'))
             ->add('min', null, array('label' => $label . 'min'))
             ->add('max', null, array('label' => $label . 'max'))
