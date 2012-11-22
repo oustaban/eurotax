@@ -229,7 +229,7 @@ class ClientAdmin extends Admin
             ->add('mois_tva', null, array('label' => 'list.mois_tva'))
             ->add('BAPSA', null, array('label' => 'list.BAPSA'))
             ->add('remboursement_de_TVA', null, array('label' => 'list.remboursement_de_TVA'))
-            ->add('solde_du_compte', null, array('label' => 'list.solde_du_compte'))
+            ->add('comptes', null, array('label' => 'list.solde_du_compte', 'template' => 'ApplicationSonataClientBundle:CRUD:comptes.html.twig'))
             ->add('date_debut_mission', null, array(
             'template' => 'ApplicationSonataClientBundle:CRUD:list_date_debut_mission.html.twig',
             'label' => 'list.date_debut_mission'
@@ -420,6 +420,7 @@ class ClientAdmin extends Admin
                 ->andWhere('(NOT ' . $builder->getRootAlias() . '.date_fin_mission BETWEEN :date_lowest AND :date_highest) OR (' . $builder->getRootAlias() . '.date_fin_mission IS NULL)')
                 ->setParameter(':date_lowest', new \DateTime('1000-01-01'))
                 ->setParameter(':date_highest', new \DateTime());
+            //exit($builder->getQuery()->getSQL());
         }
 
         return $query;

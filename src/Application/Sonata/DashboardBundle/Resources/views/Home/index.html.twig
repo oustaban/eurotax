@@ -117,7 +117,9 @@
                 {#{{ client[0].remboursement_de_TVA }}#}
             </td>
             <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client[0].id }}">
-                {#{{ client[0].solde_du_compte }}#}
+                <div class="montant{% if client.compte_solde_montant<0 %} negative_value{% endif %}">
+                    {{ client.compte_solde_montant?:0 }}
+                </div>
             </td>
             <td class="sonata-ba-list-field sonata-ba-list-field-date"  objectId="{{ client[0].id }}">
                 {{ client[0].getDateDebutMission|datefmt_format(default_date_format) }}

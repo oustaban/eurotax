@@ -79,8 +79,12 @@ abstract class AbstractTabsAdmin extends Admin
      */
     public function createQuery($context = 'list')
     {
+        /** @var $query \Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery */
         $query = parent::createQuery($context);
-        $query->andWhere($query->getRootAlias() . '.client=:client')
+
+        /** @var $builder \Doctrine\ORM\QueryBuilder */
+        $builder = $query->getQueryBuilder();
+        $builder->andWhere($builder->getRootAlias() . '.client=:client')
             ->setParameter(':client', $this->getClient());
 
         return $query;

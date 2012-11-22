@@ -1,0 +1,9 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% set value = object.getComptesSoldeMontant %}
+
+{% block field %}
+<div class="montant{% if value<0 %} negative_value{% endif %}">
+    {{ value }}
+</div>
+{% endblock field %}

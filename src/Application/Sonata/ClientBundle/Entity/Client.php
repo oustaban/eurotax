@@ -1449,6 +1449,20 @@ class Client
     }
 
     /**
+     * @return float
+     */
+    public function getComptesSoldeMontant()
+    {
+        $solde = 0;
+        foreach($this->getComptes() as $compte){
+            /** @var $compte Compte */
+            $solde += $compte->getMontant();
+        }
+        return $solde;
+    }
+
+
+    /**
      * Add comptes
      *
      * @param \Application\Sonata\ClientBundle\Entity\Compte $comptes
@@ -1523,7 +1537,7 @@ class Client
     public function addAlerte(\Application\Sonata\ClientBundle\Entity\ClientAlert $alertes)
     {
         $this->alertes[] = $alertes;
-    
+
         return $this;
     }
 
@@ -1540,7 +1554,7 @@ class Client
     /**
      * Get alertes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAlertes()
     {
@@ -1556,14 +1570,14 @@ class Client
     public function setInvoicing(\Application\Sonata\ClientBundle\Entity\ClientInvoicing $invoicing = null)
     {
         $this->invoicing = $invoicing;
-    
+
         return $this;
     }
 
     /**
      * Get invoicing
      *
-     * @return \Application\Sonata\ClientBundle\Entity\ClientInvoicing 
+     * @return \Application\Sonata\ClientBundle\Entity\ClientInvoicing
      */
     public function getInvoicing()
     {
@@ -1579,7 +1593,7 @@ class Client
     public function addCommentaire(\Application\Sonata\ClientBundle\Entity\Commentaire $commentaires)
     {
         $this->commentaires[] = $commentaires;
-    
+
         return $this;
     }
 
@@ -1596,7 +1610,7 @@ class Client
     /**
      * Get commentaires
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCommentaires()
     {
@@ -1612,7 +1626,7 @@ class Client
     public function addContact(\Application\Sonata\ClientBundle\Entity\Contact $contacts)
     {
         $this->contacts[] = $contacts;
-    
+
         return $this;
     }
 
@@ -1629,7 +1643,7 @@ class Client
     /**
      * Get contacts
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getContacts()
     {
@@ -1645,7 +1659,7 @@ class Client
     public function addCoordonnee(\Application\Sonata\ClientBundle\Entity\Coordonnees $coordonnees)
     {
         $this->coordonnees[] = $coordonnees;
-    
+
         return $this;
     }
 
@@ -1662,7 +1676,7 @@ class Client
     /**
      * Get coordonnees
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCoordonnees()
     {
@@ -1678,7 +1692,7 @@ class Client
     public function addDocument(\Application\Sonata\ClientBundle\Entity\Document $documents)
     {
         $this->documents[] = $documents;
-    
+
         return $this;
     }
 
@@ -1695,7 +1709,7 @@ class Client
     /**
      * Get documents
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getDocuments()
     {
@@ -1711,7 +1725,7 @@ class Client
     public function addTarif(\Application\Sonata\ClientBundle\Entity\Tarif $tarifs)
     {
         $this->tarifs[] = $tarifs;
-    
+
         return $this;
     }
 
@@ -1728,7 +1742,7 @@ class Client
     /**
      * Get tarifs
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTarifs()
     {
