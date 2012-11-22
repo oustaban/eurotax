@@ -302,6 +302,51 @@ class Client
     protected $garantie;
 
     /**
+     * @ORM\OneToMany (targetEntity="Compte", mappedBy="client")
+     */
+    protected $comptes;
+
+    /**
+     * @ORM\OneToMany (targetEntity="CompteDeDepot", mappedBy="client")
+     */
+    protected $comptes_de_depot;
+
+    /**
+     * @ORM\OneToMany (targetEntity="ClientAlert", mappedBy="client")
+     */
+    protected $alertes;
+
+    /**
+     * @ORM\OneToOne(targetEntity="ClientInvoicing", mappedBy="client")
+     */
+    protected $invoicing;
+
+    /**
+     * @ORM\OneToMany (targetEntity="Commentaire", mappedBy="client")
+     */
+    protected $commentaires;
+
+    /**
+     * @ORM\OneToMany (targetEntity="Contact", mappedBy="client")
+     */
+    protected $contacts;
+
+    /**
+     * @ORM\OneToMany (targetEntity="Coordonnees", mappedBy="client")
+     */
+    protected $coordonnees;
+
+    /**
+     * @ORM\OneToMany (targetEntity="Document", mappedBy="client")
+     */
+    protected $documents;
+
+    /**
+     * @ORM\OneToMany (targetEntity="Tarif", mappedBy="client")
+     */
+    protected $tarifs;
+
+    /**
      * Returns a string representation
      *
      * @return string
@@ -1401,5 +1446,292 @@ class Client
     public function getPaysFacturation()
     {
         return $this->pays_facturation;
+    }
+
+    /**
+     * Add comptes
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\Compte $comptes
+     * @return Client
+     */
+    public function addCompte(\Application\Sonata\ClientBundle\Entity\Compte $comptes)
+    {
+        $this->comptes[] = $comptes;
+
+        return $this;
+    }
+
+    /**
+     * Remove comptes
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\Compte $comptes
+     */
+    public function removeCompte(\Application\Sonata\ClientBundle\Entity\Compte $comptes)
+    {
+        $this->comptes->removeElement($comptes);
+    }
+
+    /**
+     * Get comptes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComptes()
+    {
+        return $this->comptes;
+    }
+
+    /**
+     * Add comptes_de_depot
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\CompteDeDepot $comptesDeDepot
+     * @return Client
+     */
+    public function addComptesDeDepot(\Application\Sonata\ClientBundle\Entity\CompteDeDepot $comptesDeDepot)
+    {
+        $this->comptes_de_depot[] = $comptesDeDepot;
+
+        return $this;
+    }
+
+    /**
+     * Remove comptes_de_depot
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\CompteDeDepot $comptesDeDepot
+     */
+    public function removeComptesDeDepot(\Application\Sonata\ClientBundle\Entity\CompteDeDepot $comptesDeDepot)
+    {
+        $this->comptes_de_depot->removeElement($comptesDeDepot);
+    }
+
+    /**
+     * Get comptes_de_depot
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComptesDeDepot()
+    {
+        return $this->comptes_de_depot;
+    }
+
+    /**
+     * Add alertes
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\ClientAlert $alertes
+     * @return Client
+     */
+    public function addAlerte(\Application\Sonata\ClientBundle\Entity\ClientAlert $alertes)
+    {
+        $this->alertes[] = $alertes;
+    
+        return $this;
+    }
+
+    /**
+     * Remove alertes
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\ClientAlert $alertes
+     */
+    public function removeAlerte(\Application\Sonata\ClientBundle\Entity\ClientAlert $alertes)
+    {
+        $this->alertes->removeElement($alertes);
+    }
+
+    /**
+     * Get alertes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAlertes()
+    {
+        return $this->alertes;
+    }
+
+    /**
+     * Set invoicing
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\ClientInvoicing $invoicing
+     * @return Client
+     */
+    public function setInvoicing(\Application\Sonata\ClientBundle\Entity\ClientInvoicing $invoicing = null)
+    {
+        $this->invoicing = $invoicing;
+    
+        return $this;
+    }
+
+    /**
+     * Get invoicing
+     *
+     * @return \Application\Sonata\ClientBundle\Entity\ClientInvoicing 
+     */
+    public function getInvoicing()
+    {
+        return $this->invoicing;
+    }
+
+    /**
+     * Add commentaires
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\Commentaire $commentaires
+     * @return Client
+     */
+    public function addCommentaire(\Application\Sonata\ClientBundle\Entity\Commentaire $commentaires)
+    {
+        $this->commentaires[] = $commentaires;
+    
+        return $this;
+    }
+
+    /**
+     * Remove commentaires
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\Commentaire $commentaires
+     */
+    public function removeCommentaire(\Application\Sonata\ClientBundle\Entity\Commentaire $commentaires)
+    {
+        $this->commentaires->removeElement($commentaires);
+    }
+
+    /**
+     * Get commentaires
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCommentaires()
+    {
+        return $this->commentaires;
+    }
+
+    /**
+     * Add contacts
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\Contact $contacts
+     * @return Client
+     */
+    public function addContact(\Application\Sonata\ClientBundle\Entity\Contact $contacts)
+    {
+        $this->contacts[] = $contacts;
+    
+        return $this;
+    }
+
+    /**
+     * Remove contacts
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\Contact $contacts
+     */
+    public function removeContact(\Application\Sonata\ClientBundle\Entity\Contact $contacts)
+    {
+        $this->contacts->removeElement($contacts);
+    }
+
+    /**
+     * Get contacts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getContacts()
+    {
+        return $this->contacts;
+    }
+
+    /**
+     * Add coordonnees
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\Coordonnees $coordonnees
+     * @return Client
+     */
+    public function addCoordonnee(\Application\Sonata\ClientBundle\Entity\Coordonnees $coordonnees)
+    {
+        $this->coordonnees[] = $coordonnees;
+    
+        return $this;
+    }
+
+    /**
+     * Remove coordonnees
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\Coordonnees $coordonnees
+     */
+    public function removeCoordonnee(\Application\Sonata\ClientBundle\Entity\Coordonnees $coordonnees)
+    {
+        $this->coordonnees->removeElement($coordonnees);
+    }
+
+    /**
+     * Get coordonnees
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCoordonnees()
+    {
+        return $this->coordonnees;
+    }
+
+    /**
+     * Add documents
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\Document $documents
+     * @return Client
+     */
+    public function addDocument(\Application\Sonata\ClientBundle\Entity\Document $documents)
+    {
+        $this->documents[] = $documents;
+    
+        return $this;
+    }
+
+    /**
+     * Remove documents
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\Document $documents
+     */
+    public function removeDocument(\Application\Sonata\ClientBundle\Entity\Document $documents)
+    {
+        $this->documents->removeElement($documents);
+    }
+
+    /**
+     * Get documents
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
+    }
+
+    /**
+     * Add tarifs
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\Tarif $tarifs
+     * @return Client
+     */
+    public function addTarif(\Application\Sonata\ClientBundle\Entity\Tarif $tarifs)
+    {
+        $this->tarifs[] = $tarifs;
+    
+        return $this;
+    }
+
+    /**
+     * Remove tarifs
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\Tarif $tarifs
+     */
+    public function removeTarif(\Application\Sonata\ClientBundle\Entity\Tarif $tarifs)
+    {
+        $this->tarifs->removeElement($tarifs);
+    }
+
+    /**
+     * Get tarifs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTarifs()
+    {
+        return $this->tarifs;
     }
 }

@@ -23,11 +23,12 @@ class Commentaire
 
 
     /**
-     * @var integer $client_id
+     * @var Client $client
      *
-     * @ORM\Column(name="client_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="Client", inversedBy="commentaires")
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
      */
-    private $client_id;
+    private $client;
 
     /**
      * @var \DateTime $date
@@ -62,7 +63,7 @@ class Commentaire
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -78,14 +79,14 @@ class Commentaire
     public function setDate($date)
     {
         $this->date = $date;
-    
+
         return $this;
     }
 
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -100,14 +101,14 @@ class Commentaire
     public function setNote($note)
     {
         $this->note = $note;
-    
+
         return $this;
     }
 
     /**
      * Get note
      *
-     * @return string 
+     * @return string
      */
     public function getNote()
     {
@@ -124,14 +125,14 @@ class Commentaire
     public function setCategorie(\Application\Sonata\ClientBundle\Entity\ListCategorieCommentaires $categorie = null)
     {
         $this->categorie = $categorie;
-    
+
         return $this;
     }
 
     /**
      * Get categorie
      *
-     * @return Application\Sonata\ClientBundle\Entity\ListCategorieCommentaires 
+     * @return Application\Sonata\ClientBundle\Entity\ListCategorieCommentaires
      */
     public function getCategorie()
     {
@@ -139,25 +140,25 @@ class Commentaire
     }
 
     /**
-     * Set client_id
+     * Set client
      *
-     * @param integer $clientId
+     * @param \Application\Sonata\ClientBundle\Entity\Client $client
      * @return Commentaire
      */
-    public function setClientId($clientId)
+    public function setClient(\Application\Sonata\ClientBundle\Entity\Client $client = null)
     {
-        $this->client_id = $clientId;
+        $this->client = $client;
     
         return $this;
     }
 
     /**
-     * Get client_id
+     * Get client
      *
-     * @return integer 
+     * @return \Application\Sonata\ClientBundle\Entity\Client 
      */
-    public function getClientId()
+    public function getClient()
     {
-        return $this->client_id;
+        return $this->client;
     }
 }

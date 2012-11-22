@@ -22,16 +22,17 @@ class Contact
     private $id;
 
     /**
-     * @var integer $client_id
+     * @var Client $client
      *
-     * @ORM\Column(name="client_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="Client", inversedBy="contacts")
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
      */
-    private $client_id;
+    private $client;
 
     /**
      * @var integer $civilite_id
      *
-     * @ORM\ManyToOne(targetEntity="ListCivilites", inversedBy="client")
+     * @ORM\ManyToOne(targetEntity="ListCivilites")
      * @ORM\JoinColumn(name="civilite_id",  referencedColumnName="id")
      */
     private $civilite;
@@ -274,29 +275,6 @@ class Contact
     }
 
     /**
-     * Set client_id
-     *
-     * @param integer $clientId
-     * @return Contact
-     */
-    public function setClientId($clientId)
-    {
-        $this->client_id = $clientId;
-
-        return $this;
-    }
-
-    /**
-     * Get client_id
-     *
-     * @return integer
-     */
-    public function getClientId()
-    {
-        return $this->client_id;
-    }
-
-    /**
      * Set raison_sociale_societe
      *
      * @param string $raisonSocialeSociete
@@ -305,14 +283,14 @@ class Contact
     public function setRaisonSocialeSociete($raisonSocialeSociete)
     {
         $this->raison_sociale_societe = $raisonSocialeSociete;
-    
+
         return $this;
     }
 
     /**
      * Get raison_sociale_societe
      *
-     * @return string 
+     * @return string
      */
     public function getRaisonSocialeSociete()
     {
@@ -330,17 +308,40 @@ class Contact
     public function setAffichageFactureId($affichageFactureId)
     {
         $this->affichage_facture_id = $affichageFactureId;
-    
+
         return $this;
     }
 
     /**
      * Get affichage_facture_id
      *
-     * @return integer 
+     * @return integer
      */
     public function getAffichageFactureId()
     {
         return $this->affichage_facture_id;
+    }
+
+    /**
+     * Set client
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\Client $client
+     * @return Contact
+     */
+    public function setClient(\Application\Sonata\ClientBundle\Entity\Client $client = null)
+    {
+        $this->client = $client;
+    
+        return $this;
+    }
+
+    /**
+     * Get client
+     *
+     * @return \Application\Sonata\ClientBundle\Entity\Client 
+     */
+    public function getClient()
+    {
+        return $this->client;
     }
 }

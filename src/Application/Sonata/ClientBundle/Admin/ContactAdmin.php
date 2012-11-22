@@ -79,7 +79,7 @@ class ContactAdmin extends Admin
 
     /**
      * @param $errorElement
-     * @param $object
+     * @param $object \Application\Sonata\ClientBundle\Entity\Contact
      */
     protected function _setupAlerts($errorElement, $object)
     {
@@ -95,10 +95,10 @@ class ContactAdmin extends Admin
         $em->getRepository('ApplicationSonataClientBundle:ClientAlert')
             ->createQueryBuilder('c')
             ->delete()
-            ->where('c.client_id = :client_id')
+            ->where('c.client = :client')
             ->andWhere('c.tabs = :tab')
             ->setParameters(array(
-            ':client_id' => $object->getClientId(),
+            ':client' => $object->getClient(),
             ':tab' => $tab,
         ))->getQuery()->execute();
 
@@ -111,9 +111,9 @@ class ContactAdmin extends Admin
             $dql = $em->createQueryBuilder()
                 ->select('count(c.id)')
                 ->from('ApplicationSonataClientBundle:Contact', 'c')
-                ->where('c.client_id = :client_id')
+                ->where('c.client = :client')
                 ->andWhere('c.affichage_facture_id IS NULL')
-                ->setParameter(':client_id', $object->getClientId());
+                ->setParameter(':client', $object->getClient());
 
             if ($object->getId()) {
                 $dql->andWhere('c.id != :id')->setParameter(':id', $object->getId());
@@ -129,13 +129,13 @@ class ContactAdmin extends Admin
 
     /**
      * @param \Doctrine\ORM\EntityManager $em
-     * @param $object
+     * @param $object \Application\Sonata\ClientBundle\Entity\Contact
      * @param $tab
      */
     protected function saveAffichageFactureAlertMessage(\Doctrine\ORM\EntityManager $em, $object, $tab)
     {
         $alert = new ClientAlert();
-        $alert->setClientId($object->getClientId());
+        $alert->setClient($object->getClient());
         $alert->setTabs($tab);
         $alert->setIsBlocked(true);
         $alert->setText('Aucun contact pour Facturation');

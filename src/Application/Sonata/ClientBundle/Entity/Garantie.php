@@ -23,19 +23,11 @@ class Garantie
     private $id;
 
     /**
-     * @var integer $client_id
-     *
-     * @ORM\Column(name="client_id", type="integer")
-     */
-    private $client_id;
-
-    /**
      * @var \Application\Sonata\ClientBundle\Entity\Client $client
      *
      * @ORM\ManyToOne(targetEntity="Client", inversedBy="garantie")
      * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
      */
-
     private $client;
 
     /**
@@ -140,29 +132,6 @@ class Garantie
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set client_id
-     *
-     * @param integer $clientId
-     * @return Garantie
-     */
-    public function setClientId($clientId)
-    {
-        $this->client_id = $clientId;
-
-        return $this;
-    }
-
-    /**
-     * Get client_id
-     *
-     * @return integer
-     */
-    public function getClientId()
-    {
-        return $this->client_id;
     }
 
     /**
@@ -429,20 +398,5 @@ class Garantie
     public function getClient()
     {
         return $this->client;
-    }
-
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function preSave()
-    {
-        /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
-        $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
-        /* @var $em \Doctrine\ORM\EntityManager */
-        $em = $doctrine->getManager();
-
-        $client = $em->getRepository('ApplicationSonataClientBundle:Client')->find($this->getClientId());
-        $this->setClient($client);
     }
 }

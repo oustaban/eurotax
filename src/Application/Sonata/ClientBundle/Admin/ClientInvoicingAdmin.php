@@ -29,7 +29,7 @@ class ClientInvoicingAdmin extends Admin
 
         $label = 'form.' . $this->_prefix_label . '.';
         $formMapper->with($label . 'title')
-            ->add('client_id', 'hidden', array('data' => $filter['client_id']['value']))
+            //->add('client', null, array('data' => $filter['client_id']['value']))
             ->add('facturation_du_client', null, array('label' => $label . 'facturation_du_client'))
             ->add('min', null, array('label' => $label . 'min'))
             ->add('max', null, array('label' => $label . 'max'))
@@ -95,7 +95,7 @@ class ClientInvoicingAdmin extends Admin
 
     /**
      * @param $errorElement
-     * @param $object
+     * @param $object \Application\Sonata\ClientBundle\Entity\ClientInvoicing
      */
     protected function _setupAlerts($errorElement, $object)
     {
@@ -111,20 +111,17 @@ class ClientInvoicingAdmin extends Admin
         $em->getRepository('ApplicationSonataClientBundle:ClientAlert')
             ->createQueryBuilder('c')
             ->delete()
-            ->where('c.client_id = :client_id')
+            ->where('c.client = :client')
             ->andWhere('c.tabs = :tab')
             ->setParameters(array(
-            ':client_id' => $object->getClientId(),
+            ':client' => $object->getClient(),
             ':tab' => $tab,
         ))->getQuery()->execute();
 
-
-        /* @var $object \Application\Sonata\ClientBundle\Entity\ClientInvoicing */
         $value = false;
-
         if ($value) {
             $alert = new ClientAlert();
-            $alert->setClientId($object->getClientId());
+            $alert->setClient($object->getClient());
             $alert->setTabs($tab);
             $alert->setIsBlocked(true);
             $alert->setText('Manque Libéllé avance');

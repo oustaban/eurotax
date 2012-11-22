@@ -106,7 +106,7 @@ class CoordonneesAdmin extends Admin
 
     /**
      * @param $errorElement
-     * @param $object
+     * @param $object \Application\Sonata\ClientBundle\Entity\Coordonnees
      */
     protected function _setupAlerts($errorElement, $object)
     {
@@ -122,10 +122,10 @@ class CoordonneesAdmin extends Admin
         $em->getRepository('ApplicationSonataClientBundle:ClientAlert')
             ->createQueryBuilder('c')
             ->delete()
-            ->where('c.client_id = :client_id')
+            ->where('c.client = :client')
             ->andWhere('c.tabs = :tab')
             ->setParameters(array(
-            ':client_id' => $object->getClientId(),
+            ':client' => $object->getClient(),
             ':tab' => $tab,
         ))->getQuery()->execute();
 
@@ -133,7 +133,7 @@ class CoordonneesAdmin extends Admin
         $value = $object->getIBAN();
         if (0) {
             $alert = new ClientAlert();
-            $alert->setClientId($object->getClientId());
+            $alert->setClient($object->getClient());
             $alert->setTabs($tab);
             $alert->setIsBlocked(false);
             $alert->setText('Manque coordonnées bancaires pour remboursement TVA');

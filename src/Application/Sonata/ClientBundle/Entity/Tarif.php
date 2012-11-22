@@ -22,11 +22,12 @@ class Tarif
     private $id;
 
     /**
-     * @var integer $client_id
+     * @var Client $client
      *
-     * @ORM\Column(name="client_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="Client", inversedBy="tarifs")
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
      */
-    private $client_id;
+    private $client;
 
     /**
      * @var integer $mode_de_facturation
@@ -144,28 +145,26 @@ class Tarif
         return $this->mode_de_facturation;
     }
 
-
-
     /**
-     * Set client_id
+     * Set client
      *
-     * @param integer $clientId
+     * @param \Application\Sonata\ClientBundle\Entity\Client $client
      * @return Tarif
      */
-    public function setClientId($clientId)
+    public function setClient(\Application\Sonata\ClientBundle\Entity\Client $client = null)
     {
-        $this->client_id = $clientId;
-
+        $this->client = $client;
+    
         return $this;
     }
 
     /**
-     * Get client_id
+     * Get client
      *
-     * @return integer
+     * @return \Application\Sonata\ClientBundle\Entity\Client 
      */
-    public function getClientId()
+    public function getClient()
     {
-        return $this->client_id;
+        return $this->client;
     }
 }

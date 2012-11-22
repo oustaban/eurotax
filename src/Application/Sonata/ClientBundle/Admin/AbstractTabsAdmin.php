@@ -44,27 +44,14 @@ abstract class AbstractTabsAdmin extends Admin
     }
 
     /**
-     * @return array
-     */
-    public function getFilterParameters()
-    {
-        $parameters = parent::getFilterParameters();
-        #unset($parameters['client_id']);
-
-        return $parameters;
-    }
-
-    /**
      * @param $request
      */
     public function getRequestParameters($request)
     {
         $filter = $request->query->get('filter');
         if (!empty($filter['client_id']) && !empty($filter['client_id']['value'])) {
-
             $this->client_id = $filter['client_id']['value'];
             $this->setClient($this->client_id);
-
         }
     }
 
@@ -93,8 +80,8 @@ abstract class AbstractTabsAdmin extends Admin
     public function createQuery($context = 'list')
     {
         $query = parent::createQuery($context);
-        $query->andWhere($query->getRootAlias() . '.client_id=:client_id')
-            ->setParameter(':client_id', $this->client_id);
+        $query->andWhere($query->getRootAlias() . '.client=:client')
+            ->setParameter(':client', $this->getClient());
 
         return $query;
     }
@@ -148,15 +135,6 @@ abstract class AbstractTabsAdmin extends Admin
             }
         }
         return parent::generateUrl($name, $parameters, $absolute);
-    }
-
-    //filter form
-    /**
-     * @param DatagridMapper $datagridMapper
-     */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
-    {
-        $datagridMapper->add('client_id');
     }
 
     /**

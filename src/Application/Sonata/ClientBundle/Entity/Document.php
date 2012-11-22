@@ -24,11 +24,12 @@ class Document
     private $id;
 
     /**
-     * @var integer $client_id
+     * @var Client $client
      *
-     * @ORM\Column(name="client_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="Client", inversedBy="documents")
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
      */
-    private $client_id;
+    private $client;
 
     /**
      * @var UploadedFile $file
@@ -127,29 +128,6 @@ class Document
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set client_id
-     *
-     * @param integer $clientId
-     * @return Document
-     */
-    public function setClientId($clientId)
-    {
-        $this->client_id = $clientId;
-
-        return $this;
-    }
-
-    /**
-     * Get client_id
-     *
-     * @return integer
-     */
-    public function getClientId()
-    {
-        return $this->client_id;
     }
 
     /**
@@ -331,7 +309,7 @@ class Document
      */
     public function getAbsolutePath()
     {
-        return null === $this->file_alias ? null : Client::getFilesAbsoluteDir($this->client_id) . '/' . $this->file_alias;
+        return null === $this->file_alias ? null : Client::getFilesAbsoluteDir($this->getClient()) . '/' . $this->file_alias;
     }
 
     /**
@@ -339,7 +317,7 @@ class Document
      */
     public function getWebPath()
     {
-        return null === $this->file_alias ? null : Client::getFilesWebDir($this->client_id) . '/' . $this->file_alias;
+        return null === $this->file_alias ? null : Client::getFilesWebDir($this->getClient()) . '/' . $this->file_alias;
     }
 
 
@@ -358,8 +336,8 @@ class Document
 
         $this->file_alias = $pathinfo['filename'] . '.' . $extension;
 
-        $this->file->move(Client::getFilesAbsoluteDir($this->client_id), $this->file_alias);
-        Client::scanFilesTree($this->client_id);
+        $this->file->move(Client::getFilesAbsoluteDir($this->getClient()), $this->file_alias);
+        Client::scanFilesTree($this->getClient());
 
         $this->document = $pathinfo['filename'];
 
@@ -471,5 +449,28 @@ class Document
     public function getStatutDocumentApostille()
     {
         return $this->statut_document_apostille;
+    }
+
+    /**
+     * Set client
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\Client $client
+     * @return Document
+     */
+    public function setClient(\Application\Sonata\ClientBundle\Entity\Client $client = null)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * Get client
+     *
+     * @return \Application\Sonata\ClientBundle\Entity\Client
+     */
+    public function getClient()
+    {
+        return $this->client;
     }
 }

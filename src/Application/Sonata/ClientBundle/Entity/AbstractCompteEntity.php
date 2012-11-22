@@ -20,14 +20,6 @@ abstract class AbstractCompteEntity
      */
     private $id;
 
-
-    /**
-     * @var integer $client_id
-     *
-     * @ORM\Column(name="client_id", type="integer")
-     */
-    private $client_id;
-
     /**
      * @var \DateTime $date
      *
@@ -90,34 +82,11 @@ abstract class AbstractCompteEntity
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set client_id
-     *
-     * @param integer $clientId
-     * @return AbstractCompteEntity
-     */
-    public function setClientId($clientId)
-    {
-        $this->client_id = $clientId;
-    
-        return $this;
-    }
-
-    /**
-     * Get client_id
-     *
-     * @return integer 
-     */
-    public function getClientId()
-    {
-        return $this->client_id;
     }
 
     /**
@@ -129,14 +98,14 @@ abstract class AbstractCompteEntity
     public function setDate($date)
     {
         $this->date = $date;
-    
+
         return $this;
     }
 
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -152,14 +121,14 @@ abstract class AbstractCompteEntity
     public function setOperation($operation)
     {
         $this->operation = $operation;
-    
+
         return $this;
     }
 
     /**
      * Get operation
      *
-     * @return string 
+     * @return string
      */
     public function getOperation()
     {
@@ -175,14 +144,14 @@ abstract class AbstractCompteEntity
     public function setMontant($montant)
     {
         $this->montant = $montant;
-    
+
         return $this;
     }
 
     /**
      * Get montant
      *
-     * @return float 
+     * @return float
      */
     public function getMontant()
     {
@@ -198,14 +167,14 @@ abstract class AbstractCompteEntity
     public function setCommentaire($commentaire)
     {
         $this->commentaire = $commentaire;
-    
+
         return $this;
     }
 
     /**
      * Get commentaire
      *
-     * @return string 
+     * @return string
      */
     public function getCommentaire()
     {
@@ -223,7 +192,7 @@ abstract class AbstractCompteEntity
     public function setStatut(\Application\Sonata\ClientBundle\Entity\ListCompteStatuts $statut = null)
     {
         $this->statut = $statut;
-    
+
         return $this;
     }
 
@@ -248,7 +217,7 @@ abstract class AbstractCompteEntity
     public function setGarantie(\Application\Sonata\ClientBundle\Entity\Garantie $garantie = null)
     {
         $this->garantie = $garantie;
-    
+
         return $this;
     }
 
