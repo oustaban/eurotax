@@ -35,7 +35,7 @@ class ListStatuses
 
     public function __toString()
     {
-        return (string)$this->getName() ? : '-';
+        return (string)$this->getName();
     }
 
     /**
