@@ -16,7 +16,7 @@ function addClient(client, cls){
         '',
         '',
         '',
-        '',
+        '<div class="montant'+(client.compte_solde_montant<0?' negative_value':'')+'">'+client.compte_solde_montant+'</div>',
         formatDate(new Date(client.date_debut_mission.date.replace(/-/g, ' ')), default_date_format_js),
         formatDate(new Date(client.date_fin_mission.date.replace(/-/g, ' ')), default_date_format_js)
     ];

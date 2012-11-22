@@ -12,7 +12,8 @@
 <script type="text/javascript">
     var clientsDimmed = {{ globalsGet('clientsDimmed')|raw }};
     for(var i in clientsDimmed){
-        addClient(clientsDimmed[i], 'dimmed')
+        clientsDimmed[i].client.compte_solde_montant = clientsDimmed[i].compte_solde_montant?clientsDimmed[i].compte_solde_montant:0;
+        addClient(clientsDimmed[i].client, 'dimmed')
     }
 
 </script>

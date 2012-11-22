@@ -110,21 +110,25 @@ abstract class AbstractTabsAdmin extends Admin
 
     public function createQuery($context = 'list')
     {
+        /** @var $query \Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery */
         $query = parent::createQuery($context);
+
+        /** @var $builder \Doctrine\ORM\QueryBuilder */
+        $builder = $query->getQueryBuilder();
 
         $form_date_piece = $this->year . '-' . $this->month . '-01';
         $to_date_piece = $this->year . '-' . $this->month . '-31';
 
         if ($this->query_month == -1) {
-            $query->orWhere($query->getRootAlias() . '.date_piece IS NULL');
-            $query->orWhere($query->getRootAlias() . '.date_piece BETWEEN :form_date_piece AND :to_date_piece');
+            $builder->orWhere($builder->getRootAlias() . '.date_piece IS NULL');
+            $builder->orWhere($builder->getRootAlias() . '.date_piece BETWEEN :form_date_piece AND :to_date_piece');
         } else {
-            $query->andWhere($query->getRootAlias() . '.date_piece BETWEEN :form_date_piece AND :to_date_piece');
+            $builder->andWhere($builder->getRootAlias() . '.date_piece BETWEEN :form_date_piece AND :to_date_piece');
         }
-        $query->setParameter(':form_date_piece', $form_date_piece);
-        $query->setParameter(':to_date_piece', $to_date_piece);
+        $builder->setParameter(':form_date_piece', $form_date_piece);
+        $builder->setParameter(':to_date_piece', $to_date_piece);
 
-        $query->andWhere($query->getRootAlias() . '.client_id=' . $this->client_id);
+        $builder->andWhere($builder->getRootAlias() . '.client_id=' . $this->client_id);
 
         return $query;
     }
