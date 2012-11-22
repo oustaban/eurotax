@@ -100,6 +100,46 @@ class CoordonneesAdmin extends Admin
     {
         /* @var $object \Application\Sonata\ClientBundle\Entity\Contact */
         parent::validate($errorElement, $object);
+
+        $this->_setupAlerts($errorElement, $object);
+    }
+
+    /**
+     * @param $errorElement
+     * @param $object \Application\Sonata\ClientBundle\Entity\Coordonnees
+     */
+    protected function _setupAlerts($errorElement, $object)
+    {
+        /** @var $doctrine  \Doctrine\Bundle\DoctrineBundle\Registry */
+        $doctrine = $this->getConfigurationPool()->getContainer()->get('doctrine');
+
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $doctrine->getManager();
+
+        /* @var $tab \Application\Sonata\ClientBundle\Entity\ListClientTabs */
+        $tab = $em->getRepository('ApplicationSonataClientBundle:ListClientTabs')->findOneByAlias('coordinates');
+
+        $em->getRepository('ApplicationSonataClientBundle:ClientAlert')
+            ->createQueryBuilder('c')
+            ->delete()
+            ->where('c.client = :client')
+            ->andWhere('c.tabs = :tab')
+            ->setParameters(array(
+            ':client' => $object->getClient(),
+            ':tab' => $tab,
+        ))->getQuery()->execute();
+
+
+        $value = $object->getIBAN();
+        if (0) {
+            $alert = new ClientAlert();
+            $alert->setClient($object->getClient());
+            $alert->setTabs($tab);
+            $alert->setIsBlocked(false);
+            $alert->setText('Manque coordonnées bancaires pour remboursement TVA');
+
+            $em->persist($alert);
+        }
     }
 
     /**

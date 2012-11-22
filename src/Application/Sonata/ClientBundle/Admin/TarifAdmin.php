@@ -87,10 +87,10 @@ class TarifAdmin extends Admin
         $em->getRepository('ApplicationSonataClientBundle:ClientAlert')
             ->createQueryBuilder('c')
             ->delete()
-            ->where('c.client_id = :client_id')
+            ->where('c.client = :client')
             ->andWhere('c.tabs = :tab')
             ->setParameters(array(
-            ':client_id' => $object->getClientId(),
+            ':client' => $object->getClient(),
             ':tab' => $tab,
         ))->getQuery()->execute();
 
@@ -101,7 +101,7 @@ class TarifAdmin extends Admin
 
         if (empty($value) && empty($value2)) {
             $alert = new ClientAlert();
-            $alert->setClientId($object->getClientId());
+            $alert->setClient($object->getClient());
             $alert->setTabs($tab);
             $alert->setIsBlocked(true);
             $alert->setText('Aucun tarif sélectionné');

@@ -23,12 +23,12 @@ class Coordonnees
 
 
     /**
-     * @var integer $client_id
+     * @var Client $client
      *
-     * @ORM\Column(name="client_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="Client", inversedBy="coordonnees")
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
      */
-
-    private $client_id;
+    private $client;
 
     /**
      * @var string $nom
@@ -343,29 +343,6 @@ class Coordonnees
         return $this->code_swift;
     }
 
-    /**
-     * Set client_id
-     *
-     * @param integer $clientId
-     * @return Coordonnees
-     */
-    public function setClientId($clientId)
-    {
-        $this->client_id = $clientId;
-
-        return $this;
-    }
-
-    /**
-     * Get client_id
-     *
-     * @return integer
-     */
-    public function getClientId()
-    {
-        return $this->client_id;
-    }
-
 
     /**
      * Set orders
@@ -411,5 +388,28 @@ class Coordonnees
     public function getPays()
     {
         return $this->pays;
+    }
+
+    /**
+     * Set client
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\Client $client
+     * @return Coordonnees
+     */
+    public function setClient(\Application\Sonata\ClientBundle\Entity\Client $client = null)
+    {
+        $this->client = $client;
+    
+        return $this;
+    }
+
+    /**
+     * Get client
+     *
+     * @return \Application\Sonata\ClientBundle\Entity\Client 
+     */
+    public function getClient()
+    {
+        return $this->client;
     }
 }

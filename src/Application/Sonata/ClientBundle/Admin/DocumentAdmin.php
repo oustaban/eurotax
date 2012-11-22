@@ -132,12 +132,10 @@ class DocumentAdmin extends Admin
 
     /**
      * @param ErrorElement $errorElement
-     * @param mixed $object
+     * @param \Application\Sonata\ClientBundle\Entity\Document $object
      */
     protected function _setupAlerts(ErrorElement $errorElement, $object)
     {
-        /* @var $object \Application\Sonata\ClientBundle\Entity\Document */
-
         /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
         $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
         /* @var $em \Doctrine\ORM\EntityManager */
@@ -149,17 +147,17 @@ class DocumentAdmin extends Admin
         $em->getRepository('ApplicationSonataClientBundle:ClientAlert')
             ->createQueryBuilder('c')
             ->delete()
-            ->where('c.client_id = :client_id')
+            ->where('c.client = :client')
             ->andWhere('c.tabs = :tab')
             ->setParameters(array(
-            ':client_id' => $object->getClientId(),
+            ':client' => $object->getClient(),
             ':tab' => $tab,
         ))->getQuery()->execute();
 
         $value = $object->getTypeDocument();
         if (!$value) {
             $alert = new ClientAlert();
-            $alert->setClientId($object->getClientId());
+            $alert->setClient($object->getClient());
             $alert->setTabs($tab);
             $alert->setIsBlocked(true);
             $alert->setText('Aucun document légal pour ce client');
@@ -184,8 +182,8 @@ class DocumentAdmin extends Admin
     }
 
     /**
-     * @param $em
-     * @param $object
+     * @param $em \Doctrine\ORM\EntityManager
+     * @param $object \Application\Sonata\ClientBundle\Entity\Document
      * @param $type_document
      * @return mixed
      */
@@ -194,10 +192,10 @@ class DocumentAdmin extends Admin
         $dql = $em->createQueryBuilder()
             ->select('count(d.id)')
             ->from('ApplicationSonataClientBundle:Document', 'd')
-            ->where('d.client_id = :client_id')
+            ->where('d.client = :client')
             ->andWhere('d.type_document != :type_document')
             ->setParameters(array(
-            ':client_id' => $object->getClientId(),
+            ':client' => $object->getClient(),
             ':type_document' => $em->getRepository('ApplicationSonataClientBundle:ListTypeDocuments')->findOneById($type_document),
         ));
 
@@ -209,8 +207,8 @@ class DocumentAdmin extends Admin
     }
 
     /**
-     * @param $em
-     * @param $object
+     * @param $em \Doctrine\ORM\EntityManager
+     * @param $object \Application\Sonata\ClientBundle\Entity\Document
      * @param $tab
      */
     protected function ifSaveManquePouvoirAlertMessage($em, $object, $tab)
@@ -222,7 +220,7 @@ class DocumentAdmin extends Admin
         if ($client->getNatureDuClient() && $client->getNatureDuClient()->getId() == ListNatureDuClients::sixE && !in_array($client->getPaysPostal()->getCode(), $this->getListCountryEU())) {
 
             $alert = new ClientAlert();
-            $alert->setClientId($object->getClientId());
+            $alert->setClient($object->getClient());
             $alert->setTabs($tab);
             $alert->setIsBlocked(true);
             $alert->setText('Manque Pouvoir');
@@ -232,8 +230,8 @@ class DocumentAdmin extends Admin
     }
 
     /**
-     * @param $em
-     * @param $object
+     * @param $em \Doctrine\ORM\EntityManager
+     * @param $object \Application\Sonata\ClientBundle\Entity\Document
      * @param $tab
      */
     protected function ifSaveManqueMandatAlertMessage($em, $object, $tab)
@@ -248,7 +246,7 @@ class DocumentAdmin extends Admin
             ($client->getNatureDuClient()->getId() == ListNatureDuClients::DEB || $client->getNatureDuClient()->getId() == ListNatureDuClients::DES)
         ) {
             $alert = new ClientAlert();
-            $alert->setClientId($object->getClientId());
+            $alert->setClient($object->getClient());
             $alert->setTabs($tab);
             $alert->setIsBlocked(true);
             $alert->setText('Manque Mandat');

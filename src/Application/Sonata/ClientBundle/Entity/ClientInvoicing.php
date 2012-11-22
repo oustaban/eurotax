@@ -14,12 +14,13 @@ class ClientInvoicing
 {
 
     /**
-     * @var integer $id
+     * @var Client $client
      *
-     * @ORM\Column(name="client_id", type="integer")
      * @ORM\Id
+     * @ORM\OneToOne(targetEntity="Client", inversedBy="invoicing")
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
      */
-    private $client_id;
+    private $client;
 
 
     /**
@@ -81,31 +82,9 @@ class ClientInvoicing
      */
     public function __toString()
     {
-        return $this->getClientId();
+        return $this->getClient()->getId();
     }
 
-    /**
-     * Set client_id
-     *
-     * @param integer $clientId
-     * @return ClientInvoicing
-     */
-    public function setClientId($clientId)
-    {
-        $this->client_id = $clientId;
-
-        return $this;
-    }
-
-    /**
-     * Get client_id
-     *
-     * @return integer
-     */
-    public function getClientId()
-    {
-        return $this->client_id;
-    }
 
     /**
      * Set min
@@ -266,5 +245,28 @@ class ClientInvoicing
     public function getLibelle()
     {
         return $this->libelle;
+    }
+
+    /**
+     * Set client
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\Client $client
+     * @return ClientInvoicing
+     */
+    public function setClient(\Application\Sonata\ClientBundle\Entity\Client $client = null)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * Get client
+     *
+     * @return \Application\Sonata\ClientBundle\Entity\Client
+     */
+    public function getClient()
+    {
+        return $this->client;
     }
 }

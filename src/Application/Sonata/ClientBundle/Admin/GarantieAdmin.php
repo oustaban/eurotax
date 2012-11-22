@@ -122,7 +122,7 @@ class GarantieAdmin extends Admin
                 $compte->setDate($object->getDateDemission());
                 $compte->setMontant($object->getMontant());
                 $compte->setOperation('Versement du dépôt de garantie');
-                $compte->setClientId($object->getClientId());
+                $compte->setClient($object->getClient());
                 $compte->setGarantie($object);
                 $compte->setStatut($status_object);
                 $em->persist($compte);
@@ -133,7 +133,7 @@ class GarantieAdmin extends Admin
                 $compte->setDate($object->getDateDemission());
                 $compte->setMontant(-$object->getMontant());
                 $compte->setOperation('Transfert dans compte de dépôt');
-                $compte->setClientId($object->getClientId());
+                $compte->setClient($object->getClient());
                 $compte->setGarantie($object);
                 $compte->setStatut($status_object);
                 $em->persist($compte);
@@ -143,7 +143,7 @@ class GarantieAdmin extends Admin
                 $compte_de_depot->setDate($object->getDateDemission());
                 $compte_de_depot->setMontant($object->getMontant());
                 $compte_de_depot->setOperation('Transfert du compte courant');
-                $compte_de_depot->setClientId($object->getClientId());
+                $compte_de_depot->setClient($object->getClient());
                 $compte_de_depot->setGarantie($object);
                 $compte_de_depot->setStatut($status_object);
                 $em->persist($compte_de_depot);
@@ -156,13 +156,11 @@ class GarantieAdmin extends Admin
     }
 
     /**
-     * @param mixed $object
+     * @param \Application\Sonata\ClientBundle\Entity\Garantie $object
      * @return mixed|void
      */
     public function preRemove($object)
     {
-        /** @var $object  \Application\Sonata\ClientBundle\Entity\Garantie */
-
         //2 => Dépôt de Garantie
         if ($object->getTypeGarantie() && $object->getTypeGarantie()->getId() == 2) {
             /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
@@ -216,6 +214,96 @@ class GarantieAdmin extends Admin
     {
         /* @var $object \Application\Sonata\ClientBundle\Entity\Garantie */
         parent::validate($errorElement, $object);
+
+        $this->_setupAlerts($errorElement, $object);
+    }
+
+
+    /**
+     * @param $errorElement
+     * @param $object \Application\Sonata\ClientBundle\Entity\Garantie
+     */
+    protected function _setupAlerts($errorElement, $object)
+    {
+        /** @var $doctrine  \Doctrine\Bundle\DoctrineBundle\Registry */
+        $doctrine = $this->getConfigurationPool()->getContainer()->get('doctrine');
+
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $doctrine->getManager();
+
+        /* @var $tab \Application\Sonata\ClientBundle\Entity\ListClientTabs */
+        $tab = $em->getRepository('ApplicationSonataClientBundle:ListClientTabs')->findOneByAlias('garanties');
+
+        $em->getRepository('ApplicationSonataClientBundle:ClientAlert')
+            ->createQueryBuilder('c')
+            ->delete()
+            ->where('c.client = :client')
+            ->andWhere('c.tabs = :tab')
+            ->setParameters(array(
+            ':client' => $object->getClient(),
+            ':tab' => $tab,
+        ))->getQuery()->execute();
+
+        /* @var $object \Application\Sonata\ClientBundle\Entity\Garantie */
+
+        if ($object->getTypeGarantie()) {
+
+            $value = $object->getTypeGarantie()->getId();
+            switch ($value) {
+
+                case 1:
+                    $value = $object->getNomDeLaBanquesId();
+
+                    if (0) {
+                        $alert = new ClientAlert();
+                        $alert->setClient($object->getClient());
+                        $alert->setTabs($tab);
+                        $alert->setIsBlocked(false);
+                        $alert->setText('Manque Garantie Bancaire');
+
+                        $em->persist($alert);
+                    }
+
+                    $value = $object->getDateDecheance();
+                    if (0) {
+
+                        $alert = new ClientAlert();
+                        $alert->setClient($object->getClient());
+                        $alert->setTabs($tab);
+                        $alert->setIsBlocked(false);
+                        $alert->setText("Date d'échéance Garantie Bancaire proche");
+
+                        $em->persist($alert);
+                    }
+                    break;
+
+                case 3:
+                    $value = $object->getNomDeLaBanquesId();
+
+                    if (0) {
+                        $alert = new ClientAlert();
+                        $alert->setClient($object->getClient());
+                        $alert->setTabs($tab);
+                        $alert->setIsBlocked(false);
+                        $alert->setText('Manque Garantie Parentale');
+
+                        $em->persist($alert);
+                    }
+
+                    $value = $object->getDateDecheance();
+                    if (0) {
+
+                        $alert = new ClientAlert();
+                        $alert->setClient($object->getClient());
+                        $alert->setTabs($tab);
+                        $alert->setIsBlocked(false);
+                        $alert->setText("Date d'échéance Garantie Parentale proche");
+
+                        $em->persist($alert);
+                    }
+                    break;
+            }
+        }
     }
 }
 

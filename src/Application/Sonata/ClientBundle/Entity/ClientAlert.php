@@ -23,11 +23,12 @@ class ClientAlert
 
 
     /**
-     * @var integer $client_id
+     * @var Client $client
      *
-     * @ORM\Column(name="client_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="Client", inversedBy="alertes")
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
      */
-    private $client_id;
+    private $client;
 
 
     /**
@@ -64,34 +65,11 @@ class ClientAlert
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set client_id
-     *
-     * @param integer $clientId
-     * @return ClientAlert
-     */
-    public function setClientId($clientId)
-    {
-        $this->client_id = $clientId;
-    
-        return $this;
-    }
-
-    /**
-     * Get client_id
-     *
-     * @return integer 
-     */
-    public function getClientId()
-    {
-        return $this->client_id;
     }
 
     /**
@@ -103,14 +81,14 @@ class ClientAlert
     public function setTabs($tabs)
     {
         $this->tabs = $tabs;
-    
+
         return $this;
     }
 
     /**
      * Get tabs
      *
-     * @return string 
+     * @return string
      */
     public function getTabs()
     {
@@ -126,14 +104,14 @@ class ClientAlert
     public function setText($text)
     {
         $this->text = $text;
-    
+
         return $this;
     }
 
     /**
      * Get text
      *
-     * @return string 
+     * @return string
      */
     public function getText()
     {
@@ -149,17 +127,40 @@ class ClientAlert
     public function setIsBlocked($isBlocked)
     {
         $this->is_blocked = $isBlocked;
-    
+
         return $this;
     }
 
     /**
      * Get is_blocked
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsBlocked()
     {
         return $this->is_blocked;
+    }
+
+    /**
+     * Set client
+     *
+     * @param \Application\Sonata\ClientBundle\Entity\Client $client
+     * @return ClientAlert
+     */
+    public function setClient(\Application\Sonata\ClientBundle\Entity\Client $client = null)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * Get client
+     *
+     * @return \Application\Sonata\ClientBundle\Entity\Client
+     */
+    public function getClient()
+    {
+        return $this->client;
     }
 }
