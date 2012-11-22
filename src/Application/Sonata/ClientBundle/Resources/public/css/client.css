@@ -12,6 +12,10 @@
     display: none;
 }
 
+.js-tarif .groups-client{
+    display: none;
+}
+
 .js-tarif .form-client-invoicing .control-group {
     width: 600px;
 }
@@ -24,46 +28,46 @@
     white-space: nowrap;
 }
 
-.js-tarif .form-client-invoicing .field-1 input,
-.js-tarif .form-client-invoicing .field-2 input {
+.js-tarif .form-client-invoicing .groups-min input,
+.js-tarif .form-client-invoicing .groups-max input {
     width: 100px;
 }
 
-.js-tarif .form-client-invoicing .field-2 label,
-.js-tarif .form-client-invoicing .field-4 label,
-.js-tarif .form-client-invoicing .field-5 label {
+.js-tarif .form-client-invoicing .groups-max label,
+.js-tarif .form-client-invoicing .groups-facturation_davance label,
+.js-tarif .form-client-invoicing .groups-paiement label {
     width: 80px;
 }
 
-.js-tarif .form-client-invoicing .field-2 .controls,
-.js-tarif .form-client-invoicing .field-4 .controls,
-.js-tarif .form-client-invoicing .field-5 .controls {
+.js-tarif .form-client-invoicing .groups-max .controls,
+.js-tarif .form-client-invoicing .groups-facturation_davance .controls,
+.js-tarif .form-client-invoicing .groups-paiement .controls {
     margin-left: 100px;
 }
 
-.js-tarif .form-client-invoicing .field-3 input {
+.js-tarif .form-client-invoicing .groups-facturation_davance_value input {
     width: 87px;
 }
 
-.js-tarif .form-client-invoicing .field-2 {
+.js-tarif .form-client-invoicing .groups-max {
     position: absolute;
     left: 274px;
     top: 129px;
 }
 
-.js-tarif .form-client-invoicing .field-4 {
+.js-tarif .form-client-invoicing .groups-facturation_davance {
     position: absolute;
     left: 274px;
     top: 180px;
 }
 
-.js-tarif .form-client-invoicing .field-5 {
+.js-tarif .form-client-invoicing .groups-paiement {
     position: absolute;
     left: 480px;
     top: 180px;
 }
 
-.js-tarif .form-client-invoicing .field-6 {
+.js-tarif .form-client-invoicing .groups-libelle {
     position: absolute;
     left: 400px;
     top: 230px;
@@ -77,11 +81,11 @@
     width: 220px;
 }
 
-.js-tarif .form-client-invoicing .field-0 .span5 {
+.js-tarif .form-client-invoicing .groups-facturation_du_client .span5 {
     width: 100px;
 }
 
-.js-tarif .form-client-invoicing .field-4 .span5 {
+.js-tarif .form-client-invoicing .groups-facturation_davance .span5 {
     width: 100px;
 }
 

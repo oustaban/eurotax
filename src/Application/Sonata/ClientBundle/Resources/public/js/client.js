@@ -167,7 +167,8 @@ jQuery(document).ready(function ($) {
     if ($('.js-tarif').size()) {
 
         $('.form-horizontal div.control-group').each(function (i) {
-            $(this).addClass('field-' + i);
+            var name = $(this).children().children().attr('name').split('[').pop();
+            $(this).addClass('groups-' + name.substr(0, name.length - 1));
         });
 
         $('.js-tarif .form-client-invoicing .field-4 label').remove();
