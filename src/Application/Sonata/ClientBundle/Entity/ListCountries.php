@@ -25,7 +25,7 @@ class ListCountries
     /**
      * @var string $sepa
      *
-     * @ORM\Column(name="sepa", type="string", length=3)
+     * @ORM\Column(name="sepa", type="string", length=3, nullable=true)
      */
     private $sepa;
 
