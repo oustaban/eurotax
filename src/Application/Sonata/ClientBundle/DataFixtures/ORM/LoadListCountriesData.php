@@ -309,6 +309,46 @@ class LoadListCountriesData extends AbstractLoadListData
     );
 
     /**
+     * @var array
+     */
+    protected $_SEPA = array(
+        //EU Zone
+        'DE',
+        'AT',
+        'BE',
+        'BG',
+        'CY',
+        'DK',
+        'ES',
+        'EE',
+        'FI',
+        'FR',
+        'GR',
+        'HU',
+        'IE',
+        'IT',
+        'LV',
+        'LT',
+        'LU',
+        'MT',
+        'MC',
+        'NL',
+        'PL',
+        'PT',
+        'CZ',
+        'RO',
+        'GB',
+        'SK',
+        'SI',
+        'SE',
+        //non EU Zone
+        'IS',
+        'LI',
+        'NO',
+        'CH',
+    );
+
+    /**
      * @param $manager
      */
     public function saveFixtures($manager)
@@ -327,7 +367,7 @@ class LoadListCountriesData extends AbstractLoadListData
 
                     $entity->setCode($this->upper($code));
                     $entity->setName($name);
-                    $entity->setSepa(rand(1, 255) * 1000);
+                    $entity->setSepa(isset($this->_SEPA[$entity->getCode()]) ? 1 : 0);
                     $entity->setEU(isset($this->_EU[$entity->getCode()]) ? 1 : 0);
 
                     $manager->persist($entity);

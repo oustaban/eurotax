@@ -29,7 +29,7 @@ symfony_ajax.get_uniqid = function () {
     var client_id_name = $('.client_id').attr('name');
 
     if (client_id_name) {
-        _uniqid = client_id_name.replace('[client_id]', '');
+        _uniqid = client_id_name.replace('[client]', '');
     }
     return _uniqid;
 }

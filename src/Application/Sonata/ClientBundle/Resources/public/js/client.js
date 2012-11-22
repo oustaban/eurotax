@@ -226,7 +226,8 @@ jQuery(document).ready(function ($) {
         symfony_ajax.behaviors.coordonnees = {
             attach:function (context) {
                 var _uniqid = symfony_ajax.get_uniqid();
-                $('#' + _uniqid + '_location_pays_id').change(function () {
+                console.log('#' + _uniqid + '_location_pays');
+                $('#' + _uniqid + '_location_pays').change(function () {
                     $('#' + _uniqid + '_SEPA').val(Sonata.country_sepa[$(this).val()] ? Sonata.country_sepa[$(this).val()] : $(this).val());
                 }).trigger('change');
             }
