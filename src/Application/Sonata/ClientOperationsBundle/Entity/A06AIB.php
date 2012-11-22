@@ -167,14 +167,6 @@ class A06AIB extends AbstractBuyEntity
 
 
     /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getTiers();
-    }
-
-    /**
      * Set montant_HT_en_devise
      *
      * @param float $montantHTEnDevise

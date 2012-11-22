@@ -83,9 +83,9 @@ abstract class AbstractSellEntity extends AbstractBaseEntity
     /**
      * @return string
      */
-    public function __toString(){
-
-        return $this->getTiers();
+    public function __toString()
+    {
+        return (string)$this->getTiers();
     }
 
 
