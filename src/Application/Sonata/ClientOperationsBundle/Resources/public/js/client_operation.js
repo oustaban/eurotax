@@ -33,9 +33,13 @@ jQuery(document).ready(function ($) {
 
             var montant_TVA_francaise = parseFloat(parseFloat(montant_HT_en_devise) * (parseFloat(taux_de_TVA) / 100));
 
-            var montant_TTC = parseFloat(parseFloat(montant_HT_en_devise) + montant_TVA_francaise);
+            //If method validate from file Validate/ErrorElements.php function round $precision = 2, $mode = PHP_ROUND_HALF_DOWN
 
-            montant_TVA_francaise = montant_TVA_francaise ? montant_TVA_francaise.toFixed(2).replace('.', ',') : '';
+            montant_TVA_francaise = montant_TVA_francaise ? montant_TVA_francaise.toFixed(2) : '';
+
+            var montant_TTC = parseFloat(parseFloat(montant_HT_en_devise) + parseFloat(montant_TVA_francaise));
+
+            montant_TVA_francaise = montant_TVA_francaise ? montant_TVA_francaise.replace('.', ',') : '';
             montant_TTC = montant_TTC ? montant_TTC.toFixed(2).replace('.', ',') : '';
 
             $('#' + _uniqid + '_montant_TVA_francaise').val(montant_TVA_francaise);
