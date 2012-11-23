@@ -147,12 +147,11 @@ class ErrorElements
     /**
      * @param $value
      * @param int $precision
-     * @param int $mode
      * @return float
      */
-    protected function round($value, $precision = 2, $mode = PHP_ROUND_HALF_DOWN)
+    protected function round($value, $precision = 2)
     {
-        return round($value, $precision, $mode);
+        return round($value, $precision);
     }
 
     /**

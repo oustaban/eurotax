@@ -18,15 +18,24 @@ jQuery(document).ready(function ($) {
             var _uniqid = symfony_ajax.get_uniqid();
             if (_uniqid) {
                 $('#' + _uniqid + '_montant_HT_en_devise, #' + _uniqid + '_taux_de_TVA', context)
+                    //state procurement
+                    //.keypress(this.number_limit)
                     .keyup(this.calc)
                     .trigger('change');
             }
         },
-        calc:function (env) {
+        number_limit:function (e) {
+            var chr = String.fromCharCode(e.charCode == undefined ? e.keyCode : e.charCode);
+            return (chr < ' ' || (chr >= '0' && chr <= '9') || chr == ',' || chr == '.');
+        },
+        calc:function (e) {
             var _uniqid = symfony_ajax.get_uniqid();
 
             var $montant_HT_en_devise = $('#' + _uniqid + '_montant_HT_en_devise');
             var $taux_de_TVA = $('#' + _uniqid + '_taux_de_TVA');
+
+            substr_replace($montant_HT_en_devise, 2);
+            substr_replace($taux_de_TVA, 3);
 
             var montant_HT_en_devise = $montant_HT_en_devise.val().replace(',', '.').replace(/\s+/, '');
             var taux_de_TVA = $taux_de_TVA.val().replace(',', '.').replace(/\s+/, '');
@@ -34,7 +43,6 @@ jQuery(document).ready(function ($) {
             var montant_TVA_francaise = parseFloat(parseFloat(montant_HT_en_devise) * (parseFloat(taux_de_TVA) / 100));
 
             //If method validate from file Validate/ErrorElements.php function round $precision = 2, $mode = PHP_ROUND_HALF_DOWN
-
             montant_TVA_francaise = montant_TVA_francaise ? montant_TVA_francaise.toFixed(2) : '';
 
             var montant_TTC = parseFloat(parseFloat(montant_HT_en_devise) + parseFloat(montant_TVA_francaise));
@@ -49,6 +57,15 @@ jQuery(document).ready(function ($) {
 
 });
 
+
+function substr_replace($object, limit) {
+
+    var result = $object.val().split(',');
+    var result2 = $object.val().split('.');
+    if ((result[1] && result[1].length > limit) || result2[1] && result2[1].length > limit) {
+        $object.val($object.val().substr(0, $object.val().length - 1));
+    }
+}
 
 function init_clientoperations_buttons(o) {
 
