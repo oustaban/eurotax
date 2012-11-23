@@ -108,7 +108,7 @@ class AbstractTabsController extends Controller
                 'commentaires',
                 'n_ligne',
                 'nomenclature',
-                'pays_id_destination',
+                'pays_destination',
                 'valeur_fiscale',
                 'regime',
                 'valeur_statistique',
@@ -118,7 +118,7 @@ class AbstractTabsController extends Controller
                 'conditions_livraison',
                 'mode_transport',
                 'departement',
-                'pays_id_origine',
+                'pays_origine',
                 'CEE',
             )
         ),
@@ -130,7 +130,7 @@ class AbstractTabsController extends Controller
             'fields' => array(
                 'n_ligne',
                 'nomenclature',
-                'pays_id_destination',
+                'pays_destination',
                 'valeur_fiscale',
                 'regime',
                 'valeur_statistique',
@@ -140,7 +140,7 @@ class AbstractTabsController extends Controller
                 'conditions_livraison',
                 'mode_transport',
                 'departement',
-                'pays_id_origine',
+                'pays_origine',
                 'CEE',
             )
         ),
@@ -256,7 +256,7 @@ class AbstractTabsController extends Controller
                 'commentaires',
                 'n_ligne',
                 'nomenclature',
-                'pays_id_destination',
+                'pays_destination',
                 'valeur_fiscale',
                 'regime',
                 'valeur_statistique',
@@ -266,7 +266,7 @@ class AbstractTabsController extends Controller
                 'conditions_livraison',
                 'mode_transport',
                 'departement',
-                'pays_id_origine',
+                'pays_origine',
             )
         ),
 
@@ -277,7 +277,7 @@ class AbstractTabsController extends Controller
             'fields' => array(
                 'n_ligne',
                 'nomenclature',
-                'pays_id_destination',
+                'pays_destination',
                 'valeur_fiscale',
                 'regime',
                 'valeur_statistique',
@@ -287,7 +287,7 @@ class AbstractTabsController extends Controller
                 'conditions_livraison',
                 'mode_transport',
                 'departement',
-                'pays_id_origine',
+                'pays_origine',
                 'CEE',
             )
         ),
@@ -741,10 +741,12 @@ class AbstractTabsController extends Controller
                             }
                         } catch (\Exception $e) {
 
-                            $this->setCountImports($class, 'errors', $this->getErrorsAsString($class, $form, $key + 2, 0, 0, $e->getMessage()));
+                            $message = $this->getErrorsAsString($class, $form, $key + 2, 0, 0, $e->getMessage());
+                            $this->setCountImports($class, 'errors', $message);
                         }
                     } else {
-                        $this->setCountImports($class, 'errors', $this->getErrorsAsString($class, $form, $key + 2));
+                        $message = $this->getErrorsAsString($class, $form, $key + 2);
+                        $this->setCountImports($class, 'errors', $message);
                     }
                     unset($formData, $form, $form_builder, $object);
                 }
@@ -911,55 +913,53 @@ class AbstractTabsController extends Controller
      * @param $form
      * @param $line
      * @param int $level
-     * @param string $message
-     * @param int $key
+     * @param string $field
+     * @param null $message
      * @return string
      */
-    public function getErrorsAsString($class, $form, $line, $level = 0, $key = 0, $message = '')
+    public function getErrorsAsString($class, $form, $line, $level = 0, $field = '', $message = null)
     {
-        $row = $this->_config_excel[$this->admin->trans('ApplicationSonataClientOperationsBundle.form.' . $class . '.title')]['fields'];
+        $fields = array_flip($this->_config_excel[$this->admin->trans('ApplicationSonataClientOperationsBundle.form.' . $class . '.title')]['fields']);
 
-        $errors = '';
+        $errors = array();
 
-        $clone = array();
-        foreach ($form->getErrors() as $keys => $error) {
+        if ($form->getErrors()) {
 
-            if (empty($clone) || (isset($clone[$keys - 1]) && $clone[$keys - 1] != $error->getMessage())) {
+            foreach ($form->getErrors() as $keys => $error) {
+                /** @var $error \Symfony\Component\Form\FormError */
 
                 $repeat = str_repeat(' ', $level);
-                $field = isset($row[$key]) ? '(' . (($row[$key] ? chr($row[$key] + 65) : '') . ':' . $line) . ') ' : '';
+                $label = isset($fields[$field]) ? '(' . (($fields[$field] ? chr($fields[$field] + 65) : '') . ':' . $line) . ') ' : '';
 
                 $data = $form->getViewData();
 
                 if (is_array($data)) {
-                    $data = ''; //print_r($data, 1);
+                    $data = '';
                 }
 
-                if ($data) {
-                    $errors .= $repeat . 'VALUE : ' . $field . ($data ? : 'empty') . "\n";
+                if ($error->getMessageParameters()) {
+                    $data = implode($error->getMessageParameters());
                 }
 
-                $errors .= $repeat . 'ERROR : ' . $error->getMessage() . "\n\n";
-
-                $clone[] = $error->getMessage();
+                $errors[] = $repeat . 'VALUE : ' . $label . ($data ? : 'empty') . "\n";
+                $errors[] = $repeat . 'ERROR : ' . $error->getMessage() . "\n\n";
             }
         }
 
-        foreach ($form->getChildren() as $key => $child) {
-            if ($err = $this->getErrorsAsString($class, $child, $line, ($level + 4), $key)) {
-                $field = $this->admin->trans('ApplicationSonataClientOperationsBundle.form.' . $class . '.' . $key);
-
-                $errors .= $field . "\n";
-                $errors .= $err;
+        foreach ($form->getChildren() as $field => $child) {
+            if ($err = $this->getErrorsAsString($class, $child, $line, ($level + 4), $field, null)) {
+                $errors[] = $this->admin->trans('ApplicationSonataClientOperationsBundle.form.' . $class . '.' . $field) . "\n";
+                $errors[] = $err;
             }
         }
 
         if (!empty($message)) {
-            $errors .= $message;
+            $errors[] = $message;
         }
 
-        return $errors;
+        return implode($errors);
     }
+
 
     /**
      * @return array

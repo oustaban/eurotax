@@ -81,6 +81,7 @@ class DEBExpedAdmin extends Admin
         parent::validate($errorElement, $object);
 
         $error = new ErrorElements($errorElement, $object);
-        $error->validateNomenclature();
+        $error->validateNomenclature()
+            ->validateDatePiece();
     }
 }

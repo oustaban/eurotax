@@ -355,11 +355,7 @@ abstract class AbstractTabsAdmin extends Admin
      */
     protected function getNumberFormat($value, $precision = 2)
     {
-        if ($value) {
-            $value = number_format((double)$value, $precision, ',', '');
-        }
-
-        return $value;
+        return (double)$value;
     }
 
     /**

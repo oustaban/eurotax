@@ -27,16 +27,6 @@ class ErrorElements
     }
 
     /**
-     * @param $value
-     * @param int $precision
-     * @return float
-     */
-    protected function getNumberRound($value, $precision = 2)
-    {
-        return round($value, $precision);
-    }
-
-    /**
      * @return ErrorElements
      */
     public function validateTauxDeChange()
@@ -89,9 +79,11 @@ class ErrorElements
      */
     public function validateHT()
     {
-        $value = $this->_object->getHT();
+        /** @var $_object \Application\Sonata\ClientOperationsBundle\Entity\A02TVA|\Application\Sonata\ClientOperationsBundle\Entity\A04283I|\Application\Sonata\ClientOperationsBundle\Entity\A06AIB|\Application\Sonata\ClientOperationsBundle\Entity\A10CAF|\Application\Sonata\ClientOperationsBundle\Entity\AbstractSellEntity */
+        $_object = $this->_object;
+        $value = $_object->getHT();
         if ($value) {
-            if ($this->_object->getTauxDeChange() && !($value == $this->getNumberRound($this->_object->getMontantHTEnDevise() / $this->_object->getTauxDeChange()))) {
+            if ($_object->getTauxDeChange() && round((float)$value - $_object->getMontantHTEnDevise() / $_object->getTauxDeChange(), 9)) {
                 $this->_errorElement->with('HT')->addViolation('Wrong "HT" (must be "Montant HT en devise" / "Taux de change")')->end();
             }
         }
@@ -106,7 +98,7 @@ class ErrorElements
         $value = $this->_object->getMontantTVAFrancaise();
         if ($value) {
 
-            if (!($value == $this->getNumberRound($this->_object->getMontantHTEnDevise() * $this->_object->getTauxDeTVA()))) {
+            if (!($value == $this->_object->getMontantHTEnDevise() * $this->_object->getTauxDeTVA())) {
                 $this->_errorElement->with('montant_TVA_francaise')->addViolation('Wrong "Montant TVA française" (must be "Montant HT en devise" * "Taux de TVA / 100")')->end();
             }
         }
@@ -121,7 +113,7 @@ class ErrorElements
     {
         $value = $this->_object->getMontantTTC();
         if ($value) {
-            if (!($value == $this->getNumberRound($this->_object->getMontantHTEnDevise() + $this->_object->getMontantTVAFrancaise()))) {
+            if (!($value == $this->_object->getMontantHTEnDevise() + $this->_object->getMontantTVAFrancaise())) {
                 $this->_errorElement->with('montant_TTC')->addViolation('Wrong "Montant TTC" (must be "Montant HT en devise" + "Montant TVA française")')->end();
             }
         }
@@ -322,6 +314,19 @@ class ErrorElements
         }
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function validateDatePiece(){
+
+        $value = $this->_object->getDatePiece();
+        if (!$value) {
+            $this->_errorElement->with('date_piece')->addViolation('"Date pièce" should not be null')->end();
+        }
+
+        return true;
     }
 
     /**
