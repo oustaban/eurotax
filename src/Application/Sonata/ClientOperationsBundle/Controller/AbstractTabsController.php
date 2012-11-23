@@ -747,12 +747,18 @@ class AbstractTabsController extends Controller
                     } else {
                         $message = $this->getErrorsAsString($class, $form, $key + 2);
                         $this->setCountImports($class, 'errors', $message);
+                        echo '<pre>';
+                        echo $class;
+                        echo "<hr>";
+                        echo $message;
+                        echo '</pre>';
                     }
                     unset($formData, $form, $form_builder, $object);
                 }
                 unset($data, $admin);
             }
         }
+        exit;
     }
 
 
@@ -925,24 +931,31 @@ class AbstractTabsController extends Controller
 
         if ($form->getErrors()) {
 
+            $one_view = array();
             foreach ($form->getErrors() as $keys => $error) {
                 /** @var $error \Symfony\Component\Form\FormError */
 
-                $repeat = str_repeat(' ', $level);
-                $label = isset($fields[$field]) ? '(' . (($fields[$field] ? chr($fields[$field] + 65) : '') . ':' . $line) . ') ' : '';
+                if (!isset($one_view[$field][$line])) {
 
-                $data = $form->getViewData();
+                    $one_view[$field][$line] = true;
 
-                if (is_array($data)) {
-                    $data = '';
+                    $repeat = str_repeat(' ', $level);
+                    $label = isset($fields[$field]) ? '(' . (($fields[$field] ? chr($fields[$field] + 65) : '') . ':' . $line) . ') ' : '';
+
+                    $data = $form->getViewData();
+
+                    if (is_array($data)) {
+                        $data = '';
+                    }
+
+                    if ($error->getMessageParameters()) {
+                        $data = implode($error->getMessageParameters());
+                    }
+
+                    $errors[] = $repeat . 'VALUE : ' . $label . ($data ? : 'empty') . "\n";
+                    $errors[] = $repeat . 'ERROR : ' . $error->getMessage() . "\n\n";
+
                 }
-
-                if ($error->getMessageParameters()) {
-                    $data = implode($error->getMessageParameters());
-                }
-
-                $errors[] = $repeat . 'VALUE : ' . $label . ($data ? : 'empty') . "\n";
-                $errors[] = $repeat . 'ERROR : ' . $error->getMessage() . "\n\n";
             }
         }
 
