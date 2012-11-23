@@ -334,20 +334,6 @@ class ErrorElements
     }
 
     /**
-     * @return bool
-     */
-    public function validateDatePiece()
-    {
-
-        $value = $this->_object->getDatePiece();
-        if (!$value) {
-            $this->_errorElement->with('date_piece')->addViolation('"Date pièce" should not be null')->end();
-        }
-
-        return true;
-    }
-
-    /**
      * @param bool $value
      * @return ErrorElements
      */

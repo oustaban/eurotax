@@ -87,6 +87,5 @@ class DEBIntroAdmin extends Admin
         if ($this->getValidateImport()) {
             $error->validateNLigne($this->getIndexImport());
         }
-        $error->validateDatePiece();
     }
 }
