@@ -934,7 +934,7 @@ class AbstractTabsController extends Controller
                     $one_view[$field][$line] = true;
 
                     $repeat = str_repeat(' ', $level);
-                    $label = isset($fields[$field]) ? '(' . (($fields[$field] ? chr($fields[$field] + 65) : '') . ':' . $line) . ') ' : '';
+                    $label = isset($fields[$field]) ? '(' . (($fields[$field] ? chr($fields[$field] + 65) : 'A') . ':' . $line) . ') ' : '';
 
                     $data = $form->getViewData();
 
