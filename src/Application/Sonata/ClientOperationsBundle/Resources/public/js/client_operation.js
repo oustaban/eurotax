@@ -34,6 +34,7 @@ jQuery(document).ready(function ($) {
             var $montant_HT_en_devise = $('#' + _uniqid + '_montant_HT_en_devise');
             var $taux_de_TVA = $('#' + _uniqid + '_taux_de_TVA');
 
+            //TODO limit
             substr_replace($montant_HT_en_devise, 2);
             substr_replace($taux_de_TVA, 3);
 
