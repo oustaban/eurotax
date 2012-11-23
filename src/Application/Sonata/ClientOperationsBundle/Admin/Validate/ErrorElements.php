@@ -91,7 +91,7 @@ class ErrorElements
                     $this->_errorElement->with('HT')->addViolation('Wrong "HT" (must be "Montant HT en devise" / "Taux de change")')->end();
                 }
             } //Add & Edit ajax form
-            else if ($_object->getTauxDeChange() && round($value, 2) - round($_object->getMontantHTEnDevise() / $_object->getTauxDeChange(), 2)) {
+            else if ($_object->getTauxDeChange() && $value - round($_object->getMontantHTEnDevise() / $_object->getTauxDeChange(), 2)) {
 
                 $this->_errorElement->with('HT')->addViolation('Wrong "HT" (must be "Montant HT en devise" / "Taux de change")')->end();
             }
@@ -113,7 +113,7 @@ class ErrorElements
                     $this->_errorElement->with('montant_TVA_francaise')->addViolation('Wrong "Montant TVA française" (must be "Montant HT en devise" * "Taux de TVA / 100")')->end();
                 }
             } //Add & Edit ajax form
-            elseif (!(round($value, 2) == round(($this->_object->getMontantHTEnDevise() * $this->_object->getTauxDeTVA()), 2))) {
+            elseif (!($value == round(($this->_object->getMontantHTEnDevise() * $this->_object->getTauxDeTVA()), 2))) {
 
                 $this->_errorElement->with('montant_TVA_francaise')->addViolation('Wrong "Montant TVA française" (must be "Montant HT en devise" * "Taux de TVA / 100")')->end();
             }
@@ -136,7 +136,7 @@ class ErrorElements
                 if (!($value == $this->_object->getMontantHTEnDevise() + $this->_object->getMontantTVAFrancaise())) {
                     $this->_errorElement->with('montant_TTC')->addViolation('Wrong "Montant TTC" (must be "Montant HT en devise" + "Montant TVA française")')->end();
                 }
-            } elseif (!(round($value, 2) == round(($this->_object->getMontantHTEnDevise() + $this->_object->getMontantTVAFrancaise()), 2))) {
+            } elseif (!($value == round(($this->_object->getMontantHTEnDevise() + $this->_object->getMontantTVAFrancaise()), 2))) {
                 $this->_errorElement->with('montant_TTC')->addViolation('Wrong "Montant TTC" (must be "Montant HT en devise" + "Montant TVA française")')->end();
             }
         }
