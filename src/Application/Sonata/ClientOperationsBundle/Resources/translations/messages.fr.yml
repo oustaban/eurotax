@@ -105,6 +105,7 @@ ApplicationSonataClientOperationsBundle:
       n_ligne: N° Ligne
       nomenclature: Nomenclature
       pays_id_destination: Pays Destination
+      pays_destination: Pays Destination
       valeur_fiscale: Valeur Fiscale
       valeur_statistique: Valeur Statistique
       masse_mette: Masse Nette
@@ -114,6 +115,7 @@ ApplicationSonataClientOperationsBundle:
       mode_transport: Mode Transport
       departement: Département
       pays_id_origine: Pays d'Origine
+      pays_origine: Pays d'Origine
       CEE: No TVA Acquéreur C.E.E.
 
     DEBExped:
@@ -122,6 +124,7 @@ ApplicationSonataClientOperationsBundle:
       n_ligne: N° Ligne
       nomenclature: Nomenclature de Produit
       pays_id_destination: Pays Dest. Prov.
+      pays_destination: Pays Dest. Prov.
       valeur_fiscale: Valeur Fiscale
       regime: Régime
       valeur_statistique: Valeur Statistique
@@ -132,6 +135,7 @@ ApplicationSonataClientOperationsBundle:
       mode_transport: Mode Transport
       departement: Département
       pays_id_origine: Pays d'Origine
+      pays_origine: Pays d'Origine
       CEE: No d'Identification de l'acquereur C.E.E.
 
     V07EX:
@@ -229,6 +233,7 @@ ApplicationSonataClientOperationsBundle:
       n_ligne: N° Ligne
       nomenclature: Nomenclature
       pays_id_destination: Pays Destination
+      pays_destination: Pays Destination
       valeur_fiscale: Valeur Fiscale
       valeur_statistique: Valeur Statistique
       masse_mette: Masse Nette
@@ -238,6 +243,7 @@ ApplicationSonataClientOperationsBundle:
       mode_transport: Mode Transport
       departement: Département
       pays_id_origine: Pays d'Origine
+      pays_origine: Pays d'Origine
       taux_de_TVA: Taux de TVA
       TVA: TVA
 
@@ -247,6 +253,7 @@ ApplicationSonataClientOperationsBundle:
       n_ligne: N° Ligne
       nomenclature: Nomenclature de Produit
       pays_id_destination: Pays Dest. Prov.
+      pays_destination: Pays Dest. Prov.
       valeur_fiscale: Valeur Fiscale
       regime: Régime
       valeur_statistique: Valeur Statistique
@@ -257,6 +264,7 @@ ApplicationSonataClientOperationsBundle:
       mode_transport: Mode Transport
       departement: Département
       pays_id_origine: Pays d'Origine
+      pays_origine: Pays d'Origine
       CEE: No d'Identification de l'acquereur C.E.E.
 
     A08IM:
@@ -335,6 +343,7 @@ ApplicationSonataClientOperationsBundle:
       n_ligne: N° Ligne
       nomenclature: Nomenclature
       pays_id_destination: Pays Destination
+      pays_destination: Pays Destination
       valeur_fiscale: Valeur Fiscale
       valeur_statistique: Valeur Statistique
       masse_mette: Masse Nette
@@ -344,6 +353,7 @@ ApplicationSonataClientOperationsBundle:
       mode_transport: Mode Transport
       departement: Département
       pays_id_origine: Pays d'Origine
+      pays_origine: Pays d'Origine
       CEE: No TVA Acquéreur C.E.E.
 
     DEBExped:
@@ -352,6 +362,7 @@ ApplicationSonataClientOperationsBundle:
       n_ligne: N° Ligne
       nomenclature: Nomenclature de Produit
       pays_id_destination: Pays Dest. Prov.
+      pays_destination: Pays Dest. Prov.
       valeur_fiscale: Valeur Fiscale
       regime: Régime
       valeur_statistique: Valeur Statistique
@@ -362,6 +373,7 @@ ApplicationSonataClientOperationsBundle:
       mode_transport: Mode Transport
       departement: Département
       pays_id_origine: Pays d'Origine
+      pays_origine: Pays d'Origine
       CEE: No d'Identification de l'acquereur C.E.E.
 
     V07EX:
@@ -459,6 +471,7 @@ ApplicationSonataClientOperationsBundle:
       n_ligne: N° Ligne
       nomenclature: Nomenclature
       pays_id_destination: Pays Destination
+      pays_destination: Pays Destination
       valeur_fiscale: Valeur Fiscale
       valeur_statistique: Valeur Statistique
       masse_mette: Masse Nette
@@ -468,6 +481,7 @@ ApplicationSonataClientOperationsBundle:
       mode_transport: Mode Transport
       departement: Département
       pays_id_origine: Pays d'Origine
+      pays_origine: Pays d'Origine
       taux_de_TVA: Taux de TVA
       TVA: TVA
 
@@ -477,6 +491,7 @@ ApplicationSonataClientOperationsBundle:
       n_ligne: N° Ligne
       nomenclature: Nomenclature de Produit
       pays_id_destination: Pays Dest. Prov.
+      pays_destination: Pays Dest. Prov.
       valeur_fiscale: Valeur Fiscale
       regime: Régime
       valeur_statistique: Valeur Statistique
@@ -487,6 +502,7 @@ ApplicationSonataClientOperationsBundle:
       mode_transport: Mode Transport
       departement: Département
       pays_id_origine: Pays d'Origine
+      pays_origine: Pays d'Origine
       CEE: No d'Identification de l'acquereur C.E.E.
 
     A08IM:
