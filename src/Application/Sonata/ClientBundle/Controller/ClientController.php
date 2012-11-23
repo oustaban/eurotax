@@ -30,10 +30,7 @@ class ClientController extends Controller
      */
     public function redirectTo($object)
     {
-        if ($this->get('request')->get('btn_create_and_edit')) {
-            $this->get('request')->query->set('btn_update_and_list', $this->get('request')->get('btn_create_and_edit'));
-        }
-        elseif ($this->get('request')->get('btn_update_and_list')) {
+        if ($this->get('request')->get('btn_update_and_list')) {
             return $this->render(':redirects:history.html.twig', array('depth' => 2, 'default' => $this->admin->generateUrl('list')));
         }
 
