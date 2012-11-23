@@ -229,7 +229,7 @@ jQuery(document).ready(function ($) {
                 var _uniqid = symfony_ajax.get_uniqid();
                 console.log('#' + _uniqid + '_location_pays');
                 $('#' + _uniqid + '_location_pays').change(function () {
-                    $('#' + _uniqid + '_SEPA').val(Sonata.country_sepa[$(this).val()] ? Sonata.country_sepa[$(this).val()] : $(this).val());
+                    $('#' + _uniqid + '_SEPA').val(Sonata.country_sepa[$(this).val()] ? Sonata.country_sepa[$(this).val()] : 0);
                 }).trigger('change');
             }
         }

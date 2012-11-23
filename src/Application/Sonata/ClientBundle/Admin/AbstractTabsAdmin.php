@@ -212,8 +212,11 @@ abstract class AbstractTabsAdmin extends Admin
         $rows = $em->getRepository('ApplicationSonataClientBundle:ListCountries')->findAll();
         $_rows = array();
         foreach ($rows as $row) {
-            /** @var $row \Application\Sonata\ClientBundle\Entity\ListCountries() */
-            $_rows[$row->getCode()] = $row->getSepa();
+            /** @var $row \Application\Sonata\ClientBundle\Entity\ListCountries */
+            $sepa = $row->getSepa();
+            if ($sepa){
+                $_rows[$row->getCode()] = $sepa;
+            }
         }
 
         return $_rows;
