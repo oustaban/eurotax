@@ -82,7 +82,8 @@ class A08IMAdmin extends Admin
         parent::validate($errorElement, $object);
 
         $error = new ErrorElements($errorElement, $object);
-        $error->validateMois();
+        $error->setValidateImport($this->getValidateImport())
+            ->validateMois();
 
         if ($this->getValidateImport()) {
             list($month, $year) = $this->getQueryMonth($this->query_month);

@@ -87,7 +87,7 @@ class V03283IAdmin extends Admin
         parent::validate($errorElement, $object);
 
         $error = new ErrorElements($errorElement, $object);
-        $error
+        $error->setValidateImport($this->getValidateImport())
             ->validateNoTVATiers()
             ->validateDevise()
             ->validateHT()

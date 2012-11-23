@@ -88,7 +88,7 @@ class V11INTAdmin extends Admin
         parent::validate($errorElement, $object);
 
         $error = new ErrorElements($errorElement, $object);
-        $error
+        $error->setValidateImport($this->getValidateImport())
             ->validateDevise()
             ->validateHT()
             ->validateMois();

@@ -747,6 +747,10 @@ class AbstractTabsController extends Controller
                     } else {
                         $message = $this->getErrorsAsString($class, $form, $key + 2);
                         $this->setCountImports($class, 'errors', $message);
+
+                        echo '<pre>';
+                        echo $message;
+                        exit;
                     }
                     unset($formData, $form, $form_builder, $object);
                 }
@@ -939,7 +943,7 @@ class AbstractTabsController extends Controller
                     $data = $form->getViewData();
 
                     if (is_array($data)) {
-                        $data = '';
+                        $data = implode('-', $data);
                     }
 
                     if ($error->getMessageParameters()) {

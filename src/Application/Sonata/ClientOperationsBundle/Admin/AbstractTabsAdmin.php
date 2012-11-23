@@ -386,15 +386,18 @@ abstract class AbstractTabsAdmin extends Admin
      */
     public function dateFormValue($value)
     {
-        $t = strtotime($value);
+        if ($value) {
+            $t = strtotime($value);
 
-        if (!$t) {
-            $t = \PHPExcel_Shared_Date::ExcelToPHP($value);
+            if (!$t) {
+                $t = \PHPExcel_Shared_Date::ExcelToPHP($value);
+            }
+
+            $value = date($this->date_format_php, $t);
+
+            return $value;
         }
-
-        $value = date($this->date_format_php, $t);
-
-        return $value;
+        return null;
     }
 
     /**
@@ -419,7 +422,6 @@ abstract class AbstractTabsAdmin extends Admin
 
     protected function getMoisFormValue($value)
     {
-
         $value = $this->dateFormValue($value);
 
         if ($value) {

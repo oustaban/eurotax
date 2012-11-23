@@ -115,7 +115,7 @@ class ErrorElements
             } //Add & Edit ajax form
             elseif (!($value == $this->round(($this->_object->getMontantHTEnDevise() * $this->_object->getTauxDeTVA())))) {
 
-                $this->_errorElement->with('montant_TVA_francaise')->addViolation('Wrong "Montant TVA française" (must be "Montant HT en devise" * "Taux de TVA / 100")')->end();
+                $this->_errorElement->with('montant_TVA_francaise')->addViolation('Wrong "Montant TVA française" (must be "Montant HT en devise" * "Taux de TVA / 100")' . $this->round($this->_object->getMontantHTEnDevise() * $this->_object->getTauxDeTVA()))->end();
             }
 
         }

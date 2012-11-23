@@ -33,6 +33,7 @@ abstract class AbstractBaseEntity
     /**
      * @var \DateTime $date_piece
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="date_piece", type="date")
      */
     private $date_piece;
