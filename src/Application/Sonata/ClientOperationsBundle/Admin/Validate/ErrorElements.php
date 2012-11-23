@@ -57,6 +57,7 @@ class ErrorElements
                         if (method_exists($devise, $method)) {
                             $taux_de_change = $devise->$method();
                         } else {
+                            #TODO send mail is not Devises
                             new \Exception('Currency is not found (Devises): ' . $method);
                         }
                     }
@@ -83,7 +84,15 @@ class ErrorElements
         $_object = $this->_object;
         $value = $_object->getHT();
         if ($value) {
-            if ($_object->getTauxDeChange() && round((float)$value - $_object->getMontantHTEnDevise() / $_object->getTauxDeChange(), 9)) {
+
+            //Import excel
+            if ($this->getValidateImport()) {
+                if ($_object->getTauxDeChange() && round((float)$value - $_object->getMontantHTEnDevise() / $_object->getTauxDeChange(), 9)) {
+                    $this->_errorElement->with('HT')->addViolation('Wrong "HT" (must be "Montant HT en devise" / "Taux de change")')->end();
+                }
+            } //Add & Edit ajax form
+            else if ($_object->getTauxDeChange() && round($value, 2) - round($_object->getMontantHTEnDevise() / $_object->getTauxDeChange(), 2)) {
+
                 $this->_errorElement->with('HT')->addViolation('Wrong "HT" (must be "Montant HT en devise" / "Taux de change")')->end();
             }
         }
@@ -98,9 +107,17 @@ class ErrorElements
         $value = $this->_object->getMontantTVAFrancaise();
         if ($value) {
 
-            if (!($value == $this->_object->getMontantHTEnDevise() * $this->_object->getTauxDeTVA())) {
+            //Import excel
+            if ($this->getValidateImport()) {
+                if (!($value == $this->_object->getMontantHTEnDevise() * $this->_object->getTauxDeTVA())) {
+                    $this->_errorElement->with('montant_TVA_francaise')->addViolation('Wrong "Montant TVA française" (must be "Montant HT en devise" * "Taux de TVA / 100")')->end();
+                }
+            } //Add & Edit ajax form
+            elseif (!(round($value, 2) == round(($this->_object->getMontantHTEnDevise() * $this->_object->getTauxDeTVA()), 2))) {
+
                 $this->_errorElement->with('montant_TVA_francaise')->addViolation('Wrong "Montant TVA française" (must be "Montant HT en devise" * "Taux de TVA / 100")')->end();
             }
+
         }
 
         return $this;
@@ -113,22 +130,15 @@ class ErrorElements
     {
         $value = $this->_object->getMontantTTC();
         if ($value) {
-            if (!($value == $this->_object->getMontantHTEnDevise() + $this->_object->getMontantTVAFrancaise())) {
+
+            //Import excel
+            if ($this->getValidateImport()) {
+                if (!($value == $this->_object->getMontantHTEnDevise() + $this->_object->getMontantTVAFrancaise())) {
+                    $this->_errorElement->with('montant_TTC')->addViolation('Wrong "Montant TTC" (must be "Montant HT en devise" + "Montant TVA française")')->end();
+                }
+            } elseif (!(round($value, 2) == round(($this->_object->getMontantHTEnDevise() + $this->_object->getMontantTVAFrancaise()), 2))) {
                 $this->_errorElement->with('montant_TTC')->addViolation('Wrong "Montant TTC" (must be "Montant HT en devise" + "Montant TVA française")')->end();
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return ErrorElements
-     */
-    public function validateMoisIsNotNULL()
-    {
-        $value = $this->_object->getMois();
-        if (!$value) {
-            $this->_errorElement->with('mois')->addViolation('"Mois" should not be null')->end();
         }
 
         return $this;
@@ -153,19 +163,17 @@ class ErrorElements
     /**
      * @return ErrorElements
      */
-    public function validatePaiementMontantMois()
+    public function validatePaiementMontant()
     {
         $value = $this->_object->getPaiementMontant();
         if ($value) {
             if (!$this->_object->getPaiementDevise() && !$this->getValidateImport()) {
-                $this->_errorElement->with('paiement_montant')->addViolation('"Paiement Devise" can\'t be empty')->end();
+                $this->_errorElement->with('paiement_montant')->addViolation('"Paiement Devise" can\'t be empty in case if "Paiement Montant" is not empty')->end();
             }
 
             if (!$this->_object->getPaiementDate()) {
-                $this->_errorElement->with('paiement_montant')->addViolation('"Paiement Date" can\'t be empty')->end();
+                $this->_errorElement->with('paiement_montant')->addViolation('"Paiement Date" can\'t be empty in case if "Paiement Montant" is not empty')->end();
             }
-
-            $this->validateMois();
         }
 
         return $this;
@@ -178,7 +186,7 @@ class ErrorElements
     public function validateMois()
     {
         $value = $this->_object->getMois();
-        if (!$value) {
+        if ($value) {
             if ($value instanceof \DateTime) {
                 $month = $value->format('n');
                 $year = $value->format('Y');
@@ -319,7 +327,8 @@ class ErrorElements
     /**
      * @return bool
      */
-    public function validateDatePiece(){
+    public function validateDatePiece()
+    {
 
         $value = $this->_object->getDatePiece();
         if (!$value) {

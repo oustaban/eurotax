@@ -33,10 +33,11 @@ class V09DESAdmin extends Admin
                 'format' => $this->date_format_datetime)
         )
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
-            ->add('devise', null, array('label' => $this->getFieldLabel('devise_id'), 'query_builder' => function (EntityRepository $er) {
-                return $er->createQueryBuilder('d')
-                    ->orderBy('d.alias', 'ASC');
-            },))
+            ->add('devise', null, array('label' => $this->getFieldLabel('devise_id'), 'query_builder' => function (EntityRepository $er)
+        {
+            return $er->createQueryBuilder('d')
+                ->orderBy('d.alias', 'ASC');
+        },))
             ->add('montant_HT_en_devise', 'money', array('label' => $this->getFieldLabel('montant_HT_en_devise')))
             ->add('mois', 'date', array(
             'label' => $this->getFieldLabel('mois'),
@@ -92,9 +93,9 @@ class V09DESAdmin extends Admin
 
         $error = new ErrorElements($errorElement, $object);
         $error
-            ->validateMois()
-            ->validateMoisComplementaire()
             ->validateDevise()
-            ->validateHT();
+            ->validateHT()
+            ->validateMois()
+            ->validateMoisComplementaire();
     }
 }

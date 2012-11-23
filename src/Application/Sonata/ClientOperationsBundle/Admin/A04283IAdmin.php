@@ -32,10 +32,11 @@ class A04283IAdmin extends Admin
                 'format' => $this->date_format_datetime)
         )
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
-            ->add('devise', null, array('label' => $this->getFieldLabel('devise_id'), 'query_builder' => function (EntityRepository $er) {
-                return $er->createQueryBuilder('d')
-                    ->orderBy('d.alias', 'ASC');
-            },))
+            ->add('devise', null, array('label' => $this->getFieldLabel('devise_id'), 'query_builder' => function (EntityRepository $er)
+        {
+            return $er->createQueryBuilder('d')
+                ->orderBy('d.alias', 'ASC');
+        },))
             ->add('montant_HT_en_devise', 'money', array('label' => $this->getFieldLabel('montant_HT_en_devise')))
             ->add('taux_de_TVA', 'percent', array(
             'label' => $this->getFieldLabel('taux_de_TVA'),
@@ -100,9 +101,9 @@ class A04283IAdmin extends Admin
 
         $error = new ErrorElements($errorElement, $object);
         $error
-            ->validateMois()
             ->validateDevise()
-            ->validateHT();
+            ->validateHT()
+            ->validateMois();
 
         if ($this->getValidateImport()) {
             list($month, $year) = $this->getQueryMonth($this->query_month);

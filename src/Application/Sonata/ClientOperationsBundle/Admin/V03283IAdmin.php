@@ -89,8 +89,8 @@ class V03283IAdmin extends Admin
         $error = new ErrorElements($errorElement, $object);
         $error
             ->validateNoTVATiers()
-            ->validateMois()
             ->validateDevise()
-            ->validateHT();
+            ->validateHT()
+            ->validateMois();
     }
 }

@@ -1,11 +1,50 @@
 jQuery(document).ready(function ($) {
     $('#error_repost_show').die().live('click', function () {
-
         $('#importReportModal').modal('toggle');
 
         return false;
     });
+
+    symfony_ajax.MontantTVAfrancaiseAndMontantTTC = symfony_ajax.MontantTVAfrancaiseAndMontantTTC || {};
+    symfony_ajax.MontantTVAfrancaiseAndMontantTTC.calc = function () {
+
+        $('#' + _uniqid + '_montant_TVA_francaise').val('2222');
+        $('#' + _uniqid + '_montant_TTC').val('111');
+
+    };
+
+    symfony_ajax.behaviors.calcMontantTVAfrancaiseAndMontantTTC = {
+        attach:function (context) {
+            var _uniqid = symfony_ajax.get_uniqid();
+            if (_uniqid) {
+                $('#' + _uniqid + '_montant_HT_en_devise, #' + _uniqid + '_taux_de_TVA', context)
+                    .keyup(this.calc)
+                    .trigger('change');
+            }
+        },
+        calc:function (env) {
+            var _uniqid = symfony_ajax.get_uniqid();
+
+            var $montant_HT_en_devise = $('#' + _uniqid + '_montant_HT_en_devise');
+            var $taux_de_TVA = $('#' + _uniqid + '_taux_de_TVA');
+
+            var montant_HT_en_devise = $montant_HT_en_devise.val().replace(',', '.').replace(/\s+/, '');
+            var taux_de_TVA = $taux_de_TVA.val().replace(',', '.').replace(/\s+/, '');
+
+            var montant_TVA_francaise = parseFloat(parseFloat(montant_HT_en_devise) * (parseFloat(taux_de_TVA) / 100));
+
+            var montant_TTC = parseFloat(parseFloat(montant_HT_en_devise) + montant_TVA_francaise);
+
+            montant_TVA_francaise = montant_TVA_francaise ? montant_TVA_francaise.toFixed(2).replace('.', ',') : '';
+            montant_TTC = montant_TTC ? montant_TTC.toFixed(2).replace('.', ',') : '';
+
+            $('#' + _uniqid + '_montant_TVA_francaise').val(montant_TVA_francaise);
+            $('#' + _uniqid + '_montant_TTC').val(montant_TTC);
+        }
+    };
+
 });
+
 
 function init_clientoperations_buttons(o) {
 

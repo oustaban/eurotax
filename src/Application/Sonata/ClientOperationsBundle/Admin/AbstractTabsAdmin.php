@@ -150,7 +150,7 @@ abstract class AbstractTabsAdmin extends Admin
         $this->_form_label = 'form';
 
         $formMapper->with($this->getFieldLabel())
-            ->add('client_id', 'hidden', array('data' => $this->client_id));
+            ->add('client_id', 'hidden', array('data' => $this->client_id, 'attr' => array('class' => 'client_id')));
     }
 
     /**

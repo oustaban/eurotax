@@ -59,7 +59,7 @@ class A02TVA extends AbstractBuyEntity
      * @var float $paiement_montant
      *
      * @Assert\NotBlank()
-     * @ORM\Column(name="paiement_montant", type="float")
+     * @ORM\Column(name="paiement_montant", type="float", nullable=true)
      */
     private $paiement_montant;
 
@@ -67,6 +67,7 @@ class A02TVA extends AbstractBuyEntity
     /**
      * @var integer $devise
      *
+     * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="\Application\Sonata\ClientBundle\Entity\ListDevises", inversedBy="A02TVA")
      * @ORM\JoinColumn(name="paiement_devise_id", referencedColumnName="id")
      */
