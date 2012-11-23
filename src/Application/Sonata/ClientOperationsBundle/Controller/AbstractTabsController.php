@@ -747,18 +747,12 @@ class AbstractTabsController extends Controller
                     } else {
                         $message = $this->getErrorsAsString($class, $form, $key + 2);
                         $this->setCountImports($class, 'errors', $message);
-                        echo '<pre>';
-                        echo $class;
-                        echo "<hr>";
-                        echo $message;
-                        echo '</pre>';
                     }
                     unset($formData, $form, $form_builder, $object);
                 }
                 unset($data, $admin);
             }
         }
-        exit;
     }
 
 
