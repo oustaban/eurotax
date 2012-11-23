@@ -591,7 +591,7 @@ class Excel
                     );
                 } elseif (in_array($field, array('n_ligne',
                     'nomenclature',
-                    'pays_id_destination',
+                    'pays_destination',
                     'valeur_fiscale',
                     'regime',
                     'valeur_statistique',
@@ -601,7 +601,7 @@ class Excel
                     'conditions_livraison',
                     'mode_transport',
                     'departement',
-                    'pays_id_origine',
+                    'pays_origine',
                     'CEE',))
                 ) {
                     $styleHeader[$field] = array(
@@ -619,7 +619,7 @@ class Excel
 
                 if (in_array($field, array('n_ligne',
                     'nomenclature',
-                    'pays_id_destination',
+                    'pays_destination',
                     'regime',
                     'valeur_statistique',
                     'masse_mette',
@@ -628,7 +628,7 @@ class Excel
                     'conditions_livraison',
                     'mode_transport',
                     'departement',
-                    'pays_id_origine',
+                    'pays_origine',
                     'CEE',))
                 ) {
                     $styleHeader[$field] = array(
