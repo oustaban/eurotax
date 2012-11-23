@@ -229,7 +229,7 @@ class ClientAdmin extends Admin
             ->add('mois_tva', null, array('label' => 'list.mois_tva'))
             ->add('BAPSA', null, array('label' => 'list.BAPSA'))
             ->add('remboursement_de_TVA', null, array('label' => 'list.remboursement_de_TVA'))
-            ->add('comptes', null, array('label' => 'list.solde_du_compte', 'template' => 'ApplicationSonataClientBundle:CRUD:comptes.html.twig'))
+            ->add('comptes', "money", array('label' => 'list.solde_du_compte', 'template' => 'ApplicationSonataClientBundle:CRUD:comptes.html.twig'))
             ->add('date_debut_mission', null, array(
             'template' => 'ApplicationSonataClientBundle:CRUD:list_date_debut_mission.html.twig',
             'label' => 'list.date_debut_mission'

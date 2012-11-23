@@ -57,7 +57,7 @@
             <th class="sonata-ba-list-field-header-text">
                 <a href="#">{{ 'list.remboursement_de_TVA'|trans() }}</a>
             </th>
-            <th class="sonata-ba-list-field-header-text">
+            <th class="sonata-ba-list-field-header-money">
                 <a href="#">{{ 'list.solde_du_compte'|trans() }}</a>
             </th>
             <th class="sonata-ba-list-field-header-date">
@@ -116,7 +116,7 @@
             <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client[0].id }}">
                 {#{{ client[0].remboursement_de_TVA }}#}
             </td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client[0].id }}">
+            <td class="sonata-ba-list-field sonata-ba-list-field-money"  objectId="{{ client[0].id }}">
                 <div class="montant{% if client.compte_solde_montant<0 %} negative_value{% endif %}">
                     {{ client.compte_solde_montant?:0 }}
                 </div>
