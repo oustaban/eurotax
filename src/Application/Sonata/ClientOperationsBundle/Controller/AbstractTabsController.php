@@ -779,6 +779,8 @@ class AbstractTabsController extends Controller
         $file_name = $file['name'];
         $validate = false;
 
+        list($y, $m) = explode('-', date('Y-m', strtotime('now'.(date('d')<25?' -1 month':''))));
+
         /**
          *  example file_name
          *  $file_name = 'FUJITSU-Importation-TVA-2012-10-01.xlsx';
@@ -790,52 +792,50 @@ class AbstractTabsController extends Controller
             array_shift($matches);
             list($nom_client, $year, $month, $version) = $matches;
 
-            $client = $this->getImportFileValidateNomClient($nom_client);
+            if ($year == $y && $month == $m){
 
-            if ($year != $this->_year) {
-                $validate_fields[] = 'year';
-            }
+                $client = $this->getImportFileValidateNomClient($nom_client);
 
-            if ($month != $this->_month) {
-                $validate_fields[] = 'month';
-            }
+                if (!empty($client)) {
 
-            if (!empty($client)) {
+                    if ($this->client_id != $client->getId()) {
+                        $validate_fields[] = 'nom_client';
+                    }
 
-                if ($this->client_id != $client->getId()) {
+                    $ver = $this->getImportFileValidateVersion($client, $y, $m);
+                    if ($ver == (int)$version) {
+                        $validate = true;
+                    } else {
+                        $validate_fields[] = 'version';
+                    }
+                } else {
                     $validate_fields[] = 'nom_client';
                 }
 
-                $ver = $this->getImportFileValidateVersion($client, $year, $month);
-                if ($ver == (int)$version) {
-                    $validate = true;
-                } else {
-                    $validate_fields[] = 'version';
+                if (count($validate_fields) > 0) {
+                    $this->getImportFileValidateMessage($y, $m);
+                    $validate = false;
                 }
             } else {
-                $validate_fields[] = 'nom_client';
-            }
 
-            if (count($validate_fields) > 0) {
-                $this->getImportFileValidateMessage();
-                $validate = false;
+                $this->getImportFileValidateMessage($y, $m);
             }
 
         } else {
 
-            $this->getImportFileValidateMessage();
+            $this->getImportFileValidateMessage($y, $m);
         }
 
         return $validate;
     }
 
-    protected function getImportFileValidateMessage()
+    protected function getImportFileValidateMessage($y, $m)
     {
         $data = array(
             '%nom_client%' => strtoupper($this->client),
-            '%year%' => $this->_year,
-            '%month%' => ($this->_month < 10 ? '0' : '') . $this->_month,
-            '%version%' => $this->getImportFileValidateVersion($this->client, $this->_year, $this->_month),
+            '%year%' => $y,
+            '%month%' => $m,
+            '%version%' => $this->getImportFileValidateVersion($this->client, $y, $m),
         );
 
         $filename = '<strong>' . strtr("%nom_client%-Importation-TVA-%year%-%month%-%version%.xlsx", $data) . '</strong>';
