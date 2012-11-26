@@ -121,6 +121,13 @@
         });
 
         $('.select-mois').change(function () {
+            for (var i = 0; i < 3; i++) {
+                $('.select-mois-' + i + ' option').each(function (i) {
+                    if (!i) {
+                        $(this).attr('selected', 'selected');
+                    }
+                });
+            }
             var sel = $(this).val().split('-');
             if (sel.length > 1) {
                 for (var i = 0; i < 3; i++) {
@@ -129,15 +136,6 @@
                             $(this).attr('selected', 'selected');
                         }
                         else if (sel[i] == $(this).val()) {
-                            $(this).attr('selected', 'selected');
-                        }
-                    });
-                }
-
-            } else {
-                for (var i = 0; i < 3; i++) {
-                    $('.select-mois-' + i + ' option').each(function (i) {
-                        if (!i) {
                             $(this).attr('selected', 'selected');
                         }
                     });
