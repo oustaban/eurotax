@@ -94,10 +94,13 @@ class DevisesAdmin extends Admin
 
             /** @var $entity  \Application\Sonata\ClientBundle\Entity\ListDevises */
             $formMapper->add('money' . $field, 'money', array(
-                'label' => $labelData['name'],
+                'decorator' => function ($pattern) use ($labelData){
+                    return $pattern . ' ' . $labelData['name'];
+                },
+                'label' => '1 euro',
                 'precision' => 5,
                 'divisor' => 1,
-                'currency' => 'EUR',
+                'currency' => false,
             ) + $disables);
         }
     }
