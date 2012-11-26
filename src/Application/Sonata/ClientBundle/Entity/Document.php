@@ -27,7 +27,7 @@ class Document
      * @var Client $client
      *
      * @ORM\ManyToOne(targetEntity="Client", inversedBy="documents")
-     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $client;
 

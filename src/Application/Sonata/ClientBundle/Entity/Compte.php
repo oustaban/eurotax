@@ -16,7 +16,7 @@ class Compte extends AbstractCompteEntity
      * @var Client $client
      *
      * @ORM\ManyToOne(targetEntity="Client", inversedBy="comptes")
-     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $client;
 

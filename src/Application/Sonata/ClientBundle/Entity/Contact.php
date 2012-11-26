@@ -25,7 +25,7 @@ class Contact
      * @var Client $client
      *
      * @ORM\ManyToOne(targetEntity="Client", inversedBy="contacts")
-     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $client;
 
@@ -331,14 +331,14 @@ class Contact
     public function setClient(\Application\Sonata\ClientBundle\Entity\Client $client = null)
     {
         $this->client = $client;
-    
+
         return $this;
     }
 
     /**
      * Get client
      *
-     * @return \Application\Sonata\ClientBundle\Entity\Client 
+     * @return \Application\Sonata\ClientBundle\Entity\Client
      */
     public function getClient()
     {

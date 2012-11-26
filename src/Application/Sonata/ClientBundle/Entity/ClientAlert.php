@@ -26,7 +26,7 @@ class ClientAlert
      * @var Client $client
      *
      * @ORM\ManyToOne(targetEntity="Client", inversedBy="alertes")
-     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $client;
 

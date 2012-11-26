@@ -18,7 +18,7 @@ class ClientInvoicing
      *
      * @ORM\Id
      * @ORM\OneToOne(targetEntity="Client", inversedBy="invoicing")
-     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $client;
 
