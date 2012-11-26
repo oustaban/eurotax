@@ -19,8 +19,12 @@ use Application\Sonata\ClientBundle\Admin\AbstractTabsAdmin as Admin;
 class ContactAdmin extends Admin
 {
     protected $_fields_list = array(
+        'affichage_facture_id',
+        'raison_sociale_societe',
         'nom',
         'prenom',
+        'telephone_1',
+        'email',
     );
 
     //create & edit form

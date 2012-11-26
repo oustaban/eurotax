@@ -34,8 +34,8 @@ form:
     telephone_2: Téléphone 2
     fax: Fax
     email: Email
-    raison_sociale_societe: Raison Sociale Société
-    affichage_facture_id: Affichage Facture
+    raison_sociale_societe: Raison sociale
+    affichage_facture_id: N° ordre facturation
 
   Document:
     title: Ajouter / Modifier un document
@@ -157,8 +157,8 @@ list:
     telephone_2: Téléphone 2
     fax: Fax
     email: Email
-    raison_sociale_societe: Raison Sociale Société
-    affichage_facture_id: Affichage Facture
+    raison_sociale_societe: Raison sociale
+    affichage_facture_id: N° ordre facturation
 
   Document:
     title: Ajouter un document
