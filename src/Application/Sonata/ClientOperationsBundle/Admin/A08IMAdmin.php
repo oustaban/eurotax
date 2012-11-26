@@ -37,10 +37,8 @@ class A08IMAdmin extends Admin
             'precision' => 3,
         ))
             ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA')))
-            ->add('mois', 'date', array(
+            ->add('mois', 'mois', array(
             'label' => $this->getFieldLabel('mois'),
-            'days' => range(1, 1),
-            'format' => 'dd MMMM yyyy',
         ))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
     }

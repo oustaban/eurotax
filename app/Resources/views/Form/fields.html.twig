@@ -50,43 +50,102 @@
 {{ form_row(form) }}
 {% else %}
 <div class="control-group{% if errors|length > 0%} error{%endif%}" id="sonata-ba-field-container-{{ id }}">
-        {{ form_widget(form) }}
+    {{ form_widget(form) }}
 
-        {% if errors|length > 0 %}
-        <div class="help-inline sonata-ba-field-error-messages">
-            {{ form_errors(form) }}
-        </div>
-        {% endif %}
+    {% if errors|length > 0 %}
+    <div class="help-inline sonata-ba-field-error-messages">
+        {{ form_errors(form) }}
+    </div>
+    {% endif %}
 
-        {% if sonata_admin.field_description.help %}
-        <span class="help-block sonata-ba-field-help">{{ sonata_admin.field_description.help }}</span>
-        {% endif %}
+    {% if sonata_admin.field_description.help %}
+    <span class="help-block sonata-ba-field-help">{{ sonata_admin.field_description.help }}</span>
+    {% endif %}
 </div>
 {% endif %}
 {% endblock location_row %}
 
 
 {% block amount_widget %}
-    {% spaceless %}
-    <div class="controls sonata-ba-field sonata-ba-field-{{ sonata_admin.edit }}-{{ sonata_admin.inline }} {% if errors|length > 0 %}sonata-ba-field-error{% endif %}">
-        {% for child in form %}
-            {{ form_widget(child) }}
-        {% endfor %}
-    </div>
-    {% endspaceless %}
+{% spaceless %}
+<div class="controls sonata-ba-field sonata-ba-field-{{ sonata_admin.edit }}-{{ sonata_admin.inline }} {% if errors|length > 0 %}sonata-ba-field-error{% endif %}">
+    {% for child in form %}
+    {{ form_widget(child) }}
+    {% endfor %}
+</div>
+{% endspaceless %}
 {% endblock amount_widget %}
 
 {% block amount_row %}
-     <div class="control-group{% if errors|length > 0%} error{%endif%}" id="sonata-ba-field-container-{{ id }}">
-        {{ form_label(form, label|default(null)) }}
+<div class="control-group{% if errors|length > 0%} error{%endif%}" id="sonata-ba-field-container-{{ id }}">
+    {{ form_label(form, label|default(null)) }}
 
-         {{ form_errors(form) }}
-        {{ form_widget(form) }}
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
 
-        {% if errors|length > 0 %}
-            <div class="help-inline sonata-ba-field-error-messages">
-                {{ form_errors(form) }}
-            </div>
-        {% endif %}
+    {% if errors|length > 0 %}
+    <div class="help-inline sonata-ba-field-error-messages">
+        {{ form_errors(form) }}
     </div>
+    {% endif %}
+</div>
 {% endblock amount_row %}
+
+
+{% block mois_widget %}
+{% spaceless %}
+{% if widget == 'single_text' %}
+{{ block('form_widget_simple') }}
+{% else %}
+<div {{ block('widget_container_attributes') }}>
+    {{form_widget(form.mois)}}
+
+    <div style="display:none" class="hide-block-mois">
+        {{form_widget(form.year)}}
+        {{form_widget(form.month)}}
+        {{form_widget(form.day)}}
+    </div>
+
+    <script type="text/javascript">
+        //get
+        var mois_date = [];
+        $('.hide-block-mois select :selected').each(function (i) {
+            mois_date.push($(this).val());
+            $(this).parent().addClass('select-mois-' + i);
+        })
+
+        $('.select-mois option').each(function () {
+            if (mois_date[0] + '-' + mois_date[1] == $(this).val()) {
+                $(this).attr('selected', 'selected');
+            }
+        });
+
+        $('.select-mois').change(function () {
+            var sel = $(this).val().split('-');
+            if (sel.length > 1) {
+                for (var i = 0; i < 3; i++) {
+                    $('.select-mois-' + i + ' option').each(function (j) {
+                        if (i == 2 && j == 1) {
+                            $(this).attr('selected', 'selected');
+                        }
+                        else if (sel[i] == $(this).val()) {
+                            $(this).attr('selected', 'selected');
+                        }
+                    });
+                }
+
+            } else {
+                for (var i = 0; i < 3; i++) {
+                    $('.select-mois-' + i + ' option').each(function (i) {
+                        if (!i) {
+                            $(this).attr('selected', 'selected');
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+</div>
+{% endif %}
+{% endspaceless %}
+{% endblock mois_widget %}

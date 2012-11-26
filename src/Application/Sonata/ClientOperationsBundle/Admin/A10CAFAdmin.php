@@ -33,10 +33,8 @@ class A10CAFAdmin extends Admin
         )
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT')))
-            ->add('mois', 'date', array(
+            ->add('mois', 'mois', array(
             'label' => $this->getFieldLabel('mois'),
-            'days' => range(1, 1),
-            'format' => 'dd MMMM yyyy',
         ))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
     }

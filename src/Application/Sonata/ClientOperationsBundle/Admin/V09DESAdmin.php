@@ -39,10 +39,8 @@ class V09DESAdmin extends Admin
                 ->orderBy('d.alias', 'ASC');
         },))
             ->add('montant_HT_en_devise', 'money', array('label' => $this->getFieldLabel('montant_HT_en_devise')))
-            ->add('mois', 'date', array(
+            ->add('mois', 'mois', array(
             'label' => $this->getFieldLabel('mois'),
-            'days' => range(1, 1),
-            'format' => 'dd MMMM yyyy',
         ))
             ->add('mois_complementaire', null, array('label' => $this->getFieldLabel('mois_complementaire')))
             ->add('taux_de_change', 'money', array(
