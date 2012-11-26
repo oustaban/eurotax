@@ -102,7 +102,7 @@ form:
     is_blocked: Blocked
 
   Compte:
-    title: Ajouter / Modifier un compte
+    title: Ajouter / Modifier Une opération du Compte
     date: Date
     operation: Opération
     montant: Montant
@@ -110,7 +110,7 @@ form:
     statut: Statut
 
   CompteDeDepot:
-    title: Ajouter / Modifier un compte de dépôt
+    title: Ajouter / Modifier Une opération du Compte de dépot
     date: Date
     operation: Opération
     montant: Montant
