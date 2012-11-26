@@ -14,7 +14,7 @@
             {% set alert_count = client.getAlertCount()%}
             {% if alert_count %}
             <div class="btn-group inline">
-                <button rel="tooltip" title="{{alert_count}} {{ 'alertes'|trans }}" class="btn" id="btn_client_alert"><span class="badge badge-warning">{{ alert_count }}</span> {{ 'Alertes'|trans }}</button>
+                <button rel="tooltip" title="{{alert_count}} {{ 'alertes'|trans }}" class="btn" id="btn_client_alert">{{ 'Alertes'|trans }} <span class="badge badge-warning">{{ alert_count }}</span></button>
             </div>
             {% endif%}
 
