@@ -17,6 +17,7 @@ class LoadListPeriodiciteFacturationsData extends AbstractLoadListData
      * @var array
      */
     protected $_lists = array(
+        'Mensuelle',
         'Trimestrielle',
         'Semestrielle',
         'Annuelle',
