@@ -72,7 +72,8 @@ class ClientAdmin extends Admin
             ->add('code_client', null, array('label' => 'form.code_client', 'disabled' => true))
             ->add('autre_destinataire_de_facturation', null, array('label' => 'form.autre_destinataire_de_facturation'))
             ->with('form.client.row2')
-            ->add('user', null, array('label' => 'form.user', 'query_builder' => function (EntityRepository $er) {
+            ->add('user', null, array('label' => 'form.user', 'query_builder' => function (EntityRepository $er)
+        {
             return $er->createQueryBuilder('u')
                 ->orderBy('u.username', 'ASC');
         },))
@@ -208,17 +209,17 @@ class ClientAdmin extends Admin
         $fieldUserOptions = array('label' => 'list.user');
         /* @var $securityContext SecurityContext */
         $securityContext = \AppKernel::getStaticContainer()->get('security.context');
-        if (!$securityContext->isGranted('ROLE_EDIT_USERS')){
+        if (!$securityContext->isGranted('ROLE_EDIT_USERS')) {
             $fieldUserOptions['template'] = 'ApplicationSonataClientBundle:CRUD:list_user_text.html.twig';
         }
 
         $listMapper
             ->add('_action', 'actions', array(
-                'actions' => array(
-                    'operations' => array('template' => 'ApplicationSonataClientBundle:CRUD:operations_action.html.twig'),
-                    'edit' => array('template' => 'ApplicationSonataClientBundle:CRUD:edit_action.html.twig'),
-                )
-            ))
+            'actions' => array(
+                'operations' => array('template' => 'ApplicationSonataClientBundle:CRUD:operations_action.html.twig'),
+                'edit' => array('template' => 'ApplicationSonataClientBundle:CRUD:edit_action.html.twig'),
+            )
+        ))
             ->add('code_client')
             ->add('raison_sociale', null, array('label' => 'list.raison_sociale'))
             ->add('nature_du_client.name', null, array('label' => 'list.nature_du_client'))
@@ -279,12 +280,32 @@ class ClientAdmin extends Admin
 
     /**
      * @param ErrorElement $errorElement
-     * @param mixed $object
+     * @param mixed|\Application\Sonata\ClientBundle\Entity\Client $object
      */
     public function validate(ErrorElement $errorElement, $object)
     {
         /* @var $object \Application\Sonata\ClientBundle\Entity\Client */
         parent::validate($errorElement, $object);
+
+        if ($object->getAutreDestinataireDeFacturation()) {
+
+            //validate NotBlank
+            foreach (array(
+                         'raison_sociale_2',
+                         'adresse_1_facturation',
+                         'adresse_2_facturation',
+                         'code_postal_facturation',
+                         'ville_facturation',
+                         'pays_facturation',
+                         'N_TVA_CEE_facture',
+                     ) as $field) {
+
+                $method = 'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $field)));
+                if (method_exists($object, $method) && !$object->$method()) {
+                    $errorElement->with($field)->addViolation('This value should not be blank.')->end();
+                }
+            }
+        }
     }
 
     /**
