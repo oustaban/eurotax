@@ -220,19 +220,6 @@ jQuery(document).ready(function ($) {
                 });
             }
         }).disableSelection();
-
-        /**
-         * @type {Object}
-         */
-        symfony_ajax.behaviors.coordonnees = {
-            attach:function (context) {
-                var _uniqid = symfony_ajax.get_uniqid();
-                console.log('#' + _uniqid + '_location_pays');
-                $('#' + _uniqid + '_location_pays').change(function () {
-                    $('#' + _uniqid + '_SEPA').val(Sonata.country_sepa[$(this).val()] ? Sonata.country_sepa[$(this).val()] : 0);
-                }).trigger('change');
-            }
-        }
     }
 
 

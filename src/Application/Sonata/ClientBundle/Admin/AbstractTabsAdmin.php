@@ -180,7 +180,7 @@ abstract class AbstractTabsAdmin extends Admin
         parent::configureFormFields($formMapper);
 
         $formMapper->with(' ');
-        $formMapper->add('client', null, array('label'=>' ', 'data' => $this->getClient(), 'attr' => array('class' => 'client_id important_hidden'),));
+        $formMapper->add('client', null, array('label' => ' ', 'data' => $this->getClient(), 'attr' => array('class' => 'client_id important_hidden'),));
     }
 
     /**
@@ -197,29 +197,6 @@ abstract class AbstractTabsAdmin extends Admin
         ));
 
         parent::configureListFields($listMapper);
-    }
-
-    /**
-     * @return array
-     */
-    public function getListCountrySepa()
-    {
-        /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
-        $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
-        /* @var $em \Doctrine\ORM\EntityManager */
-        $em = $doctrine->getManager();
-
-        $rows = $em->getRepository('ApplicationSonataClientBundle:ListCountries')->findAll();
-        $_rows = array();
-        foreach ($rows as $row) {
-            /** @var $row \Application\Sonata\ClientBundle\Entity\ListCountries */
-            $sepa = $row->getSepa();
-            if ($sepa){
-                $_rows[$row->getCode()] = $sepa;
-            }
-        }
-
-        return $_rows;
     }
 
     /**

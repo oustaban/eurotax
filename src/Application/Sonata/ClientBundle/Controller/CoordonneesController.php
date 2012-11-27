@@ -23,7 +23,6 @@ class CoordonneesController extends Controller
             'url' => array(
                 'sortable' => $this->admin->generateUrl('sortable', array('filter' => array('client_id' => array('value' => $this->client_id)))),
             ),
-            'country_sepa' => $this->admin->getListCountrySepa(),
             'drag_text' => $this->admin->trans('Drag to re-order'),
         ));
     }
