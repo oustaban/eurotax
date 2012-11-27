@@ -17,6 +17,7 @@ use Application\Form\Type\LocationFacturationType;
 use Sonata\AdminBundle\Validator\ErrorElement;
 use Application\Sonata\ClientBundle\Entity\ClientAlert;
 use Doctrine\ORM\EntityRepository;
+use Application\Sonata\ClientBundle\Entity\ListCountries;
 
 class ClientAdmin extends Admin
 {
@@ -76,11 +77,11 @@ class ClientAdmin extends Admin
         {
             return $er->createQueryBuilder('u')
                 ->orderBy('u.username', 'ASC');
-        }, 'required'=>true))
+        }, 'required' => true))
             ->with('form.client.row3')
             ->add('nom', null, array('label' => 'form.nom'))
             ->with('form.client.row4')
-            ->add('nature_du_client', null, array('label' => 'form.nature_du_client', 'required'=>true))
+            ->add('nature_du_client', null, array('label' => 'form.nature_du_client', 'required' => true))
             ->add('contact', null, array('label' => 'form.contacts'))
             ->with('form.client.row5')
             ->add('raison_sociale', null, array('label' => 'form.raison_sociale'))
@@ -120,7 +121,7 @@ class ClientAdmin extends Admin
             'required' => false,
         ))
             ->with('form.client.row10')
-            ->add('mode_denregistrement', null, array('label' => 'form.mode_denregistrement', 'required'=>true))
+            ->add('mode_denregistrement', null, array('label' => 'form.mode_denregistrement', 'required' => true))
             ->with('form.client.row11')
             ->add('siret', null, array('label' => 'form.siret', 'required' => false,))
             ->with('form.client.row12')
@@ -142,7 +143,7 @@ class ClientAdmin extends Admin
             'attr' => array('class' => 'date_de_depot_id'),
         ))
             ->with('form.client.row16')
-            ->add('center_des_impots', null, array('label' => 'form.center_des_impots', 'required'=>true))
+            ->add('center_des_impots', null, array('label' => 'form.center_des_impots', 'required' => true))
             ->add('teledeclaration', null, array('label' => 'form.teledeclaration'))
             ->with('form.client.row17')
             ->add('language', null, array('label' => 'form.language'))
@@ -286,6 +287,12 @@ class ClientAdmin extends Admin
     {
         /* @var $object \Application\Sonata\ClientBundle\Entity\Client */
         parent::validate($errorElement, $object);
+
+        //EU validate NotBlank
+        if ($object->getPaysPostal() && $object->getPaysPostal()->getCode() && in_array($object->getPaysPostal()->getCode(), ListCountries::getCountryEUCode()) && !$object->getNTVACEE()) {
+
+            $errorElement->with('N_TVA_CEE')->addViolation('This value should not be blank.')->end();
+        }
 
         if ($object->getAutreDestinataireDeFacturation()) {
 

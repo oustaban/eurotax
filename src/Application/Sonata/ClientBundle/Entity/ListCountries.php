@@ -61,6 +61,15 @@ class ListCountries
         return \AppKernel::getStaticContainer()->get('doctrine')->getRepository('ApplicationSonataClientBundle:ListCountries')->findEU();
     }
 
+    /**
+     * @static
+     * @return array
+     */
+    public static function getCountryEUCode()
+    {
+        return array_keys(self::getCountryEU());
+    }
+
 
     /**
      * @return string
