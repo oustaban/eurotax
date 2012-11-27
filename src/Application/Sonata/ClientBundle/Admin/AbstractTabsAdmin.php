@@ -228,7 +228,7 @@ abstract class AbstractTabsAdmin extends Admin
     protected function getListCountryEU()
     {
         if (!$this->_country_eu) {
-            $this->_country_eu = array_keys(\Application\Sonata\ClientBundle\Entity\ListCountries::getCountryEU());
+            $this->_country_eu = \Application\Sonata\ClientBundle\Entity\ListCountries::getCountryEUCode();
         }
 
         return $this->_country_eu;
