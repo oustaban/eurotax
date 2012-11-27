@@ -42,10 +42,8 @@ class A04283IAdmin extends Admin
             'label' => $this->getFieldLabel('taux_de_TVA'),
             'precision' => 3,
         ))
-            ->add('mois', 'date', array(
+            ->add('mois', 'mois', array(
             'label' => $this->getFieldLabel('mois'),
-            'days' => range(1, 1),
-            'format' => 'dd MMMM yyyy',
         ))
             ->add('taux_de_change', 'money', array(
             'label' => $this->getFieldLabel('taux_de_change'),

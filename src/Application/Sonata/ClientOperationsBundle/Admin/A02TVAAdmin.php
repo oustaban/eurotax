@@ -57,10 +57,8 @@ class A02TVAAdmin extends Admin
                 'input' => 'datetime',
                 'format' => $this->date_format_datetime)
         )
-            ->add('mois', 'date', array(
+            ->add('mois', 'mois', array(
             'label' => $this->getFieldLabel('mois'),
-            'days' => range(1, 1),
-            'format' => 'dd MMMM yyyy',
         ))
             ->add('taux_de_change', 'money', array(
             'label' => $this->getFieldLabel('taux_de_change'),

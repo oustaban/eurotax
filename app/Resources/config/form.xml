@@ -13,6 +13,9 @@
         <service id="form.type.percent" class="Application\Form\Type\PercentType">
             <tag name="form.type" alias="percent" />
         </service>
+        <service id="form.type.mois" class="Application\Form\Type\MoisType">
+            <tag name="form.type" alias="mois" />
+        </service>
     </services>
 
 </container>
