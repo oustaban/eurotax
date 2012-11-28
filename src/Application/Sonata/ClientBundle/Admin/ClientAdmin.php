@@ -124,6 +124,7 @@ class ClientAdmin extends Admin
             ->add('mode_denregistrement', null, array('label' => 'form.mode_denregistrement', 'empty_value' => '', 'required' => true))
             ->with('form.client.row11')
             ->add('siret', null, array('label' => 'form.siret', 'required' => false,))
+            ->add('N_TVA_FR', null, array('label' => 'form.N_TVA_FR'))
             ->with('form.client.row12')
             ->add('periodicite_facturation', null, array('label' => 'form.periodicite_facturation'))
             ->with('form.client.row13')

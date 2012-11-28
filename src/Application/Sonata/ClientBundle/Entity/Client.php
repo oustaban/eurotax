@@ -356,6 +356,13 @@ class Client
     protected $tarifs;
 
     /**
+     * @var string $N_TVA_FR
+     *
+     * @ORM\Column(name="N_TVA_FR", type="string", length=100, nullable=true)
+     */
+    private $N_TVA_FR;
+
+    /**
      * Returns a string representation
      *
      * @return string
@@ -1756,5 +1763,28 @@ class Client
     public function getTarifs()
     {
         return $this->tarifs;
+    }
+
+    /**
+     * Set N_TVA_FR
+     *
+     * @param string $nTVAFR
+     * @return Client
+     */
+    public function setNTVAFR($nTVAFR)
+    {
+        $this->N_TVA_FR = $nTVAFR;
+    
+        return $this;
+    }
+
+    /**
+     * Get N_TVA_FR
+     *
+     * @return string 
+     */
+    public function getNTVAFR()
+    {
+        return $this->N_TVA_FR;
     }
 }

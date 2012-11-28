@@ -24,6 +24,7 @@ form:
   niveau_dobligation_id: Niveau d'obligation
   teledeclaration: Télédéclaration
   code_client: Code Client
+  N_TVA_FR: N° TVA FR
 
   Contact:
     title: Ajouter / Modifier un contact
@@ -147,6 +148,7 @@ list:
   solde_du_compte: Solde compte
   remboursement_de_TVA: Rbst TVA
   code_client: Code Client
+  N_TVA_FR: N° TVA FR
 
   Contact:
     title: Contact
@@ -256,6 +258,7 @@ filter:
   date_de_depot_id: Date de dépot
   N_TVA_CEE: N° TVA CEE
   niveau_dobligation_id: Niveau d'obligation
+  N_TVA_FR: N° TVA FR
 
 Client List: Clients
 Contact List: Contacts

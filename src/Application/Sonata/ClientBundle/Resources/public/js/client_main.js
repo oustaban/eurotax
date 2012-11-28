@@ -111,6 +111,18 @@ jQuery(document).ready(function ($) {
                 }
             });
         }
+
+        var $N_TVA_FR = $('#' + uniqid + '_N_TVA_FR');
+        var $N_TVA_FR_label = $('#sonata-ba-field-container-' + uniqid + '_N_TVA_FR label');
+
+        if ($(this).val() == 1) {
+            $N_TVA_FR.attr('required', 'required');
+            add_label_required($N_TVA_FR_label);
+        }
+        else {
+            $N_TVA_FR.removeAttr('required');
+            rm_label_required($N_TVA_FR_label);
+        }
     }).trigger('change');
 
 });
