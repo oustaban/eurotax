@@ -2,6 +2,7 @@
 
 namespace Application\Sonata\ClientBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +42,7 @@ class Client
     /**
      * @var string $nom
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="nom", type="string", length=200)
      */
     private $nom;
@@ -56,6 +58,7 @@ class Client
     /**
      * @var string $raison_sociale
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="raison_sociale", type="string", length=100)
      */
     private $raison_sociale = "";
@@ -63,6 +66,7 @@ class Client
     /**
      * @var string $adresse_1_postal
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="adresse_1_postal", type="string", length=100)
      */
     private $adresse_1_postal = "";
@@ -77,6 +81,7 @@ class Client
     /**
      * @var string $code_postal_postal
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="code_postal_postal", type="string", length=20)
      */
     private $code_postal_postal = "";
@@ -84,6 +89,7 @@ class Client
     /**
      * @var string $ville_postal
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="ville_postal", type="string", length=50)
      */
     private $ville_postal = "";
@@ -91,6 +97,7 @@ class Client
     /**
      * @var string $pays_id_postal
      *
+     * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="ListCountries")
      * @ORM\JoinColumn(name="pays_id_postal", referencedColumnName="code")
      */
@@ -106,6 +113,7 @@ class Client
     /**
      * @var \DateTime $date_debut_mission
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="date_debut_mission", type="date")
      */
     private $date_debut_mission;
@@ -248,6 +256,7 @@ class Client
     /**
      * @var integer $date_de_depot_id
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="date_de_depot_id", type="integer")
      */
     private $date_de_depot_id;

@@ -61,8 +61,7 @@ class CoordonneesAdmin extends Admin
             array('type' => 'location'))
             ->add('no_de_compte', null, array('label' => $this->getFieldLabel('no_de_compte')))
             ->add('code_swift', null, array('label' => $this->getFieldLabel('code_swift')))
-            ->add('IBAN', null, array('label' => $this->getFieldLabel('IBAN')))
-            ->add('SEPA', null, array('label' => $this->getFieldLabel('SEPA')));
+            ->add('IBAN', null, array('label' => $this->getFieldLabel('IBAN')));
     }
 
     /**
@@ -92,7 +91,7 @@ class CoordonneesAdmin extends Admin
             ->add('code_swift', null, array('label' => $this->getFieldLabel('code_swift')))
             ->add('pays.name', null, array('label' => $this->getFieldLabel('pays_id')))
             ->add('IBAN', null, array('label' => $this->getFieldLabel('IBAN')))
-            ->add('SEPA', null, array('label' => $this->getFieldLabel('SEPA')));
+            ->add('pays.sepa', null, array('label' => $this->getFieldLabel('SEPA')));
     }
 
 

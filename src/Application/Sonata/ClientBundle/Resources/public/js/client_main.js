@@ -18,26 +18,31 @@ jQuery(document).ready(function ($) {
 
     $('#' + uniqid + '_autre_destinataire_de_facturation').change(function () {
 
+        var $raison_sociale_2 = $('#sonata-ba-field-container-' + uniqid + '_raison_sociale_2 label');
+
         if ($(this).attr('checked') != 'checked') {
 
             $('#clone_address').die();
             $.each(fields_address, function (i, field) {
-                $('#' + uniqid + '_location_facturation_' + field + '_facturation').attr('disabled', 'disabled').val('');
+                $('#' + uniqid + '_location_facturation_' + field + '_facturation').attr('disabled', 'disabled').val('').removeAttr('required');
                 rm_label_required($('#sonata-ba-field-container-' + uniqid + '_location_facturation_' + field + '_facturation label'));
             });
-            $('#' + uniqid + '_raison_sociale_2').attr('disabled', 'disabled').val('');
+
+            $('#' + uniqid + '_raison_sociale_2').attr('disabled', 'disabled').val('').removeAttr('required');
             $('#' + uniqid + '_N_TVA_CEE_facture').attr('disabled', 'disabled').val('');
 
-
+            rm_label_required($raison_sociale_2);
         }
         else {
             copy_address();
             $.each(fields_address, function (i, field) {
-                $('#' + uniqid + '_location_facturation_' + field + '_facturation').removeAttr('disabled');
+                $('#' + uniqid + '_location_facturation_' + field + '_facturation').removeAttr('disabled').attr('required', 'required');
                 add_label_required($('#sonata-ba-field-container-' + uniqid + '_location_facturation_' + field + '_facturation label'));
             });
-            $('#' + uniqid + '_raison_sociale_2').removeAttr('disabled');
+            $('#' + uniqid + '_raison_sociale_2').removeAttr('disabled').attr('required', 'required');
             $('#' + uniqid + '_N_TVA_CEE_facture').removeAttr('disabled');
+
+            add_label_required($raison_sociale_2);
         }
 
 
@@ -46,16 +51,32 @@ jQuery(document).ready(function ($) {
 
     $('#' + uniqid + '_location_postal_pays_postal').change(function () {
 
-        var N_TVA_CEE = $('#' + uniqid + '_N_TVA_CEE');
-        var N_TVA_CEE_label = $('#sonata-ba-field-container-' + uniqid + '_N_TVA_CEE label');
+        var $N_TVA_CEE = $('#' + uniqid + '_N_TVA_CEE');
+        var $N_TVA_CEE_label = $('#sonata-ba-field-container-' + uniqid + '_N_TVA_CEE label');
 
         if (Sonata.country_eu[$(this).val()]) {
-            N_TVA_CEE.attr('required', 'required');
-            add_label_required(N_TVA_CEE_label);
+            $N_TVA_CEE.attr('required', 'required');
+            add_label_required($N_TVA_CEE_label);
         }
         else {
-            N_TVA_CEE.removeAttr('required');
-            rm_label_required(N_TVA_CEE_label);
+            $N_TVA_CEE.removeAttr('required');
+            rm_label_required($N_TVA_CEE_label);
+        }
+
+    }).trigger('change');
+
+    $('#' + uniqid + '_location_facturation_pays_facturation').change(function () {
+
+        var $N_TVA_CEE = $('#' + uniqid + '_N_TVA_CEE_facture');
+        var $N_TVA_CEE_label = $('#sonata-ba-field-container-' + uniqid + '_N_TVA_CEE_facture label');
+
+        if (Sonata.country_eu[$(this).val()]) {
+            $N_TVA_CEE.attr('required', 'required');
+            add_label_required($N_TVA_CEE_label);
+        }
+        else {
+            $N_TVA_CEE.removeAttr('required');
+            rm_label_required($N_TVA_CEE_label);
         }
 
     }).trigger('change');
@@ -106,12 +127,13 @@ function copy_address() {
         $('#' + uniqid + '_raison_sociale_2').val($('#' + uniqid + '_raison_sociale').val());
         $('#' + uniqid + '_N_TVA_CEE_facture').val($('#' + uniqid + '_N_TVA_CEE').val());
 
+        $('#' + uniqid + '_location_facturation_pays_facturation').change();
         return false;
     });
 }
 
 /**
-  * @param e
+ * @param e
  * @return {Boolean}
  */
 function required_spaces(e) {

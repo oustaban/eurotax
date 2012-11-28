@@ -25,7 +25,7 @@ class ListCountries
     /**
      * @var string $sepa
      *
-     * @ORM\Column(name="sepa", type="string", length=3, nullable=true)
+     * @ORM\Column(name="sepa", type="boolean", nullable=true)
      */
     private $sepa;
 
@@ -59,6 +59,15 @@ class ListCountries
     public static function getCountryEU()
     {
         return \AppKernel::getStaticContainer()->get('doctrine')->getRepository('ApplicationSonataClientBundle:ListCountries')->findEU();
+    }
+
+    /**
+     * @static
+     * @return array
+     */
+    public static function getCountryEUCode()
+    {
+        return array_keys(self::getCountryEU());
     }
 
 

@@ -98,14 +98,6 @@ class Coordonnees
 
 
     /**
-     * @var string $SEPA
-     *
-     * @ORM\Column(name="SEPA", type="string", length=100, nullable=true)
-     */
-    private $SEPA;
-
-
-    /**
      * @var string $orders
      *
      * @ORM\Column(name="orders", type="integer", nullable=true)
@@ -297,28 +289,6 @@ class Coordonnees
         return $this->IBAN;
     }
 
-    /**
-     * Set SEPA
-     *
-     * @param string $sEPA
-     * @return Coordonnees
-     */
-    public function setSEPA($sEPA)
-    {
-        $this->SEPA = $sEPA;
-
-        return $this;
-    }
-
-    /**
-     * Get SEPA
-     *
-     * @return string
-     */
-    public function getSEPA()
-    {
-        return $this->SEPA;
-    }
 
     /**
      * Set code_swift
