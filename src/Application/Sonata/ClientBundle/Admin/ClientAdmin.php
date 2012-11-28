@@ -147,7 +147,7 @@ class ClientAdmin extends Admin
             ->add('center_des_impots', null, array('label' => 'form.center_des_impots', 'empty_value' => '', 'required' => true))
             ->add('teledeclaration', null, array('label' => 'form.teledeclaration'))
             ->with('form.client.row17')
-            ->add('language', null, array('label' => 'form.language'))
+            ->add('language', null, array('label' => 'form.language', 'empty_value' => '', 'required' => true))
             ->add('niveau_dobligation_id', 'choice', array(
             'label' => 'form.niveau_dobligation_id',
             'choices' => $this->getNiveauDobligationIdChoise(),
