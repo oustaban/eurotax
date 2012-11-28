@@ -232,8 +232,8 @@ ApplicationSonataClientOperationsBundle:
       commentaires: Commentaires
       n_ligne: N° Ligne
       nomenclature: Nomenclature
-      pays_id_destination: Pays Destination
-      pays_destination: Pays Destination
+      pays_id_destination: Pays de provenance
+      pays_destination: Pays de provenance
       valeur_fiscale: Valeur Fiscale
       valeur_statistique: Valeur Statistique
       masse_mette: Masse Nette
