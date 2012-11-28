@@ -46,7 +46,7 @@ class ImpotsAdmin extends Admin
             ->add('no_de_compte', null, array('label' => $label . 'no_de_compte'))
             ->add('code_swift', null, array('label' => $label . 'code_swift'))
             ->add('IBAN', null, array('label' => $label . 'IBAN'))
-            ->add('SEPA', null, array('label' => $label . 'SEPA'));
+            ;
     }
 
     //filter form
@@ -62,7 +62,7 @@ class ImpotsAdmin extends Admin
             ->add('no_de_compte', null, array('label' => $label . 'no_de_compte'))
             ->add('code_swift', null, array('label' => $label . 'code_swift'))
             ->add('IBAN', null, array('label' => $label . 'IBAN'))
-            ->add('SEPA', null, array('label' => $label . 'SEPA'));
+            ;
     }
 
     //list
@@ -81,7 +81,7 @@ class ImpotsAdmin extends Admin
             ->add('no_de_compte', null, array('label' => $label . 'no_de_compte'))
             ->add('code_swift', null, array('label' => $label . 'code_swift'))
             ->add('IBAN', null, array('label' => $label . 'IBAN'))
-            ->add('SEPA', null, array('label' => $label . 'SEPA'));
+            ->add('pays.sepa', null, array('label' => $label . 'SEPA'));
     }
 
     /**

@@ -57,13 +57,6 @@ class Impots
     private $IBAN;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="SEPA", type="string", length=200)
-     */
-    private $SEPA;
-
-    /**
      * @var string $adresse_1
      *
      * @ORM\Column(name="adresse_1", type="string", length=100)
@@ -243,29 +236,6 @@ class Impots
     public function getIBAN()
     {
         return $this->IBAN;
-    }
-
-    /**
-     * Set SEPA
-     *
-     * @param string $sEPA
-     * @return Impots
-     */
-    public function setSEPA($sEPA)
-    {
-        $this->SEPA = $sEPA;
-
-        return $this;
-    }
-
-    /**
-     * Get SEPA
-     *
-     * @return string
-     */
-    public function getSEPA()
-    {
-        return $this->SEPA;
     }
 
     /**

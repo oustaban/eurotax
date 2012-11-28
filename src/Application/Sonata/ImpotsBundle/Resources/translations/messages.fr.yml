@@ -4,7 +4,6 @@ form:
   no_de_compte: No de Compte
   code_swift: Code Swift
   IBAN: IBAN
-  SEPA: SEPA
 
 list:
   id: ID
@@ -29,6 +28,5 @@ filter:
   no_de_compte: No de Compte
   code_swift: Code Swift
   IBAN: IBAN
-  SEPA: SEPA
 
 Impots List: Centres des Impots
