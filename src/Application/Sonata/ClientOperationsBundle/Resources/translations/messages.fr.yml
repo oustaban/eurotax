@@ -66,7 +66,7 @@ ApplicationSonataClientOperationsBundle:
       paiement_montant: Paiement Montant
       paiement_devise_id: Paiement Devise
       paiement_devise: Paiement Devise
-      paiement_date: Paiement Date
+      paiement_date: Date du paiement
       mois: Mois
       taux_de_change: Taux de change
       HT: HT

@@ -51,6 +51,7 @@ class V01TVAAdmin extends Admin
         },))
             ->add('paiement_date', null, array(
                 'label' => $this->getFieldLabel('paiement_date'),
+                'required' => false,
                 'attr' => array('class' => 'datepicker'),
                 'widget' => 'single_text',
                 'input' => 'datetime',

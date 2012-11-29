@@ -58,7 +58,7 @@ class V01TVA extends AbstractSellEntity
      * @var \DateTime $paiement_date
      *
      * @Assert\NotBlank()
-     * @ORM\Column(name="paiement_date", type="date")
+     * @ORM\Column(name="paiement_date", type="date", nullable=true)
      */
     private $paiement_date;
 
