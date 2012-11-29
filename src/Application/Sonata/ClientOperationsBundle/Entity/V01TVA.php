@@ -4,6 +4,7 @@ namespace Application\Sonata\ClientOperationsBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Application\Sonata\ClientBundle\Entity\ListDevises;
 
 /**
  * Application\Sonata\ClientOperationsBundle\Entity\V01TVA
@@ -69,6 +70,10 @@ class V01TVA extends AbstractSellEntity
      * @ORM\Column(name="TVA", type="float")
      */
     private $TVA;
+
+    public function __construct(){
+        $this->paiement_devise = ListDevises::getDefault();
+    }
 
 
     /**
