@@ -4,6 +4,7 @@ namespace Application\Sonata\ClientOperationsBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Application\Sonata\ClientBundle\Entity\ListDevises;
 
 /**
  * Application\Sonata\ClientOperationsBundle\Entity\A06AIB
@@ -14,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 class A06AIB extends AbstractBuyEntity
 {
     /**
-     * @var integer $devise
+     * @var ListDevises $devise
      *
      * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="\Application\Sonata\ClientBundle\Entity\ListDevises", inversedBy="BaseListDevises")
@@ -165,6 +166,13 @@ class A06AIB extends AbstractBuyEntity
      */
     private $TVA;
 
+
+
+    public function __construct(){
+        parent::__construct();
+
+        $this->devise = ListDevises::getDefault();
+    }
 
     /**
      * Set montant_HT_en_devise

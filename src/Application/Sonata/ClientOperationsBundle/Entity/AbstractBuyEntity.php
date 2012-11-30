@@ -48,6 +48,11 @@ abstract class AbstractBuyEntity extends AbstractBaseEntity
     private $commentaires;
 
 
+
+    public function __construct(){
+        parent::__construct();
+    }
+
     /**
      * @return string
      */

@@ -4,7 +4,7 @@ namespace Application\Sonata\ClientOperationsBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
-
+use Application\Sonata\ClientBundle\Entity\ListDevises;
 
 /**
  * Application\Sonata\ClientOperationsBundle\Entity\AbstractSellEntity
@@ -47,7 +47,7 @@ abstract class AbstractSellEntity extends AbstractBaseEntity
     private $HT;
 
     /**
-     * @var integer $devise
+     * @var ListDevises $devise
      *
      * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="\Application\Sonata\ClientBundle\Entity\ListDevises")
@@ -78,6 +78,13 @@ abstract class AbstractSellEntity extends AbstractBaseEntity
      * @ORM\Column(name="commentaires", type="text", nullable=true)
      */
     private $commentaires;
+
+
+    public function __construct(){
+        parent::__construct();
+
+        $this->devise = ListDevises::getDefault();
+    }
 
 
     /**
