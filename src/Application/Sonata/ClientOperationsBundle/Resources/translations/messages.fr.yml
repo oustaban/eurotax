@@ -64,7 +64,7 @@ ApplicationSonataClientOperationsBundle:
       montant_TVA_francaise: Montant TVA française
       montant_TTC: Montant TTC
       paiement_montant: Paiement Montant
-      paiement_devise_id: Paiement Devise
+      paiement_devise_id: Devise du paiement
       paiement_devise: Devise du paiement
       paiement_date: Date du paiement
       mois: Mois
@@ -176,8 +176,8 @@ ApplicationSonataClientOperationsBundle:
       montant_TVA_francaise: Montant TVA française
       montant_TTC: Montant TTC
       paiement_montant: Paiement Montant
-      paiement_devise_id: Paiement Devise
-      paiement_devise: Paiement Devise
+      paiement_devise_id: Devise du paiement
+      paiement_devise: Devise du paiement
       paiement_date: Date du paiement
       mois: Mois
       taux_de_change: Taux de change
@@ -429,8 +429,8 @@ ApplicationSonataClientOperationsBundle:
       montant_TVA_francaise: Montant TVA française
       montant_TTC: Montant TTC
       paiement_montant: Paiement Montant
-      paiement_devise_id: Paiement Devise
-      paiement_devise: Paiement Devise
+      paiement_devise_id: Devise du paiement
+      paiement_devise: Devise du paiement
       paiement_date: Date du paiement
       mois: Mois
       taux_de_change: Taux de change
