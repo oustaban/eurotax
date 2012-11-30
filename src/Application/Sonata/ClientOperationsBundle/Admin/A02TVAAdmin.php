@@ -50,8 +50,9 @@ class A02TVAAdmin extends Admin
             return $er->createQueryBuilder('d')
                 ->orderBy('d.alias', 'ASC');
         },))
-            ->add('paiement_date', null, array('label' =>
-            $this->getFieldLabel('paiement_date'),
+            ->add('paiement_date', null, array(
+                'label' =>$this->getFieldLabel('paiement_date'),
+                'required' => false,
                 'attr' => array('class' => 'datepicker'),
                 'widget' => 'single_text',
                 'input' => 'datetime',
