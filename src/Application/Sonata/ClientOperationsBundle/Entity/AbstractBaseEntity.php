@@ -52,6 +52,11 @@ abstract class AbstractBaseEntity
      */
     private $status;
 
+
+
+    public function __construct(){
+    }
+
     public function __clone()
     {
         $this->id = null;

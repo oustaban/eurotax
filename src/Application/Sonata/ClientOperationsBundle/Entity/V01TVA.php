@@ -47,7 +47,7 @@ class V01TVA extends AbstractSellEntity
     private $paiement_montant;
 
     /**
-     * @var integer $paiement_devise
+     * @var ListDevises $paiement_devise
      *
      * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="\Application\Sonata\ClientBundle\Entity\ListDevises", inversedBy="BaseListDevises")
@@ -58,7 +58,6 @@ class V01TVA extends AbstractSellEntity
     /**
      * @var \DateTime $paiement_date
      *
-     * @Assert\NotBlank()
      * @ORM\Column(name="paiement_date", type="date", nullable=true)
      */
     private $paiement_date;
@@ -72,6 +71,8 @@ class V01TVA extends AbstractSellEntity
     private $TVA;
 
     public function __construct(){
+        parent::__construct();
+
         $this->paiement_devise = ListDevises::getDefault();
     }
 
@@ -80,7 +81,7 @@ class V01TVA extends AbstractSellEntity
      * Set taux_de_TVA
      *
      * @param float $tauxDeTVA
-     * @return V01_TVA
+     * @return V01TVA
      */
     public function setTauxDeTVA($tauxDeTVA)
     {
@@ -103,7 +104,7 @@ class V01TVA extends AbstractSellEntity
      * Set montant_TVA_francaise
      *
      * @param float $montantTVAFrancaise
-     * @return V01_TVA
+     * @return V01TVA
      */
     public function setMontantTVAFrancaise($montantTVAFrancaise)
     {
@@ -126,7 +127,7 @@ class V01TVA extends AbstractSellEntity
      * Set montant_TTC
      *
      * @param float $montantTTC
-     * @return V01_TVA
+     * @return V01TVA
      */
     public function setMontantTTC($montantTTC)
     {
@@ -149,7 +150,7 @@ class V01TVA extends AbstractSellEntity
      * Set paiement_montant
      *
      * @param float $paiementMontant
-     * @return V01_TVA
+     * @return V01TVA
      */
     public function setPaiementMontant($paiementMontant)
     {
@@ -173,7 +174,7 @@ class V01TVA extends AbstractSellEntity
      * Set paiement_date
      *
      * @param \DateTime $paiementDate
-     * @return V01_TVA
+     * @return V01TVA
      */
     public function setPaiementDate($paiementDate)
     {
@@ -196,7 +197,7 @@ class V01TVA extends AbstractSellEntity
      * Set TVA
      *
      * @param float $TVA
-     * @return V01_TVA
+     * @return V01TVA
      */
     public function setTVA($TVA)
     {

@@ -120,6 +120,12 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
      */
     private $CEE;
 
+
+
+    public function __construct(){
+        parent::__construct();
+    }
+
     /**
      * @return string
      */
@@ -459,7 +465,7 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     public function setPaysDestination(\Application\Sonata\ClientBundle\Entity\ListCountries $paysDestination = null)
     {
         $this->pays_destination = $paysDestination;
-    
+
         return $this;
     }
 
@@ -482,7 +488,7 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     public function setPaysOrigine(\Application\Sonata\ClientBundle\Entity\ListCountries $paysOrigine = null)
     {
         $this->pays_origine = $paysOrigine;
-    
+
         return $this;
     }
 

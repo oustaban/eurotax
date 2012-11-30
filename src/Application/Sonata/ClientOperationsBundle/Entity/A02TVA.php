@@ -4,6 +4,7 @@ namespace Application\Sonata\ClientOperationsBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Application\Sonata\ClientBundle\Entity\ListDevises;
 
 /**
  * Application\Sonata\ClientOperationsBundle\Entity\A02TVA
@@ -14,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 class A02TVA extends AbstractBuyEntity
 {
     /**
-     * @var integer $devise
+     * @var ListDevises $devise
      *
      * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="\Application\Sonata\ClientBundle\Entity\ListDevises", inversedBy="BaseListDevises")
@@ -64,7 +65,7 @@ class A02TVA extends AbstractBuyEntity
 
 
     /**
-     * @var integer $devise
+     * @var ListDevises $paiement_devise
      *
      * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="\Application\Sonata\ClientBundle\Entity\ListDevises", inversedBy="A02TVA")
@@ -75,8 +76,7 @@ class A02TVA extends AbstractBuyEntity
     /**
      * @var \DateTime $paiement_date
      *
-     * @Assert\NotBlank()
-     * @ORM\Column(name="paiement_date", type="date")
+     * @ORM\Column(name="paiement_date", type="date", nullable=true)
      */
     private $paiement_date;
 
@@ -104,6 +104,14 @@ class A02TVA extends AbstractBuyEntity
      */
     private $TVA;
 
+
+
+    public function __construct(){
+        parent::__construct();
+
+        $this->devise = ListDevises::getDefault();
+        $this->paiement_devise = ListDevises::getDefault();
+    }
 
 
     /**

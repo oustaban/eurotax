@@ -15,6 +15,11 @@ class ListDevises
     const Device = 'EUR';
 
     /**
+     * @var ListDevises|null
+     */
+    private static $default = null;
+
+    /**
      * @var integer $id
      *
      * @ORM\Column(name="id", type="integer")
@@ -53,16 +58,20 @@ class ListDevises
     private $symbol;
 
     /**
-     * @return object
+     * @return ListDevises
      */
     public static function getDefault()
     {
-        /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
-        $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
-        /* @var $em \Doctrine\ORM\EntityManager */
-        $em = $doctrine->getManager();
+        if (is_null(static::$default)){
+            /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+            $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+            /* @var $em \Doctrine\ORM\EntityManager */
+            $em = $doctrine->getManager();
 
-        return $em->getRepository('ApplicationSonataClientBundle:ListDevises')->findOneByAlias(static::Device);
+            static::$default = $em->getRepository('ApplicationSonataClientBundle:ListDevises')->findOneByAlias(static::Device);
+        }
+
+        return static::$default;
     }
 
     /***

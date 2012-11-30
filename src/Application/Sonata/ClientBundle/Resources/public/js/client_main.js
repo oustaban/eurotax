@@ -19,6 +19,7 @@ jQuery(document).ready(function ($) {
     $('#' + uniqid + '_autre_destinataire_de_facturation').change(function () {
 
         var $raison_sociale_2 = $('#sonata-ba-field-container-' + uniqid + '_raison_sociale_2 label');
+        var $N_TVA_CEE_facture = $('#sonata-ba-field-container-' + uniqid + '_N_TVA_CEE_facture label');
 
         if ($(this).attr('checked') != 'checked') {
 
@@ -29,9 +30,10 @@ jQuery(document).ready(function ($) {
             });
 
             $('#' + uniqid + '_raison_sociale_2').attr('disabled', 'disabled').val('').removeAttr('required');
-            $('#' + uniqid + '_N_TVA_CEE_facture').attr('disabled', 'disabled').val('');
+            $('#' + uniqid + '_N_TVA_CEE_facture').attr('disabled', 'disabled').val('').removeAttr('required');
 
             rm_label_required($raison_sociale_2);
+            rm_label_required($N_TVA_CEE_facture);
         }
         else {
             copy_address();
@@ -43,6 +45,7 @@ jQuery(document).ready(function ($) {
             $('#' + uniqid + '_N_TVA_CEE_facture').removeAttr('disabled');
 
             add_label_required($raison_sociale_2);
+            $('#' + uniqid + '_location_facturation_pays_facturation').change();
         }
 
 
