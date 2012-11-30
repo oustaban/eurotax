@@ -71,21 +71,62 @@ class ContactAdmin extends Admin
 
     /**
      * @param ErrorElement $errorElement
-     * @param mixed $object
+     * @param \Application\Sonata\ClientBundle\Entity\Contact $object
      */
     public function validate(ErrorElement $errorElement, $object)
     {
         /* @var $object \Application\Sonata\ClientBundle\Entity\Contact */
         parent::validate($errorElement, $object);
 
+        $this->_setupValidate($errorElement, $object);
+
         $this->_setupAlerts($errorElement, $object);
     }
 
     /**
-     * @param $errorElement
-     * @param $object \Application\Sonata\ClientBundle\Entity\Contact
+     * @param ErrorElement $errorElement
+     * @param \Application\Sonata\ClientBundle\Entity\Contact $object
      */
-    protected function _setupAlerts($errorElement, $object)
+    protected function _setupValidate(ErrorElement $errorElement, $object)
+    {
+        /** http://redmine.testenm.com/issues/1378  */
+
+        $value = $object->getAffichageFactureId();
+        if ($value) {
+
+            /** @var $doctrine  \Doctrine\Bundle\DoctrineBundle\Registry */
+            $doctrine = $this->getConfigurationPool()->getContainer()->get('doctrine');
+
+            /* @var $em \Doctrine\ORM\EntityManager */
+            $em = $doctrine->getManager();
+
+            /** @var $dql \Doctrine\ORM\QueryBuilder */
+            $dql = $em->createQueryBuilder()
+                ->select('count(c.id)')
+                ->from('ApplicationSonataClientBundle:Contact', 'c')
+                ->where('c.client = :client')
+                ->andWhere('c.affichage_facture_id = :affichage_facture_id')
+                ->setParameter(':client', $object->getClient())
+                ->setParameter(':affichage_facture_id', $value);
+
+            // Edit
+            if ($object->getId()) {
+                $dql->andWhere('c.id != :id')->setParameter(':id', $object->getId());
+            }
+
+            $count = $dql->getQuery()->getSingleScalarResult();
+
+            if ($count) {
+                $errorElement->with('affichage_facture_id')->addViolation('Un contact a déjà ce N° ordre facturation')->end();
+            }
+        }
+    }
+
+    /**
+     * @param ErrorElement $errorElement
+     * @param \Application\Sonata\ClientBundle\Entity\Contact $object
+     */
+    protected function _setupAlerts(ErrorElement $errorElement, $object)
     {
         /** @var $doctrine  \Doctrine\Bundle\DoctrineBundle\Registry */
         $doctrine = $this->getConfigurationPool()->getContainer()->get('doctrine');
