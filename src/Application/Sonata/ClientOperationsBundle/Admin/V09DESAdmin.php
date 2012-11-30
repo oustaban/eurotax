@@ -43,11 +43,8 @@ class V09DESAdmin extends Admin
             'label' => $this->getFieldLabel('mois'),
         ))
             ->add('mois_complementaire', null, array('label' => $this->getFieldLabel('mois_complementaire')))
-            ->add('taux_de_change', 'money', array(
+            ->add('taux_de_change', null, array(
             'label' => $this->getFieldLabel('taux_de_change'),
-            'precision' => 5,
-            'divisor' => 1,
-            'currency' => 'EUR',
             'required' => false,
         ))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT')))
@@ -75,7 +72,7 @@ class V09DESAdmin extends Admin
             'template' => $this->_bundle_name . ':CRUD:list_mois.html.twig',
         ))
             ->add('mois_complementaire', null, array('label' => $this->getFieldLabel('mois_complementaire')))
-            ->add('taux_de_change', 'money', array('label' => $this->getFieldLabel('taux_de_change')))
+            ->add('taux_de_change', null, array('label' => $this->getFieldLabel('taux_de_change')))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:HT.html.twig'))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
     }

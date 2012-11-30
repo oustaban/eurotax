@@ -42,11 +42,8 @@ class V05LICAdmin extends Admin
             ->add('mois', 'mois', array(
             'label' => $this->getFieldLabel('mois'),
         ))
-            ->add('taux_de_change', 'money', array(
+            ->add('taux_de_change', null, array(
             'label' => $this->getFieldLabel('taux_de_change'),
-            'precision' => 5,
-            'divisor' => 1,
-            'currency' => 'EUR',
             'required' => false,
         ))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT')))
@@ -55,7 +52,7 @@ class V05LICAdmin extends Admin
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')))
             ->add('n_ligne', null, array('label' => $this->getFieldLabel('n_ligne')))
             ->add('nomenclature', null, array('label' => $this->getFieldLabel('nomenclature')))
-            ->add('pays_destination', null, array('label' => $this->getFieldLabel('pays_id_destination'), 'property'=>'code'))
+            ->add('pays_destination', null, array('label' => $this->getFieldLabel('pays_id_destination'), 'property' => 'code'))
             ->add('valeur_fiscale', 'money', array('label' => $this->getFieldLabel('valeur_fiscale')))
             ->add('valeur_statistique', null, array('label' => $this->getFieldLabel('valeur_statistique')))
             ->add('masse_mette', null, array('label' => $this->getFieldLabel('masse_mette')))
@@ -64,7 +61,7 @@ class V05LICAdmin extends Admin
             ->add('conditions_livraison', null, array('label' => $this->getFieldLabel('conditions_livraison')))
             ->add('mode_transport', null, array('label' => $this->getFieldLabel('mode_transport')))
             ->add('departement', null, array('label' => $this->getFieldLabel('departement')))
-            ->add('pays_origine', null, array('label' => $this->getFieldLabel('pays_id_origine'), 'property'=>'code'))
+            ->add('pays_origine', null, array('label' => $this->getFieldLabel('pays_id_origine'), 'property' => 'code'))
             ->add('CEE', null, array('label' => $this->getFieldLabel('CEE')));
     }
 

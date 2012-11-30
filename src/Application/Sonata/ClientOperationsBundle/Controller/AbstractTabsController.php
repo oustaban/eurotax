@@ -11,6 +11,7 @@ use Application\Sonata\ClientOperationsBundle\Entity\Locking;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Application\Sonata\ClientOperationsBundle\Entity\Imports;
 use Application\Tools\mPDF;
+use Application\Sonata\DevisesBundle\Entity\Devises;
 
 class AbstractTabsController extends Controller
 {
@@ -372,6 +373,12 @@ class AbstractTabsController extends Controller
         if ($this->isXmlHttpRequest()) {
             return $data;
         }
+
+        $this->jsSettingsJson(array(
+            'url' => array(
+                'rdevises' => $this->admin->generateUrl('RDevises', array('filter' => array('client_id' => array('value' => $this->client_id)))),
+            ),
+        ));
 
         return $this->render('ApplicationSonataClientOperationsBundle::' . $template . '.html.twig', array(
             'client_id' => $this->client_id,
@@ -779,7 +786,7 @@ class AbstractTabsController extends Controller
         $file_name = $file['name'];
         $validate = false;
 
-        list($y, $m) = explode('-', date('Y-m', strtotime('now'.(date('d')<25?' -1 month':''))));
+        list($y, $m) = explode('-', date('Y-m', strtotime('now' . (date('d') < 25 ? ' -1 month' : ''))));
 
         /**
          *  example file_name
@@ -792,7 +799,7 @@ class AbstractTabsController extends Controller
             array_shift($matches);
             list($nom_client, $year, $month, $version) = $matches;
 
-            if ($year == $y && $month == $m){
+            if ($year == $y && $month == $m) {
 
                 $client = $this->getImportFileValidateNomClient($nom_client);
 
@@ -1316,6 +1323,26 @@ class AbstractTabsController extends Controller
         }
 
         return $page;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function RDevisesAction()
+    {
+        $devise_id = $this->getRequest()->request->get('devise');
+        $date_piece = $this->getRequest()->request->get('date_piece');
+
+        if (!$devise_id && !$date_piece) {
+            throw new NotFoundHttpException('Must be devise and date_piece');
+        }
+
+        $value = Devises::getDevisesValue($devise_id, \DateTime::createFromFormat('d/m/Y', $date_piece));
+
+        return $this->renderJson(array(
+            'value' => $value,
+        ));
     }
 
     /**

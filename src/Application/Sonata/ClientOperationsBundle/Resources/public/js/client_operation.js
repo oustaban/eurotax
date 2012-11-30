@@ -5,14 +5,43 @@ jQuery(document).ready(function ($) {
         return false;
     });
 
-    symfony_ajax.MontantTVAfrancaiseAndMontantTTC = symfony_ajax.MontantTVAfrancaiseAndMontantTTC || {};
-    symfony_ajax.MontantTVAfrancaiseAndMontantTTC.calc = function () {
+    //-- get Devises money value
+    symfony_ajax.rDevises = symfony_ajax.rDevises || {};
 
-        $('#' + _uniqid + '_montant_TVA_francaise').val('2222');
-        $('#' + _uniqid + '_montant_TTC').val('111');
+    symfony_ajax.rDevises.getDevises = function () {
+        var _uniqid = symfony_ajax.get_uniqid();
 
+        //TODO Date AND Devises
+        var devise = $('#' + _uniqid + '_paiement_devise :selected').val();
+        var date_piece = $('#' + _uniqid + '_paiement_date').val();
+
+        if (devise && date_piece) {
+            $.ajax({
+                url:Sonata.url.rdevises,
+                type:'POST',
+                data:{
+                    'devise':devise,
+                    'date_piece':date_piece
+                },
+                dataType:'json',
+                async:false,
+                success:function (i) {
+                    $('#' + _uniqid + '_taux_de_change').val(i.value ? i.value : '');
+                }
+            })
+        }
     };
 
+    symfony_ajax.behaviors.rDevises = {
+        attach:function (context) {
+            var _uniqid = symfony_ajax.get_uniqid();
+            if (_uniqid) {
+                $('#' + _uniqid + '_paiement_devise, #' + _uniqid + '_paiement_date', context).change(symfony_ajax.rDevises.getDevises);
+            }
+        }
+    };
+
+    //-- Calc MontantTVAfrancaiseAndMontantTTC
     symfony_ajax.behaviors.calcMontantTVAfrancaiseAndMontantTTC = {
         attach:function (context) {
             var _uniqid = symfony_ajax.get_uniqid();
@@ -34,7 +63,6 @@ jQuery(document).ready(function ($) {
             var $montant_HT_en_devise = $('#' + _uniqid + '_montant_HT_en_devise');
             var $taux_de_TVA = $('#' + _uniqid + '_taux_de_TVA');
 
-            //TODO limit
             substr_replace($montant_HT_en_devise, 2);
             substr_replace($taux_de_TVA, 3);
 

@@ -41,11 +41,8 @@ class V03283IAdmin extends Admin
             ->add('montant_HT_en_devise', 'money', array('label' => $this->getFieldLabel('montant_HT_en_devise')))
             ->add('mois', 'mois', array(
             'label' => $this->getFieldLabel('mois'),
-        ))->add('taux_de_change', 'money', array(
+        ))->add('taux_de_change', null, array(
             'label' => $this->getFieldLabel('taux_de_change'),
-            'precision' => 5,
-            'divisor' => 1,
-            'currency' => 'EUR',
             'required' => false,
         ))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT')))
@@ -72,7 +69,7 @@ class V03283IAdmin extends Admin
             'label' => $this->getFieldLabel('mois'),
             'template' => $this->_bundle_name . ':CRUD:list_mois.html.twig',
         ))
-            ->add('taux_de_change', 'money', array('label' => $this->getFieldLabel('taux_de_change')))
+            ->add('taux_de_change', null, array('label' => $this->getFieldLabel('taux_de_change')))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:HT.html.twig'));
     }
 

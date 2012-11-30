@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Devises
 {
+    const Device = 'EUR';
+
     /**
      * @var integer $id
      *
@@ -104,6 +106,37 @@ class Devises
     public function __toString()
     {
         return (string)$this->getId() ? : '-';
+    }
+
+    /**
+     * @static
+     * @param $id
+     * @param \DateTime $date
+     * @return int
+     */
+    public static function getDevisesValue($id, \DateTime $date)
+    {
+        /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+        $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $doctrine->getManager();
+
+        /** @var $list_devises \Application\Sonata\ClientBundle\Entity\ListDevises */
+        $list_devises = $em->getRepository('ApplicationSonataClientBundle:ListDevises')->findOneById($id);
+
+        $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate(new \DateTime($date->format('Y-m-01')));
+
+        /** http://redmine.testenm.com/issues/1364 */
+        if ($list_devises->getAlias() == self::Device) {
+            return 1;
+        } elseif ($devise) {
+            $method = 'getMoney' . $list_devises->getAlias();
+            if (method_exists($devise, $method)) {
+
+                return $devise->$method();
+            }
+        }
     }
 
     /**
