@@ -42,11 +42,24 @@ class AbstractTabsController extends Controller
     protected $_year = 0;
     protected $_import_counts = array();
     protected $_import_reports = array();
+    /** @var null|\DateTime */
+    protected $_import_date = null;
     protected $_client_documents = array();
     protected $_client_dir = '';
+
+    /**
+     * @var \Application\Sonata\ClientOperationsBundle\Entity\Imports
+     */
     protected $_imports = null;
+
+    /**
+     * @var array
+     */
     protected $_parameters_url = array();
 
+    /**
+     * @var array
+     */
     protected $_config_excel = array(
         'V01-TVA' => array(
             'name' => 'V01-TVA',
@@ -630,7 +643,7 @@ class AbstractTabsController extends Controller
 
         $this->_imports = new Imports();
         $this->_imports->setUser($users);
-        $this->_imports->setDate(new \DateTime($this->_year . '-' . $this->_month . '-' . date('d H:i:s')));
+        $this->_imports->setDate($this->_import_date);
         $this->_imports->setClientId($this->client_id);
 
         $em->persist($this->_imports);
@@ -798,6 +811,8 @@ class AbstractTabsController extends Controller
 
             array_shift($matches);
             list($nom_client, $year, $month, $version) = $matches;
+
+            $this->_import_date = new \DateTime($year . '-' . $month . '-' . date('d H:i:s'));
 
             if ($year == $y && $month == $m) {
 
