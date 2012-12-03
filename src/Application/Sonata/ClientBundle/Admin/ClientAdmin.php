@@ -290,14 +290,12 @@ class ClientAdmin extends Admin
         parent::validate($errorElement, $object);
 
         //EU validate NotBlank
-        if ($object->getPaysPostal() && $object->getPaysPostal()->getCode() && in_array($object->getPaysPostal()->getCode(), ListCountries::getCountryEUCode())) {
+        if (!$object->getNTVACEE() && $object->getPaysPostal() && $object->getPaysPostal()->getCode() && in_array($object->getPaysPostal()->getCode(), ListCountries::getCountryEUCode())) {
+            $errorElement->with('N_TVA_CEE')->addViolation('This value should not be blank.')->end();
+        }
 
-            if (!$object->getNTVACEE()) {
-                $errorElement->with('N_TVA_CEE')->addViolation('This value should not be blank.')->end();
-            }
-            if (!$object->getNTVACEEFacture()) {
-                $errorElement->with('N_TVA_CEE_facture')->addViolation('This value should not be blank.')->end();
-            }
+        if (!$object->getNTVACEEFacture() && $object->getPaysFacturation() && $object->getPaysFacturation()->getCode() && in_array($object->getPaysFacturation()->getCode(), ListCountries::getCountryEUCode())) {
+            $errorElement->with('N_TVA_CEE_facture')->addViolation('This value should not be blank.')->end();
         }
 
         if ($object->getAutreDestinataireDeFacturation()) {
