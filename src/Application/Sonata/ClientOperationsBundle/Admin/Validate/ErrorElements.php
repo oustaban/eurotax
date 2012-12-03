@@ -319,6 +319,21 @@ class ErrorElements
 
 
     /**
+     * http://redmine.testenm.com/issues/1376
+     * @return ErrorElements
+     */
+    public function validatePaiementDateCloneMois()
+    {
+        /** @var $_object \Application\Sonata\ClientOperationsBundle\Entity\A02TVA|\Application\Sonata\ClientOperationsBundle\Entity\V01TVA */
+        $object = $this->_object;
+
+        if ($object->getPaiementDate() && !$object->getMois()) {
+            $object->setMois($object->getPaiementDate());
+        }
+        return $this;
+    }
+
+    /**
      * @return ErrorElements
      */
     public function validateNomenclature()

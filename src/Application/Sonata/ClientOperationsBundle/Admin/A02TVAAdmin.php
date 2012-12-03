@@ -51,7 +51,7 @@ class A02TVAAdmin extends Admin
                 ->orderBy('d.alias', 'ASC');
         },))
             ->add('paiement_date', null, array(
-                'label' =>$this->getFieldLabel('paiement_date'),
+                'label' => $this->getFieldLabel('paiement_date'),
                 'required' => false,
                 'attr' => array('class' => 'datepicker'),
                 'widget' => 'single_text',
@@ -120,6 +120,7 @@ class A02TVAAdmin extends Admin
 
         $error = new ErrorElements($errorElement, $object);
         $error->setValidateImport($this->getValidateImport())
+            ->validatePaiementDateCloneMois()
             ->validateMontantTVAFrancaise()
             ->validateMontantTTC()
             ->validateTauxDeChange()

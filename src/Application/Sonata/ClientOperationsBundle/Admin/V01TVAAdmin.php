@@ -113,6 +113,7 @@ class V01TVAAdmin extends Admin
 
         $error = new ErrorElements($errorElement, $object);
         $error->setValidateImport($this->getValidateImport())
+            ->validatePaiementDateCloneMois()
             ->validateMontantTVAFrancaise()
             ->validateMontantTTC()
             ->validateTauxDeChange()
