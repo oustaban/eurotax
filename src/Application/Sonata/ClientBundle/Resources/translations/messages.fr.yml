@@ -41,8 +41,8 @@ form:
   Document:
     title: Ajouter / Modifier un document
     document: Document
-    type_document: Type document
-    date_document: Date du document
+    type_document: Type
+    date_document: Date
     preavis: Préavis
     particularite: Particularité
     date_notaire: Notaire
@@ -165,8 +165,8 @@ list:
   Document:
     title: Ajouter un document
     document: Document
-    type_document: Type document
-    date_document: Date du document
+    type_document: Type
+    date_document: Date
     preavis: Préavis
     particularite: Particularité
     date_notaire: Notaire

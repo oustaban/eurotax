@@ -81,6 +81,7 @@ class DocumentAdmin extends Admin
             'label' => $this->getFieldLabel('document'),
             'template' => 'ApplicationSonataClientBundle:CRUD:document_link.html.twig'
         ))
+            ->add('type_document.name', null, array('label' => $this->getFieldLabel('type_document')))
             ->add('date_document', null, array(
             'label' => $this->getFieldLabel('date_document'),
             'template' => 'ApplicationSonataClientBundle:CRUD:list_date_document.html.twig'
