@@ -324,7 +324,7 @@ class ErrorElements
      */
     public function validatePaiementDateCloneMois()
     {
-        /** @var $_object \Application\Sonata\ClientOperationsBundle\Entity\A02TVA|\Application\Sonata\ClientOperationsBundle\Entity\V01TVA */
+        /** @var $object \Application\Sonata\ClientOperationsBundle\Entity\A02TVA|\Application\Sonata\ClientOperationsBundle\Entity\V01TVA */
         $object = $this->_object;
 
         if ($object->getPaiementDate() && !$object->getMois()) {
