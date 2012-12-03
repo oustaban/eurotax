@@ -67,7 +67,7 @@ ApplicationSonataClientOperationsBundle:
       paiement_devise_id: Devise du paiement
       paiement_devise: Devise du paiement
       paiement_date: Date du paiement
-      mois: Mois
+      mois: Mois de TVA
       taux_de_change: Taux de change
       HT: HT
       TVA: TVA
@@ -82,7 +82,7 @@ ApplicationSonataClientOperationsBundle:
       devise_id: Devise
       devise: Devise
       montant_HT_en_devise: Montant HT en devise
-      mois: Mois
+      mois: Mois de TVA
       taux_de_change: Taux de change
       HT: HT
       commentaires: Commentaires
@@ -96,7 +96,7 @@ ApplicationSonataClientOperationsBundle:
       devise_id: Devise
       devise: Devise
       montant_HT_en_devise: Montant HT en devise
-      mois: Mois
+      mois: Mois de TVA
       taux_de_change: Taux de change
       HT: HT
       regime: Régime
@@ -146,7 +146,7 @@ ApplicationSonataClientOperationsBundle:
       devise_id: Devise
       devise: Devise
       montant_HT_en_devise: Montant HT en devise
-      mois: Mois
+      mois: Mois de TVA
       taux_de_change: Taux de change
       HT: HT
       commentaires: Commentaires
@@ -159,7 +159,7 @@ ApplicationSonataClientOperationsBundle:
       devise_id: Devise
       devise: Devise
       montant_HT_en_devise: Montant HT en devise
-      mois: Mois
+      mois: Mois de TVA
       taux_de_change: Taux de change
       HT: HT
       commentaires: Commentaires
@@ -179,7 +179,7 @@ ApplicationSonataClientOperationsBundle:
       paiement_devise_id: Devise du paiement
       paiement_devise: Devise du paiement
       paiement_date: Date du paiement
-      mois: Mois
+      mois: Mois de TVA
       taux_de_change: Taux de change
       HT: HT
       TVA: TVA
@@ -195,7 +195,7 @@ ApplicationSonataClientOperationsBundle:
       devise: Devise
       montant_HT_en_devise: Montant HT en devise
       taux_de_TVA: Taux de TVA
-      mois: Mois
+      mois: Mois de TVA
       taux_de_change: Taux de change
       HT: HT
       TVA: TVA
@@ -210,7 +210,7 @@ ApplicationSonataClientOperationsBundle:
       devise_id: Devise
       devise: Devise
       montant_HT_en_devise: Montant HT en devise
-      mois: Mois
+      mois: Mois de TVA
       mois_complementaire: Mois Complémentaire
       taux_de_change: Taux de change
       HT: HT
@@ -224,7 +224,7 @@ ApplicationSonataClientOperationsBundle:
       devise_id: Devise
       devise: Devise
       montant_HT_en_devise: Montant HT en devise
-      mois: Mois
+      mois: Mois de TVA
       taux_de_change: Taux de change
       regime: Régime
       HT: HT
@@ -274,7 +274,7 @@ ApplicationSonataClientOperationsBundle:
       numero_piece: Numéro pièce
       taux_de_TVA: Taux de TVA
       TVA: TVA
-      mois: Mois
+      mois: Mois de TVA
       commentaires: Commentaires
 
     A10CAF:
@@ -283,7 +283,7 @@ ApplicationSonataClientOperationsBundle:
       date_piece: Date pièce
       numero_piece: Numéro pièce
       HT: HT
-      mois: Mois
+      mois: Mois de TVA
       commentaires: Commentaires
 
   list:
@@ -306,7 +306,7 @@ ApplicationSonataClientOperationsBundle:
       paiement_devise_id: Devise du paiement
       paiement_devise: Devise du paiement
       paiement_date: Date du paiement
-      mois: Mois
+      mois: Mois de TVA
       taux_de_change: Taux de change
       HT: HT (€)
       TVA: TVA (€)
@@ -320,7 +320,7 @@ ApplicationSonataClientOperationsBundle:
       devise_id: Devise
       devise: Devise
       montant_HT_en_devise: Montant HT en devise
-      mois: Mois
+      mois: Mois de TVA
       taux_de_change: Taux de change
       HT: HT (€)
       commentaires: Commentaires
@@ -334,7 +334,7 @@ ApplicationSonataClientOperationsBundle:
       devise_id: Devise
       devise: Devise
       montant_HT_en_devise: Montant HT en devise
-      mois: Mois
+      mois: Mois de TVA
       taux_de_change: Taux de change
       HT: HT (€)
       regime: Régime
@@ -384,7 +384,7 @@ ApplicationSonataClientOperationsBundle:
       devise_id: Devise
       devise: Devise
       montant_HT_en_devise: Montant HT en devise
-      mois: Mois
+      mois: Mois de TVA
       taux_de_change: Taux de change
       HT: HT (€)
       commentaires: Commentaires
@@ -398,7 +398,7 @@ ApplicationSonataClientOperationsBundle:
       devise_id: Devise
       devise: Devise
       montant_HT_en_devise: Montant HT en devise
-      mois: Mois
+      mois: Mois de TVA
       mois_complementaire: Mois Complémentaire
       taux_de_change: Taux de change
       HT: HT (€)
@@ -412,7 +412,7 @@ ApplicationSonataClientOperationsBundle:
       devise_id: Devise
       devise: Devise
       montant_HT_en_devise: Montant HT en devise
-      mois: Mois
+      mois: Mois de TVA
       taux_de_change: Taux de change
       HT: HT (€)
       commentaires: Commentaires
@@ -432,7 +432,7 @@ ApplicationSonataClientOperationsBundle:
       paiement_devise_id: Devise du paiement
       paiement_devise: Devise du paiement
       paiement_date: Date du paiement
-      mois: Mois
+      mois: Mois de TVA
       taux_de_change: Taux de change
       HT: HT (€)
       TVA: TVA (€)
@@ -448,7 +448,7 @@ ApplicationSonataClientOperationsBundle:
       devise: Devise
       montant_HT_en_devise: Montant HT en devise
       taux_de_TVA: Taux de TVA
-      mois: Mois
+      mois: Mois de TVA
       taux_de_change: Taux de change
       HT: HT (€)
       TVA: TVA (€)
@@ -462,7 +462,7 @@ ApplicationSonataClientOperationsBundle:
       devise_id: Devise
       devise: Devise
       montant_HT_en_devise: Montant HT en devise
-      mois: Mois
+      mois: Mois de TVA
       taux_de_change: Taux de change
       regime: Régime
       HT: HT (€)
@@ -512,7 +512,7 @@ ApplicationSonataClientOperationsBundle:
       numero_piece: Numéro pièce
       taux_de_TVA: Taux de TVA
       TVA: TVA (€)
-      mois: Mois
+      mois: Mois de TVA
       commentaires: Commentaires
 
     A10CAF:
@@ -521,13 +521,14 @@ ApplicationSonataClientOperationsBundle:
       date_piece: Date pièce
       numero_piece: Numéro pièce
       HT: HT (€)
-      mois: Mois
+      mois: Mois de TVA
       commentaires: Commentaires
 
   rapprochement:
     input_title: Analyse de l'écart entre A06 et DEB Intro
     output_title: Analyse de l'écart entre V05 et DEB Exped
 
+  mois: Mois de TVA
 
 V11 I N T List: V11-INT
 V11 I N T Edit: Edit

@@ -5,6 +5,36 @@ jQuery(document).ready(function ($) {
         return false;
     });
 
+    //--
+    //In the form when Paiement Date changes and Mois de TVA not set, the field Mois de TVA should take the corresponding YearMonth of Paiement Date
+    //http://redmine.testenm.com/issues/1376
+    symfony_ajax.behaviors.PaiementDateCloneMoisdeTVA = {
+        attach:function (context) {
+            var _uniqid = symfony_ajax.get_uniqid();
+
+            // V01-TVA  || A02-TVA
+            if ($('#' + _uniqid + '_paiement_date', context).size() && $('#' + _uniqid + '_mois_mois', context).size()) {
+                $('#' + _uniqid + '_paiement_date', context).change(function () {
+
+                    if ($(this).val() && !$('#' + _uniqid + '_mois_mois :selected', context).val()) {
+                        var date_arr = $(this).val().split('/');
+                        var year_month = date_arr[2] + '-' + Number(date_arr[1]);
+
+                        $('#' + _uniqid + '_mois_mois option', context).each(function () {
+                            $(this).removeAttr('selected');
+                        });
+
+                        $('#' + _uniqid + '_mois_mois option', context).each(function () {
+                            if ($(this).val() == year_month) {
+                                $(this).attr('selected', 'selected').trigger('change');
+                            }
+                        })
+                    }
+                });
+            }
+        }
+    };
+
     //-- get Devises money value
     symfony_ajax.rDevises = symfony_ajax.rDevises || {};
 

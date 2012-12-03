@@ -8,7 +8,7 @@
     </h1>
 
     <div>
-        <label for="selected_month">Mois</label>
+        <label for="selected_month">{{'ApplicationSonataClientOperationsBundle.mois'|trans}}</label>
         <select id="selected_month" name="month">
             {% for month in month_list %}
             <option {% if month.key == query_month %} selected="selected" {% endif %}
