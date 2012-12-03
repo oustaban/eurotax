@@ -116,17 +116,22 @@ abstract class AbstractTabsAdmin extends Admin
         /** @var $builder \Doctrine\ORM\QueryBuilder */
         $builder = $query->getQueryBuilder();
 
-        $form_date_piece = $this->year . '-' . $this->month . '-01';
-        $to_date_piece = $this->year . '-' . $this->month . '-31';
+        $form_month = $this->year . '-' . $this->month . '-01';
+        $to_month = $this->year . '-' . $this->month . '-31';
+
+        /** @var $from \Doctrine\ORM\Query\Expr\From */
+        $from = $builder->getDQLPart('from')[0];
+        $entity = $from->getFrom();
+        $monthField = $entity::monthField;
 
         if ($this->query_month == -1) {
-            $builder->orWhere($builder->getRootAlias() . '.date_piece IS NULL');
-            $builder->orWhere($builder->getRootAlias() . '.date_piece BETWEEN :form_date_piece AND :to_date_piece');
+            $builder->orWhere($builder->getRootAlias() . '.'.$monthField.' IS NULL');
+            $builder->orWhere($builder->getRootAlias() . '.'.$monthField.' BETWEEN :form_month AND :to_month');
         } else {
-            $builder->andWhere($builder->getRootAlias() . '.date_piece BETWEEN :form_date_piece AND :to_date_piece');
+            $builder->andWhere($builder->getRootAlias() . '.'.$monthField.' BETWEEN :form_month AND :to_month');
         }
-        $builder->setParameter(':form_date_piece', $form_date_piece);
-        $builder->setParameter(':to_date_piece', $to_date_piece);
+        $builder->setParameter(':form_month', $form_month);
+        $builder->setParameter(':to_month', $to_month);
 
         $builder->andWhere($builder->getRootAlias() . '.client_id=' . $this->client_id);
 

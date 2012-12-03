@@ -14,6 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
 abstract class AbstractBaseEntity
 {
 
+    const monthField = 'date_piece';
+
     /**
      * @var integer $id
      *
