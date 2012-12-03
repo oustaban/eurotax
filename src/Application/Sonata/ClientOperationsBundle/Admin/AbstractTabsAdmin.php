@@ -300,6 +300,7 @@ abstract class AbstractTabsAdmin extends Admin
         $collection->add('declaration');
         $collection->add('attestation');
         $collection->add('exportExcel', 'export-excel');
+        $collection->add('RDevises', 'rdevises');
     }
 
     //customs fields

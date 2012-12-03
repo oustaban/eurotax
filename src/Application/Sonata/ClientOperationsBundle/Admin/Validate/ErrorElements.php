@@ -34,7 +34,7 @@ class ErrorElements
         /** @var $_object \Application\Sonata\ClientOperationsBundle\Entity\A02TVA|\Application\Sonata\ClientOperationsBundle\Entity\V01TVA */
         $_object = $this->_object;
 
-        if ($_object->getPaiementMontant() && !$_object->getTauxDeChange()) {
+        if (!$_object->getTauxDeChange()) {
 
             $listDevise = $_object->getDevise();
             if ($listDevise) {
@@ -57,7 +57,6 @@ class ErrorElements
                         if (method_exists($devise, $method)) {
                             $taux_de_change = $devise->$method();
                         } else {
-                            #TODO send mail is not Devises
                             new \Exception('Currency is not found (Devises): ' . $method);
                         }
                     }
@@ -318,6 +317,21 @@ class ErrorElements
         return $this;
     }
 
+
+    /**
+     * http://redmine.testenm.com/issues/1376
+     * @return ErrorElements
+     */
+    public function validatePaiementDateCloneMois()
+    {
+        /** @var $object \Application\Sonata\ClientOperationsBundle\Entity\A02TVA|\Application\Sonata\ClientOperationsBundle\Entity\V01TVA */
+        $object = $this->_object;
+
+        if ($object->getPaiementDate() && !$object->getMois()) {
+            $object->setMois($object->getPaiementDate());
+        }
+        return $this;
+    }
 
     /**
      * @return ErrorElements

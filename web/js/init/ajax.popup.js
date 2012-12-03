@@ -85,7 +85,6 @@ var field_dialog_form_add__id = function (event, link, options) {
 };
 
 
-
 var field_dialog_form_content__id = function (html) {
     // populate the popup container
     field_dialog__id.find('.popup-body').html(html);
@@ -124,7 +123,7 @@ var field_dialog_form_content__id = function (html) {
     });
 
     jQuery('.action-buttons input', field_dialog__id).each(function () {
-        $(this).click(function () {
+        $(this).attr('id', 'ajax-' + $(this).attr('name')).click(function () {
             jQuery('form input[name="' + $(this).attr('name') + '"]', field_dialog__id).click();
         });
     });
@@ -204,8 +203,7 @@ $(function () {
     symfony_attach_behaviors(document);
 });
 
-function init_ajax_edit_popup()
-{
+function init_ajax_edit_popup() {
     var $table = $('.sonata-ba-list .table tbody:first');
     $table.find('tr:not(.totals_row) td[objectid]').css('cursor', 'pointer').live('click', function (event) {
         var objectid = $(this).attr('objectid');
@@ -216,8 +214,7 @@ function init_ajax_edit_popup()
     });
 }
 
-function init_ajax_create_popup()
-{
+function init_ajax_create_popup() {
     $('.sonata-actions .sonata-action-element').live('click', function (event) {
         var link = $(this).attr('href');
         field_dialog_form_add__id(event, link);
@@ -225,8 +222,7 @@ function init_ajax_create_popup()
     });
 }
 
-function init_ajax_delete_popup()
-{
+function init_ajax_delete_popup() {
     $('.sonata-ba-list .delete_link').live('click', function (event) {
         var link = $(this).attr('href');
         field_dialog_form_add__id(event, link);

@@ -115,7 +115,7 @@
         })
 
         $('.select-mois option').each(function () {
-            if (mois_date[0] + '-' + mois_date[1] == $(this).val()) {
+            if (mois_date[0] + '-' + Number(mois_date[1]) == $(this).val()) {
                 $(this).attr('selected', 'selected');
             }
         });
@@ -131,6 +131,10 @@
             var sel = $(this).val().split('-');
             if (sel.length > 1) {
                 for (var i = 0; i < 3; i++) {
+                    $('.select-mois-' + i + ' option').each(function (j) {
+                        $(this).removeAttr('selected');
+                    });
+
                     $('.select-mois-' + i + ' option').each(function (j) {
                         if (i == 2 && j == 1) {
                             $(this).attr('selected', 'selected');

@@ -11,6 +11,7 @@ use Application\Sonata\ClientOperationsBundle\Entity\Locking;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Application\Sonata\ClientOperationsBundle\Entity\Imports;
 use Application\Tools\mPDF;
+use Application\Sonata\DevisesBundle\Entity\Devises;
 
 class AbstractTabsController extends Controller
 {
@@ -41,11 +42,24 @@ class AbstractTabsController extends Controller
     protected $_year = 0;
     protected $_import_counts = array();
     protected $_import_reports = array();
+    /** @var null|\DateTime */
+    protected $_import_date = null;
     protected $_client_documents = array();
     protected $_client_dir = '';
+
+    /**
+     * @var \Application\Sonata\ClientOperationsBundle\Entity\Imports
+     */
     protected $_imports = null;
+
+    /**
+     * @var array
+     */
     protected $_parameters_url = array();
 
+    /**
+     * @var array
+     */
     protected $_config_excel = array(
         'V01-TVA' => array(
             'name' => 'V01-TVA',
@@ -373,6 +387,12 @@ class AbstractTabsController extends Controller
             return $data;
         }
 
+        $this->jsSettingsJson(array(
+            'url' => array(
+                'rdevises' => $this->admin->generateUrl('RDevises', array('filter' => array('client_id' => array('value' => $this->client_id)))),
+            ),
+        ));
+
         return $this->render('ApplicationSonataClientOperationsBundle::' . $template . '.html.twig', array(
             'client_id' => $this->client_id,
             'client' => $this->getClient(),
@@ -622,7 +642,7 @@ class AbstractTabsController extends Controller
 
         $this->_imports = new Imports();
         $this->_imports->setUser($users);
-        $this->_imports->setDate(new \DateTime($this->_year . '-' . $this->_month . '-' . date('d H:i:s')));
+        $this->_imports->setDate($this->_import_date);
         $this->_imports->setClientId($this->client_id);
 
         $em->persist($this->_imports);
@@ -778,7 +798,7 @@ class AbstractTabsController extends Controller
         $file_name = $file['name'];
         $validate = false;
 
-        list($y, $m) = explode('-', date('Y-m', strtotime('now'.(date('d')<25?' -1 month':''))));
+        list($y, $m) = explode('-', date('Y-m', strtotime('now' . (date('d') < 25 ? ' -1 month' : ''))));
 
         /**
          *  example file_name
@@ -791,7 +811,9 @@ class AbstractTabsController extends Controller
             array_shift($matches);
             list($nom_client, $year, $month, $version) = $matches;
 
-            if ($year == $y && $month == $m){
+            $this->_import_date = new \DateTime($year . '-' . $month . '-' . date('d H:i:s'));
+
+            if ($year == $y && $month == $m) {
 
                 $client = $this->getImportFileValidateNomClient($nom_client);
 
@@ -1315,6 +1337,26 @@ class AbstractTabsController extends Controller
         }
 
         return $page;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function RDevisesAction()
+    {
+        $devise_id = $this->getRequest()->request->get('devise');
+        $date_piece = $this->getRequest()->request->get('date_piece');
+
+        if (!$devise_id && !$date_piece) {
+            throw new NotFoundHttpException('Must be devise and date_piece');
+        }
+
+        $value = Devises::getDevisesValue($devise_id, \DateTime::createFromFormat('d/m/Y', $date_piece));
+
+        return $this->renderJson(array(
+            'value' => $value,
+        ));
     }
 
     /**

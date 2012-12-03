@@ -5,14 +5,73 @@ jQuery(document).ready(function ($) {
         return false;
     });
 
-    symfony_ajax.MontantTVAfrancaiseAndMontantTTC = symfony_ajax.MontantTVAfrancaiseAndMontantTTC || {};
-    symfony_ajax.MontantTVAfrancaiseAndMontantTTC.calc = function () {
+    //--
+    //In the form when Paiement Date changes and Mois de TVA not set, the field Mois de TVA should take the corresponding YearMonth of Paiement Date
+    //http://redmine.testenm.com/issues/1376
+    symfony_ajax.behaviors.PaiementDateCloneMoisdeTVA = {
+        attach:function (context) {
+            var _uniqid = symfony_ajax.get_uniqid();
 
-        $('#' + _uniqid + '_montant_TVA_francaise').val('2222');
-        $('#' + _uniqid + '_montant_TTC').val('111');
+            // V01-TVA  || A02-TVA
+            if ($('#' + _uniqid + '_paiement_date', context).size() && $('#' + _uniqid + '_mois_mois', context).size()) {
+                $('#' + _uniqid + '_paiement_date', context).change(function () {
 
+                    if ($(this).val() && !$('#' + _uniqid + '_mois_mois :selected', context).val()) {
+                        var date_arr = $(this).val().split('/');
+                        var year_month = date_arr[2] + '-' + Number(date_arr[1]);
+
+                        $('#' + _uniqid + '_mois_mois option', context).each(function () {
+                            $(this).removeAttr('selected');
+                        });
+
+                        $('#' + _uniqid + '_mois_mois option', context).each(function () {
+                            if ($(this).val() == year_month) {
+                                $(this).attr('selected', 'selected').trigger('change');
+                            }
+                        })
+                    }
+                });
+            }
+        }
     };
 
+    //-- get Devises money value
+    symfony_ajax.rDevises = symfony_ajax.rDevises || {};
+
+    symfony_ajax.rDevises.getDevises = function () {
+        var _uniqid = symfony_ajax.get_uniqid();
+
+        //TODO Date AND Devises
+        var devise = $('#' + _uniqid + '_paiement_devise :selected').val();
+        var date_piece = $('#' + _uniqid + '_paiement_date').val();
+
+        if (devise && date_piece) {
+            $.ajax({
+                url:Sonata.url.rdevises,
+                type:'POST',
+                data:{
+                    'devise':devise,
+                    'date_piece':date_piece
+                },
+                dataType:'json',
+                async:false,
+                success:function (i) {
+                    $('#' + _uniqid + '_taux_de_change').val(i.value ? i.value : '');
+                }
+            })
+        }
+    };
+
+    symfony_ajax.behaviors.rDevises = {
+        attach:function (context) {
+            var _uniqid = symfony_ajax.get_uniqid();
+            if (_uniqid) {
+                $('#' + _uniqid + '_paiement_devise, #' + _uniqid + '_paiement_date', context).change(symfony_ajax.rDevises.getDevises);
+            }
+        }
+    };
+
+    //-- Calc MontantTVAfrancaiseAndMontantTTC
     symfony_ajax.behaviors.calcMontantTVAfrancaiseAndMontantTTC = {
         attach:function (context) {
             var _uniqid = symfony_ajax.get_uniqid();
@@ -34,7 +93,6 @@ jQuery(document).ready(function ($) {
             var $montant_HT_en_devise = $('#' + _uniqid + '_montant_HT_en_devise');
             var $taux_de_TVA = $('#' + _uniqid + '_taux_de_TVA');
 
-            //TODO limit
             substr_replace($montant_HT_en_devise, 2);
             substr_replace($taux_de_TVA, 3);
 

@@ -51,7 +51,7 @@ class A02TVAAdmin extends Admin
                 ->orderBy('d.alias', 'ASC');
         },))
             ->add('paiement_date', null, array(
-                'label' =>$this->getFieldLabel('paiement_date'),
+                'label' => $this->getFieldLabel('paiement_date'),
                 'required' => false,
                 'attr' => array('class' => 'datepicker'),
                 'widget' => 'single_text',
@@ -61,11 +61,8 @@ class A02TVAAdmin extends Admin
             ->add('mois', 'mois', array(
             'label' => $this->getFieldLabel('mois'),
         ))
-            ->add('taux_de_change', 'money', array(
+            ->add('taux_de_change', null, array(
             'label' => $this->getFieldLabel('taux_de_change'),
-            'precision' => 5,
-            'divisor' => 1,
-            'currency' => 'EUR',
             'required' => false,
         ))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT')))
@@ -101,7 +98,7 @@ class A02TVAAdmin extends Admin
             'label' => $this->getFieldLabel('mois'),
             'template' => $this->_bundle_name . ':CRUD:list_mois.html.twig',
         ))
-            ->add('taux_de_change', 'money', array('label' => $this->getFieldLabel('taux_de_change')))
+            ->add('taux_de_change', null, array('label' => $this->getFieldLabel('taux_de_change')))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:HT.html.twig'))
             ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:TVA.html.twig'))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
@@ -123,6 +120,7 @@ class A02TVAAdmin extends Admin
 
         $error = new ErrorElements($errorElement, $object);
         $error->setValidateImport($this->getValidateImport())
+            ->validatePaiementDateCloneMois()
             ->validateMontantTVAFrancaise()
             ->validateMontantTTC()
             ->validateTauxDeChange()
