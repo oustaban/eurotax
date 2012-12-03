@@ -119,8 +119,10 @@ abstract class AbstractTabsAdmin extends Admin
         $form_month = $this->year . '-' . $this->month . '-01';
         $to_month = $this->year . '-' . $this->month . '-31';
 
+
+        $from = $builder->getDQLPart('from');
         /** @var $from \Doctrine\ORM\Query\Expr\From */
-        $from = $builder->getDQLPart('from')[0];
+        $from = $from[0];
         $entity = $from->getFrom();
         $monthField = $entity::monthField;
 
@@ -300,7 +302,6 @@ abstract class AbstractTabsAdmin extends Admin
         $collection->add('declaration');
         $collection->add('attestation');
         $collection->add('exportExcel', 'export-excel');
-        $collection->add('RDevises', 'rdevises');
     }
 
     //customs fields
