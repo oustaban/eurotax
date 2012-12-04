@@ -12,7 +12,7 @@ jQuery(document).ready(function ($) {
         attach:function (context) {
             var _uniqid = symfony_ajax.get_uniqid();
 
-            // V01-TVA  || A02-TVA
+            //-- V01-TVA || A02-TVA
             if ($('#' + _uniqid + '_paiement_date', context).size() && $('#' + _uniqid + '_mois_mois', context).size()) {
                 $('#' + _uniqid + '_paiement_date', context).change(function () {
 
@@ -36,37 +36,33 @@ jQuery(document).ready(function ($) {
     };
 
     //-- get Devises money value
-    symfony_ajax.rDevises = symfony_ajax.rDevises || {};
-
-    symfony_ajax.rDevises.getDevises = function () {
-        var _uniqid = symfony_ajax.get_uniqid();
-
-        //TODO Date AND Devises
-        var devise = $('#' + _uniqid + '_paiement_devise :selected').val();
-        var date_piece = $('#' + _uniqid + '_paiement_date').val();
-
-        if (devise && date_piece) {
-            $.ajax({
-                url:Sonata.url.rdevises,
-                type:'POST',
-                data:{
-                    'devise':devise,
-                    'date_piece':date_piece
-                },
-                dataType:'json',
-                async:false,
-                success:function (i) {
-                    $('#' + _uniqid + '_taux_de_change').val(i.value ? i.value : '');
-                }
-            })
-        }
-    };
-
     symfony_ajax.behaviors.rDevises = {
         attach:function (context) {
             var _uniqid = symfony_ajax.get_uniqid();
             if (_uniqid) {
-                $('#' + _uniqid + '_paiement_devise, #' + _uniqid + '_paiement_date', context).change(symfony_ajax.rDevises.getDevises);
+                $('#' + _uniqid + '_paiement_devise, #' + _uniqid + '_paiement_date', context).change(function () {
+                    var _uniqid = symfony_ajax.get_uniqid();
+
+                    var devise = $('#' + _uniqid + '_paiement_devise :selected').val();
+                    var date_piece = $('#' + _uniqid + '_paiement_date').val();
+                    var paiement_montant = $('#' + _uniqid + '_paiement_montant').val();
+
+                    if (devise && date_piece && paiement_montant) {
+                        $.ajax({
+                            url:Sonata.url.rdevises,
+                            type:'POST',
+                            data:{
+                                devise:devise,
+                                date_piece:date_piece
+                            },
+                            dataType:'json',
+                            async:false,
+                            success:function (i) {
+                                $('#' + _uniqid + '_taux_de_change').val(i.value ? i.value : '');
+                            }
+                        })
+                    }
+                });
             }
         }
     };
