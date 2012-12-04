@@ -36,6 +36,7 @@ jQuery(document).ready(function ($) {
     };
 
     //-- get Devises money value
+    //http://redmine.testenm.com/issues/1364#note-9
     symfony_ajax.behaviors.rDevises = {
         attach:function (context) {
             var _uniqid = symfony_ajax.get_uniqid();
