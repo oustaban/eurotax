@@ -66,7 +66,7 @@ class ErrorElements
                 $_object->setTauxDeChange($taux_de_change);
 
                 if (!$taux_de_change) {
-                    $this->_errorElement->with('taux_de_change')->addViolation('Wrong "Taux de change"')->end();
+                    $this->_errorElement->with('taux_de_change')->addViolation('"Taux de change" non valide')->end();
                 }
             }
         }
@@ -86,13 +86,13 @@ class ErrorElements
 
             //Import excel
             if ($this->getValidateImport()) {
-                if ($_object->getTauxDeChange() && round((float)$value - $_object->getMontantHTEnDevise() / $_object->getTauxDeChange(), 9)) {
-                    $this->_errorElement->with('HT')->addViolation('Wrong "HT" (must be "Montant HT en devise" / "Taux de change")')->end();
+                if ($_object->getTauxDeChange() && round((float)$value * $_object->getTauxDeChange() - $_object->getMontantHTEnDevise(), 9)) {
+                    $this->_errorElement->with('HT')->addViolation('"HT" non valide (doit etre "Montant HT en devise" / "Taux de change")')->end();
                 }
             } //Add & Edit ajax form
-            else if ($_object->getTauxDeChange() && $value - $this->round($_object->getMontantHTEnDevise() / $_object->getTauxDeChange())) {
+            else if ($_object->getTauxDeChange() && ($value * $_object->getTauxDeChange() - $this->round($_object->getMontantHTEnDevise()))) {
 
-                $this->_errorElement->with('HT')->addViolation('Wrong "HT" (must be "Montant HT en devise" / "Taux de change")')->end();
+                $this->_errorElement->with('HT')->addViolation('"HT" non valide (doit etre "Montant HT en devise" / "Taux de change")')->end();
             }
         }
         return $this;
@@ -109,12 +109,12 @@ class ErrorElements
             //Import excel
             if ($this->getValidateImport()) {
                 if (!($value == $this->_object->getMontantHTEnDevise() * $this->_object->getTauxDeTVA())) {
-                    $this->_errorElement->with('montant_TVA_francaise')->addViolation('Wrong "Montant TVA française" (must be "Montant HT en devise" * "Taux de TVA / 100")')->end();
+                    $this->_errorElement->with('montant_TVA_francaise')->addViolation('"Montant TVA française" non valide (doit etre "Montant HT en devise" * "Taux de TVA / 100")')->end();
                 }
             } //Add & Edit ajax form
             elseif (!($value == $this->round(($this->_object->getMontantHTEnDevise() * $this->_object->getTauxDeTVA())))) {
 
-                $this->_errorElement->with('montant_TVA_francaise')->addViolation('Wrong "Montant TVA française" (must be "Montant HT en devise" * "Taux de TVA / 100")')->end();
+                $this->_errorElement->with('montant_TVA_francaise')->addViolation('"Montant TVA française" non valide (doit etre "Montant HT en devise" * "Taux de TVA / 100")')->end();
             }
 
         }
@@ -133,10 +133,10 @@ class ErrorElements
             //Import excel
             if ($this->getValidateImport()) {
                 if (!($value == $this->_object->getMontantHTEnDevise() + $this->_object->getMontantTVAFrancaise())) {
-                    $this->_errorElement->with('montant_TTC')->addViolation('Wrong "Montant TTC" (must be "Montant HT en devise" + "Montant TVA française")')->end();
+                    $this->_errorElement->with('montant_TTC')->addViolation('"Montant TTC" non valide (doit etre "Montant HT en devise" + "Montant TVA française")')->end();
                 }
             } elseif (!($value == $this->round(($this->_object->getMontantHTEnDevise() + $this->_object->getMontantTVAFrancaise())))) {
-                $this->_errorElement->with('montant_TTC')->addViolation('Wrong "Montant TTC" (must be "Montant HT en devise" + "Montant TVA française")')->end();
+                $this->_errorElement->with('montant_TTC')->addViolation('"Montant TTC" non valide (doit etre "Montant HT en devise" + "Montant TVA française")')->end();
             }
         }
 
@@ -204,7 +204,7 @@ class ErrorElements
             }
 
             if ($year . '-' . $month != date('Y-n', strtotime('-1 month'))) {
-                $this->_errorElement->with('mois')->addViolation('Wrong "Mois"')->end();
+                $this->_errorElement->with('mois')->addViolation('"Mois" non valide')->end();
             }
         }
 
