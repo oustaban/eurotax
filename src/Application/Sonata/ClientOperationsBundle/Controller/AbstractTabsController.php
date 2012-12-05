@@ -462,7 +462,9 @@ class AbstractTabsController extends Controller
 
             $mktime = mktime(0, 0, 0, $month, 1, $year);
 
-            $month_list[] = array('key' => date('n' . $this->admin->date_filter_separator . 'Y', $mktime), 'name' => $this->datefmtFormatFilter(new \DateTime(date('Y-m-d', $mktime)), 'MMMM') . ' ' . date('Y', $mktime));
+            $month_list[] = array(
+                'key' => date('n' . $this->admin->date_filter_separator . 'Y', $mktime),
+                'name' => ucwords($this->datefmtFormatFilter(new \DateTime(date('Y-m-d', $mktime)), 'YYYY MMMM')));
         }
 
         return $month_list;
