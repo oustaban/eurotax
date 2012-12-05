@@ -37,9 +37,20 @@ class V01TVAAdmin extends Admin
                 ->orderBy('d.alias', 'ASC');
         },))
             ->add('montant_HT_en_devise', 'money', array('label' => $this->getFieldLabel('montant_HT_en_devise')))
-            ->add('taux_de_TVA', 'percent', array(
+            ->add('taux_de_TVA', 'choice', array(
             'label' => $this->getFieldLabel('taux_de_TVA'),
-            'precision' => 3,
+            'choices' => array(
+                '0.196' => '19.6%',
+                '0.13' => '13%',
+                '0.085' => '8.5%',
+                '0.08' => '8%',
+                '0.07' => '7%',
+                '0.055' => '5.5%',
+                '0.021' => '2.1%',
+                '0.0105' => '1.05%',
+                '0.009' => '0.9%',
+            ),
+            'empty_value' => '',
         ))
             ->add('montant_TVA_francaise', 'money', array('label' => $this->getFieldLabel('montant_TVA_francaise')))
             ->add('montant_TTC', 'money', array('label' => $this->getFieldLabel('montant_TTC')))
