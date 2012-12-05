@@ -34,9 +34,10 @@ class ErrorElements
         /** @var $_object \Application\Sonata\ClientOperationsBundle\Entity\A02TVA|\Application\Sonata\ClientOperationsBundle\Entity\V01TVA */
         $_object = $this->_object;
 
-        if (!$_object->getTauxDeChange()) {
+        //-- http://redmine.testenm.com/issues/1364#note-9
+        if ($_object->getPaiementMontant() && !$_object->getTauxDeChange()) {
 
-            $listDevise = $_object->getDevise();
+            $listDevise = $_object->getPaiementDevise();
             if ($listDevise) {
                 $currency = $listDevise->getAlias();
 
@@ -44,13 +45,15 @@ class ErrorElements
                 if ($currency == static::Device) {
                     $taux_de_change = 1;
                 } else {
+
                     /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
                     $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+
                     /* @var $em \Doctrine\ORM\EntityManager */
                     $em = $doctrine->getManager();
-                    /* @var $devise \Application\Sonata\DevisesBundle\Entity\Devises */
 
-                    $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($_object->getDatePieceFormat());
+                    /* @var $devise \Application\Sonata\DevisesBundle\Entity\Devises */
+                    $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($_object->getPaiementDate());
 
                     if ($devise) {
                         $method = 'getMoney' . $currency;
