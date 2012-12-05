@@ -20,14 +20,16 @@ class MoisType extends BaseType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $choices = array();
-        $default_year = range(date('Y') - 5, date('Y') + 5);
-        $default_month = range(1, 12);
+        $minDate = explode('-', date('Y-m', strtotime('-6 month')));
+        $minDate = $minDate[0]*12 + $minDate[1];
+        $maxDate = explode('-', date('Y-m'));
+        $maxDate = $maxDate[0]*12 + $maxDate[1];
 
-        foreach ($default_year as $year) {
-            foreach ($default_month as $month) {
-                $key = $year . '-' . sprintf($month, '%02d');
-                $choices[$key] = $this->formatTimestamps(new \DateTime('01-' . $month . '-' . $year), 'YYYY') . ' ' . $this->formatTimestamps(new \DateTime('01-' . $month . '-' . $year), 'MMMM');
-            }
+        for ($date = $minDate; $date < $maxDate; $date++) {
+            $year = floor($date/12);
+            $month = $date % 12;
+            $key = $year . '-' . sprintf($month, '%02d');
+            $choices[$key] = $this->formatTimestamps(new \DateTime('01-' . $month . '-' . $year), 'YYYY') . ' ' . $this->formatTimestamps(new \DateTime('01-' . $month . '-' . $year), 'MMMM');
         }
         $resolver->replaceDefaults(array(
             'day' => array(1),
