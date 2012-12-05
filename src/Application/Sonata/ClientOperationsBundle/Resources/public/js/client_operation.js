@@ -74,11 +74,12 @@ jQuery(document).ready(function ($) {
         attach:function (context) {
             var _uniqid = symfony_ajax.get_uniqid();
             if (_uniqid) {
-                $('#' + _uniqid + '_montant_HT_en_devise, #' + _uniqid + '_taux_de_TVA', context)
-                    //state procurement
-                    .change(this.calc)
-                    .keyup(this.calc)
-                    .trigger('change');
+                var $montant_HT_en_devise = $('#' + _uniqid + '_montant_HT_en_devise', context);
+                var $taux_de_TVA = $('#' + _uniqid + '_taux_de_TVA', context);
+                if ($montant_HT_en_devise.length && $taux_de_TVA.length){
+                    $montant_HT_en_devise.change(this.calc).keyup(this.calc);
+                    $taux_de_TVA.change(this.calc).trigger('change');
+                }
             }
         },
         number_limit:function (e) {
@@ -116,11 +117,12 @@ jQuery(document).ready(function ($) {
 
 
 function substr_replace($object, limit) {
-
-    var result = $object.val().split(',');
-    var result2 = $object.val().split('.');
-    if ((result[1] && result[1].length > limit) || result2[1] && result2[1].length > limit) {
-        $object.val($object.val().substr(0, $object.val().length - 1));
+    if ($object && $object.length){
+        var result = $object.val().split(',');
+        var result2 = $object.val().split('.');
+        if ((result[1] && result[1].length > limit) || result2[1] && result2[1].length > limit) {
+            $object.val($object.val().substr(0, $object.val().length - 1));
+        }
     }
 }
 
