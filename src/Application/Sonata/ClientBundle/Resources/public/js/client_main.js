@@ -16,11 +16,6 @@ jQuery(document).ready(function ($) {
 
     copy_address();
 
-    $.each(fields_address, function (i, field) {
-        $('#' + uniqid + '_location_facturation_' + field + '_facturation').removeAttr('required');
-        rm_label_required($('#sonata-ba-field-container-' + uniqid + '_location_facturation_' + field + '_facturation label'));
-    });
-
     $('#' + uniqid + '_autre_destinataire_de_facturation').change(function () {
 
         var $raison_sociale_2 = $('#sonata-ba-field-container-' + uniqid + '_raison_sociale_2 label');

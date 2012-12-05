@@ -63,7 +63,7 @@ class ClientAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         LocationPostalType::setRequired();
-        LocationFacturationType::setRequired();
+        LocationFacturationType::setRequired(false);
 
         $id = $this->getRequest()->get($this->getIdParameter());
         $class = $id ? '' : ' hidden';
@@ -303,11 +303,6 @@ class ClientAdmin extends Admin
             //validate NotBlank
             foreach (array(
                          'raison_sociale_2',
-                         'adresse_1_facturation',
-                         'adresse_2_facturation',
-                         'code_postal_facturation',
-                         'ville_facturation',
-                         'pays_facturation',
                      ) as $field) {
 
                 $method = 'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $field)));
