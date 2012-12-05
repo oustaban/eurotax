@@ -45,21 +45,22 @@ jQuery(document).ready(function ($) {
                     var _uniqid = symfony_ajax.get_uniqid();
 
                     var devise = $('#' + _uniqid + '_paiement_devise :selected').val();
-                    var date_piece = $('#' + _uniqid + '_paiement_date').val();
+                    var paiement_date = $('#' + _uniqid + '_paiement_date').val();
                     var paiement_montant = $('#' + _uniqid + '_paiement_montant').val();
+                    var $taux_de_change = $('#' + _uniqid + '_taux_de_change');
 
-                    if (devise && date_piece && paiement_montant) {
+                    if (devise && paiement_date && paiement_montant && !$taux_de_change.val()) {
                         $.ajax({
                             url:Sonata.url.rdevises,
                             type:'POST',
                             data:{
                                 devise:devise,
-                                date_piece:date_piece
+                                date:paiement_date
                             },
                             dataType:'json',
                             async:false,
                             success:function (i) {
-                                $('#' + _uniqid + '_taux_de_change').val(i.value ? i.value : '');
+                                $taux_de_change.val(i.value ? i.value : '');
                             }
                         })
                     }

@@ -1346,7 +1346,7 @@ class AbstractTabsController extends Controller
     public function RDevisesAction()
     {
         $devise_id = $this->getRequest()->request->get('devise');
-        $date_piece = $this->getRequest()->request->get('date_piece');
+        $date_piece = $this->getRequest()->request->get('date');
 
         if (!$devise_id && !$date_piece) {
             throw new NotFoundHttpException('Must be devise and date_piece');
