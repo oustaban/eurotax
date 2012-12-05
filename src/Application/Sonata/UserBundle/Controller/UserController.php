@@ -43,13 +43,15 @@ class UserController extends Controller
      */
     public function batchActionDeleteIsRelevant($idx, $all_elements)
     {
+        $return = true || $all_elements;
         foreach ($idx as $index => $id) {
             if (!$this->_canUserBeDeleted($id)) {
+                $return = false;
                 unset($idx[$index]);
             }
         }
 
-        return count($idx) || $all_elements;
+        return $return;
     }
 
     protected function _canUserBeDeleted($id)
