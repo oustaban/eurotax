@@ -119,13 +119,13 @@ class DevisesAdmin extends Admin
         $rows = array();
 
         if (!$this->_current_devises) {
-            $rows[$this->generateUrl('create')] = $this->datefmtFormatFilter(new \DateTime(), 'MMMM YYYY');
+            $rows[$this->generateUrl('create')] = ucwords($this->datefmtFormatFilter(new \DateTime(), 'YYYY MMMM'));
         }
 
         foreach ($devises as $value) {
 
             /** @var $value \Application\Sonata\DevisesBundle\Entity\Devises */
-            $rows[$this->generateObjectUrl('edit', $value)] = $this->datefmtFormatFilter($value->getDate(), 'MMMM YYYY');
+            $rows[$this->generateObjectUrl('edit', $value)] = ucwords($this->datefmtFormatFilter($value->getDate(), 'YYYY MMMM'));
         }
 
         return $rows;

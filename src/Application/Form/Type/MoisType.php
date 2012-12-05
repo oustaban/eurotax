@@ -29,7 +29,7 @@ class MoisType extends BaseType
             $year = floor($date/12);
             $month = $date % 12;
             $key = $year . '-' . sprintf($month, '%02d');
-            $choices[$key] = $this->formatTimestamps(new \DateTime('01-' . $month . '-' . $year), 'YYYY') . ' ' . $this->formatTimestamps(new \DateTime('01-' . $month . '-' . $year), 'MMMM');
+            $choices[$key] = ucwords($this->formatTimestamps(new \DateTime('01-' . $month . '-' . $year), 'YYYY MMMM'));
         }
         $resolver->replaceDefaults(array(
             'day' => array(1),
@@ -97,6 +97,6 @@ class MoisType extends BaseType
         $formatter->setLenient(false);
         $timestamp = $datetime->getTimestamp();
 
-        return ucfirst($formatter->format($timestamp));
+        return $formatter->format($timestamp);
     }
 }
