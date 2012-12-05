@@ -76,7 +76,7 @@ jQuery(document).ready(function ($) {
             if (_uniqid) {
                 $('#' + _uniqid + '_montant_HT_en_devise, #' + _uniqid + '_taux_de_TVA', context)
                     //state procurement
-                    //.keypress(this.number_limit)
+                    .change(this.calc)
                     .keyup(this.calc)
                     .trigger('change');
             }
@@ -97,7 +97,7 @@ jQuery(document).ready(function ($) {
             var montant_HT_en_devise = $montant_HT_en_devise.val().replace(',', '.').replace(/\s+/, '');
             var taux_de_TVA = $taux_de_TVA.val().replace(',', '.').replace(/\s+/, '');
 
-            var montant_TVA_francaise = parseFloat(parseFloat(montant_HT_en_devise) * (parseFloat(taux_de_TVA) / 100));
+            var montant_TVA_francaise = parseFloat(parseFloat(montant_HT_en_devise) * parseFloat(taux_de_TVA));
 
             //If method validate from file Validate/ErrorElements.php function round $precision = 2, $mode = PHP_ROUND_HALF_DOWN
             montant_TVA_francaise = montant_TVA_francaise ? montant_TVA_francaise.toFixed(2) : '';
