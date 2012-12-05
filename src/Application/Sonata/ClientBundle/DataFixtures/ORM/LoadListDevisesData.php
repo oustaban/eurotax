@@ -48,10 +48,6 @@ class LoadListDevisesData extends AbstractLoadListData
             'symbol' => '$',
         ),
 
-        'AED' => array(
-            'name' => 'Emirati Dirham',
-            'symbol' => 'د.إ',
-        ),
         'CHF' => array(
             'name' => 'Swiss Franc',
             'symbol' => 'CHF',

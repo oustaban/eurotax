@@ -69,14 +69,6 @@ class Devises
 
 
     /**
-     * @var string $moneyAED
-     *
-     * @ORM\Column(name="moneyAED", type="float", nullable=true)
-     */
-    private $moneyAED;
-
-
-    /**
      * @var string $moneyCHF
      *
      * @ORM\Column(name="moneyCHF", type="float", nullable=true)
@@ -301,29 +293,6 @@ class Devises
     public function getMoneyCAD()
     {
         return $this->moneyCAD;
-    }
-
-    /**
-     * Set moneyAED
-     *
-     * @param float $moneyAED
-     * @return Devises
-     */
-    public function setMoneyAED($moneyAED)
-    {
-        $this->moneyAED = $moneyAED;
-
-        return $this;
-    }
-
-    /**
-     * Get moneyAED
-     *
-     * @return float
-     */
-    public function getMoneyAED()
-    {
-        return $this->moneyAED;
     }
 
     /**
