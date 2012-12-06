@@ -1266,6 +1266,7 @@ class AbstractTabsController extends Controller
                 'id' => $import->getId(),
                 'date' => $import->getDate(),
                 'username' => (string)$import->getUser(),
+                'filename' => (string)$import->getFileName(),
             );
         }
 

@@ -169,6 +169,7 @@ function init_clientoperations_buttons(o) {
                     .append('<th class="sonata-ba-list-field-header-integer">N°</th>')
                     .append('<th class="sonata-ba-list-field-header-date">Date</th>')
                     .append('<th class="sonata-ba-list-field-header-orm_many_to_one">Utilisateur</th>')
+                    .append('<th class="sonata-ba-list-field-header-string">Fichier</th>')
                     .append('<th class="sonata-ba-list-field-header-actions">Action</th>')
                     .appendTo($table.children('thead'));
 
@@ -177,10 +178,11 @@ function init_clientoperations_buttons(o) {
                     var import_id = json.imports[i].id;
                     var deleteUrl = o.import.delete.replace("__id__", import_id);
                     $('<tr />')
-                        .append('<td class="sonata-ba-list-field-header-integer">' + import_id + '</td>')
-                        .append('<td class="sonata-ba-list-field-header-date"><b>' + json.imports[i].date.date + '</b></td>')
-                        .append('<td class="sonata-ba-list-field-header-orm_many_to_one">' + json.imports[i].username + '</td>')
-                        .append('<td class="sonata-ba-list-field-header-actions"><a style="display: inline;" class="import_del" href="' + deleteUrl + '">Supprimer</a></td>')
+                        .append('<td class="sonata-ba-list-field-integer">' + import_id + '</td>')
+                        .append('<td class="sonata-ba-list-field-date"><b>' + json.imports[i].date.date + '</b></td>')
+                        .append('<td class="sonata-ba-list-field-orm_many_to_one">' + json.imports[i].username + '</td>')
+                        .append('<td class="sonata-ba-list-field-string">' + json.imports[i].filename + '</td>')
+                        .append('<td class="sonata-ba-list-field-actions"><a style="display: inline;" class="import_del" href="' + deleteUrl + '">Supprimer</a></td>')
                         .appendTo($tbody);
                 }
                 $table.append($tbody);
