@@ -229,3 +229,11 @@ function init_ajax_delete_popup() {
         return false;
     });
 }
+
+function init_ajax_clone_popup() {
+    $('.sonata-ba-list .clone_link').live('click', function (event) {
+        var link = $(this).attr('href');
+        field_dialog_form_add__id(event, link);
+        return false;
+    });
+}

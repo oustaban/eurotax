@@ -33,5 +33,6 @@
 {% if not admin.getLocking %}
     {{ block('ajaxEdit')}}
     {{ block('ajaxDelete') }}
+    {{ block('ajaxClone') }}
 {% endif %}
 {% endblock javascriptsafter %}
