@@ -144,6 +144,21 @@ class Devises
     }
 
     /**
+     * @return null
+     */
+    public function getDateChange()
+    {
+        return null;
+    }
+
+    /**
+     * @param $value
+     */
+    public function setDateChange($value)
+    {
+    }
+
+    /**
      * Get id
      *
      * @return integer
