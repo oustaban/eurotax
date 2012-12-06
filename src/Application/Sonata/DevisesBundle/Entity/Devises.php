@@ -38,27 +38,11 @@ class Devises
     private $moneyUSD;
 
     /**
-     * @var string $moneyGBP
-     *
-     * @ORM\Column(name="moneyGBP", type="float", nullable=true)
-     */
-    private $moneyGBP;
-
-    /**
-     * @var string $moneyINR
-     *
-     * @ORM\Column(name="moneyINR", type="float", nullable=true)
-     */
-    private $moneyINR;
-
-
-    /**
      * @var string $moneyAUD
      *
      * @ORM\Column(name="moneyAUD", type="float", nullable=true)
      */
     private $moneyAUD;
-
 
     /**
      * @var string $moneyCAD
@@ -66,7 +50,6 @@ class Devises
      * @ORM\Column(name="moneyCAD", type="float", nullable=true)
      */
     private $moneyCAD;
-
 
     /**
      * @var string $moneyCHF
@@ -76,6 +59,20 @@ class Devises
     private $moneyCHF;
 
     /**
+     * @var string $moneyDKK
+     *
+     * @ORM\Column(name="moneyDKK", type="float", nullable=true)
+     */
+    private $moneyDKK;
+
+    /**
+     * @var string $moneyGBP
+     *
+     * @ORM\Column(name="moneyGBP", type="float", nullable=true)
+     */
+    private $moneyGBP;
+
+    /**
      * @var string $moneyJPY
      *
      * @ORM\Column(name="moneyJPY", type="float", nullable=true)
@@ -83,11 +80,26 @@ class Devises
     private $moneyJPY;
 
     /**
+     * @var string $moneyNOK
+     *
+     * @ORM\Column(name="moneyNOK", type="float", nullable=true)
+     */
+    private $moneyNOK;
+
+    /**
+     * @var string $moneySEK
+     *
+     * @ORM\Column(name="moneySEK", type="float", nullable=true)
+     */
+    private $moneySEK;
+
+
+    /**
      *
      */
     public function __construct()
     {
-        $this->date = new \DateTime(date('Y-m-01'));
+        //$this->date = new \DateTime(date('Y-m-01'));
     }
 
     /**
@@ -97,7 +109,7 @@ class Devises
      */
     public function __toString()
     {
-        return (string)$this->getId() ? : '-';
+        //return (string)$this->getId() ? : '-';
     }
 
     /**
@@ -129,21 +141,6 @@ class Devises
                 return $devise->$method();
             }
         }
-    }
-
-    /**
-     * @return null
-     */
-    public function getDateChange()
-    {
-        return null;
-    }
-
-    /**
-     * @param $value
-     */
-    public function setDateChange($value)
-    {
     }
 
     /**
@@ -179,7 +176,6 @@ class Devises
         return $this->date;
     }
 
-
     /**
      * Set moneyUSD
      *
@@ -201,52 +197,6 @@ class Devises
     public function getMoneyUSD()
     {
         return $this->moneyUSD;
-    }
-
-    /**
-     * Set moneyGBP
-     *
-     * @param float $moneyGBP
-     * @return Devises
-     */
-    public function setMoneyGBP($moneyGBP)
-    {
-        $this->moneyGBP = $moneyGBP;
-
-        return $this;
-    }
-
-    /**
-     * Get moneyGBP
-     *
-     * @return float
-     */
-    public function getMoneyGBP()
-    {
-        return $this->moneyGBP;
-    }
-
-    /**
-     * Set moneyINR
-     *
-     * @param float $moneyINR
-     * @return Devises
-     */
-    public function setMoneyINR($moneyINR)
-    {
-        $this->moneyINR = $moneyINR;
-
-        return $this;
-    }
-
-    /**
-     * Get moneyINR
-     *
-     * @return float
-     */
-    public function getMoneyINR()
-    {
-        return $this->moneyINR;
     }
 
     /**
@@ -319,6 +269,52 @@ class Devises
     }
 
     /**
+     * Set moneyDKK
+     *
+     * @param float $moneyDKK
+     * @return Devises
+     */
+    public function setMoneyDKK($moneyDKK)
+    {
+        $this->moneyDKK = $moneyDKK;
+
+        return $this;
+    }
+
+    /**
+     * Get moneyDKK
+     *
+     * @return float
+     */
+    public function getMoneyDKK()
+    {
+        return $this->moneyDKK;
+    }
+
+    /**
+     * Set moneyGBP
+     *
+     * @param float $moneyGBP
+     * @return Devises
+     */
+    public function setMoneyGBP($moneyGBP)
+    {
+        $this->moneyGBP = $moneyGBP;
+
+        return $this;
+    }
+
+    /**
+     * Get moneyGBP
+     *
+     * @return float
+     */
+    public function getMoneyGBP()
+    {
+        return $this->moneyGBP;
+    }
+
+    /**
      * Set moneyJPY
      *
      * @param float $moneyJPY
@@ -339,5 +335,51 @@ class Devises
     public function getMoneyJPY()
     {
         return $this->moneyJPY;
+    }
+
+    /**
+     * Set moneyNOK
+     *
+     * @param float $moneyNOK
+     * @return Devises
+     */
+    public function setMoneyNOK($moneyNOK)
+    {
+        $this->moneyNOK = $moneyNOK;
+
+        return $this;
+    }
+
+    /**
+     * Get moneyNOK
+     *
+     * @return float
+     */
+    public function getMoneyNOK()
+    {
+        return $this->moneyNOK;
+    }
+
+    /**
+     * Set moneySEK
+     *
+     * @param float $moneySEK
+     * @return Devises
+     */
+    public function setMoneySEK($moneySEK)
+    {
+        $this->moneySEK = $moneySEK;
+
+        return $this;
+    }
+
+    /**
+     * Get moneySEK
+     *
+     * @return float
+     */
+    public function getMoneySEK()
+    {
+        return $this->moneySEK;
     }
 }

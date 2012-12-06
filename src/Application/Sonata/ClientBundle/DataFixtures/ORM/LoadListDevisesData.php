@@ -24,37 +24,48 @@ class LoadListDevisesData extends AbstractLoadListData
         ),
 
         'USD' => array(
-            'name' => 'US Dollar',
+            'name' => 'Dollar Américain',
             'symbol' => '$',
-        ),
-
-        'GBP' => array(
-            'name' => 'British Pound',
-            'symbol' => '$',
-        ),
-
-        'INR' => array(
-            'name' => 'Indian Rupee',
-            'symbol' => 'INR',
         ),
 
         'AUD' => array(
-            'name' => 'Australian Dollar',
+            'name' => 'Dollar Australien',
             'symbol' => '$',
         ),
 
         'CAD' => array(
-            'name' => 'Canadian Dollar',
+            'name' => 'Dollar Canadien',
             'symbol' => '$',
         ),
 
         'CHF' => array(
-            'name' => 'Swiss Franc',
+            'name' => 'Franc Suisse',
             'symbol' => 'CHF',
         ),
+
+        'DKK' => array(
+            'name' => 'Couronne Danoise',
+            'symbol' => 'kr',
+        ),
+
+        'GBP' => array(
+            'name' => 'Livre Sterling RU',
+            'symbol' => '£',
+        ),
+
         'JPY' => array(
-            'name' => 'Japanese Yen',
+            'name' => 'Yen Japonais',
             'symbol' => '¥',
+        ),
+
+        'NOK' => array(
+            'name' => 'Couronne Norvégienne',
+            'symbol' => 'kr',
+        ),
+
+        'SEK' => array(
+            'name' => 'Couronne Suédoise',
+            'symbol' => 'kr',
         ),
         // Before add new Devise be sure You added it to \Application\Sonata\DevisesBundle\Entity\Devises
     );
