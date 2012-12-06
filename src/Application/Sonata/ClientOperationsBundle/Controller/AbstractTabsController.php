@@ -636,7 +636,7 @@ class AbstractTabsController extends Controller
     /**
      * saveImports
      */
-    protected function saveImports()
+    protected function saveImports($inputFile)
     {
         $user = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
@@ -646,6 +646,7 @@ class AbstractTabsController extends Controller
         $this->_imports->setUser($users);
         $this->_imports->setDate($this->_import_date);
         $this->_imports->setClientId($this->client_id);
+        $this->_imports->setFileName($inputFile['name']);
 
         $em->persist($this->_imports);
         $em->flush();
@@ -688,7 +689,7 @@ class AbstractTabsController extends Controller
 
                     if (empty($this->_import_counts['rows']['errors'])) {
 
-                        $this->saveImports();
+                        $this->saveImports($inputFile);
                         $this->importValidateAndSave($content_arr, true);
                     }
                 }

@@ -43,6 +43,12 @@ class Imports
      */
     private $client_id;
 
+    /**
+     * @var string $file_name
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $file_name;
+
 
     /**
      * @return string
@@ -137,5 +143,28 @@ class Imports
     public function getClientId()
     {
         return $this->client_id;
+    }
+
+    /**
+     * Set file_name
+     *
+     * @param string $fileName
+     * @return Imports
+     */
+    public function setFileName($fileName)
+    {
+        $this->file_name = $fileName;
+    
+        return $this;
+    }
+
+    /**
+     * Get file_name
+     *
+     * @return string 
+     */
+    public function getFileName()
+    {
+        return $this->file_name;
     }
 }
