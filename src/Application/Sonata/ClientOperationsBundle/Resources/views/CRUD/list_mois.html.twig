@@ -2,6 +2,6 @@
 
 {% block field %}
 {% if object.getMois is not empty %}
-    {{ object.getMois|datefmt_format('MMMM YYYY') }}
+    {{ object.getMois|datefmt_format('YYYY MMMM')|title }}
 {% endif %}
 {% endblock field %}
