@@ -32,21 +32,6 @@ class DevisesAdmin extends Admin
         '_sort_by' => 'date'
     );
 
-
-    //create & edit form
-    /*    protected $_money_arr = array(
-            'moneyUSD' => array(
-                'label' => 'Dollar',
-            ),
-            'money_yen' => array(
-                'label' => 'Yen',
-            ),
-            'moneyGBP' => array(
-                'label' => 'British Pound',
-            ),
-        );*/
-
-
     /**
      * @return array
      */
@@ -87,15 +72,15 @@ class DevisesAdmin extends Admin
         ));
 
         $devisesList = LoadListDevisesData::getStaticList();
-
         unset($devisesList[ListDevises::Device]);
+        ksort($devisesList);
 
         foreach ($devisesList as $field => $labelData) {
 
             /** @var $entity  \Application\Sonata\ClientBundle\Entity\ListDevises */
             $formMapper->add('money' . $field, 'money', array(
-                'decorator' => function ($pattern) use ($labelData){
-                    return $pattern . ' ' . $labelData['name'];
+                'decorator' => function ($pattern) use ($field){
+                    return $pattern . ' ' . $field;
                 },
                 'label' => '1 euro',
                 'precision' => 5,
