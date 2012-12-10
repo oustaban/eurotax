@@ -10,3 +10,8 @@
     {% endif %}
 </div>
 {% endblock actions %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/applicationsonatauser/js/user.js') }}"></script>
+{% endblock javascripts %}

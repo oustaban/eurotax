@@ -69,10 +69,10 @@ class UserAdmin extends BaseUserAdmin
             ->add('username')
             ->add('email')
             ->add('plainPassword', 'text', array('required' => false))
-            ->add('firstname', null, array('required' => false))
-            ->add('lastname', null, array('required' => false))
+            ->add('firstname', null, array('required' => true))
+            ->add('lastname', null, array('required' => true))
             ->add('phone', null, array('required' => false))
-            ->add('groups', 'sonata_type_model', array('required' => false, 'expanded' => true, 'multiple' => true))
+            ->add('groups', null, array('required' => true, 'multiple'=>false, 'expanded'=>false, 'empty_value'=>''))
             ->add('enabled', null, array('required' => false))
             ->end();
     }
