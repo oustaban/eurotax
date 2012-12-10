@@ -1373,9 +1373,9 @@ class Client
             /** @var $fileInfo \DirectoryIterator */
             if (!$fileInfo->isDot()) {
                 if ($fileInfo->isFile()) {
-                    $files['.'][] = mb_convert_encoding($fileInfo->getFilename(), 'UTF-8');
+                    $files['.'][] = $fileInfo->getFilename();//mb_convert_encoding($fileInfo->getFilename(), 'UTF-8');
                 } elseif ($fileInfo->isDir()) {
-                    $files[mb_convert_encoding($fileInfo->getFilename(), 'UTF-8')] = self::recursiveScanDir($fileInfo->getPathname());
+                    $files[$fileInfo->getFilename()] = self::recursiveScanDir($fileInfo->getPathname());
                 }
             }
         }
@@ -1774,14 +1774,14 @@ class Client
     public function setNTVAFR($nTVAFR)
     {
         $this->N_TVA_FR = $nTVAFR;
-    
+
         return $this;
     }
 
     /**
      * Get N_TVA_FR
      *
-     * @return string 
+     * @return string
      */
     public function getNTVAFR()
     {
