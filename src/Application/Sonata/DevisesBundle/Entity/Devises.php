@@ -99,7 +99,7 @@ class Devises
      */
     public function __construct()
     {
-        //$this->date = new \DateTime(date('Y-m-01'));
+        $this->setDate(\DateTime(date('Y-m-01')));
     }
 
     /**
@@ -109,7 +109,7 @@ class Devises
      */
     public function __toString()
     {
-        //return (string)$this->getId() ? : '-';
+        return (string)$this->getId() ? : '-';
     }
 
     /**
