@@ -99,7 +99,7 @@ class Devises
      */
     public function __construct()
     {
-        $this->setDate(\DateTime(date('Y-m-01')));
+        $this->setDate(new \DateTime(date('Y-m-01')));
     }
 
     /**
