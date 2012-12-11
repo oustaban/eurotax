@@ -1,6 +1,9 @@
 {% block form_tabs %}
 {% set action = client_id ? 'edit' : 'create' %}
 {% set _filter_json = {'filter[client_id][value]':client_id} %}
+{% if current_client is not defined %}
+{% set current_client = client %}
+{% endif %}
 
 <div class="client_tabs_block">
     <ul class="nav nav-tabs">
@@ -8,9 +11,11 @@
             <a href="{{ path('admin_sonata_client_client_'~action, {'id':client_id}) }}">Général</a>
         </li>
         {% if client_id  %}
+        {% if current_client.getAutreDestinataireDeFacturation %}
         <li {% if active_tab=='contact' %}class="active"{% endif %}>
             <a href="{{ path('admin_sonata_client_contact_list', _filter_json) }}">Contacts</a>
         </li>
+        {% endif %}
         <li {% if active_tab=='document' %}class="active"{% endif %}>
             <a href="{{ path('admin_sonata_client_document_list', _filter_json) }}">Documents</a>
         </li>
