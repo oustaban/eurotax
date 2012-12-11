@@ -179,11 +179,11 @@ class ErrorElements
         $value = $this->_object->getPaiementMontant();
         if ($value) {
             if (!$this->_object->getPaiementDevise() && !$this->getValidateImport()) {
-                $this->_errorElement->with('paiement_montant')->addViolation('"Paiement Devise" can\'t be empty in case if "Paiement Montant" is not empty')->end();
+                $this->_errorElement->with('paiement_montant')->addViolation('"Paiement Devise" can\'t be empty in case if "Montant payé" is not empty')->end();
             }
 
             if (!$this->_object->getPaiementDate()) {
-                $this->_errorElement->with('paiement_montant')->addViolation('"Paiement Date" can\'t be empty in case if "Paiement Montant" is not empty')->end();
+                $this->_errorElement->with('paiement_montant')->addViolation('"Paiement Date" can\'t be empty in case if "Montant payé" is not empty')->end();
             }
         }
 
