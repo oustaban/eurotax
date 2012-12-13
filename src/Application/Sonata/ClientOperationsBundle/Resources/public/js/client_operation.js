@@ -47,9 +47,8 @@ jQuery(document).ready(function ($) {
                     var devise = $('#' + _uniqid + '_paiement_devise :selected').val();
                     var paiement_date = $('#' + _uniqid + '_paiement_date').val();
                     var paiement_montant = $('#' + _uniqid + '_paiement_montant').val();
-                    var $taux_de_change = $('#' + _uniqid + '_taux_de_change');
 
-                    if (devise && paiement_date && paiement_montant && !$taux_de_change.val()) {
+                    if (devise && paiement_date && paiement_montant) {
                         $.ajax({
                             url:Sonata.url.rdevises,
                             type:'POST',
@@ -60,7 +59,7 @@ jQuery(document).ready(function ($) {
                             dataType:'json',
                             async:false,
                             success:function (i) {
-                                $taux_de_change.val(i.value ? i.value : '');
+                                $('#' + _uniqid + '_taux_de_change').val(i.value ? i.value : '');
                             }
                         })
                     }
