@@ -589,29 +589,6 @@ class Excel
                             ),
                         ),
                     );
-                } elseif (in_array($field, array('n_ligne',
-                    'nomenclature',
-                    'pays_destination',
-                    'valeur_fiscale',
-                    'regime',
-                    'valeur_statistique',
-                    'masse_mette',
-                    'unites_supplementaires',
-                    'nature_transaction',
-                    'conditions_livraison',
-                    'mode_transport',
-                    'departement',
-                    'pays_origine',
-                    'CEE',))
-                ) {
-                    $styleHeader[$field] = array(
-                        'fill' => array(
-                            'type' => \PHPExcel_Style_Fill::FILL_SOLID,
-                            'color' => array(
-                                'argb' => 'ffff99',
-                            ),
-                        ),
-                    );
                 }
             }
 
