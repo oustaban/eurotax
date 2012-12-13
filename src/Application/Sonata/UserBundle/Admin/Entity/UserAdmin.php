@@ -72,7 +72,7 @@ class UserAdmin extends BaseUserAdmin
             ->add('firstname', null, array('required' => true))
             ->add('lastname', null, array('required' => true))
             ->add('phone', null, array('required' => false))
-            ->add('groups', null, array('required' => true, 'multiple'=>false, 'expanded'=>false, 'empty_value'=>''))
+            ->add('groups', null, array('required' => true, 'multiple'=>true, 'expanded'=>false, 'empty_value'=>''))
             ->add('enabled', null, array('required' => false))
             ->end();
     }

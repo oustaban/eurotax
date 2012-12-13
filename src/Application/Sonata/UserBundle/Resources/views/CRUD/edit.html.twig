@@ -14,4 +14,16 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript" src="{{ asset('bundles/applicationsonatauser/js/user.js') }}"></script>
+    <script type="text/javascript">
+        var uniqid = '{{ admin.uniqid }}';
+    </script>
 {% endblock javascripts %}
+
+{% block javascriptsafter %}
+{{ parent() }}
+<script type="text/javascript">
+    $(function(){
+        $('#'+uniqid+'_groups').removeAttr('multiple').prepend('<option value=""></option>');
+    });
+</script>
+{% endblock javascriptsafter %}

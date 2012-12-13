@@ -81,9 +81,14 @@ class User extends AbstractedUser implements UserInterface
     {
         parent::__construct();
 
-        $this->enabled = true;
+        /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+        $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $doctrine->getManager();
 
-        $group = \AppKernel::getStaticContainer()->get('doctrine')->getRepository('ApplicationSonataUserBundle:Group')->find(static::GroupId);
+        $this->setEnabled(true);
+
+        $group = $em->getRepository('ApplicationSonataUserBundle:Group')->find(static::GroupId);
         if ($group) {
             $this->addGroup($group);
         }
