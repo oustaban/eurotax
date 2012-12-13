@@ -18,6 +18,7 @@ jQuery(document).ready(function ($) {
 
     $('#' + uniqid + '_autre_destinataire_de_facturation').change(function () {
 
+        var $contact = $('#sonata-ba-field-container-' + uniqid + '_contact label');
         var $raison_sociale_2 = $('#sonata-ba-field-container-' + uniqid + '_raison_sociale_2 label');
         var $N_TVA_CEE_facture = $('#sonata-ba-field-container-' + uniqid + '_N_TVA_CEE_facture label');
 
@@ -28,6 +29,7 @@ jQuery(document).ready(function ($) {
                 $('#' + uniqid + '_location_facturation_' + field + '_facturation').attr('disabled', 'disabled').val('');
             });
 
+            $('#' + uniqid + '_contact').attr('disabled', 'disabled').val('');
             $('#' + uniqid + '_raison_sociale_2').attr('disabled', 'disabled').val('').removeAttr('required');
             $('#' + uniqid + '_N_TVA_CEE_facture').attr('disabled', 'disabled').val('').removeAttr('required');
 
@@ -39,6 +41,7 @@ jQuery(document).ready(function ($) {
             $.each(fields_address, function (i, field) {
                 $('#' + uniqid + '_location_facturation_' + field + '_facturation').removeAttr('disabled');
             });
+            $('#' + uniqid + '_contact').removeAttr('disabled');
             $('#' + uniqid + '_raison_sociale_2').removeAttr('disabled').attr('required', 'required');
             $('#' + uniqid + '_N_TVA_CEE_facture').removeAttr('disabled');
 

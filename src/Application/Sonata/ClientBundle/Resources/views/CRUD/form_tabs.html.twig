@@ -11,11 +11,9 @@
             <a href="{{ path('admin_sonata_client_client_'~action, {'id':client_id}) }}">Général</a>
         </li>
         {% if client_id  %}
-        {% if current_client.getAutreDestinataireDeFacturation %}
         <li {% if active_tab=='contact' %}class="active"{% endif %}>
             <a href="{{ path('admin_sonata_client_contact_list', _filter_json) }}">Contacts</a>
         </li>
-        {% endif %}
         <li {% if active_tab=='document' %}class="active"{% endif %}>
             <a href="{{ path('admin_sonata_client_document_list', _filter_json) }}">Documents</a>
         </li>
