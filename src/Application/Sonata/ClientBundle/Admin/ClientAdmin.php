@@ -320,8 +320,8 @@ class ClientAdmin extends Admin
         $siret = $object->getSiret();
         $offset = -1*strlen($siret);
         if ($value) {
-            $valueSiret = substr($value, $offset);
-            $value = substr($value, 0, $offset);
+            $valueSiret = $offset?substr($value, $offset):'';
+            $value = $offset?substr($value, 0, $offset):$value;
             if ($valueSiret != $siret || !preg_match('/^FR..$/', $value)) {
                 $errorElement->with('N_TVA_FR')->addViolation('Non concordance entre le "Siret" et le "N° TVA FR"')->end();
             }
