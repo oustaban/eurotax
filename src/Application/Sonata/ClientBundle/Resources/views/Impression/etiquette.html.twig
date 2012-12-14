@@ -1,27 +1,54 @@
-{% extends 'ApplicationSonataClientBundle:Impression:layout.html.twig' %}
-
-{% block title %}
-{{ parent() ~ ' - Etiquette' }}
-{% endblock title %}
-
-{% block impression_content %}
-<input type="checkbox" id="check_all" name="check_all" checked="checked"/> <label for="check_all">Tout</label>
-<form method="post">
-    <table border="1" align="center" class="etiquette_table">
-        {% for i in 1..7 %}
-        <tr>
-            {% for j in 1..2 %}
-            <td><input type="checkbox" name="box[{{ i }}][{{ j }}]" checked="checked"/></td>
-            {% endfor %}
-        </tr>
-        {% endfor %}
-    </table>
-    <input type="submit" value="Générer" style="float:right;clear: both;" />
-</form>
-{% endblock impression_content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Etiquette{% endblock %}</title>
+    {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" type="text/css"/>
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}" type="text/css"/>
+    <link rel="stylesheet" href="{{ asset('bundles/applicationsonataclient/css/client.css') }}" type="text/css" media="all"/>
+    {% endblock %}
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}"/>
+    {% block javascripts %}
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.cookie.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
+    <script type="text/javascript">
+        var active_tab = '{{ active_tab }}';
+    </script>
+    <script src="{{ asset('bundles/applicationsonataclient/js/client.js') }}" type="text/javascript"></script>
+    {% endblock javascripts %}
+</head>
+<body>
+<div class="container-fluid" id="container">
+    {% block body %}
+    <div id="maincont">
+        <div id="mainsubcont">
+            {% block body_content %}
+            <div class="sonata-ba-form sonata-ba-list">
+                {% block impression_content %}
+                <input type="checkbox" id="check_all" name="check_all" checked="checked"/> <label for="check_all">Tout</label>
+                <form method="post">
+                    <table border="1" align="center" class="etiquette_table">
+                        {% for i in 1..7 %}
+                        <tr>
+                            {% for j in 1..2 %}
+                            <td><input type="checkbox" name="box[{{ i }}][{{ j }}]" checked="checked"/></td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    <input type="submit" value="Générer" style="float:right;clear: both;" />
+                </form>
+                {% endblock impression_content %}
+            </div>
+            {% endblock %}
+        </div>
+    </div>
+    {% endblock %}
+</div>
 
 {% block javascriptsafter %}
-{{ parent() }}
 <script type="text/javascript">
     $(function () {
         $('.etiquette_table tr td').click(function (eventObject) {
@@ -35,3 +62,6 @@
     });
 </script>
 {% endblock javascriptsafter %}
+</body>
+</html>
+
