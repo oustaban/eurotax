@@ -5,107 +5,108 @@ jQuery(document).ready(function ($) {
         return false;
     });
 
-    symfony_ajax.behaviors.PaiementDateCloneMoisdeTVA = {
-        attach:function (context) {
-            var _uniqid = symfony_ajax.get_uniqid();
+    if (typeof symfony_ajax != 'undefined'){
+        symfony_ajax.behaviors.PaiementDateCloneMoisdeTVA = {
+            attach:function (context) {
+                var _uniqid = symfony_ajax.get_uniqid();
 
-            //-- V01-TVA || A02-TVA
-            if ($('#' + _uniqid + '_paiement_date', context).size() && $('#' + _uniqid + '_mois_mois', context).size()) {
-                $('#' + _uniqid + '_paiement_date', context).change(function () {
+                //-- V01-TVA || A02-TVA
+                if ($('#' + _uniqid + '_paiement_date', context).size() && $('#' + _uniqid + '_mois_mois', context).size()) {
+                    $('#' + _uniqid + '_paiement_date', context).change(function () {
 
-                    if ($(this).val() && !$('#' + _uniqid + '_mois_mois :selected', context).val()) {
-                        var date_arr = $(this).val().split('/');
-                        var year_month = date_arr[2] + '-' + Number(date_arr[1]);
+                        if ($(this).val() && !$('#' + _uniqid + '_mois_mois :selected', context).val()) {
+                            var date_arr = $(this).val().split('/');
+                            var year_month = date_arr[2] + '-' + Number(date_arr[1]);
 
-                        $('#' + _uniqid + '_mois_mois option', context).each(function () {
-                            $(this).removeAttr('selected');
-                        });
+                            $('#' + _uniqid + '_mois_mois option', context).each(function () {
+                                $(this).removeAttr('selected');
+                            });
 
-                        $('#' + _uniqid + '_mois_mois option', context).each(function () {
-                            if ($(this).val() == year_month) {
-                                $(this).attr('selected', 'selected').trigger('change');
-                            }
-                        })
-                    }
-                });
-            }
-        }
-    };
-
-    symfony_ajax.behaviors.rDevises = {
-        attach:function (context) {
-            var _uniqid = symfony_ajax.get_uniqid();
-            if (_uniqid) {
-                $('#' + _uniqid + '_paiement_devise, #' + _uniqid + '_paiement_date', context).change(function () {
-                    var _uniqid = symfony_ajax.get_uniqid();
-
-                    var devise = $('#' + _uniqid + '_paiement_devise :selected').val();
-                    var paiement_date = $('#' + _uniqid + '_paiement_date').val();
-                    var paiement_montant = $('#' + _uniqid + '_paiement_montant').val();
-
-                    if (devise && paiement_date && paiement_montant) {
-                        $.ajax({
-                            url:Sonata.url.rdevises,
-                            type:'POST',
-                            data:{
-                                devise:devise,
-                                date:paiement_date
-                            },
-                            dataType:'json',
-                            async:false,
-                            success:function (i) {
-                                $('#' + _uniqid + '_taux_de_change').val(i.value ? i.value : '');
-                            }
-                        })
-                    }
-                });
-            }
-        }
-    };
-
-    symfony_ajax.behaviors.calcMontantTVAfrancaiseAndMontantTTC = {
-        attach:function (context) {
-            var _uniqid = symfony_ajax.get_uniqid();
-            if (_uniqid) {
-                var $montant_HT_en_devise = $('#' + _uniqid + '_montant_HT_en_devise', context);
-                var $taux_de_TVA = $('#' + _uniqid + '_taux_de_TVA', context);
-                if ($montant_HT_en_devise.length && $taux_de_TVA.length){
-                    $montant_HT_en_devise.change(this.calc).keyup(this.calc);
-                    $taux_de_TVA.change(this.calc).trigger('change');
+                            $('#' + _uniqid + '_mois_mois option', context).each(function () {
+                                if ($(this).val() == year_month) {
+                                    $(this).attr('selected', 'selected').trigger('change');
+                                }
+                            })
+                        }
+                    });
                 }
             }
-        },
-        number_limit:function (e) {
-            var chr = String.fromCharCode(e.charCode == undefined ? e.keyCode : e.charCode);
-            return (chr < ' ' || (chr >= '0' && chr <= '9') || chr == ',' || chr == '.');
-        },
-        calc:function (e) {
-            var _uniqid = symfony_ajax.get_uniqid();
+        };
 
-            var $montant_HT_en_devise = $('#' + _uniqid + '_montant_HT_en_devise');
-            var $taux_de_TVA = $('#' + _uniqid + '_taux_de_TVA');
+        symfony_ajax.behaviors.rDevises = {
+            attach:function (context) {
+                var _uniqid = symfony_ajax.get_uniqid();
+                if (_uniqid) {
+                    $('#' + _uniqid + '_paiement_devise, #' + _uniqid + '_paiement_date', context).change(function () {
+                        var _uniqid = symfony_ajax.get_uniqid();
 
-            substr_replace($montant_HT_en_devise, 2);
-            substr_replace($taux_de_TVA, 3);
+                        var devise = $('#' + _uniqid + '_paiement_devise :selected').val();
+                        var paiement_date = $('#' + _uniqid + '_paiement_date').val();
+                        var paiement_montant = $('#' + _uniqid + '_paiement_montant').val();
 
-            var montant_HT_en_devise = $montant_HT_en_devise.val().replace(',', '.').replace(/\s+/, '');
-            var taux_de_TVA = $taux_de_TVA.val().replace(',', '.').replace(/\s+/, '');
+                        if (devise && paiement_date && paiement_montant) {
+                            $.ajax({
+                                url:Sonata.url.rdevises,
+                                type:'POST',
+                                data:{
+                                    devise:devise,
+                                    date:paiement_date
+                                },
+                                dataType:'json',
+                                async:false,
+                                success:function (i) {
+                                    $('#' + _uniqid + '_taux_de_change').val(i.value ? i.value : '');
+                                }
+                            })
+                        }
+                    });
+                }
+            }
+        };
 
-            var montant_TVA_francaise = parseFloat(parseFloat(montant_HT_en_devise) * parseFloat(taux_de_TVA));
+        symfony_ajax.behaviors.calcMontantTVAfrancaiseAndMontantTTC = {
+            attach:function (context) {
+                var _uniqid = symfony_ajax.get_uniqid();
+                if (_uniqid) {
+                    var $montant_HT_en_devise = $('#' + _uniqid + '_montant_HT_en_devise', context);
+                    var $taux_de_TVA = $('#' + _uniqid + '_taux_de_TVA', context);
+                    if ($montant_HT_en_devise.length && $taux_de_TVA.length){
+                        $montant_HT_en_devise.change(this.calc).keyup(this.calc);
+                        $taux_de_TVA.change(this.calc).trigger('change');
+                    }
+                }
+            },
+            number_limit:function (e) {
+                var chr = String.fromCharCode(e.charCode == undefined ? e.keyCode : e.charCode);
+                return (chr < ' ' || (chr >= '0' && chr <= '9') || chr == ',' || chr == '.');
+            },
+            calc:function (e) {
+                var _uniqid = symfony_ajax.get_uniqid();
 
-            //If method validate from file Validate/ErrorElements.php function round $precision = 2, $mode = PHP_ROUND_HALF_DOWN
-            montant_TVA_francaise = montant_TVA_francaise ? montant_TVA_francaise.toFixed(2) : '';
+                var $montant_HT_en_devise = $('#' + _uniqid + '_montant_HT_en_devise');
+                var $taux_de_TVA = $('#' + _uniqid + '_taux_de_TVA');
 
-            var montant_TTC = parseFloat(parseFloat(montant_HT_en_devise) + parseFloat(montant_TVA_francaise));
+                substr_replace($montant_HT_en_devise, 2);
+                substr_replace($taux_de_TVA, 3);
 
-            montant_TVA_francaise = montant_TVA_francaise ? montant_TVA_francaise.replace('.', ',') : '';
-            montant_TTC = montant_TTC ? montant_TTC.toFixed(2).replace('.', ',') : '';
+                var montant_HT_en_devise = $montant_HT_en_devise.val().replace(',', '.').replace(/\s+/, '');
+                var taux_de_TVA = $taux_de_TVA.val().replace(',', '.').replace(/\s+/, '');
 
-            $('#' + _uniqid + '_montant_TVA_francaise').val(montant_TVA_francaise);
-            $('#' + _uniqid + '_montant_TTC').val(montant_TTC);
-        }
-    };
+                var montant_TVA_francaise = parseFloat(parseFloat(montant_HT_en_devise) * parseFloat(taux_de_TVA));
 
+                //If method validate from file Validate/ErrorElements.php function round $precision = 2, $mode = PHP_ROUND_HALF_DOWN
+                montant_TVA_francaise = montant_TVA_francaise ? montant_TVA_francaise.toFixed(2) : '';
+
+                var montant_TTC = parseFloat(parseFloat(montant_HT_en_devise) + parseFloat(montant_TVA_francaise));
+
+                montant_TVA_francaise = montant_TVA_francaise ? montant_TVA_francaise.replace('.', ',') : '';
+                montant_TTC = montant_TTC ? montant_TTC.toFixed(2).replace('.', ',') : '';
+
+                $('#' + _uniqid + '_montant_TVA_francaise').val(montant_TVA_francaise);
+                $('#' + _uniqid + '_montant_TTC').val(montant_TTC);
+            }
+        };
+    }
 });
 
 
