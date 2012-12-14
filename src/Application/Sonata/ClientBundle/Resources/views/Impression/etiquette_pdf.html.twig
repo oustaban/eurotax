@@ -15,7 +15,7 @@
 ~ client.user.__toString ~ '<br/>'
 ~ (client.adresse1Postal?client.adresse1Postal ~ '<br/>':'')
 ~ (client.adresse2Postal?client.adresse2Postal ~ '<br/>':'')
-~ client.codePostalPostal ~ ' ' ~ client.villePostal ~ '<br/>'
+~ client.getLocaleCodeVillePostal ~ '<br/>'
 ~ client.paysPostal.__toString|upper
 %}
 

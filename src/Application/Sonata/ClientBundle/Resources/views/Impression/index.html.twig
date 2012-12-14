@@ -6,5 +6,5 @@
 {% endblock title %}
 
 {% block impression_content %}
-    <button rel="tooltip" title="{{ 'Etiquette'|trans }}" class="btn" onclick="javascript:location.href = '{{ path('impression_etiquette', _filter_json) }}';"><i class="icon icon-list-alt"></i> {{ 'Etiquette'|trans }}</button>
+    <button rel="tooltip" title="{{ 'Etiquette'|trans }}" class="btn" onclick="javascript:window.open('{{ path('impression_etiquette', _filter_json) }}', '_blank');"><i class="icon icon-list-alt"></i> {{ 'Etiquette'|trans }}</button>
 {% endblock impression_content %}

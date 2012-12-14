@@ -1787,4 +1787,17 @@ class Client
     {
         return $this->N_TVA_FR;
     }
+
+    /**
+     * @return string
+     */
+    public function getLocaleCodeVillePostal()
+    {
+        $pays = $this->getPaysPostal();
+        if ($pays && in_array($pays->getCode(), array('UK', 'US'))){
+            return $this->getVillePostal().' '.$this->getCodePostalPostal();
+        }
+
+        return $this->getCodePostalPostal().' '.$this->getVillePostal();
+    }
 }
