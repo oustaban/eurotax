@@ -184,7 +184,7 @@ tr.dimmed, tr.dimmed a {
 .filterColumns {
     white-space: nowrap;
 }
-#list_batch_checkbox {
+#list_batch_checkbox, #list_batch_checkbox_cloned {
     width: auto;
 }
 

@@ -5,9 +5,6 @@ jQuery(document).ready(function ($) {
         return false;
     });
 
-    //--
-    //In the form when Paiement Date changes and Mois de TVA not set, the field Mois de TVA should take the corresponding YearMonth of Paiement Date
-    //http://redmine.testenm.com/issues/1376
     symfony_ajax.behaviors.PaiementDateCloneMoisdeTVA = {
         attach:function (context) {
             var _uniqid = symfony_ajax.get_uniqid();
@@ -35,8 +32,6 @@ jQuery(document).ready(function ($) {
         }
     };
 
-    //-- get Devises money value
-    //http://redmine.testenm.com/issues/1364#note-9
     symfony_ajax.behaviors.rDevises = {
         attach:function (context) {
             var _uniqid = symfony_ajax.get_uniqid();
@@ -68,7 +63,6 @@ jQuery(document).ready(function ($) {
         }
     };
 
-    //-- Calc MontantTVAfrancaiseAndMontantTTC
     symfony_ajax.behaviors.calcMontantTVAfrancaiseAndMontantTTC = {
         attach:function (context) {
             var _uniqid = symfony_ajax.get_uniqid();
@@ -292,4 +286,27 @@ function init_tabs_filters_sticky_header() {
 
         return false;
     });
+
+    var $all_elements = $('input[name="all_elements"]');
+    var $list_batch_checkbox_cloned = $('.sticky_header_clone .sonata-ba-list-field-header-batch input[type="checkbox"]');
+    $list_batch_checkbox_cloned.attr('id', 'list_batch_checkbox_cloned');
+    var $list_batch_checkbox = $('#list_batch_checkbox');
+
+    var all_elements_checkbox_toggle = function(checked){
+        $list_batch_checkbox.attr('checked', checked).click().attr('checked', checked);
+    };
+
+    $all_elements.click(function(){
+        all_elements_checkbox_toggle($(this).is(':checked'));
+    });
+
+    $list_batch_checkbox_cloned.click(function(){
+        all_elements_checkbox_toggle($(this).is(':checked'));
+    });
+
+    $list_batch_checkbox.click(function(){
+        $().add($all_elements).add($list_batch_checkbox_cloned).attr('checked', $(this).is(':checked'));
+    });
+
+
 }
