@@ -7,6 +7,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Sonata\AdminBundle\Validator\ErrorElement;
 
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -63,7 +64,7 @@ abstract class AbstractCompteAdmin extends Admin
 
         $listMapper->add('date', null, array(
             'label' => $this->getFieldLabel('date'),
-            'template' => 'ApplicationSonataClientBundle:CRUD:list_date.html.twig'
+            'template' => 'ApplicationSonataClientBundle:CRUD:list_date_compte.html.twig'
         ))
             ->add('operation', null, array('label' => $this->getFieldLabel('operation')))
             ->add('montant', 'money', array(
@@ -76,6 +77,23 @@ abstract class AbstractCompteAdmin extends Admin
         ))
             ->add('commentaire', null, array('label' => $this->getFieldLabel('commentaire')))
             ->add('statut.name', null, array('label' => $this->getFieldLabel('statut')));
+    }
+
+    /**
+     * @param ErrorElement $errorElement
+     * @param mixed|\Application\Sonata\ClientBundle\Entity\AbstractCompteEntity $object
+     */
+    public function validate(ErrorElement $errorElement, $object)
+    {
+        parent::validate($errorElement, $object);
+
+        /* @var $value \DateTime */
+        $value = $object->getDate();
+        if ($value) {
+            if ($value->getTimestamp() < strtotime('-10 days')) {
+                $errorElement->with('date')->addViolation('La "date" ne doit pas dépasser les 10 jours dans le passé')->end();
+            }
+        }
     }
 }
 

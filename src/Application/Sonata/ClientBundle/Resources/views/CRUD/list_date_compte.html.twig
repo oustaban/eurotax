@@ -1,0 +1,7 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+        <div class="{% if object.getDate.getTimestamp < date('-10 days').getTimestamp %}inactive_compte{% endif %}">
+            {{ object.getDate|datefmt_format(default_date_format) }}
+        </div>
+{% endblock field %}

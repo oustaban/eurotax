@@ -205,7 +205,7 @@ $(function () {
 
 function init_ajax_edit_popup() {
     var $table = $('.sonata-ba-list .table tbody:first');
-    $table.find('tr:not(.totals_row) td[objectid]').css('cursor', 'pointer').live('click', function (event) {
+    $table.find('tr:not(.totals_row) td[objectid]:not(.no-edit)').css('cursor', 'pointer').live('click', function (event) {
         var objectid = $(this).attr('objectid');
         if (objectid) {
             var link = editObjectAbstractUrl.replace("__id__", objectid).replace('&amp;', '&');

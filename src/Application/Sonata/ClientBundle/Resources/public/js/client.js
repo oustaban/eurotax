@@ -259,4 +259,13 @@ jQuery(document).ready(function ($) {
             }
         };
     }
+
+    /**
+     * compte & compte_de_depot
+     */
+    if ($('.js-compte, .js-compte_de_depot').size()) {
+        var $inactiveTr = $('div.inactive_compte').parent().parent();
+        $inactiveTr.find('.sonata-ba-list-field-action').html('');
+        $inactiveTr.find('td').addClass('no-edit');
+    }
 });
