@@ -311,6 +311,17 @@ class ClientAdmin extends Admin
                 }
             }
         }
+
+        $value = $object->getNTVAFR();
+        $siret = $object->getSiret();
+        $offset = -1*strlen($siret);
+        if ($value) {
+            $valueSiret = substr($value, $offset);
+            $value = substr($value, 0, $offset);
+            if ($valueSiret != $siret || !preg_match('/^FR..$/', $value)) {
+                $errorElement->with('N_TVA_FR')->addViolation('Non concordance entre le "Siret" et le "N° TVA FR"')->end();
+            }
+        }
     }
 
     /**
