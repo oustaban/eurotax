@@ -37,7 +37,7 @@ class V07EXAdmin extends Admin
             return $er->createQueryBuilder('d')
                 ->orderBy('d.alias', 'ASC');
         },))
-            ->add('montant_HT_en_devise', null, array('precision'=>2, 'label' => $this->getFieldLabel('montant_HT_en_devise')))
+            ->add('montant_HT_en_devise', null, array('precision'=>2, 'attr'=>array('class'=>'money'), 'label' => $this->getFieldLabel('montant_HT_en_devise')))
             ->add('mois', 'mois', array(
             'label' => $this->getFieldLabel('mois'),
         ))

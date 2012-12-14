@@ -37,7 +37,7 @@ class A06AIBAdmin extends Admin
             return $er->createQueryBuilder('d')
                 ->orderBy('d.alias', 'ASC');
         },))
-            ->add('montant_HT_en_devise', null, array('precision'=>2, 'label' => $this->getFieldLabel('montant_HT_en_devise')))
+            ->add('montant_HT_en_devise', null, array('precision'=>2, 'attr'=>array('class'=>'money'), 'label' => $this->getFieldLabel('montant_HT_en_devise')))
             ->add('taux_de_TVA', 'choice', array(
             'label' => $this->getFieldLabel('taux_de_TVA'),
             'choices' => array(
