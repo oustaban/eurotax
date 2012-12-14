@@ -144,7 +144,11 @@ class ClientAdmin extends Admin
             'attr' => array('class' => 'date_de_depot_id'),
         ))
             ->with('form.client.row16')
-            ->add('center_des_impots', null, array('label' => 'form.center_des_impots', 'empty_value' => '', 'required' => true))
+            ->add('center_des_impots', null, array('label' => 'form.center_des_impots', 'query_builder' => function (EntityRepository $er)
+        {
+            return $er->createQueryBuilder('u')
+                ->orderBy('u.nom', 'ASC');
+        }, 'empty_value' => '', 'required' => true))
             ->add('teledeclaration', null, array('label' => 'form.teledeclaration'))
             ->with('form.client.row17')
             ->add('language', null, array('label' => 'form.language', 'empty_value' => '', 'required' => true))
