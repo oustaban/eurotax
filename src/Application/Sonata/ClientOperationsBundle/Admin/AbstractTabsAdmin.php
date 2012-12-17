@@ -38,6 +38,7 @@ abstract class AbstractTabsAdmin extends Admin
     public $date_format_php = 'd/m/Y';
     protected $_is_validate_import = false;
     protected $_index_import = 0;
+    protected $_show_all_operations = false;
 
     /**
      * @param string $code
@@ -62,9 +63,14 @@ abstract class AbstractTabsAdmin extends Admin
 
             $this->client_id = $this->client_id = $filter['client_id']['value'];
 
-            $this->month_default = '-1' . date($this->date_filter_separator . 'Y');
+            $this->month_default = '-1' . date($this->date_filter_separator . 'Y', strtotime('-1 month'));
 
             $this->query_month = isset($filter['month']) ? $filter['month'] : $request->query->get('month', $this->month_default);
+
+            if ($this->query_month == 'all'){
+                $this->query_month = -1;
+                $this->_show_all_operations = true;
+            }
 
             list($this->month, $this->year) = $this->getQueryMonth($this->query_month);
         }
@@ -116,24 +122,26 @@ abstract class AbstractTabsAdmin extends Admin
         /** @var $builder \Doctrine\ORM\QueryBuilder */
         $builder = $query->getQueryBuilder();
 
-        $form_month = $this->year . '-' . $this->month . '-01';
-        $to_month = $this->year . '-' . $this->month . '-31';
+        if (!$this->_show_all_operations){
+            $form_month = $this->year . '-' . $this->month . '-01';
+            $to_month = $this->year . '-' . $this->month . '-31';
 
+            $from = $builder->getDQLPart('from');
+            /** @var $from \Doctrine\ORM\Query\Expr\From */
+            $from = $from[0];
+            $entity = $from->getFrom();
+            $monthField = $entity::monthField;
 
-        $from = $builder->getDQLPart('from');
-        /** @var $from \Doctrine\ORM\Query\Expr\From */
-        $from = $from[0];
-        $entity = $from->getFrom();
-        $monthField = $entity::monthField;
+            if ($this->query_month == -1) {
+                $builder->orWhere($builder->getRootAlias() . '.'.$monthField.' IS NULL');
+                $builder->orWhere($builder->getRootAlias() . '.'.$monthField.' BETWEEN :form_month AND :to_month');
+            } else {
+                $builder->andWhere($builder->getRootAlias() . '.'.$monthField.' BETWEEN :form_month AND :to_month');
+            }
 
-        if ($this->query_month == -1) {
-            $builder->orWhere($builder->getRootAlias() . '.'.$monthField.' IS NULL');
-            $builder->orWhere($builder->getRootAlias() . '.'.$monthField.' BETWEEN :form_month AND :to_month');
-        } else {
-            $builder->andWhere($builder->getRootAlias() . '.'.$monthField.' BETWEEN :form_month AND :to_month');
+            $builder->setParameter(':form_month', $form_month);
+            $builder->setParameter(':to_month', $to_month);
         }
-        $builder->setParameter(':form_month', $form_month);
-        $builder->setParameter(':to_month', $to_month);
 
         $builder->andWhere($builder->getRootAlias() . '.client_id=' . $this->client_id);
 

@@ -440,6 +440,8 @@ class AbstractTabsController extends Controller
                 'name' => ucwords($this->datefmtFormatFilter(new \DateTime(date('Y-m-d', $mktime)), 'YYYY MMMM')));
         }
 
+        $month_list[] = array('key' => 'all', 'name' => 'Toutes les opérations');
+
         return $month_list;
     }
 
