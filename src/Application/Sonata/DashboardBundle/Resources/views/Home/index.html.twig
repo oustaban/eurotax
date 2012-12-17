@@ -83,6 +83,10 @@
                 <a href="{{ path('admin_sonata_client_client_edit', {'id':client[0].id}) }}">
                     <i rel="tooltip" title="Fiche" class="icon icon-list-alt"></i>
                 </a>
+                {% set alert_count = client[0].getAlertCount%}
+                {% if alert_count %}
+                    <span rel="tooltip" title="{{alert_count}} {{ 'alertes'|trans }}" class="badge badge-warning">{{ alert_count }}</span>
+                {% endif%}
                 {% endspaceless %}
             </td>
             <td class="sonata-ba-list-field sonata-ba-list-field-integer"  objectId="{{ client[0].id }}">
