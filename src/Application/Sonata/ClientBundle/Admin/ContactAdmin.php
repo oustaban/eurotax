@@ -18,14 +18,6 @@ use Application\Sonata\ClientBundle\Admin\AbstractTabsAdmin as Admin;
 
 class ContactAdmin extends Admin
 {
-    protected $_fields_list = array(
-        'affichage_facture_id',
-        'raison_sociale_societe',
-        'nom',
-        'prenom',
-        'telephone_1',
-        'email',
-    );
 
     //create & edit form
     /**
@@ -63,9 +55,15 @@ class ContactAdmin extends Admin
     {
         parent::configureListFields($listMapper);
 
-        foreach ($this->_fields_list as $field) {
-            $listMapper->add($field, null, array('label' => $this->getFieldLabel($field)));
-        }
+        $listMapper
+            ->add('affichage_facture_id', null, array('label' => $this->getFieldLabel('affichage_facture_id')))
+            ->add('raison_sociale_societe', null, array('label' => $this->getFieldLabel('raison_sociale_societe')))
+            ->add('civilite.name', null, array('label' => $this->getFieldLabel('civilite')))
+            ->add('nom', null, array('label' => $this->getFieldLabel('nom')))
+            ->add('prenom', null, array('label' => $this->getFieldLabel('prenom')))
+            ->add('telephone_1', null, array('label' => $this->getFieldLabel('telephone_1')))
+            ->add('email', null, array('label' => $this->getFieldLabel('email')))
+        ;
     }
 
 
