@@ -26,9 +26,9 @@
         <li {% if active_tab=='commentaire' %}class="active"{% endif %}>
             <a href="{{ path('admin_sonata_client_commentaire_list', _filter_json) }}">Commentaires</a>
         </li>
-        <li {% if active_tab=='tarif' %}class="active"{% endif %}>
-            <a href="{{ path('admin_sonata_client_tarif_list', _filter_json) }}">Tarif</a>
-        </li>
+        {#<li {% if active_tab=='tarif' %}class="active"{% endif %}>#}
+            {#<a href="{{ path('admin_sonata_client_tarif_list', _filter_json) }}">Tarif</a>#}
+        {#</li>#}
         <li {% if active_tab=='compte' %}class="active"{% endif %}>
             <a href="{{ path('admin_sonata_client_compte_list', _filter_json) }}">Compte</a>
         </li>
