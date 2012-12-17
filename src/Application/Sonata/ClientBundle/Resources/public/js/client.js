@@ -22,6 +22,17 @@ jQuery(document).ready(function ($) {
 
                         $('#sonata-ba-field-container-' + _uniqid + '_preavis')[['show', 'hide'][($(this).val() == 1 || $(this).val() == 3) ? 0 : 1]]();
 
+                        if ($(this).val() == 2){
+                            $('#' + _uniqid + '_statut_document_notaire, #' + _uniqid + '_statut_document_apostille').each(function(){
+                                if ($(this).val() == ''){
+                                    $(this).val(1);
+                                }
+                            });
+                        }
+                        else {
+                            $('#' + _uniqid + '_statut_document_notaire, #' + _uniqid + '_statut_document_apostille').val('');
+                        }
+
                     }).trigger('change');
 
                     $('#sonata-ba-field-container-' + _uniqid + '_date_notaire').addClass('date_notaire');

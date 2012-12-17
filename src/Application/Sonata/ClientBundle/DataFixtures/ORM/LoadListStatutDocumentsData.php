@@ -17,7 +17,7 @@ class LoadListStatutDocumentsData extends AbstractLoadListData
      * @var array
      */
     protected $_lists = array(
-        'A optenir',
+        'A obtenir',
         'Non demandé',
     );
 }
