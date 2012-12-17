@@ -86,10 +86,7 @@ class DocumentAdmin extends Admin
             'label' => $this->getFieldLabel('date_document'),
             'template' => 'ApplicationSonataClientBundle:CRUD:list_date_document.html.twig'
         ))
-            ->add('date_notaire', null, array('label' => $this->getFieldLabel('date_notaire')))
-            ->add('statut_document_notaire.name', null, array('label' => $this->getFieldLabel('statut_document_notaire')))
-            ->add('date_apostille', null, array('label' => $this->getFieldLabel('date_apostille')))
-            ->add('statut_document_apostille.name', null, array('label' => $this->getFieldLabel('statut_document_apostille')));
+        ;
     }
 
     /**
