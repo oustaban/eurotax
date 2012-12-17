@@ -326,6 +326,13 @@ class ClientAdmin extends Admin
                 $errorElement->with('N_TVA_FR')->addViolation('Non concordance entre le "Siret" et le "N° TVA FR"')->end();
             }
         }
+
+        $value = $object->getNumDossierFiscal();
+        if ($value) {
+            if (!preg_match('/^\d{6}\/\d{2}$/', $value)) {
+                $errorElement->with('num_dossier_fiscal')->addViolation('not valid')->end();
+            }
+        }
     }
 
     /**
@@ -443,6 +450,20 @@ class ClientAdmin extends Admin
                 $alert->setText('Manque Activité');
 
                 $em->persist($alert);
+            }
+
+            $value = $object->getNumDossierFiscal();
+            if ($value) {
+                $explode = explode('/', $value);
+                if (!isset($explode[1]) || $explode[1] == '00'){
+                    $alert = new ClientAlert();
+                    $alert->setClient($object);
+                    $alert->setTabs($tab);
+                    $alert->setIsBlocked(false);
+                    $alert->setText('Numéro de dossier fiscal incomplet');
+
+                    $em->persist($alert);
+                }
             }
 
             $em->flush();
