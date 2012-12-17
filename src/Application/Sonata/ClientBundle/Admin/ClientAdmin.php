@@ -18,6 +18,7 @@ use Sonata\AdminBundle\Validator\ErrorElement;
 use Application\Sonata\ClientBundle\Entity\ClientAlert;
 use Doctrine\ORM\EntityRepository;
 use Application\Sonata\ClientBundle\Entity\ListCountries;
+use Application\Sonata\ClientBundle\Entity\ListNatureDuClients;
 
 class ClientAdmin extends Admin
 {
@@ -331,6 +332,13 @@ class ClientAdmin extends Admin
         if ($value) {
             if (!preg_match('/^\d{6}\/\d{2}$/', $value)) {
                 $errorElement->with('num_dossier_fiscal')->addViolation('"Num dossier fiscal" non valide, devrait avoir le format xxxxxx/xx')->end();
+            }
+        }
+
+        $value = $object->getDateDeDepot();
+        if ($value) {
+            if (in_array($object->getNatureDuClient()->getId(), array(ListNatureDuClients::DEB, ListNatureDuClients::DES)) && $value!=31){
+                $errorElement->with('date_de_depot_id')->addViolation('"Date de dépôt" non cohérente')->end();
             }
         }
     }
