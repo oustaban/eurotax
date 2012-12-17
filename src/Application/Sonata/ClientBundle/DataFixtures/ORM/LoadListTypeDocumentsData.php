@@ -20,7 +20,7 @@ class LoadListTypeDocumentsData extends AbstractLoadListData
         'Mandat',
         'Pouvoir',
         'Accord',
-        'Lettre',
+        'Lettre de désignation',
         'Attestation de TVA',
         'Mandat Spécifique',
     );
