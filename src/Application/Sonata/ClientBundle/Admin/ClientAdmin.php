@@ -330,7 +330,7 @@ class ClientAdmin extends Admin
         $value = $object->getNumDossierFiscal();
         if ($value) {
             if (!preg_match('/^\d{6}\/\d{2}$/', $value)) {
-                $errorElement->with('num_dossier_fiscal')->addViolation('not valid')->end();
+                $errorElement->with('num_dossier_fiscal')->addViolation('"Num dossier fiscal" non valide, devrait avoir le format xxxxxx/xx')->end();
             }
         }
     }
