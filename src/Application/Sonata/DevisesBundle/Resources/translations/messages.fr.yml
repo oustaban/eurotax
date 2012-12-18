@@ -5,7 +5,7 @@ ApplicationSonataDevisesBundle:
     British Pound: British Pound
     Month: Mois
     Year:  Année
-    Devises: Devise - Éditer
+    Devises: Devise
     DateChange: Mois
 
   list:
