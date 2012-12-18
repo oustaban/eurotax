@@ -18,4 +18,19 @@ class GroupAdmin extends BaseGroupAdmin
         array_shift($res);
         return $res;
     }
+
+    /**
+     * @param string $name
+     *
+     * @return null|string
+     */
+    public function getTemplate($name)
+    {
+        switch ($name) {
+            case 'create':
+            case 'edit':
+                return 'ApplicationSonataUserBundle:CRUD:edit_group.html.twig';
+        }
+        return parent::getTemplate($name);
+    }
 }

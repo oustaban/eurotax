@@ -1,0 +1,13 @@
+{% extends ':CRUD:edit.html.twig' %}
+
+{% block title %}
+Groupe - {{ parent() }}
+{% endblock title %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/applicationsonatauser/js/group.js') }}"></script>
+    <script type="text/javascript">
+        var uniqid = '{{ admin.uniqid }}';
+    </script>
+{% endblock javascripts %}

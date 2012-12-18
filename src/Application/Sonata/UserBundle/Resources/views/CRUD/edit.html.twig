@@ -1,5 +1,9 @@
 {% extends ':CRUD:edit.html.twig' %}
 
+{% block title %}
+Utilisateur - {{ parent() }}
+{% endblock title %}
+
 {% block actions %}
 <div class="sonata-actions">
     {% if admin.hasroute('history') and admin.id(object) and admin.isGranted('EDIT', object) %}

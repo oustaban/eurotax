@@ -10,9 +10,9 @@
 {% if client is defined %}
 {% set label = client ~ ' - ' ~ parent() %}
 {% elseif  current_client is defined and current_client is not empty %}
-{% set label = current_client ~ ' - ' ~ 'Général'|trans() %}
+{% set label = 'Client - ' ~ current_client ~ ' - ' ~ 'Général'|trans() %}
 {% else %}
-{% set label = 'Général'|trans() %}
+{% set label = 'Client - Créer' %}
 {% endif %}
 {{ label }}
 
