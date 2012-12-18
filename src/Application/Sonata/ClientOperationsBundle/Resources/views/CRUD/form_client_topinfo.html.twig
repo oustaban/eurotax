@@ -7,11 +7,11 @@
         {% endif %}
     </h1>
 
-    <div>
+    <div>{{query_month}}<br>
         <label for="selected_month">{{'ApplicationSonataClientOperationsBundle.mois'|trans}}</label>
         <select id="selected_month" name="month">
             {% for month in month_list %}
-            <option {% if month.key == query_month or (month.key == 'all' and query_month == -1) %} selected="selected" {% endif %}
+            <option {% if month.key == query_month or (month.key == 'all' and query_month == '-1') %} selected="selected" {% endif %}
                                                       value="{{ month.key }}">{{ month.name}}</option>
             {% endfor %}
         </select>
