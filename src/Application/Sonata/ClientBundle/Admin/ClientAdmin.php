@@ -318,7 +318,7 @@ class ClientAdmin extends Admin
         }
 
         $value = $object->getNTVAFR();
-        $siret = $object->getSiret();
+        $siret = substr(str_replace(' ', '', $object->getSiret()), 0, 9);
         $offset = -1*strlen($siret);
         if ($value) {
             $valueSiret = $offset?substr($value, $offset):'';
