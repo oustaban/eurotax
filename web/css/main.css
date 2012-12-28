@@ -195,3 +195,7 @@ tr.dimmed, tr.dimmed a {
 .important_hidden {
     display: none !important;
 }
+
+.sonata-ba-list td.sonata-ba-list-field {
+    white-space: nowrap;
+}
