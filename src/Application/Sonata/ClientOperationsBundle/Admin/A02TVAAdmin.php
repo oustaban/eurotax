@@ -53,9 +53,9 @@ class A02TVAAdmin extends Admin
             ),
             'empty_value' => '',
         ))
-            ->add('montant_TVA_francaise', 'money', array('label' => $this->getFieldLabel('montant_TVA_francaise')))
-            ->add('montant_TTC', 'money', array('label' => $this->getFieldLabel('montant_TTC')))
-            ->add('paiement_montant', 'money', array('required' => false, 'label' => $this->getFieldLabel('paiement_montant')))
+            ->add('montant_TVA_francaise', null, array('precision'=>2, 'attr'=>array('class'=>'money'), 'label' => $this->getFieldLabel('montant_TVA_francaise')))
+            ->add('montant_TTC', null, array('precision'=>2, 'attr'=>array('class'=>'money'), 'label' => $this->getFieldLabel('montant_TTC')))
+            ->add('paiement_montant', null, array('precision'=>2, 'attr'=>array('class'=>'money'), 'required' => false, 'label' => $this->getFieldLabel('paiement_montant')))
             ->add('paiement_devise', null, array('label' => $this->getFieldLabel('paiement_devise_id'), 'query_builder' => function (EntityRepository $er)
         {
             return $er->createQueryBuilder('d')
