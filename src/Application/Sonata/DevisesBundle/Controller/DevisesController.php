@@ -14,7 +14,7 @@ class DevisesController extends Controller
      */
     public function createAction()
     {
-        $object = $this->admin->getCurrentDevises(date('Y-m'));
+        $object = $this->admin->getCurrentDevises(date('Y-m', strtotime('now' . (date('d') > 24 ? ' +1 month' : ''))));
         if ($object) {
             $url = $this->admin->generateObjectUrl('edit', $object);
             return $this->redirect($url);
