@@ -1794,7 +1794,7 @@ class Client
     public function getLocaleCodeVillePostal()
     {
         $pays = $this->getPaysPostal();
-        if ($pays && in_array($pays->getCode(), array('UK', 'US'))){
+        if ($pays && in_array($pays->getCode(), array('GB', 'US'))){
             return $this->getVillePostal().' '.$this->getCodePostalPostal();
         }
 
