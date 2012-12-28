@@ -124,6 +124,8 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
 
     public function __construct(){
         parent::__construct();
+
+        $this->setMois(new \DateTime(strtotime('now' . (date('d') < 25 ? ' -1 month' : ''))));
     }
 
     /**

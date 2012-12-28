@@ -14,8 +14,6 @@ use Doctrine\ORM\Mapping as ORM;
 abstract class AbstractBaseEntity
 {
 
-    const monthField = 'date_piece';
-
     /**
      * @var integer $id
      *
@@ -53,6 +51,13 @@ abstract class AbstractBaseEntity
      * @ORM\JoinColumn(name="status_id", referencedColumnName="id")
      */
     private $status;
+
+    /**
+     * @var \DateTime $mois
+     *
+     * @ORM\Column(name="mois", type="date", nullable=true)
+     */
+    private $mois;
 
 
 
@@ -184,5 +189,28 @@ abstract class AbstractBaseEntity
         }
 
         return $this->status;
+    }
+
+    /**
+     * Set mois
+     *
+     * @param \DateTime $mois
+     * @return AbstractSellEntity
+     */
+    public function setMois($mois)
+    {
+        $this->mois = $mois;
+
+        return $this;
+    }
+
+    /**
+     * Get mois
+     *
+     * @return \DateTime
+     */
+    public function getMois()
+    {
+        return $this->mois;
     }
 }

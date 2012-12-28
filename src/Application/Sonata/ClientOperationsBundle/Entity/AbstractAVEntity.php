@@ -13,8 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 abstract class AbstractAVEntity extends AbstractBaseEntity
 {
 
-    const monthField = 'mois';
-
     /**
      * @var string $tiers
      *
@@ -30,13 +28,6 @@ abstract class AbstractAVEntity extends AbstractBaseEntity
      * @ORM\Column(name="numero_piece", type="string", length=255)
      */
     private $numero_piece;
-
-    /**
-     * @var float $mois
-     *
-     * @ORM\Column(name="mois", type="date", nullable=true)
-     */
-    private $mois;
 
     /**
      * @var string $commentaires
@@ -102,29 +93,6 @@ abstract class AbstractAVEntity extends AbstractBaseEntity
     public function getNumeroPiece()
     {
         return $this->numero_piece;
-    }
-
-    /**
-     * Set mois
-     *
-     * @param float $mois
-     * @return AbstractSellEntity
-     */
-    public function setMois($mois)
-    {
-        $this->mois = $mois;
-
-        return $this;
-    }
-
-    /**
-     * Get mois
-     *
-     * @return float
-     */
-    public function getMois()
-    {
-        return $this->mois;
     }
 
     /**

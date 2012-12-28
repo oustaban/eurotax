@@ -125,12 +125,7 @@ abstract class AbstractTabsAdmin extends Admin
         if (!$this->_show_all_operations){
             $form_month = $this->year . '-' . $this->month . '-01';
             $to_month = $this->year . '-' . $this->month . '-31';
-
-            $from = $builder->getDQLPart('from');
-            /** @var $from \Doctrine\ORM\Query\Expr\From */
-            $from = $from[0];
-            $entity = $from->getFrom();
-            $monthField = $entity::monthField;
+            $monthField = 'mois';
 
             if ($this->query_month == -1) {
                 $builder->orWhere($builder->getRootAlias() . '.'.$monthField.' IS NULL');
