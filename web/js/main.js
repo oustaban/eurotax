@@ -47,6 +47,18 @@ $(function () {
     if ($.cookie('show_all_clients') != $.cookie('PHPSESSID')){
         $.removeCookie('show_all_clients', { path:'/' });
     }
+
+    $('input').each(function() {
+        this.oninvalid = function(e) {
+            e.target.setCustomValidity("");
+            if (!e.target.validity.valid) {
+                e.target.setCustomValidity("Cette valeur ne doit pas être vide");
+            }
+        };
+        this.oninput = function(e) {
+            e.target.setCustomValidity("");
+        };
+    });
 });
 
 

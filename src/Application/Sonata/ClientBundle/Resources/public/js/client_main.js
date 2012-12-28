@@ -29,10 +29,11 @@ jQuery(document).ready(function ($) {
                 $('#' + uniqid + '_location_facturation_' + field + '_facturation').attr('disabled', 'disabled').val('');
             });
 
-            $('#' + uniqid + '_contact').attr('disabled', 'disabled').val('');
+            $('#' + uniqid + '_contact').attr('disabled', 'disabled').val('').removeAttr('required');
             $('#' + uniqid + '_raison_sociale_2').attr('disabled', 'disabled').val('').removeAttr('required');
             $('#' + uniqid + '_N_TVA_CEE_facture').attr('disabled', 'disabled').val('').removeAttr('required');
 
+            rm_label_required($contact);
             rm_label_required($raison_sociale_2);
             rm_label_required($N_TVA_CEE_facture);
         }
@@ -41,10 +42,11 @@ jQuery(document).ready(function ($) {
             $.each(fields_address, function (i, field) {
                 $('#' + uniqid + '_location_facturation_' + field + '_facturation').removeAttr('disabled');
             });
-            $('#' + uniqid + '_contact').removeAttr('disabled');
+            $('#' + uniqid + '_contact').removeAttr('disabled').attr('required', 'required');
             $('#' + uniqid + '_raison_sociale_2').removeAttr('disabled').attr('required', 'required');
             $('#' + uniqid + '_N_TVA_CEE_facture').removeAttr('disabled');
 
+            add_label_required($contact);
             add_label_required($raison_sociale_2);
             $('#' + uniqid + '_location_facturation_pays_facturation').change();
         }
