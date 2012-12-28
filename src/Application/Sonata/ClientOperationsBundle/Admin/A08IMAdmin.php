@@ -92,11 +92,7 @@ class A08IMAdmin extends Admin
 
         $error = new ErrorElements($errorElement, $object);
         $error->setValidateImport($this->getValidateImport())
-            ->validateMois();
-
-        if ($this->getValidateImport()) {
-            list($month, $year) = $this->getQueryMonth($this->query_month);
-            $error->validateMoisImport($month, $year);
-        }
+            ->validateMois()
+        ;
     }
 }

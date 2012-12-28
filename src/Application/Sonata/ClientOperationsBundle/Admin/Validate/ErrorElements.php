@@ -190,40 +190,15 @@ class ErrorElements
         return $this;
     }
 
-
     /**
      * @return ErrorElements
      */
     public function validateMois()
     {
+        list($current_year, $current_month) = explode('-', date('Y-m', strtotime('now' . (date('d') < 25 ? ' -1 month' : ''))));
+
         $value = $this->_object->getMois();
         if ($value) {
-            if ($value instanceof \DateTime) {
-                $month = $value->format('n');
-                $year = $value->format('Y');
-            } else {
-                $month = $value['month'];
-                $year = $value['year'];
-            }
-
-            if ($year . '-' . $month != date('Y-n', strtotime('-1 month'))) {
-                $this->_errorElement->with('mois')->addViolation('"Mois" non valide')->end();
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param $current_month
-     * @param $current_year
-     * @return ErrorElements
-     */
-    public function validateMoisImport($current_month, $current_year)
-    {
-        $value = $this->_object->getMois();
-        if ($value) {
-
             if ($value instanceof \DateTime) {
                 $month = $value->format('n');
                 $year = $value->format('Y');

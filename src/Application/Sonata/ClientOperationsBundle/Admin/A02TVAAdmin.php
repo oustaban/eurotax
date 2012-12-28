@@ -136,11 +136,7 @@ class A02TVAAdmin extends Admin
             ->validateMontantTTC()
             ->validateTauxDeChange()
             ->validateHT()
-            ->validateMois();
-
-        if ($this->getValidateImport()) {
-            list($month, $year) = $this->getQueryMonth($this->query_month);
-            $error->validateMoisImport($month, $year);
-        }
+            ->validateMois()
+        ;
     }
 }

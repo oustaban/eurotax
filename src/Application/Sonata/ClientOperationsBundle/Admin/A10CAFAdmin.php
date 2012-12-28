@@ -70,11 +70,8 @@ class A10CAFAdmin extends Admin
         parent::validate($errorElement, $object);
 
         $error = new ErrorElements($errorElement, $object);
-        $error->setValidateImport($this->getValidateImport());
-
-        if ($this->getValidateImport()) {
-            list($month, $year) = $this->getQueryMonth($this->query_month);
-            $error->validateMoisImport($month, $year);
-        }
+        $error->setValidateImport($this->getValidateImport())
+            ->validateMois()
+        ;
     }
 }
