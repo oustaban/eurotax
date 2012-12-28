@@ -154,3 +154,9 @@
 #check_all {
     float: left;
 }
+.modal .form-horizontal fieldset:first-child {
+    display: none;
+}
+.modal .modal-body {
+    max-height: 420px;
+}
