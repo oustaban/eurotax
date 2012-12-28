@@ -70,6 +70,8 @@ class V07EXAdmin extends Admin
         ))
             ->add('taux_de_change', null, array('label' => $this->getFieldLabel('taux_de_change')))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:HT.html.twig'));
+
+        $this->postConfigureListFields($listMapper);
     }
 
     /**

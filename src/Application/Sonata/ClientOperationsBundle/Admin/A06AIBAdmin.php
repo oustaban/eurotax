@@ -94,6 +94,8 @@ class A06AIBAdmin extends Admin
             ->add('regime', null, array('label' => $this->getFieldLabel('regime')))
             ->add('DEB', null, array('label' => $this->getFieldLabel('DEB')))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
+
+        $this->postConfigureListFields($listMapper);
     }
 
     protected function getDate_pieceFormValue($value)

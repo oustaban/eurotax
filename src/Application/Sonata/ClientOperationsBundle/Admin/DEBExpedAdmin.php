@@ -69,6 +69,8 @@ class DEBExpedAdmin extends Admin
             ->add('departement', null, array('label' => $this->getFieldLabel('departement')))
             ->add('pays_origine.name', null, array('label' => $this->getFieldLabel('pays_id_origine')))
             ->add('CEE', null, array('label' => $this->getFieldLabel('CEE')));
+
+        $this->postConfigureListFields($listMapper);
     }
 
     /**

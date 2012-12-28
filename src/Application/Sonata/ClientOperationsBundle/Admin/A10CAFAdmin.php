@@ -58,6 +58,8 @@ class A10CAFAdmin extends Admin
             'template' => $this->_bundle_name . ':CRUD:list_mois.html.twig',
         ))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
+
+        $this->postConfigureListFields($listMapper);
     }
 
     /**

@@ -113,6 +113,8 @@ class A02TVAAdmin extends Admin
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:HT.html.twig'))
             ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:TVA.html.twig'))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
+
+        $this->postConfigureListFields($listMapper);
     }
 
     protected function getPaiement_dateFormValue($value)
