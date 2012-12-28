@@ -112,7 +112,7 @@ class V01TVAAdmin extends Admin
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:HT.html.twig'))
             ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:TVA.html.twig'));
 
-        $this->postConfigureListFields($listMapper);``
+        $this->postConfigureListFields($listMapper);
     }
 
     /**
