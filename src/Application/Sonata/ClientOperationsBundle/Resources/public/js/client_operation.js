@@ -93,7 +93,7 @@ jQuery(document).ready(function ($) {
                 montant_TVA_francaise = montant_TVA_francaise ? montant_TVA_francaise.toString() : '';
 
                 var montant_TTC = parseFloat(parseFloat(montant_HT_en_devise) + parseFloat(montant_TVA_francaise));
-                montant_TTC = montant_TTC ? montant_TTC.toString(2) : '';
+                montant_TTC = montant_TTC ? montant_TTC.toString() : '';
 
                 montant_TVA_francaise = montant_TVA_francaise ? montant_TVA_francaise.replace('.', ',') : '';
                 montant_TTC = montant_TTC ? montant_TTC.replace('.', ',') : '';
