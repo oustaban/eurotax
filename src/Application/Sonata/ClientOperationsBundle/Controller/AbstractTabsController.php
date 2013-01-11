@@ -1046,6 +1046,7 @@ class AbstractTabsController extends Controller
                         ));
                     }
                     if (isset($values['errors'])) {
+                        $error_log_filename = '/data/imports/import-error-log-' . md5(time() . rand(1, 99999999)) . '.html';
 
                         $render_view_popup = $this->renderView('ApplicationSonataClientOperationsBundle:popup:popup_message.html.twig', array(
                             'error_reports' => $this->_import_reports,
@@ -1053,10 +1054,12 @@ class AbstractTabsController extends Controller
                             'import_id' => $this->_imports ? $this->_imports->getId() : null,
                         ));
 
+                        file_put_contents(DOCUMENT_ROOT.$error_log_filename, '<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>Error log</title></head><body>' . $render_view_popup . '</body></html>');
+
                         $message[] = '<span class="error">' . $translator->trans('Not valid %table% : %count%', array(
                             '%table%' => $table,
                             '%count%' => $values['errors'],
-                        )) . '</span>, ' . $render_view_popup;
+                        )) . '</span>, <a id="error_repost_show" href="#">View errors</a> <a target="_blank" href="'.$error_log_filename.'">Save error log</a>' . $render_view_popup;
                     }
 
                     $messages[] = implode('&nbsp;&nbsp;|&nbsp;&nbsp;', $message);
