@@ -12,4 +12,12 @@ class MoneyToLocalizedStringTransformer extends BaseStringTransformer
     {
         return parent::reverseTransform(str_replace('.', ',', $value));
     }
+
+    protected function getNumberFormatter()
+    {
+        $formatter = parent::getNumberFormatter();
+        $formatter->setAttribute(\NumberFormatter::MAX_FRACTION_DIGITS, 100);
+
+        return $formatter;
+    }
 }

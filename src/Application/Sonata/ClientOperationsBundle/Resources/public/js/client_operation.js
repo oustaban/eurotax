@@ -86,21 +86,17 @@ jQuery(document).ready(function ($) {
                 var $montant_HT_en_devise = $('#' + _uniqid + '_montant_HT_en_devise');
                 var $taux_de_TVA = $('#' + _uniqid + '_taux_de_TVA');
 
-                substr_replace($montant_HT_en_devise, 2);
-                substr_replace($taux_de_TVA, 3);
-
                 var montant_HT_en_devise = $montant_HT_en_devise.val().replace(',', '.').replace(/\s+/, '');
                 var taux_de_TVA = $taux_de_TVA.val().replace(',', '.').replace(/\s+/, '');
 
                 var montant_TVA_francaise = parseFloat(parseFloat(montant_HT_en_devise) * parseFloat(taux_de_TVA));
-
-                //If method validate from file Validate/ErrorElements.php function round $precision = 2, $mode = PHP_ROUND_HALF_DOWN
-                montant_TVA_francaise = montant_TVA_francaise ? montant_TVA_francaise.toFixed(2) : '';
+                montant_TVA_francaise = montant_TVA_francaise ? montant_TVA_francaise.toString() : '';
 
                 var montant_TTC = parseFloat(parseFloat(montant_HT_en_devise) + parseFloat(montant_TVA_francaise));
+                montant_TTC = montant_TTC ? montant_TTC.toString(2) : '';
 
                 montant_TVA_francaise = montant_TVA_francaise ? montant_TVA_francaise.replace('.', ',') : '';
-                montant_TTC = montant_TTC ? montant_TTC.toFixed(2).replace('.', ',') : '';
+                montant_TTC = montant_TTC ? montant_TTC.replace('.', ',') : '';
 
                 $('#' + _uniqid + '_montant_TVA_francaise').val(montant_TVA_francaise);
                 $('#' + _uniqid + '_montant_TTC').val(montant_TTC);

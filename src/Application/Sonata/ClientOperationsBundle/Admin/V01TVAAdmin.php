@@ -36,7 +36,7 @@ class V01TVAAdmin extends Admin
             return $er->createQueryBuilder('d')
                 ->orderBy('d.alias', 'ASC');
         },))
-            ->add('montant_HT_en_devise', null, array('precision'=>2, 'attr'=>array('class'=>'money'), 'label' => $this->getFieldLabel('montant_HT_en_devise')))
+            ->add('montant_HT_en_devise', null, array('attr'=>array('class'=>'money'), 'label' => $this->getFieldLabel('montant_HT_en_devise')))
             ->add('taux_de_TVA', 'choice', array(
             'label' => $this->getFieldLabel('taux_de_TVA'),
             'choices' => array(
@@ -52,9 +52,9 @@ class V01TVAAdmin extends Admin
             ),
             'empty_value' => '',
         ))
-            ->add('montant_TVA_francaise', null, array('precision'=>2, 'attr'=>array('class'=>'money'), 'label' => $this->getFieldLabel('montant_TVA_francaise')))
-            ->add('montant_TTC', null, array('precision'=>2, 'attr'=>array('class'=>'money'), 'label' => $this->getFieldLabel('montant_TTC')))
-            ->add('paiement_montant', null, array('precision'=>2, 'attr'=>array('class'=>'money'), 'required' => false, 'label' => $this->getFieldLabel('paiement_montant')))
+            ->add('montant_TVA_francaise', null, array('attr'=>array('class'=>'money'), 'label' => $this->getFieldLabel('montant_TVA_francaise')))
+            ->add('montant_TTC', null, array('attr'=>array('class'=>'money'), 'label' => $this->getFieldLabel('montant_TTC')))
+            ->add('paiement_montant', null, array('attr'=>array('class'=>'money'), 'required' => false, 'label' => $this->getFieldLabel('paiement_montant')))
             ->add('paiement_devise', null, array('label' => $this->getFieldLabel('paiement_devise_id'), 'query_builder' => function (EntityRepository $er)
         {
             return $er->createQueryBuilder('d')
