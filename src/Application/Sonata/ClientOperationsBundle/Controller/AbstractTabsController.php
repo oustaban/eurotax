@@ -997,7 +997,13 @@ class AbstractTabsController extends Controller
             $line_counter = false;
 
             if (!empty($data[$i]) && $line = $data[$i]) {
+                $columns = 0;
                 foreach ($line as $value) {
+                    $columns++;
+                    if ($columns > 4){
+                        break;
+                    }
+
                     $value = trim($value);
                     if (empty($value) || $value == '#VALUE!') {
                         $line_counter = true;
