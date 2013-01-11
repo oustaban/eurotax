@@ -49,6 +49,13 @@ class Imports
      */
     private $file_name;
 
+    /**
+     * @var boolean $is_deleted
+     *
+     * @ORM\Column(name="is_deleted", type="boolean")
+     */
+    private $is_deleted = false;
+
 
     /**
      * @return string
@@ -154,17 +161,40 @@ class Imports
     public function setFileName($fileName)
     {
         $this->file_name = $fileName;
-    
+
         return $this;
     }
 
     /**
      * Get file_name
      *
-     * @return string 
+     * @return string
      */
     public function getFileName()
     {
         return $this->file_name;
+    }
+
+    /**
+     * Set is_deleted
+     *
+     * @param boolean $is_deleted
+     * @return Imports
+     */
+    public function setIsDeleted($is_deleted)
+    {
+        $this->is_deleted = $is_deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get is_deleted
+     *
+     * @return boolean
+     */
+    public function getIsDeleted()
+    {
+        return $this->is_deleted;
     }
 }

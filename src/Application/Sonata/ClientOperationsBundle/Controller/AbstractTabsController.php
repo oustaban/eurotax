@@ -1205,8 +1205,10 @@ class AbstractTabsController extends Controller
             }
             $em->flush();
 
+            /** @var $import Imports */
             $import = $em->getRepository('ApplicationSonataClientOperationsBundle:Imports')->find($id);
-            $em->remove($import);
+            $import->setIsDeleted(true);
+            $em->persist($import);
             unset($import);
             $em->flush();
         }
@@ -1226,9 +1228,11 @@ class AbstractTabsController extends Controller
         /* @var $lastImport Imports */
         $lastImports = $iDB->select('i, u')
             ->leftJoin('i.user', 'u')
-            ->where('i.client_id = :client_id')
+            ->andWhere('i.client_id = :client_id')
+            ->andWhere('i.is_deleted = :is_deleted')
             ->addOrderBy('i.date', 'DESC')
             ->setParameter(':client_id', $this->client_id)
+            ->setParameter(':is_deleted', false)
             ->getQuery()
         //->getSQL();
             ->getResult();
