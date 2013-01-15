@@ -1,19 +1,22 @@
+{% spaceless %}
 <div class="modal hide fade" id="importReportModal" tabindex="-1" role="dialog" aria-labelledby="importReportModalLabel"
      aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <h3 id="importReportModalLabel">Errors reporting</h3>
     </div>
-    <div class="modal-body">
-       {% for table, reports in error_reports %}
-            {% for report in reports %}
-                {% set title = 'ApplicationSonataClientOperationsBundle.form.'~table~'.title' %}
-                {{ title|trans()  }}:
-                  <pre>{{report}}</pre>
-            {% endfor%}
-       {% endfor%}
-    </div>
+
+<div class="modal-body">
+{% for table, reports in error_reports %}
+{% for report in reports %}
+{{ ('ApplicationSonataClientOperationsBundle.form.'~table~'.title')|trans()  }}:
+<pre>{{report}}</pre>
+{% endfor%}
+{% endfor%}
+</div>
+
     <div class="modal-footer">
 
     </div>
 </div>
+{% endspaceless %}

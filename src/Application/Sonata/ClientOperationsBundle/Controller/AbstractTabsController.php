@@ -1046,7 +1046,7 @@ class AbstractTabsController extends Controller
                         ));
                     }
                     if (isset($values['errors'])) {
-                        $error_log_filename = '/data/imports/import-error-log-' . md5(time() . rand(1, 99999999)) . '.html';
+                        $error_log_filename = '/data/imports/import-error-log-' . md5(time() . rand(1, 99999999)) . '.txt';
 
                         $render_view_popup = $this->renderView('ApplicationSonataClientOperationsBundle:popup:popup_message.html.twig', array(
                             'error_reports' => $this->_import_reports,
@@ -1054,7 +1054,8 @@ class AbstractTabsController extends Controller
                             'import_id' => $this->_imports ? $this->_imports->getId() : null,
                         ));
 
-                        file_put_contents(DOCUMENT_ROOT.$error_log_filename, '<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>Error log</title></head><body>' . $render_view_popup . '</body></html>');
+                        preg_match('#<div class="modal-body">(.*)#is', $render_view_popup, $matches);
+                        file_put_contents(DOCUMENT_ROOT.$error_log_filename, strip_tags($matches[1]));
 
                         $message[] = '<span class="error">' . $translator->trans('Not valid %table% : %count%', array(
                             '%table%' => $table,
