@@ -81,6 +81,8 @@ jQuery(document).ready(function ($) {
                 return (chr < ' ' || (chr >= '0' && chr <= '9') || chr == ',' || chr == '.');
             },
             calc:function (e) {
+                var m = 100000;
+
                 var _uniqid = symfony_ajax.get_uniqid();
 
                 var $montant_HT_en_devise = $('#' + _uniqid + '_montant_HT_en_devise');
@@ -89,14 +91,14 @@ jQuery(document).ready(function ($) {
                 var montant_HT_en_devise = $montant_HT_en_devise.val().replace(',', '.').replace(/\s+/, '');
                 var taux_de_TVA = $taux_de_TVA.val().replace(',', '.').replace(/\s+/, '');
 
-                var montant_TVA_francaise = parseFloat(parseFloat(montant_HT_en_devise) * parseFloat(taux_de_TVA));
-                montant_TVA_francaise = montant_TVA_francaise ? montant_TVA_francaise.toString() : '';
+                var montant_HT_en_devise_X_m = Math.round(parseFloat(montant_HT_en_devise)*m);
+                var taux_de_TVA_X_m = Math.round(parseFloat(taux_de_TVA)*m);
 
-                var montant_TTC = parseFloat(parseFloat(montant_HT_en_devise) + parseFloat(montant_TVA_francaise));
-                montant_TTC = montant_TTC ? montant_TTC.toString() : '';
+                var montant_TVA_francaise = (montant_HT_en_devise_X_m * taux_de_TVA_X_m) / m / m;
+                var montant_TTC = montant_HT_en_devise_X_m / m + montant_TVA_francaise;
 
-                montant_TVA_francaise = montant_TVA_francaise ? montant_TVA_francaise.replace('.', ',') : '';
-                montant_TTC = montant_TTC ? montant_TTC.replace('.', ',') : '';
+                montant_TVA_francaise = montant_TVA_francaise ? montant_TVA_francaise.toString().replace('.', ',') : '';
+                montant_TTC = montant_TTC ? montant_TTC.toString().replace('.', ',') : '';
 
                 $('#' + _uniqid + '_montant_TVA_francaise').val(montant_TVA_francaise);
                 $('#' + _uniqid + '_montant_TTC').val(montant_TTC);
