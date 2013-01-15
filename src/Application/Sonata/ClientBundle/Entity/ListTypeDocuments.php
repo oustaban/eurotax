@@ -13,8 +13,12 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class ListTypeDocuments
 {
-    const Pouvoir = 2;
     const Mandat = 1;
+    const Pouvoir = 2;
+    const Accord = 3;
+    const Lettre_de_designation = 4;
+    const Attestation_de_TVA = 5;
+    const Mandat_Specifique = 6;
     /**
      * @var integer $id
      *
@@ -58,7 +62,7 @@ class ListTypeDocuments
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -74,14 +78,14 @@ class ListTypeDocuments
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {

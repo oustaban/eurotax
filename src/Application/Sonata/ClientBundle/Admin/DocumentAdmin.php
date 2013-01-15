@@ -15,6 +15,7 @@ use Sonata\AdminBundle\Validator\ErrorElement;
 use Application\Sonata\ClientBundle\Entity\ClientAlert;
 use Application\Sonata\ClientBundle\Entity\ListTypeDocuments;
 use Application\Sonata\ClientBundle\Entity\ListNatureDuClients;
+use Doctrine\ORM\EntityRepository;
 
 use Application\Sonata\ClientBundle\Admin\AbstractTabsAdmin as Admin;
 
@@ -28,10 +29,50 @@ class DocumentAdmin extends Admin
         parent::configureFormFields($formMapper);
 
         $id = $this->getRequest()->get($this->getIdParameter());
+        $client = $this->getClient();
 
         $formMapper->with($this->getFieldLabel('title'))
             ->add('file', 'file', array('label' => $this->getFieldLabel('document'), 'required' => false))
-            ->add('type_document', null, array('label' => $this->getFieldLabel('type_document'), 'disabled' => !!$id))
+            ->add('type_document', null, array(
+            'label' => $this->getFieldLabel('type_document'),
+            'disabled' => !!$id,
+            'query_builder' => function (EntityRepository $er) use ($client) {
+                $builder = $er->createQueryBuilder('t');
+
+                /** @var $client \Application\Sonata\ClientBundle\Entity\Client */
+                switch ($client->getNatureDuClient()->getId()) {
+                    case ListNatureDuClients::sixE:
+                        if ($client->getPaysPostal()->getEU()){
+                            $filter = array(
+                                ListTypeDocuments::Mandat,
+                                ListTypeDocuments::Attestation_de_TVA,
+                                ListTypeDocuments::Mandat_Specifique,
+                            );
+
+                        }
+                        else {
+                            $filter = array(
+                                ListTypeDocuments::Pouvoir,
+                                ListTypeDocuments::Accord,
+                                ListTypeDocuments::Lettre_de_designation,
+                            );
+                        }
+                        break;
+                    case ListNatureDuClients::DEB:
+                    case ListNatureDuClients::DES:
+                        $filter = array(
+                            ListTypeDocuments::Mandat,
+                        );
+                        break;
+                }
+
+                if ($filter){
+                    $builder->andWhere('t.id IN ('.implode(',', $filter).')');
+                }
+
+                return $builder;
+            },
+        ))
             ->add('date_document', null, array(
             'label' => $this->getFieldLabel('date_document'),
             'attr' => array('class' => 'datepicker'),
