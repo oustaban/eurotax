@@ -40,6 +40,10 @@ class DevisesAdmin extends Admin
         return array();
     }
 
+    public function getCurrentYearMonth() {
+        return date('Y-m', strtotime('now' . (date('d') > 24 ? ' +1 month' : '')));
+    }
+
     /**
      * @param FormMapper $formMapper
      */
@@ -49,7 +53,7 @@ class DevisesAdmin extends Admin
         /** @var $entity_devises \Application\Sonata\DevisesBundle\Entity\Devises */
         $entity_devises = $this->getEntityDevises();
 
-        list($create_years, $create_months) = explode('-', date('Y-m', strtotime('now' . (date('d') > 24 ? ' +1 month' : ''))));
+        list($create_years, $create_months) = explode('-', $this->getCurrentYearMonth());
 
         $this->_current_devises = $this->getCurrentDevises($create_years . '-' . $create_months);
 
@@ -103,7 +107,7 @@ class DevisesAdmin extends Admin
         $rows = array();
 
         if (!$this->_current_devises) {
-            $rows[$this->generateUrl('create')] = ucwords($this->datefmtFormatFilter(new \DateTime('now' . (date('d') > 24 ? ' +1 month' : '')), 'YYYY MMMM'));
+            $rows[$this->generateUrl('create')] = ucwords($this->datefmtFormatFilter(new \DateTime($this->getCurrentYearMonth().'-01'), 'YYYY MMMM'));
         }
 
         foreach ($devises as $value) {
