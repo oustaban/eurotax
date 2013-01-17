@@ -49,7 +49,6 @@ class A06AIB extends AbstractBuyEntity
     /**
      * @var float $HT
      *
-     * @Assert\NotBlank()
      * @ORM\Column(name="HT", type="float")
      */
     private $HT;
@@ -72,7 +71,6 @@ class A06AIB extends AbstractBuyEntity
     /**
      * @var float $TVA
      *
-     * @Assert\NotBlank()
      * @ORM\Column(name="TVA", type="float")
      */
     private $TVA;

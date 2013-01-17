@@ -52,7 +52,6 @@ class A04283I extends AbstractBuyEntity
     /**
      * @var float $HT
      *
-     * @Assert\NotBlank()
      * @ORM\Column(name="HT", type="float", nullable=true)
      */
     private $HT;
@@ -60,7 +59,6 @@ class A04283I extends AbstractBuyEntity
     /**
      * @var float $TVA
      *
-     * @Assert\NotBlank()
      * @ORM\Column(name="TVA", type="float")
      */
     private $TVA;

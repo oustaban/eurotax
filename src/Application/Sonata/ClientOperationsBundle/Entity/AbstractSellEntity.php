@@ -17,7 +17,6 @@ abstract class AbstractSellEntity extends AbstractAVEntity
     /**
      * @var float $HT
      *
-     * @Assert\NotBlank()
      * @ORM\Column(name="HT", type="float", nullable=true)
      */
     private $HT;

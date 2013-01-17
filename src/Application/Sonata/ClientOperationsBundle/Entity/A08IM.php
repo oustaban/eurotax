@@ -25,7 +25,6 @@ class A08IM extends AbstractBuyEntity
     /**
      * @var float $TVA
      *
-     * @Assert\NotBlank()
      * @ORM\Column(name="TVA", type="float")
      */
     private $TVA;

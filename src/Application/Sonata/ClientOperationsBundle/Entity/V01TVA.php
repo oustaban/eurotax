@@ -65,7 +65,6 @@ class V01TVA extends AbstractSellEntity
     /**
      * @var float $TVA
      *
-     * @Assert\NotBlank()
      * @ORM\Column(name="TVA", type="float")
      */
     private $TVA;
