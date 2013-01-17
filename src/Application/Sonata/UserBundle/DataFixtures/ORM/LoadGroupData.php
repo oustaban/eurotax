@@ -25,6 +25,7 @@ class LoadGroupData extends AbstractLoadListData
         'Superviseur' => array(
             'ROLE_EDIT_USERS',
             'ROLE_EDIT_DEVISES',
+            'ROLE_EDIT_DEVISES_WRITE',
             'ROLE_EDIT_IMPOTS',
             'ROLE_EDIT_CLIENTS',
             'ROLE_EDIT_CLIENTOPERATIONS',
