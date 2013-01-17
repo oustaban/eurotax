@@ -31,7 +31,7 @@ class ClientController extends Controller
     public function redirectTo($object)
     {
         if ($this->get('request')->get('btn_update_and_list')) {
-            return $this->render(':redirects:history.html.twig', array('depth' => 2, 'default' => $this->admin->generateUrl('list')));
+            return $this->redirect($this->generateUrl('admin_sonata_clientoperations_v01tva_list', array('filter[client_id][value]' => $object->getId())));
         }
 
         return parent::redirectTo($object);
