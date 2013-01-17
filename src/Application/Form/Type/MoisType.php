@@ -23,12 +23,12 @@ class MoisType extends BaseType
 
         $choices = array();
         $minDate = explode('-', date('Y-m', strtotime('-24 days')));
-        $minDate = $minDate[0]*12 + $minDate[1];
+        $minDate = $minDate[0]*12 + $minDate[1] - 1;
         $maxDate = $minDate;
 
         for ($date = $minDate; $date <= $maxDate; $date++) {
             $year = floor($date/12);
-            $month = $date % 12;
+            $month = $date % 12 + 1;
             $key = $year . '-' . sprintf($month, '%02d');
             $choices[$key] = ucwords($this->formatTimestamps(new \DateTime('01-' . $month . '-' . $year), 'YYYY MMMM'));
         }

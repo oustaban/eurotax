@@ -90,6 +90,12 @@ jQuery(document).ready(function ($) {
                         $HT.change(this.calc_TVA).keyup(this.calc_TVA);
                         $taux_de_TVA.change(this.calc_TVA).trigger('change');
                     }
+
+                    $('#' + _uniqid + '_date_piece, #' + _uniqid + '_paiement_date', context).change(function(){
+                        var _uniqid = symfony_ajax.get_uniqid();
+
+                        $('#' + _uniqid + '_mois_mois option:last').attr('selected', true);
+                    }).trigger('change');
                 }
             },
             number_limit:function (e) {
