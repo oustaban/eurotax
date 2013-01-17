@@ -21,6 +21,13 @@ class DEBExpedAdmin extends Admin
     {
         parent::configureFormFields($formMapper);
 
+        $id = $this->getRequest()->get($this->getIdParameter());
+
+        if ($id){
+            $formMapper
+                ->add('mois', null, array('label' => $this->getFieldLabel('mois'), 'disabled' => true));
+        }
+
         $formMapper
             ->add('n_ligne', null, array('label' => $this->getFieldLabel('n_ligne')))
             ->add('date_piece', null, array(

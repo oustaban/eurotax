@@ -137,6 +137,7 @@ ApplicationSonataClientOperationsBundle:
       pays_id_origine: Pays d'Origine
       pays_origine: Pays d'Origine
       CEE: No d'Identification de l'acquereur C.E.E.
+      mois: Mois de TVA
 
     V07EX:
       title: V07-EX
@@ -266,6 +267,7 @@ ApplicationSonataClientOperationsBundle:
       pays_id_origine: Pays d'Origine
       pays_origine: Pays d'Origine
       CEE: No d'Identification de l'acquereur C.E.E.
+      mois: Mois de TVA
 
     A08IM:
       title: A08-IM
