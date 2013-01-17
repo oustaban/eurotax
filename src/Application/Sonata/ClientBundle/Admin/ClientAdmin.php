@@ -319,14 +319,14 @@ class ClientAdmin extends Admin
 
         $value = $object->getSiret();
         if (!preg_match('/^\d{3} \d{3} \d{3} \d{3} \d{2}$/', $value)) {
-            $errorElement->with('siret')->addViolation('Le format du "Siret" est incorrect')->end();
+            $errorElement->with('siret')->addViolation('Le format du N° SIRET est incorrect.   Respecter : xxx xxx xxx xxx xx')->end();
         }
         else {
             $value = $object->getNTVAFR();
             $siret = substr($object->getSiret(), 0, 11);
             if ($value) {
                 if (!preg_match('/^FR \d{2} '.$siret.'$/', $value)) {
-                    $errorElement->with('N_TVA_FR')->addViolation('Non concordance entre le "Siret" et le "N° TVA FR"')->end();
+                    $errorElement->with('N_TVA_FR')->addViolation('Non concordance entre le SIRET et le N° TVA FR.   Respecter FR xx (+SIREN xxx xxx xxx)')->end();
                 }
             }
         }
