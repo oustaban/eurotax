@@ -60,8 +60,10 @@ class DevisesAdmin extends Admin
         $months = $entity_devises ? $entity_devises->getDate()->format('n') : $create_months;
         $years = $entity_devises ? $entity_devises->getDate()->format('Y') : $create_years;
 
+        /* @var $securityContext SecurityContext */
+        $securityContext = \AppKernel::getStaticContainer()->get('security.context');
         $disables = array();
-        if (!($months == $create_months && $years == $create_years)) {
+        if (!$securityContext->isGranted('ROLE_EDIT_DEVISES_WRITE') || !($months == $create_months && $years == $create_years)) {
             $disables = array('disabled' => true);
         }
 
