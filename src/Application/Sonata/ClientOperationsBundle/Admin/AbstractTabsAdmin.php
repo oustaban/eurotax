@@ -82,8 +82,12 @@ abstract class AbstractTabsAdmin extends Admin
      */
     public function getQueryMonth($query_month)
     {
-        $year = substr($query_month, -4);
-        $month = $query_month == -1 ? (date('n') - 1) . $this->date_filter_separator . $year : $query_month;
+        if ($query_month == -1) {
+            $month = date('n' . $this->date_filter_separator . 'Y', strtotime('-1 month'));
+        }
+        else {
+            $month = $query_month;
+        }
 
         return explode($this->date_filter_separator, $month);
     }

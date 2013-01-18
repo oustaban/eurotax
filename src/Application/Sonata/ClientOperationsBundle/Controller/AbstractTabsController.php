@@ -1230,6 +1230,9 @@ class AbstractTabsController extends Controller
      */
     public function importListAction()
     {
+        $form_month = $this->_year . '-' . $this->_month . '-01';
+        $to_month = $this->_year . '-' . $this->_month . '-31';
+
         /* @var $em \Doctrine\ORM\EntityManager */
         $em = $this->getDoctrine()->getManager();
 
@@ -1238,14 +1241,17 @@ class AbstractTabsController extends Controller
         /* @var $lastImport Imports */
         $lastImports = $iDB->select('i, u')
             ->leftJoin('i.user', 'u')
+            ->andWhere('i.date BETWEEN :form_month AND :to_month')
             ->andWhere('i.client_id = :client_id')
             ->andWhere('i.is_deleted = :is_deleted')
             ->addOrderBy('i.date', 'DESC')
             ->setParameter(':client_id', $this->client_id)
             ->setParameter(':is_deleted', false)
+            ->setParameter(':form_month', $form_month)
+            ->setParameter(':to_month', $to_month)
             ->getQuery()
-        //->getSQL();
-            ->getResult();
+        //->getSQL();exit($lastImports);
+           ->getResult();
 
         $lastImports = $lastImports ? : array();
         $lastImportsArray = array();

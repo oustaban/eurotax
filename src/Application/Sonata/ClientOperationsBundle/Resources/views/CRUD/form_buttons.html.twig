@@ -76,7 +76,7 @@
                 text: '{{ (blocked ? 'verrouiller_confirm' : 'deverrouiller_confirm')|trans }}'
             },
             import: {
-                link: '{{ path('admin_sonata_clientoperations_'~active_tab~'_importList', _filter_json) }}',
+                link: '{{ path('admin_sonata_clientoperations_'~active_tab~'_importList', _filter_json) }}'.replace('&amp;', '&'),
                 {% set import_delete_params = _filter_json|merge({'id':'__id__'}) %}
                 delete: '{{ path('admin_sonata_clientoperations_'~active_tab~'_importRemove', import_delete_params) }}',
                 confirm: '{{ 'ApplicationSonataClientOperationsBundle.imports.confirm_delete'|trans() }}'
