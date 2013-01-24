@@ -75,8 +75,8 @@ class V01TVAAdmin extends Admin
             'label' => $this->getFieldLabel('taux_de_change'),
             'required' => false,
         ))
-            ->add('HT', 'money', array('label' => $this->getFieldLabel('HT')))
-            ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA')))
+            ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'required'=>false))
+            ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA'), 'required'=>false))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
     }
 

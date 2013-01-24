@@ -32,7 +32,7 @@ class A10CAFAdmin extends Admin
                 'format' => $this->date_format_datetime)
         )
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
-            ->add('HT', 'money', array('label' => $this->getFieldLabel('HT')))
+            ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'required'=>false))
             ->add('mois', 'mois', array(
             'label' => $this->getFieldLabel('mois'),
         ))

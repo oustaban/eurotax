@@ -47,7 +47,7 @@ class A08IMAdmin extends Admin
             ),
             'empty_value' => '',
         ))
-            ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA')))
+            ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA'), 'required'=>false))
             ->add('mois', 'mois', array(
             'label' => $this->getFieldLabel('mois'),
         ))

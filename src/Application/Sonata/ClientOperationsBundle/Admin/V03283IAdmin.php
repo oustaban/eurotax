@@ -45,7 +45,7 @@ class V03283IAdmin extends Admin
             'label' => $this->getFieldLabel('taux_de_change'),
             'required' => false,
         ))
-            ->add('HT', 'money', array('label' => $this->getFieldLabel('HT')))
+            ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'required'=>false))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
     }
 
