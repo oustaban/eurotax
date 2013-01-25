@@ -11,24 +11,10 @@ jQuery(document).ready(function ($) {
                 var _uniqid = symfony_ajax.get_uniqid();
 
                 //-- V01-TVA || A02-TVA
-                if ($('#' + _uniqid + '_paiement_date', context).size() && $('#' + _uniqid + '_mois_mois', context).size()) {
-                    $('#' + _uniqid + '_paiement_date', context).change(function () {
-
-                        if ($(this).val() && !$('#' + _uniqid + '_mois_mois :selected', context).val()) {
-                            var date_arr = $(this).val().split('/');
-                            var year_month = date_arr[2] + '-' + Number(date_arr[1]);
-
-                            $('#' + _uniqid + '_mois_mois option', context).each(function () {
-                                $(this).removeAttr('selected');
-                            });
-
-                            $('#' + _uniqid + '_mois_mois option', context).each(function () {
-                                if ($(this).val() == year_month) {
-                                    $(this).attr('selected', 'selected').trigger('change');
-                                }
-                            })
-                        }
-                    });
+                if (($('#' + _uniqid + '_paiement_date', context).size() || $('#' + _uniqid + '_date_piece', context).size()) && $('#' + _uniqid + '_mois_mois', context).size()) {
+                    $('#' + _uniqid + '_date_piece, #' + _uniqid + '_paiement_date', context).change(function(){
+                        $('#' + _uniqid + '_mois_mois option:last').attr('selected', true).trigger('change');
+                    }).trigger('change');
                 }
             }
         };
@@ -90,12 +76,6 @@ jQuery(document).ready(function ($) {
                         $HT.change(this.calc_TVA).keyup(this.calc_TVA);
                         $taux_de_TVA.change(this.calc_TVA).trigger('change');
                     }
-
-                    $('#' + _uniqid + '_date_piece, #' + _uniqid + '_paiement_date', context).change(function(){
-                        var _uniqid = symfony_ajax.get_uniqid();
-
-                        $('#' + _uniqid + '_mois_mois option:last').attr('selected', true);
-                    }).trigger('change');
                 }
             },
             number_limit:function (e) {
