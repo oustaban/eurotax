@@ -46,6 +46,13 @@ class ListCountries
     private $EU;
 
     /**
+     * @var boolean $destination
+     *
+     * @ORM\Column(name="destination", type="boolean", nullable=true)
+     */
+    private $destination;
+
+    /**
      * @return mixed
      */
     public static function getDefault()
@@ -171,5 +178,28 @@ class ListCountries
     public function getEU()
     {
         return $this->EU;
+    }
+
+    /**
+     * Set destination
+     *
+     * @param boolean $destination
+     * @return ListCountries
+     */
+    public function setDestination($destination)
+    {
+        $this->destination = $destination;
+
+        return $this;
+    }
+
+    /**
+     * Get destination
+     *
+     * @return boolean
+     */
+    public function getDestination()
+    {
+        return $this->destination;
     }
 }
