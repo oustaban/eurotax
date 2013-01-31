@@ -104,6 +104,36 @@ class ErrorElements
     /**
      * @return ErrorElements
      */
+    public function validateHT_V05()
+    {
+        /** @var $_object \Application\Sonata\ClientOperationsBundle\Entity\V05LIC */
+        $_object = $this->_object;
+        $value = $_object->getHT();
+        $deb = $_object->getDEB();
+
+
+        //Import excel
+        if ($this->getValidateImport()) {
+            if ($_object->getDEB()){
+                /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+                $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+
+                /* @var $em \Doctrine\ORM\EntityManager */
+                $em = $doctrine->getManager();
+
+                /* @var $debExped \Application\Sonata\ClientOperationsBundle\Entity\DEBExped */
+                $debExped = $em->getRepository('ApplicationSonataClientOperationsBundle:DEBExped')->findOneByClientId($_object->getClientId());
+
+                if ($value != $debExped->getValeurFiscale()){
+                    $this->_errorElement->with('HT')->addViolation('Le total DEB dans "V05-LIC" ne correspond pas à celui de "DEB Exped"')->end();
+                }
+            }
+        }
+    }
+
+    /**
+     * @return ErrorElements
+     */
     public function validateMontantTVAFrancaise()
     {
         $value = $this->_object->getMontantTVAFrancaise();
