@@ -41,7 +41,7 @@ class DevisesAdmin extends Admin
     }
 
     public function getCurrentYearMonth() {
-        return date('Y-m', strtotime('now' . (date('d') > 24 ? ' +1 month' : '')));
+        return date('Y-m', strtotime('now' . (date('d') > 24 ? ' +8 days' : '')));
     }
 
     /**

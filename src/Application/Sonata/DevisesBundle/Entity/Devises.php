@@ -99,7 +99,7 @@ class Devises
      */
     public function __construct()
     {
-        $this->setDate(new \DateTime(date('Y-m-01', strtotime('now' . (date('d') > 24 ? ' +1 month' : '')))));
+        $this->setDate(new \DateTime(date('Y-m-01', strtotime('now' . (date('d') > 24 ? ' +8 days' : '')))));
     }
 
     /**
