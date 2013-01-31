@@ -57,6 +57,7 @@ jQuery(document).ready(function ($) {
                     var $montant_HT_en_devise = $('#' + _uniqid + '_montant_HT_en_devise', context);
                     var $taux_de_TVA = $('#' + _uniqid + '_taux_de_TVA', context);
                     var $montant_TTC = $('#' + _uniqid + '_montant_TTC', context);
+                    var $paiement_montant = $('#' + _uniqid + '_paiement_montant', context);
                     var $taux_de_change = $('#' + _uniqid + '_taux_de_change', context);
                     var $HT = $('#' + _uniqid + '_HT', context);
 
@@ -67,8 +68,8 @@ jQuery(document).ready(function ($) {
                     if($montant_TTC.length){
                         $montant_TTC.change(this.calc_paiement_montant).keyup(this.calc_paiement_montant).trigger('change')
                     }
-                    if($montant_TTC.length && $taux_de_change.length && $taux_de_TVA.length){
-                        $montant_TTC.change(this.calc_HT).keyup(this.calc_HT);
+                    if($paiement_montant.length && $taux_de_change.length && $taux_de_TVA.length){
+                        $paiement_montant.change(this.calc_HT).keyup(this.calc_HT);
                         $taux_de_change.change(this.calc_HT).keyup(this.calc_HT);
                         $taux_de_TVA.change(this.calc_HT).trigger('change');
                     }
@@ -100,7 +101,7 @@ jQuery(document).ready(function ($) {
                     var TVA = (taux_de_TVA_X_m * HT_X_m) / m / m;
                     TVA = TVA ? TVA.toString().replace('.', ',') : '';
 
-                    $('#' + _uniqid + '_TVA').val(TVA);
+                    $('#' + _uniqid + '_TVA').val(TVA).trigger('change');
                 }
             },
             calc_HT:function(e){
@@ -121,17 +122,17 @@ jQuery(document).ready(function ($) {
                 var taux_de_change_X_m = Math.round(parseFloat(taux_de_change)*m);
 
                 if (taux_de_TVA_X_m && paiement_montant_X_m && taux_de_change_X_m){
-                    var HT = (paiement_montant_X_m / ((1 + taux_de_TVA_X_m) * taux_de_change_X_m)) / m;
+                    var HT = paiement_montant_X_m * m / ((m + taux_de_TVA_X_m) * taux_de_change_X_m);
                     HT = HT ? HT.toString().replace('.', ',') : '';
 
-                    $('#' + _uniqid + '_HT').val(HT);
+                    $('#' + _uniqid + '_HT').val(HT).trigger('change');
                 }
             },
             calc_paiement_montant:function(e){
                 var _uniqid = symfony_ajax.get_uniqid();
 
                 var $montant_TTC = $('#' + _uniqid + '_montant_TTC');
-                $('#' + _uniqid + '_paiement_montant').val($montant_TTC.val());
+                $('#' + _uniqid + '_paiement_montant').val($montant_TTC.val()).trigger('change');
             },
             calc:function (e) {
                 var m = 100000;
@@ -153,8 +154,8 @@ jQuery(document).ready(function ($) {
                 montant_TVA_francaise = montant_TVA_francaise ? montant_TVA_francaise.toString().replace('.', ',') : '';
                 montant_TTC = montant_TTC ? montant_TTC.toString().replace('.', ',') : '';
 
-                $('#' + _uniqid + '_montant_TVA_francaise').val(montant_TVA_francaise);
-                $('#' + _uniqid + '_montant_TTC').val(montant_TTC).change();
+                $('#' + _uniqid + '_montant_TVA_francaise').val(montant_TVA_francaise).trigger('change');
+                $('#' + _uniqid + '_montant_TTC').val(montant_TTC).trigger('change');
             }
         };
     }
