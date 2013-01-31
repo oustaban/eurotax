@@ -95,4 +95,9 @@ class V05LICAdmin extends Admin
             ->validateHT()
             ->validateMois();
     }
+
+    protected function getDEBFormValue($value)
+    {
+        return !(!$value || strtolower($value) == 'non');
+    }
 }
