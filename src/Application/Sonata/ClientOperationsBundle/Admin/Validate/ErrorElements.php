@@ -7,6 +7,7 @@ use Sonata\AdminBundle\Validator\ErrorElement;
 class ErrorElements
 {
     const Device = 'EUR';
+    const EPSILON = 0.000000001;
 
     protected $_errorElement;
     /**
@@ -139,14 +140,7 @@ class ErrorElements
         $value = $this->_object->getMontantTVAFrancaise();
         if ($value) {
 
-            //Import excel
-            if ($this->getValidateImport()) {
-                if (!($value == $this->_object->getMontantHTEnDevise() * $this->_object->getTauxDeTVA())) {
-                    $this->_errorElement->with('montant_TVA_francaise')->addViolation('"Montant TVA française" non valide (doit etre "Montant HT en devise" * "Taux de TVA / 100")')->end();
-                }
-            } //Add & Edit ajax form
-            elseif (!($value == $this->round(($this->_object->getMontantHTEnDevise() * $this->_object->getTauxDeTVA())))) {
-
+            if (($value - $this->_object->getMontantHTEnDevise() * $this->_object->getTauxDeTVA()) > static::EPSILON) {
                 $this->_errorElement->with('montant_TVA_francaise')->addViolation('"Montant TVA française" non valide (doit etre "Montant HT en devise" * "Taux de TVA / 100")')->end();
             }
 
@@ -162,13 +156,7 @@ class ErrorElements
     {
         $value = $this->_object->getMontantTTC();
         if ($value) {
-
-            //Import excel
-            if ($this->getValidateImport()) {
-                if (!($value == $this->_object->getMontantHTEnDevise() + $this->_object->getMontantTVAFrancaise())) {
-                    $this->_errorElement->with('montant_TTC')->addViolation('"Montant TTC" non valide (doit etre "Montant HT en devise" + "Montant TVA française")')->end();
-                }
-            } elseif (!($value == $this->round(($this->_object->getMontantHTEnDevise() + $this->_object->getMontantTVAFrancaise())))) {
+            if (($value - ($this->_object->getMontantHTEnDevise() + $this->_object->getMontantTVAFrancaise())) > static::EPSILON) {
                 $this->_errorElement->with('montant_TTC')->addViolation('"Montant TTC" non valide (doit etre "Montant HT en devise" + "Montant TVA française")')->end();
             }
         }
