@@ -41,7 +41,7 @@ jQuery(document).ready(function ($) {
                                 dataType:'json',
                                 async:false,
                                 success:function (i) {
-                                    $('#' + _uniqid + '_taux_de_change').val(i.value ? i.value : '');
+                                    $('#' + _uniqid + '_taux_de_change').val(i.value ? i.value : '').trigger('change');
                                 }
                             })
                         }
@@ -167,7 +167,7 @@ function substr_replace($object, limit) {
         var result = $object.val().split(',');
         var result2 = $object.val().split('.');
         if ((result[1] && result[1].length > limit) || result2[1] && result2[1].length > limit) {
-            $object.val($object.val().substr(0, $object.val().length - 1));
+            $object.val($object.val().substr(0, $object.val().length - 1)).trigger('change');
         }
     }
 }
