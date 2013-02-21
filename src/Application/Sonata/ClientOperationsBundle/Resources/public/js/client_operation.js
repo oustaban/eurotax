@@ -98,9 +98,10 @@ jQuery(document).ready(function ($) {
                 var HT_X_m = Math.round(parseFloat(HT)*m);
 
                 if (taux_de_TVA_X_m && HT_X_m){
-                    var TVA = (taux_de_TVA_X_m * HT_X_m) / m / m;
+                	//TVA = HT x Taux de TVA%
+                	var TVA = HT * taux_de_TVA;
+                    //var TVA = (taux_de_TVA_X_m * HT_X_m) / m / m; //old formula
                     TVA = TVA ? TVA.toString().replace('.', ',') : '';
-
                     $('#' + _uniqid + '_TVA').val(TVA).trigger('change');
                 }
             },
@@ -109,10 +110,14 @@ jQuery(document).ready(function ($) {
 
                 var _uniqid = symfony_ajax.get_uniqid();
 
+                
+                var $montant_TTC = $('#' + _uniqid + '_montant_TTC');
+                
                 var $taux_de_TVA = $('#' + _uniqid + '_taux_de_TVA');
                 var $paiement_montant = $('#' + _uniqid + '_paiement_montant');
                 var $taux_de_change = $('#' + _uniqid + '_taux_de_change');
 
+                var montant_TTC = $montant_TTC.val().replace(',', '.').replace(/\s+/, '');
                 var taux_de_TVA = $taux_de_TVA.val().replace(',', '.').replace(/\s+/, '');
                 var paiement_montant = $paiement_montant.val().replace(',', '.').replace(/\s+/, '');
                 var taux_de_change = $taux_de_change.val().replace(',', '.').replace(/\s+/, '');
@@ -122,7 +127,9 @@ jQuery(document).ready(function ($) {
                 var taux_de_change_X_m = Math.round(parseFloat(taux_de_change)*m);
 
                 if (taux_de_TVA_X_m && paiement_montant_X_m && taux_de_change_X_m){
-                    var HT = paiement_montant_X_m * m / ((m + taux_de_TVA_X_m) * taux_de_change_X_m);
+                	// HT = TTC / (1+Taux de TVA%) / Taux de Change
+                	var HT = montant_TTC / (1+taux_de_TVA) / taux_de_change;
+                    //var HT = paiement_montant_X_m * m / ((m + taux_de_TVA_X_m) * taux_de_change_X_m); //old formula
                     HT = HT ? HT.toString().replace('.', ',') : '';
 
                     $('#' + _uniqid + '_HT').val(HT).trigger('change');
