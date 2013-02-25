@@ -723,7 +723,12 @@ class AbstractTabsController extends Controller
                     foreach ($line as $index => $value) {
                         if (isset($fields[$index])) {
                             $fieldName = $fields[$index];
-                            $formData[$fieldName] = $admin->getFormValue($fieldName, $value);
+                            $newValue = $admin->getFormValue($fieldName, $value);
+                            $formData[$fieldName] = $newValue;
+                            // unset data for boolean fields equal to false
+                            if(is_bool($newValue) && $newValue === false) {
+                            	unset($formData[$fieldName]);
+                            }
                         }
                     }
 
