@@ -19,7 +19,7 @@ jQuery(document).ready(function ($) {
                 
                 
                 // v03283i
-                if ( ( $('#' + _uniqid + '_date_piece', context).size() || $('#' + _uniqid + '_devise', context).size() ) && $('#' + _uniqid + '_mois_mois', context).size() ) {
+                if ( ( $('#' + _uniqid + '_date_piece', context).size() || $('#' + _uniqid + '_devise', context).size() ) && $('#' + _uniqid + '_mois_mois', context).size() && $('#'+_uniqid + '_paiement_date', context).size() == 0 ) {
                     $('#' + _uniqid + '_date_piece, #' + _uniqid + '_devise', context).change(function(){
                         $('#' + _uniqid + '_mois_mois option:last').attr('selected', true).trigger('change');
                         var devise = $('#' + _uniqid + '_devise :selected').val();
@@ -129,7 +129,7 @@ jQuery(document).ready(function ($) {
                 	var TVA = HT * taux_de_TVA;
                     //var TVA = (taux_de_TVA_X_m * HT_X_m) / m / m; //old formula
                     TVA = TVA ? TVA.toString().replace('.', ',') : '';
-                    $('#' + _uniqid + '_TVA').val(TVA).trigger('change');
+                    $('#' + _uniqid + '_TVA').val(round_number(TVA)).trigger('change');
                 }
             },
             calc_HT:function(e){
@@ -159,7 +159,7 @@ jQuery(document).ready(function ($) {
                     //var HT = paiement_montant_X_m * m / ((m + taux_de_TVA_X_m) * taux_de_change_X_m); //old formula
                     HT = HT ? HT.toString().replace('.', ',') : '';
 
-                    $('#' + _uniqid + '_HT').val(HT).trigger('change');
+                    $('#' + _uniqid + '_HT').val(round_number(HT)).trigger('change');
                 }
             },
             calc_paiement_montant:function(e){
@@ -397,3 +397,16 @@ function init_tabs_filters_sticky_header() {
 
 
 }
+
+function round_number(rnum, rlength) { // Arguments: number to round, number of decimal places
+	if(typeof rlength === 'undefined') {
+		rlength = 2;
+	}
+	
+	rnum = rnum.toString().replace(',', '.');
+	var newnumber = Math.round(rnum*Math.pow(10,rlength))/Math.pow(10,rlength);
+	newnumber = parseFloat(newnumber); // Output the result to the form field (change for your purposes)
+	return newnumber.toString().replace('.', ',')
+}
+
+
