@@ -42,9 +42,9 @@ class DEBExpedAdmin extends Admin
         {
             return $er->createQueryBuilder('p')
                 ->andWhere('p.destination=1')
-                ->orderBy('p.name')
+                ->orderBy('p.code')
                 ;
-        },))
+        },'property' => 'code',))
             ->add('valeur_fiscale', 'money', array('label' => $this->getFieldLabel('valeur_fiscale')))
             ->add('regime', null, array('label' => $this->getFieldLabel('regime')))
             ->add('valeur_statistique', 'money', array('label' => $this->getFieldLabel('valeur_statistique')))
