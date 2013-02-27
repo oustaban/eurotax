@@ -14,6 +14,9 @@ jQuery(document).ready(function ($) {
                 if (($('#' + _uniqid + '_paiement_date', context).size() || $('#' + _uniqid + '_date_piece', context).size()) && $('#' + _uniqid + '_mois_mois', context).size()) {
                     $('#' + _uniqid + '_date_piece, #' + _uniqid + '_paiement_date', context).change(function(){
                         $('#' + _uniqid + '_mois_mois option:last').attr('selected', true).trigger('change');
+                        
+                        //console.log($(this).val());
+                        
                     }).trigger('change');
                 }
                 
@@ -56,7 +59,12 @@ jQuery(document).ready(function ($) {
                         var devise = $('#' + _uniqid + '_paiement_devise :selected').val();
                         var paiement_date = $('#' + _uniqid + '_paiement_date').val();
                         var paiement_montant = $('#' + _uniqid + '_paiement_montant').val();
-
+                        
+                        //If « Date du paiement » is empty.. « Mois de TVA » should be empty too
+                        if(paiement_date == '') {
+                        	$('#' + _uniqid + '_mois_mois').val('');
+                        }
+                        
                         if (devise && paiement_date && paiement_montant) {
                             $.ajax({
                                 url:Sonata.url.rdevises,
