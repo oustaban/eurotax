@@ -27,7 +27,7 @@ class SendErrorsToMail
 
     protected $_mailTo = array(
         'Pierre.DeLespinay@masao.eu',
-        'vladimir@hypernaut.net',
+        //'vladimir@hypernaut.net',
         'defan.hypernaut@gmail.com',
     );
 
