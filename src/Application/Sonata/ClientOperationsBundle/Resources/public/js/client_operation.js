@@ -14,19 +14,23 @@ jQuery(document).ready(function ($) {
                 if (($('#' + _uniqid + '_paiement_date', context).size() || $('#' + _uniqid + '_date_piece', context).size()) && $('#' + _uniqid + '_mois_mois', context).size()) {
                     $('#' + _uniqid + '_date_piece, #' + _uniqid + '_paiement_date', context).change(function(){
                         $('#' + _uniqid + '_mois_mois option:last').attr('selected', true).trigger('change');
-                        
-                        //console.log($(this).val());
-                        
                     }).trigger('change');
                 }
                 
                 
                 // v03283i
+                $('#' + _uniqid + '_montant_HT_en_devise').keyup(function() {
+                	$('#' + _uniqid + '_HT').val($('#' + _uniqid + '_taux_de_change').val() * $(this).val());
+                });
                 if ( ( $('#' + _uniqid + '_date_piece', context).size() || $('#' + _uniqid + '_devise', context).size() ) && $('#' + _uniqid + '_mois_mois', context).size() && $('#'+_uniqid + '_paiement_date', context).size() == 0 ) {
                     $('#' + _uniqid + '_date_piece, #' + _uniqid + '_devise', context).change(function(){
                         $('#' + _uniqid + '_mois_mois option:last').attr('selected', true).trigger('change');
                         var devise = $('#' + _uniqid + '_devise :selected').val();
                         var date_piece = $('#' + _uniqid + '_date_piece').val();
+                        var montant_HT_en_devise = $('#' + _uniqid + '_montant_HT_en_devise').val();
+                        var taux_de_change = $('#' + _uniqid + '_taux_de_change').val();
+                        
+                        
                         if(devise && date_piece) {
 	                        $.ajax({
 	                            url:Sonata.url.rdevises,
@@ -38,10 +42,14 @@ jQuery(document).ready(function ($) {
 	                            dataType:'json',
 	                            async:false,
 	                            success:function (i) {
-	                                $('#' + _uniqid + '_taux_de_change').val(i.value ? i.value : '').trigger('change');
+	                                $('#' + _uniqid + '_taux_de_change').val(i.value ? i.value : '');
+	                                $('#' + _uniqid + '_HT').val(parseFloat(i.value) * montant_HT_en_devise);
 	                            }
 	                        });
                         }
+
+                        
+                        
                     }).trigger('change');
                 }
                 
@@ -64,6 +72,13 @@ jQuery(document).ready(function ($) {
                         if(paiement_date == '') {
                         	$('#' + _uniqid + '_mois_mois').val('');
                         }
+                        
+                        //V01-TVA
+                        //When "Devise du paiement" is changed... put on "Devise" the same value thate "Devise du paiement"
+                        if(devise) {
+                        	$('#' + _uniqid + '_devise').val(devise);
+                        }
+                        
                         
                         if (devise && paiement_date && paiement_montant) {
                             $.ajax({
