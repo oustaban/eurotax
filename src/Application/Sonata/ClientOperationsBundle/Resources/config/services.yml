@@ -96,3 +96,16 @@ services:
 
     client.operation.excel:
         class: Application\Sonata\ClientOperationsBundle\Export\Excel
+
+    request:
+        class: Symfony\Component\HttpFoundation\Request
+
+    application.twig.extension:
+ 
+        class :  Application\Twig\PageExtension
+        arguments:  [@request]
+        tags:
+            - { name: twig.extension }
+
+
+

@@ -40,7 +40,7 @@ class ClientAdmin extends ClientAdminBase
     {
         $class = parent::getClass();
 
-        $backtrace = (version_compare(PHP_VERSION, '5.4.0') >= 0)?debug_backtrace (DEBUG_BACKTRACE_IGNORE_ARGS, 2):debug_backtrace (DEBUG_BACKTRACE_IGNORE_ARGS);
+        $backtrace = (version_compare(PHP_VERSION, '5.4.0') >= 0)?debug_backtrace (DEBUG_BACKTRACE_IGNORE_ARGS, 2):debug_backtrace ();
         if (in_array($backtrace[1]['function'], array('getBaseRouteName', 'getBaseRoutePattern')))
         {
             $class = str_replace('\\ClientBundle\\', '\\ClientOperationsBundle\\', $class);

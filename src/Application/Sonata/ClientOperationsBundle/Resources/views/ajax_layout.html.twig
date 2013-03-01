@@ -16,7 +16,7 @@
             {% block list_filters %}{% endblock %}
         </div>
 
-        <div class="sonata-ba-list">
+        <div class="sonata-ba-list {{ get_controller_name() }}">
             {% block list_table %}{% endblock %}
         </div>
     </div>
