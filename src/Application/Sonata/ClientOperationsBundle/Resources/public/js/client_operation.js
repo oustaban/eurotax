@@ -19,6 +19,11 @@ jQuery(document).ready(function ($) {
                 
                 
                 // v03283i
+                
+                $('#' + _uniqid + '_taux_de_change').keyup(function() {
+                	$('#' + _uniqid + '_HT').val($('#' + _uniqid + '_taux_de_change').val() * $('#' + _uniqid + '_montant_HT_en_devise').val());
+                });                
+                
                 $('#' + _uniqid + '_montant_HT_en_devise').keyup(function() {
                 	$('#' + _uniqid + '_HT').val($('#' + _uniqid + '_taux_de_change').val() * $(this).val());
                 });
