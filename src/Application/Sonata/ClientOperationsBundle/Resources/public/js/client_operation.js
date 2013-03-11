@@ -19,7 +19,6 @@ jQuery(document).ready(function ($) {
                 
                 
                 // v03283i
-                
                 $('#' + _uniqid + '_taux_de_change').keyup(function() {
                 	$('#' + _uniqid + '_HT').val($('#' + _uniqid + '_taux_de_change').val() * $('#' + _uniqid + '_montant_HT_en_devise').val());
                 });                
@@ -66,6 +65,17 @@ jQuery(document).ready(function ($) {
             attach:function (context) {
                 var _uniqid = symfony_ajax.get_uniqid();
                 if (_uniqid) {
+                	
+                	 //V01-TVA
+                	/*
+                	 * when changing the Devise, copy the same value on Devise du paiement (  but we can change after “Devise de paiemen” if we want that the data are different
+                	 */
+                    $('#' + _uniqid + '_devise').change(function() {                    	
+                    	$('#' + _uniqid + '_paiement_devise').val($(this).val()).trigger('change');                    	
+                    });
+                	
+                	
+                	
                     $('#' + _uniqid + '_paiement_devise, #' + _uniqid + '_paiement_date', context).change(function () {
                         var _uniqid = symfony_ajax.get_uniqid();
 
@@ -79,10 +89,12 @@ jQuery(document).ready(function ($) {
                         }
                         
                         //V01-TVA
-                        //When "Devise du paiement" is changed... put on "Devise" the same value thate "Devise du paiement"
+                        /*//When "Devise du paiement" is changed... put on "Devise" the same value thate "Devise du paiement"
                         if(devise) {
                         	$('#' + _uniqid + '_devise').val(devise);
-                        }
+                        }*/
+                        
+
                         
                         
                         if (devise && paiement_date && paiement_montant) {
