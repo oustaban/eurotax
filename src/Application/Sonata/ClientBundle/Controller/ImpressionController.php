@@ -72,6 +72,7 @@ class ImpressionController extends Controller
             'client_id' => $this->client_id,
             'client' => $this->getClient(),
             'active_tab' => $this->_tabAlias,
+        	'contact' => $this->getContact(),
         );
     }
 
@@ -116,4 +117,16 @@ class ImpressionController extends Controller
     {
         return $this->client;
     }
+    
+    
+    
+    public function getContact() {
+    	
+    	return $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:Contact')->findOneByClient($this->client_id);
+    	
+    	
+    	// return $this->client;
+    }
+    
+    
 }

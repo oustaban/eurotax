@@ -11,10 +11,11 @@ jQuery(document).ready(function ($) {
                 var _uniqid = symfony_ajax.get_uniqid();
 
                 //-- V01-TVA || A02-TVA
+                //The default value should be null for “Mois de TVA”  When we select a “Date de paiement” .. we must initialize the value of “Mois de TVA”
                 if (($('#' + _uniqid + '_paiement_date', context).size() || $('#' + _uniqid + '_date_piece', context).size()) && $('#' + _uniqid + '_mois_mois', context).size()) {
                     $('#' + _uniqid + '_date_piece, #' + _uniqid + '_paiement_date', context).change(function(){
                         $('#' + _uniqid + '_mois_mois option:last').attr('selected', true).trigger('change');
-                    }).trigger('change');
+                    });//.trigger('change');
                 }
                 
                 

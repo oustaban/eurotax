@@ -12,7 +12,7 @@
 
 {% set sticker = ''
 ~ client.nom ~ '<br/>'
-~ (client.contact ? client.contact ~ '<br/>' : '')
+~ (contact ? contact.civilite ~ ' ' ~ contact.nom ~ ' ' ~ contact.prenom ~ '<br/>' : '')
 ~ (client.adresse1Postal?client.adresse1Postal ~ '<br/>':'')
 ~ (client.adresse2Postal?client.adresse2Postal ~ '<br/>':'')
 ~ client.getLocaleCodeVillePostal ~ '<br/>'
