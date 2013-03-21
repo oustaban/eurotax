@@ -29,7 +29,7 @@ class ContactAdmin extends Admin
 
         $formMapper->with($this->getFieldLabel('title'))
             ->add('civilite', null, array('label' => $this->getFieldLabel('civilite')))
-            ->add('nom', null, array('label' => $this->getFieldLabel('nom'), 'data' => $this->getClient()->getNom()))
+            ->add('nom', null, array('label' => $this->getFieldLabel('nom'), 'data' => $this->getClient()->getRaisonSociale()))
             ->add('prenom', null, array('label' => $this->getFieldLabel('prenom')))
             ->add('telephone_1', null, array('label' => $this->getFieldLabel('telephone_1')))
             ->add('telephone_2', null, array('label' => $this->getFieldLabel('telephone_2')))
