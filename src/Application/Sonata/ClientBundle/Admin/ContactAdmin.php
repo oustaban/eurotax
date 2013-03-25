@@ -29,13 +29,13 @@ class ContactAdmin extends Admin
 
         $formMapper->with($this->getFieldLabel('title'))
             ->add('civilite', null, array('label' => $this->getFieldLabel('civilite')))
-            ->add('nom', null, array('label' => $this->getFieldLabel('nom'), 'data' => $this->getClient()->getRaisonSociale()))
+            ->add('nom', null, array('label' => $this->getFieldLabel('nom'), ))
             ->add('prenom', null, array('label' => $this->getFieldLabel('prenom')))
             ->add('telephone_1', null, array('label' => $this->getFieldLabel('telephone_1')))
             ->add('telephone_2', null, array('label' => $this->getFieldLabel('telephone_2')))
             ->add('fax', null, array('label' => $this->getFieldLabel('fax')))
             ->add('email', 'email', array('label' => $this->getFieldLabel('email')))
-            ->add('raison_sociale_societe', null, array('label' => $this->getFieldLabel('raison_sociale_societe')))
+            ->add('raison_sociale_societe', null, array('label' => $this->getFieldLabel('raison_sociale_societe'), 'data' => $this->getClient()->getRaisonSociale()))
             ->add('affichage_facture_id', 'choice', array(
             'label' => $this->getFieldLabel('affichage_facture_id'),
             'empty_value' => '',
