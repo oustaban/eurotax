@@ -21,19 +21,25 @@ jQuery(document).ready(function ($) {
                 
                 // v03283i
                 $('#' + _uniqid + '_taux_de_change').keyup(function() {
-                	$('#' + _uniqid + '_HT').val($('#' + _uniqid + '_taux_de_change').val() * $('#' + _uniqid + '_montant_HT_en_devise').val());
+                	$('#' + _uniqid + '_HT').val( round_number( $('#' + _uniqid + '_taux_de_change').val().replace(',', '.').replace(/\s+/, '') * $('#' + _uniqid + '_montant_HT_en_devise').val().replace(',', '.').replace(/\s+/, '') ) );
                 });                
                 
                 $('#' + _uniqid + '_montant_HT_en_devise').keyup(function() {
-                	$('#' + _uniqid + '_HT').val($('#' + _uniqid + '_taux_de_change').val() * $(this).val());
+                	
+                	$(this).val( round_number($(this).val()) );
+                	
+                	$('#' + _uniqid + '_HT').val( round_number( $('#' + _uniqid + '_taux_de_change').val().replace(',', '.').replace(/\s+/, '') * $(this).val().replace(',', '.').replace(/\s+/, '') ) );
+                	
+                	
+                	
                 });
                 if ( ( $('#' + _uniqid + '_date_piece', context).size() || $('#' + _uniqid + '_devise', context).size() ) && $('#' + _uniqid + '_mois_mois', context).size() && $('#'+_uniqid + '_paiement_date', context).size() == 0 ) {
                     $('#' + _uniqid + '_date_piece, #' + _uniqid + '_devise', context).change(function(){
                         $('#' + _uniqid + '_mois_mois option:last').attr('selected', true).trigger('change');
                         var devise = $('#' + _uniqid + '_devise :selected').val();
                         var date_piece = $('#' + _uniqid + '_date_piece').val();
-                        var montant_HT_en_devise = $('#' + _uniqid + '_montant_HT_en_devise').val();
-                        var taux_de_change = $('#' + _uniqid + '_taux_de_change').val();
+                        var montant_HT_en_devise = $('#' + _uniqid + '_montant_HT_en_devise').val().replace(',', '.').replace(/\s+/, '');
+                        //var taux_de_change = $('#' + _uniqid + '_taux_de_change').val().replace(',', '.').replace(/\s+/, '');
                         
                         
                         if(devise && date_piece) {
@@ -48,7 +54,7 @@ jQuery(document).ready(function ($) {
 	                            async:false,
 	                            success:function (i) {
 	                                $('#' + _uniqid + '_taux_de_change').val(i.value ? i.value : '');
-	                                $('#' + _uniqid + '_HT').val(parseFloat(i.value) * montant_HT_en_devise);
+	                                $('#' + _uniqid + '_HT').val( round_number( parseFloat(i.value) * montant_HT_en_devise ) );
 	                            }
 	                        });
                         }
@@ -444,10 +450,14 @@ function round_number(rnum, rlength) { // Arguments: number to round, number of 
 		rlength = 2;
 	}
 	
-	rnum = rnum.toString().replace(',', '.');
-	var newnumber = Math.round(rnum*Math.pow(10,rlength))/Math.pow(10,rlength);
-	newnumber = parseFloat(newnumber); // Output the result to the form field (change for your purposes)
-	return newnumber.toString().replace('.', ',')
+	rnum = parseFloat(rnum.toString().replace(',', '.'));
+	//var newnumber = Math.round(rnum*Math.pow(10,rlength))/Math.pow(10,rlength);
+	//newnumber = parseFloat(newnumber); // Output the result to the form field (change for your purposes)
+	//return newnumber.toString().replace('.', ',');
+	
+	
+	return rnum.toFixed(rlength).toString().replace('.', ',');
+	
 }
 
 
