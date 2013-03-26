@@ -14,7 +14,9 @@ jQuery(document).ready(function ($) {
                 //The default value should be null for “Mois de TVA”  When we select a “Date de paiement” .. we must initialize the value of “Mois de TVA”
                 if (($('#' + _uniqid + '_paiement_date', context).size() || $('#' + _uniqid + '_date_piece', context).size()) && $('#' + _uniqid + '_mois_mois', context).size()) {
                     $('#' + _uniqid + '_date_piece, #' + _uniqid + '_paiement_date', context).change(function(){
-                        $('#' + _uniqid + '_mois_mois option:last').attr('selected', true).trigger('change');
+                        if($(this).val() != '') {
+                    		$('#' + _uniqid + '_mois_mois option:last').attr('selected', true).trigger('change');
+                        }
                     });//.trigger('change');
                 }
                 
@@ -26,7 +28,7 @@ jQuery(document).ready(function ($) {
                 
                 $('#' + _uniqid + '_montant_HT_en_devise').keyup(function() {
                 	
-                	$(this).val( round_number($(this).val()) );
+                	//$(this).val( round_number($(this).val()) );
                 	
                 	$('#' + _uniqid + '_HT').val( round_number( $('#' + _uniqid + '_taux_de_change').val().replace(',', '.').replace(/\s+/, '') * $(this).val().replace(',', '.').replace(/\s+/, '') ) );
                 	
@@ -140,7 +142,7 @@ jQuery(document).ready(function ($) {
                         $taux_de_TVA.change(this.calc).trigger('change');
                     }
                     if($montant_TTC.length){
-                        $montant_TTC.change(this.calc_paiement_montant).keyup(this.calc_paiement_montant).trigger('change')
+                        $montant_TTC.change(this.calc_paiement_montant).keyup(this.calc_paiement_montant).trigger('change');
                     }
                     if($paiement_montant.length && $taux_de_change.length && $taux_de_TVA.length){
                         $paiement_montant.change(this.calc_HT).keyup(this.calc_HT);
