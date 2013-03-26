@@ -63,8 +63,8 @@ abstract class AbstractTabsAdmin extends Admin
 
             $this->client_id = $this->client_id = $filter['client_id']['value'];
 
-            //$this->month_default = '-1' . date($this->date_filter_separator . 'Y', strtotime('-1 month'));
-            $this->month_default = date('m' . $this->date_filter_separator . 'Y', strtotime('-1 month'));
+            $this->month_default = '-1' . date($this->date_filter_separator . 'Y', strtotime('-1 month'));
+            //$this->month_default = date('m' . $this->date_filter_separator . 'Y', strtotime('-1 month'));
             $this->query_month = isset($filter['month']) ? $filter['month'] : $request->query->get('month', $this->month_default);
             
             if ($this->query_month == 'all'){
