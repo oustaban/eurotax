@@ -55,7 +55,7 @@ jQuery(document).ready(function ($) {
 	                            dataType:'json',
 	                            async:false,
 	                            success:function (i) {
-	                                $('#' + _uniqid + '_taux_de_change').val(i.value ? i.value : '');
+	                                $('#' + _uniqid + '_taux_de_change').val(i.value ? round_number(i.value) : '');
 	                                $('#' + _uniqid + '_HT').val( round_number( parseFloat(i.value) * montant_HT_en_devise ) );
 	                            }
 	                        });
@@ -80,7 +80,7 @@ jQuery(document).ready(function ($) {
                 	 * when changing the Devise, copy the same value on Devise du paiement (  but we can change after “Devise de paiemen” if we want that the data are different
                 	 */
                     $('#' + _uniqid + '_devise').change(function() {                    	
-                    	$('#' + _uniqid + '_paiement_devise').val($(this).val()).trigger('change');                    	
+                    	$('#' + _uniqid + '_paiement_devise').val(round_number($(this).val())).trigger('change');                    	
                     });
                 	
                 	
@@ -117,7 +117,7 @@ jQuery(document).ready(function ($) {
                                 dataType:'json',
                                 async:false,
                                 success:function (i) {
-                                    $('#' + _uniqid + '_taux_de_change').val(i.value ? i.value : '').trigger('change');
+                                    $('#' + _uniqid + '_taux_de_change').val(i.value ? round_number(i.value) : '').trigger('change');
                                 }
                             });
                         }

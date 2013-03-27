@@ -27,6 +27,14 @@ class ContactAdmin extends Admin
     {
         parent::configureFormFields($formMapper);
 
+        
+        $id = $this->request->get($this->getIdParameter());
+        $raison_sociale_societe = array('label' => $this->getFieldLabel('raison_sociale_societe')); //, 'data' => !$id ? $this->getClient()->getRaisonSociale() : '');
+        
+        if(!$id) {
+        	$raison_sociale_societe['data'] = $this->getClient()->getRaisonSociale();
+        }
+        
         $formMapper->with($this->getFieldLabel('title'))
             ->add('civilite', null, array('label' => $this->getFieldLabel('civilite')))
             ->add('nom', null, array('label' => $this->getFieldLabel('nom'), ))
@@ -35,7 +43,7 @@ class ContactAdmin extends Admin
             ->add('telephone_2', null, array('label' => $this->getFieldLabel('telephone_2')))
             ->add('fax', null, array('label' => $this->getFieldLabel('fax')))
             ->add('email', 'email', array('label' => $this->getFieldLabel('email')))
-            ->add('raison_sociale_societe', null, array('label' => $this->getFieldLabel('raison_sociale_societe'), 'data' => $this->getClient()->getRaisonSociale()))
+            ->add('raison_sociale_societe', null, $raison_sociale_societe)
             ->add('affichage_facture_id', 'choice', array(
             'label' => $this->getFieldLabel('affichage_facture_id'),
             'empty_value' => '',
