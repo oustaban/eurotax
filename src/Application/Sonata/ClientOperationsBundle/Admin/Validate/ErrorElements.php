@@ -86,16 +86,13 @@ class ErrorElements
         /** @var $_object \Application\Sonata\ClientOperationsBundle\Entity\A02TVA|\Application\Sonata\ClientOperationsBundle\Entity\A04283I|\Application\Sonata\ClientOperationsBundle\Entity\A06AIB|\Application\Sonata\ClientOperationsBundle\Entity\A10CAF|\Application\Sonata\ClientOperationsBundle\Entity\AbstractSellEntity */
         $_object = $this->_object;
         $value = $_object->getHT();
+        
+        //var HT = montant_TTC / (1 + parseFloat(taux_de_TVA)) / taux_de_change;
+        $calcValue = $this->round( $_object->getMontantTTC() / (1+$_object->getTauxDeTVA() ) / $_object->getTauxDeChange(), 2);
+        
+        
         if ($value) {
-
-            //Import excel
-            if ($this->getValidateImport()) {
-                if ($_object->getTauxDeChange() && round((float)$value * $_object->getTauxDeChange() - $_object->getMontantHTEnDevise(), 9)) {
-                    $this->_errorElement->with('HT')->addViolation('"HT" non valide (doit etre "Montant HT en devise" / "Taux de change")')->end();
-                }
-            } //Add & Edit ajax form
-            else if ($_object->getTauxDeChange() && ($value * $_object->getTauxDeChange() - $this->round($_object->getMontantHTEnDevise()))) {
-
+			if ($_object->getTauxDeChange() && $_object->getMontantHTEnDevise() && ($value != $calcValue)) {
                 $this->_errorElement->with('HT')->addViolation('"HT" non valide (doit etre "Montant HT en devise" / "Taux de change")')->end();
             }
         }
