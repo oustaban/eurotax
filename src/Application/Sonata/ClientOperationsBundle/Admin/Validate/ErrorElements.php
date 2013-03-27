@@ -93,7 +93,7 @@ class ErrorElements
         
         if ($value) {
 			if ($_object->getTauxDeChange() && $_object->getMontantHTEnDevise() && ($value != $calcValue)) {
-                $this->_errorElement->with('HT')->addViolation('"HT" non valide (doit etre "Montant HT en devise" / "Taux de change")')->end();
+                $this->_errorElement->with('HT')->addViolation('"HT" non valide (doit etre "TTC" / (1+Taux de TVA) / "Taux de change" )')->end();
             }
         }
         return $this;
