@@ -3,6 +3,7 @@
 namespace Application\Sonata\ClientOperationsBundle\Admin\Validate;
 
 use Sonata\AdminBundle\Validator\ErrorElement;
+use Application\Sonata\DevisesBundle\Entity\Devises;
 
 class ErrorElements
 {
@@ -47,30 +48,37 @@ class ErrorElements
                     $taux_de_change = 1;
                 } else {
 
-                    /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
-                    $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+//                     /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+//                     $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
 
-                    /* @var $em \Doctrine\ORM\EntityManager */
-                    $em = $doctrine->getManager();
+//                     /* @var $em \Doctrine\ORM\EntityManager */
+//                     $em = $doctrine->getManager();
 
-                    /* @var $devise \Application\Sonata\DevisesBundle\Entity\Devises */
-                    $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($_object->getPaiementDate());
+//                     /* @var $devise \Application\Sonata\DevisesBundle\Entity\Devises */
+//                     $devise = $em->getRepository('ApplicationSonataDevisesBundle:Devises')->findOneByDate($_object->getPaiementDate());
 
-                    if ($devise) {
-                        $method = 'getMoney' . $currency;
-                        if (method_exists($devise, $method)) {
-                            $taux_de_change = $devise->$method();
-                        } else {
-                            new \Exception('Currency is not found (Devises): ' . $method);
-                        }
-                    }
+                    
+                    
+                    
+                    
+//                     if ($devise) {
+//                         $method = 'getMoney' . $currency;
+//                         if (method_exists($devise, $method)) {
+//                             $taux_de_change = $devise->$method();
+//                         } else {
+//                             new \Exception('Currency is not found (Devises): ' . $method);
+//                         }
+//                     }
+                    
+                    
+                    $taux_de_change = Devises::getDevisesValue($listDevise->getId(), $_object->getPaiementDate());
                 }
 
                 // setTauxDeChange
                 $_object->setTauxDeChange($taux_de_change);
 
                 if (!$taux_de_change) {
-                    $this->_errorElement->with('taux_de_change')->addViolation('"Taux de change" non valide')->end();
+                    $this->_errorElement->with('taux_de_change')->addViolation('"Taux de change" non valide ' . $taux_de_change)->end();
                 }
             }
         }
