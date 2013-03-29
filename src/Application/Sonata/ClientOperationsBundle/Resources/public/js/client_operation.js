@@ -55,7 +55,7 @@ jQuery(document).ready(function ($) {
 	                            dataType:'json',
 	                            async:false,
 	                            success:function (i) {
-	                                $('#' + _uniqid + '_taux_de_change').val(i.value ? round_number(i.value) : '');
+	                                $('#' + _uniqid + '_taux_de_change').val(i.value ? (i.value) : '');
 	                                $('#' + _uniqid + '_HT').val( round_number( parseFloat(i.value) * montant_HT_en_devise ) );
 	                            }
 	                        });
@@ -117,7 +117,7 @@ jQuery(document).ready(function ($) {
                                 dataType:'json',
                                 async:false,
                                 success:function (i) {
-                                    $('#' + _uniqid + '_taux_de_change').val(i.value ? round_number(i.value) : '').trigger('change');
+                                    $('#' + _uniqid + '_taux_de_change').val(i.value ? (i.value) : '').trigger('change');
                                 }
                             });
                         }
