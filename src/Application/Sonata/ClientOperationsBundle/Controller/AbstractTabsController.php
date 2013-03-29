@@ -731,6 +731,17 @@ class AbstractTabsController extends Controller
                             }
                         }
                     }
+                    
+                    
+                    //if paiement_date is empty, empty the ff. fields.
+                    if(!isset($formData['paiement_date']) || (isset($formData['paiement_date']) && empty($formData['paiement_date']))) {
+                    	unset($formData['mois']);
+                    	unset($formData['taux_de_change']);
+                    	unset($formData['HT']);
+                    	unset($formData['TVA']);
+                    }
+                    
+                    
 
                     $form->bind($formData);
 
