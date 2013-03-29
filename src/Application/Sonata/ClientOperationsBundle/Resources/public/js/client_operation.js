@@ -26,7 +26,7 @@ jQuery(document).ready(function ($) {
                 
                 // v03283i
                 $('#' + _uniqid + '_taux_de_change').keyup(function() {
-                	$('#' + _uniqid + '_HT').val( round_number( $('#' + _uniqid + '_taux_de_change').val().replace(',', '.').replace(/\s+/, '') * $('#' + _uniqid + '_montant_HT_en_devise').val().replace(',', '.').replace(/\s+/, '') ) );
+                	$('#' + _uniqid + '_HT').val( round_number(  $('#' + _uniqid + '_montant_HT_en_devise').val().replace(',', '.').replace(/\s+/, '') / $('#' + _uniqid + '_taux_de_change').val().replace(',', '.').replace(/\s+/, '') ) );
                 });                
                 
                 $('#' + _uniqid + '_montant_HT_en_devise').blur(function() {
@@ -36,7 +36,7 @@ jQuery(document).ready(function ($) {
                 
                 
                 $('#' + _uniqid + '_montant_HT_en_devise').keyup(function() {
-                	$('#' + _uniqid + '_HT').val( round_number( $('#' + _uniqid + '_taux_de_change').val().replace(',', '.').replace(/\s+/, '') * $(this).val().replace(',', '.').replace(/\s+/, '') ) );
+                	$('#' + _uniqid + '_HT').val( round_number( $(this).val().replace(',', '.').replace(/\s+/, '') / $('#' + _uniqid + '_taux_de_change').val().replace(',', '.').replace(/\s+/, '') ) );
                 });
                 if ( ( $('#' + _uniqid + '_date_piece', context).size() || $('#' + _uniqid + '_devise', context).size() ) && $('#' + _uniqid + '_mois_mois', context).size() && $('#'+_uniqid + '_paiement_date', context).size() == 0 ) {
                     $('#' + _uniqid + '_date_piece, #' + _uniqid + '_devise', context).change(function(){
@@ -59,7 +59,7 @@ jQuery(document).ready(function ($) {
 	                            async:false,
 	                            success:function (i) {
 	                                $('#' + _uniqid + '_taux_de_change').val(i.value ? (i.value) : '');
-	                                $('#' + _uniqid + '_HT').val( round_number( parseFloat(i.value) * montant_HT_en_devise ) );
+	                                $('#' + _uniqid + '_HT').val( round_number( montant_HT_en_devise / parseFloat(i.value) ) );
 	                            }
 	                        });
                         }
@@ -205,7 +205,7 @@ jQuery(document).ready(function ($) {
                 var paiement_montant_X_m = Math.round(parseFloat(paiement_montant)*m);
                 var taux_de_change_X_m = Math.round(parseFloat(taux_de_change)*m);
 
-                if (taux_de_TVA_X_m && paiement_montant_X_m && taux_de_change_X_m){
+                if (montant_TTC && taux_de_TVA_X_m && paiement_montant_X_m && taux_de_change_X_m){
                 	// HT = TTC / (1+Taux de TVA%) / Taux de Change
                 	var HT = montant_TTC / (1 + parseFloat(taux_de_TVA)) / taux_de_change;
                     //var HT = paiement_montant_X_m * m / ((m + taux_de_TVA_X_m) * taux_de_change_X_m); //old formula

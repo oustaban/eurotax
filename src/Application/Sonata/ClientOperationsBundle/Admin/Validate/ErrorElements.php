@@ -95,18 +95,23 @@ class ErrorElements
         $_object = $this->_object;
         $value = $_object->getHT();
         
-        
-        
         if ($value) {
-			if ($_object->getMontantTTC() && $_object->getTauxDeTVA() && $_object->getTauxDeChange()) {
-				
-				//var HT = montant_TTC / (1 + parseFloat(taux_de_TVA)) / taux_de_change;
-				$calcValue = $this->round( $_object->getMontantTTC() / (1+$_object->getTauxDeTVA() ) / $_object->getTauxDeChange(), 2);
-				
-				if($value != $calcValue) {
-                	$this->_errorElement->with('HT')->addViolation('"HT" non valide (doit etre "TTC" / (1+Taux de TVA) / "Taux de change" )')->end();
-				}
-            }
+        	if(method_exists($_object, 'getMontantTTC')) {
+				if ($_object->getMontantTTC() && $_object->getTauxDeTVA() && $_object->getTauxDeChange()) {
+					//var HT = montant_TTC / (1 + parseFloat(taux_de_TVA)) / taux_de_change;
+					$calcValue = $this->round( $_object->getMontantTTC() / (1+$_object->getTauxDeTVA() ) / $_object->getTauxDeChange(), 2);
+					if($value != $calcValue) {
+	                	$this->_errorElement->with('HT')->addViolation('"HT" non valide (doit etre "TTC" / (1+Taux de TVA) / "Taux de change" )')->end();
+					}
+	            }
+        	} else {
+        		if ( $_object->getMontantHTEnDevise() && $_object->getTauxDeChange()) {
+        			$calcValue = $this->round( $_object->getMontantHTEnDevise() / $_object->getTauxDeChange(), 2);
+        			if($value != $calcValue) {
+        				$this->_errorElement->with('HT')->addViolation('"HT" non valide (doit etre "HT en devise" / "Taux de change" )')->end();
+        			}
+        		}
+        	}
         }
         return $this;
     }
