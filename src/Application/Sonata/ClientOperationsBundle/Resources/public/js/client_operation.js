@@ -16,6 +16,9 @@ jQuery(document).ready(function ($) {
                     $('#' + _uniqid + '_date_piece, #' + _uniqid + '_paiement_date', context).change(function(){
                         if($(this).val() != '') {
                     		$('#' + _uniqid + '_mois_mois option:last').attr('selected', true).trigger('change');
+                    		
+                        } else {
+                        	$('#' + _uniqid + '_mois_mois option:last').attr('selected', false).trigger('change');
                         }
                     });//.trigger('change');
                 }
@@ -26,14 +29,14 @@ jQuery(document).ready(function ($) {
                 	$('#' + _uniqid + '_HT').val( round_number( $('#' + _uniqid + '_taux_de_change').val().replace(',', '.').replace(/\s+/, '') * $('#' + _uniqid + '_montant_HT_en_devise').val().replace(',', '.').replace(/\s+/, '') ) );
                 });                
                 
+                $('#' + _uniqid + '_montant_HT_en_devise').blur(function() {
+                	
+                	$(this).val( round_number($(this).val()) );
+                });
+                
+                
                 $('#' + _uniqid + '_montant_HT_en_devise').keyup(function() {
-                	
-                	//$(this).val( round_number($(this).val()) );
-                	
                 	$('#' + _uniqid + '_HT').val( round_number( $('#' + _uniqid + '_taux_de_change').val().replace(',', '.').replace(/\s+/, '') * $(this).val().replace(',', '.').replace(/\s+/, '') ) );
-                	
-                	
-                	
                 });
                 if ( ( $('#' + _uniqid + '_date_piece', context).size() || $('#' + _uniqid + '_devise', context).size() ) && $('#' + _uniqid + '_mois_mois', context).size() && $('#'+_uniqid + '_paiement_date', context).size() == 0 ) {
                     $('#' + _uniqid + '_date_piece, #' + _uniqid + '_devise', context).change(function(){
