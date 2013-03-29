@@ -83,7 +83,7 @@ jQuery(document).ready(function ($) {
                 	 * when changing the Devise, copy the same value on Devise du paiement (  but we can change after “Devise de paiemen” if we want that the data are different
                 	 */
                     $('#' + _uniqid + '_devise').change(function() {                    	
-                    	$('#' + _uniqid + '_paiement_devise').val(round_number($(this).val())).trigger('change');                    	
+                    	$('#' + _uniqid + '_paiement_devise').val($(this).val()).trigger('change');                    	
                     });
                 	
                 	
