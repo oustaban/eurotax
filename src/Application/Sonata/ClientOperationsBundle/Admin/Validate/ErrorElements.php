@@ -37,10 +37,28 @@ class ErrorElements
         $_object = $this->_object;
 
         //-- http://redmine.testenm.com/issues/1364#note-9
-        if ($_object->getPaiementMontant() && !$_object->getTauxDeChange()) {
-
-            $listDevise = $_object->getPaiementDevise();
-            if ($listDevise) {
+        //if ($_object->getPaiementMontant() && !$_object->getTauxDeChange()) {
+        if (!$_object->getTauxDeChange()) {
+        	
+        	$listDevise = null;
+        	if(method_exists($_object, 'getPaiementDevise')) {
+            	$listDevise = $_object->getPaiementDevise();
+        	} else if(method_exists($_object, 'getDevise')) {
+            	$listDevise = $_object->getDevise();
+        	}
+            
+            $date = null;
+            
+            
+            if(method_exists($_object, 'getPaiementDate')) {
+            	$date = $_object->getPaiementDate();
+            } else if(method_exists($_object, 'getDatePiece')) {
+            	$date = $_object->getDatePiece();
+            }
+            
+            
+            
+            if ($listDevise && $date) {
                 $currency = $listDevise->getAlias();
 
                 $taux_de_change = 0;
@@ -71,7 +89,7 @@ class ErrorElements
 //                     }
                     
                     
-                    $taux_de_change = Devises::getDevisesValue($listDevise->getId(), $_object->getPaiementDate());
+                    $taux_de_change = Devises::getDevisesValue($listDevise->getId(), $date);
                 }
 
                 // setTauxDeChange
@@ -149,21 +167,15 @@ class ErrorElements
     	/** @var $_object \Application\Sonata\ClientOperationsBundle\Entity\A02TVA|\Application\Sonata\ClientOperationsBundle\Entity\A04283I|\Application\Sonata\ClientOperationsBundle\Entity\A06AIB|\Application\Sonata\ClientOperationsBundle\Entity\A10CAF|\Application\Sonata\ClientOperationsBundle\Entity\AbstractSellEntity */
     	$_object = $this->_object;
     	 
+    	
+    	//_montant_HT_en_devise / _taux_de_change
     
     	if ($this->_is_validate_import) {
-    		if(method_exists($_object, 'getMontantTTC')) {
-    			if ($_object->getMontantTTC() && $_object->getTauxDeTVA() && $_object->getTauxDeChange()) {
-    				//var HT = montant_TTC / (1 + parseFloat(taux_de_TVA)) / taux_de_change;
-    				$calcValue = $this->round( $_object->getMontantTTC() / (1+$_object->getTauxDeTVA() ) / $_object->getTauxDeChange(), 2);
-    
-    			}
-    		} else {
-    			if ( $_object->getMontantHTEnDevise() && $_object->getTauxDeChange()) {
-    				$calcValue = $this->round( $_object->getMontantHTEnDevise() / $_object->getTauxDeChange(), 2);
-    
-    			}
+    		$calcValue = 0;
+    		if ( $_object->getMontantHTEnDevise() && $_object->getTauxDeChange()) {
+    			$calcValue = $this->round( $_object->getMontantHTEnDevise() / $_object->getTauxDeChange(), 2);
     		}
-    
+
     		$_object->setHT($calcValue);
     	}
     	return $this;
@@ -214,7 +226,7 @@ class ErrorElements
      */
     public function validateMontantTVAFrancaise()
     {
-        $value = $this->_object->getMontantTVAFrancaise();
+        $value = $this->round($this->_object->getMontantTVAFrancaise());
         if ($value) {
         	
         	// var montant_TVA_francaise = (montant_HT_en_devise_X_m * taux_de_TVA_X_m) / m / m;
