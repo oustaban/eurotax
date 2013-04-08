@@ -116,6 +116,69 @@ class ErrorElements
         return $this;
     }
 
+    
+    
+    public function setHT()
+    {
+    	/** @var $_object \Application\Sonata\ClientOperationsBundle\Entity\A02TVA|\Application\Sonata\ClientOperationsBundle\Entity\A04283I|\Application\Sonata\ClientOperationsBundle\Entity\A06AIB|\Application\Sonata\ClientOperationsBundle\Entity\A10CAF|\Application\Sonata\ClientOperationsBundle\Entity\AbstractSellEntity */
+    	$_object = $this->_object;
+    	
+    
+    	if ($this->_is_validate_import && $_object->getPaiementDate()) {
+    		if(method_exists($_object, 'getMontantTTC')) {
+    			if ($_object->getMontantTTC() && $_object->getTauxDeTVA() && $_object->getTauxDeChange()) {
+    				//var HT = montant_TTC / (1 + parseFloat(taux_de_TVA)) / taux_de_change;
+    				$calcValue = $this->round( $_object->getMontantTTC() / (1+$_object->getTauxDeTVA() ) / $_object->getTauxDeChange(), 2);
+    				
+    			}
+    		} else {
+    			if ( $_object->getMontantHTEnDevise() && $_object->getTauxDeChange()) {
+    				$calcValue = $this->round( $_object->getMontantHTEnDevise() / $_object->getTauxDeChange(), 2);
+    				
+    			}
+    		}
+    		
+    		$_object->setHT($calcValue);
+    	}
+    	return $this;
+    }
+    
+    
+    public function setHT_02()
+    {
+    	/** @var $_object \Application\Sonata\ClientOperationsBundle\Entity\A02TVA|\Application\Sonata\ClientOperationsBundle\Entity\A04283I|\Application\Sonata\ClientOperationsBundle\Entity\A06AIB|\Application\Sonata\ClientOperationsBundle\Entity\A10CAF|\Application\Sonata\ClientOperationsBundle\Entity\AbstractSellEntity */
+    	$_object = $this->_object;
+    	 
+    
+    	if ($this->_is_validate_import) {
+    		if(method_exists($_object, 'getMontantTTC')) {
+    			if ($_object->getMontantTTC() && $_object->getTauxDeTVA() && $_object->getTauxDeChange()) {
+    				//var HT = montant_TTC / (1 + parseFloat(taux_de_TVA)) / taux_de_change;
+    				$calcValue = $this->round( $_object->getMontantTTC() / (1+$_object->getTauxDeTVA() ) / $_object->getTauxDeChange(), 2);
+    
+    			}
+    		} else {
+    			if ( $_object->getMontantHTEnDevise() && $_object->getTauxDeChange()) {
+    				$calcValue = $this->round( $_object->getMontantHTEnDevise() / $_object->getTauxDeChange(), 2);
+    
+    			}
+    		}
+    
+    		$_object->setHT($calcValue);
+    	}
+    	return $this;
+    }
+    
+    
+    public function setTVA() {
+    	$_object = $this->_object;
+    	if ($this->_is_validate_import && $_object->getPaiementDate()) {
+    		$_object->setTVA( $this->round( $_object->getHT() * $_object->getTauxDeTVA(), 2 ) );
+    	}
+    	return $this;
+    }
+    
+    
     /**
      * @return ErrorElements
      */
@@ -153,11 +216,21 @@ class ErrorElements
     {
         $value = $this->_object->getMontantTVAFrancaise();
         if ($value) {
+        	
+        	// var montant_TVA_francaise = (montant_HT_en_devise_X_m * taux_de_TVA_X_m) / m / m;
 
-            if (($value - $this->_object->getMontantHTEnDevise() * $this->_object->getTauxDeTVA()) > static::EPSILON) {
+           /*  if (($value - $this->_object->getMontantHTEnDevise() * $this->_object->getTauxDeTVA()) > static::EPSILON) {
                 $this->_errorElement->with('montant_TVA_francaise')->addViolation('"Montant TVA française" non valide (doit etre "Montant HT en devise" * "Taux de TVA / 100")')->end();
-            }
-
+            } */
+			
+        	
+        	
+        	$m = 100000;
+        	$calcValue = $this->round( ( ($this->_object->getMontantHTEnDevise()*$m) * ($this->_object->getTauxDeTVA()*$m) ) / $m / $m, 2);
+        	if ($value != $calcValue) {
+        		$this->_errorElement->with('montant_TVA_francaise')->addViolation('"Montant TVA française" non valide (doit etre ("Montant HT en devise * 100000" * "Taux de TVA * 100000") / 100000 / 100000")')->end();
+        	}
+        	
         }
 
         return $this;

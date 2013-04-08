@@ -88,6 +88,7 @@ class V03283IAdmin extends Admin
         $error->setValidateImport($this->getValidateImport())
             ->validateNoTVATiers()
             ->validateDevise()
+            //->setHT_02()
             ->validateHT()
             ->validateMois();
     }
