@@ -18,7 +18,7 @@ jQuery(document).ready(function ($) {
                     		$('#' + _uniqid + '_mois_mois option:last').attr('selected', true).trigger('change');
                     		
                         } else {
-                        	$('#' + _uniqid + '_mois_mois option:last').attr('selected', false).trigger('change');
+                        	$('#' + _uniqid + '_mois_mois option:last').removeAttr('selected');
                         }
                     });//.trigger('change');
                 }
@@ -36,7 +36,13 @@ jQuery(document).ready(function ($) {
                 
                 
                 $('#' + _uniqid + '_montant_HT_en_devise').keyup(function() {
-                	$('#' + _uniqid + '_HT').val( round_number( $(this).val().replace(',', '.').replace(/\s+/, '') / $('#' + _uniqid + '_taux_de_change').val().replace(',', '.').replace(/\s+/, '') ) );
+                	
+                	var result = $(this).val().replace(',', '.').replace(/\s+/, '') / $('#' + _uniqid + '_taux_de_change').val().replace(',', '.').replace(/\s+/, '');
+                	
+                	if (result != Number.POSITIVE_INFINITY && result != Number.NEGATIVE_INFINITY) {
+                		$('#' + _uniqid + '_HT').val( round_number( result ) );
+                	}
+                	
                 });
                 if ( ( $('#' + _uniqid + '_date_piece', context).size() || $('#' + _uniqid + '_devise', context).size() ) && $('#' + _uniqid + '_mois_mois', context).size() && $('#'+_uniqid + '_paiement_date', context).size() == 0 ) {
                     $('#' + _uniqid + '_date_piece, #' + _uniqid + '_devise', context).change(function(){
@@ -96,8 +102,14 @@ jQuery(document).ready(function ($) {
                         var paiement_montant = $('#' + _uniqid + '_paiement_montant').val();
                         
                         //If « Date du paiement » is empty.. « Mois de TVA » should be empty too
+                        // When I delete the data “Date de paiement”, I should empty the field “Taux de change”, “HT” and “TVA”
                         if(paiement_date == '') {
                         	$('#' + _uniqid + '_mois_mois').val('');
+                        	$('#' + _uniqid + '_taux_de_change').val('');
+                        	$('#' + _uniqid + '_TVA').val('');
+                        	$('#' + _uniqid + '_HT').val('');
+                        	
+                        	
                         }
                         
                         //V01-TVA
@@ -181,7 +193,11 @@ jQuery(document).ready(function ($) {
                 	var TVA = HT * taux_de_TVA;
                     //var TVA = (taux_de_TVA_X_m * HT_X_m) / m / m; //old formula
                     TVA = TVA ? TVA.toString().replace('.', ',') : '';
-                    $('#' + _uniqid + '_TVA').val(round_number(TVA)).trigger('change');
+                    
+                    if (TVA != Number.POSITIVE_INFINITY && TVA != Number.NEGATIVE_INFINITY) {
+                    
+                    	$('#' + _uniqid + '_TVA').val(round_number(TVA)).trigger('change');
+                    }
                 }
             },
             calc_HT:function(e){
