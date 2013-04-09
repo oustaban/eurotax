@@ -109,13 +109,13 @@ class DevisesAdmin extends Admin
         $rows = array();
 
         if (!$this->_current_devises) {
-            $rows[$this->generateUrl('create')] = ucwords($this->datefmtFormatFilter(new \DateTime($this->getCurrentYearMonth().'-01'), 'YYYY MMMM'));
+            $rows[$this->generateUrl('create')] = ucwords($this->datefmtFormatFilter(new \DateTime($this->getCurrentYearMonth().'-01'), 'yyyy MMMM'));
         }
 
         foreach ($devises as $value) {
 
             /** @var $value \Application\Sonata\DevisesBundle\Entity\Devises */
-            $rows[$this->generateObjectUrl('edit', $value)] = ucwords($this->datefmtFormatFilter($value->getDate(), 'YYYY MMMM'));
+            $rows[$this->generateObjectUrl('edit', $value)] = ucwords($this->datefmtFormatFilter($value->getDate(), 'yyyy MMMM'));
         }
 
         return $rows;
@@ -137,7 +137,7 @@ class DevisesAdmin extends Admin
             \Locale::getDefault(),
             $dateFormat,
             $timeFormat,
-            null,
+             date_default_timezone_get(),
             $calendar,
             $pattern
         );
