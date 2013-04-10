@@ -32,7 +32,13 @@ symfony_ajax.get_uniqid = function () {
         _uniqid = client_id_name.replace('[client]', '').replace('[client_id]', '');
     }
     return _uniqid;
-}
+};
+
+
+symfony_ajax.is_new = function () {
+	return $('.is_new').val() == 1 ? true: false;
+}; 
+
 
 /**
  * @private

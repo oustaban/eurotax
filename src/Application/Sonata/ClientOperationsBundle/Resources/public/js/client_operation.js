@@ -232,9 +232,19 @@ jQuery(document).ready(function ($) {
             },
             calc_paiement_montant:function(e){
                 var _uniqid = symfony_ajax.get_uniqid();
-
                 var $montant_TTC = $('#' + _uniqid + '_montant_TTC');
-                $('#' + _uniqid + '_paiement_montant').val(round_number($montant_TTC.val())).trigger('change');
+                var $paiement_montant = $('#' + _uniqid + '_paiement_montant');
+                var pm = $montant_TTC.val();
+                
+
+                if(pm && symfony_ajax.is_new()) {
+                	$paiement_montant.val(round_number(pm)).trigger('change');
+                } else {
+                	//format value only
+                	if($paiement_montant.val()) {
+                		$paiement_montant.val(round_number($paiement_montant.val()));
+                	}
+                }
             },
             calc:function (e) {
                 var m = 100000;
