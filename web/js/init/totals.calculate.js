@@ -22,7 +22,8 @@ $(function () {
 
                 var sum = 0;
                 $('.' + tc).each(function () {
-                    sum += parseFloat($(this).html());
+                	if(parseFloat($(this).html()))
+                		sum += parseFloat($(this).html());
                 });
                 $div.html('<b>' + sum + '</b>');
                 if (sum < 0) {
