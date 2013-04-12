@@ -115,9 +115,9 @@ class ErrorElements
         
         if ($value) {
         	if(method_exists($_object, 'getMontantTTC')) {
-				if ($_object->getMontantTTC() && $_object->getTauxDeTVA() && $_object->getTauxDeChange()) {
+				if ($_object->getPaiementMontant() && $_object->getTauxDeTVA() && $_object->getTauxDeChange()) {
 					//var HT = montant_TTC / (1 + parseFloat(taux_de_TVA)) / taux_de_change;
-					$calcValue = $this->round( $_object->getMontantTTC() / (1+$_object->getTauxDeTVA() ) / $_object->getTauxDeChange(), 2);
+					$calcValue = $this->round( $_object->getPaiementMontant() / (1+$_object->getTauxDeTVA() ) / $_object->getTauxDeChange(), 2);
 					if($value != $calcValue) {
 	                	$this->_errorElement->with('HT')->addViolation('"HT" non valide (doit etre "TTC" / (1+Taux de TVA) / "Taux de change" )')->end();
 					}
@@ -143,10 +143,10 @@ class ErrorElements
     	
     
     	if ($this->_is_validate_import && $_object->getPaiementDate()) {
-    		if(method_exists($_object, 'getMontantTTC')) {
-    			if ($_object->getMontantTTC() && $_object->getTauxDeTVA() && $_object->getTauxDeChange()) {
+    		if(method_exists($_object, 'getPaiementMontant')) {
+    			if ($_object->getPaiementMontant() && $_object->getTauxDeTVA() && $_object->getTauxDeChange()) {
     				//var HT = montant_TTC / (1 + parseFloat(taux_de_TVA)) / taux_de_change;
-    				$calcValue = $this->round( $_object->getMontantTTC() / (1+$_object->getTauxDeTVA() ) / $_object->getTauxDeChange(), 2);
+    				$calcValue = $this->round( $_object->getPaiementMontant() / (1+$_object->getTauxDeTVA() ) / $_object->getTauxDeChange(), 2);
     				
     			}
     		} else {

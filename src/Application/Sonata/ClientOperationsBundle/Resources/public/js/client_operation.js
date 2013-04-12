@@ -222,8 +222,8 @@ jQuery(document).ready(function ($) {
                 var taux_de_change_X_m = Math.round(parseFloat(taux_de_change)*m);
 
                 if (montant_TTC && taux_de_TVA_X_m && paiement_montant_X_m && taux_de_change_X_m){
-                	// HT = TTC / (1+Taux de TVA%) / Taux de Change
-                	var HT = montant_TTC / (1 + parseFloat(taux_de_TVA)) / taux_de_change;
+                	// HT = paiement_montant / (1+Taux de TVA%) / Taux de Change
+                	var HT = paiement_montant / (1 + parseFloat(taux_de_TVA)) / taux_de_change;
                     //var HT = paiement_montant_X_m * m / ((m + taux_de_TVA_X_m) * taux_de_change_X_m); //old formula
                     HT = HT ? HT.toString().replace('.', ',') : '';
 
