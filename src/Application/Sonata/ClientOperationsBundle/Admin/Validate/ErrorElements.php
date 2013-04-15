@@ -143,6 +143,7 @@ class ErrorElements
     	
     
     	if ($this->_is_validate_import && $_object->getPaiementDate()) {
+    		$calcValue = 0;
     		if(method_exists($_object, 'getPaiementMontant')) {
     			if ($_object->getPaiementMontant() && $_object->getTauxDeTVA() && $_object->getTauxDeChange()) {
     				//var HT = montant_TTC / (1 + parseFloat(taux_de_TVA)) / taux_de_change;
@@ -235,11 +236,12 @@ class ErrorElements
                 $this->_errorElement->with('montant_TVA_francaise')->addViolation('"Montant TVA française" non valide (doit etre "Montant HT en devise" * "Taux de TVA / 100")')->end();
             } */
 			
-        	
+        	//Montant HT en devise * 100000" * "Taux de TVA * 100000") / 100000 / 100000 = Montant HT en devise * "Taux de TVA
         	
         	$m = 100000;
         	$calcValue = $this->round( ( ($this->_object->getMontantHTEnDevise()*$m) * ($this->_object->getTauxDeTVA()*$m) ) / $m / $m, 2);
-        	if ($value != $calcValue) {
+        	$calcValue2 = $this->round($this->_object->getMontantHTEnDevise() * $this->_object->getTauxDeTVA(), 2);
+        	if ($calcValue2 != $calcValue) {
         		$this->_errorElement->with('montant_TVA_francaise')->addViolation('"Montant TVA française" non valide (doit etre ("Montant HT en devise * 100000" * "Taux de TVA * 100000") / 100000 / 100000")')->end();
         	}
         	
@@ -451,6 +453,31 @@ class ErrorElements
         $this->_is_validate_import = $value;
         return $this;
     }
+    
+    
+    
+    public function setDatePiece() {
+    	
+    	static $date = null;
+    	
+    	//_ If day(now) >= 1 and < 25 .... Date Pièce = 01/ Month(Now) / Year(Now)
+		//_ If day(now) >= 25   Date Pièce = 01/Month(Now) + 1 / Year(Now) ( If Month(Now + 1 = 13 ... Put Month = 1 and Year = Year + 1
+
+    	if(!$this->_object->getDatePiece()) {
+    		if(date('d') >= 1 && date('d') < 25) {
+    			$ts = date('Y-m') . '-01';
+    		} else if(date('d' >= 25)) {
+    			$ts = 'now +1 month';
+    		}
+    		if(is_null($date)) {
+    			$date = new \DateTime($ts);
+    		}
+    		$this->_object->setDatePiece($date);
+    	}
+    	
+    	return $this;
+    }
+    
 
     /**
      * @return bool
