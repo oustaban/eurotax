@@ -14,7 +14,7 @@ jQuery(document).ready(function ($) {
                 //The default value should be null for “Mois de TVA”  When we select a “Date de paiement” .. we must initialize the value of “Mois de TVA”
                 if (($('#' + _uniqid + '_paiement_date', context).size() || $('#' + _uniqid + '_date_piece', context).size()) && $('#' + _uniqid + '_mois_mois', context).size()) {
                     $('#' + _uniqid + '_date_piece, #' + _uniqid + '_paiement_date', context).change(function(){
-                        if($(this).val() != '') {
+                        if($('#' + _uniqid + '_paiement_date').val() != '') {
                     		$('#' + _uniqid + '_mois_mois option:last').attr('selected', true).trigger('change');
                     		
                         } else {
@@ -46,7 +46,7 @@ jQuery(document).ready(function ($) {
                 });
                 if ( ( $('#' + _uniqid + '_date_piece', context).size() || $('#' + _uniqid + '_devise', context).size() ) && $('#' + _uniqid + '_mois_mois', context).size() && $('#'+_uniqid + '_paiement_date', context).size() == 0 ) {
                     $('#' + _uniqid + '_date_piece, #' + _uniqid + '_devise', context).change(function(){
-                        $('#' + _uniqid + '_mois_mois option:last').attr('selected', true).trigger('change');
+                        //$('#' + _uniqid + '_mois_mois option:last').attr('selected', true).trigger('change');
                         var devise = $('#' + _uniqid + '_devise :selected').val();
                         var date_piece = $('#' + _uniqid + '_date_piece').val();
                         var montant_HT_en_devise = $('#' + _uniqid + '_montant_HT_en_devise').val().replace(',', '.').replace(/\s+/, '');
