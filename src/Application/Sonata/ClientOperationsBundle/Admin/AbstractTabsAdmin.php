@@ -144,7 +144,7 @@ abstract class AbstractTabsAdmin extends Admin
         }
 
         $builder->andWhere($builder->getRootAlias() . '.client_id=' . $this->client_id);
-        var_dump($query->getDql());
+
         return $query;
     }
 
