@@ -48,7 +48,7 @@ class V05LICAdmin extends Admin
         ))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'required'=>false))
             ->add('regime', null, array('label' => $this->getFieldLabel('regime')))
-            ->add('DEB', null, array('label' => $this->getFieldLabel('DEB')))
+            ->add('DEB', 'choice', array('label' => $this->getFieldLabel('DEB'), 'choices' => array('1' => 'Oui', '0' => 'Non'),'multiple' => false,'expanded'=>true))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')))
             ;
     }

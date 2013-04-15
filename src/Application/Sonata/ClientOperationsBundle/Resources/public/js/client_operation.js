@@ -14,7 +14,8 @@ jQuery(document).ready(function ($) {
                 //The default value should be null for “Mois de TVA”  When we select a “Date de paiement” .. we must initialize the value of “Mois de TVA”
                 if (($('#' + _uniqid + '_paiement_date', context).size() || $('#' + _uniqid + '_date_piece', context).size()) && $('#' + _uniqid + '_mois_mois', context).size()) {
                     $('#' + _uniqid + '_date_piece, #' + _uniqid + '_paiement_date', context).change(function(){
-                        if($('#' + _uniqid + '_paiement_date').val() != '') {
+                    	var date = $('#' + _uniqid + '_paiement_date');
+                        if(date.val()) {
                     		$('#' + _uniqid + '_mois_mois option:last').attr('selected', true).trigger('change');
                     		
                         } else {
