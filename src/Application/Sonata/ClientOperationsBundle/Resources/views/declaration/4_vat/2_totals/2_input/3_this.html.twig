@@ -7,53 +7,29 @@
     </tr>
     </thead>
     <tbody>
+   
+    
+    {% for data in A02TVAlist %}
     <tr>
-        <td class="i_title">A02-TVA</td>
-        <td class="i_value">2,10%</td>
-        <td class="i_nett">0</td>
-        <td class="i_tva">0</td>
+        <td class="i_title">{% if loop.index == 1 %} V02-TVA {% endif %}</td>
+        <td class="i_value">{{ (data.getTauxDeTVA() * 100) }}%</td>
+        <td class="i_nett"></td>
+        <td class="i_tva">{{ data.getTVA()|number_format(2, ',', ' ') }}</td>
     </tr>
+    {% endfor %}
+    
+    
+    
+    {% for data in A08IMlist %}
     <tr>
-        <td class="i_title">A08-IM</td>
-        <td class="i_value">2,10%</td>
-        <td class="i_nett">{{ nn }}</td>
-        <td class="i_tva">{{ nv }}</td>
+        <td class="i_title">{% if loop.index == 1 %} A08-IM {% endif %}</td>
+        <td class="i_value">{{ (data.getTauxDeTVA() * 100) }}%</td>
+        <td class="i_nett"></td>
+        <td class="i_tva">{{ data.getTVA()|number_format(2, ',', ' ') }}</td>
     </tr>
-    <tr>
-        <td class="i_title">&nbsp;</td>
-        <td class="i_value">5,50%</td>
-        <td class="i_nett">0</td>
-        <td class="i_tva">0</td>
-    </tr>
-    <tr>
-        <td class="i_title">&nbsp;</td>
-        <td class="i_value">5,50%</td>
-        <td class="i_nett">{{ nn }}</td>
-        <td class="i_tva">{{ nv }}</td>
-    </tr>
-    <tr>
-        <td class="i_title">&nbsp;</td>
-        <td class="i_value">7,00%</td>
-        <td class="i_nett">0</td>
-        <td class="i_tva">0</td>
-    </tr>
-    <tr>
-        <td class="i_title">&nbsp;</td>
-        <td class="i_value">7,00%</td>
-        <td class="i_nett">{{ nn }}</td>
-        <td class="i_tva">{{ nv }}</td>
-    </tr>
-    <tr>
-        <td class="i_title">&nbsp;</td>
-        <td class="i_value">19,60%</td>
-        <td class="i_nett">0</td>
-        <td class="i_tva">0</td>
-    </tr>
-    <tr>
-        <td class="i_title">&nbsp;</td>
-        <td class="i_value">19,60%</td>
-        <td class="i_nett">{{ nn }}</td>
-        <td class="i_tva">{{ nv }}</td>
-    </tr>
+    {% endfor %}
+    
+    
+   
     </tbody>
 </table>

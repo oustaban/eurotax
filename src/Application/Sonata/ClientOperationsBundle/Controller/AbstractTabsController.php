@@ -46,6 +46,7 @@ class AbstractTabsController extends Controller
     protected $_import_date = null;
     protected $_client_documents = array();
     protected $_client_dir = '';
+    protected $_show_all_operations = false;
 
     /**
      * @var \Application\Sonata\ClientOperationsBundle\Entity\Imports
@@ -332,6 +333,7 @@ class AbstractTabsController extends Controller
         $this->_month = $this->admin->month;
         $this->_query_month = $this->admin->query_month;
         $this->_year = $this->admin->year;
+        $this->_show_all_operations = $this->admin->_show_all_operations;
 
         $this->_parameters_url['filter']['client_id']['value'] = $this->client_id;
 
@@ -1302,6 +1304,10 @@ class AbstractTabsController extends Controller
         $bank = $em->getRepository('ApplicationSonataClientBundle:Coordonnees')->findOneBy(array());
 
         $debug = isset($_GET['d']);
+        $V01TVAlist = $this->getV01TVA();
+        $A02TVAlist = $this->getA02TVA();
+        $A08IMlist = $this->getA08IM();
+        
         $page = $this->render('ApplicationSonataClientOperationsBundle::declaration.html.twig', array(
             'info' => array(
                 'time' => strtotime($this->_year . '-' . $this->_month . '-01'),
@@ -1311,6 +1317,10 @@ class AbstractTabsController extends Controller
             'debug' => $debug,
             'client' => $client,
             'bank' => $bank,
+        		
+        	'V01TVAlist' => $V01TVAlist,
+        	'A02TVAlist' => $A02TVAlist,
+        	'A08IMlist' => $A08IMlist
         ));
 
 
@@ -1338,7 +1348,7 @@ class AbstractTabsController extends Controller
                 'month' => $this->_month,
                 'year' => $this->_year,
                 'quarter' => floor(($this->_month - 1) / 3) + 1),
-            'debug' => $debug,
+            	'debug' => $debug,
         ));
 
 
@@ -1405,4 +1415,87 @@ class AbstractTabsController extends Controller
     {
         $this->_jsSettingsJson = json_encode($data);
     }
+    
+    
+    
+    protected function getV01TVA()
+    {
+    	/* @var $em \Doctrine\ORM\EntityManager */
+    	$em = $this->getDoctrine()->getManager();
+    	$qb = $em->createQueryBuilder();
+    	$q = $qb->select('v')->from('Application\Sonata\ClientOperationsBundle\Entity\V01TVA', 'v');
+    	$qb = $this->_listQueryFilter($qb);
+    	$data =	$q->getQuery()
+    		->getResult();
+    	if (!empty($data)) {
+    		return $data;
+    	}
+    	return null;
+    }
+
+    protected function getA02TVA()
+    {
+    	/* @var $em \Doctrine\ORM\EntityManager */
+    	$em = $this->getDoctrine()->getManager();
+    	$qb = $em->createQueryBuilder();
+    	$q = $qb->select('v')->from('Application\Sonata\ClientOperationsBundle\Entity\A02TVA', 'v');
+    	$qb = $this->_listQueryFilter($qb);
+    	$data =	$q->getQuery()
+    	->getResult();
+    	if (!empty($data)) {
+    		return $data;
+    	}
+    	return null;
+    }
+    
+    
+    protected function getA08IM()
+    {
+    	/* @var $em \Doctrine\ORM\EntityManager */
+    	$em = $this->getDoctrine()->getManager();
+    	$qb = $em->createQueryBuilder();
+    	$q = $qb->select('v')->from('Application\Sonata\ClientOperationsBundle\Entity\A08IM', 'v');
+    	$qb = $this->_listQueryFilter($qb);
+    	//var_dump($qb->__toString());
+    	$data =	$q->getQuery()
+    		->getResult();
+    	
+    	
+    	
+    	if (!empty($data)) {
+    		return $data;
+    	}
+    	return null;
+    }
+    
+    
+    
+    private function _listQueryFilter(\Doctrine\ORM\QueryBuilder $qb) {
+    	if (!$this->_show_all_operations){
+    	
+    		$form_month = $this->_year . '-' . $this->_month . '-01';
+    		$to_month = $this->_year . '-' . $this->_month . '-31';
+    		$monthField = 'mois';
+    		
+    		//var_dump($form_month, $to_month);
+    		
+    	
+    		if ($this->_query_month == -1) {
+    			$qb->orWhere($qb->getRootAlias() . '.'.$monthField.' IS NULL');
+    			$qb->orWhere($qb->getRootAlias() . '.'.$monthField.' BETWEEN :form_month AND :to_month');
+    		} else {
+    			$qb->andWhere($qb->getRootAlias() . '.'.$monthField.' BETWEEN :form_month AND :to_month');
+    		}
+    		 
+    		$qb->setParameter(':form_month', $form_month);
+    		$qb->setParameter(':to_month', $to_month);
+    		 
+    	}
+    	 
+    	$qb->andWhere($qb->getRootAlias() . '.client_id=' . $this->client_id);
+    	
+    	return $qb;
+    }
+    
+    
 }

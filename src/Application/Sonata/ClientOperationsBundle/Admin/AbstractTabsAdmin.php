@@ -38,7 +38,7 @@ abstract class AbstractTabsAdmin extends Admin
     public $date_format_php = 'd/m/Y';
     protected $_is_validate_import = false;
     protected $_index_import = 0;
-    protected $_show_all_operations = false;
+    public $_show_all_operations = false;
 
     /**
      * @param string $code
@@ -144,7 +144,7 @@ abstract class AbstractTabsAdmin extends Admin
         }
 
         $builder->andWhere($builder->getRootAlias() . '.client_id=' . $this->client_id);
-
+		//var_dump($query->__toString());
         return $query;
     }
 
