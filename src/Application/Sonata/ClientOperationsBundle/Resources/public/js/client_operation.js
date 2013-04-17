@@ -29,17 +29,11 @@ jQuery(document).ready(function ($) {
                 $('#' + _uniqid + '_taux_de_change').keyup(function() {
                 	$('#' + _uniqid + '_HT').val( round_number(  $('#' + _uniqid + '_montant_HT_en_devise').val().replace(',', '.').replace(/\s+/, '') / $('#' + _uniqid + '_taux_de_change').val().replace(',', '.').replace(/\s+/, '') ) );
                 });                
-                
                 $('#' + _uniqid + '_montant_HT_en_devise').blur(function() {
-                	
                 	$(this).val( round_number($(this).val()) );
                 });
-                
-                
                 $('#' + _uniqid + '_montant_HT_en_devise').keyup(function() {
-                	
                 	var result = $(this).val().replace(',', '.').replace(/\s+/, '') / $('#' + _uniqid + '_taux_de_change').val().replace(',', '.').replace(/\s+/, '');
-                	
                 	if (result != Number.POSITIVE_INFINITY && result != Number.NEGATIVE_INFINITY) {
                 		$('#' + _uniqid + '_HT').val( round_number( result ) );
                 	}
@@ -50,10 +44,7 @@ jQuery(document).ready(function ($) {
                         //$('#' + _uniqid + '_mois_mois option:last').attr('selected', true).trigger('change');
                         var devise = $('#' + _uniqid + '_devise :selected').val();
                         var date_piece = $('#' + _uniqid + '_date_piece').val();
-                        var montant_HT_en_devise = $('#' + _uniqid + '_montant_HT_en_devise').val().replace(',', '.').replace(/\s+/, '');
-                        //var taux_de_change = $('#' + _uniqid + '_taux_de_change').val().replace(',', '.').replace(/\s+/, '');
-                        
-                        
+                        var montant_HT_en_devise = $('#' + _uniqid + '_montant_HT_en_devise').val()
                         if(devise && date_piece) {
 	                        $.ajax({
 	                            url:Sonata.url.rdevises,
@@ -66,7 +57,7 @@ jQuery(document).ready(function ($) {
 	                            async:false,
 	                            success:function (i) {
 	                                $('#' + _uniqid + '_taux_de_change').val(i.value ? (i.value) : '');
-	                                $('#' + _uniqid + '_HT').val( round_number( montant_HT_en_devise / parseFloat(i.value) ) );
+	                                $('#' + _uniqid + '_HT').val( round_number( montant_HT_en_devise.replace(',', '.').replace(/\s+/, '') / parseFloat(i.value) ) );
 	                            }
 	                        });
                         }
