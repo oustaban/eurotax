@@ -359,8 +359,14 @@ function init_rapprochement_sums() {
     $minus = $minus.length ? $minus.html() : '0';
     var diff = Number($plus.replace(',', '.')) - Number($minus.replace(',', '.'));
     ECARTsumm += diff;
+    
+    var result = Math.round((diff) * 100) / 100;
+    if (result == Number.POSITIVE_INFINITY && result == Number.NEGATIVE_INFINITY) {
+    	result = 0;
+    }
+    
     $('#totals_input_v1').html(
-        (Math.round((diff) * 100) / 100).toFixed(2).toString().replace('.', ',')
+        (result).toFixed(2).toString().replace('.', ',')
     );
 
     var $plus = $('.rapprochement_content_no_deb .rapprochement_content_input table.table tr.totals_row div b :last');
@@ -369,8 +375,14 @@ function init_rapprochement_sums() {
     $minus = $minus.length ? $minus.html() : '0';
     var diff = Number($plus.replace(',', '.')) - Number($minus.replace(',', '.'));
     ECARTsumm += diff;
+    
+    
+    var result = Math.round((diff) * 100) / 100;
+    if (result == Number.POSITIVE_INFINITY && result == Number.NEGATIVE_INFINITY) {
+    	result = 0;
+    }
     $('#totals_input_v2').html(
-        (Math.round((diff) * 100) / 100).toFixed(2).toString().replace('.', ',')
+        (result).toFixed(2).toString().replace('.', ',')
     );
 
     var $plus = $('.rapprochement_content_no_deb .rapprochement_content_output table.table tr.totals_row div b :first');
@@ -379,8 +391,13 @@ function init_rapprochement_sums() {
     $minus = $minus.length ? $minus.html() : '0';
     var diff = Number($plus.replace(',', '.')) - Number($minus.replace(',', '.'));
     ECARTsumm += diff;
+    
+    var result = Math.round((diff) * 100) / 100;
+    if (result == Number.POSITIVE_INFINITY && result == Number.NEGATIVE_INFINITY) {
+    	result = 0;
+    }
     $('#totals_output_v1').html(
-        (Math.round((diff) * 100) / 100).toFixed(2).toString().replace('.', ',')
+        (result).toFixed(2).toString().replace('.', ',')
     );
 
     var $plus = $('.rapprochement_content_no_deb .rapprochement_content_output table.table tr.totals_row div b :last');
@@ -389,8 +406,13 @@ function init_rapprochement_sums() {
     $minus = $minus.length ? $minus.html() : '0';
     var diff = Number($plus.replace(',', '.')) - Number($minus.replace(',', '.'));
     ECARTsumm += diff;
+    
+    var result = Math.round((diff) * 100) / 100;
+    if (result == Number.POSITIVE_INFINITY && result == Number.NEGATIVE_INFINITY) {
+    	result = 0;
+    }
     $('#totals_output_v2').html(
-        (Math.round((diff) * 100) / 100).toFixed(2).toString().replace('.', ',')
+        (result).toFixed(2).toString().replace('.', ',')
     );
 
     if (ECARTsumm == 0) {
