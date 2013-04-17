@@ -85,7 +85,7 @@ class RapprochementController extends Controller
             $v2 = 'HT';
         }
 
-        return $em->getRepository('ApplicationSonataClientOperationsBundle:' . $clientOperationName)
+        $qb = $em->getRepository('ApplicationSonataClientOperationsBundle:' . $clientOperationName)
             ->createQueryBuilder('o')
             ->select('o.regime' . $deb . ' AS DEB, o.regime, SUM(o.' . $v1 . ') AS v1, COUNT(o.id) AS nb , SUM(o.' . $v2 . ') AS v2')
             ->andWhere('o.date_piece BETWEEN :form_date_piece AND :to_date_piece')
@@ -93,9 +93,23 @@ class RapprochementController extends Controller
             ->setParameter(':to_date_piece', $this->_year . '-' . $this->_month . '-31')
             ->andWhere('o.client_id = :client_id')
             ->setParameter(':client_id', $this->_client_id)
+            /*  */
+            
+            
             ->groupBy('DEB')
-            ->orderBy('DEB')
-            ->getQuery()->execute();
+            ->orderBy('DEB');
+        
+        if($clientOperationName == 'V05LIC') {
+        	
+        	$qb
+        	->andWhere('o.DEB = :DEB')
+        	->setParameter(':DEB', (int) $isDEB);
+        }
+        
+        
+        
+        
+        return $qb->getQuery()->execute();
     }
 
 }
