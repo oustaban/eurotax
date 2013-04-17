@@ -361,7 +361,7 @@ function init_rapprochement_sums() {
     ECARTsumm += diff;
     
     var result = Math.round((diff) * 100) / 100;
-    if (result == Number.POSITIVE_INFINITY && result == Number.NEGATIVE_INFINITY) {
+    if (isNaN(result)) {
     	result = 0;
     }
     
@@ -378,7 +378,7 @@ function init_rapprochement_sums() {
     
     
     var result = Math.round((diff) * 100) / 100;
-    if (result == Number.POSITIVE_INFINITY && result == Number.NEGATIVE_INFINITY) {
+    if (isNaN(result)) {
     	result = 0;
     }
     $('#totals_input_v2').html(
@@ -393,7 +393,7 @@ function init_rapprochement_sums() {
     ECARTsumm += diff;
     
     var result = Math.round((diff) * 100) / 100;
-    if (result == Number.POSITIVE_INFINITY && result == Number.NEGATIVE_INFINITY) {
+    if (isNaN(result)) {
     	result = 0;
     }
     $('#totals_output_v1').html(
@@ -408,7 +408,7 @@ function init_rapprochement_sums() {
     ECARTsumm += diff;
     
     var result = Math.round((diff) * 100) / 100;
-    if (result == Number.POSITIVE_INFINITY && result == Number.NEGATIVE_INFINITY) {
+    if (isNaN(result)) {
     	result = 0;
     }
     $('#totals_output_v2').html(
