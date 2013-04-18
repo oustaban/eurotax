@@ -743,7 +743,7 @@ class AbstractTabsController extends Controller
                     	unset($formData['TVA']);
                     }
                     
-                    
+                    var_dump($formData['taux_de_change']);
 
                     $form->bind($formData);
 
@@ -765,6 +765,7 @@ class AbstractTabsController extends Controller
                     }
                     unset($formData, $form, $form_builder, $object);
                 }
+                exit;
                 unset($data, $admin);
             }
         }
@@ -1304,9 +1305,12 @@ class AbstractTabsController extends Controller
         $bank = $em->getRepository('ApplicationSonataClientBundle:Coordonnees')->findOneBy(array());
 
         $debug = isset($_GET['d']);
-        $V01TVAlist = $this->getV01TVA();
-        $A02TVAlist = $this->getA02TVA();
-        $A08IMlist = $this->getA08IM();
+        $V01TVAlist = $this->getEntityList('V01TVA');
+        $A02TVAlist = $this->getEntityList('A02TVA');
+        $A08IMlist = $this->getEntityList('A08IM');
+        
+        $A06AIBlist = $this->getEntityList('A06AIB');
+        
         
         $page = $this->render('ApplicationSonataClientOperationsBundle::declaration.html.twig', array(
             'info' => array(
@@ -1320,7 +1324,8 @@ class AbstractTabsController extends Controller
         		
         	'V01TVAlist' => $V01TVAlist,
         	'A02TVAlist' => $A02TVAlist,
-        	'A08IMlist' => $A08IMlist
+        	'A08IMlist' => $A08IMlist,
+        	'A06AIBlist' => $A06AIBlist
         ));
 
 
@@ -1418,12 +1423,12 @@ class AbstractTabsController extends Controller
     
     
     
-    protected function getV01TVA()
+    protected function getEntityList($entity)
     {
     	/* @var $em \Doctrine\ORM\EntityManager */
     	$em = $this->getDoctrine()->getManager();
     	$qb = $em->createQueryBuilder();
-    	$q = $qb->select('v')->from('Application\Sonata\ClientOperationsBundle\Entity\V01TVA', 'v');
+    	$q = $qb->select('v')->from("Application\Sonata\ClientOperationsBundle\Entity\\". $entity, 'v');
     	$qb = $this->_listQueryFilter($qb);
     	$data =	$q->getQuery()
     		->getResult();
@@ -1432,43 +1437,6 @@ class AbstractTabsController extends Controller
     	}
     	return null;
     }
-
-    protected function getA02TVA()
-    {
-    	/* @var $em \Doctrine\ORM\EntityManager */
-    	$em = $this->getDoctrine()->getManager();
-    	$qb = $em->createQueryBuilder();
-    	$q = $qb->select('v')->from('Application\Sonata\ClientOperationsBundle\Entity\A02TVA', 'v');
-    	$qb = $this->_listQueryFilter($qb);
-    	$data =	$q->getQuery()
-    	->getResult();
-    	if (!empty($data)) {
-    		return $data;
-    	}
-    	return null;
-    }
-    
-    
-    protected function getA08IM()
-    {
-    	/* @var $em \Doctrine\ORM\EntityManager */
-    	$em = $this->getDoctrine()->getManager();
-    	$qb = $em->createQueryBuilder();
-    	$q = $qb->select('v')->from('Application\Sonata\ClientOperationsBundle\Entity\A08IM', 'v');
-    	$qb = $this->_listQueryFilter($qb);
-    	//var_dump($qb->__toString());
-    	$data =	$q->getQuery()
-    		->getResult();
-    	
-    	
-    	
-    	if (!empty($data)) {
-    		return $data;
-    	}
-    	return null;
-    }
-    
-    
     
     private function _listQueryFilter(\Doctrine\ORM\QueryBuilder $qb) {
     	if (!$this->_show_all_operations){
@@ -1492,7 +1460,7 @@ class AbstractTabsController extends Controller
     		 
     	}
     	 
-    	$qb->andWhere($qb->getRootAlias() . '.client_id=' . $this->client_id);
+    	$qb->andWhere($qb->getRootAlias() . '.client_id=' . $this->client_id)->orderBy($qb->getRootAlias() .'.TVA');
     	
     	return $qb;
     }
