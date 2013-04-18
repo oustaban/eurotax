@@ -93,7 +93,7 @@ class ErrorElements
                 }
 
                 // setTauxDeChange
-                $_object->setTauxDeChange($this->round($taux_de_change, 4));
+                $_object->setTauxDeChange($taux_de_change);
 
                 if (!$taux_de_change) {
                     $this->_errorElement->with('taux_de_change')->addViolation('"Taux de change" non valide ' . $taux_de_change)->end();
@@ -195,11 +195,11 @@ class ErrorElements
     	
     	
     	$_object = $this->_object;
-    	if ($this->_is_validate_import) {
+    	//if ($this->_is_validate_import) {
     		$_object->setTauxDeTVA( $this->round( $_object->getTauxDeTVA(), 4 ) );
     		
     		
-    	}
+    	//}
     	return $this;
     	
     }
