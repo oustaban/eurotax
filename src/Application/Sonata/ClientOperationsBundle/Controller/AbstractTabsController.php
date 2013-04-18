@@ -743,7 +743,7 @@ class AbstractTabsController extends Controller
                     	unset($formData['TVA']);
                     }
                     
-                    var_dump($formData['taux_de_change']);
+                    var_dump($formData['taux_de_TVA']);
 
                     $form->bind($formData);
 
