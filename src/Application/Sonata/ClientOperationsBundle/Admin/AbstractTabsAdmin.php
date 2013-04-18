@@ -371,7 +371,7 @@ abstract class AbstractTabsAdmin extends Admin
     public function getPercentTypeFormValue($value)
     {
         if ($value) {
-            $value = $this->getNumberFormat($value * 100);
+            $value = $this->getNumberFormat($value * 100, 4);
         }
 
         return $value;
@@ -384,7 +384,7 @@ abstract class AbstractTabsAdmin extends Admin
      */
     protected function getNumberFormat($value, $precision = 2)
     {
-        return (double)$value;
+        return round( (double)$value, $precision );
     }
 
     /**
