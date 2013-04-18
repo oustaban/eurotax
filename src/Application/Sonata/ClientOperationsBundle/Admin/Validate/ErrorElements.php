@@ -195,11 +195,9 @@ class ErrorElements
     	
     	
     	$_object = $this->_object;
-    	//if ($this->_is_validate_import) {
+    	if ($this->_is_validate_import) {
     		$_object->setTauxDeTVA( $this->round( $_object->getTauxDeTVA(), 4 ) );
-    		
-    		
-    	//}
+    	}
     	return $this;
     	
     }

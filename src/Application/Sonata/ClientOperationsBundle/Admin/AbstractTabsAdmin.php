@@ -344,6 +344,10 @@ abstract class AbstractTabsAdmin extends Admin
             $method = 'get' . ucfirst($type) . 'TypeFormValue';
             $v = method_exists($this, $method) ? $this->$method($v) : $v;
         }
+        
+        if($field == 'taux_de_TVA') {
+        	var_dump($v);
+        }
 
         return $v;
     }
@@ -371,7 +375,7 @@ abstract class AbstractTabsAdmin extends Admin
     public function getPercentTypeFormValue($value)
     {
         if ($value) {
-            $value = $this->getNumberFormat($value * 100, 4);
+            $value = $this->getNumberFormat($value * 100);
         }
 
         return $value;
@@ -384,7 +388,7 @@ abstract class AbstractTabsAdmin extends Admin
      */
     protected function getNumberFormat($value, $precision = 2)
     {
-        return round( (double)$value, $precision );
+        return (double)$value;
     }
 
     /**
@@ -530,6 +534,17 @@ abstract class AbstractTabsAdmin extends Admin
         return $value;
     }
 
+    
+    /**
+     * @param $value
+     * @return float
+     */
+    protected function getTaux_de_TVAFormValue($value)
+    {
+    	return round($value, 4);
+    }
+    
+    
 
     /**
      * @param bool $value
