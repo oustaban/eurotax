@@ -337,16 +337,13 @@ abstract class AbstractTabsAdmin extends Admin
         $fieldDescription = $this->getFormFieldDescription($field);
         $method = 'get' . ucfirst($field) . 'FormValue';
         $v = method_exists($this, $method) ? $this->$method($value) : $value;
+        
         if (is_scalar($v)) {
             $v = trim($v);
         }
         if ($fieldDescription && $type = $fieldDescription->getType()) {
             $method = 'get' . ucfirst($type) . 'TypeFormValue';
             $v = method_exists($this, $method) ? $this->$method($v) : $v;
-        }
-        
-        if($field == 'taux_de_TVA') {
-        	var_dump($v);
         }
 
         return $v;
