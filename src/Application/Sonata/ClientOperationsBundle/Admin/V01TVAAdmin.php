@@ -130,10 +130,12 @@ class V01TVAAdmin extends Admin
             ->validateMontantTVAFrancaise()
             ->validateMontantTTC()
             ->validateTauxDeChange()
-            //->formatTauxDeTVA()
+            
             ->setHT()
             ->validateHT()
             ->setTVA()
-            ->validateMois();
+            ->validateMois()
+            ->formatTauxDeTVA()
+        ;
     }
 }
