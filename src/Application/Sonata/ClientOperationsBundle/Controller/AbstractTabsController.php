@@ -743,9 +743,7 @@ class AbstractTabsController extends Controller
                     	unset($formData['TVA']);
                     }
                     
-                    var_dump($formData['taux_de_TVA']);
-
-                    $form->bind($formData);
+		            $form->bind($formData);
 
                     if ($form->isValid()) {
                         try {
@@ -765,7 +763,7 @@ class AbstractTabsController extends Controller
                     }
                     unset($formData, $form, $form_builder, $object);
                 }
-                exit;
+        
                 unset($data, $admin);
             }
         }
