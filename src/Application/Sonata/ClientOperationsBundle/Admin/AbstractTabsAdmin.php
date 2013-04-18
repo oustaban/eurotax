@@ -538,7 +538,9 @@ abstract class AbstractTabsAdmin extends Admin
      */
     protected function getTaux_de_TVAFormValue($value)
     {
-    	return number_format($value, 4);
+    	//workaround for this strange issue in the test server
+    	//http://stackoverflow.com/questions/12965816/php-round-working-strange
+    	return rtrim(number_format($value, 4), 0);
     }
     
     
