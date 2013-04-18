@@ -538,7 +538,7 @@ abstract class AbstractTabsAdmin extends Admin
      */
     protected function getTaux_de_TVAFormValue($value)
     {
-    	return round($value, 4);
+    	return $this->getNumberFormat(round($value, 4));
     }
     
     
