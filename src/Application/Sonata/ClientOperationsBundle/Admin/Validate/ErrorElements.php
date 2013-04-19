@@ -121,7 +121,7 @@ class ErrorElements
 					$this->formatTauxDeTVA();
 					//var HT = montant_TTC / (1 + parseFloat(taux_de_TVA)) / taux_de_change;
 					$calcValue = $this->round( $_object->getPaiementMontant() / (1+$_object->getTauxDeTVA() ) / $_object->getTauxDeChange(), 2);
-					if($value != $calcValue) {
+					if((int)$value != (int)$calcValue) {
 	                	$this->_errorElement->with('HT')->addViolation('"HT" non valide (doit etre "TTC" / (1+Taux de TVA) / "Taux de change" )')->end();
 					}
 	            }
@@ -129,7 +129,7 @@ class ErrorElements
         		if ( $_object->getMontantHTEnDevise() && $_object->getTauxDeChange()) {
         			
         			$calcValue = $this->round( $_object->getMontantHTEnDevise() / $_object->getTauxDeChange(), 2);
-        			if($value != $calcValue) {
+        			if((int)$value != (int)$calcValue) {
         				$this->_errorElement->with('HT')->addViolation('"HT" non valide (doit etre "HT en devise" / "Taux de change" )')->end();
         			}
         		}
@@ -201,7 +201,7 @@ class ErrorElements
     public function formatTauxDeTVA() {
     	$_object = $this->_object;
     	if ($this->_is_validate_import) {
-    		$_object->setTauxDeTVA(rtrim(number_format($_object->getTauxDeTVA(), 4), 0));
+    		$_object->setTauxDeTVA($this->fixPrecision($_object->getTauxDeTVA()));
     	}
     	return $this;
     }
@@ -257,7 +257,7 @@ class ErrorElements
         	$m = 100000;
         	$calcValue = $this->round( ( ($this->_object->getMontantHTEnDevise()*$m) * ($this->_object->getTauxDeTVA()*$m) ) / $m / $m, 2);
         	$calcValue2 = $this->round($this->_object->getMontantHTEnDevise() * $this->_object->getTauxDeTVA(), 2);
-        	if ($calcValue2 != $calcValue) {
+        	if ((int)$calcValue2 != (int)$calcValue) {
         		$this->_errorElement->with('montant_TVA_francaise')->addViolation('"Montant TVA française" non valide (doit etre ("Montant HT en devise * 100000" * "Taux de TVA * 100000") / 100000 / 100000")')->end();
         	}
         	
@@ -501,6 +501,19 @@ class ErrorElements
     protected function getValidateImport()
     {
         return $this->_is_validate_import;
+    }
+    
+    /**
+     * 
+     * @param float $value
+     * @param number $precision
+     * @return string
+     */
+    protected function fixPrecision($value, $precision = 4)
+    {
+    	//workaround for this strange issue in the test server
+    	//http://stackoverflow.com/questions/12965816/php-round-working-strange
+    	return rtrim(number_format($value, $precision), 0);
     }
 }
 
