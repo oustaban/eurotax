@@ -114,6 +114,8 @@ class ErrorElements
         $value = $_object->getHT();
         
         if ($value) {
+        	$this->formatTauxDeTVA();
+        	
         	if(method_exists($_object, 'getMontantTTC')) {
 				if ($_object->getPaiementMontant() && $_object->getTauxDeTVA() && $_object->getTauxDeChange()) {
 					//var HT = montant_TTC / (1 + parseFloat(taux_de_TVA)) / taux_de_change;
@@ -146,6 +148,8 @@ class ErrorElements
     		$calcValue = 0;
     		if(method_exists($_object, 'getPaiementMontant')) {
     			if ($_object->getPaiementMontant() && $_object->getTauxDeTVA() && $_object->getTauxDeChange()) {
+    				$this->formatTauxDeTVA();
+	    				
     				//var HT = montant_TTC / (1 + parseFloat(taux_de_TVA)) / taux_de_change;
     				$calcValue = $this->round( $_object->getPaiementMontant() / (1+$_object->getTauxDeTVA() ) / $_object->getTauxDeChange(), 2);
     				
@@ -186,20 +190,18 @@ class ErrorElements
     public function setTVA() {
     	$_object = $this->_object;
     	if ($this->_is_validate_import && $_object->getPaiementDate()) {
+    		$this->formatTauxDeTVA();
     		$_object->setTVA( $this->round( $_object->getHT() * $_object->getTauxDeTVA(), 2 ) );
     	}
     	return $this;
     }
     
     public function formatTauxDeTVA() {
-    	
-    	
     	$_object = $this->_object;
     	if ($this->_is_validate_import) {
-    		$_object->setTauxDeTVA( $this->round( $_object->getTauxDeTVA(), 4 ) );
+    		$_object->setTauxDeTVA(rtrim(number_format($_object->getTauxDeTVA(), 4), 0));
     	}
     	return $this;
-    	
     }
     
     
@@ -249,7 +251,7 @@ class ErrorElements
             } */
 			
         	//Montant HT en devise * 100000" * "Taux de TVA * 100000") / 100000 / 100000 = Montant HT en devise * "Taux de TVA
-        	
+        	$this->formatTauxDeTVA();
         	$m = 100000;
         	$calcValue = $this->round( ( ($this->_object->getMontantHTEnDevise()*$m) * ($this->_object->getTauxDeTVA()*$m) ) / $m / $m, 2);
         	$calcValue2 = $this->round($this->_object->getMontantHTEnDevise() * $this->_object->getTauxDeTVA(), 2);
