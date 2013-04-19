@@ -57,6 +57,33 @@ class Excel
     );
 
 
+    protected $_keyTabData = array(
+    			'Overview' => array(
+    					array('title' => 'French VAT summary', 'desc' => 'Summary of operations related to the return period'),
+    					array('title' => 'Account', 'desc' => 'Financial statement of your account with us'),
+    					array('title' => 'Funds request', 'desc' => 'Funds request for payment of the TVA'),
+    			),
+    			'Sales'	=> array(
+    					array('title' => 'Sales with Output TVA', 'desc' => 'Sales of Goods & Services in France. TVA charged'),
+    					array('title' => 'Sales without TVA (Art 283-1)', 'desc' => 'Sales of Goods & Services in France. TVA not charged (Art 283-1 FTC)'),
+    					array('title' => 'Intra-EU deliveries of goods', 'desc' => 'Exempt sales of Goods from France to the E.U. (Intra-EU deliveries)'),
+    					array('title' => 'Intrastat (Dispatches)', 'desc' => 'Intrastat return (for Customs purposes) : Dispatches from France to the EU'),
+    					array('title' => 'Other Intl Service Sales 0%', 'desc' => 'Exempt Sales of International Services from France & Other Exempt Operations'),
+    					array('title' => 'Exports of Goods 0%', 'desc' => 'Exempt Sales of Goods from France to a non EU country (exportation)')
+    			),
+    			'Purchases' => array(
+    					array('title' => 'Purchases with TVA', 'desc' => 'Purchases of Goods & Services taxable in France. Charged and recoverable TVA'),
+    					array('title' => 'Imports of Goods', 'desc' => 'Imports of Goods from a non-EU country to France'),
+    					array('title' => 'Purchases without TVA', 'desc' => 'Purchases of Goods & Services taxable in France. Art 283-1 : Reverse Charge'),
+    					array('title' => 'Intra-EU Acquisitions of Goods', 'desc' => 'Intra-EU Acquisitions of Goods from the EU to France : Reverse Charge'),
+    					array('title' => 'Intrastat (Arrivals)', 'desc' => 'Intrastat return (for Customs purposes) : Arrivals from another EU country to France'),
+    					array('title' => 'Purch. of EU & non-EU Services', 'desc' => 'EU & non-EU Purchases of Services : Reverse Charge'),
+    					array('title' => 'QFP Evolution', 'desc' => 'Purchases of Goods & Services taxable in France. TVA not charged : Quota of Free Purchase (QFP)'),
+    			),
+    	
+    	);
+    
+    
     public function __construct()
     {
         $this->_excel = new \PHPExcel();
@@ -135,14 +162,19 @@ class Excel
     public function getData()
     {
         $this->getProperties();
-
-        $i = 0;
+        
+        
+        
+        $this->keyTabData();
+        $this->accountTabData();
+       	
+        $i = 2;
         foreach ($this->get('_config_excel') as $table => $params) {
 
             $this->setParams($params);
-            if ($i > 0) {
-                $this->_excel->createSheet(null, $i);
-            }
+            //if ($i > 0) {
+                $this->_excel->createSheet($i);
+            //}
 
             $this->_excel->setActiveSheetIndex($i);
 
@@ -160,7 +192,208 @@ class Excel
 
         $this->_excel->setActiveSheetIndex(0);
     }
+    
+    
+    protected function accountTabData() {
+    	$this->_excel->createSheet(1);
+    	$this->_excel->setActiveSheetIndex(1);
+    	$this->_sheet = $this->_excel->getActiveSheet();
+    	$this->_sheet->getDefaultColumnDimension()->setWidth(10);
+    	$this->_sheet->setTitle('Account ' . date('Y'));
+    	
+    	
+    	
+    	$this->_excel->getActiveSheet()->getColumnDimension('A')->setWidth(15);
+    	$this->_excel->getActiveSheet()->getColumnDimension('B')->setWidth(50);
+    	$this->_excel->getActiveSheet()->getColumnDimension('C')->setWidth(15);
+    	$this->_excel->getActiveSheet()->getColumnDimension('D')->setWidth(20);
+    	
+    	
+    	$this->_excel->getActiveSheet()->getColumnDimension('F')->setWidth(15);
+    	$this->_excel->getActiveSheet()->getColumnDimension('G')->setWidth(50);
+    	$this->_excel->getActiveSheet()->getColumnDimension('H')->setWidth(15);
+    	$this->_excel->getActiveSheet()->getColumnDimension('I')->setWidth(20);
+    	
+    	
+    	
+    	$this->_excel->getActiveSheet()->getCell('A1')->setValue('eurotax');
+    	$this->_excel->getActiveSheet()->getStyle('A1')->getFont()->setName('Arial');
+    	$this->_excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(14);
+    	
+    	
+    	$this->_excel->getActiveSheet()->setCellValue('B1', 'SHRIEVE PRODUCTS INTL. ACCOUNT as at 06/12/2012');
+    	$this->_excel->getActiveSheet()->mergeCells('B1:I1');
+    	$this->yellowHeader('B1');
+    	
+    	
+    	$this->_excel->getActiveSheet()->setCellValue('A3', 'French VAT return Curreny:');
+    	$this->_excel->getActiveSheet()->setCellValue('D3', 'EURO');
+    	$this->_excel->getActiveSheet()->getStyle('D3')->getFont()->setBold(true);
+    	
+    	$this->_excel->getActiveSheet()->setCellValue('F3', 'Account Number:');
+    	$this->_excel->getActiveSheet()->setCellValue('I3', '18/9176');
+    	$this->_excel->getActiveSheet()->getStyle('I3')->getFont()->setBold(true);
+    	 
+    	$excel = $this->_excel;
+    	
+		$headerFunc = function($row, $cols) use($excel) {    	
+    	
+	    	$headers = array(
+	    		'Date', 'Description', 'Euro', 'Balance'		
+	    	);
+	    	$i = 0;
+	    	$col = '';
+	    	foreach($headers as $header) {
+	    		$col = $cols[$i];
+	    		$cell = $col.$row;
+	    		$excel->getActiveSheet()->setCellValue($cell, $header);
+	    		$excel->getActiveSheet()->getStyle($cell)->getFont()->setBold(true);
+	    		$i++;
+	    	}
+	    	
+	    	$excel->getActiveSheet()->setCellValue($col.($row+1), 'EURO');
+	    	$excel->getActiveSheet()->getStyle($cell)->getFont()->setBold(true);
+	    	
+	    	
+	    	foreach($cols as $col) {
+	    		$excel->getActiveSheet()->getStyle($col.($row+2))->applyFromArray(
+	    				array('fill' 	=> array(
+	    						'type'		=> \PHPExcel_Style_Fill::FILL_SOLID,
+	    						'color'		=> array('argb' => 'FF000000')
+	    					)
+	    				)
+	    		);
+	    	}
+	    	
+    	
+		};
+		
+		
+		$headerFunc(5, range('A', 'D'));
+		$headerFunc(5, range('F', 'I'));
+		
+		$result = $this->queryResult(array('entity'=>'compte'));
+		$i = 8;
+		foreach ($result as $key => $row) {
+			$date = \PHPExcel_Shared_Date::PHPToExcel($row->getDate());
+			$this->_excel->getActiveSheet()->setCellValue("A$i", $date);
+			$this->_sheet->getStyle("A$i")->getNumberFormat()->setFormatCode('dd.mm.YYYY');
+			$this->_excel->getActiveSheet()->setCellValue("B$i", $row->getOperation());
+			$this->_excel->getActiveSheet()->setCellValue("C$i", $row->getMontant());
+			$i++;
+		}
+    }
 
+    
+    
+    protected function keyTabData() {
+    	// Key tab
+    	$this->_excel->setActiveSheetIndex(0);
+    	$this->_sheet = $this->_excel->getActiveSheet();
+    	$this->_sheet->getDefaultColumnDimension()->setWidth(10);
+    	$this->_sheet->setTitle('Key');
+    	$this->_excel->getActiveSheet()->getRowDimension(1)->setRowHeight(25);
+    	$this->_excel->getActiveSheet()->getRowDimension(3)->setRowHeight(25);
+    	$objRichText = new \PHPExcel_RichText();
+    	$key = $objRichText->createTextRun('KEY');
+    	
+    	$this->_excel->getActiveSheet()->getColumnDimension('A')->setWidth(10);
+    	$this->_excel->getActiveSheet()->getColumnDimension('B')->setWidth(40);
+    	$this->_excel->getActiveSheet()->getColumnDimension('C')->setWidth(90);
+    	 
+    	
+    	$this->_excel->getActiveSheet()->getCell('B1')->setValue($objRichText);
+    	$this->_excel->getActiveSheet()->mergeCells('B1:C1');
+    	$this->_excel->getActiveSheet()->getStyle('B1:C1')->getFont()->setName('Arial');
+    	$this->_excel->getActiveSheet()->getStyle('B1:C1')->getFont()->setSize(12);
+    	$this->_excel->getActiveSheet()->getStyle('B1:C1')->getFont()->setBold(true);
+    	$this->_excel->getActiveSheet()->getStyle('B1:C1')->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+    	$this->_excel->getActiveSheet()->getStyle('B1:C1')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    	$this->_excel->getActiveSheet()->getStyle('B1:C1')->applyFromArray(
+    			array('fill' 	=> array(
+    					'type'		=> \PHPExcel_Style_Fill::FILL_SOLID,
+    					'color'		=> array('argb' => 'FFCCFFCC')
+    			),
+    					'borders' => array(
+    							'allborders'	=> array('style' => \PHPExcel_Style_Border::BORDER_THIN),
+    					)
+    			)
+    	);
+    	
+    	$this->yellowHeader('A3');
+    	$this->_excel->getActiveSheet()->setCellValue('B3', 'Title');
+    	$this->yellowHeader('B3');
+    	$this->_excel->getActiveSheet()->setCellValue('C3', 'Description of operations');
+    	$this->yellowHeader('C3');
+    	
+    	
+    	
+    	$startRow = 4;
+    	foreach($this->_keyTabData as $head => $rows) {
+    		$rowCount = count($rows)-1;
+    		$lastRow = $startRow + $rowCount;
+    		$objRichText = new \PHPExcel_RichText();
+    		$headTitle = $objRichText->createTextRun($head);
+    		$cells = "A$startRow:A$lastRow";
+    		$this->_excel->getActiveSheet()->getCell("A$startRow")->setValue($objRichText);
+    		$this->_excel->getActiveSheet()->mergeCells($cells);
+    		$this->_excel->getActiveSheet()->getStyle($cells)->getFont()->setSize(11);
+    		$this->_excel->getActiveSheet()->getStyle($cells)->getFont()->setBold(true);
+    		$this->_excel->getActiveSheet()->getStyle($cells)->getAlignment()->setTextRotation(90);
+    		$this->_excel->getActiveSheet()->getStyle($cells)->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+    		$this->_excel->getActiveSheet()->getStyle($cells)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    		 
+    		unset($objRichText);
+    		 
+    		$i = $startRow;
+    		foreach($rows as $row) {
+    			$this->_excel->getActiveSheet()->getRowDimension($i)->setRowHeight(20);
+    			$this->_excel->getActiveSheet()->getCell("B$i")->setValue($row['title']);
+    			$this->_excel->getActiveSheet()->getCell("C$i")->setValue($row['desc']);
+    			$i++;
+    		}
+    		 
+    		 
+    		$this->_excel->getActiveSheet()->getRowDimension($i)->setRowHeight(20);
+    		$this->_excel->getActiveSheet()->mergeCells("A$i:C$i");
+    		$this->_excel->getActiveSheet()->getStyle("A$i:C$i")->applyFromArray(
+    				array('fill' 	=> array(
+    						'type'		=> \PHPExcel_Style_Fill::FILL_SOLID,
+    						'color'		=> array('argb' => 'FFFFFF00')
+    					),
+    	
+    						'borders' => array(
+    								'allborders'	=> array('style' => \PHPExcel_Style_Border::BORDER_THIN),
+    						)
+    				)
+    		);
+    		$startRow+=($rowCount+2);
+    		 
+    	}
+    }
+    
+    
+    protected function yellowHeader($cellCoordinate) {
+    	$this->_excel->getActiveSheet()->getStyle($cellCoordinate)->getFont()->setName('MS Sans Serif');
+    	$this->_excel->getActiveSheet()->getStyle($cellCoordinate)->getFont()->setSize(10);
+    	$this->_excel->getActiveSheet()->getStyle($cellCoordinate)->getFont()->setBold(true);
+    	$this->_excel->getActiveSheet()->getStyle($cellCoordinate)->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+    	$this->_excel->getActiveSheet()->getStyle($cellCoordinate)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    	$this->_excel->getActiveSheet()->getStyle($cellCoordinate)->applyFromArray(
+    			array('fill' 	=> array(
+    					'type'		=> \PHPExcel_Style_Fill::FILL_SOLID,
+    					'color'		=> array('argb' => 'FFFFFF00')
+    			),
+    	
+    					'borders' => array(
+    							'allborders'	=> array('style' => \PHPExcel_Style_Border::BORDER_THIN),
+    					)
+    			)
+    	);
+    }
+    
+    
+    
     /**
      * @param $params
      */
