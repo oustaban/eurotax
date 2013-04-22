@@ -718,6 +718,12 @@ class AbstractTabsController extends Controller
                     $form_builder = $admin->getFormBuilder();
                     $form = $form_builder->getForm();
 
+                    
+                    if($object instanceof ListDevises) {
+                    	continue;
+                    }
+                    
+                    
                     $form->setData($object);
 
                     $formData = array('client_id' => $this->client_id, '_token' => $this->get('form.csrf_provider')->generateCsrfToken('unknown'));
@@ -734,15 +740,17 @@ class AbstractTabsController extends Controller
                         }
                     }
                     
+
+                    if(in_array('paiement_date', $fields)) {
                     
-                    //if paiement_date is empty, empty the ff. fields.
-                    if(!isset($formData['paiement_date']) || (isset($formData['paiement_date']) && empty($formData['paiement_date']))) {
-                    	unset($formData['mois']);
-                    	unset($formData['taux_de_change']);
-                    	unset($formData['HT']);
-                    	unset($formData['TVA']);
+	                    //if paiement_date is empty, empty the ff. fields.
+	                    if(!isset($formData['paiement_date']) || (isset($formData['paiement_date']) && empty($formData['paiement_date']))) {
+	                    	unset($formData['mois']);
+	                    	unset($formData['taux_de_change']);
+	                    	unset($formData['HT']);
+	                    	unset($formData['TVA']);
+	                    }
                     }
-                    
 		            $form->bind($formData);
 
                     if ($form->isValid()) {
