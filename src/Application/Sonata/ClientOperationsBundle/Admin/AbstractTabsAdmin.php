@@ -40,6 +40,10 @@ abstract class AbstractTabsAdmin extends Admin
     protected $_index_import = 0;
     public $_show_all_operations = false;
 
+    
+    public $import_file_year,
+    	$import_file_month;
+    
     /**
      * @param string $code
      * @param string $class

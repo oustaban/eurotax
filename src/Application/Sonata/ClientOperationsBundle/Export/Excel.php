@@ -16,6 +16,10 @@ class Excel
     private $_sum = array();
     private $_header_cell = array();
     private $_params = array();
+    
+    
+    protected $_admin;
+    
     protected $_styleBorders = array(
         'borders' => array(
             'top' => array(
@@ -88,6 +92,9 @@ class Excel
     {
         $this->_excel = new \PHPExcel();
         $this->translator = \AppKernel::getStaticContainer()->get('translator');
+        
+        
+        
     }
 
     /**
@@ -231,7 +238,7 @@ class Excel
     	$this->_excel->getActiveSheet()->getStyle('D3')->getFont()->setBold(true);
     	
     	$this->_excel->getActiveSheet()->setCellValue('F3', 'Account Number:');
-    	$this->_excel->getActiveSheet()->setCellValue('I3', '18/9176');
+    	$this->_excel->getActiveSheet()->setCellValue('I3', $this->get('_admin')->client_id);
     	$this->_excel->getActiveSheet()->getStyle('I3')->getFont()->setBold(true);
     	 
     	$excel = $this->_excel;
@@ -280,6 +287,15 @@ class Excel
 			$this->_sheet->getStyle("A$i")->getNumberFormat()->setFormatCode('dd.mm.YYYY');
 			$this->_excel->getActiveSheet()->setCellValue("B$i", $row->getOperation());
 			$this->_excel->getActiveSheet()->setCellValue("C$i", $row->getMontant());
+			
+			//Balance column			
+			if($i > 8) {
+				$this->_excel->getActiveSheet()->setCellValue("D$i", '=SUM(C'.($i-1).':C'.$i.')');
+			}
+			
+			
+			
+			
 			$i++;
 		}
     }

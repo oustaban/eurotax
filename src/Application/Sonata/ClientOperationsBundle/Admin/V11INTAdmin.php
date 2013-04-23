@@ -84,7 +84,7 @@ class V11INTAdmin extends Admin
         /* @var $object \Application\Sonata\ClientOperationsBundle\Entity\V11INT */
         parent::validate($errorElement, $object);
 
-        $error = new ErrorElements($errorElement, $object);
+        $error = new ErrorElements($errorElement, $object, $this->import_file_year, $this->import_file_month);
         $error->setValidateImport($this->getValidateImport())
             ->validateDevise()
             ->validateHT()

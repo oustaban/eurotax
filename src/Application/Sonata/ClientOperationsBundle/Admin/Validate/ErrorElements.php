@@ -18,14 +18,21 @@ class ErrorElements
     protected $_is_validate_import = false;
 
 
+    protected $_import_file_year, 
+    	$_import_file_month;
+    
+    
     /**
      * @param \Sonata\AdminBundle\Validator\ErrorElement $errorElement
      * @param $object
      */
-    public function __construct(ErrorElement $errorElement, $object)
+    public function __construct(ErrorElement $errorElement, $object, $xlsFileYear = null, $xlsFileMonth = null)
     {
         $this->_errorElement = $errorElement;
         $this->_object = $object;
+        
+        $this->_import_file_month = $xlsFileMonth;
+        $this->_import_file_year = $xlsFileYear;
     }
 
     /**
@@ -348,6 +355,34 @@ class ErrorElements
         }
         return $this;
     }
+    
+    public function validateMois2()
+    {
+    	/** @var $_object \Application\Sonata\ClientOperationsBundle\Entity\A02TVA|\Application\Sonata\ClientOperationsBundle\Entity\A04283I|\Application\Sonata\ClientOperationsBundle\Entity\A06AIB|\Application\Sonata\ClientOperationsBundle\Entity\A10CAF|\Application\Sonata\ClientOperationsBundle\Entity\AbstractSellEntity */
+    	$_object = $this->_object;
+    	 
+   		//  if XX/YY is both the value of the file name... add the alert "Mois antérieur au "Mois de TVA" actuel
+    	if ($this->_is_validate_import && method_exists($_object, 'getMois') && !is_null($this->_import_file_year) && !is_null($this->_import_file_month)) {
+    		
+    		$value = $_object->getMois();
+    		if ($value) {
+    			if ($value instanceof \DateTime) {
+    				$month = $value->format('m');
+    				$year = $value->format('Y');
+    				$day = $value->format('d');
+    			} else {
+    				$month = $value['month'];
+    				$year = $value['year'];
+    				$day = $value['day'];
+    			}
+    			
+    			if((int)$year == (int)$this->_import_file_year && (int)$month < (int)$this->_import_file_month) {
+    				$this->_errorElement->with('mois')->addViolation('Mois antérieur au "Mois de TVA" actuel ');
+    			}
+    			
+    		}
+    	}
+    }
 
 
     /**
@@ -466,6 +501,10 @@ class ErrorElements
     public function setValidateImport($value = true)
     {
         $this->_is_validate_import = $value;
+        
+        
+        $this->validateMois2();
+        
         return $this;
     }
     

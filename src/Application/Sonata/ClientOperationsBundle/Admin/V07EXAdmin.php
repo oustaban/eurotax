@@ -83,7 +83,7 @@ class V07EXAdmin extends Admin
         /* @var $object \Application\Sonata\ClientOperationsBundle\Entity\V07EX */
         parent::validate($errorElement, $object);
 
-        $error = new ErrorElements($errorElement, $object);
+        $error = new ErrorElements($errorElement, $object, $this->import_file_year, $this->import_file_month);
         $error->setValidateImport($this->getValidateImport())
             ->validateDevise()
             ->validateHT()

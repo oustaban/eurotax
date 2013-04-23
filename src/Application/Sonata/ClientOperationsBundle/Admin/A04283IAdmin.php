@@ -107,7 +107,7 @@ class A04283IAdmin extends Admin
         /* @var $object \Application\Sonata\ClientOperationsBundle\Entity\A04283I */
         parent::validate($errorElement, $object);
 
-        $error = new ErrorElements($errorElement, $object);
+        $error = new ErrorElements($errorElement, $object, $this->import_file_year, $this->import_file_month);
         $error->setValidateImport($this->getValidateImport())
             ->validateDevise()
             ->validateHT()

@@ -48,6 +48,9 @@ class AbstractTabsController extends Controller
     protected $_client_dir = '';
     protected $_show_all_operations = false;
 
+    protected $_import_file_year,
+    	$_import_file_month;
+    
     /**
      * @var \Application\Sonata\ClientOperationsBundle\Entity\Imports
      */
@@ -713,6 +716,10 @@ class AbstractTabsController extends Controller
 
                     $admin->setSubject($object);
                     $admin->setIndexImport($key + 1);
+                    
+                    $admin->import_file_year = $this->_import_file_year;
+                    $admin->import_file_month = $this->_import_file_month;
+                    
 
                     /* @var $form \Symfony\Component\Form\Form */
                     $form_builder = $admin->getFormBuilder();
@@ -813,6 +820,11 @@ class AbstractTabsController extends Controller
 
             array_shift($matches);
             list($nom_client, $year, $month, $version) = $matches;
+            
+            
+            $this->_import_file_month = $month;
+            $this->_import_file_year = $year;
+            
 
             $this->_import_date = new \DateTime($year . '-' . $month . '-' . date('d H:i:s'));
 
@@ -1154,6 +1166,7 @@ class AbstractTabsController extends Controller
         $excel->set('_client', $this->client);
         $excel->set('_config_excel', $this->_config_excel);
         $excel->set('_locking', $this->getLocking());
+        $excel->set('_admin', $this->admin);
         $excel->render();
 
         if ($this->getLocking()) {
