@@ -79,7 +79,7 @@ class DEBExpedAdmin extends Admin
             ->add('pays_destination.name', null, array('label' => $this->getFieldLabel('pays_id_destination')))
             ->add('valeur_fiscale', 'money', array('label' => $this->getFieldLabel('valeur_fiscale'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:valeur_fiscale.html.twig'))
             ->add('regime', null, array('label' => $this->getFieldLabel('regime')))
-            ->add('valeur_statistique', 'money', array('label' => $this->getFieldLabel('valeur_statistique')))
+            ->add('valeur_statistique', 'money', array('label' => $this->getFieldLabel('valeur_statistique'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:valeur_statistique.html.twig'))
             ->add('masse_mette', null, array('label' => $this->getFieldLabel('masse_mette')))
             ->add('unites_supplementaires', null, array('label' => $this->getFieldLabel('unites_supplementaires')))
             ->add('nature_transaction', null, array('label' => $this->getFieldLabel('nature_transaction')))
@@ -103,6 +103,7 @@ class DEBExpedAdmin extends Admin
 
         $error = new ErrorElements($errorElement, $object, $this->import_file_year, $this->import_file_month);
         $error->setValidateImport($this->getValidateImport())
+        	->setMois()
         	->setDatePiece()
         	->validateNomenclature();
     }

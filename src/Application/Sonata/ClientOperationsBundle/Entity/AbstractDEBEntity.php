@@ -63,7 +63,7 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     /**
      * @var float $masse_mette
      *
-     * @ORM\Column(name="masse_mette", type="float", nullable=true)
+     * @ORM\Column(name="masse_mette", type="integer", nullable=true)
      */
     private $masse_mette;
 
@@ -71,7 +71,7 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     /**
      * @var float $unites_supplementaires
      *
-     * @ORM\Column(name="unites_supplementaires", type="float", nullable=true)
+     * @ORM\Column(name="unites_supplementaires", type="integer", nullable=true)
      */
     private $unites_supplementaires;
 

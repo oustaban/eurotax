@@ -1179,6 +1179,14 @@ class AbstractTabsController extends Controller
         exit;
     }
 
+    
+    public function exportTransDeb() {
+    	
+    	
+    	exit;
+    }
+    
+    
     /**
      * @param $client_id
      * @param $month

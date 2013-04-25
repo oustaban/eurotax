@@ -520,7 +520,7 @@ class ErrorElements
     	if(!$this->_object->getDatePiece()) {
     		if(date('d') >= 1 && date('d') < 25) {
     			$ts = date('Y-m') . '-01';
-    		} else if(date('d' >= 25)) {
+    		} else if(date('d') >= 25) {
     			$ts = 'now +1 month';
     		}
     		if(is_null($date)) {
@@ -532,6 +532,15 @@ class ErrorElements
     	return $this;
     }
     
+    
+    public function setMois() {
+    	if ($this->_is_validate_import) {
+    		$ts = $this->_import_file_year . '-' . $this->_import_file_month . '-01';
+    		$date = new \DateTime($ts);
+    		$this->_object->setMois($date);
+    	}
+    	return $this;
+    }
 
     /**
      * @return bool
