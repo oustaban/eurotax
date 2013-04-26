@@ -1180,8 +1180,14 @@ class AbstractTabsController extends Controller
     }
 
     
-    public function exportTransDeb() {
+    public function exportTransDebAction() {
     	
+    	$transdeb = $this->get('client.operation.transdeb');
+    	$transdeb->set('_client', $this->client);
+    	
+    	$transdeb->set('_admin', $this->admin);
+    	$transdeb->render();
+    	$transdeb->download();
     	
     	exit;
     }

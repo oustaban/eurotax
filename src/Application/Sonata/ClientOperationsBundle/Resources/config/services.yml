@@ -97,6 +97,9 @@ services:
     client.operation.excel:
         class: Application\Sonata\ClientOperationsBundle\Export\Excel
 
+    client.operation.transdeb:
+        class: Application\Sonata\ClientOperationsBundle\Export\TransDeb
+
     request:
         class: Symfony\Component\HttpFoundation\Request
 
