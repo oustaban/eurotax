@@ -1,10 +1,17 @@
 jQuery(document).ready(function ($) {
     $('#error_repost_show').die().live('click', function () {
         $('#importReportModal').modal('toggle');
-
         return false;
     });
 
+    
+    //links are disabled when scrolled down, hence active it
+    $('.sonata-ba-list .nav-pills li a').live('click', function(){
+    	window.location = $(this).attr('href');
+    });
+    
+    
+    
     if (typeof symfony_ajax != 'undefined'){
         symfony_ajax.behaviors.PaiementDateCloneMoisdeTVA = {
             attach:function (context) {
