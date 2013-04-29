@@ -5,7 +5,7 @@ jQuery(document).ready(function ($) {
     });
 
     
-    //links are disabled when scrolled down, hence active it
+    //links are disabled when scrolled down, hence activate it
     $('.sonata-ba-list .nav-pills li a').live('click', function(){
     	window.location = $(this).attr('href');
     });
@@ -34,15 +34,17 @@ jQuery(document).ready(function ($) {
                 
                 // v03283i
                 $('#' + _uniqid + '_taux_de_change').keyup(function() {
-                	$('#' + _uniqid + '_HT').val( round_number(  $('#' + _uniqid + '_montant_HT_en_devise').val().replace(',', '.').replace(/\s+/, '') / $('#' + _uniqid + '_taux_de_change').val().replace(',', '.').replace(/\s+/, '') ) );
-                });                
+                	$('#' + _uniqid + '_HT').val( euro_num_format(  real_num($('#' + _uniqid + '_montant_HT_en_devise').val()) / real_num($('#' + _uniqid + '_taux_de_change').val()) ) );
+                });            
+                if (($('#' + _uniqid + '_montant_HT_en_devise', context).size())) {
+                	$('#' + _uniqid + '_montant_HT_en_devise').val( euro_num_format($('#' + _uniqid + '_montant_HT_en_devise').val()) );
+                }
                 $('#' + _uniqid + '_montant_HT_en_devise').blur(function() {
-                	$(this).val( round_number($(this).val()) );
-                });
-                $('#' + _uniqid + '_montant_HT_en_devise').keyup(function() {
-                	var result = $(this).val().replace(',', '.').replace(/\s+/, '') / $('#' + _uniqid + '_taux_de_change').val().replace(',', '.').replace(/\s+/, '');
+                	$(this).val( euro_num_format($(this).val()) );
+                }).keyup(function() {
+                	var result = real_num($(this).val()) / real_num($('#' + _uniqid + '_taux_de_change').val());
                 	if (result != Number.POSITIVE_INFINITY && result != Number.NEGATIVE_INFINITY) {
-                		$('#' + _uniqid + '_HT').val( round_number( result ) );
+                		$('#' + _uniqid + '_HT').val( euro_num_format( result ) );
                 	}
                 	
                 });
@@ -51,7 +53,7 @@ jQuery(document).ready(function ($) {
                         //$('#' + _uniqid + '_mois_mois option:last').attr('selected', true).trigger('change');
                         var devise = $('#' + _uniqid + '_devise :selected').val();
                         var date_piece = $('#' + _uniqid + '_date_piece').val();
-                        var montant_HT_en_devise = $('#' + _uniqid + '_montant_HT_en_devise').val()
+                        var montant_HT_en_devise = $('#' + _uniqid + '_montant_HT_en_devise').val();
                         if(devise && date_piece) {
 	                        $.ajax({
 	                            url:Sonata.url.rdevises,
@@ -64,7 +66,7 @@ jQuery(document).ready(function ($) {
 	                            async:false,
 	                            success:function (i) {
 	                                $('#' + _uniqid + '_taux_de_change').val(i.value ? (i.value) : '');
-	                                $('#' + _uniqid + '_HT').val( round_number( montant_HT_en_devise.replace(',', '.').replace(/\s+/, '') / parseFloat(i.value) ) );
+	                                $('#' + _uniqid + '_HT').val( euro_num_format( real_num(montant_HT_en_devise) / parseFloat(i.value) ) );
 	                            }
 	                        });
                         }
@@ -181,8 +183,8 @@ jQuery(document).ready(function ($) {
                 var $HT = $('#' + _uniqid + '_HT');
                 var $taux_de_TVA = $('#' + _uniqid + '_taux_de_TVA');
 
-                var taux_de_TVA = $taux_de_TVA.val().replace(',', '.').replace(/\s+/, '');
-                var HT = $HT.val().replace(',', '.').replace(/\s+/, '');
+                var taux_de_TVA = real_num($taux_de_TVA.val());
+                var HT = real_num($HT.val());
 
                 var taux_de_TVA_X_m = Math.round(parseFloat(taux_de_TVA)*m);
                 var HT_X_m = Math.round(parseFloat(HT)*m);
@@ -195,7 +197,7 @@ jQuery(document).ready(function ($) {
                     
                     if (TVA != Number.POSITIVE_INFINITY && TVA != Number.NEGATIVE_INFINITY) {
                     
-                    	$('#' + _uniqid + '_TVA').val(round_number(TVA)).trigger('change');
+                    	$('#' + _uniqid + '_TVA').val(euro_num_format(TVA)).trigger('change');
                     }
                 }
             },
@@ -211,10 +213,10 @@ jQuery(document).ready(function ($) {
                 var $paiement_montant = $('#' + _uniqid + '_paiement_montant');
                 var $taux_de_change = $('#' + _uniqid + '_taux_de_change');
 
-                var montant_TTC = $montant_TTC.val().replace(',', '.').replace(/\s+/, '');
-                var taux_de_TVA = $taux_de_TVA.val().replace(',', '.').replace(/\s+/, '');
-                var paiement_montant = $paiement_montant.val().replace(',', '.').replace(/\s+/, '');
-                var taux_de_change = $taux_de_change.val().replace(',', '.').replace(/\s+/, '');
+                var montant_TTC = real_num($montant_TTC.val());
+                var taux_de_TVA = real_num($taux_de_TVA.val());
+                var paiement_montant = real_num($paiement_montant.val());
+                var taux_de_change = real_num($taux_de_change.val());
 
                 var taux_de_TVA_X_m = Math.round(parseFloat(taux_de_TVA)*m);
                 var paiement_montant_X_m = Math.round(parseFloat(paiement_montant)*m);
@@ -226,7 +228,7 @@ jQuery(document).ready(function ($) {
                     //var HT = paiement_montant_X_m * m / ((m + taux_de_TVA_X_m) * taux_de_change_X_m); //old formula
                     HT = HT ? HT.toString().replace('.', ',') : '';
 
-                    $('#' + _uniqid + '_HT').val(round_number(HT)).trigger('change');
+                    $('#' + _uniqid + '_HT').val(euro_num_format(HT)).trigger('change');
                 }
             },
             calc_paiement_montant:function(e){
@@ -237,11 +239,11 @@ jQuery(document).ready(function ($) {
                 
 
                 if(pm && symfony_ajax.is_new()) {
-                	$paiement_montant.val(round_number(pm)).trigger('change');
+                	$paiement_montant.val(euro_num_format(pm)).trigger('change');
                 } else {
                 	//format value only
                 	if($paiement_montant.val()) {
-                		$paiement_montant.val(round_number($paiement_montant.val()));
+                		$paiement_montant.val(euro_num_format($paiement_montant.val()));
                 	}
                 }
             },
@@ -253,8 +255,8 @@ jQuery(document).ready(function ($) {
                 var $montant_HT_en_devise = $('#' + _uniqid + '_montant_HT_en_devise');
                 var $taux_de_TVA = $('#' + _uniqid + '_taux_de_TVA');
 
-                var montant_HT_en_devise = $montant_HT_en_devise.val().replace(',', '.').replace(/\s+/, '');
-                var taux_de_TVA = $taux_de_TVA.val().replace(',', '.').replace(/\s+/, '');
+                var montant_HT_en_devise = real_num($montant_HT_en_devise.val());
+                var taux_de_TVA = real_num($taux_de_TVA.val());
 
                 var montant_HT_en_devise_X_m = Math.round(parseFloat(montant_HT_en_devise)*m);
                 var taux_de_TVA_X_m = Math.round(parseFloat(taux_de_TVA)*m);
@@ -262,8 +264,8 @@ jQuery(document).ready(function ($) {
                 var montant_TVA_francaise = (montant_HT_en_devise_X_m * taux_de_TVA_X_m) / m / m;
                 var montant_TTC = montant_HT_en_devise_X_m / m + montant_TVA_francaise;
 
-                montant_TVA_francaise = montant_TVA_francaise ? round_number(montant_TVA_francaise) : '';
-                montant_TTC = montant_TTC ? round_number(montant_TTC) : '';
+                montant_TVA_francaise = montant_TVA_francaise ? euro_num_format(montant_TVA_francaise) : '';
+                montant_TTC = montant_TTC ? euro_num_format(montant_TTC) : '';
 
                 $('#' + _uniqid + '_montant_TVA_francaise').val(montant_TVA_francaise).trigger('change');
                 $('#' + _uniqid + '_montant_TTC').val(montant_TTC).trigger('change');
@@ -364,7 +366,7 @@ function init_rapprochement_sums() {
     $plus = $plus.length ? $plus.html() : '0';
     var $minus = $('.rapprochement_content_deb .rapprochement_content_input table.table tr.totals_row div b :first');
     $minus = $minus.length ? $minus.html() : '0';
-    var diff = Number($plus.replace(',', '.')) - Number($minus.replace(',', '.'));
+    var diff = Number(real_num($plus)) - Number(real_num($minus));
     ECARTsumm += diff;
     
     var result = Math.round((diff) * 100) / 100;
@@ -380,7 +382,7 @@ function init_rapprochement_sums() {
     $plus = $plus.length ? $plus.html() : '0';
     var $minus = $('.rapprochement_content_deb .rapprochement_content_input table.table tr.totals_row div b :last');
     $minus = $minus.length ? $minus.html() : '0';
-    var diff = Number($plus.replace(',', '.')) - Number($minus.replace(',', '.'));
+    var diff = Number(real_num($plus)) - Number(real_num($minus));
     ECARTsumm += diff;
     
     
@@ -396,7 +398,7 @@ function init_rapprochement_sums() {
     $plus = $plus.length ? $plus.html() : '0';
     var $minus = $('.rapprochement_content_deb .rapprochement_content_output table.table tr.totals_row div b :first');
     $minus = $minus.length ? $minus.html() : '0';
-    var diff = Number($plus.replace(',', '.')) - Number($minus.replace(',', '.'));
+    var diff = Number(real_num($plus)) - Number(real_num($minus));
     ECARTsumm += diff;
     
     var result = Math.round((diff) * 100) / 100;
@@ -411,7 +413,7 @@ function init_rapprochement_sums() {
     $plus = $plus.length ? $plus.html() : '0';
     var $minus = $('.rapprochement_content_deb .rapprochement_content_output table.table tr.totals_row div b :last');
     $minus = $minus.length ? $minus.html() : '0';
-    var diff = Number($plus.replace(',', '.')) - Number($minus.replace(',', '.'));
+    var diff = Number(real_num($plus)) - Number(real_num($minus));
     ECARTsumm += diff;
     
     var result = Math.round((diff) * 100) / 100;
@@ -497,19 +499,32 @@ function init_tabs_filters_sticky_header() {
 
 }
 
-function round_number(rnum, rlength) { // Arguments: number to round, number of decimal places
+function euro_num_format(rnum, rlength) { // Arguments: number to round, number of decimal places
 	if(typeof rlength === 'undefined') {
 		rlength = 2;
 	}
 	
 	rnum = parseFloat(rnum.toString().replace(',', '.'));
-	//var newnumber = Math.round(rnum*Math.pow(10,rlength))/Math.pow(10,rlength);
-	//newnumber = parseFloat(newnumber); // Output the result to the form field (change for your purposes)
-	//return newnumber.toString().replace('.', ',');
+	var numberStr = rnum.toFixed(rlength).toString().replace('.', ',');
+	var numFormatDec = numberStr.slice(-2); /*decimal 00*/
+	numberStr = numberStr.substring(0, numberStr.length-3); /*cut last 3 strings*/
 	
-	
-	return rnum.toFixed(rlength).toString().replace('.', ',');
+	var numFormat = new Array;
+	while (numberStr.length > 3) {
+		numFormat.unshift(numberStr.slice(-3));
+		numberStr = numberStr.substring(0, numberStr.length-3);
+	}
+	numFormat.unshift(numberStr);
+	return numFormat.join(' ')+','+numFormatDec; /*format 000.000.000,00 */
 	
 }
+
+
+
+function real_num(num) {
+	num = num.replace(',', '.').replace(/\s+/, '');
+	return parseFloat(num);
+}
+
 
 

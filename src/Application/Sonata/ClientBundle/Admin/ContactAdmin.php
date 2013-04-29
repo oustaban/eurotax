@@ -71,6 +71,9 @@ class ContactAdmin extends Admin
             ->add('prenom', null, array('label' => $this->getFieldLabel('prenom')))
             ->add('telephone_1', null, array('label' => $this->getFieldLabel('telephone_1')))
             ->add('email', null, array('label' => $this->getFieldLabel('email')))
+            
+            ->add('client.raison_sociale', null, array('label' => 'Raison sociale Société', 'data' => $this->getClient()->getRaisonSociale()))
+            
         ;
     }
 

@@ -1,5 +1,10 @@
 jQuery(document).ready(function ($) {
 
+	if(symfony_ajax.is_new() === false) {
+		$('#' + uniqid + '_location_postal_pays_postal').attr('disabled', 'disabled');
+	}
+	
+	
     $('#sonata-ba-field-container-' + uniqid + '_N_TVA_CEE, #sonata-ba-field-container-' + uniqid + '_N_TVA_CEE_facture').after('<hr />');
 
     $('.form-horizontal table td div.control-group').each(function (i) {
@@ -28,7 +33,7 @@ jQuery(document).ready(function ($) {
             $.each(fields_address, function (i, field) {
                 $('#' + uniqid + '_location_facturation_' + field + '_facturation').attr('disabled', 'disabled').val('');
             });
-
+            
             $('#' + uniqid + '_contact').attr('disabled', 'disabled').val('').removeAttr('required');
             $('#' + uniqid + '_raison_sociale_2').attr('disabled', 'disabled').val('').removeAttr('required');
             $('#' + uniqid + '_N_TVA_CEE_facture').attr('disabled', 'disabled').val('').removeAttr('required');

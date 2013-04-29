@@ -69,9 +69,16 @@ class ClientAdmin extends Admin
         $id = $this->getRequest()->get($this->getIdParameter());
         $class = $id ? '' : ' hidden';
 
+        
         $formMapper
+
+        	->add('is_new', 'hidden', array('data' => $id ? 0 : 1, 'mapped' => false, 'attr' => array('class' => 'is_new')))
+        
             ->with('form.client.row1')
             ->add('code_client', null, array('label' => 'form.code_client', 'disabled' => true))
+            
+            
+            
             ->add('autre_destinataire_de_facturation', null, array('label' => 'form.autre_destinataire_de_facturation'))
             ->with('form.client.row2')
             ->add('user', null, array('label' => 'form.user', 'query_builder' => function (EntityRepository $er)
@@ -138,7 +145,12 @@ class ClientAdmin extends Admin
                 'required' => false,
             ))
             ->with('form.client.row15')
-            ->add('periodicite_CA3', null, array('label' => 'form.periodicite_CA3', 'empty_value' => '', 'required' => false,))
+            ->add('periodicite_CA3', null, array('label' => 'form.periodicite_CA3', 'query_builder' => function (EntityRepository $er)
+        {
+            return $er->createQueryBuilder('l')
+            	->where("l.name <> 'Annuelle'")
+                ->orderBy('l.id', 'ASC');
+        },'empty_value' => '', 'required' => false,))
             ->add('date_de_depot_id', 'choice', array(
             'label' => 'form.date_de_depot_id',
             'choices' => array(15 => 15, 19 => 19, 24 => 24, 31 => 31),
