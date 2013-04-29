@@ -74,13 +74,13 @@ class DEBIntroAdmin extends Admin
         $listMapper->add('n_ligne', null, array('label' => $this->getFieldLabel('n_ligne')))
             ->add('date_piece', null, array(
             'label' => $this->getFieldLabel('date_piece'),
-            'template' => $this->_bundle_name . ':CRUD:list_date_piece.html.twig'
+            'template' => $this->_bundle_name . ':CRUD:list_date_piece_2.html.twig'
         ))
             ->add('nomenclature', null, array('label' => $this->getFieldLabel('nomenclature')))
             ->add('pays_destination.name', null, array('label' => $this->getFieldLabel('pays_id_destination')))
             ->add('valeur_fiscale', 'money', array('label' => $this->getFieldLabel('valeur_fiscale'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:valeur_fiscale.html.twig'))
             ->add('regime', null, array('label' => $this->getFieldLabel('regime')))
-            ->add('valeur_statistique', 'money', array('label' => $this->getFieldLabel('valeur_statistique')))
+            ->add('valeur_statistique', 'money', array('label' => $this->getFieldLabel('valeur_statistique'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:valeur_statistique.html.twig'))
             ->add('masse_mette', null, array('label' => $this->getFieldLabel('masse_mette')))
             ->add('unites_supplementaires', null, array('label' => $this->getFieldLabel('unites_supplementaires')))
             ->add('nature_transaction', null, array('label' => $this->getFieldLabel('nature_transaction')))
