@@ -95,5 +95,31 @@ abstract class AbstractCompteAdmin extends Admin
             }
         }
     }
+    
+    
+    
+    public function hasAjouterAccess() {
+    	
+    	/** @var $doctrine  \Doctrine\Bundle\DoctrineBundle\Registry */
+    	$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+    	$garantie = $doctrine->getManager()->getRepository('ApplicationSonataClientBundle:Garantie')->findOneBy(
+   			array(
+   				'client' => $this->client_id, 'type_garantie' => 2 // Dépôt de Garantie
+   			)
+    	);
+    	//var_dump($garantie->getNomDeLaBanquesId()); exit;
+    	//If  status is "A établir" for "Dépôt de Garantie"
+    	if($garantie->getNomDeLaBanquesId() == 1) {
+    		return false;
+    	}
+    	
+    	return true;
+    }
+    
+    
+    
+    
+    
+    
 }
 
