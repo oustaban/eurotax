@@ -90,9 +90,9 @@ class GarantieAdmin extends Admin
             'label' => $this->getFieldLabel('date_decheance'),
             'template' => 'ApplicationSonataClientBundle:CRUD:list_date_decheance.html.twig',
         ))
-            ->add('expire', null, array(
-            'label' => $this->getFieldLabel('expire'),
-            'template' => 'ApplicationSonataClientBundle:CRUD:list_boolean_expire.html.twig',
+            ->add('nom_de_la_banques_id', null, array(
+            'label' => $this->getFieldLabel('nom_de_la_banques_id'),
+            'template' => 'ApplicationSonataClientBundle:CRUD:list_banques.html.twig',
         ));
     }
 
