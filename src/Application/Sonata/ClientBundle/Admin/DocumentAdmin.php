@@ -27,15 +27,28 @@ class DocumentAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         parent::configureFormFields($formMapper);
-
+        
         $id = $this->getRequest()->get($this->getIdParameter());
         $client = $this->getClient();
 
+        $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $doctrine->getManager();
+        $document = $em->getRepository('ApplicationSonataClientBundle:Document')->find($id);
+                
+        $typeDocumentId = $document->getTypeDocument()->getId();
+        $typeDocDisabled = false;
+        
+        // 2 = Pouvoir || 3 = Accord
+        if($typeDocumentId == 2 || $typeDocumentId == 3) {
+        	$typeDocDisabled = true;
+        }
+        
         $formMapper->with($this->getFieldLabel('title'))
             ->add('file', 'file', array('label' => $this->getFieldLabel('document'), 'required' => false))
             ->add('type_document', null, array(
             'label' => $this->getFieldLabel('type_document'),
-            'disabled' => !!$id,
+            'disabled' => $typeDocDisabled,
             'query_builder' => function (EntityRepository $er) use ($client) {
                 $builder = $er->createQueryBuilder('t');
 
@@ -108,6 +121,10 @@ class DocumentAdmin extends Admin
             'empty_value' => '',
             'required' => false,
         ));
+            
+            
+            //var_dump($this->getNewInstance()->find($id));
+            //exit;
     }
 
     //list
