@@ -28,6 +28,20 @@ function init_home_page() {
         $("#emptyColumnFilters").click(function(){
             $(this).parent().parent().find("._filterText").val("").keyup();
         });
+        
+        $('#btn_client_alert').live('click', function (event) {
+
+        	symfony_ajax.behaviors.alert_popo = {
+                    attach:function (context) {
+                        $('.modal-body .table td').removeAttr('objectid');
+                    }
+                };
+
+            field_dialog_form_add__id(event, '/index_dev.php/sonata/clientoperations/clientalert/list?filter%5Bclient_id%5D%5Bvalue%5D=6'.replace('&amp;', '&'), {title:'Alertes' });
+            return false;
+        });
+        
+        
     });
     $(function () {
         $('#show_hide_all_clients').click(function () {

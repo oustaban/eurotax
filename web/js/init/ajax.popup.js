@@ -116,8 +116,8 @@ var field_dialog_form_content__id = function (html) {
     jQuery('.popup-body .span5', field_dialog__id).removeClass('span5');
 
     field_dialog__id.find('.title').html(dialog_title);
-
-    jQuery('.datepicker').datepicker();
+    if(typeof $.datepicker !== 'undefined')
+    	jQuery('.datepicker').datepicker();
 
     // capture the submit event to make an ajax call, ie : POST data to the
     // related create admin
