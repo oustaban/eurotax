@@ -52,10 +52,18 @@ class HomeController extends Controller
             ->select('SUM(c.alert_count) as cnt')
             ->getQuery()->execute();
 
+        
+        $now = new \DateTime();
+        // id DD > 25 Mois-TVA MM.YYYY else Mois-TVA MM.YYYY - 1MM
+        $moisExtraColTitle = $now->format('d') > 25 ? $now->format('m.Y') : $now->format('m.Y - 1m');
+        
+        
+        
         return array(
             'clients' => array_merge($clients, $clientsDimmed),
             'cookies' => $this->getRequest()->cookies,
             'alert_count' => $alerts[0]['cnt'],
+        	'moisExtraColTitle' => $moisExtraColTitle
         );
     }
 
