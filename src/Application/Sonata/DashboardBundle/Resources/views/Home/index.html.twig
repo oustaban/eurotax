@@ -85,7 +85,7 @@
                 </a>
                 {% set alert_count = client[0].getAlertCount%}
                 {% if alert_count %}
-                    <span rel="tooltip" title="{{alert_count}} {{ 'alertes'|trans }}" class="badge badge-warning btn-link" id="btn_client_alert">{{ alert_count }}</span>
+                    <span rel="tooltip" title="{{alert_count}} {{ 'alertes'|trans }}" href="{{ path('admin_sonata_clientoperations_clientalert_list', {'filter[client_id][value]':client[0].id}) }}" class="badge badge-warning btn-link" id="btn_client_alert">{{ alert_count }}</span>
                 {% endif%}
                 {% endspaceless %}
             </td>

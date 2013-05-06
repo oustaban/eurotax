@@ -37,7 +37,7 @@ function init_home_page() {
                     }
                 };
 
-            field_dialog_form_add__id(event, '/index_dev.php/sonata/clientoperations/clientalert/list?filter%5Bclient_id%5D%5Bvalue%5D=6'.replace('&amp;', '&'), {title:'Alertes' });
+            field_dialog_form_add__id(event, $(this).attr('href'), {title:'Alertes' });
             return false;
         });
         
