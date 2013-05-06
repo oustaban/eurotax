@@ -231,6 +231,12 @@ class ClientAdmin extends Admin
         if (!$securityContext->isGranted('ROLE_EDIT_USERS')) {
             $fieldUserOptions['template'] = 'ApplicationSonataClientBundle:CRUD:list_user_text.html.twig';
         }
+        
+        
+        
+        $now = new \DateTime();
+        // id DD > 25 Mois-TVA MM.YYYY else Mois-TVA MM.YYYY - 1MM
+        $moisExtraColTitle = $now->format('d') > 25 ? $now->format('m.Y') : $now->format('m.Y - 1m');
 
         $listMapper
             ->add('_action', 'actions', array(
@@ -246,7 +252,7 @@ class ClientAdmin extends Admin
             ->add('center_des_impots.nom', null, array('label' => 'list.center_des_impots'))
             ->add('date_de_depot_id', null, array('label' => 'list.date_de_depot_id'))
             ->add('teledeclaration', null, array('label' => 'list.teledeclaration'))
-            ->add('mois_tva', null, array('label' => 'list.mois_tva'))
+            ->add('mois_tva', null, array('label' => 'Mois-TVA ' . $moisExtraColTitle))
             ->add('BAPSA', null, array('label' => 'list.BAPSA'))
             ->add('remboursement_de_TVA', null, array('label' => 'list.remboursement_de_TVA'))
             ->add('comptes', "money", array('label' => 'list.solde_du_compte', 'template' => 'ApplicationSonataClientBundle:CRUD:comptes.html.twig'))
