@@ -235,8 +235,7 @@ class ClientAdmin extends Admin
         
         
         $now = new \DateTime();
-        // id DD > 25 Mois-TVA MM.YYYY else Mois-TVA MM.YYYY - 1MM
-        $moisExtraColTitle = $now->format('d') > 25 ? $now->format('m.Y') : $now->format('m.Y - 1m');
+        $moisExtraColTitle = $now->format('m.Y');
 
         $listMapper
             ->add('_action', 'actions', array(

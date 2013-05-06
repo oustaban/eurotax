@@ -34,10 +34,14 @@ class DocumentAdmin extends Admin
         $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
         /* @var $em \Doctrine\ORM\EntityManager */
         $em = $doctrine->getManager();
-        $document = $em->getRepository('ApplicationSonataClientBundle:Document')->find($id);
-                
-        $typeDocumentId = $document->getTypeDocument()->getId();
+        
+
+        $typeDocumentId = 0;
         $typeDocDisabled = false;
+        
+        if($id && $document = $em->getRepository('ApplicationSonataClientBundle:Document')->find($id)) {
+        	$typeDocumentId = $document->getTypeDocument()->getId();
+        }
         
         // 2 = Pouvoir || 3 = Accord
         if($typeDocumentId == 2 || $typeDocumentId == 3) {
@@ -121,10 +125,6 @@ class DocumentAdmin extends Admin
             'empty_value' => '',
             'required' => false,
         ));
-            
-            
-            //var_dump($this->getNewInstance()->find($id));
-            //exit;
     }
 
     //list
