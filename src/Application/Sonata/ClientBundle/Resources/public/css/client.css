@@ -3,10 +3,10 @@
     float: none;
 }
 
-.client_tabs_block button {
+/* .client_tabs_block button {
     margin-top: -60px;
     float: right;
-}
+} */
 
 .sonata-filter-form  #filter_client_id_row {
     display: none;

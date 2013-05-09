@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
+
 
 abstract class AbstractTabsAdmin extends Admin
 {
@@ -22,6 +24,8 @@ abstract class AbstractTabsAdmin extends Admin
     protected $_country_eu = null;
 
 
+    protected $_is_validate_import = false;
+    
     /**
      * @param string $code
      * @param string $class
@@ -200,6 +204,16 @@ abstract class AbstractTabsAdmin extends Admin
     }
 
     /**
+     * {@inheritdoc}
+     */
+    protected function configureRoutes(RouteCollection $collection)
+    {
+    	$collection->add('initialImport', 'initial-import');
+    }
+    
+    
+    
+    /**
      * @return array|null
      */
     protected function getListCountryEU()
@@ -210,4 +224,23 @@ abstract class AbstractTabsAdmin extends Admin
 
         return $this->_country_eu;
     }
+    
+    
+    /**
+     * @param bool $value
+     */
+    public function setValidateImport($value = true)
+    {
+    	$this->_is_validate_import = $value;
+    }
+    
+    /**
+     * @return bool
+     */
+    protected function getValidateImport()
+    {
+    	return $this->_is_validate_import;
+    }
+    
+    
 }

@@ -89,7 +89,7 @@ abstract class AbstractCompteAdmin extends Admin
 
         /* @var $value \DateTime */
         $value = $object->getDate();
-        if ($value) {
+        if ($value && !$this->getValidateImport()) {
             if ($value->getTimestamp() < strtotime('-10 days')) {
                 $errorElement->with('date')->addViolation('La "date" ne doit pas dépasser les 10 jours dans le passé')->end();
             }
@@ -109,7 +109,7 @@ abstract class AbstractCompteAdmin extends Admin
     	);
     	//var_dump($garantie->getNomDeLaBanquesId()); exit;
     	//If  status is "A établir" for "Dépôt de Garantie"
-    	if($garantie->getNomDeLaBanquesId() == 1) {
+    	if($garantie && $garantie->getNomDeLaBanquesId() == 1) {
     		return false;
     	}
     	

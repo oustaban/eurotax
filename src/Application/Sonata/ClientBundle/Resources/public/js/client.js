@@ -279,4 +279,13 @@ jQuery(document).ready(function ($) {
         $inactiveTr.find('.sonata-ba-list-field-action').html('');
         $inactiveTr.find('td').addClass('no-edit');
     }
+    
+    /**
+     * import initial
+     */
+    $('input[id=inputFile]').change(function () {
+        $('#inputFileCover').val($(this).val());
+    });
+    
+    
 });
