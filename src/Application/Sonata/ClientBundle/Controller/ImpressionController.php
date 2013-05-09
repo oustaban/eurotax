@@ -122,7 +122,7 @@ class ImpressionController extends Controller
     
     public function getContact() {
     	
-    	return $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:Contact')->findOneByClientId($this->client_id);
+    	return $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:Contact')->findOneByClient($this->client_id);
     	
     	
     	// return $this->client;
