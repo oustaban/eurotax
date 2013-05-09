@@ -533,6 +533,17 @@ class ErrorElements
     }
     
     
+    public function setDatePieceByFilename() {
+    	if ($this->_is_validate_import) {
+    		$ts = $this->_import_file_year . '-' . $this->_import_file_month . '-01';
+    		$date = new \DateTime($ts);
+    		$this->_object->setDatePiece($date);
+    	}
+    	return $this;
+    }
+    
+    
+    
     public function setMois() {
     	if ($this->_is_validate_import) {
     		$ts = $this->_import_file_year . '-' . $this->_import_file_month . '-01';

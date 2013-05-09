@@ -104,7 +104,7 @@ class DEBExpedAdmin extends Admin
         $error = new ErrorElements($errorElement, $object, $this->import_file_year, $this->import_file_month);
         $error->setValidateImport($this->getValidateImport())
         	->setMois()
-        	->setDatePiece()
+        	->setDatePieceByFilename()
         	->validateNomenclature();
     }
 }
