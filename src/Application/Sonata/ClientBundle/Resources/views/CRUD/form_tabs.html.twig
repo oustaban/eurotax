@@ -44,11 +44,11 @@
     
     
       <div class="span3">
-	    	{% if get_controller_name() != 'client' and admin is defined  %}  <button rel="tooltip" class="btn pull-right" id="toggleImportModal" onclick="javascript:$('#importModal').modal('toggle');" data-original-title="Import Initial"><i class="icon icon-hdd"></i> Import Initial</button>{% endif %}
+	    	{% if get_controller_name() != 'client' and get_controller_name() != 'coordonnees' and admin is defined  %}  <button rel="tooltip" class="btn pull-right" id="toggleImportModal" onclick="javascript:$('#importModal').modal('toggle');" data-original-title="Import Initial"><i class="icon icon-hdd"></i> Import Initial</button>{% endif %}
 	        <button class="btn pull-right" onclick="javascript:location.href = '{{ path('admin_sonata_clientoperations_v01tva_list', _filter_json) }}'.replace('&amp;', '&');"><i class="icon icon-th-list"></i> Voir les opérations</button>
 	  </div>
 	  
-	{% if get_controller_name() != 'client' and admin is defined %}  
+	{% if get_controller_name() != 'client' and get_controller_name() != 'coordonnees' and admin is defined %}  
 	  <div class="modal hide fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel"
      aria-hidden="true">
     <div class="modal-header">
