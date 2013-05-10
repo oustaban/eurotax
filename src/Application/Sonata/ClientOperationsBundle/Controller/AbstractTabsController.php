@@ -2,6 +2,8 @@
 
 namespace Application\Sonata\ClientOperationsBundle\Controller;
 
+use Application\Sonata\ClientOperationsBundle\Entity\AbstractBaseEntity;
+
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,6 +14,8 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Application\Sonata\ClientOperationsBundle\Entity\Imports;
 use Application\Tools\mPDF;
 use Application\Sonata\DevisesBundle\Entity\Devises;
+
+use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 
 class AbstractTabsController extends Controller
 {
@@ -549,15 +553,50 @@ class AbstractTabsController extends Controller
         $this->getLockingAccessDenied();
 
         /** @var $action RedirectResponse */
-        $action = parent::deleteAction($id);
+        //$action = parent::deleteAction($id);
 
+        $id     = $this->get('request')->get($this->admin->getIdParameter());
+        $object = $this->admin->getObject($id);
+        
+        if (!$object) {
+        	throw new NotFoundHttpException(sprintf('unable to find the object with id : %s', $id));
+        }
+
+        // status = Vérouillé cannot be deleted
+        if($object instanceof AbstractBaseEntity) {
+        	if($object->getStatus() && $object->getStatus()->getId() == 1) {
+        		$this->get('session')->setFlash('sonata_flash_error', 'flash_delete_error');
+        	}
+        }
+        
+        
+        if (false === $this->admin->isGranted('DELETE', $object)) {
+        	throw new AccessDeniedException();
+        }
+        
         if ($this->getRequest()->getMethod() == 'DELETE' && $this->isXmlHttpRequest()) {
             return $this->renderJson(array(
                 'result' => 'ok',
             ));
         }
 
-        return $action;
+        
+        if ($this->getRequest()->getMethod() == 'DELETE') {
+        	try {
+        		$this->admin->delete($object);
+        		$this->get('session')->setFlash('sonata_flash_success', 'flash_delete_success');
+        	} catch (ModelManagerException $e) {
+        		$this->get('session')->setFlash('sonata_flash_error', 'flash_delete_error');
+        	}
+        
+        	return new RedirectResponse($this->admin->generateUrl('list'));
+        }
+        
+        return $this->render($this->admin->getTemplate('delete'), array(
+        		'object' => $object,
+        		'action' => 'delete'
+        ));
+        
     }
 
     /**
@@ -574,6 +613,16 @@ class AbstractTabsController extends Controller
 
         return parent::batchAction();
     }
+    
+    
+
+    public function batchActionDelete(ProxyQueryInterface $query)
+    {
+		// status = Vérouillé cannot be deleted    	 
+    	$query->andWhere('o.status = 2 OR o.status IS NULL'); 
+    	return parent::batchActionDelete($query);
+    }
+    
 
     /**
      * @return \Symfony\Component\HttpFoundation\Response
