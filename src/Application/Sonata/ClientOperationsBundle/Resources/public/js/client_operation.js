@@ -360,6 +360,7 @@ function init_clientoperations_buttons(o) {
 }
 
 function init_rapprochement_sums() {
+
     var ECARTsumm = 0;
 
     var $plus = $('.rapprochement_content_no_deb .rapprochement_content_input table.table tr.totals_row div b :first');
@@ -375,7 +376,7 @@ function init_rapprochement_sums() {
     }
     
     $('#totals_input_v1').html(
-        (result).toFixed(2).toString().replace('.', ',')
+    	euro_num_format(result)
     );
 
     var $plus = $('.rapprochement_content_no_deb .rapprochement_content_input table.table tr.totals_row div b :last');
@@ -391,7 +392,7 @@ function init_rapprochement_sums() {
     	result = 0;
     }
     $('#totals_input_v2').html(
-        (result).toFixed(2).toString().replace('.', ',')
+    	euro_num_format(result)
     );
 
     var $plus = $('.rapprochement_content_no_deb .rapprochement_content_output table.table tr.totals_row div b :first');
@@ -406,7 +407,7 @@ function init_rapprochement_sums() {
     	result = 0;
     }
     $('#totals_output_v1').html(
-        (result).toFixed(2).toString().replace('.', ',')
+    	euro_num_format(result)
     );
 
     var $plus = $('.rapprochement_content_no_deb .rapprochement_content_output table.table tr.totals_row div b :last');
@@ -421,7 +422,7 @@ function init_rapprochement_sums() {
     	result = 0;
     }
     $('#totals_output_v2').html(
-        (result).toFixed(2).toString().replace('.', ',')
+    	euro_num_format(result)
     );
 
     if (ECARTsumm == 0) {
