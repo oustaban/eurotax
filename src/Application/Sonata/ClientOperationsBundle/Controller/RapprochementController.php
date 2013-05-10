@@ -37,10 +37,10 @@ class RapprochementController extends Controller
         $this->_client_id = $client_id;
         list($this->_month, $this->_year) = $this->getQueryMonth($month);
 
-        $a06_aib = $this->_getTableData('A06AIB');
-        $v05_lic = $this->_getTableData('V05LIC');
-        $deb_intro = $this->_getTableData('DEBIntro', true);
-        $deb_exped = $this->_getTableData('DEBExped', true);
+        $a06_aib = $this->_getTableData('A06AIB', true);
+        $v05_lic = $this->_getTableData('V05LIC', true);
+        $deb_intro = $this->_getTableData('DEBIntro');
+        $deb_exped = $this->_getTableData('DEBExped');
 
         return array(
             'info' => array(
@@ -75,22 +75,25 @@ class RapprochementController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         if ($isDEB) {
-            $deb = '';
-            $v1 = 'valeur_statistique';
-            $v2 = 'valeur_fiscale';
+
+        	$deb = '*o.DEB';
+        	$v1 = 'montant_HT_en_devise/o.taux_de_change';
+        	$v2 = 'HT';
         }
         else {
-            $deb = '*o.DEB';
-            $v1 = 'montant_HT_en_devise/o.taux_de_change';
-            $v2 = 'HT';
+        	
+        	$deb = '';
+        	$v1 = 'valeur_statistique';
+        	$v2 = 'valeur_fiscale';
+        	
         }
 
         $qb = $em->getRepository('ApplicationSonataClientOperationsBundle:' . $clientOperationName)
             ->createQueryBuilder('o')
             ->select('o.regime' . $deb . ' AS DEB, o.regime, SUM(o.' . $v1 . ') AS v1, COUNT(o.id) AS nb , SUM(o.' . $v2 . ') AS v2')
-            ->andWhere('o.date_piece BETWEEN :form_date_piece AND :to_date_piece')
-            ->setParameter(':form_date_piece', $this->_year . '-' . $this->_month . '-01')
-            ->setParameter(':to_date_piece', $this->_year . '-' . $this->_month . '-31')
+            ->andWhere('o.mois BETWEEN :form_date_mois AND :to_date_mois')
+            ->setParameter(':form_date_mois', $this->_year . '-' . $this->_month . '-01')
+            ->setParameter(':to_date_mois', $this->_year . '-' . $this->_month . '-31')
             ->andWhere('o.client_id = :client_id')
             ->setParameter(':client_id', $this->_client_id)
             /*  */
@@ -99,7 +102,7 @@ class RapprochementController extends Controller
             ->groupBy('DEB')
             ->orderBy('DEB');
         
-        if($clientOperationName == 'V05LIC') {
+        if ($isDEB) {
         	
         	$qb
         	->andWhere('o.DEB = :DEB')
@@ -107,6 +110,8 @@ class RapprochementController extends Controller
         }
         
         
+        /* var_dump($isDEB, (string)$qb->getQuery()->getSql(), $this->_year . '-' . $this->_month . '-01', $this->_year . '-' . $this->_month . '-31');
+        exit; */
         
         
         return $qb->getQuery()->execute();
