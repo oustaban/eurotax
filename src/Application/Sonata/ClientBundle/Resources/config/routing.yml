@@ -5,3 +5,8 @@ impression_index:
 impression_etiquette:
     pattern: /impression/etiquette
     defaults: { _controller: ApplicationSonataClientBundle:Impression:etiquette }
+
+
+initial_import_index:
+    pattern: /initial-import
+    defaults: { _controller: ApplicationSonataClientBundle:InitialImport:index }

@@ -60,6 +60,8 @@
                                 {% if is_granted('ROLE_SUPER_ADMIN') %}
                                 <li><a href="{{ path('admin_sonata_user_group_list') }}">Groupes</a></li>
                                 {% endif %}
+                                <li><a href="{{ path('initial_import_index') }}">Initialisation</a></li>
+                                
                             </ul>
                         </li>
                         {% endif %}

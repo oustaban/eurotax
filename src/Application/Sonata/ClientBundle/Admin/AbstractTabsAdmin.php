@@ -206,12 +206,7 @@ abstract class AbstractTabsAdmin extends Admin
     /**
      * {@inheritdoc}
      */
-    protected function configureRoutes(RouteCollection $collection)
-    {
-    	$collection->add('initialImport', 'initial-import');
-    }
-    
-    
+      
     
     /**
      * @return array|null
