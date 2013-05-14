@@ -65,12 +65,20 @@ jQuery(document).ready(function ($) {
         var $N_TVA_CEE = $('#' + uniqid + '_N_TVA_CEE');
         var $N_TVA_CEE_label = $('#sonata-ba-field-container-' + uniqid + '_N_TVA_CEE label');
 
+        var $N_TVA_CEE_con = $('#sonata-ba-field-container-' + uniqid + '_N_TVA_CEE');
+        
+        
+        
+        
+        
         if (Sonata.country_eu[$(this).val()]) {
             $N_TVA_CEE.attr('required', 'required');
+            $N_TVA_CEE_con.show();
             add_label_required($N_TVA_CEE_label);
         }
         else {
             $N_TVA_CEE.removeAttr('required');
+            $N_TVA_CEE_con.hide();
             rm_label_required($N_TVA_CEE_label);
         }
 
