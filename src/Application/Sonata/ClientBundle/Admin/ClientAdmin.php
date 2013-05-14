@@ -149,6 +149,7 @@ class ClientAdmin extends Admin
         {
             return $er->createQueryBuilder('l')
             	->where("l.name <> 'Annuelle'")
+            	->andWhere("l.name <> 'Semestrielle'")
                 ->orderBy('l.id', 'ASC');
         },'empty_value' => '', 'required' => false,))
             ->add('date_de_depot_id', 'choice', array(
