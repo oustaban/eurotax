@@ -379,6 +379,11 @@ function init_rapprochement_sums() {
     	euro_num_format(result)
     );
 
+    if(result != 0) {
+    	$('#totals_input_v1').parent().css('background-color', '#ff69b4');
+    }
+    
+    
     var $plus = $('.rapprochement_content_no_deb .rapprochement_content_input table.table tr.totals_row div b :last');
     $plus = $plus.length ? $plus.html() : '0';
     var $minus = $('.rapprochement_content_deb .rapprochement_content_input table.table tr.totals_row div b :last');
@@ -394,6 +399,10 @@ function init_rapprochement_sums() {
     $('#totals_input_v2').html(
     	euro_num_format(result)
     );
+    
+    if(result != 0) {
+    	$('#totals_input_v2').parent().css('background-color', '#ff69b4');
+    }
 
     var $plus = $('.rapprochement_content_no_deb .rapprochement_content_output table.table tr.totals_row div b :first');
     $plus = $plus.length ? $plus.html() : '0';
@@ -410,6 +419,10 @@ function init_rapprochement_sums() {
     	euro_num_format(result)
     );
 
+    if(result != 0) {
+    	$('#totals_output_v1').parent().css('background-color', '#ff69b4');
+    }
+    
     var $plus = $('.rapprochement_content_no_deb .rapprochement_content_output table.table tr.totals_row div b :last');
     $plus = $plus.length ? $plus.html() : '0';
     var $minus = $('.rapprochement_content_deb .rapprochement_content_output table.table tr.totals_row div b :last');
@@ -424,6 +437,11 @@ function init_rapprochement_sums() {
     $('#totals_output_v2').html(
     	euro_num_format(result)
     );
+    
+    if(result != 0) {
+    	$('#totals_output_v2').parent().css('background-color', '#ff69b4');
+    }
+    
 
     if (ECARTsumm == 0) {
         $("#rapprochement_validation").show();
