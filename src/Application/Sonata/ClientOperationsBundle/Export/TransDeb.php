@@ -69,8 +69,8 @@ class TransDeb {
 	 * 58 to 61 : Conditions Livraison
 	 * 62 to 63 : Régime
 	 * 64 : I have to check the other one..
-	 * 65 to 72 : I have to check the other one..
-	 * 73 I have to check the other one..
+	 * 65 to 72 : Nomenclature du produit on http://eurotax.testenm.com/sonata/clientoperations/debexped/list?filter[client_id][value]=1 + "00000000" to complete on the left
+	 * 73 : 0 ( all the time the same caractere)
 	 * 74 à 83 : Masse Nette  ( complete with 000 before.. no digit after ,)
 	 * 84 à 94 : Valeur Statistique  ( complete with 000 before.. no digit after ,)
 	 * 95 à 104 : Unités Supplémentaires ( complete with 000 before.. no digit after ,)
@@ -81,6 +81,8 @@ class TransDeb {
 	protected function col6(\Application\Sonata\ClientOperationsBundle\Entity\AbstractDEBEntity $row) {
 		return $row->getPaysIdDestination() . $row->getNatureTransaction() .  000 . (int) $row->getValeurFiscale() .
 			$row->getConditionsLivraison() . $row->getRegime() .
+			 00000000 . $row->getNomenclature() . // 65 - 72
+             0 .	// 73		
 			 000 . (int) $row->getMasseMette() .
 			 000 . (int) $row->getValeurStatistique() .
 			 000 . (int) $row->getUnitesSupplementaires();
@@ -176,8 +178,10 @@ class TransDeb {
 	 58 to 61 : Conditions Livraison
 	 62 to 63 : Régime
 	 64 : I have to check the other one..
-	 65 to 72 : I have to check the other one..
-	 73 I have to check the other one..
+
+	 65 to 72 : Nomenclature du produit on http://eurotax.testenm.com/sonata/clientoperations/debexped/list?filter[client_id][value]=1 + "00000000" to complete on the left
+	 73 : 0 ( all the time the same caractere)
+	 
 	 74 à 83 : Masse Nette  ( complete with 000 before.. no digit after ,)
 	 84 à 94 : Valeur Statistique  ( complete with 000 before.. no digit after ,)
 	 95 à 104 : Unités Supplémentaires ( complete with 000 before.. no digit after ,)

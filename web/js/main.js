@@ -37,7 +37,7 @@ function init_home_page() {
                     }
                 };
 
-            field_dialog_form_add__id(event, $(this).attr('href'), {title:'Alertes' });
+            field_dialog_form_add__id(event, $(this).attr('href'), {title: $(this).attr('clientname') });
             return false;
         });
         

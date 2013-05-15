@@ -67,7 +67,7 @@
         init_clientoperations_buttons({
             alert:{
                 link: '{{ path('admin_sonata_clientoperations_clientalert_list', _filter_json) }}'.replace('&amp;', '&'),
-                title: '{{ 'ApplicationSonataClientOperationsBundle.list.Alerts'|trans()}}'
+                title: '{{ client.nom }}'
             },
             blocking: {
                 link: '{{ path('admin_sonata_clientoperations_'~active_tab~'_locking', {'filter[client_id][value]':client_id, 'client_id': client_id, 'month' : query_month, 'year' : year, 'blocked': blocked  }) }}',
