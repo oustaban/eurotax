@@ -163,15 +163,25 @@ class ClientAdmin extends Admin
             return $er->createQueryBuilder('u')
                 ->orderBy('u.nom', 'ASC');
         }, 'empty_value' => '', 'required' => true))
+        
             ->add('teledeclaration', null, array('label' => 'form.teledeclaration'))
             ->with('form.client.row17')
             ->add('language', null, array('label' => 'form.language', 'empty_value' => '', 'required' => true))
-            ->add('niveau_dobligation_id', 'choice', array(
-            'label' => 'form.niveau_dobligation_id',
+
+        ->add('niveau_dobligation_id', 'choice', array(
+            'label' => 'Niveau Obligation INTRO',
             'choices' => $this->getNiveauDobligationIdChoise(),
             'empty_value' => '',
             'required' => false,
             'help' => ' ',
+        ))
+        ->with('form.client.row18')
+        ->add('niveau_dobligation_exped_id', 'choice', array(
+        		'label' => 'Niveau Obligation EXPED',
+        		'choices' => $this->getNiveauDobligationIdChoise(),
+        		'empty_value' => '',
+        		'required' => false,
+        		'help' => ' ',
         ));
     }
 

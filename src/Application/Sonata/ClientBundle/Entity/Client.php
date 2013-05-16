@@ -269,12 +269,23 @@ class Client
     private $N_TVA_CEE;
 
     /**
+     * Niveau Obligation INTRO
      * @var integer $niveau_dobligation_id
      *
      * @ORM\Column(name="niveau_dobligation_id", type="integer", nullable=true)
      */
     private $niveau_dobligation_id;
 
+    
+    /**
+     * Niveau Obligation EXPED
+     * @var integer $niveau_dobligation_exped_id
+     *
+     * @ORM\Column(name="niveau_dobligation_exped_id", type="integer", nullable=true)
+     */
+    private $niveau_dobligation_exped_id;
+    
+    
     /**
      * @var integer $alert_count
      *
@@ -877,6 +888,33 @@ class Client
         return $this->niveau_dobligation_id;
     }
 
+    
+    /**
+     * Set niveau_dobligation_exped_id
+     *
+     * @param integer $niveauDobligationExpedId
+     * @return Client
+     */
+    public function setNiveauDobligationExpedId($niveauDobligationExpedId)
+    {
+    	$this->niveau_dobligation_id = $niveauDobligationExpedId;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get niveau_dobligation_exped_id
+     *
+     * @return integer
+     */
+    public function getNiveauDobligationExpedId()
+    {
+    	return $this->niveau_dobligation_exped_id;
+    }
+    
+    
+    
+    
     /**
      * Set date_de_depot_id
      *
