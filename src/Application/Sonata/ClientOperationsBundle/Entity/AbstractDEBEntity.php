@@ -39,7 +39,7 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
      * @var float $valeur_fiscale
      *
      * @Assert\NotBlank()
-     * @Assert\Min(limit = "0", message = "Montants < 0")
+     * @Assert\Min(limit = "0", message = "Valeur fiscale doit être un nombre positif")
      * @ORM\Column(name="valeur_fiscale", type="float", nullable=true)
      */
     private $valeur_fiscale;
@@ -47,7 +47,7 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     /**
      * @var string $regime
      *
-     * @ORM\Column(name="regime", type="string", length=255, nullable=true)
+     * @ORM\Column(name="regime", type="float", length=255, nullable=true)
      */
     private $regime;
 
@@ -55,7 +55,7 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
      * @var float $valeur_statistique
      *
      * @Assert\NotBlank()
-     * @Assert\Min(limit = "0", message = "Montants < 0")
+     * @Assert\Min(limit = "0", message = "Valeur statistique doit être un nombre positif")
      * @ORM\Column(name="valeur_statistique", type="float", nullable=true)
      */
     private $valeur_statistique;
@@ -63,6 +63,7 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     /**
      * @var float $masse_mette
      *
+     * @Assert\Min(limit = "0", message = "Masse Nette doit être un nombre positif")
      * @ORM\Column(name="masse_mette", type="integer", nullable=true)
      */
     private $masse_mette;
@@ -71,6 +72,7 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     /**
      * @var float $unites_supplementaires
      *
+     * @Assert\Min(limit = "0", message = "Unité supplémentaires doit être un nombre positif")
      * @ORM\Column(name="unites_supplementaires", type="integer", nullable=true)
      */
     private $unites_supplementaires;
@@ -93,6 +95,7 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     /**
      * @var string $mode_transport
      *
+     * @Assert\Range(min = "1", max = "9", minMessage = "Mode de transport doit être compris entre 1 et 9", maxMessage = "Mode de transport doit être compris entre 1 et 9")
      * @ORM\Column(name="mode_transport", type="string", length=255, nullable=true)
      */
     private $mode_transport;
@@ -100,6 +103,7 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     /**
      * @var string $departement
      *
+     * @Assert\Range(min = "1", max = "99", minMessage = "Le département n'est pas correct", maxMessage = "Le département n'est pas correct")
      * @ORM\Column(name="departement", type="string", length=255, nullable=true)
      */
     private $departement;

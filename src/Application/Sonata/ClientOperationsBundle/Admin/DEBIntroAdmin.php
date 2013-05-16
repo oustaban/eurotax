@@ -108,7 +108,7 @@ class DEBIntroAdmin extends Admin
         	->setDatePieceByFilename();
 
         if ($this->getValidateImport()) {
-            $error->validateNLigne($this->getIndexImport());
+            //$error->validateNLigne($this->getIndexImport());
         }
     }
 }

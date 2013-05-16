@@ -733,6 +733,40 @@ class AbstractTabsController extends Controller
         return $this->render(':redirects:back.html.twig');
     }
 
+
+    /**
+     * NLigne rows must be consecutive 1,2,3,4,5...
+     * 
+     * @param unknown $class
+     * @param unknown $data
+     */
+    private function _validateDEBNLigne($class, $data) {
+    	if(!in_array($class, array('DEBExped', 'DEBIntro'))) {
+    		return;
+    	}
+    	$expectedFirstVal = 1;
+    	$nlignes = array();
+    	foreach($data as $row) {
+    		if(empty($row[0])) {
+    			continue;
+    		}
+    		$nlignes[] = $row[0];
+    	}
+    	$checkConsec = function($d) {
+    		for($i=0;$i<count($d);$i++) {
+    			if(isset($d[$i+1]) && $d[$i]+1 != $d[$i+1]) {
+    				return false;
+    			}
+    		}
+    		return true;
+    	};
+    	
+    	if($data[0][0] != $expectedFirstVal || !$checkConsec($nlignes)) {
+    		$this->setCountImports($class, 'errors', 'No line n\'est pas correct pour');
+    	}
+    }
+    
+    
     /**
      * @param $sheets
      * @param bool $save
@@ -749,20 +783,22 @@ class AbstractTabsController extends Controller
 
                 $data = $this->skipLine($config_excel, $data);
 
+                //DEB Exped | DEB Intro
+                $this->_validateDEBNLigne($class, $data);
+                        
+                
+                
                 $adminCode = 'application.sonata.admin.' . strtolower($class);
                 /* @var $admin \Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin */
                 $admin = $this->container->get('sonata.admin.pool')->getAdminByAdminCode($adminCode);
                 $admin->setDeviseList($this->getDeviseList());
                 $admin->setValidateImport();
-
+                
                 foreach ($data as $key => $line) {
-
                     if ($this->getImportsBreak($data, $key)) {
                         break;
                     }
-
                     $object = $admin->getNewInstance();
-
                     $admin->setSubject($object);
                     $admin->setIndexImport($key + 1);
                     
