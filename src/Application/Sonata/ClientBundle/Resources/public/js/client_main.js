@@ -101,11 +101,11 @@ jQuery(document).ready(function ($) {
     }).trigger('change');
 
 
-    $('#' + uniqid + '_niveau_dobligation_id').change(function () {
+    /*$('#' + uniqid + '_niveau_dobligation_id').change(function () {
 
         $('#sonata-ba-field-container-' + uniqid + '_niveau_dobligation_id .help-block').text(Sonata.niveau_dobligation[$(this).val()] ? Sonata.niveau_dobligation[$(this).val()] : '');
 
-    }).trigger('change');
+    }).trigger('change');*/
 
 
     $('#' + uniqid + '_nature_du_client').change(function () {
