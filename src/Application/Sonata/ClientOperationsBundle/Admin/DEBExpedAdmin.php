@@ -31,7 +31,7 @@ class DEBExpedAdmin extends Admin
         $formMapper
             ->add('n_ligne', null, array('label' => $this->getFieldLabel('n_ligne')))
             ->add('date_piece', null, array(
-                'label' => $this->getFieldLabel('date_piece'),
+                'label' => 'Mois TVA',
                 'attr' => array('class' => 'datepicker'),
                 'widget' => 'single_text',
                 'input' => 'datetime',
@@ -73,7 +73,7 @@ class DEBExpedAdmin extends Admin
 
         $listMapper->add('n_ligne', null, array('label' => $this->getFieldLabel('n_ligne')))
             ->add('date_piece', null, array(
-            'label' => $this->getFieldLabel('date_piece'),
+            'label' => 'Mois de TVA',
             'template' => $this->_bundle_name . ':CRUD:list_date_piece_2.html.twig'
         ))->add('nomenclature', null, array('label' => $this->getFieldLabel('nomenclature')))
             ->add('pays_destination.name', null, array('label' => $this->getFieldLabel('pays_id_destination')))

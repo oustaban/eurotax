@@ -10,9 +10,15 @@ jQuery(document).ready(function ($) {
     	window.location = $(this).attr('href');
     });
     
-    
-    
     if (typeof symfony_ajax != 'undefined'){
+    	symfony_ajax.behaviors.common = {
+            attach:function (context) {
+            	$('form .sonata-ba-collapsed-fields input[class~="money"]').each(function() {
+                	$(this).val( euro_num_format($(this).val()) );
+                });
+            }
+    	};
+    	
         symfony_ajax.behaviors.PaiementDateCloneMoisdeTVA = {
             attach:function (context) {
                 var _uniqid = symfony_ajax.get_uniqid();
