@@ -6,7 +6,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
-use Application\Sonata\ClientOperationsBundle\Admin\Validate\ErrorElements;
+use Application\Sonata\ClientOperationsBundle\Admin\Validate\DEBErrorElements;
 use Doctrine\ORM\EntityRepository;
 
 use Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin as Admin;
@@ -101,8 +101,9 @@ class DEBExpedAdmin extends Admin
         /* @var $object \Application\Sonata\ClientOperationsBundle\Entity\DEBExped */
         parent::validate($errorElement, $object);
 
-        $error = new ErrorElements($errorElement, $object, $this->import_file_year, $this->import_file_month);
+        $error = new DEBErrorElements($errorElement, $object, $this->import_file_year, $this->import_file_month);
         $error->setValidateImport($this->getValidateImport())
+        	->validateDEB()
         	->setMois()
         	->setDatePieceByFilename()
         	->validateNomenclature();
