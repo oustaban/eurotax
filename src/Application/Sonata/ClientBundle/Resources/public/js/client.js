@@ -144,6 +144,11 @@ jQuery(document).ready(function ($) {
                 '#sonata-ba-field-container-' + _uniqid + '_date_demission input,' +
                 '#sonata-ba-field-container-' + _uniqid + '_date_decheance input', context);
 
+            if(status == 0) {
+            	$('#' + _uniqid + '_nom_de_la_banques_id').attr('disabled', true);
+            }
+            
+            
             if ((type == 1 || type == 3)) {
 
                 var valute_all = 0;
