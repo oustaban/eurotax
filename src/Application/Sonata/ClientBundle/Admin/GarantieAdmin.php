@@ -34,6 +34,23 @@ class GarantieAdmin extends Admin
 
         $id = $this->getRequest()->get($this->getIdParameter());
 
+        
+        $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $doctrine->getManager();
+        
+        
+        
+        if($id && $garantie = $em->getRepository('ApplicationSonataClientBundle:Garantie')->find($id)) {
+        	//$typeDocumentId = $document->getTypeDocument()->getId();
+        	$formMapper->with(' ')
+        		->add('nom_de_la_banques_id_old', 'hidden', array('data' => $garantie->getNomDeLaBanquesId(), 'mapped' => false, ));
+        }
+        
+        
+        
+        
+        
         $formMapper->with($this->getFieldLabel('title'))
             ->add('type_garantie', null,
             array(
@@ -204,6 +221,42 @@ class GarantieAdmin extends Admin
                 unset($c, $compte_de_depot, $compte);
             }
         }
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see \Sonata\AdminBundle\Admin\Admin::postUpdate()
+     */
+    public function postUpdate($object)
+    {
+    	$formRequestData = $this->getRequest()->request->all();
+    	$formRequestData = $formRequestData[$this->getForm()->getName()];
+    	
+    	$nom_de_la_banques_id = $object->getNomDeLaBanquesId();
+    	$nom_de_la_banques_id_old = $formRequestData['nom_de_la_banques_id_old'];
+    	
+    	if(!$nom_de_la_banques_id  &&  $nom_de_la_banques_id_old == 1) {
+    		/* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+    		$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+    		
+    		/* @var $em \Doctrine\ORM\EntityManager */
+    		$em = $doctrine->getManager();
+    		
+    		//example: http://redmine.testenm.com/issues/880
+    		$status_object = $em->getRepository('ApplicationSonataClientBundle:ListCompteStatuts')->find(1);
+    		
+    		//1
+    		$compte = new Compte();
+    		$compte->setDate($object->getDateDemission());
+    		$compte->setMontant($object->getMontant());
+    		$compte->setOperation('Versement du dépôt de garantie');
+    		$compte->setClient($object->getClient());
+    		$compte->setGarantie($object);
+    		$compte->setStatut($status_object);
+    		$em->persist($compte);
+    		
+    		$em->flush();
+    	}
     }
 }
 
