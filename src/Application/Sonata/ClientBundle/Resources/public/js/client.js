@@ -96,11 +96,26 @@ jQuery(document).ready(function ($) {
                 }).trigger('change');
 
 
-                $('#' + _uniqid + '_nom_de_lemeteur', context).keyup(function () {
+               /* $('#' + _uniqid + '_nom_de_lemeteur', context).keyup(function () {
                     $('#sonata-ba-field-container-' + _uniqid + '_nom_de_la_banques_id')[['hide', 'show'][$(this).val() ? 0 : 1]]();
                 }).keyup();
+                */
+                
+                
+                
+                
+                
+                
+                //console.log(status);
+                var status = $('#' + _uniqid + '_nom_de_la_banques_id :selected', context).val();
+                
+                if(status == 0 && symfony_ajax.is_new() === false) {
+                	$('#' + _uniqid + '_nom_de_la_banques_id').attr('disabled', true);
+                }
+                
+                
             }
-        }
+        };
 
         /**
          * @param _uniqid
@@ -144,9 +159,7 @@ jQuery(document).ready(function ($) {
                 '#sonata-ba-field-container-' + _uniqid + '_date_demission input,' +
                 '#sonata-ba-field-container-' + _uniqid + '_date_decheance input', context);
 
-            if(status == 0) {
-            	$('#' + _uniqid + '_nom_de_la_banques_id').attr('disabled', true);
-            }
+           
             
             
             if ((type == 1 || type == 3)) {
@@ -180,8 +193,7 @@ jQuery(document).ready(function ($) {
             else if (type == 2) {
                 $require_block.removeAttr('required');
 
-                $('#sonata-ba-field-container-' + _uniqid + '_nom_de_la_banques_id, ' +
-                    '#sonata-ba-field-container-' + _uniqid + '_nom_de_lemeteur, ' +
+                $(  '#sonata-ba-field-container-' + _uniqid + '_nom_de_lemeteur, ' +
                     '#sonata-ba-field-container-' + _uniqid + '_num_de_ganrantie, ' +
                     '#sonata-ba-field-container-' + _uniqid + '_date_decheance, ' +
                     '#sonata-ba-field-container-' + _uniqid + '_expire', context).hide();
