@@ -54,8 +54,8 @@ class HomeController extends Controller
 
         
         $now = new \DateTime();
-        // id DD > 25 Mois-TVA MM.YYYY else Mois-TVA MM.YYYY - 1MM
-        $moisExtraColTitle = $now->format('d') > 25 ? $now->format('m.Y') : $now->format('m.Y - 1m');
+        // if DD > 25 Mois-TVA MM.YYYY - 1  else Mois-TVA MM.YYYY - 2MM
+        $moisExtraColTitle = $now->format('d') > 25 ? $now->format('m.Y - 1') : $now->format('m.Y - 2m');
         
         
         

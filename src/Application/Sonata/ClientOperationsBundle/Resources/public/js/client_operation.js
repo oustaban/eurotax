@@ -14,7 +14,9 @@ jQuery(document).ready(function ($) {
     	symfony_ajax.behaviors.common = {
             attach:function (context) {
             	$('form .sonata-ba-collapsed-fields input[class~="money"]').each(function() {
-                	$(this).val( euro_num_format($(this).val()) );
+                	if($(this).val()) {	
+            			$(this).val( euro_num_format($(this).val()) );
+                	}
                 });
             }
     	};
@@ -42,9 +44,9 @@ jQuery(document).ready(function ($) {
                 $('#' + _uniqid + '_taux_de_change').keyup(function() {
                 	$('#' + _uniqid + '_HT').val( euro_num_format(  real_num($('#' + _uniqid + '_montant_HT_en_devise').val()) / real_num($('#' + _uniqid + '_taux_de_change').val()) ) );
                 });            
-                if (($('#' + _uniqid + '_montant_HT_en_devise', context).size())) {
-                	$('#' + _uniqid + '_montant_HT_en_devise').val( euro_num_format($('#' + _uniqid + '_montant_HT_en_devise').val()) );
-                }
+                //if (($('#' + _uniqid + '_montant_HT_en_devise', context).size())) {
+                	//$('#' + _uniqid + '_montant_HT_en_devise').val( euro_num_format($('#' + _uniqid + '_montant_HT_en_devise').val()) );
+               // }
                 $('#' + _uniqid + '_montant_HT_en_devise').blur(function() {
                 	$(this).val( euro_num_format($(this).val()) );
                 }).keyup(function() {
