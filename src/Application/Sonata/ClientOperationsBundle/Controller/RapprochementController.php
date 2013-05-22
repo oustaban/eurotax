@@ -20,6 +20,7 @@ class RapprochementController extends Controller
     protected $_month = '';
     protected $_year = '';
     protected $_client_id = null;
+    protected $_locking = false;
 
     /**
      * @Template()
@@ -37,6 +38,23 @@ class RapprochementController extends Controller
         $this->_client_id = $client_id;
         list($this->_month, $this->_year) = $this->getQueryMonth($month);
 
+        
+        
+        $month_default = '-1' . date('|Y', strtotime('-1 month'));
+        
+        $query_month = $month ? $month : $month_default;
+        
+        if ($query_month == 'all'){
+        	$query_month = -1;
+        	
+        }
+        
+        
+        //var_dump($query_month, $month);
+        
+        
+        
+        
         $a06_aib = $this->_getTableData('A06AIB', true);
         $v05_lic = $this->_getTableData('V05LIC', true);
         $deb_intro = $this->_getTableData('DEBIntro');
@@ -47,7 +65,9 @@ class RapprochementController extends Controller
                 'time' => strtotime($this->_year . '-' . $this->_month . '-01'),
                 'month' => $this->_month,
                 'year' => $this->_year,
-                'quarter' => floor(($this->_month - 1) / 3) + 1
+                'quarter' => floor(($this->_month - 1) / 3) + 1,
+            	'blocked' => $this->getLocking() ? 0 : 1,
+            	'query_month' => $query_month
             ),
             'client' => $client,
             'a06_aib' => $a06_aib,
@@ -57,18 +77,48 @@ class RapprochementController extends Controller
         );
     }
 
+    
+    
+    /**
+     * @return mixed
+     */
+    public function getLocking()
+    {
+    	if ($this->_locking === false) {
+    		$this->_locking = $this->getDoctrine()->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $this->_client_id, 'month' => $this->_month, 'year' => $this->_year));
+    		$this->_locking = $this->_locking ? : 0;
+    	}
+    
+    	return $this->_locking;
+    }
+    
+    
     /**
      * @param $query_month
      * @return array
      */
-    public function getQueryMonth($query_month)
+/*     public function getQueryMonth($query_month)
     {
         $year = substr($query_month, -4);
         $month = $query_month == -1 ? (date('n') - 1) . '|' . $year : $query_month;
 
         return explode('|', $month);
-    }
+    } */
 
+    
+    public function getQueryMonth($query_month)
+    {
+    	if ($query_month == -1) {
+    		$month = date('n|Y', strtotime('-1 month'));
+    	}
+    	else {
+    		$month = $query_month;
+    	}
+    
+    	return explode('|', $month);
+    }
+    
+    
     protected function _getTableData($clientOperationName, $isDEB = false)
     {
         /** @var $em \Doctrine\ORM\EntityManager */

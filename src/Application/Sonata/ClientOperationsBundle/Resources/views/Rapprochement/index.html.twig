@@ -9,25 +9,25 @@
 
     <h2>{{ client }}</h2>
 
-    <h3>{{ info.time|date('Y-m') }} - T{{ info.quarter }}</h3>
+    <h3>{{ info.time|date('Y-m') }} <!-- T{{ info.quarter }} --></h3>
 
     <div class="rapprochement_content_body">
         <div class="rapprochement_content_no_deb">
             <div class="rapprochement_content_input">
                 <h4>{{ 'ApplicationSonataClientOperationsBundle.rapprochement.input_title'|trans() }}</h4>
-                {% include 'ApplicationSonataClientOperationsBundle::Rapprochement/table.html.twig' with {'table': a06_aib, 'typeName': 'A06-AIB', preRegime: 'pour ', postRegime: ' - DEB "OUI"'} %}
+                {% include 'ApplicationSonataClientOperationsBundle::Rapprochement/table.html.twig' with {'table': a06_aib, 'typeName': 'A06-AIB', preRegime: 'pour ', postRegime: ' - DEB "OUI"', 'totalTitle': 'TOTAL V06'} %}
             </div>
             <div class="rapprochement_content_output">
                 <h4>{{ 'ApplicationSonataClientOperationsBundle.rapprochement.output_title'|trans() }}</h4>
-                {% include 'ApplicationSonataClientOperationsBundle::Rapprochement/table.html.twig' with {'table': v05_lic, 'typeName': 'V05-LIC', preRegime: 'pour ', postRegime: ' - DEB "OUI"'} %}
+                {% include 'ApplicationSonataClientOperationsBundle::Rapprochement/table.html.twig' with {'table': v05_lic, 'typeName': 'V05-LIC', preRegime: 'pour ', postRegime: ' - DEB "OUI"', 'totalTitle': 'TOTAL V05'} %}
             </div>
         </div>
         <div class="rapprochement_content_deb">
             <div class="rapprochement_content_input">
-                {% include 'ApplicationSonataClientOperationsBundle::Rapprochement/table.html.twig' with {'table': deb_intro, 'typeName': 'DEB-Intro', preRegime: ' ', postRegime: ''} %}
+                {% include 'ApplicationSonataClientOperationsBundle::Rapprochement/table.html.twig' with {'table': deb_intro, 'typeName': 'DEB-Intro', preRegime: ' ', postRegime: '', 'totalTitle': ''} %}
             </div>
             <div class="rapprochement_content_output">
-                {% include 'ApplicationSonataClientOperationsBundle::Rapprochement/table.html.twig' with {'table': deb_exped, 'typeName': 'DEB-Exped', preRegime: '', postRegime: ''} %}
+                {% include 'ApplicationSonataClientOperationsBundle::Rapprochement/table.html.twig' with {'table': deb_exped, 'typeName': 'DEB-Exped', preRegime: '', postRegime: '', 'totalTitle': ''} %}
             </div>
         </div>
     </div>
@@ -73,7 +73,20 @@
             </table>
         </div>
     </div>
+    
+   
+    
 </div>
+<div class="content cboth ">
+ 	
+ 	
+ 	
+ 	
+ 	{% set text_lock = info.blocked ? 'Clôturer' : 'Déverrouiller' %}
+     <button id="btn_locking" rel="tooltip" title="Pour tests" class="btn pull-right"><i class="icon icon-lock"></i> {{ text_lock|trans}}</button>
+ 	
+</div>
+ 
 {% endset %}
 
 {% block javascriptsafter %}
@@ -81,6 +94,23 @@
 <script type="text/javascript">
     $(function(){
         init_rapprochement_sums();
+    });
+</script>
+
+
+
+<script type="text/javascript">
+    $(function(){
+        init_clientoperations_buttons({
+            
+            blocking: {
+                link: '{{ path('admin_sonata_clientoperations_v01tva_locking', {'filter[client_id][value]':client.id, 'client_id': client.id, 'month' : info.query_month, 'year' : info.year, 'blocked': info.blocked  }) }}',
+                permit: {% if info.blocked %}true{% else %}false{% endif%},
+                hasBlocking: {% if client.getBlockedCount %}true{% else %}false{% endif%},
+                isBlocked: {% if info.blocked %}true{% else %}false{% endif%},
+                text: '{{ (info.blocked ? 'verrouiller_confirm' : 'deverrouiller_confirm')|trans }}'
+            }
+        })
     });
 </script>
 {% endblock %}
