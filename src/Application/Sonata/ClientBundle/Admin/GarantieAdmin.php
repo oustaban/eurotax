@@ -135,14 +135,14 @@ class GarantieAdmin extends Admin
                 $status_object = $em->getRepository('ApplicationSonataClientBundle:ListCompteStatuts')->find(1);
 
                 //1
-                $compte = new Compte();
+               /*  $compte = new Compte();
                 $compte->setDate($object->getDateDemission());
                 $compte->setMontant($object->getMontant());
                 $compte->setOperation('Versement du dépôt de garantie');
                 $compte->setClient($object->getClient());
                 $compte->setGarantie($object);
                 $compte->setStatut($status_object);
-                $em->persist($compte);
+                $em->persist($compte); */
 
 
                 //2
