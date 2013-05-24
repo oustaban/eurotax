@@ -6,9 +6,9 @@ $(function () {
         }
         var $tr = $(this).find('tbody tr:first').clone();
         $tr.find('.negative_value').removeClass('negative_value');
-
+        
         var add_total_rows = false;
-        $tr.addClass('totals_row').children().each(function () {
+        $tr.addClass('totals_row').children().each(function (i) {
             $(this).addClass('total').removeAttr('objectid');
             var $div = $(this).children();
             if (!$div.hasClass('totals')) {
@@ -33,6 +33,13 @@ $(function () {
         });
 
         if (add_total_rows) {
+        	 var $tdFirst = $tr.find('td:first');
+             var totalTitle = $tdFirst.attr('title');
+             if(totalTitle) {
+	            $tdFirst.html("<b>" + totalTitle + " </b> ").end();
+            	//console.log(totalTitle);
+             }	
+        	
             $tr.appendTo($tfoot);
         }
         else {

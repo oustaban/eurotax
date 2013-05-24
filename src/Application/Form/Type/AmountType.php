@@ -32,6 +32,7 @@ class AmountType extends AbstractType
     {
         $resolver->setDefaults(array(
             'virtual' => true,
+        	'grouping'  => true,
         ));
     }
 

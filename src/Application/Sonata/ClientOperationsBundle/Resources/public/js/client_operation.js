@@ -1,4 +1,5 @@
 jQuery(document).ready(function ($) {
+	return;
     $('#error_repost_show').die().live('click', function () {
         $('#importReportModal').modal('toggle');
         return false;
@@ -11,15 +12,19 @@ jQuery(document).ready(function ($) {
     });
     
     if (typeof symfony_ajax != 'undefined'){
-    	symfony_ajax.behaviors.common = {
+    	/*symfony_ajax.behaviors.common = {
             attach:function (context) {
             	$('form .sonata-ba-collapsed-fields input[class~="money"]').each(function() {
                 	if($(this).val()) {	
             			$(this).val( euro_num_format($(this).val()) );
                 	}
+            		
+            		//console.log($(this).val());
+            		//console.log(euro_num_format($(this).val()));
+            		
                 });
             }
-    	};
+    	};*/
     	
         symfony_ajax.behaviors.PaiementDateCloneMoisdeTVA = {
             attach:function (context) {
@@ -44,9 +49,14 @@ jQuery(document).ready(function ($) {
                 $('#' + _uniqid + '_taux_de_change').keyup(function() {
                 	$('#' + _uniqid + '_HT').val( euro_num_format(  real_num($('#' + _uniqid + '_montant_HT_en_devise').val()) / real_num($('#' + _uniqid + '_taux_de_change').val()) ) );
                 });            
-                //if (($('#' + _uniqid + '_montant_HT_en_devise', context).size())) {
-                	//$('#' + _uniqid + '_montant_HT_en_devise').val( euro_num_format($('#' + _uniqid + '_montant_HT_en_devise').val()) );
-               // }
+                
+                /*if ( $('#' + _uniqid + '_montant_HT_en_devise', context).val() != '' ) {
+                	$('#' + _uniqid + '_montant_HT_en_devise').val( euro_num_format($('#' + _uniqid + '_montant_HT_en_devise').val()) );
+                }*/
+                
+                //console.log($('#' + _uniqid + '_montant_HT_en_devise', context).size());
+                
+                
                 $('#' + _uniqid + '_montant_HT_en_devise').blur(function() {
                 	$(this).val( euro_num_format($(this).val()) );
                 }).keyup(function() {
@@ -240,6 +250,9 @@ jQuery(document).ready(function ($) {
                 }
             },
             calc_paiement_montant:function(e){
+            	
+            	//console.log('calc_paiement_montant');
+            	
                 var _uniqid = symfony_ajax.get_uniqid();
                 var $montant_TTC = $('#' + _uniqid + '_montant_TTC');
                 var $paiement_montant = $('#' + _uniqid + '_paiement_montant');
@@ -250,31 +263,25 @@ jQuery(document).ready(function ($) {
                 	$paiement_montant.val(euro_num_format(pm)).trigger('change');
                 } else {
                 	//format value only
-                	if($paiement_montant.val()) {
+                	/*if($paiement_montant.val()) {
                 		$paiement_montant.val(euro_num_format($paiement_montant.val()));
-                	}
+                	}*/
                 }
+                
             },
             calc:function (e) {
                 var m = 100000;
-
                 var _uniqid = symfony_ajax.get_uniqid();
-
                 var $montant_HT_en_devise = $('#' + _uniqid + '_montant_HT_en_devise');
                 var $taux_de_TVA = $('#' + _uniqid + '_taux_de_TVA');
-
                 var montant_HT_en_devise = real_num($montant_HT_en_devise.val());
                 var taux_de_TVA = real_num($taux_de_TVA.val());
-
                 var montant_HT_en_devise_X_m = Math.round(parseFloat(montant_HT_en_devise)*m);
                 var taux_de_TVA_X_m = Math.round(parseFloat(taux_de_TVA)*m);
-
                 var montant_TVA_francaise = (montant_HT_en_devise_X_m * taux_de_TVA_X_m) / m / m;
                 var montant_TTC = montant_HT_en_devise_X_m / m + montant_TVA_francaise;
-
                 montant_TVA_francaise = montant_TVA_francaise ? euro_num_format(montant_TVA_francaise) : '';
                 montant_TTC = montant_TTC ? euro_num_format(montant_TTC) : '';
-
                 $('#' + _uniqid + '_montant_TVA_francaise').val(montant_TVA_francaise).trigger('change');
                 $('#' + _uniqid + '_montant_TTC').val(montant_TTC).trigger('change');
             }
@@ -530,26 +537,35 @@ function euro_num_format(rnum, rlength) { // Arguments: number to round, number 
 	if(typeof rlength === 'undefined') {
 		rlength = 2;
 	}
+	rnum = real_num(rnum);
+	if(rnum == '') {
+		return '';
+	}
 	
-	rnum = parseFloat(rnum.toString().replace(',', '.'));
+	
+	
 	var numberStr = rnum.toFixed(rlength).toString().replace('.', ',');
-	var numFormatDec = numberStr.slice(-2); /*decimal 00*/
-	numberStr = numberStr.substring(0, numberStr.length-3); /*cut last 3 strings*/
+	var numFormatDec = numberStr.slice(-2); //decimal 00
 	
-	var numFormat = new Array;
+	numberStr = numberStr.substring(0, numberStr.length-3); //cut last 3 strings
+	
+	var numFormat = [];
 	while (numberStr.length > 3) {
 		numFormat.unshift(numberStr.slice(-3));
 		numberStr = numberStr.substring(0, numberStr.length-3);
 	}
 	numFormat.unshift(numberStr);
-	return numFormat.join(' ')+','+numFormatDec; /*format 000.000.000,00 */
+	return numFormat.join(' ')+','+numFormatDec; //format 000 000 000,00 
 	
 }
 
 
-
 function real_num(num) {
-	num = num.replace(',', '.').replace(/\s+/, '');
+	if(num == '' || typeof num === 'undefined') {
+		return '';
+	}
+	
+	num = num.toString().replace(',', '.').replace(/\s+/, '');
 	return parseFloat(num);
 }
 

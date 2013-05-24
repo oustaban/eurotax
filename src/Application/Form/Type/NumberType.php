@@ -3,6 +3,7 @@ namespace Application\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Application\Form\Extension\NumberToLocalizedStringTransformer;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 use Symfony\Component\Form\Extension\Core\Type\NumberType as BaseType;
 
@@ -27,4 +28,19 @@ class NumberType extends BaseType
         ));
     }
 
+    
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+    	$resolver->setDefaults(array(
+    		'precision' => 2,
+    		'grouping'  => true,
+        	'rounding_mode' => \NumberFormatter::ROUND_HALFUP,
+    		'compound'      => false,
+    	));
+    }
+    
 }

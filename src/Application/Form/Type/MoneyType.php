@@ -40,7 +40,7 @@ class MoneyType extends BaseType
         $resolver->setDefaults(array(
             'decorator' => null,
             'precision' => 2,
-            'grouping'  => false,
+            'grouping'  => true,
             'divisor'   => 1,
             'currency'  => 'EUR',
             'compound'  => false,
