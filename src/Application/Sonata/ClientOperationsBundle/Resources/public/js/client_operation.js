@@ -1,5 +1,4 @@
 jQuery(document).ready(function ($) {
-	return;
     $('#error_repost_show').die().live('click', function () {
         $('#importReportModal').modal('toggle');
         return false;
@@ -12,19 +11,7 @@ jQuery(document).ready(function ($) {
     });
     
     if (typeof symfony_ajax != 'undefined'){
-    	/*symfony_ajax.behaviors.common = {
-            attach:function (context) {
-            	$('form .sonata-ba-collapsed-fields input[class~="money"]').each(function() {
-                	if($(this).val()) {	
-            			$(this).val( euro_num_format($(this).val()) );
-                	}
-            		
-            		//console.log($(this).val());
-            		//console.log(euro_num_format($(this).val()));
-            		
-                });
-            }
-    	};*/
+    	
     	
         symfony_ajax.behaviors.PaiementDateCloneMoisdeTVA = {
             attach:function (context) {
@@ -49,12 +36,7 @@ jQuery(document).ready(function ($) {
                 $('#' + _uniqid + '_taux_de_change').keyup(function() {
                 	$('#' + _uniqid + '_HT').val( euro_num_format(  real_num($('#' + _uniqid + '_montant_HT_en_devise').val()) / real_num($('#' + _uniqid + '_taux_de_change').val()) ) );
                 });            
-                
-                /*if ( $('#' + _uniqid + '_montant_HT_en_devise', context).val() != '' ) {
-                	$('#' + _uniqid + '_montant_HT_en_devise').val( euro_num_format($('#' + _uniqid + '_montant_HT_en_devise').val()) );
-                }*/
-                
-                //console.log($('#' + _uniqid + '_montant_HT_en_devise', context).size());
+
                 
                 
                 $('#' + _uniqid + '_montant_HT_en_devise').blur(function() {

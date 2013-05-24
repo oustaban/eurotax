@@ -213,4 +213,22 @@ abstract class AbstractBaseEntity
     {
         return $this->mois;
     }
+    
+    
+    
+    
+    public function fieldsAsArray() {
+    	$fields = array();
+    	$refclass = new \ReflectionClass($this);
+    	foreach ($refclass->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
+    		$name = $methodName = $method->getName();
+    		if(preg_match('/^get/', $name)) {
+    			$name = substr($name, 3);
+    			$name = \Doctrine\Common\Util\Inflector::tableize($name);
+    			$name = str_replace(array('t_v_a', 'h_t', 't_t_c'), array('TVA', 'HT', 'TTC'), $name);
+    			$fields[$name] = $this->$methodName();
+    		}
+    	}
+    	return $fields;
+    }
 }

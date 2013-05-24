@@ -204,6 +204,41 @@ abstract class AbstractTabsAdmin extends Admin
             ->add('imports.id', null, array('label' => 'ApplicationSonataClientOperationsBundle.list.import_id'));
     }
 
+    
+    public function preUpdate($object)
+    {
+    	$this->_autofixeuroformat($object);	
+    }
+    
+    
+    public function prePersist($object) {
+    	$this->_autofixeuroformat($object);
+    }
+    
+    
+    private function _autofixeuroformat($object) {
+    	$formRequestData = $this->getRequest()->request->all();
+    	$formRequestData = $formRequestData[$this->getForm()->getName()];
+    	 
+    	$fields = $object->fieldsAsArray($object);
+    	foreach($fields as $field => $value) {
+    		$fieldDescription = $this->getFormFieldDescription($field);
+    		if ($fieldDescription && $type = $fieldDescription->getType()) {
+    			if($type == 'money' || $type == 'number' || $type == 'float') {
+    				if(isset($formRequestData[$field])) {
+    					$method = ucfirst(\Doctrine\Common\Util\Inflector::classify($field));
+    					$setMethod = 'set'.$method;
+    					$getMethod = 'get'.$method;
+    					$value = str_replace(array(' ', ','), array('', '.'), $formRequestData[$field]);
+    					$object->$setMethod($value);
+    				}
+    			}
+    		}
+    	}
+    }
+    
+    
+    
     /**
      * @param ErrorElement $errorElement
      * @param mixed $object
