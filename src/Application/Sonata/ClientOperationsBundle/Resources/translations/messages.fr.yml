@@ -44,7 +44,7 @@ ApplicationSonataClientOperationsBundle:
       tva: TVA #TVA
 
   imports:
-    list_title: Liste des importations
+    list_title: Liste des importations sans ligne clôturée
     confirm_delete: Etes vous sur de vouloir effacer le dernier lot importé
 
   form:
