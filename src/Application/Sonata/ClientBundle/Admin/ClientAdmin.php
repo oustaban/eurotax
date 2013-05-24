@@ -176,6 +176,7 @@ class ClientAdmin extends Admin
             'help' => ' ',
         ))
         ->with('form.client.row18')
+       	->add('emptyEmpty', 'hidden', array('data' => 0, 'mapped' => false))
         ->add('niveau_dobligation_exped_id', 'choice', array(
         		'label' => 'Niveau Obligation EXPED',
         		'choices' => $this->getNiveauDobligationIdChoise(),

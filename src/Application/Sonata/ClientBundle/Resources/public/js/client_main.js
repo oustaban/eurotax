@@ -117,20 +117,95 @@ jQuery(document).ready(function ($) {
                 $('#sonata-ba-field-container-' + uniqid + '_niveau_dobligation_id .help-block').text('');
             }
 
-            $('#' + uniqid + '_niveau_dobligation_id option').each(function () {
+            
+        }
+        
+        
+        
+        
+        
+        
+        if ($(this).val() == 1) {
+        	
+        	// The "Nature du client *" = 6 eme...
+            //"4" should not be present on the list for "Niveau Obligation EXPED"
+        	
+        	$('#' + uniqid + '_niveau_dobligation_id option').each(function () {
                 if ($(this).val() == 4) {
                     $(this).hide();
                 }
             });
-        }
-        else {
+        	
+        	
+        	$('#' + uniqid + '_niveau_dobligation_exped_id option').each(function () {
+                if ($(this).val() == 4) {
+                    $(this).hide();
+                }
+            });
+        	
+        } else if ($(this).val() == 2) {
+        	
+        	
+        	 /**
+             * 
+    		The "Nature du client *" = DEB...
+    		 
+    		"Niveau Obligation EXPED" could be 0, 1, 2 , 3, 4  ( 2 and 3 are missing)
+    		"Niveau Obligation INTRO " could be 0, 1,2 ,3   (2 and 3 are missing ... need to delete 4 )
+      
+             * 
+             */
+        	
+        	
+        	$('#' + uniqid + '_niveau_dobligation_id option').each(function () {
+                if ($(this).val() == 4) {
+                    $(this).hide();
+                }
+            });
+        	
+        	
+        	$('#' + uniqid + '_niveau_dobligation_exped_id option').each(function () {
+                if ($(this).val() == 4) {
+                    $(this).show();
+                }
+            });
+        	
+        	
+        	
+        }  else {
             $('#' + uniqid + '_niveau_dobligation_id option').each(function () {
+                if ($(this).val() == 4) {
+                    $(this).show();
+                }
+            });
+            
+            
+            $('#' + uniqid + '_niveau_dobligation_exped_id option').each(function () {
                 if ($(this).val() == 4) {
                     $(this).show();
                 }
             });
         }
 
+
+        
+        
+        
+        
+
+
+        
+       
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         var $N_TVA_FR = $('#' + uniqid + '_N_TVA_FR');
         var $N_TVA_FR_label = $('#sonata-ba-field-container-' + uniqid + '_N_TVA_FR label');
 
