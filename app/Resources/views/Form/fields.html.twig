@@ -108,17 +108,31 @@
 
     <script type="text/javascript">
         //get
-        var mois_date = [];
+        var mois_date = [], hasSelected = false;
+        
         $('.hide-block-mois select :selected').each(function (i) {
             mois_date.push($(this).val());
             $(this).parent().addClass('select-mois-' + i);
         })
-
+        
         $('.select-mois option').each(function () {
             if (mois_date[0] + '-' + Number(mois_date[1]) == $(this).val()) {
                 $(this).attr('selected', 'selected');
+                hasSelected = true;
             }
         });
+        
+        if(hasSelected === false && mois_date[1]) {
+        	var month = Number(mois_date[1]);
+        	if(typeof $.fn.datepicker.dates !== 'undefined') {
+        		month = $.fn.datepicker.dates['fr']['months'][Number(mois_date[1]-1)]
+        	}
+        	$('.select-mois').append($('<option>', {
+    			value: mois_date[0] + '-' + Number(mois_date[1]),
+    			text: mois_date[0] + ' ' + month,
+    			selected: true
+			}));
+        }
 
         $('.select-mois').change(function () {
             for (var i = 0; i < 3; i++) {
