@@ -25,7 +25,7 @@ jQuery(document).ready(function ($) {
                         if(date.val()) {
                     		$('#' + _uniqid + '_mois_mois option:last').attr('selected', true).trigger('change');
                     		
-                        } else {
+                        } else if (symfony_ajax.is_new()) {
                         	$('#' + _uniqid + '_mois_mois option:last').removeAttr('selected');
                         }
                     });//.trigger('change');
