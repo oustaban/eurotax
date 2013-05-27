@@ -131,14 +131,14 @@ jQuery(document).ready(function ($) {
             //"4" should not be present on the list for "Niveau Obligation EXPED"
         	
         	$('#' + uniqid + '_niveau_dobligation_id option').each(function () {
-                if ($(this).val() == 4) {
+                if ( $(this).val() >= 2 &&  $(this).val() <= 4) {
                     $(this).hide();
                 }
             });
         	
         	
         	$('#' + uniqid + '_niveau_dobligation_exped_id option').each(function () {
-                if ($(this).val() == 4) {
+        		if ( $(this).val() >= 2 &&  $(this).val()<= 4) {
                     $(this).hide();
                 }
             });
