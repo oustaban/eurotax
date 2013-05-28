@@ -574,12 +574,7 @@ class AbstractTabsController extends Controller
         	throw new AccessDeniedException();
         }
         
-        if ($this->getRequest()->getMethod() == 'DELETE' && $this->isXmlHttpRequest()) {
-            return $this->renderJson(array(
-                'result' => 'ok',
-            ));
-        }
-
+        
         
         if ($this->getRequest()->getMethod() == 'DELETE') {
         	try {
@@ -588,9 +583,18 @@ class AbstractTabsController extends Controller
         	} catch (ModelManagerException $e) {
         		$this->get('session')->setFlash('sonata_flash_error', 'flash_delete_error');
         	}
+        }
         
+        
+        if ($this->getRequest()->getMethod() == 'DELETE' && $this->isXmlHttpRequest()) {
+        	return $this->renderJson(array(
+        			'result' => 'ok',
+        	));
+        } else if ($this->getRequest()->getMethod() == 'DELETE' && $this->isXmlHttpRequest() === false) {
         	return new RedirectResponse($this->admin->generateUrl('list'));
         }
+        
+        
         
         return $this->render($this->admin->getTemplate('delete'), array(
         		'object' => $object,

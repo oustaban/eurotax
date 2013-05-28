@@ -1,8 +1,8 @@
 jQuery(document).ready(function ($) {
 
-	if(symfony_ajax.is_new() === false) {
-		$('#' + uniqid + '_location_postal_pays_postal').attr('disabled', 'disabled');
-	}
+	//if(symfony_ajax.is_new() === false) {
+	//	$('#' + uniqid + '_location_postal_pays_postal').attr('disabled', 'disabled');
+	//}
 	
 	
     $('#sonata-ba-field-container-' + uniqid + '_N_TVA_CEE, #sonata-ba-field-container-' + uniqid + '_N_TVA_CEE_facture').after('<hr />');

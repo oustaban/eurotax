@@ -72,6 +72,11 @@ class ClientAdmin extends Admin
         $class = $id ? '' : ' hidden';
 
         
+        if($id) {
+        	LocationPostalType::$pays_is_disabled = true;
+        }
+        
+        
         $formMapper
 
         	->add('is_new', 'hidden', array('data' => $id ? 0 : 1, 'mapped' => false, 'attr' => array('class' => 'is_new')))
