@@ -548,7 +548,8 @@ function real_num(num) {
 		return '';
 	}
 	num = num.toString().replace(',', '.').replace(/\s+/, '');
-	num = encodeURIComponent(num).replace('%20', ''); // to ensure spaces are replaced w/ empty string
+	num = encodeURIComponent(num).replace('%C2%A0', '').replace('%20', ''); // to ensure spaces are replaced w/ empty string
+	
 	return parseFloat(num);
 }
 
