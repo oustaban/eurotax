@@ -48,13 +48,14 @@ jQuery(document).ready(function ($) {
                 	}
                 	
                 });
-                if ( ( $('#' + _uniqid + '_date_piece', context).size() || $('#' + _uniqid + '_devise', context).size() ) && $('#' + _uniqid + '_mois_mois', context).size() && $('#'+_uniqid + '_paiement_date', context).size() == 0 ) {
-                    $('#' + _uniqid + '_date_piece, #' + _uniqid + '_devise', context).change(function(){
+                if ( ( $('#' + _uniqid + '_date_piece', context).size() || $('#' + _uniqid + '_devise', context).size() ) && $('#' + _uniqid + '_mois_mois', context).size() && $('#' + _uniqid + '_paiement_date', context).size() == 0 ) {
+                    $('#' + _uniqid + '_date_piece, #' + _uniqid + '_devise, #' + _uniqid + '_mois_mois', context).change(function(){
                         //$('#' + _uniqid + '_mois_mois option:last').attr('selected', true).trigger('change');
                         var devise = $('#' + _uniqid + '_devise :selected').val();
                         var date_piece = $('#' + _uniqid + '_date_piece').val();
                         var montant_HT_en_devise = $('#' + _uniqid + '_montant_HT_en_devise').val();
                         if(devise && date_piece) {
+                        	
 	                        $.ajax({
 	                            url:Sonata.url.rdevises,
 	                            type:'POST',
