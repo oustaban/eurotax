@@ -897,7 +897,7 @@ class Client
      */
     public function setNiveauDobligationExpedId($niveauDobligationExpedId)
     {
-    	$this->niveau_dobligation_id = $niveauDobligationExpedId;
+    	$this->niveau_dobligation_exped_id = $niveauDobligationExpedId;
     
     	return $this;
     }
