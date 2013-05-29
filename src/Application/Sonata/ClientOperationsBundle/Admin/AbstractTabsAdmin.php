@@ -229,7 +229,9 @@ abstract class AbstractTabsAdmin extends Admin
     					$method = ucfirst(\Doctrine\Common\Util\Inflector::classify($field));
     					$setMethod = 'set'.$method;
     					$getMethod = 'get'.$method;
-    					$value = str_replace(array(' ', ','), array('', '.'), $formRequestData[$field]);
+    					$value = str_replace(array("\n","\t","\r"), " ", $formRequestData[$field]);
+    					$value =  str_replace(array(' ', ','), array('', '.'), $value);
+    					$value = preg_replace('/[^(\x20-\x7F)]*/','', $value);
     					$object->$setMethod($value);
     				}
     			}
