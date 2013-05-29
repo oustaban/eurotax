@@ -547,8 +547,8 @@ function real_num(num) {
 	if(num == '' || typeof num === 'undefined') {
 		return '';
 	}
-	
 	num = num.toString().replace(',', '.').replace(/\s+/, '');
+	num = encodeURIComponent(num).replace('%20', ''); // to ensure spaces are replaced w/ empty string
 	return parseFloat(num);
 }
 
