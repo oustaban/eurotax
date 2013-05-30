@@ -173,8 +173,13 @@ class ClientAdmin extends Admin
         
             ->add('teledeclaration', null, array('label' => 'form.teledeclaration'))
             ->with('form.client.row17')
-            
-
+            ->add('niveau_dobligation_id', 'choice', array(
+            		'label' => 'Niveau Obligation INTRO',
+            		'choices' => $this->getNiveauDobligationIdChoise(),
+            		'empty_value' => '',
+            		'required' => false,
+            		'help' => ' ',
+            ))
             ->add('niveau_dobligation_exped_id', 'choice', array(
             		'label' => 'Niveau Obligation EXPED',
             		'choices' => $this->getNiveauDobligationIdChoise(),
@@ -182,13 +187,7 @@ class ClientAdmin extends Admin
             		'required' => false,
             		'help' => ' ',
             ))
-        ->add('niveau_dobligation_id', 'choice', array(
-            'label' => 'Niveau Obligation INTRO',
-            'choices' => $this->getNiveauDobligationIdChoise(),
-            'empty_value' => '',
-            'required' => false,
-            'help' => ' ',
-        ))
+        
         ->with('form.client.row18')
         ->add('language', null, array('label' => 'form.language', 'empty_value' => '', 'required' => true))
         ;
