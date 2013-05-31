@@ -16,7 +16,17 @@
             {% endfor %}
         </select>
     </div>
+    
+    &nbsp;
+    {% if (compte_reel_sum or compte_previsionnel_sum) %}
+	<a class="btn ">Sold{% if compte_previsionnel_sum %} P{% endif %}{% if compte_reel_sum %} {{ compte_reel_sum }}{% endif %}</a>
+	{% endif %}
 </form>
+
+
+
+
+
 
 {% set path = url('admin_sonata_clientoperations_'~active_tab~'_list', {'filter[client_id][value]':client_id}) %}
 
