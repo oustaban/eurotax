@@ -1,0 +1,46 @@
+<form action="" method="post" {{ form_enctype(form) }} id="rapprochement_form" class="">
+
+
+	<div class="alert-error">
+ 	{{ form_errors(form.intro_info_id) }}
+ 	{{ form_errors(form.intro_info_number) }}
+ 	{{ form_errors(form.intro_info_text) }}
+ 	
+ 	{{ form_errors(form.exped_info_id) }}
+ 	{{ form_errors(form.exped_info_number) }}
+ 	{{ form_errors(form.exped_info_text) }}
+
+	{{ form_errors(form) }}
+	</div>
+
+	<div class="rapprochement_content_deb">
+            <div class="rapprochement_content_input rapprochement_intro">
+                <div class="rapprochement_content_body_table">
+
+
+ 					{{ form_widget(form.intro_info_id) }}
+					{{ form_widget(form.intro_info_number) }}
+					{{ form_widget(form.intro_info_text) }}
+
+				</div>
+            </div>
+            <div class="rapprochement_content_output rapprochement_exped">
+                <div class="rapprochement_content_body_table">
+
+ 					{{ form_widget(form.exped_info_id) }}
+					{{ form_widget(form.exped_info_number) }}
+					{{ form_widget(form.exped_info_text) }}
+
+
+				</div>
+            </div>
+        </div>
+        
+        
+        
+        {{ form_rest(form) }}
+    
+<div class="content cboth ">
+    <input type="submit" value="Submit"/>
+</div>        
+</form>

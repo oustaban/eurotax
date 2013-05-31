@@ -86,6 +86,10 @@
      <button id="btn_locking" rel="tooltip" title="Pour tests" class="btn pull-right"><i class="icon icon-lock"></i> {{ text_lock|trans}}</button>
  	
 </div>
+
+{% if form %}
+{% include 'ApplicationSonataClientOperationsBundle::Form/form_rapprochement.html.twig' with {'form': form} %}
+{% endif %}
  
 {% endset %}
 
