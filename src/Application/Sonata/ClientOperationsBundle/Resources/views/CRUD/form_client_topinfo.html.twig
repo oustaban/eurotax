@@ -18,9 +18,8 @@
     </div>
     
     &nbsp;
-    {% if (compte_reel_sum or compte_previsionnel_sum) %}
-	<a class="btn ">Sold{% if compte_previsionnel_sum %} P{% endif %}{% if compte_reel_sum %} {{ compte_reel_sum }}{% endif %}</a>
-	{% endif %}
+    
+	<a class="btn ">Solde{% if compte_previsionnel_sum %} P{% endif %}{% if compte_reel_sum %} {{ compte_reel_sum }}{% endif %}</a>
 </form>
 
 
