@@ -809,18 +809,14 @@ class AbstractTabsController extends Controller
         foreach ($sheets as $title => $data) {
 
             if (array_key_exists($title, $this->_config_excel)) {
-
                 $config_excel = $this->_config_excel[$title];
                 $class = $config_excel['entity'];
                 $fields = $config_excel['fields'];
-
+                $skip_line = $config_excel['skip_line'];
                 $data = $this->skipLine($config_excel, $data);
 
                 //DEB Exped | DEB Intro
                 $this->_validateDEBNLigne($class, $data);
-                        
-                
-                
                 $adminCode = 'application.sonata.admin.' . strtolower($class);
                 /* @var $admin \Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin */
                 $admin = $this->container->get('sonata.admin.pool')->getAdminByAdminCode($adminCode);
@@ -887,11 +883,11 @@ class AbstractTabsController extends Controller
                             }
                         } catch (\Exception $e) {
 
-                            $message = $this->getErrorsAsString($class, $form, $key + 2, 0, 0, $e->getMessage());
+                            $message = $this->getErrorsAsString($class, $form, $key + ($skip_line+1), 0, 0, $e->getMessage());
                             $this->setCountImports($class, 'errors', $message);
                         }
                     } else {
-                        $message = $this->getErrorsAsString($class, $form, $key + 2);
+                        $message = $this->getErrorsAsString($class, $form, $key + ($skip_line+1));
                         $this->setCountImports($class, 'errors', $message);
                     }
                     unset($formData, $form, $form_builder, $object);

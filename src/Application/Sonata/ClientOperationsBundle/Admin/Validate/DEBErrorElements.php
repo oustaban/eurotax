@@ -512,7 +512,7 @@ class DEBErrorElements extends ErrorElements
 						)
 					),
 					19 => array(
-						'niveauDobligationId' => 2,
+						'niveauDobligationId' => 3,
 						'regime' => 19,
 						'fields' => array(
 							'n_ligne',
