@@ -218,6 +218,11 @@ abstract class AbstractTabsAdmin extends Admin
     
     private function _autofixeuroformat($object) {
     	$formRequestData = $this->getRequest()->request->all();
+    	
+    	if(!isset($formRequestData[$this->getForm()->getName()])) {
+    		return;
+    	}
+    	
     	$formRequestData = $formRequestData[$this->getForm()->getName()];
     	 
     	$fields = $object->fieldsAsArray($object);
