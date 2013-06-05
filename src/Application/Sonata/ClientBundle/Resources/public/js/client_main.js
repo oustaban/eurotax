@@ -110,19 +110,13 @@ jQuery(document).ready(function ($) {
 
     $('#' + uniqid + '_nature_du_client').change(function () {
         //DEB => 2 id
-        if ($(this).val() != 2) {
+        /*if ($(this).val() != 2) {
 
             if ($('#' + uniqid + '_niveau_dobligation_id').val() == 4) {
                 $('#' + uniqid + '_niveau_dobligation_id').val('');
                 $('#sonata-ba-field-container-' + uniqid + '_niveau_dobligation_id .help-block').text('');
             }
-
-            
-        }
-        
-        
-        
-        
+        }*/
         
         
         if ($(this).val() == 1) {
@@ -175,7 +169,8 @@ jQuery(document).ready(function ($) {
         }  else {
             $('#' + uniqid + '_niveau_dobligation_id option').each(function () {
                 if ($(this).val() == 4) {
-                    $(this).show();
+                	//console.log('test');
+                   $(this).show();
                 }
             });
             
