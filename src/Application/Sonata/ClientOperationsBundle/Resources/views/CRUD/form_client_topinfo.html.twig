@@ -19,7 +19,7 @@
     
     &nbsp;
     
-	<a class="btn ">Solde{% if compte_previsionnel_sum %} P{% endif %} {{ compte_reel_sum }}</a>
+	<a class="btn" href="{{ path('admin_sonata_client_compte_list', {'filter[client_id][value]':client_id}) }}">Solde{% if compte_previsionnel_sum %} P{% endif %} {{ compte_reel_sum }}</a>
 </form>
 
 
