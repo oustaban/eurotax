@@ -364,7 +364,7 @@ class AbstractTabsController extends Controller
     		}
     		if($compte->getStatut()->getId() == 1) {
     			$this->_compte_reel_sum += $compte->getMontant();
-    		} elseif($compte->getStatut()->getId() == 1) {
+    		} elseif($compte->getStatut()->getId() == 2) {
     			$this->_compte_previsionnel_sum += $compte->getMontant();
     		}
     	}
