@@ -1,0 +1,125 @@
+<style type="text/css">
+
+.b {font-weight: bold;}
+
+.border { border: 2px solid #000 }
+
+
+table.td {font-family: arial;}
+
+table.right { float: right; width: 100% }
+table.right td { text-align: right }
+
+table.left { float: left; width: 100% }
+table.left td { text-align: left }
+
+
+table.center { width: 100% }
+table.center td { text-align: center }
+
+
+
+</style>
+
+
+
+<table class="right">
+<tr><td class="b">BARCLAYS BANK S.A</td></tr>
+<tr><td>. 24 Avenue Kléber</td></tr>
+<tr><td class="b">75116 – PARIS Cedex</td></tr> 
+<tr><td class="b">&nbsp;</td></tr>
+<tr><td class="b">Fax : 01.45.00.24.66</td></tr>
+<tr><td class="b">&nbsp;</td></tr>
+
+<tr><td>Arcueil, le dimanche 2 juin 2013,</td></tr>
+</table>
+
+
+<table class="left">
+<tr><td>
+<p>DOSSIER {{ client.getCodeClient() }}</p>
+<br /><br />
+<p>Messieurs,</p>
+<br /><br />
+<p>Nous vous demandons de bien vouloir transférer (SEPA : Frais de 1€ à notre charge) par le débit de notre compte</p>
+</td></tr>
+
+</table>
+
+
+<br /><br />
+
+<table class="center">
+<tr><td class="b">{{ coordonnees.getIBAN() }}</td></tr>
+<tr><td>la somme de</td></tr>
+</table>
+
+<br /><br />
+
+<table class="center">
+<tr><td class="b">€ {{ amount }}</td></tr>
+<tr><td class="b">Mille cent soixante six € 10 centimes)</td></tr>
+</table>
+
+<br /><br />
+
+<table class="center">
+<tr><td>au profit du compte suivant :</td></tr>
+</table>
+
+<br /><br />
+
+
+
+<table class="center border">
+<tr><td>
+
+<span class="b">CASTEL S.r.l.</span><br />
+Banca Popolare Commercio e Industria S.p.A.-UBI Group<br />
+Via Toscana, n°10<br />
+20061 (MI) Carugate Italie<br />
+Swift: POCIITM1XXX VIA BLOPIT22<br />
+IBAN: IT85U0504832760000000000030<br />
+N° de compte: 000000000030<br />
+ABI: 05048<br />
+CAB: 32760<br />
+</td></tr>
+</table>
+
+<br /><br />
+
+<table class="left">
+<tr><td>
+En indiquant en référence du transfert : <span class="b">Facture 1280</span><br /><br />
+Pour toute information concernant cet ordre de virement, merci de contacter Elisabetta Carraro au 01.41.98.48.12. <br /><br />
+Nous vous prions d'agréer, Messieurs, nos salutations distinguées. <br /><br />
+</td></tr>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

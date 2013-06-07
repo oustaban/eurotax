@@ -119,9 +119,6 @@ class RapprochementController extends Controller
     			//$this->get('session')->setFlash('notice', 'Success');
     			return $this->render(':redirects:back.html.twig');
     			//return $this->redirect($this->generateUrl('rapprochement_index', array('client_id' => $client_id, 'month' => $month), true));
-    			
-    			exit;
-    			
     		}
     	}
     	

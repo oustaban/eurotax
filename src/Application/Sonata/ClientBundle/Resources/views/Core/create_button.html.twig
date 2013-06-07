@@ -1,12 +1,18 @@
 {% if admin.hasAjouterAccess is defined %}
 
 	{% if admin.hasRoute('create') and admin.isGranted('CREATE') and admin.hasAjouterAccess() %}
-	    <a class="btn sonata-action-element" href="{{ admin.generateUrl('create') }}">{{ 'link_action_create'|trans({}, 'SonataAdminBundle') }}</a>
+	    <a class="btn sonata-action-element pull-left" href="{{ admin.generateUrl('create') }}">{{ 'link_action_create'|trans({}, 'SonataAdminBundle') }}</a>
 	{% endif %}
 
 {% else %}
 
 	{% if admin.hasRoute('create') and admin.isGranted('CREATE') %}
-	    <a class="btn sonata-action-element" href="{{ admin.generateUrl('create') }}">{{ 'link_action_create'|trans({}, 'SonataAdminBundle') }}</a>
+	    <a class="btn sonata-action-element  pull-left" href="{{ admin.generateUrl('create') }}">{{ 'link_action_create'|trans({}, 'SonataAdminBundle') }}</a>
 	{% endif %}
+{% endif %}
+
+
+
+{% if virement_form is defined and virement_form %}
+{% include 'ApplicationSonataClientBundle::Form/form_virement.html.twig' with {'form': virement_form} %}
 {% endif %}

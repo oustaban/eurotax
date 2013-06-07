@@ -13,6 +13,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Application\Sonata\ClientBundle\Admin\AbstractCompteAdmin as Admin;
 
+use Sonata\AdminBundle\Route\RouteCollection;
+
 class CompteAdmin extends Admin
 {
+	
+	protected function configureRoutes(RouteCollection $collection)
+	{
+		$collection->add('virement', 'virement/{amount}/{coordonnees}');
+		 
+	}
 }

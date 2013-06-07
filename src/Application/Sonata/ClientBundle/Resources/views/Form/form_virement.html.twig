@@ -1,0 +1,15 @@
+<span class="span6">
+<form action="" method="post" {{ form_enctype(form) }} id="virement_form" class="">
+	<span class="alert-error">
+ 	{{ form_errors(form.amount) }}
+	{{ form_errors(form) }}
+	</span>
+		{{ form_widget(form.amount) }}
+		{{ form_widget(form.coordonnees) }}
+        
+        {{ form_rest(form) }}
+    
+
+    <input type="submit" value="Submit"/>
+</form>
+</span>
