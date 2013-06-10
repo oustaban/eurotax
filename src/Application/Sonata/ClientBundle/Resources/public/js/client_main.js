@@ -4,6 +4,8 @@ jQuery(document).ready(function ($) {
 	//	$('#' + uniqid + '_location_postal_pays_postal').attr('disabled', 'disabled');
 	//}
 	
+	$('input[name="btn_create_and_create"]').hide();
+	
 	
     $('#sonata-ba-field-container-' + uniqid + '_N_TVA_CEE, #sonata-ba-field-container-' + uniqid + '_N_TVA_CEE_facture').after('<hr />');
 
@@ -17,7 +19,7 @@ jQuery(document).ready(function ($) {
         .blur(replace_spaces)
         .trigger('blur');
 
-    $('td.td-nom').next().append('<input type="button" value="Copier les information postales" name="clone_address" id="clone_address" class="btn" />');
+    $('td.td-nom').next().append('<input type="button" value="Copier les informations postales" name="clone_address" id="clone_address" class="btn" />');
 
     copy_address();
 

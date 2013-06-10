@@ -25,6 +25,9 @@ form:
   teledeclaration: Télédéclaration
   code_client: Code Client
   N_TVA_FR: N° TVA FR
+  EN: Anglais
+  FR: Français
+  IT: Italien
 
   Contact:
     title: Ajouter / Modifier un contact

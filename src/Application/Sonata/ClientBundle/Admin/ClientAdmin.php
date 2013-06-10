@@ -151,27 +151,35 @@ class ClientAdmin extends Admin
                 'choices' => array(1 => 'Oui', 0 => 'Non'),
                 'required' => false,
             ))
+           
+        
             ->with('form.client.row15')
-            ->add('periodicite_CA3', null, array('label' => 'form.periodicite_CA3', 'query_builder' => function (EntityRepository $er)
-        {
-            return $er->createQueryBuilder('l')
-            	->where("l.name <> 'Annuelle'")
-            	->andWhere("l.name <> 'Semestrielle'")
-                ->orderBy('l.id', 'ASC');
-        },'empty_value' => '', 'required' => false,))
-            ->add('date_de_depot_id', 'choice', array(
-            'label' => 'form.date_de_depot_id',
-            'choices' => array(15 => 15, 19 => 19, 24 => 24, 31 => 31),
-            'attr' => array('class' => 'date_de_depot_id'),
-        ))
-            ->with('form.client.row16')
             ->add('center_des_impots', null, array('label' => 'form.center_des_impots', 'query_builder' => function (EntityRepository $er)
         {
             return $er->createQueryBuilder('u')
                 ->orderBy('u.nom', 'ASC');
         }, 'empty_value' => '', 'required' => true))
         
-            ->add('teledeclaration', null, array('label' => 'form.teledeclaration'))
+        ->add('date_de_depot_id', 'choice', array(
+        		'label' => 'form.date_de_depot_id',
+        		'choices' => array(15 => 15, 19 => 19, 24 => 24, 31 => 31),
+        		'attr' => array('class' => 'date_de_depot_id'),
+        ))
+        
+        
+        ->with('form.client.row16')
+        ->add('periodicite_CA3', null, array('label' => 'form.periodicite_CA3', 'query_builder' => function (EntityRepository $er)
+        {
+        	return $er->createQueryBuilder('l')
+        	->where("l.name <> 'Annuelle'")
+        	->andWhere("l.name <> 'Semestrielle'")
+        	->orderBy('l.id', 'ASC');
+        },'empty_value' => '', 'required' => false,))
+        
+        ->add('teledeclaration', null, array('label' => 'form.teledeclaration'))
+        
+        
+        
             ->with('form.client.row17')
             ->add('niveau_dobligation_id', 'choice', array(
             		'label' => 'Niveau Obligation INTRO',
@@ -189,7 +197,7 @@ class ClientAdmin extends Admin
             ))
         
         ->with('form.client.row18')
-        ->add('language', null, array('label' => 'form.language', 'empty_value' => '', 'required' => true))
+        ->add('language', null, array('label' => 'form.language', 'empty_value' => '', 'required' => true, 'choices' => $this->languages()))
         ;
     }
 
@@ -534,4 +542,19 @@ class ClientAdmin extends Admin
 
         return $query;
     }
+    
+    
+    private function languages() {
+    	$langArray = array();
+    	$langs = $this->getModelManager()->createQuery('ApplicationSonataClientBundle:ListLanguages')->execute();
+    	foreach($langs as $lang) {
+    		$lang->setName('form.' . $lang->getName());
+    		$langArray[$lang->getId()] = $lang;
+    	}
+    	return $langArray;
+    }
+    
+    
+    
+    
 }
