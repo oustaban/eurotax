@@ -1,17 +1,6 @@
-{% if admin.hasAjouterAccess is defined %}
-
-	{% if admin.hasRoute('create') and admin.isGranted('CREATE') and admin.hasAjouterAccess() %}
-	    <a class="btn sonata-action-element " href="{{ admin.generateUrl('create') }}">{{ 'link_action_create'|trans({}, 'SonataAdminBundle') }}</a>
-	{% endif %}
-
-{% else %}
-
-	{% if admin.hasRoute('create') and admin.isGranted('CREATE') %}
-	    <a class="btn sonata-action-element  " href="{{ admin.generateUrl('create') }}">{{ 'link_action_create'|trans({}, 'SonataAdminBundle') }}</a>
-	{% endif %}
+{% if admin.hasRoute('create') and admin.isGranted('CREATE') %}
+    <a class="btn sonata-action-element  " href="{{ admin.generateUrl('create') }}">{{ 'link_action_create'|trans({}, 'SonataAdminBundle') }}</a>
 {% endif %}
-
-
 
 {% if virement_form is defined and virement_form %}
 <br /><br />
