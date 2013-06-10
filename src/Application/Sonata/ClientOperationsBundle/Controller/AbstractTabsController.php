@@ -368,9 +368,17 @@ class AbstractTabsController extends Controller
     			$this->_compte_previsionnel_sum += $compte->getMontant();
     		}
     	}
+    	
+    	if($this->_compte_previsionnel_sum > 0) {
+    		$this->_compte_reel_sum += _compte_previsionnel_sum;
+    	}
+    	
     	if($this->_compte_reel_sum == 0) {
     		$this->_compte_reel_sum = 1;
     	}
+    	
+    	
+    	
     }
     
     
