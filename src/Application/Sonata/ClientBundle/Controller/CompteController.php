@@ -47,7 +47,13 @@ class CompteController extends Controller
     	{
     		$virementForm->bindRequest($request);
     		if ($virementForm->isValid()) {
-    			$amount = (float)$virementForm['amount']->getData();
+    			
+				// Get raw data coz of issue on euro number format.    			
+    			$formRequestData = $request->request->all();
+    			$formRequestData = $formRequestData[$virementForm->getName()];
+    			
+    			$amount = $formRequestData['amount'];
+    			
     			$coordonnees = $virementForm['coordonnees']->getData();
     			return $this->redirect($this->generateUrl('admin_sonata_client_compte_virement', array('filter[client_id][value]' => $this->client_id, 'coordonnees' => $coordonnees->getId(), 'amount' => $amount)));
     		}
@@ -76,6 +82,7 @@ class CompteController extends Controller
     	$page = $this->render('ApplicationSonataClientBundle::virement.html.twig', array(
     			'client' => $client,
     			'amount' => $amount,
+    			'amountWords' => $this->_amountToWords($amount),
     			'coordonnees' => $coordonnees
     		));
     	$mpdf = new mPDF('c', 'A4', 0, '', 15, 15, 13, 13, 9, 2);
@@ -83,6 +90,28 @@ class CompteController extends Controller
     	$mpdf->Output();
     	exit;
     }
+    
+    
+    
+    private function _amountToWords($amount) {
+    	$words = array();
+    	$len = strlen($amount);
+    	for($i = 0; $i < $len; $i++) {
+    		$num = $amount[$i];
+    		if((int)$num) {
+    			$words[] = $this->get('translator')->trans(\Pear\NumbersWordsBundle\Numbers\Words::toWords($num));
+    		} else {
+    			$words[] = $num;
+    		}
+    	}
+    	
+    	return str_replace(' ,', ',', implode(' ', $words));
+    	
+    }
+    
+    
+    
+    
     
     
     

@@ -50,7 +50,7 @@ table.center td { text-align: center }
 <br /><br />
 
 <table class="center">
-<tr><td class="b">{{ coordonnees.getIBAN() }}</td></tr>
+<tr><td class="b">N° 734 694 101 01</td></tr>
 <tr><td>la somme de</td></tr>
 </table>
 
@@ -58,7 +58,7 @@ table.center td { text-align: center }
 
 <table class="center">
 <tr><td class="b">€ {{ amount }}</td></tr>
-<tr><td class="b">Mille cent soixante six € 10 centimes)</td></tr>
+<tr><td class="b">{{ amountWords }}</td></tr>
 </table>
 
 <br /><br />
@@ -74,15 +74,15 @@ table.center td { text-align: center }
 <table class="center border">
 <tr><td>
 
-<span class="b">CASTEL S.r.l.</span><br />
-Banca Popolare Commercio e Industria S.p.A.-UBI Group<br />
-Via Toscana, n°10<br />
-20061 (MI) Carugate Italie<br />
-Swift: POCIITM1XXX VIA BLOPIT22<br />
-IBAN: IT85U0504832760000000000030<br />
-N° de compte: 000000000030<br />
-ABI: 05048<br />
-CAB: 32760<br />
+<span class="b">{{ coordonnees.getNom() }}</span><br />
+{{ coordonnees.getAdresse1() }}<br />
+{% if coordonnees.getAdresse2() is not empty %}{{ coordonnees.getAdresse2() }}<br />{% endif %}
+{{ coordonnees.getVille() }} {{ coordonnees.getCodePostal() }}<br />
+Swift: {{ coordonnees.getCodeSwift() }}<br />
+IBAN: {{ coordonnees.getIBAN() }}<br />
+N° de compte: {{ coordonnees.getNoDeCompte() }}<br />
+<!--ABI: 05048<br />-->
+<!--CAB: 32760<br />-->
 </td></tr>
 </table>
 

@@ -58,6 +58,7 @@ class AppKernel extends Kernel
             new Application\Sonata\ClientOperationsBundle\ApplicationSonataClientOperationsBundle(),
 
             new Application\Sonata\DashboardBundle\ApplicationSonataDashboardBundle(),
+        	new Pear\NumbersWordsBundle\PearNumbersWordsBundle()	
         );
 
         if (in_array($this->getEnvironment(), array('prod'))) {
