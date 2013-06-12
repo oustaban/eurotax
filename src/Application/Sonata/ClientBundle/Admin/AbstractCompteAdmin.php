@@ -43,7 +43,7 @@ abstract class AbstractCompteAdmin extends Admin
             ->add('statut', null, array(
             'label' => $this->getFieldLabel('statut'),
             'empty_value' => '',
-            'required' => false,
+            'required' => true, 
         ));
 
     }

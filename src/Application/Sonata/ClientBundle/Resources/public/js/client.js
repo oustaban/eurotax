@@ -62,6 +62,8 @@ jQuery(document).ready(function ($) {
                 });
 
                 
+               
+                
             }
         };
 
@@ -317,6 +319,17 @@ jQuery(document).ready(function ($) {
         var $inactiveTr = $('div.inactive_compte').parent().parent();
         $inactiveTr.find('.sonata-ba-list-field-action').html('');
         $inactiveTr.find('td').addClass('no-edit');
+        
+      
+        if (typeof symfony_ajax != 'undefined'){
+	        symfony_ajax.behaviors.compte = {
+	                attach:function (context) {
+	                    if(symfony_ajax.is_new()) {
+	                		$('#' + symfony_ajax.get_uniqid() + '_statut option:eq(1)').attr('selected', 'selected');
+	                	}
+	                }
+	        };
+        }
     }
     
     /**
@@ -325,6 +338,12 @@ jQuery(document).ready(function ($) {
     $('input[id=inputFile]').change(function () {
         $('#inputFileCover').val($(this).val());
     });
+    
+    
+    
+    
+	
+	
     
     
 });

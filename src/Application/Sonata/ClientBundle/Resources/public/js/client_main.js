@@ -1,9 +1,4 @@
 jQuery(document).ready(function ($) {
-
-	//if(symfony_ajax.is_new() === false) {
-	//	$('#' + uniqid + '_location_postal_pays_postal').attr('disabled', 'disabled');
-	//}
-	
 	$('input[name="btn_create_and_create"]').hide();
 	
 	
