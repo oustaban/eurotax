@@ -7,13 +7,13 @@
                 Dans {{ typeName }}
             </th>
             <th class="sonata-ba-list-field-header-money" width="20%">
-                HT (&#8364;)
+                {{ secondColTitle }}
             </th>
             <th class="sonata-ba-list-field-header-integer" width="20%">
                 Nb lignes
             </th>
             <th class="sonata-ba-list-field-header-money" width="20%">
-                HT (&#8364;)
+                {% if has4thCol %}Valeur Stat HT (&#8364;){% endif %}
             </th>
         </tr>
         </thead>
@@ -39,9 +39,11 @@
                         {{ object.nb }}
                     </td>
                     <td class="sonata-ba-list-field sonata-ba-list-field-money">
+                    {% if has4thCol %}
                         <div class="totals v2_{{ rnd }}">
                             {{ object.v2 ? object.v2 : 0  }}
                         </div>
+                    {% endif%}   
                     </td>
                 </tr>
                 {% endfor %}

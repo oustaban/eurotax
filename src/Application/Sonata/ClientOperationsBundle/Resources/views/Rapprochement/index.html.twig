@@ -15,19 +15,19 @@
         <div class="rapprochement_content_no_deb">
             <div class="rapprochement_content_input">
                 <h4>{{ 'ApplicationSonataClientOperationsBundle.rapprochement.input_title'|trans() }}</h4>
-                {% include 'ApplicationSonataClientOperationsBundle::Rapprochement/table.html.twig' with {'table': a06_aib, 'typeName': 'A06-AIB', preRegime: 'pour ', postRegime: ' - DEB "OUI"', 'totalTitle': 'TOTAL V06'} %}
+                {% include 'ApplicationSonataClientOperationsBundle::Rapprochement/table.html.twig' with {'table': a06_aib, 'typeName': 'A06-AIB', preRegime: 'pour ', postRegime: ' - DEB "OUI"', 'totalTitle': 'TOTAL A06', 'secondColTitle': 'HT (€)',  'has4thCol': false} %}
             </div>
             <div class="rapprochement_content_output">
                 <h4>{{ 'ApplicationSonataClientOperationsBundle.rapprochement.output_title'|trans() }}</h4>
-                {% include 'ApplicationSonataClientOperationsBundle::Rapprochement/table.html.twig' with {'table': v05_lic, 'typeName': 'V05-LIC', preRegime: 'pour ', postRegime: ' - DEB "OUI"', 'totalTitle': 'TOTAL V05'} %}
+                {% include 'ApplicationSonataClientOperationsBundle::Rapprochement/table.html.twig' with {'table': v05_lic, 'typeName': 'V05-LIC', preRegime: 'pour ', postRegime: ' - DEB "OUI"', 'totalTitle': 'TOTAL V05', 'secondColTitle': 'HT (€)', 'has4thCol': false} %}
             </div>
         </div>
         <div class="rapprochement_content_deb">
             <div class="rapprochement_content_input">
-                {% include 'ApplicationSonataClientOperationsBundle::Rapprochement/table.html.twig' with {'table': deb_intro, 'typeName': 'DEB-Intro', preRegime: ' ', postRegime: '', 'totalTitle': ''} %}
+                {% include 'ApplicationSonataClientOperationsBundle::Rapprochement/table.html.twig' with {'table': deb_intro, 'typeName': 'DEB-Intro', preRegime: ' ', postRegime: '', 'totalTitle': '', 'secondColTitle': 'Valeur Fiscale HT (€)', 'has4thCol': true} %}
             </div>
             <div class="rapprochement_content_output">
-                {% include 'ApplicationSonataClientOperationsBundle::Rapprochement/table.html.twig' with {'table': deb_exped, 'typeName': 'DEB-Exped', preRegime: '', postRegime: '', 'totalTitle': ''} %}
+                {% include 'ApplicationSonataClientOperationsBundle::Rapprochement/table.html.twig' with {'table': deb_exped, 'typeName': 'DEB-Exped', preRegime: '', postRegime: '', 'totalTitle': '', 'secondColTitle': 'Valeur Fiscale HT (€)', 'has4thCol': true} %}
             </div>
         </div>
     </div>

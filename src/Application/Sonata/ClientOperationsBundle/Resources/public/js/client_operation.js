@@ -383,7 +383,7 @@ function init_rapprochement_sums() {
     }
     
     $('#totals_input_v1').html(
-    	euro_num_format(result)
+    	euro_num_format(result, 2, true)
     );
 
     if(result != 0) {
@@ -391,8 +391,7 @@ function init_rapprochement_sums() {
     }
     
     totals_input_v1 = result;
-    
-    
+        
     
     var $plus = $('.rapprochement_content_no_deb .rapprochement_content_input table.table tr.totals_row div b :last');
     $plus = $plus.length ? $plus.html() : '0';
@@ -407,7 +406,7 @@ function init_rapprochement_sums() {
     	result = 0;
     }
     $('#totals_input_v2').html(
-    	euro_num_format(result)
+    	euro_num_format(result, 2, true)
     );
     
     if(result != 0) {
@@ -427,8 +426,11 @@ function init_rapprochement_sums() {
     if (isNaN(result)) {
     	result = 0;
     }
+    
+    
+    
     $('#totals_output_v1').html(
-    	euro_num_format(result)
+    	euro_num_format(result, 2, true)
     );
 
     if(result != 0) {
@@ -449,7 +451,7 @@ function init_rapprochement_sums() {
     	result = 0;
     }
     $('#totals_output_v2').html(
-    	euro_num_format(result)
+    	euro_num_format(result, 2, true)
     );
     
     if(result != 0) {
@@ -592,15 +594,25 @@ function init_tabs_filters_sticky_header() {
 
 }
 
-function euro_num_format(rnum, rlength) { // Arguments: number to round, number of decimal places
+function euro_num_format(rnum, rlength, returnzero) { 
 	if(typeof rlength === 'undefined') {
 		rlength = 2;
 	}
-	rnum = real_num(rnum);
-	if(rnum == '') {
-		return '';
+	
+	if(typeof returnzero === 'undefined') {
+		returnzero = false;
 	}
 	
+	rnum = real_num(rnum);
+	
+	
+	if(rnum == 0 && returnzero === true) {
+		return '0,00';	
+	}
+	
+	if(rnum === '') {
+		return '';
+	}
 	
 	
 	var numberStr = rnum.toFixed(rlength).toString().replace('.', ',');
@@ -608,12 +620,17 @@ function euro_num_format(rnum, rlength) { // Arguments: number to round, number 
 	
 	numberStr = numberStr.substring(0, numberStr.length-3); //cut last 3 strings
 	
+	
+	
 	var numFormat = [];
 	while (numberStr.length > 3) {
 		numFormat.unshift(numberStr.slice(-3));
 		numberStr = numberStr.substring(0, numberStr.length-3);
 	}
 	numFormat.unshift(numberStr);
+	
+	
+	
 	return numFormat.join(' ')+','+numFormatDec; //format 000 000 000,00 
 	
 }
