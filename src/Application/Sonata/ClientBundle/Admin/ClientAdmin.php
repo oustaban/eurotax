@@ -197,7 +197,7 @@ class ClientAdmin extends Admin
             ))
         
         ->with('form.client.row18')
-        ->add('language', null, array('label' => 'form.language', 'empty_value' => '', 'required' => true, 'choices' => $this->languages()))
+        ->add('language', null, array('label' => 'form.language', 'empty_value' => '', 'required' => true))
         ;
     }
 

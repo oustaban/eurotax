@@ -14,6 +14,20 @@ jQuery(document).ready(function ($) {
         $('.hidden').parent().parent().remove();
     });
 
+    
+    var LANGTRANS = {
+    	EN: 'Anglais',
+    	FR: 'Français',
+    	IT: 'Italien'
+    };
+    
+    $('#' + uniqid + '_language option').each(function() {
+    	$(this).text(
+    		LANGTRANS[$(this).text()]	
+    	);
+    });
+    
+    
     $('#' + uniqid + '_nom')
         .keypress(required_spaces)
         .blur(replace_spaces)
@@ -183,25 +197,6 @@ jQuery(document).ready(function ($) {
                 }
             });
         }
-
-
-        
-        
-        
-        
-
-
-        
-       
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
         var $N_TVA_FR = $('#' + uniqid + '_N_TVA_FR');
         var $N_TVA_FR_label = $('#sonata-ba-field-container-' + uniqid + '_N_TVA_FR label');
