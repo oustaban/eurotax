@@ -77,19 +77,13 @@
    
     
 </div>
-<div class="content cboth ">
- 	
- 	
- 	
- 	
- 	{% set text_lock = info.blocked ? 'Clôturer' : 'Déverrouiller' %}
-     <button id="btn_locking" rel="tooltip" title="Pour tests" class="btn pull-right"><i class="icon icon-lock"></i> {{ text_lock|trans}}</button>
- 	
-</div>
 
 {% if form %}
 {% include 'ApplicationSonataClientOperationsBundle::Form/form_rapprochement.html.twig' with {'form': form} %}
 {% endif %}
+
+
+
  
 {% endset %}
 
@@ -108,8 +102,7 @@
         init_clientoperations_buttons({
             
             blocking: {
-                link: '{{ path('admin_sonata_clientoperations_v01tva_locking', {'filter[client_id][value]':client.id, 'client_id': client.id, 'month' : info.query_month, 'year' : info.year, 'blocked': info.blocked  }) }}',
-                permit: {% if info.blocked %}true{% else %}false{% endif%},
+                permit: true,
                 hasBlocking: {% if client.getBlockedCount %}true{% else %}false{% endif%},
                 isBlocked: {% if info.blocked %}true{% else %}false{% endif%},
                 text: '{{ (info.blocked ? 'verrouiller_confirm' : 'deverrouiller_confirm')|trans }}'

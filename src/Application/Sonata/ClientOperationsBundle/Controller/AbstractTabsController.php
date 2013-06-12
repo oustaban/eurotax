@@ -358,6 +358,9 @@ class AbstractTabsController extends Controller
     
     
     protected function _findCompteSum() {
+    	
+    	$hasCompteComputation = false;
+    	
     	foreach($this->client->getComptes() as $compte){
     		if(!$compte->getStatut()) {
     			continue;
@@ -365,13 +368,15 @@ class AbstractTabsController extends Controller
     		if($compte->getStatut()->getId() == 1) {
     			$this->_compte_reel_sum += $compte->getMontant();
     		} elseif($compte->getStatut()->getId() == 2) {
+    			$hasCompteComputation = true;
     			$this->_compte_previsionnel_sum += $compte->getMontant();
     		}
     	}
     	if($this->_compte_previsionnel_sum != 0) {
+    		$hasCompteComputation = true;
     		$this->_compte_reel_sum += $this->_compte_previsionnel_sum;
     	}
-    	if($this->_compte_reel_sum == 0) {
+    	if($this->_compte_reel_sum == 0 && $hasCompteComputation == false) {
     		$this->_compte_reel_sum = 1;
     	}
     }

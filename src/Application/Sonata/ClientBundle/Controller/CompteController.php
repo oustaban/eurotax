@@ -5,6 +5,7 @@ namespace Application\Sonata\ClientBundle\Controller;
 use Application\Sonata\ClientBundle\Controller\AbstractTabsController as Controller;
 use Application\Sonata\ClientBundle\Form\VirementForm;
 use Application\Sonata\ClientBundle\Entity\Coordonnees;
+use Application\Sonata\ClientBundle\Entity\Compte;
 
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\Form;
@@ -53,8 +54,22 @@ class CompteController extends Controller
     			$formRequestData = $formRequestData[$virementForm->getName()];
     			
     			$amount = $formRequestData['amount'];
-    			
     			$coordonnees = $virementForm['coordonnees']->getData();
+    			
+    			/* @var $em \Doctrine\ORM\EntityManager */
+    			$em = $this->getDoctrine()->getManager();
+    			$status = $em->getRepository('ApplicationSonataClientBundle:ListCompteStatuts')->find(2); // previsionnel
+    			$compte = new Compte();
+    			$compte->setClient($this->client)
+    				->setStatut($status)
+    				->setMontant( $this->_amountToInt($amount) )
+    				->setOperation('Notre Transfert en votre faveur')
+    				->setDate(new \DateTime())
+    			;
+    			
+    			$em->persist($compte);
+    			$em->flush();
+    			
     			return $this->redirect($this->generateUrl('admin_sonata_client_compte_virement', array('filter[client_id][value]' => $this->client_id, 'coordonnees' => $coordonnees->getId(), 'amount' => $amount)));
     		}
     	}
@@ -106,9 +121,15 @@ class CompteController extends Controller
     	}
     	
     	return str_replace(' ,', ',', implode(' ', $words));
-    	
     }
     
+    
+    private function _amountToInt($amount) {
+    	$amount = str_replace(array("\n","\t","\r"), " ", $amount);
+    	$amount =  str_replace(array(' ', ','), array('', '.'), $amount);
+    	$amount = preg_replace('/[^(\x20-\x7F)]*/','', $amount);
+    	return (float) $amount;
+    }
     
     
     

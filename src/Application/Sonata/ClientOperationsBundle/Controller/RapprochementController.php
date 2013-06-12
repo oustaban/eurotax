@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Application\Sonata\ClientOperationsBundle\Entity\Locking;
 use Application\Sonata\ClientOperationsBundle\Entity\Rapprochement;
 use Application\Sonata\ClientOperationsBundle\Form\RapprochementForm;
 
@@ -28,6 +29,261 @@ class RapprochementController extends Controller
     protected $_client_id = null;
     protected $_locking = false;
 
+    
+    
+    /**
+     * @var array
+     */
+    protected $_config_excel = array(
+    		'V01-TVA' => array(
+    				'name' => 'V01-TVA',
+    				'entity' => 'V01TVA',
+    				'skip_line' => 1,
+    				'fields' => array(
+    						'tiers',
+    						'date_piece',
+    						'numero_piece',
+    						'devise',
+    						'montant_HT_en_devise',
+    						'taux_de_TVA',
+    						'montant_TVA_francaise',
+    						'montant_TTC',
+    						'paiement_montant',
+    						'paiement_devise',
+    						'paiement_date',
+    						'mois',
+    						'taux_de_change',
+    						'HT',
+    						'TVA',
+    						'commentaires',
+    				)
+    		),
+    
+    		'V03-283-I' => array(
+    				'name' => 'V03-283-I',
+    				'entity' => 'V03283I',
+    				'skip_line' => 1,
+    				'fields' => array(
+    						'tiers',
+    						'no_TVA_tiers',
+    						'date_piece',
+    						'numero_piece',
+    						'devise',
+    						'montant_HT_en_devise',
+    						'mois',
+    						'taux_de_change',
+    						'HT',
+    						'commentaires',
+    				)
+    		),
+    
+    		'V05-LIC' => array(
+    				'name' => 'V05-LIC',
+    				'entity' => 'V05LIC',
+    				'skip_line' => 1,
+    				'fields' => array(
+    						'tiers',
+    						'no_TVA_tiers',
+    						'date_piece',
+    						'numero_piece',
+    						'devise',
+    						'montant_HT_en_devise',
+    						'mois',
+    						'taux_de_change',
+    						'HT',
+    						'regime',
+    						'DEB',
+    						'commentaires',
+    				)
+    		),
+    
+    		'DEB Exped' => array(
+    		'name' => 'DEB Exped',
+    		'entity' => 'DEBExped',
+    		'skip_line' => 7,
+    		'fields' => array(
+    		'n_ligne',
+    		'nomenclature',
+    		'pays_destination',
+    		'valeur_fiscale',
+    		'regime',
+    		'valeur_statistique',
+    		'masse_mette',
+    		'unites_supplementaires',
+    		'nature_transaction',
+    		'conditions_livraison',
+    		'mode_transport',
+    		'departement',
+    		'pays_origine',
+    		'CEE',
+    		)
+    		),
+    		'V07-EX' => array(
+    		'name' => 'V07-EX',
+    		'entity' => 'V07EX',
+    		'skip_line' => 1,
+    		'fields' => array(
+    		'tiers',
+    		'date_piece',
+    		'numero_piece',
+    		'devise',
+    		'montant_HT_en_devise',
+    		'mois',
+    		'taux_de_change',
+    		'HT',
+    		'commentaires',
+    		)
+    		),
+    		'V09-DES' => array(
+    		'name' => 'V09-DES',
+    		'entity' => 'V09DES',
+    		'skip_line' => 1,
+    		'fields' => array(
+    		'tiers',
+    		'no_TVA_tiers',
+    		'date_piece',
+    		'numero_piece',
+    		'devise',
+    		'montant_HT_en_devise',
+    		'mois',
+    		'mois_complementaire',
+    		'taux_de_change',
+    		'HT',
+    		'commentaires',
+    		)
+    		),
+    		'V11-INT' => array(
+    		'name' => 'V11-INT',
+    		'entity' => 'V11INT',
+    		'skip_line' => 1,
+    		'fields' => array(
+    		'tiers',
+    		'date_piece',
+    		'numero_piece',
+    		'devise',
+    		'montant_HT_en_devise',
+    		'mois',
+    		'taux_de_change',
+    		'HT',
+    		'commentaires',
+    		)
+    		),
+    		'A02-TVA' => array(
+    		'name' => 'A02-TVA',
+    		'entity' => 'A02TVA',
+    		'skip_line' => 1,
+    		'fields' => array(
+    		'tiers',
+    		'date_piece',
+    		'numero_piece',
+    		'devise',
+    		'montant_HT_en_devise',
+    		'taux_de_TVA',
+    		'montant_TVA_francaise',
+    		'montant_TTC',
+    		'paiement_montant',
+    		'paiement_devise',
+    		'paiement_date',
+    		'mois',
+    		'taux_de_change',
+    		'HT',
+    		'TVA',
+    		'commentaires',
+    		)
+    		),
+    		'A04-283-I' => array(
+    		'name' => 'A04-283-I',
+    		'entity' => 'A04283I',
+    		'skip_line' => 1,
+    		'fields' => array(
+    		'tiers',
+    		'date_piece',
+    		'numero_piece',
+    		'devise',
+    		'montant_HT_en_devise',
+    		'taux_de_TVA',
+    		'mois',
+    		'taux_de_change',
+    		'HT',
+    		'TVA',
+    		'commentaires',
+    		)
+    		),
+    
+    		'A06-AIB' => array(
+    		'name' => 'A06-AIB',
+    		'entity' => 'A06AIB',
+    		'skip_line' => 1,
+    		'fields' => array(
+    		'tiers',
+    		'date_piece',
+    		'numero_piece',
+    		'devise',
+    		'montant_HT_en_devise',
+    		'taux_de_TVA',
+    		'mois',
+    		'taux_de_change',
+    		'regime',
+    		'HT',
+    		'TVA',
+    		'DEB',
+    		'commentaires',
+    		)
+    		),
+    
+    		'DEB Intro' => array(
+    		'name' => 'DEB Intro',
+    		'entity' => 'DEBIntro',
+    		'skip_line' => 7,
+    		'fields' => array(
+    		'n_ligne',
+    		'nomenclature',
+    		'pays_destination',
+    		'valeur_fiscale',
+    		'regime',
+    		'valeur_statistique',
+    		'masse_mette',
+    		'unites_supplementaires',
+    		'nature_transaction',
+    		'conditions_livraison',
+    		'mode_transport',
+    		'departement',
+    		'pays_origine',
+    		'CEE',
+    		)
+    		),
+    
+    		'A08-IM' => array(
+    		'name' => 'A08-IM',
+    		'entity' => 'A08IM',
+    		'skip_line' => 1,
+    		'fields' => array(
+    		'tiers',
+    		'date_piece',
+    		'numero_piece',
+    		'taux_de_TVA',
+    		'TVA',
+    		'mois',
+    		'commentaires',
+    		)
+    		),
+    
+    		'A10-CAF' => array(
+    		'name' => 'A10-CAF',
+    		'entity' => 'A10CAF',
+    		'skip_line' => 1,
+    		'fields' => array(
+    		'tiers',
+    		'date_piece',
+    		'numero_piece',
+    		'HT',
+    		'mois',
+    		'commentaires',
+    		)
+    		),
+    );
+    
+    
     /**
      * @Template()
      */
@@ -55,11 +311,14 @@ class RapprochementController extends Controller
         }
         
         
+        $blocked = $this->getLocking() ? 0 : 1;
+        
+        
         $a06_aib = $this->_getTableData('A06AIB', true);
         $v05_lic = $this->_getTableData('V05LIC', true);
         $deb_intro = $this->_getTableData('DEBIntro');
         $deb_exped = $this->_getTableData('DEBExped');
-        $form = $this->form($client_id, $month);
+        $form = $this->form($client_id, $month, $blocked);
         
         return array(
             'info' => array(
@@ -67,7 +326,7 @@ class RapprochementController extends Controller
                 'month' => $this->_month,
                 'year' => $this->_year,
                 'quarter' => floor(($this->_month - 1) / 3) + 1,
-            	'blocked' => $this->getLocking() ? 0 : 1,
+            	'blocked' => $blocked,
             	'query_month' => $query_month
             ),
             'client' => $client,
@@ -80,10 +339,10 @@ class RapprochementController extends Controller
     }
 
     
-    private function form($client_id = null, $month = null)
+    private function form($client_id = null, $month = null, $blocked = 1)
     {
     
-    	$form = $this->get('form.factory')->create(new RapprochementForm());
+    	$form = $this->get('form.factory')->create(new RapprochementForm($blocked));
     	$request = $this->get('request');
     
     	if ($request->getMethod() == 'POST')
@@ -117,8 +376,16 @@ class RapprochementController extends Controller
     			$em->persist($rap);
     			$em->flush(); 
     			//$this->get('session')->setFlash('notice', 'Success');
-    			return $this->render(':redirects:back.html.twig');
+    			//return $this->render(':redirects:back.html.twig');
     			//return $this->redirect($this->generateUrl('rapprochement_index', array('client_id' => $client_id, 'month' => $month), true));
+    			$this->setLocking($client_id, $month, $blocked);
+
+    				
+    			header('Location: ' . $this->generateUrl('admin_sonata_clientoperations_v01tva_list', array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)));
+	    		//return $this->redirect($this->generateUrl('admin_sonata_clientoperations_v01tva_list', array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)));
+	    		exit;
+    			
+    			
     		}
     	}
     	
@@ -128,7 +395,57 @@ class RapprochementController extends Controller
     }
     
     
+    /**
+     * @param $client_id
+     * @param $month
+     * @param int $blocked
+     
+     */
+    public function setLocking($client_id, $month, $blocked = 1)
+    {
+    	list($_month, $_year) = $this->getQueryMonth($month);
     
+    	/* @var $em \Doctrine\ORM\EntityManager */
+    	$em = $this->getDoctrine()->getManager();
+    
+    	$locking = $em->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $client_id, 'month' => $_month, 'year' => $_year));
+    
+    	if ($locking) {
+    		$em->remove($locking);
+    		$em->flush();
+    		$status_id = 2;
+    	}
+    
+    	if ($blocked) {
+    		$locking = new Locking();
+    		$locking->setClientId($client_id);
+    		$locking->setMonth($_month);
+    		$locking->setYear($_year);
+    		$em->persist($locking);
+    		$em->flush();
+    		$status_id = 1;
+    	}
+    
+    	$status = $em->getRepository('ApplicationSonataClientOperationsBundle:ListStatuses')->find($status_id);
+    
+    	if ($status) {
+    		foreach ($this->_config_excel as $table => $params) {
+    			$objects = $em->getRepository('ApplicationSonataClientOperationsBundle:' . $params['entity'])
+    			->createQueryBuilder('o')
+    			->where('o.date_piece BETWEEN :form_date_piece AND :to_date_piece')
+    			->setParameter(':form_date_piece', $_year . '-' . $_month . '-01')
+    			->setParameter(':to_date_piece', $_year . '-' . $_month . '-31')
+    			->getQuery()->getResult();
+    			foreach ($objects as $obj) {
+    				/** @var $obj \Application\Sonata\ClientOperationsBundle\Entity\AbstractBaseEntity */
+    				$obj->setStatus($status);
+    				$em->persist($obj);
+    				$em->flush();
+    			}
+    			unset($objects);
+    		}
+    	}
+    }
     
     
     /**
