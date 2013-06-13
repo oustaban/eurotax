@@ -603,6 +603,14 @@ class AbstractTabsController extends Controller
         if($object instanceof AbstractBaseEntity) {
         	if($object->getStatus() && $object->getStatus()->getId() == 1) {
         		$this->get('session')->setFlash('sonata_flash_error', 'flash_delete_error');
+        		
+        		if ($this->getRequest()->getMethod() == 'DELETE' && $this->isXmlHttpRequest()) {
+        			return $this->renderJson(array(
+        					'result' => 'ok',
+        			));
+        		} else if ($this->getRequest()->getMethod() == 'DELETE' && $this->isXmlHttpRequest() === false) {
+        			return new RedirectResponse($this->admin->generateUrl('list'));
+        		}
         	}
         }
         
@@ -966,6 +974,17 @@ class AbstractTabsController extends Controller
                     } else {
                         $validate_fields[] = 'version';
                     }
+                    
+                    
+                    $dateDebut = $client->getDateDebutMission();
+                    
+                    
+                    if($dateDebut->format('Ym') > $year . $month) {
+                    	$this->get('session')->setFlash('sonata_flash_info|raw', 'Le fichier de données est antérieur à la date de début de mission');
+                    	return false;
+                    }
+                    
+                    
                 } else {
                     $validate_fields[] = 'nom_client';
                 }
