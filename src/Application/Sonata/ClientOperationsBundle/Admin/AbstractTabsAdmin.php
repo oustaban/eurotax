@@ -587,7 +587,7 @@ abstract class AbstractTabsAdmin extends Admin
     {
     	//workaround for this strange issue in the test server
     	//http://stackoverflow.com/questions/12965816/php-round-working-strange
-    	return rtrim(number_format($value, 4), 0);
+    	return rtrim(number_format((float)$value, 4), 0);
     }
     
     

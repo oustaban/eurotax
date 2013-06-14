@@ -793,6 +793,7 @@ class AbstractTabsController extends Controller
     	if(!in_array($class, array('DEBExped', 'DEBIntro'))) {
     		return;
     	}
+    	
     	$expectedFirstVal = 1;
     	$nlignes = array();
     	foreach($data as $row) {
@@ -810,8 +811,11 @@ class AbstractTabsController extends Controller
     		return true;
     	};
     	
-    	if($data[0][0] != $expectedFirstVal || !$checkConsec($nlignes)) {
-    		$this->setCountImports($class, 'errors', 'No line n\'est pas correct pour');
+    	
+    	if(!empty($nlignes)) {
+	    	if($data[0][0] != $expectedFirstVal || !$checkConsec($nlignes)) {
+	    		$this->setCountImports($class, 'errors', 'No line n\'est pas correct pour');
+	    	}
     	}
     }
     
