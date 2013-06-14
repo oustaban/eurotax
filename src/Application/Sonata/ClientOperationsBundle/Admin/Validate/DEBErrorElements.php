@@ -552,7 +552,14 @@ class DEBErrorElements extends ErrorElements
 			$em = $doctrine->getManager();
 	
 			$client = $em->getRepository('ApplicationSonataClientBundle:Client')->find($this->_object->getClientId());
-			$niveauDobligationId = $client->getNiveauDobligationId();
+			
+			
+			if($class == 'DEBIntro') {
+				$niveauDobligationId = $client->getNiveauDobligationId(); //INTRO
+			} elseif($class == 'DEBExped') {
+				$niveauDobligationId = $client->getNiveauDobligationExpedId(); //DEB
+			}
+			
 			$regime = $this->_object->getRegime();
 	
 			
