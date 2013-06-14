@@ -875,9 +875,9 @@ class AbstractTabsController extends Controller
                             $newValue = $admin->getFormValue($fieldName, $value);
                             $formData[$fieldName] = $newValue;
                             // unset data for boolean fields equal to false
-                            if(is_bool($newValue) && $newValue === false) {
+                            /* if(is_bool($newValue) && $newValue === false) {
                             	unset($formData[$fieldName]);
-                            }
+                            } */
                         }
                     }
                     

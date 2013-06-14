@@ -392,14 +392,14 @@ abstract class AbstractTabsAdmin extends Admin
             $method = 'get' . ucfirst($type) . 'TypeFormValue';
             $v = method_exists($this, $method) ? $this->$method($v) : $v;
         }
-
+        
         return $v;
     }
 
     
-    public function getBooleanTypeFormValue($value) {
+    /* public function getBooleanTypeFormValue($value) {
     	return (boolean) $value;
-    }
+    } */
     
     
     /**
@@ -564,9 +564,12 @@ abstract class AbstractTabsAdmin extends Admin
     protected function getDEBFormValue($value)
     {
         if ($value == 'OUI') {
-            return 1;
+            return true;
+        } elseif ($value == 'NON') {
+        	return null;
         }
-        return 0;
+        
+        return 'EMPTY';
     }
 
     /**

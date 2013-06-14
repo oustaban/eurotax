@@ -494,6 +494,19 @@ class ErrorElements
         return $this;
     }
 
+    
+    public function validateRegime()
+    {
+    	$regime = (int)$this->_object->getRegime();
+    	
+    	if(!in_array($regime, array(11,19))) {
+    		$this->_errorElement->with('regime')->addViolation('La valeur du régime de la cellule ' . $regime . ' est incorrecte')->end();
+    	}
+    		
+    	return $this;
+    }
+    
+    
     /**
      * @param bool $value
      * @return ErrorElements
