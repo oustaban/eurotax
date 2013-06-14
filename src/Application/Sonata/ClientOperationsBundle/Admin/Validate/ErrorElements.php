@@ -495,14 +495,29 @@ class ErrorElements
     }
 
     
-    public function validateRegime()
+    public function validateRegime($values)
     {
     	$regime = (int)$this->_object->getRegime();
     	
-    	if(!in_array($regime, array(11,19))) {
+    	if(!in_array($regime, $values)) {
     		$this->_errorElement->with('regime')->addViolation('La valeur du régime de la cellule ' . $regime . ' est incorrecte')->end();
     	}
     		
+    	return $this;
+    }
+    
+    
+    
+    public function validateRegimeV05($values)
+    {
+    	$regime = (int)$this->_object->getRegime();
+    	$deb = $this->_object->getDEB();
+    	
+    	if($deb && $regime == 0) {
+    		$this->_errorElement->with('regime')->addViolation('La valeur du régime de la cellule ' . $regime . ' est incorrecte')->end();
+    	} else {
+    		$this->validateRegime($values);
+    	}
     	return $this;
     }
     
