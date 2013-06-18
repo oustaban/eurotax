@@ -224,8 +224,8 @@ list:
     title: Compte
     date: Date
     operation: Opération
-    montant: Montant
-    solde: Solde
+    montant: Montant (€)
+    solde: Solde (€)
     commentaire: Commentaire
     statut: Statut
 
@@ -233,8 +233,8 @@ list:
     title: Ajouter / Modifier un compte de dépôt
     date: Date
     operation: Opération
-    montant: Montant
-    solde: Solde
+    montant: Montant (€)
+    solde: Solde (€)
     commentaire: Commentaire
     statut: Statut
 

@@ -35,6 +35,14 @@ class CompteController extends Controller
     		throw new AccessDeniedException();
     	}
     
+    	
+    	$user = \AppKernel::getStaticContainer()->get('security.context')->getToken()->getUser();
+    	$this->jsSettingsJson(array(
+    		'isSuperviseur' => $user->hasGroup('Superviseur'),
+    	));
+    	
+    	
+    	
     	$datagrid = $this->admin->getDatagrid();
     	$formView = $datagrid->getForm()->createView();
     
