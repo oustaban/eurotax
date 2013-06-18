@@ -87,9 +87,11 @@ abstract class AbstractCompteAdmin extends Admin
     {
         parent::validate($errorElement, $object);
 
+        $user = \AppKernel::getStaticContainer()->get('security.context')->getToken()->getUser();
+        
         /* @var $value \DateTime */
         $value = $object->getDate();
-        if ($value && !$this->getValidateImport()) {
+        if ($value && !$this->getValidateImport() && !$user->hasGroup('Superviseur')) {
             if ($value->getTimestamp() < strtotime('-10 days')) {
                 $errorElement->with('date')->addViolation('La "date" ne doit pas dépasser les 10 jours dans le passé')->end();
             }
