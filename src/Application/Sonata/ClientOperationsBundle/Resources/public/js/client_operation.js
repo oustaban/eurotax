@@ -374,7 +374,7 @@ function init_rapprochement_sums() {
     $plus = $plus.length ? $plus.html() : '0';
     var $minus = $('.rapprochement_content_deb .rapprochement_content_input table.table tr.totals_row div b :first');
     $minus = $minus.length ? $minus.html() : '0';
-    var diff = Number(real_num($plus)) - Number(real_num($minus));
+    var diff = Number(real_num($minus))-Number(real_num($plus)) ;
     ECARTsumm += diff;
     
     var result = Math.round((diff) * 100) / 100;
@@ -397,7 +397,7 @@ function init_rapprochement_sums() {
     $plus = $plus.length ? $plus.html() : '0';
     var $minus = $('.rapprochement_content_deb .rapprochement_content_input table.table tr.totals_row div b :last');
     $minus = $minus.length ? $minus.html() : '0';
-    var diff = Number(real_num($plus)) - Number(real_num($minus));
+    var diff = Number(real_num($minus))-Number(real_num($plus)) ;
     ECARTsumm += diff;
     
     
@@ -417,9 +417,11 @@ function init_rapprochement_sums() {
     
     var $plus = $('.rapprochement_content_no_deb .rapprochement_content_output table.table tr.totals_row div b :first');
     $plus = $plus.length ? $plus.html() : '0';
+   
     var $minus = $('.rapprochement_content_deb .rapprochement_content_output table.table tr.totals_row div b :first');
     $minus = $minus.length ? $minus.html() : '0';
-    var diff = Number(real_num($plus)) - Number(real_num($minus));
+    
+    var diff = Number(real_num($minus))-Number(real_num($plus)) ;
     ECARTsumm += diff;
     
     var result = Math.round((diff) * 100) / 100;
@@ -443,7 +445,7 @@ function init_rapprochement_sums() {
     $plus = $plus.length ? $plus.html() : '0';
     var $minus = $('.rapprochement_content_deb .rapprochement_content_output table.table tr.totals_row div b :last');
     $minus = $minus.length ? $minus.html() : '0';
-    var diff = Number(real_num($plus)) - Number(real_num($minus));
+    var diff = Number(real_num($minus))-Number(real_num($plus)) ;
     ECARTsumm += diff;
     
     var result = Math.round((diff) * 100) / 100;
@@ -466,6 +468,24 @@ function init_rapprochement_sums() {
     
     //#rapprochement_form
     if($('#rapprochement_form').size()) {
+    	
+    	$('#btn_recalculer').click(function(){
+    		var calc = function(numSel, numInputSel, outputSel) {
+        		var sum = Number(real_num($(numSel).html()))+ Number(real_num( $(numInputSel).val()));
+	    		$(outputSel).html('<b>'+ euro_num_format(sum) +'</b>');
+			};
+    		
+    		calc('#totals_input_v1', '#rapprochement_intro_info_number', '#totals_input_calcu1');
+    		calc('#totals_input_v2', '#rapprochement_intro_info_number', '#totals_input_calcu2');
+    		
+    		calc('#totals_output_v1', '#rapprochement_exped_info_number', '#totals_output_calcu1');
+    		calc('#totals_output_v2', '#rapprochement_exped_info_number', '#totals_output_calcu2');
+    		
+    		return false;
+    	}).trigger('click');
+    	
+    	
+    	
     
 	    $('#rapprochement_exped_info_text').hide();
 	    $('#rapprochement_intro_info_text').hide();

@@ -1,4 +1,15 @@
 $(function () {
+	
+	$('#DEB-Exped').find('.totals').each(function() {
+		var isRegime25 = $(this).attr('rel') == 'deb-25' ? true : false;
+		if(isRegime25) {
+			$(this).html(  parseFloat($(this).html()) * -1 )
+		}
+	});
+	
+	
+	
+	
     $('.sonata-ba-list .table').each(function(){
         var $tfoot = $(this).find('tfoot:first');
         if (!$tfoot.length) {

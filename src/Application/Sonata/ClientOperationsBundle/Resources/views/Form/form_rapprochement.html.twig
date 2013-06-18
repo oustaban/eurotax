@@ -40,9 +40,66 @@
         
         {{ form_rest(form) }}
     
+
+
+
+
+
+<div class="rapprochement_content_stat">
+        <div class="rapprochement_content_input">
+            <table class="table table-bordered table-striped">
+                <tbody>
+                <tr>
+                    <td width="40%">
+                        ECART 3
+                    </td>
+                    <td class="sonata-ba-list-field sonata-ba-list-field-money" width="20%">
+                        <div id="totals_input_calcu1"></div>
+                    </td>
+                    <td width="20%">
+                        &nbsp;
+                    </td>
+                    <td class="sonata-ba-list-field sonata-ba-list-field-money" width="20%">
+                        <div id="totals_input_calcu2"></div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="rapprochement_content_output">
+            <table class="table table-bordered table-striped">
+                <tbody>
+                <tr>
+                    <td width="40%">
+                        ECART 4
+                    </td>
+                    <td class="sonata-ba-list-field sonata-ba-list-field-money" width="20%">
+                        <div id="totals_output_calcu1"></div>
+                    </td>
+                    <td width="20%">
+                        &nbsp;
+                    </td>
+                    <td class="sonata-ba-list-field sonata-ba-list-field-money" width="20%">
+                        <div id="totals_output_calcu2"></div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+
+
 <div class="content cboth ">
-    
+
+
     {% set text_lock = info.blocked ? 'Clôturer' : 'Déverrouiller' %}
     <button id="btn_locking" rel="tooltip" title="Pour tests" class="btn pull-right"><i class="icon icon-lock"></i> {{ text_lock|trans}}</button>
+    &nbsp;&nbsp;
+    <button id="btn_recalculer" rel="tooltip" title="Recalculer" class="btn pull-right"><i class="icon icon-lock"></i> Recalculer</button>
+    
 </div>        
 </form>

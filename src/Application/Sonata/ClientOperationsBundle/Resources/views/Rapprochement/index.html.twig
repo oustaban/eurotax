@@ -24,10 +24,10 @@
         </div>
         <div class="rapprochement_content_deb">
             <div class="rapprochement_content_input">
-                {% include 'ApplicationSonataClientOperationsBundle::Rapprochement/table.html.twig' with {'table': deb_intro, 'typeName': 'DEB-Intro', preRegime: ' ', postRegime: '', 'totalTitle': '', 'secondColTitle': 'Valeur Fiscale HT (€)', 'has4thCol': true} %}
+                {% include 'ApplicationSonataClientOperationsBundle::Rapprochement/table.html.twig' with {'table': deb_intro, 'typeName': 'DEB-Intro', preRegime: ' ', postRegime: '', 'totalTitle': 'TOTAL DEB-Intro', 'secondColTitle': 'Valeur Fiscale HT (€)', 'has4thCol': true} %}
             </div>
             <div class="rapprochement_content_output">
-                {% include 'ApplicationSonataClientOperationsBundle::Rapprochement/table.html.twig' with {'table': deb_exped, 'typeName': 'DEB-Exped', preRegime: '', postRegime: '', 'totalTitle': '', 'secondColTitle': 'Valeur Fiscale HT (€)', 'has4thCol': true} %}
+                {% include 'ApplicationSonataClientOperationsBundle::Rapprochement/table.html.twig' with {'table': deb_exped, 'typeName': 'DEB-Exped', preRegime: '', postRegime: '', 'totalTitle': 'TOTAL DEB-Exped', 'secondColTitle': 'Valeur Fiscale HT (€)', 'has4thCol': true} %}
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@
                 <tbody>
                 <tr>
                     <td width="40%">
-                        ECART
+                        ECART 1
                     </td>
                     <td class="sonata-ba-list-field sonata-ba-list-field-money" width="20%">
                         <div id="totals_input_v1"></div>
@@ -57,7 +57,7 @@
                 <tbody>
                 <tr>
                     <td width="40%">
-                        ECART
+                        ECART 2
                     </td>
                     <td class="sonata-ba-list-field sonata-ba-list-field-money" width="20%">
                         <div id="totals_output_v1"></div>
@@ -82,7 +82,7 @@
 {% include 'ApplicationSonataClientOperationsBundle::Form/form_rapprochement.html.twig' with {'form': form} %}
 {% endif %}
 
-
+	
 
  
 {% endset %}
