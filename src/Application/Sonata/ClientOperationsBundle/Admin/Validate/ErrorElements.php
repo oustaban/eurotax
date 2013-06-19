@@ -499,7 +499,7 @@ class ErrorElements
     {
     	$regime = (int)$this->_object->getRegime();
     	
-    	if(!in_array($regime, $values)) {
+    	if(!in_array($regime, $values) && !is_null($this->_object->getRegime())) {
     		$this->_errorElement->with('regime')->addViolation('La valeur du régime de la cellule ' . $regime . ' est incorrecte')->end();
     	}
     		
@@ -510,6 +510,7 @@ class ErrorElements
     
     public function validateRegimeV05($values)
     {
+    	
     	$regime = (int)$this->_object->getRegime();
     	$deb = $this->_object->getDEB();
     	
