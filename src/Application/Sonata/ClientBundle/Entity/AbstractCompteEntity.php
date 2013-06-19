@@ -74,7 +74,7 @@ abstract class AbstractCompteEntity
      */
     public function __toString()
     {
-        return $this->getId()?:'-';
+        return $this->getId()?'':'-';
     }
 
 
