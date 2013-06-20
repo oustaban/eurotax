@@ -59,8 +59,23 @@ class ClientAdmin extends Admin
         return array();
     }
 
-    //create & edit form
+    
     /**
+     * //create & edit form
+     * 
+     * On modification...  the value
+     * Nom
+     * Nature du client
+     * Date Début Mission
+     * Date fin mission
+     * Mode enregistrement
+     * SIRET
+     * N° TVA FR
+     * Num dossier fiscal (qui pourrait être renommé : N° Dossier fiscal)
+     * Périodicité Ca3
+     *
+     * Should not be modified anymore by all admin ( put the field in grey )
+     * 
      * @param FormMapper $formMapper
      */
     protected function configureFormFields(FormMapper $formMapper)
@@ -94,9 +109,9 @@ class ClientAdmin extends Admin
                 ->orderBy('u.username', 'ASC');
         }, 'empty_value' => '', 'required' => true))
             ->with('form.client.row3')
-            ->add('nom', null, array('label' => 'form.nom'))
+            ->add('nom', null, array('label' => 'form.nom', 'disabled' => $id ? true : false))
             ->with('form.client.row4')
-            ->add('nature_du_client', null, array('label' => 'form.nature_du_client', 'empty_value' => '', 'required' => true))
+            ->add('nature_du_client', null, array('label' => 'form.nature_du_client', 'empty_value' => '', 'required' => true, 'disabled' => $id ? true : false))
             ->add('contact', null, array('label' => 'form.contacts'))
             ->with('form.client.row5')
             ->add('raison_sociale', null, array('label' => 'form.raison_sociale'))
@@ -124,7 +139,8 @@ class ClientAdmin extends Admin
             'attr' => array('class' => 'datepicker'),
             'widget' => 'single_text',
             'input' => 'datetime',
-            'format' => $this->date_format_datetime
+            'format' => $this->date_format_datetime,
+            'disabled' => $id ? true : false
         ))
             ->add('date_fin_mission', 'date', array(
             'label' => 'form.date_fin_mission',
@@ -136,14 +152,16 @@ class ClientAdmin extends Admin
             'required' => false,
         ))
             ->with('form.client.row10')
-            ->add('mode_denregistrement', null, array('label' => 'form.mode_denregistrement', 'empty_value' => '', 'required' => true))
+            ->add('mode_denregistrement', null, array('label' => 'form.mode_denregistrement', 'empty_value' => '', 
+            		'required' => true, 'disabled' => $id ? true : false))
+            
             ->with('form.client.row11')
-            ->add('siret', null, array('label' => 'form.siret', 'required' => false,))
-            ->add('N_TVA_FR', null, array('label' => 'form.N_TVA_FR'))
+            ->add('siret', null, array('label' => 'form.siret', 'required' => false, 'disabled' => $id ? true : false))
+            ->add('N_TVA_FR', null, array('label' => 'form.N_TVA_FR', 'disabled' => $id ? true : false))
             ->with('form.client.row12')
             ->add('periodicite_facturation', null, array('label' => 'form.periodicite_facturation'))
             ->with('form.client.row13')
-            ->add('num_dossier_fiscal', null, array('label' => 'form.num_dossier_fiscal', 'required' => false,))
+            ->add('num_dossier_fiscal', null, array('label' => 'form.num_dossier_fiscal', 'required' => false, 'disabled' => $id ? true : false))
             ->with('form.client.row14')
             ->add('taxe_additionnelle', 'choice',
             array('expanded' => true,
@@ -174,7 +192,7 @@ class ClientAdmin extends Admin
         	->where("l.name <> 'Annuelle'")
         	->andWhere("l.name <> 'Semestrielle'")
         	->orderBy('l.id', 'ASC');
-        },'empty_value' => '', 'required' => false,))
+        },'empty_value' => '', 'required' => false, 'disabled' => $id ? true : false))
         
         ->add('teledeclaration', null, array('label' => 'form.teledeclaration'))
         
