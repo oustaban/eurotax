@@ -63,7 +63,10 @@ class A06AIBAdmin extends Admin
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'required'=>false))
             ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA'), 'required'=>false))
             ->add('regime', null, array('label' => $this->getFieldLabel('regime')))
-            ->add('DEB', null, array('label' => $this->getFieldLabel('DEB')))
+            //->add('DEB', null, array('label' => $this->getFieldLabel('DEB')))
+            
+            ->add('DEB', 'choice', array('label' => 'DEB', 'choices' => array(1 => 'Oui', 0 => 'Non'),'multiple' => false,'expanded'=>true))
+            
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')))
             ;
     }
@@ -114,7 +117,7 @@ class A06AIBAdmin extends Admin
 
         $error = new ErrorElements($errorElement, $object, $this->import_file_year, $this->import_file_month);
         $error->setValidateImport($this->getValidateImport())
-        	->validateRegime(array(11,19))
+        	->validateRegime2(array(11,19))
             ->validateDevise()
             ->validateHT()
             ->validateMois()

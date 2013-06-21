@@ -564,12 +564,12 @@ abstract class AbstractTabsAdmin extends Admin
     protected function getDEBFormValue($value)
     {
         if ($value == 'OUI') {
-            return true;
+            return 1;
         } elseif ($value == 'NON') {
-        	return null;
+        	return 0;
         }
         
-        return 'EMPTY';
+        return '';
     }
 
     /**

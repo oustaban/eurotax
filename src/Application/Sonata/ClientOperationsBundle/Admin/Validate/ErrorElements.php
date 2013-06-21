@@ -498,29 +498,50 @@ class ErrorElements
     public function validateRegime($values)
     {
     	$regime = (int)$this->_object->getRegime();
+    	//$deb = $this->_object->getDEB();
     	
-    	if(!in_array($regime, $values) && !is_null($this->_object->getRegime())) {
-    		$this->_errorElement->with('regime')->addViolation('La valeur du régime de la cellule ' . $regime . ' est incorrecte')->end();
-    	}
+    	
+	    if(!in_array($regime, $values) && !is_null($this->_object->getRegime())) {
+	    	$this->_errorElement->with('regime')->addViolation('La valeur du régime de la cellule "' . $this->_object->getRegime() . '" est incorrecte')->end();
+    	//} else if(is_null($this->_object->getRegime()) && is_null($deb)) {
+    	//	$this->_errorElement->with('regime')->addViolation('La valeur de est obligatoire.')->end();
     		
+    	}
+    	
+    	
     	return $this;
     }
     
     
     
-    public function validateRegimeV05($values)
+    public function validateRegime2($values)
     {
     	
     	$regime = (int)$this->_object->getRegime();
     	$deb = $this->_object->getDEB();
     	
     	if($deb && $regime == 0) {
-    		$this->_errorElement->with('regime')->addViolation('La valeur du régime de la cellule ' . $regime . ' est incorrecte')->end();
+    		$this->_errorElement->with('regime')->addViolation('La valeur du régime de la cellule "' . $this->_object->getRegime() . '" est incorrecte')->end();
+    	} else if(is_null($this->_object->getRegime()) && is_null($deb)) {
+    		$this->_errorElement->with('regime')->addViolation('La valeur de est obligatoire.')->end();
     	} else {
     		$this->validateRegime($values);
     	}
     	return $this;
     }
+    
+    
+    
+    public function validateDEB()
+    {
+    	$deb = $this->_object->getDEB();
+    	if(is_null($deb)) {
+    		$this->_errorElement->with('DEB')->addViolation('La valeur de est obligatoire.')->end();
+    	
+    	}
+    	return $this;
+    }
+    
     
     
     /**

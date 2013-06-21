@@ -16,6 +16,10 @@
         <service id="form.type.mois" class="Application\Form\Type\MoisType">
             <tag name="form.type" alias="mois" />
         </service>
+        
+        <service id="form.type.choice" class="Application\Form\Type\ChoiceType">
+            <tag name="form.type" alias="choice" />
+        </service>
     </services>
 
 </container>

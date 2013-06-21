@@ -56,7 +56,8 @@ class V05LICAdmin extends Admin
         ))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'required'=>false))
             ->add('regime', null, array('label' => $this->getFieldLabel('regime')))
-            ->add('DEB', 'choice', array('label' => 'DEB', 'choices' => array('1' => 'Oui', '0' => 'Non'),'multiple' => false,'expanded'=>true)+$DEBDefaultValue)
+            ->add('DEB', 'choice', array('label' => 'DEB', 'choices' => array(1 => 'Oui', 0 => 'Non'),'multiple' => false,'expanded'=>true)+$DEBDefaultValue)
+            
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')))
             ;
     }
@@ -99,14 +100,15 @@ class V05LICAdmin extends Admin
 
         $error = new ErrorElements($errorElement, $object, $this->import_file_year, $this->import_file_month);
         $error->setValidateImport($this->getValidateImport())
-        	->validateRegimeV05(array(21, 25, 26, 29))
+        	->validateRegime2(array(21, 25, 26, 29))
+        	->validateDEB()
             ->validateDevise()
             ->validateHT()
             ->validateMois();
     }
 
-    protected function getDEBFormValue($value)
+   /*  protected function getDEBFormValue($value)
     {
         return !(!$value || strtolower($value) == 'non');
-    }
+    } */
 }
