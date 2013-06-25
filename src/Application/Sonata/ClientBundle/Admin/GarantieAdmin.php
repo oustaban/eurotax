@@ -119,8 +119,11 @@ class GarantieAdmin extends Admin
      */
     public function postPersist($object)
     {
+    	
+    	$nom_de_la_banques_id = $object->getNomDeLaBanquesId();
+    	
         /** @var $object  \Application\Sonata\ClientBundle\Entity\Garantie */
-        if ($object->getTypeGarantie()) {
+        if ($object->getTypeGarantie() && $nom_de_la_banques_id != 1) { // not "a etablir"
 
             //2 => Dépôt de Garantie
             if ($object->getTypeGarantie()->getId() == 2) {
