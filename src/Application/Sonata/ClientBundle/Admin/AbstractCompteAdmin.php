@@ -57,7 +57,7 @@ abstract class AbstractCompteAdmin extends Admin
         parent::configureListFields($listMapper);
 
         $filterParameters = $this->getFilterParameters();
-        if ($filterParameters['_sort_order'] == $this->datagridValues['_sort_order'] && $filterParameters['_sort_by'] == $this->datagridValues['_sort_by']){
+        if ($filterParameters['_sort_order'] == 'ASC' && $filterParameters['_sort_by'] == $this->datagridValues['_sort_by']){
             global $SonataAdminBundle_Compte_list_solde;
             $SonataAdminBundle_Compte_list_solde = 0;
         }

@@ -320,6 +320,8 @@ jQuery(document).ready(function ($) {
     	//pink bg for rows w/ statut = Prévisionnel
     	$('.sonata-ba-list').find('.statut-p').parent().parent().find('td').css('background', '#ff69b4');
     	
+    	//$('.sonata-ba-list').find('.solde').hide();
+    	
     	if(typeof Sonata.isSuperviseur === 'undefined' || Sonata.isSuperviseur === false) {
 	        var $inactiveTr = $('div.inactive_compte').parent().parent();
 	        $inactiveTr.find('.sonata-ba-list-field-action').html('');
