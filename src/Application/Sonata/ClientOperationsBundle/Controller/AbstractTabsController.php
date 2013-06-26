@@ -789,32 +789,50 @@ class AbstractTabsController extends Controller
      * @param unknown $class
      * @param unknown $data
      */
-    private function _validateDEBNLigne($class, $data) {
+    private function _validateDEBNLigne($class, $skip_line, $data) {
     	if(!in_array($class, array('DEBExped', 'DEBIntro'))) {
     		return;
     	}
+    	$fields = array_flip($this->_config_excel[$this->admin->trans('ApplicationSonataClientOperationsBundle.form.' . $class . '.title')]['fields']);
     	
     	$expectedFirstVal = 1;
     	$nlignes = array();
     	foreach($data as $row) {
-    		if(empty($row[0])) {
+    		if(empty($row[0]) && empty($row[2])) {
     			continue;
     		}
-    		$nlignes[] = $row[0];
+    		$nlignes[] = (float)$row[0];
+    		
     	}
-    	$checkConsec = function($d) {
-    		for($i=0;$i<count($d);$i++) {
-    			if(isset($d[$i+1]) && $d[$i]+1 != $d[$i+1]) {
-    				return false;
+    	$checkConsec = function($d) use ($fields, $skip_line, $class) {
+    		$errors = array();
+    		$count = count($d);
+    		for($i=0;$i<$count;$i++) {
+    		$start = $i+1;
+    			if( isset($d[$i]) && $start != $d[$i] ) {
+    				$line = $skip_line+($i+1);
+    				$repeat = str_repeat(' ', 4);
+    				$label = isset($fields['n_ligne']) ? '(' . (($fields['n_ligne'] ? chr($fields['n_ligne'] + 65) : 'A') . ':' . $line) . ') ' : '';
+    				$errors[] = $repeat . 'VALUE : ' . $label . ($d[$i] ? $d[$i] : '(empty)') . "\n";
+    				$errors[] = $repeat . 'ERROR : No line n\'est pas correct pour' . "\n\n";
     			}
     		}
+    		
+    		
+    		if(!empty($errors)) {
+    			return $errors;
+    		}
+    		
     		return true;
     	};
     	
     	
     	if(!empty($nlignes)) {
-	    	if($data[0][0] != $expectedFirstVal || !$checkConsec($nlignes)) {
-	    		$this->setCountImports($class, 'errors', 'No line n\'est pas correct pour');
+    		$errors = $checkConsec($nlignes);
+	    	if($data[0][0] != $expectedFirstVal || is_array($errors)) {
+	    		$msg = $this->admin->trans('ApplicationSonataClientOperationsBundle.form.' . $class . '.n_ligne') . "\n";
+	    		$msg .= implode($errors);
+	    		$this->setCountImports($class, 'errors', $msg);
 	    	}
     	}
     }
@@ -836,7 +854,7 @@ class AbstractTabsController extends Controller
                 $data = $this->skipLine($config_excel, $data);
 
                 //DEB Exped | DEB Intro
-                $this->_validateDEBNLigne($class, $data);
+                $this->_validateDEBNLigne($class, $skip_line, $data);
                 $adminCode = 'application.sonata.admin.' . strtolower($class);
                 /* @var $admin \Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin */
                 $admin = $this->container->get('sonata.admin.pool')->getAdminByAdminCode($adminCode);
@@ -864,9 +882,7 @@ class AbstractTabsController extends Controller
                     	continue;
                     }
                     
-                    
                     $form->setData($object);
-
                     $formData = array('client_id' => $this->client_id, '_token' => $this->get('form.csrf_provider')->generateCsrfToken('unknown'));
 
                     foreach ($line as $index => $value) {
@@ -874,16 +890,11 @@ class AbstractTabsController extends Controller
                             $fieldName = $fields[$index];
                             $newValue = $admin->getFormValue($fieldName, $value);
                             $formData[$fieldName] = $newValue;
-                            // unset data for boolean fields equal to false
-                            /* if(is_bool($newValue) && $newValue === false) {
-                            	unset($formData[$fieldName]);
-                            } */
                         }
                     }
                     
 
                     if(in_array('paiement_date', $fields)) {
-                    
 	                    //if paiement_date is empty, empty the ff. fields.
 	                    if(!isset($formData['paiement_date']) || (isset($formData['paiement_date']) && empty($formData['paiement_date']))) {
 	                    	unset($formData['mois']);
