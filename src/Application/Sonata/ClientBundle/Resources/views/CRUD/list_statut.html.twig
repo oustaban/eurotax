@@ -1,0 +1,9 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% set value = object.getStatut.getName %}
+
+{% block field %}
+<div class="statut{% if value=='Prévisionnel' %}-p{% endif %}">
+    {{ value }}
+</div>
+{% endblock field %}
