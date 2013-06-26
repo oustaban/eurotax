@@ -26,6 +26,7 @@ class DEBErrorElements extends ErrorElements
 							'masse_mette',
 							'unites_supplementaires',
 							'nature_transaction',
+							//'conditions_livraison',
 							'mode_transport',
 							'departement',
 							'pays_origine',
@@ -39,13 +40,16 @@ class DEBErrorElements extends ErrorElements
 							'n_ligne',
 							'nomenclature',
 							'pays_destination',
+							//'valeur_fiscale',
 							'valeur_statistique',
 							'masse_mette',
 							'unites_supplementaires',
 							'nature_transaction',
+							//'conditions_livraison',
 							'mode_transport',
 							'departement',
 							'pays_origine',
+							//'CEE',
 						)	
 					), 
 					25 => array(
@@ -56,7 +60,7 @@ class DEBErrorElements extends ErrorElements
 			                //'nomenclature',
 			                //'pays_destination',
 			                'valeur_fiscale',
-			                //'regime',
+			                
 			                //'valeur_statistique',
 			                //'masse_mette',
 			                //'unites_supplementaires',
@@ -76,7 +80,7 @@ class DEBErrorElements extends ErrorElements
 							//'nomenclature',
 							//'pays_destination',
 							'valeur_fiscale',
-							//'regime',
+							
 							//'valeur_statistique',
 							//'masse_mette',
 							//'unites_supplementaires',
@@ -96,7 +100,7 @@ class DEBErrorElements extends ErrorElements
 							//'nomenclature',
 							//'pays_destination',
 							'valeur_fiscale',
-							//'regime',
+							
 							//'valeur_statistique',
 							//'masse_mette',
 							//'unites_supplementaires',
@@ -119,7 +123,7 @@ class DEBErrorElements extends ErrorElements
 							'nomenclature',
 							'pays_destination',
 							'valeur_fiscale',
-							//'regime',
+							
 							//'valeur_statistique',
 							'masse_mette',
 							'unites_supplementaires',
@@ -141,7 +145,7 @@ class DEBErrorElements extends ErrorElements
 							'nomenclature',
 							'pays_destination',
 							//'valeur_fiscale',
-							//'regime',
+							
 							'valeur_statistique',
 							'masse_mette',
 							'unites_supplementaires',
@@ -161,7 +165,7 @@ class DEBErrorElements extends ErrorElements
 							//'nomenclature',
 							//'pays_destination',
 							'valeur_fiscale',
-							//'regime',
+							
 							//'valeur_statistique',
 							//'masse_mette',
 							//'unites_supplementaires',
@@ -181,7 +185,7 @@ class DEBErrorElements extends ErrorElements
 							//'nomenclature',
 							//'pays_destination',
 							'valeur_fiscale',
-							//'regime',
+							
 							//'valeur_statistique',
 							//'masse_mette',
 							//'unites_supplementaires',
@@ -201,7 +205,7 @@ class DEBErrorElements extends ErrorElements
 							//'nomenclature',
 							//'pays_destination',
 							'valeur_fiscale',
-							//'regime',
+							
 							//'valeur_statistique',
 							//'masse_mette',
 							//'unites_supplementaires',
@@ -224,7 +228,7 @@ class DEBErrorElements extends ErrorElements
 							'nomenclature',
 							'pays_destination',
 							'valeur_fiscale',
-							//'regime',
+							
 							//'valeur_statistique',
 							//'masse_mette',
 							//'unites_supplementaires',
@@ -244,7 +248,7 @@ class DEBErrorElements extends ErrorElements
 							'nomenclature',
 							'pays_destination',
 							'valeur_fiscale',
-							//'regime',
+							
 							//'valeur_statistique',
 							//'masse_mette',
 							//'unites_supplementaires',
@@ -264,7 +268,7 @@ class DEBErrorElements extends ErrorElements
 							//'nomenclature',
 							'pays_destination',
 							'valeur_fiscale',
-							//'regime',
+							
 							//'valeur_statistique',
 							//'masse_mette',
 							//'unites_supplementaires',
@@ -284,7 +288,7 @@ class DEBErrorElements extends ErrorElements
 							//'nomenclature',
 							'pays_destination',
 							'valeur_fiscale',
-							//'regime',
+							
 							//'valeur_statistique',
 							//'masse_mette',
 							//'unites_supplementaires',
@@ -304,7 +308,7 @@ class DEBErrorElements extends ErrorElements
 							//'nomenclature',
 							'pays_destination',
 							'valeur_fiscale',
-							//'regime',
+							
 							//'valeur_statistique',
 							//'masse_mette',
 							//'unites_supplementaires',
@@ -327,7 +331,7 @@ class DEBErrorElements extends ErrorElements
 							//'nomenclature',
 							//'pays_destination',
 							'valeur_fiscale',
-							//'regime',
+							
 							//'valeur_statistique',
 							//'masse_mette',
 							//'unites_supplementaires',
@@ -347,7 +351,7 @@ class DEBErrorElements extends ErrorElements
 							//'nomenclature',
 							//'pays_destination',
 							'valeur_fiscale',
-							//'regime',
+							
 							//'valeur_statistique',
 							//'masse_mette',
 							//'unites_supplementaires',
@@ -367,7 +371,7 @@ class DEBErrorElements extends ErrorElements
 							//'nomenclature',
 							//'pays_destination',
 							'valeur_fiscale',
-							//'regime',
+							
 							//'valeur_statistique',
 							//'masse_mette',
 							//'unites_supplementaires',
@@ -387,7 +391,7 @@ class DEBErrorElements extends ErrorElements
 							//'nomenclature',
 							//'pays_destination',
 							'valeur_fiscale',
-							//'regime',
+							
 							//'valeur_statistique',
 							//'masse_mette',
 							//'unites_supplementaires',
@@ -413,7 +417,7 @@ class DEBErrorElements extends ErrorElements
 							'nomenclature',
 							'pays_destination',
 							'valeur_fiscale',
-							//'regime',
+							
 							'valeur_statistique',
 							'masse_mette',
 							'unites_supplementaires',
@@ -433,7 +437,7 @@ class DEBErrorElements extends ErrorElements
 							'nomenclature',
 							'pays_destination',
 							//'valeur_fiscale',
-							//'regime',
+							
 							'valeur_statistique',
 							'masse_mette',
 							'unites_supplementaires',
@@ -457,7 +461,7 @@ class DEBErrorElements extends ErrorElements
 							'nomenclature',
 							'pays_destination',
 							'valeur_fiscale',
-							//'regime',
+							
 							'valeur_statistique',
 							'masse_mette',
 							'unites_supplementaires',
@@ -477,7 +481,7 @@ class DEBErrorElements extends ErrorElements
 							'nomenclature',
 							'pays_destination',
 							//'valeur_fiscale',
-							//'regime',
+							
 							'valeur_statistique',
 							'masse_mette',
 							'unites_supplementaires',
@@ -499,7 +503,7 @@ class DEBErrorElements extends ErrorElements
 							'nomenclature',
 							'pays_destination',
 							'valeur_fiscale',
-							//'regime',
+							
 							//'valeur_statistique',
 							//'masse_mette',
 							//'unites_supplementaires',
@@ -519,7 +523,7 @@ class DEBErrorElements extends ErrorElements
 							'nomenclature',
 							'pays_destination',
 							//'valeur_fiscale',
-							//'regime',
+							
 							'valeur_statistique',
 							//'masse_mette',
 							//'unites_supplementaires',
@@ -531,13 +535,409 @@ class DEBErrorElements extends ErrorElements
 							//'CEE',
 						)
 					),
-			)			
-			
+			)
+					
 		)
 	);
-	
-	
-	
+
+
+	protected $_emptyFields = array(
+		'DEBExped' => array(
+			1 => array(
+					21 => array(
+							'niveauDobligationId' => 1,
+							'regime' => 21,
+							'fields' => array(
+								'conditions_livraison',
+
+							)
+					),
+					29 => array(
+							'niveauDobligationId' => 1,
+							'regime' => 29,
+							'fields' => array(
+									'valeur_fiscale',
+									'conditions_livraison',
+									'CEE',
+							)
+					),
+					25 => array(
+							'niveauDobligationId' => 1,
+							'regime' => 25,
+							'fields' => array(
+
+									'nomenclature',
+									'pays_destination',
+									
+									'valeur_statistique',
+									'masse_mette',
+									'unites_supplementaires',
+									'nature_transaction',
+									'conditions_livraison',
+									'mode_transport',
+									'departement',
+									'pays_origine',
+									'CEE',
+							)
+					),
+					26 => array(
+							'niveauDobligationId' => 1,
+							'regime' => 26,
+							'fields' => array(
+
+									'nomenclature',
+									'pays_destination',
+
+									
+									'valeur_statistique',
+									'masse_mette',
+									'unites_supplementaires',
+									'nature_transaction',
+									'conditions_livraison',
+									'mode_transport',
+									'departement',
+									'pays_origine',
+							)
+					),
+					31 => array(
+							'niveauDobligationId' => 1,
+							'regime' => 31,
+							'fields' => array(
+
+									'nomenclature',
+									'pays_destination',
+
+									
+									'valeur_statistique',
+									'masse_mette',
+									'unites_supplementaires',
+									'nature_transaction',
+									'conditions_livraison',
+									'mode_transport',
+									'departement',
+									'pays_origine',
+
+							)
+					),
+			),
+
+			2 => array(
+					21 => array(
+							'niveauDobligationId' => 2,
+							'regime' => 21,
+							'fields' => array(
+									'valeur_statistique',
+									'conditions_livraison',
+									'mode_transport',
+									'departement',
+									'pays_origine',
+
+							)
+					),
+
+
+					29 => array(
+							'niveauDobligationId' => 2,
+							'regime' => 29,
+							'fields' => array(
+									'valeur_fiscale',
+									'conditions_livraison',
+									'mode_transport',
+									'departement',
+									'pays_origine',
+									'CEE',
+							)
+					),
+					25 => array(
+							'niveauDobligationId' => 2,
+							'regime' => 25,
+							'fields' => array(
+									'nomenclature',
+									'pays_destination',
+									'valeur_statistique',
+									'masse_mette',
+									'unites_supplementaires',
+									'nature_transaction',
+									'conditions_livraison',
+									'mode_transport',
+									'departement',
+									'pays_origine',
+							)
+					),
+					26 => array(
+							'niveauDobligationId' => 2,
+							'regime' => 26,
+							'fields' => array(
+									'nomenclature',
+									'pays_destination',
+									
+									'valeur_statistique',
+									'masse_mette',
+									'unites_supplementaires',
+									'nature_transaction',
+									'conditions_livraison',
+									'mode_transport',
+									'departement',
+									'pays_origine',
+							)
+					),
+					31 => array(
+							'niveauDobligationId' => 2,
+							'regime' => 31,
+							'fields' => array(
+									'nomenclature',
+									'pays_destination',
+									
+									'valeur_statistique',
+									'masse_mette',
+									'unites_supplementaires',
+									'nature_transaction',
+									'conditions_livraison',
+									'mode_transport',
+									'departement',
+									'pays_origine',
+							)
+					),
+			),
+
+			3 => array(
+					21 => array(
+							'niveauDobligationId' => 3,
+							'regime' => 21,
+							'fields' => array(
+									
+									'valeur_statistique',
+									'masse_mette',
+									'unites_supplementaires',
+									'nature_transaction',
+									'conditions_livraison',
+									'mode_transport',
+									'departement',
+									'pays_origine',
+							)
+					),
+					29 => array(
+							'niveauDobligationId' => 3,
+							'regime' => 29,
+							'fields' => array(
+									
+									'valeur_statistique',
+									'masse_mette',
+									'unites_supplementaires',
+									'nature_transaction',
+									'conditions_livraison',
+									'mode_transport',
+									'departement',
+									'pays_origine',
+									'CEE',
+							)
+					),
+					25 => array(
+							'niveauDobligationId' => 3,
+							'regime' => 25,
+							'fields' => array(
+									'nomenclature',
+									
+									'valeur_statistique',
+									'masse_mette',
+									'unites_supplementaires',
+									'nature_transaction',
+									'conditions_livraison',
+									'mode_transport',
+									'departement',
+									'pays_origine',
+							)
+					),
+					26 => array(
+							'niveauDobligationId' => 3,
+							'regime' => 26,
+							'fields' => array(
+
+									'nomenclature',
+									'valeur_statistique',
+									'masse_mette',
+									'unites_supplementaires',
+									'nature_transaction',
+									'conditions_livraison',
+									'mode_transport',
+									'departement',
+									'pays_origine',
+
+							)
+					),
+					31 => array(
+							'niveauDobligationId' => 3,
+							'regime' => 31,
+							'fields' => array(
+
+									'nomenclature',
+									'valeur_statistique',
+									'masse_mette',
+									'unites_supplementaires',
+									'nature_transaction',
+									'conditions_livraison',
+									'mode_transport',
+									'departement',
+									'pays_origine',
+
+							)
+					),
+			),
+
+			4 => array(
+					21 => array(
+							'niveauDobligationId' => 4,
+							'regime' => 21,
+							'fields' => array(
+
+									'nomenclature',
+									'pays_destination',
+
+									
+									'valeur_statistique',
+									'masse_mette',
+									'unites_supplementaires',
+									'nature_transaction',
+									'conditions_livraison',
+									'mode_transport',
+									'departement',
+									'pays_origine',
+							)
+					),
+					25 => array(
+							'niveauDobligationId' => 4,
+							'regime' => 25,
+							'fields' => array(
+									'nomenclature',
+									'pays_destination',
+									
+									'valeur_statistique',
+									'masse_mette',
+									'unites_supplementaires',
+									'nature_transaction',
+									'conditions_livraison',
+									'mode_transport',
+									'departement',
+									'pays_origine',
+							)
+					),
+					26 => array(
+							'niveauDobligationId' => 4,
+							'regime' => 26,
+							'fields' => array(
+									'nomenclature',
+									'pays_destination',
+									
+									'valeur_statistique',
+									'masse_mette',
+									'unites_supplementaires',
+									'nature_transaction',
+									'conditions_livraison',
+									'mode_transport',
+									'departement',
+									'pays_origine',
+							)
+					),
+					31 => array(
+							'niveauDobligationId' => 4,
+							'regime' => 31,
+							'fields' => array(
+									'nomenclature',
+									'pays_destination',
+									'valeur_statistique',
+									'masse_mette',
+									'unites_supplementaires',
+									'nature_transaction',
+									'conditions_livraison',
+									'mode_transport',
+									'departement',
+									'pays_origine',
+							)
+					),
+			)
+
+		),
+
+		'DEBIntro' => array(
+			1 => array(
+				11 => array(
+					'niveauDobligationId' => 1,
+					'regime' => 11,
+					'fields' => array(
+						'conditions_livraison',
+						'CEE',
+					)
+				),
+				19 => array(
+				'niveauDobligationId' => 1,
+				'regime' => 19,
+				'fields' => array(
+						'valeur_fiscale',
+						'conditions_livraison',
+						'CEE',
+					)
+				),
+		),
+
+
+		2 => array(
+			11 => array(
+				'niveauDobligationId' => 2,
+				'regime' => 11,
+				'fields' => array(
+					'conditions_livraison',
+					'mode_transport',
+					'departement',
+					'CEE',
+					)
+			),
+			19 => array(
+				'niveauDobligationId' => 2,
+				'regime' => 19,
+				'fields' => array(
+					'valeur_fiscale',
+					'conditions_livraison',
+					'mode_transport',
+					'departement',
+					'CEE',
+				)
+			),
+		),
+		3 => array(
+				11 => array(
+					'niveauDobligationId' => 3,
+					'regime' => 11,
+					'fields' => array(
+						'valeur_statistique',
+						'masse_mette',
+						'unites_supplementaires',
+						'nature_transaction',
+						'conditions_livraison',
+						'mode_transport',
+						'departement',
+						'pays_origine',
+						'CEE',
+					)
+				),
+				19 => array(
+					'niveauDobligationId' => 3,
+					'regime' => 19,
+					'fields' => array(
+						'valeur_fiscale',
+						'masse_mette',
+						'unites_supplementaires',
+						'nature_transaction',
+						'conditions_livraison',
+						'mode_transport',
+						'departement',
+						'pays_origine',
+						'CEE',
+					)
+				),
+			)
+
+		)
+	);
 	
 	public function validateDEB() {
 		
@@ -583,6 +983,19 @@ class DEBErrorElements extends ErrorElements
 					}
 				}
 			}
+			
+			$emptyFields = @$this->_emptyFields[$class][$niveauDobligationId][$regime]['fields'];
+			if(!empty($emptyFields)) {
+				foreach($emptyFields as $field) {
+					$method = 'get' . strtoupper(\Doctrine\Common\Util\Inflector::camelize($field));
+					if($this->_object->$method()) {
+						$this->_errorElement->with($field)->addViolation( 'La cellule doit être vide.' )->end();
+					}
+				}
+			}
+			
+			
+			
 		}
 		return $this;
 	}
