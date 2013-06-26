@@ -317,6 +317,8 @@ jQuery(document).ready(function ($) {
      */
     if ($('.js-compte, .js-compte_de_depot').size()) {
     	
+    	//pink bg for rows w/ statut = Prévisionnel
+    	$('.sonata-ba-list').find('.statut-p').parent().parent().find('td').css('background', '#ff69b4');
     	
     	if(typeof Sonata.isSuperviseur === 'undefined' || Sonata.isSuperviseur === false) {
 	        var $inactiveTr = $('div.inactive_compte').parent().parent();

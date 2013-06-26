@@ -17,7 +17,7 @@ use Application\Sonata\ClientBundle\Admin\AbstractTabsAdmin as Admin;
 abstract class AbstractCompteAdmin extends Admin
 {
     protected $datagridValues = array(
-        '_sort_order' => 'ASC',
+        '_sort_order' => 'DESC',
         '_sort_by' => 'date'
     );
 
@@ -76,7 +76,10 @@ abstract class AbstractCompteAdmin extends Admin
             'template' => 'ApplicationSonataClientBundle:CRUD:list_solde.html.twig'
         ))
             ->add('commentaire', null, array('label' => $this->getFieldLabel('commentaire')))
-            ->add('statut.name', null, array('label' => $this->getFieldLabel('statut')));
+            ->add('statut.name', null, array('label' => $this->getFieldLabel('statut'),
+            	'template' => 'ApplicationSonataClientBundle:CRUD:list_statut.html.twig'
+            		
+        ));
     }
 
     /**
