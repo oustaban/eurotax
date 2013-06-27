@@ -838,6 +838,28 @@ class DEBErrorElements extends ErrorElements
 									'pays_origine',
 							)
 					),
+					
+					
+					29 => array(
+							'niveauDobligationId' => 4,
+							'regime' => 29,
+							'fields' => array(
+									'n_ligne',
+									'nomenclature',
+									'pays_destination',
+									'valeur_fiscale',
+									'valeur_statistique',
+									'masse_mette',
+									'unites_supplementaires',
+									'nature_transaction',
+									'conditions_livraison',
+									'mode_transport',
+									'departement',
+									'pays_origine',
+									'CEE',
+							)
+					),					
+					
 					31 => array(
 							'niveauDobligationId' => 4,
 							'regime' => 31,
@@ -977,7 +999,6 @@ class DEBErrorElements extends ErrorElements
 			if(!empty($requiredFields)) {
 				foreach($requiredFields as $field) {
 					$method = 'get' . strtoupper(\Doctrine\Common\Util\Inflector::camelize($field));
-					//var_dump($method);
 					if(!$this->_object->$method()) {
 						$this->_errorElement->with($field)->addViolation( 'La valeur de est obligatoire.' )->end();
 					}
@@ -988,14 +1009,11 @@ class DEBErrorElements extends ErrorElements
 			if(!empty($emptyFields)) {
 				foreach($emptyFields as $field) {
 					$method = 'get' . strtoupper(\Doctrine\Common\Util\Inflector::camelize($field));
-					if($this->_object->$method()) {
+					if($this->_object->$method() || !is_null($this->_object->$method()) || ($this->_object->$method() != '' && $this->_object->$method() == 0)) {
 						$this->_errorElement->with($field)->addViolation( 'La cellule doit être vide.' )->end();
 					}
 				}
 			}
-			
-			
-			
 		}
 		return $this;
 	}
