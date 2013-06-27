@@ -527,8 +527,8 @@ ApplicationSonataClientOperationsBundle:
       commentaires: Commentaires
 
   rapprochement:
-    input_title: Analyse de l'écart entre A06 et DEB Intro
-    output_title: Analyse de l'écart entre V05 et DEB Exped
+    input_title: Analyse de l'écart entre A06 (DEB OUI) et DEB Intro
+    output_title: Analyse de l'écart entre V05 (DEB OUI) et DEB Exped
 
   mois: Mois de TVA
 

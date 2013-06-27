@@ -31,7 +31,7 @@
                         {{ object.DEB? preRegime ~ 'Régime ' ~ object.DEB ~ postRegime : 'pour DEB "NON"' }}
                     </td>
                     <td class="sonata-ba-list-field sonata-ba-list-field-money">
-                        <div class="totals v1_{{ rnd }}" rel="deb-{{ object.DEB }}">
+                        <div class="totals v1_{{ rnd }} v1" rel="deb-{{ object.DEB }}">
                             {{ object.v2 ? object.v2 : 0  }}
                         </div>
                     </td>
@@ -40,7 +40,7 @@
                     </td>
                     <td class="sonata-ba-list-field sonata-ba-list-field-money">
                     {% if has4thCol %}
-                        <div class="totals v2_{{ rnd }}" rel="deb-{{ object.DEB }}">
+                        <div class="totals v2_{{ rnd }} v2" rel="deb-{{ object.DEB }}">
                             {{ object.v1 ? object.v1 : 0 }}
                         </div>
                     {% endif%}   

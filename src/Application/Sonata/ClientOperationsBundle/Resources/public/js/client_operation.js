@@ -368,6 +368,67 @@ function init_clientoperations_buttons(o) {
 
 function init_rapprochement_sums() {
 
+	
+	 //Total 
+    var TOTAL_DEBExped_valeur_fiscale_HT = 0, TOTAL_DEBExped_valeur_stat_HT = 0;
+    $('#DEB-Exped').find('.totals').each(function() {
+    	var num = real_num($(this).html());
+    	var isRegime25 = $(this).attr('rel') == 'deb-25' ? true : false;
+		if(isRegime25) {
+			num = real_num($(this).html()) * -1;
+				
+		}
+		
+		if($(this).hasClass('v1')) {
+			TOTAL_DEBExped_valeur_fiscale_HT+=num;
+		} else if($(this).hasClass('v2')) {
+			TOTAL_DEBExped_valeur_stat_HT+=num;
+		}
+    });
+    
+    var NEWTR = '<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr> \
+    <tr> \
+    <td class="sonata-ba-list-field sonata-ba-list-field-text total" title="TOTAL DEB-Exped"><b>TOTAL DEB-Exped </b> </td> \
+    <td class="sonata-ba-list-field sonata-ba-list-field-money total"> \
+        <div class="TOTAL_DEBExped_valeur_fiscale_HT" rel=""><b>' + euro_num_format(TOTAL_DEBExped_valeur_fiscale_HT) + '</b></div> \
+    </td> \
+    <td class="sonata-ba-list-field sonata-ba-list-field-integer total">&nbsp;</td> \
+    <td class="sonata-ba-list-field sonata-ba-list-field-money total"> \
+                            <div class="TOTAL_DEBExped_valeur_stat_HT" rel=""><b>' + euro_num_format(TOTAL_DEBExped_valeur_stat_HT) + '</b></div> \
+	    </td></tr>\
+	    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>';
+    
+    $('#DEB-Exped table tbody').prepend(NEWTR);
+    
+    
+    var TOTAL_DEBIntro_valeur_fiscale_HT = 0, TOTAL_DEBIntro_valeur_stat_HT = 0;
+    $('#DEB-Intro').find('.totals').each(function() {
+    	var num = real_num($(this).html());
+    		
+		if($(this).hasClass('v1')) {
+			TOTAL_DEBIntro_valeur_fiscale_HT+=num;
+		} else if($(this).hasClass('v2')) {
+			TOTAL_DEBIntro_valeur_stat_HT+=num;
+		}
+    });
+    
+    var NEWTR = '<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr> \
+    <tr> \
+    <td class="sonata-ba-list-field sonata-ba-list-field-text total" title="TOTAL DEB-Intro"><b>TOTAL DEB-Intro </b> </td> \
+    <td class="sonata-ba-list-field sonata-ba-list-field-money total"> \
+        <div class="TOTAL_DEBIntro_valeur_fiscale_HT" rel=""><b>' + euro_num_format(TOTAL_DEBIntro_valeur_fiscale_HT) + '</b></div> \
+    </td> \
+    <td class="sonata-ba-list-field sonata-ba-list-field-integer total">&nbsp;</td> \
+    <td class="sonata-ba-list-field sonata-ba-list-field-money total"> \
+                            <div class="TOTAL_DEBIntro_valeur_stat_HT" rel=""><b>' + euro_num_format(TOTAL_DEBIntro_valeur_stat_HT) + '</b></div> \
+	    </td></tr>\
+	    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>';
+    
+    $('#DEB-Intro table tbody').prepend(NEWTR);
+	
+	
+	
+	
     var ECARTsumm = 0;
 
     var $plus = $('.rapprochement_content_no_deb .rapprochement_content_input table.table tr.totals_row div b :first');
@@ -461,7 +522,8 @@ function init_rapprochement_sums() {
     }
     
     totals_output_v2 = result;
-    
+
+     
     if (ECARTsumm == 0) {
         $("#rapprochement_validation").show();
     }

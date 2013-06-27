@@ -27,10 +27,9 @@ $(function () {
             }
             else {
                 add_total_rows = true;
-                var tc = $div.removeClass('totals')
+                var tc = $div.removeClass('totals').removeClass('v1').removeClass('v2')
                     .attr("class");
                 $div.attr("class", tc + '_total');
-
                 var sum = 0;
                 $('.' + tc).each(function () {
                 	if(parseFloat($(this).html()))
