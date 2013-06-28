@@ -27,26 +27,21 @@ class VirementForm extends AbstractType {
 	*/
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
-		
-		//$this->getRequest();
-		
-		
 		$client_id = $this->client_id;
-		
-	
+			
 		$builder
 			->add('amount', 'money', array('required' => true, 'label' => ''))
-			 ->add('coordonnees', 'entity', array('label' => '',
+			->add('coordonnees', 'entity', array('label' => '',
 			 		'class' => 'Application\Sonata\ClientBundle\Entity\Coordonnees',
 			 		//'property' => 'option_value',
 			 		'query_builder' => function (EntityRepository $er) use($client_id) {
 				return $er->createQueryBuilder('c')
 					->where("c.client=$client_id")
 					->orderBy('c.orders', 'ASC');
-			},'empty_value' => '', 'required' => true,)) 
-			
+			},'empty_value' => '', 'required' => true,))
+
+			->add('facture', 'text', array('attr' => array('placeholder'=>'Quel est le libellé du transfert ?'),   'required' => true, 'label' => 'Quel est le libellé du transfert ?'))
 			;
-	
 	}
 	
 	

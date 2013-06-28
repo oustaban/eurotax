@@ -55,13 +55,13 @@ class CompteController extends Controller
     	{
     		$virementForm->bindRequest($request);
     		if ($virementForm->isValid()) {
-    			
 				// Get raw data coz of issue on euro number format.    			
     			$formRequestData = $request->request->all();
     			$formRequestData = $formRequestData[$virementForm->getName()];
     			
     			$amount = $formRequestData['amount'];
     			$coordonnees = $virementForm['coordonnees']->getData();
+    			$facture = $virementForm['facture']->getData();
     			
     			/* @var $em \Doctrine\ORM\EntityManager */
     			$em = $this->getDoctrine()->getManager();
@@ -77,7 +77,8 @@ class CompteController extends Controller
     			$em->persist($compte);
     			$em->flush();
     			
-    			return $this->redirect($this->generateUrl('admin_sonata_client_compte_virement', array('filter[client_id][value]' => $this->client_id, 'coordonnees' => $coordonnees->getId(), 'amount' => $amount)));
+    			return $this->redirect($this->generateUrl('admin_sonata_client_compte_virement', array('filter[client_id][value]' => $this->client_id, 
+    				'coordonnees' => $coordonnees->getId(), 'amount' => $amount, 'facture' => $facture)));
     		}
     	}
     	
@@ -93,7 +94,7 @@ class CompteController extends Controller
     
     
     
-    public function virementAction($amount, $coordonnees) {
+    public function virementAction($amount, $coordonnees, $facture) {
     	$client = $this->getClient();
     	$coordonneesId = (int) $coordonnees;
     	
@@ -107,7 +108,8 @@ class CompteController extends Controller
     			'client' => $client,
     			'amount' => $amountEuro,
     			'amountWords' => $this->_amountToWords($amount),
-    			'coordonnees' => $coordonnees
+    			'coordonnees' => $coordonnees,
+    			'facture' => $facture
     		));
     	
     	if(isset($_GET['d'])) {

@@ -20,7 +20,7 @@ class CompteAdmin extends Admin
 	
 	protected function configureRoutes(RouteCollection $collection)
 	{
-		$collection->add('virement', 'virement/{amount}/{coordonnees}');
+		$collection->add('virement', 'virement/{amount}/{coordonnees}/{facture}');
 		 
 	}
 }

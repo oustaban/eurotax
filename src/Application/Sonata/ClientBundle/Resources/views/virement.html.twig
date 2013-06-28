@@ -1,27 +1,14 @@
 <style type="text/css">
-
 .b {font-weight: bold;}
-
 .border { border: 2px solid #000 }
-
-
 table.td {font-family: arial;}
-
 table.right { float: right; width: 100% }
 table.right td { text-align: right }
-
 table.left { float: left; width: 100% }
 table.left td { text-align: left }
-
-
 table.center { width: 100% }
 table.center td { text-align: center }
-
-
-
 </style>
-
-
 
 <table class="right">
 <tr><td class="b">{{ coordonnees.getNom() }}</td></tr>
@@ -92,7 +79,7 @@ N° de compte: {{ coordonnees.getNoDeCompte() }}<br />
 
 <table class="left">
 <tr><td>
-En indiquant en référence du transfert : <span class="b">Facture</span><br /><br />
+En indiquant en référence du transfert : <span class="b">Facture</span> {{ facture }}<br /><br />
 Pour toute information concernant cet ordre de virement, merci de contacter Elisabetta Carraro au 01.41.98.48.12. <br /><br />
 Nous vous prions d'agréer, Messieurs, nos salutations distinguées. <br /><br />
 </td></tr>
