@@ -1,5 +1,7 @@
 {% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
 
 {% block field %}
+{% if object.user %}
 {{ object.user.__toString }}
+{% endif %}
 {% endblock field %}

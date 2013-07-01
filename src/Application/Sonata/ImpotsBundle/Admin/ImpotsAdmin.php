@@ -16,7 +16,7 @@ class ImpotsAdmin extends Admin
     public $dashboards = array('Admin');
 
     protected $_bundle_name = 'ApplicationSonataImpotsBundle';
-
+    
     /**
      * @var array
      */
@@ -25,6 +25,12 @@ class ImpotsAdmin extends Admin
         '_sort_by' => 'nom'
     );
 
+    public function configure()
+    {
+    	
+    }
+    
+    
     /**
      * @return array
      */
@@ -36,6 +42,13 @@ class ImpotsAdmin extends Admin
     //create & edit form
     protected function configureFormFields(FormMapper $formMapper)
     {
+		// Hide edit/update button
+    	$user = \AppKernel::getStaticContainer()->get('security.context')->getToken()->getUser();
+    	if($user->hasGroup('Gestionnaire')) {
+    		$this->supportsPreviewMode = true;
+    	}
+    	
+    	
         $label = 'form.';
         $formMapper
             ->add('nom', null, array('label' => $label . 'nom'))
@@ -121,4 +134,20 @@ class ImpotsAdmin extends Admin
         }
         return $template;
     }
+    
+    public function isGranted($name, $object = null)
+    {
+    	
+    	if($name == 'DELETE') {
+    		$user = \AppKernel::getStaticContainer()->get('security.context')->getToken()->getUser();
+    		
+    		if($user->hasGroup('Gestionnaire')) {
+    			return false;
+    		}
+    	}
+    	
+    	return parent::isGranted($name, $object);
+    }
+    
+    
 }

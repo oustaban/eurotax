@@ -592,6 +592,20 @@ class ClientAdmin extends Admin
     }
     
     
+    public function isGranted($name, $object = null)
+    {
+    	 
+    	if($name == 'DELETE') {
+    		$user = \AppKernel::getStaticContainer()->get('security.context')->getToken()->getUser();
+    
+    		if($user->hasGroup('Gestionnaire')) {
+    			return false;
+    		}
+    	}
+    	 
+    	return parent::isGranted($name, $object);
+    }
+    
     
     
 }

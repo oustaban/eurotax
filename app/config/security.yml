@@ -7,7 +7,7 @@ security:
         FOS\UserBundle\Model\UserInterface: sha512
 
     role_hierarchy:
-        ROLE_SUPER_ADMIN: [ROLE_EDIT_USERS, ROLE_EDIT_DEVISES, ROLE_EDIT_IMPOTS, ROLE_EDIT_CLIENTS, ROLE_ADD_CLIENTS, ROLE_EDIT_CLIENTOPERATIONS, ROLE_CLIENT_TOOLS, ROLE_EDIT_ETATS, ROLE_EDIT_DEVISES_WRITE]
+        ROLE_SUPER_ADMIN: [ROLE_EDIT_USERS, ROLE_EDIT_DEVISES, ROLE_EDIT_IMPOTS, ROLE_EDIT_CLIENTS, ROLE_ADD_CLIENTS, ROLE_EDIT_CLIENTOPERATIONS, ROLE_CLIENT_TOOLS, ROLE_EDIT_ETATS, ROLE_EDIT_DEVISES_WRITE, ROLE_INITIALIMPORTS]
         ROLE_EDIT_USERS: [ROLE_USER, ROLE_SONATA_ADMIN]
         ROLE_EDIT_DEVISES: [ROLE_USER, ROLE_SONATA_ADMIN]
         ROLE_EDIT_DEVISES_WRITE: [ROLE_EDIT_DEVISES_WRITE]
@@ -16,6 +16,7 @@ security:
         ROLE_ADD_CLIENTS: [ROLE_EDIT_CLIENTS]
         ROLE_EDIT_CLIENTOPERATIONS: [ROLE_USER, ROLE_SONATA_ADMIN]
         ROLE_CLIENT_TOOLS: [ROLE_EDIT_CLIENTOPERATIONS]
+        ROLE_INITIALIMPORTS: [ROLE_SONATA_ADMIN]
         SONATA:
             - ROLE_SONATA_PAGE_ADMIN_PAGE_EDIT  # if you are not using acl then this line must be uncommented
 
@@ -72,11 +73,12 @@ security:
         - { path: ^/sonata/user/group, role: [ROLE_SUPER_ADMIN] }
         - { path: ^/sonata/devises, role: [ROLE_EDIT_DEVISES] }
         - { path: ^/sonata/impots, role: [ROLE_EDIT_IMPOTS] }
-        - { path: ^/dashboard/etats, role: [ROLE_EDIT_ETATS] }
+        - { path: ^/dashboard/etats, role: [ROLE_EDIT_ETATS] }			
 
         - { path: ^/sonata/client/client/create, role: [ROLE_ADD_CLIENTS] }
         - { path: ^/sonata/client, role: [ROLE_EDIT_CLIENTS] }
 
         - { path: ^/sonata/clientoperations, role: [ROLE_EDIT_CLIENTOPERATIONS] }
+        - { path: ^/sonata/client/initial-import, role: [ROLE_INITIALIMPORTS] }
 
         - { path: ^/.*, role: [ROLE_USER] }
