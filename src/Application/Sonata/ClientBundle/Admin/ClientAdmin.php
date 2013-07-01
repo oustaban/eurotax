@@ -76,6 +76,18 @@ class ClientAdmin extends Admin
      *
      * Should not be modified anymore by all admin ( put the field in grey )
      * 
+     * 
+     * 
+     * If user is "Gestionnaire"... put in grey on modification of client ( so gestionnaire will not modify this values...)
+     * le Gestionnaire*
+     * "Date de fin de mission"
+     * "Période de facturation"
+     * "Taxe Additionnelle"
+     * Centre des Impôts"
+     * "Date de Dépôt"
+     * "Télédéclaration"
+     * "INTRO & EXPED"
+     * 
      * @param FormMapper $formMapper
      */
     protected function configureFormFields(FormMapper $formMapper)
@@ -86,6 +98,9 @@ class ClientAdmin extends Admin
         $id = $this->getRequest()->get($this->getIdParameter());
         $class = $id ? '' : ' hidden';
 
+        $user = \AppKernel::getStaticContainer()->get('security.context')->getToken()->getUser();
+        $isGestionnaire = $user->hasGroup('Gestionnaire');
+        
         
         if($id) {
         	LocationPostalType::$pays_is_disabled = true;
@@ -150,6 +165,7 @@ class ClientAdmin extends Admin
             'format' => $this->date_format_datetime,
             'empty_value' => '',
             'required' => false,
+            'disabled' => $id || $isGestionnaire ? true : false
         ))
             ->with('form.client.row10')
             ->add('mode_denregistrement', null, array('label' => 'form.mode_denregistrement', 'empty_value' => '', 
@@ -159,7 +175,7 @@ class ClientAdmin extends Admin
             ->add('siret', null, array('label' => 'form.siret', 'required' => false, 'disabled' => $id ? true : false))
             ->add('N_TVA_FR', null, array('label' => 'form.N_TVA_FR', 'disabled' => $id ? true : false))
             ->with('form.client.row12')
-            ->add('periodicite_facturation', null, array('label' => 'form.periodicite_facturation'))
+            ->add('periodicite_facturation', null, array('label' => 'form.periodicite_facturation',  'disabled' => $isGestionnaire ? true : false))
             ->with('form.client.row13')
             ->add('num_dossier_fiscal', null, array('label' => 'form.num_dossier_fiscal', 'required' => false, 'disabled' => $id ? true : false))
             ->with('form.client.row14')
@@ -168,6 +184,7 @@ class ClientAdmin extends Admin
                 'label' => 'form.taxe_additionnelle',
                 'choices' => array(1 => 'Oui', 0 => 'Non'),
                 'required' => false,
+            	'disabled' => $isGestionnaire ? true : false
             ))
            
         
@@ -176,12 +193,12 @@ class ClientAdmin extends Admin
         {
             return $er->createQueryBuilder('u')
                 ->orderBy('u.nom', 'ASC');
-        }, 'empty_value' => '', 'required' => true))
+        }, 'empty_value' => '', 'required' => true, 'disabled' => $isGestionnaire ? true : false))
         
         ->add('date_de_depot_id', 'choice', array(
         		'label' => 'form.date_de_depot_id',
         		'choices' => array(15 => 15, 19 => 19, 24 => 24, 31 => 31),
-        		'attr' => array('class' => 'date_de_depot_id'),
+        		'attr' => array('class' => 'date_de_depot_id'), 'disabled' => $isGestionnaire ? true : false
         ))
         
         
@@ -194,7 +211,7 @@ class ClientAdmin extends Admin
         	->orderBy('l.id', 'ASC');
         },'empty_value' => '', 'required' => false, 'disabled' => $id ? true : false))
         
-        ->add('teledeclaration', null, array('label' => 'form.teledeclaration'))
+        ->add('teledeclaration', null, array('label' => 'form.teledeclaration', 'disabled' => $isGestionnaire ? true : false))
         
         
         
@@ -205,6 +222,7 @@ class ClientAdmin extends Admin
             		'empty_value' => '',
             		'required' => false,
             		'help' => ' ',
+            		'disabled' => $isGestionnaire ? true : false
             ))
             ->add('niveau_dobligation_exped_id', 'choice', array(
             		'label' => 'Niveau Obligation EXPED',
@@ -212,6 +230,7 @@ class ClientAdmin extends Admin
             		'empty_value' => '',
             		'required' => false,
             		'help' => ' ',
+            		'disabled' => $isGestionnaire ? true : false
             ))
         
         ->with('form.client.row18')
