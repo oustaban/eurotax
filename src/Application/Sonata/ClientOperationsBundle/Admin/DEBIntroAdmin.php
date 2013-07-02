@@ -104,6 +104,7 @@ class DEBIntroAdmin extends Admin
 
         $error = new DEBErrorElements($errorElement, $object, $this->import_file_year, $this->import_file_month);
         $error->setValidateImport($this->getValidateImport())
+        	->validateRegime(array(11, 19))
         	->validateDEB()
         	->setMois()
         	->setDatePieceByFilename();

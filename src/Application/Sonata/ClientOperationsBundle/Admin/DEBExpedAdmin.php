@@ -103,7 +103,7 @@ class DEBExpedAdmin extends Admin
 
         $error = new DEBErrorElements($errorElement, $object, $this->import_file_year, $this->import_file_month);
         $error->setValidateImport($this->getValidateImport())
-        	->validateRegime(array(26, 29, 21))
+        	->validateRegime(array(21, 29, 25, 26, 31))
         	->validateDEB()
         	->setMois()
         	->setDatePieceByFilename()

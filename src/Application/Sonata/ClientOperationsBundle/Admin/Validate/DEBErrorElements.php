@@ -990,8 +990,20 @@ class DEBErrorElements extends ErrorElements
 			$emptyFields = @$this->_emptyFields[$class][$niveauDobligationId][$regime]['fields'];
 			if(!empty($emptyFields)) {
 				foreach($emptyFields as $field) {
+					$hasViolation = false;
 					$method = 'get' . strtoupper(\Doctrine\Common\Util\Inflector::camelize($field));
-					if($this->_object->$method() || !is_null($this->_object->$method()) || ($this->_object->$method() != '' && $this->_object->$method() == 0)) {
+					$value = $this->_object->$method();
+					
+					if(is_float($value)) {
+						if($value != 0) {
+							$hasViolation = true;
+						}
+					} elseif (!empty($value) || !is_null($value) ) {
+						$hasViolation = true;
+					}
+					
+					
+					if($hasViolation) {
 						$this->_errorElement->with($field)->addViolation( 'La cellule doit être vide.' )->end();
 					}
 				}
