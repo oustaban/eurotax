@@ -783,6 +783,33 @@ class AbstractTabsController extends Controller
     }
 
 
+    
+    /**
+     * If client has NiveauDobligationId | NiveauDobligationExpedId = 0, disallow import
+     * 
+     * @param string $class
+     */
+    private function _validateDEBClientNiveauDobligation($class) {
+    	if(!in_array($class, array('DEBExped', 'DEBIntro'))) {
+    		return;
+    	}
+
+    	$client = $this->client;
+    		
+    	if($class == 'DEBIntro') {
+    		$niveauDobligationId = $client->getNiveauDobligationId(); //INTRO
+    	} elseif($class == 'DEBExped') {
+    		$niveauDobligationId = $client->getNiveauDobligationExpedId(); //DEB
+    	}
+    		
+    	if($niveauDobligationId == 0) {
+    		$message = "VALUE : $niveauDobligationId \n";
+    		$message .= "ERROR :Le niveau d'obligation est à 0 : On ne devrait pas avoir de données\n\n";
+    		$this->setCountImports($class, 'errors', $message);
+    	}
+    }
+    
+    
     /**
      * NLigne rows must be consecutive 1,2,3,4,5...
      * 
@@ -814,7 +841,7 @@ class AbstractTabsController extends Controller
     				$repeat = str_repeat(' ', 4);
     				$label = isset($fields['n_ligne']) ? '(' . (($fields['n_ligne'] ? chr($fields['n_ligne'] + 65) : 'A') . ':' . $line) . ') ' : '';
     				$errors[] = $repeat . 'VALUE : ' . $label . ($d[$i] ? $d[$i] : '(empty)') . "\n";
-    				$errors[] = $repeat . 'ERROR : No line n\'est pas correct pour' . "\n\n";
+    				$errors[] = $repeat . 'ERROR : Le numero de ligne n\'est pas correct (numéro consécutif)' . "\n\n";
     			}
     		}
     		
@@ -854,6 +881,7 @@ class AbstractTabsController extends Controller
                 $data = $this->skipLine($config_excel, $data);
 
                 //DEB Exped | DEB Intro
+                $this->_validateDEBClientNiveauDobligation($class);
                 $this->_validateDEBNLigne($class, $skip_line, $data);
                 $adminCode = 'application.sonata.admin.' . strtolower($class);
                 /* @var $admin \Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin */

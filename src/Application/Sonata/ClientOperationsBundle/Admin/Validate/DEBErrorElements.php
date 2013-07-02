@@ -962,19 +962,12 @@ class DEBErrorElements extends ErrorElements
 	);
 	
 	public function validateDEB() {
-		
-		
-		static $hasTabError = array();
-		
-		
 		if ($this->_is_validate_import) {
 			$class = (explode('\\', get_class($this->_object)));
 			$class = end($class);
 			$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
 			$em = $doctrine->getManager();
-	
 			$client = $em->getRepository('ApplicationSonataClientBundle:Client')->find($this->_object->getClientId());
-			
 			
 			if($class == 'DEBIntro') {
 				$niveauDobligationId = $client->getNiveauDobligationId(); //INTRO
@@ -984,17 +977,6 @@ class DEBErrorElements extends ErrorElements
 			
 			$regime = $this->_object->getRegime();
 	
-			
-			if($niveauDobligationId == 0) {
-				if(!isset($hasTabError[$class])) {
-					$this->_errorElement->addViolation( 'Le niveau d\'obligation est à 0 : On ne devrait pas avoir de données' )->end();
-					$hasTabError[$class] = true;
-					return $this;
-				}
-			}
-			
-			
-			
 			$requiredFields = @$this->_requiredFields[$class][$niveauDobligationId][$regime]['fields'];
 			if(!empty($requiredFields)) {
 				foreach($requiredFields as $field) {
