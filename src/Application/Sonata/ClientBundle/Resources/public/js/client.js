@@ -326,13 +326,13 @@ jQuery(document).ready(function ($) {
     	$('.sonata-ba-list').find('.statut-p').parent().parent().find('td').css('background', '#ff69b4');
     	
     	//$('.sonata-ba-list').find('.solde').hide();
-    	
-    	if(typeof Sonata.isSuperviseur === 'undefined' || Sonata.isSuperviseur === false) {
-	        var $inactiveTr = $('div.inactive_compte').parent().parent();
-	        $inactiveTr.find('.sonata-ba-list-field-action').html('');
-	        $inactiveTr.find('td').addClass('no-edit');
+    	if(typeof Sonata !== 'undefined') {
+	    	if(typeof Sonata.isSuperviseur === 'undefined' || (typeof Sonata.isSuperviseur !== 'undefined' && Sonata.isSuperviseur === false)) {
+		        var $inactiveTr = $('div.inactive_compte').parent().parent();
+		        $inactiveTr.find('.sonata-ba-list-field-action').html('');
+		        $inactiveTr.find('td').addClass('no-edit');
+	    	}
     	}
-      
         if (typeof symfony_ajax != 'undefined'){
 	        symfony_ajax.behaviors.compte = {
 	                attach:function (context) {
