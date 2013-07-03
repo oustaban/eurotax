@@ -42,7 +42,7 @@ abstract class AbstractCompteAdmin extends Admin
             ->add('commentaire', null, array('label' => $this->getFieldLabel('commentaire')))
             ->add('statut', null, array(
             'label' => $this->getFieldLabel('statut'),
-            'empty_value' => '',
+            //'empty_value' => '',
             'required' => true, 
         ));
 
