@@ -553,7 +553,7 @@ function init_rapprochement_sums() {
 	    $('#rapprochement_intro_info_text').hide();
 	    
 	    
-	    if(totals_input_v1 === 0 || totals_input_v2 === 0) {
+	    if(totals_input_v1 === 0 && totals_input_v2 === 0) {
 	    	$('.rapprochement_intro').hide();
 	    	$('#rapprochement_intro_info_text').removeAttr('required');
 	    	$('#rapprochement_intro_info_number').removeAttr('required');
@@ -575,7 +575,7 @@ function init_rapprochement_sums() {
 	    	});
 	    	
 	    }
-	    if(totals_output_v1 === 0 || totals_output_v2 === 0) {
+	    if(totals_output_v1 === 0 && totals_output_v2 === 0) {
 	    	$('.rapprochement_exped').hide();
 	    	$('#rapprochement_exped_info_text').removeAttr('required');
 	    	$('#rapprochement_exped_info_number').removeAttr('required');
@@ -595,7 +595,7 @@ function init_rapprochement_sums() {
 	    	});
 	    	
 	    }
-	    if( (totals_input_v1 === 0 || totals_input_v2 === 0) && (totals_output_v1 === 0 || totals_output_v2 === 0)) {
+	    if( (totals_input_v1 === 0 && totals_input_v2 === 0) && (totals_output_v1 === 0 && totals_output_v2 === 0)) {
 	    	$('#rapprochement_form').hide();
 	    }
     
