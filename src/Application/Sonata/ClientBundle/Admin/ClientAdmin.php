@@ -489,7 +489,7 @@ class ClientAdmin extends Admin
                 $em->persist($alert);
             }
 
-            $value = $object->getNTVACEE();
+            $value = $object->getNTVAFR();
             if (!$value) {
                 $alert = new ClientAlert();
                 $alert->setClient($object);
