@@ -103,11 +103,6 @@ jQuery(document).ready(function ($) {
                 }).keyup();
                 */
                 
-                
-                
-                
-                
-                
                 //console.log(status);
                 var status = $('#' + _uniqid + '_nom_de_la_banques_id :selected', context).val();
                 
@@ -212,6 +207,16 @@ jQuery(document).ready(function ($) {
                 var valute_euro = 1;
                 symfony_ajax.garantie_valute(_uniqid, context, valute_euro);
                 $('#' + _uniqid + '_montant_devise', context).val(valute_euro);
+                
+                if(status == 1) {
+                	 $('#sonata-ba-field-container-' + _uniqid + '_date_demission', context).hide();
+                	 $('#' + _uniqid + '_date_demission', context).removeAttr('required');
+                } else {
+                	 $('#sonata-ba-field-container-' + _uniqid + '_date_demission', context).show();
+                	 $('#' + _uniqid + '_date_demission', context).attr('required', 'required');
+                }
+                
+                
             }
         }
     }
