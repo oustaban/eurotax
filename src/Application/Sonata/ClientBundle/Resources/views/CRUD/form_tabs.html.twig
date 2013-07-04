@@ -41,7 +41,7 @@
         {% endif %}
     </ul>
     {% if client_id  %}
-       <button class="btn pull-right" onclick="javascript:location.href = '{{ path('admin_sonata_clientoperations_v01tva_list', _filter_json) }}'.replace('&amp;', '&');"><i class="icon icon-th-list"></i> Voir les opérations</button>
+       <button class="btn pull-right voir-les-operations" onclick="javascript:location.href = '{{ path('admin_sonata_clientoperations_v01tva_list', _filter_json) }}'.replace('&amp;', '&');"><i class="icon icon-th-list"></i> Voir les opérations</button>
     {% endif %}
 </div>
 {% endblock %}

@@ -6,6 +6,11 @@ jQuery(document).ready(function ($) {
         $('body').addClass('js-' + active_tab);
     }
 
+    if ($('.js-client').size()) {
+    	//Place voir les operations button next to Ajouter / Modifier un client title
+    	$('.voir-les-operations').css({marginLeft: '280px', position: 'absolute'});
+    }
+    
     /**
      * document
      * */
