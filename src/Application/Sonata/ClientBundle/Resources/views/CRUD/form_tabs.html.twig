@@ -35,6 +35,11 @@
         <li {% if active_tab=='compte_de_depot' %}class="active"{% endif %}>
             <a href="{{ path('admin_sonata_client_comptededepot_list', _filter_json) }}">Compte de dépôt</a>
         </li>
+        
+        <li {% if active_tab=='numero_TVA' %}class="active"{% endif %}>
+            <a href="{{ path('admin_sonata_client_numerotva_list', _filter_json) }}">Numéro TVA</a>
+        </li>
+        
         <li {% if active_tab=='impression' %}class="active"{% endif %}>
             <a href="{{ path('impression_index', _filter_json) }}">Impression</a>
         </li>

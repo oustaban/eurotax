@@ -121,6 +121,13 @@ form:
     commentaire: Commentaire
     statut: Statut
 
+  NumeroTVA:
+    title: Ajouter / Modifier un numero TVA
+    code: Client du Client
+    n_de_TVA: N° de TVA
+    date_de_verification: Date de vérification
+
+
 list:
   user: Gestionnaire
   nom: Nom
@@ -237,6 +244,12 @@ list:
     solde: Solde (€)
     commentaire: Commentaire
     statut: Statut
+
+  NumeroTVA:
+    title: Ajouter / Modifier un numero TVA
+    code: Client du Client
+    n_de_TVA: N° de TVA
+    date_de_verification: Date de vérification 
 
 filter:
   user: Gestionnaire

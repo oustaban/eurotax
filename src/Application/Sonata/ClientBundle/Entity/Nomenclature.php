@@ -56,6 +56,31 @@ class Nomenclature
         return $this->id;
     }
 
+    
+    /**
+     * Set code
+     *
+     * @param float $value
+     */
+    public function setCode($value)
+    {
+    	$this->code = $value;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get code
+     *
+     * @return string
+     */
+    public function getCode()
+    {
+    	return $this->code;
+    }
+    
+    
+    
     /**
      * Set libelle
      *
