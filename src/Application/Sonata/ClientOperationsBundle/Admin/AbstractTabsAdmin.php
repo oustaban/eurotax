@@ -252,6 +252,8 @@ abstract class AbstractTabsAdmin extends Admin
      */
     public function validate(ErrorElement $errorElement, $object)
     {
+    	$this->_autofixeuroformat($object);
+    	
         /* @var $object \Application\Sonata\ClientOperationsBundle\Entity\AbstractBaseEntity */
         parent::validate($errorElement, $object);
 
