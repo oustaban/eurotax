@@ -108,21 +108,16 @@ class ClientAdmin extends Admin
         
         
         $formMapper
-
         	->add('is_new', 'hidden', array('data' => $id ? 0 : 1, 'mapped' => false, 'attr' => array('class' => 'is_new')))
-        
             ->with('form.client.row1')
             ->add('code_client', null, array('label' => 'form.code_client', 'disabled' => true))
-            
-            
-            
             ->add('autre_destinataire_de_facturation', null, array('label' => 'form.autre_destinataire_de_facturation'))
             ->with('form.client.row2')
             ->add('user', null, array('label' => 'form.user', 'query_builder' => function (EntityRepository $er)
         {
             return $er->createQueryBuilder('u')
-                ->orderBy('u.username', 'ASC');
-        }, 'empty_value' => '', 'required' => true))
+                ->orderBy('u.firstname, u.lastname', 'ASC');
+        }, 'empty_value' => '', 'required' => true, 'disabled' => $isGestionnaire ? true : false))
             ->with('form.client.row3')
             ->add('nom', null, array('label' => 'form.nom', 'disabled' => $id ? true : false))
             ->with('form.client.row4')
