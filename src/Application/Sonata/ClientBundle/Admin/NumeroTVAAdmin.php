@@ -27,7 +27,7 @@ class NumeroTVAAdmin extends Admin
         parent::configureFormFields($formMapper);
         $formMapper->with($this->getFieldLabel('title'))
         
-            ->add('code', 'textarea', array('label' => $this->getFieldLabel('code')))
+            ->add('code', null, array('label' => $this->getFieldLabel('code')))
             ->add('n_de_TVA', null, array('label' => $this->getFieldLabel('n_de_TVA'), ))
         	->add('date_de_verification', null, array(
         		'label' => $this->getFieldLabel('date_de_verification'),
