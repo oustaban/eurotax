@@ -82,12 +82,55 @@ abstract class AbstractCompteAdmin extends Admin
         ));
     }
 
+    
+    public function preUpdate($object)
+    {
+    	$this->_autofixeuroformat($object);
+    }
+    
+    
+    public function prePersist($object) {
+    	$this->_autofixeuroformat($object);
+    }
+    
+    
+    private function _autofixeuroformat($object) {
+    	$formRequestData = $this->getRequest()->request->all();
+    	 
+    	if(!isset($formRequestData[$this->getForm()->getName()])) {
+    		return;
+    	}
+    	 
+    	$formRequestData = $formRequestData[$this->getForm()->getName()];
+    
+    	$fields = $object->fieldsAsArray($object);
+    	foreach($fields as $field => $value) {
+    		$fieldDescription = $this->getFormFieldDescription($field);
+    		if ($fieldDescription && $type = $fieldDescription->getType()) {
+    			if($type == 'money' || $type == 'number' || $type == 'float') {
+    				if(isset($formRequestData[$field])) {
+    					$method = ucfirst(\Doctrine\Common\Util\Inflector::classify($field));
+    					$setMethod = 'set'.$method;
+    					$getMethod = 'get'.$method;
+    					$value = str_replace(array("\n","\t","\r"), " ", $formRequestData[$field]);
+    					$value =  str_replace(array(' ', ','), array('', '.'), $value);
+    					$value = preg_replace('/[^(\x20-\x7F)]*/','', $value);
+    					$object->$setMethod($value);
+    				}
+    			}
+    		}
+    	}
+    }
+    
     /**
      * @param ErrorElement $errorElement
      * @param mixed|\Application\Sonata\ClientBundle\Entity\AbstractCompteEntity $object
      */
     public function validate(ErrorElement $errorElement, $object)
     {
+    	
+    	$this->_autofixeuroformat($object);
+    	
         parent::validate($errorElement, $object);
 
         $user = \AppKernel::getStaticContainer()->get('security.context')->getToken()->getUser();

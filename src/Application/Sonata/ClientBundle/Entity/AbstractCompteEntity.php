@@ -230,4 +230,19 @@ abstract class AbstractCompteEntity
     {
         return $this->garantie;
     }
+    
+    public function fieldsAsArray() {
+    	$fields = array();
+    	$refclass = new \ReflectionClass($this);
+    	foreach ($refclass->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
+    		$name = $methodName = $method->getName();
+    		if(preg_match('/^get/', $name)) {
+    			$name = substr($name, 3);
+    			$name = \Doctrine\Common\Util\Inflector::tableize($name);
+    			$fields[$name] = $this->$methodName();
+    		}
+    	}
+    	return $fields;
+    }
+    
 }
