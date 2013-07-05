@@ -80,6 +80,13 @@ class Rapprochement {
 	
 	
 	/**
+	 * @var integer $intro_info_number2
+	 *
+	 * @ORM\Column(name="intro_info_number2", type="float", nullable=true)
+	 */
+	private $intro_info_number2;
+	
+	/**
 	 * @var integer $intro_info_text
 	 *
 	 * 
@@ -104,6 +111,12 @@ class Rapprochement {
 	 */
 	private $exped_info_number;
 	
+	/**
+	 * @var integer $exped_info_number2
+	 *
+	 * @ORM\Column(name="exped_info_number2", type="float", nullable=true)
+	 */
+	private $exped_info_number2;
 	
 	/**
 	 * @var integer $exped_info_text
@@ -229,6 +242,23 @@ class Rapprochement {
 	}
 	
 	/**
+	 *
+	 * @param float $introInfoNumber2
+	 */
+	public function setIntroInfoNumber2($introInfoNumber2) {
+		$this->intro_info_number2 = $introInfoNumber2;
+	}
+	
+	/**
+	 *
+	 * @return float
+	 */
+	public function getIntroInfoNumber2() {
+		return $this->intro_info_number2;
+	}
+		
+	
+	/**
 	 * 
 	 * @param string $introInfoText
 	 */
@@ -275,6 +305,23 @@ class Rapprochement {
 	public function getExpedInfoNumber() {
 		return $this->exped_info_number;
 	}
+	
+	
+	/**
+	 *
+	 * @param float $debInfoNumber2
+	 */
+	public function setExpedInfoNumber2($debInfoNumber2) {
+		$this->exped_info_number2 = $debInfoNumber2;
+	}
+	
+	/**
+	 *
+	 * @return float
+	 */
+	public function getExpedInfoNumber2() {
+		return $this->exped_info_number2;
+	}	
 	
 	/**
 	 *

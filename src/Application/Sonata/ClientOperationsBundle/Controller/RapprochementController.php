@@ -362,10 +362,12 @@ class RapprochementController extends Controller
     			
     			$rap->setIntroInfoId((int)$form['intro_info_id']->getData());
     			$rap->setIntroInfoNumber((double)$form['intro_info_number']->getData());
+    			$rap->setIntroInfoNumber2((double)$form['intro_info_number2']->getData());
     			$rap->setIntroInfoText($form['intro_info_text']->getData());
     			
     			$rap->setExpedInfoId((int)$form['exped_info_id']->getData());
     			$rap->setExpedInfoNumber((double)$form['exped_info_number']->getData());
+    			$rap->setExpedInfoNumber2((double)$form['exped_info_number2']->getData());
     			$rap->setExpedInfoText($form['exped_info_text']->getData());
     			
     			

@@ -4,10 +4,12 @@
 	<div class="alert-error">
  	{{ form_errors(form.intro_info_id) }}
  	{{ form_errors(form.intro_info_number) }}
+ 	{{ form_errors(form.intro_info_number2) }}
  	{{ form_errors(form.intro_info_text) }}
  	
  	{{ form_errors(form.exped_info_id) }}
  	{{ form_errors(form.exped_info_number) }}
+ 	{{ form_errors(form.exped_info_number2) }}
  	{{ form_errors(form.exped_info_text) }}
 
 	{{ form_errors(form) }}
@@ -16,34 +18,42 @@
 	<div class="rapprochement_content_deb">
             <div class="rapprochement_content_input rapprochement_intro">
                 <div class="rapprochement_content_body_table">
-
-
- 					{{ form_widget(form.intro_info_id) }}
-					{{ form_widget(form.intro_info_number) }}
-					{{ form_widget(form.intro_info_text) }}
-
+				<table class="table table-bordered table-striped">
+	                <tbody>
+	                <tr>
+	                    <td width="80%">
+	                    {{ form_widget(form.intro_info_id) }}
+	                    </td>
+	                    <td class="sonata-ba-list-field sonata-ba-list-field-money" width="20%">
+	                        <p>{{ form_widget(form.intro_info_number) }}</p> 
+							<p>{{ form_widget(form.intro_info_number2) }}</p>
+							<p>{{ form_widget(form.intro_info_text) }}</p>
+	                    </td>
+	                </tr>
+	                </tbody>
+	            </table>
 				</div>
             </div>
             <div class="rapprochement_content_output rapprochement_exped">
                 <div class="rapprochement_content_body_table">
-
- 					{{ form_widget(form.exped_info_id) }}
-					{{ form_widget(form.exped_info_number) }}
-					{{ form_widget(form.exped_info_text) }}
-
-
+				<table class="table table-bordered table-striped">
+	                <tbody>
+	                <tr>
+	                    <td width="80%">
+	                    {{ form_widget(form.exped_info_id) }}
+	                    </td>
+	                    <td class="sonata-ba-list-field sonata-ba-list-field-money" width="20%">
+	                        <p>{{ form_widget(form.exped_info_number) }}</p>
+							<p>{{ form_widget(form.exped_info_number2) }}</p>
+							<p>{{ form_widget(form.exped_info_text) }}</p>
+	                    </td>
+	                </tr>
+	                </tbody>
+	            </table>
 				</div>
             </div>
         </div>
-        
-        
-        
         {{ form_rest(form) }}
-    
-
-
-
-
 
 <div class="rapprochement_content_stat">
         <div class="rapprochement_content_input">
