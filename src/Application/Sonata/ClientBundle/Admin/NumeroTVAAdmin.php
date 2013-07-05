@@ -54,7 +54,8 @@ class NumeroTVAAdmin extends Admin
         $listMapper
             ->add('code', null, array('label' => $this->getFieldLabel('code')))
             ->add('n_de_TVA', null, array('label' => $this->getFieldLabel('n_de_TVA')))
-            ->add('date_de_verification', null, array('label' => $this->getFieldLabel('date_de_verification')))
+            ->add('date_de_verification', null, array('label' => $this->getFieldLabel('date_de_verification'), 
+            	'template' => 'ApplicationSonataClientBundle:CRUD:list_date_de_verification.html.twig',))
             
             
         ;
