@@ -2,6 +2,7 @@
 
 namespace Application\Sonata\ClientBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,7 +47,8 @@ class NumeroTVA
     /**
      * @var string $n_de_TVA
      *
-     * @ORM\Column(name="n_de_TVA", type="text", nullable=true)
+     * @Assert\NotBlank()
+     * @ORM\Column(name="n_de_TVA", type="text", nullable=false)
      */
     private $n_de_TVA;
 
@@ -54,7 +56,7 @@ class NumeroTVA
      /**
      * @var \DateTime $date
      *
-     * @ORM\Column(name="date_de_verification", type="datetime")
+     * @ORM\Column(name="date_de_verification", type="datetime", nullable=true)
      */
     private $date_de_verification;
 

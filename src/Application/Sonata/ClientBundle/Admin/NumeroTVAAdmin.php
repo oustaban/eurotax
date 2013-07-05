@@ -25,10 +25,6 @@ class NumeroTVAAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         parent::configureFormFields($formMapper);
-
-        
-      
-        
         $formMapper->with($this->getFieldLabel('title'))
         
             ->add('code', 'textarea', array('label' => $this->getFieldLabel('code')))
@@ -38,7 +34,8 @@ class NumeroTVAAdmin extends Admin
         		'attr' => array('class' => 'datepicker'),
         		'widget' => 'single_text',
         		'input' => 'datetime',
-        		'format' => $this->date_format_datetime
+        		'format' => $this->date_format_datetime,
+        		'required' => false
         ))
             
             
