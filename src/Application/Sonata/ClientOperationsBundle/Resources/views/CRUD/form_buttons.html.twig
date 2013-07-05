@@ -20,7 +20,7 @@
             {% endif%}
 
         <div class="btn-group inline">
-            <button class="btn" id="raprochement" onclick="javascript:window.open('{{ path('rapprochement_index', {client_id: client_id, month: month~'|'~year } ) }}'.replace('&amp;', '&'));"><i class="icon icon-list-alt"></i> {{ 'Prévisualisation'|trans }}</button>
+            <button class="btn" id="raprochement" onclick="javascript:window.open('{{ path('rapprochement_index', {client_id: client_id, month: month~'|'~year } ) }}'.replace('&amp;', '&'));"><i class="icon icon-list-alt"></i> {{ 'Réconciliation DEB'|trans }}</button>
             <button class="btn" id="downloadDeclaration" onclick="javascript:window.open('{{ admin.generateUrl('declaration', _filter_json) }}'.replace('&amp;', '&'));"><i class="icon icon-print"></i> {{ 'Déclaration'|trans }}</button>
             {% if admin.isGranted('ROLE_CLIENT_TOOLS') %}
             {% set text_lock = blocked ? 'Clôturer' : 'Déverrouiller' %}
