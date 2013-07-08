@@ -12,26 +12,12 @@ table.center td { text-align: center }
 </style>
 
 
-
-
 <table class="right">
 <tr><td>
 BARCLAYS BANK<br />
 56 Avenue Kléber<br />
 75008 PARIS<br />
 </td></tr>
-</table>
-<br /><br />
-
-
-<table class="right">
-<tr><td class="b">{{ coordonnees.getNom() }}</td></tr>
-<tr><td>{{ coordonnees.getAdresse1() }}</td></tr>
-{% if coordonnees.getAdresse2() is not empty %}<tr><td>{{ coordonnees.getAdresse2() }}</td></tr>{% endif %}
-<tr><td class="b">{{ coordonnees.getVille() }} {{ coordonnees.getCodePostal() }}</td></tr>
-
-<tr><td class="b">&nbsp;</td></tr>
-<tr><td class="b">Fax : 01.45.00.24.66</td></tr>
 <tr><td class="b">&nbsp;</td></tr>
 
 <tr><td>Arcueil, le {{ "now"|date("d/m/Y") }}, </td></tr>
