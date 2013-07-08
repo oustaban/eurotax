@@ -1,4 +1,5 @@
 <style type="text/css">
+body { font-family: Arial; }
 .b {font-weight: bold;}
 .border { border: 2px solid #000 }
 table.td {font-family: arial;}
@@ -9,6 +10,19 @@ table.left td { text-align: left }
 table.center { width: 100% }
 table.center td { text-align: center }
 </style>
+
+
+
+
+<table class="left">
+<tr><td>
+BARCLAYS BANK<br />
+56 Avenue Kléber<br />
+75008 PARIS<br />
+</td></tr>
+</table>
+
+
 
 <table class="right">
 <tr><td class="b">{{ coordonnees.getNom() }}</td></tr>
@@ -79,14 +93,29 @@ N° de compte: {{ coordonnees.getNoDeCompte() }}<br />
 
 <table class="left">
 <tr><td>
-En indiquant en référence du transfert : <span class="b">Facture</span> {{ facture }}<br /><br />
-Pour toute information concernant cet ordre de virement, merci de contacter Elisabetta Carraro au 01.41.98.48.12. <br /><br />
+En indiquant en référence du transfert : <span class="b">{{ facture }}</span><br /><br />
+Pour toute information concernant cet ordre de virement, merci de contacter {{ client.getUser.getFullname }} au {{ client.getUser.getPhone }}. <br /><br />
 Nous vous prions d'agréer, Messieurs, nos salutations distinguées. <br /><br />
 </td></tr>
 </table>
 
 
 
+
+<br /><br />
+
+<table class="left">
+<tr>
+	<td>Paul LAEREMANS </td><td>&nbsp;</td><td>Fabrice COCHET</td><td>&nbsp;</td>
+</tr>
+
+<tr><td colspan="4">&nbsp;</td></tr>
+
+<tr>
+<td>Eric BENOIST </td><td>&nbsp;</td><td>Nabila OULD-MAKHLOUF</td><td>&nbsp;</td>
+</tr>
+
+</table>
 
 
 
