@@ -15,6 +15,7 @@ use Knp\Menu\ItemInterface as MenuItemInterface;
 use Application\Form\Type\LocationPostalType;
 use Application\Form\Type\LocationFacturationType;
 use Sonata\AdminBundle\Validator\ErrorElement;
+use Application\Sonata\ClientBundle\Entity\Client;
 use Application\Sonata\ClientBundle\Entity\ClientAlert;
 use Doctrine\ORM\EntityRepository;
 use Application\Sonata\ClientBundle\Entity\ListCountries;
@@ -100,10 +101,11 @@ class ClientAdmin extends Admin
 
         $user = \AppKernel::getStaticContainer()->get('security.context')->getToken()->getUser();
         $isGestionnaire = $user->hasGroup('Gestionnaire');
-        
+        $client = $this->getNewInstance();
         
         if($id) {
         	LocationPostalType::$pays_is_disabled = true;
+        	$client = $this->getObject($id);
         }
         
         
@@ -160,7 +162,7 @@ class ClientAdmin extends Admin
             'format' => $this->date_format_datetime,
             'empty_value' => '',
             'required' => false,
-            'disabled' => $id || $isGestionnaire ? true : false
+            'disabled' => $client->getDateFinMission() || $isGestionnaire ? true : false
         ))
             ->with('form.client.row10')
             ->add('mode_denregistrement', null, array('label' => 'form.mode_denregistrement', 'empty_value' => '', 
