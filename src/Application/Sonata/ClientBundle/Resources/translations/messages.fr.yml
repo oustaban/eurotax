@@ -123,7 +123,7 @@ form:
 
   NumeroTVA:
     title: Ajouter / Modifier un numero TVA
-    code: Client du Client
+    code: Liste des N° de TVA
     n_de_TVA: N° de TVA
     date_de_verification: Date de vérification
 
@@ -247,7 +247,7 @@ list:
 
   NumeroTVA:
     title: Ajouter / Modifier un numero TVA
-    code: Client du Client
+    code: Liste des N° de TVA
     n_de_TVA: N° de TVA
     date_de_verification: Date de vérification 
 
