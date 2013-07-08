@@ -158,27 +158,21 @@ class ContactAdmin extends Admin
 
 
         $value = $object->getAffichageFactureId();
-        if (!$value) {
-            $this->saveAffichageFactureAlertMessage($em, $object, $tab);
-        } else {
 
-            $dql = $em->createQueryBuilder()
-                ->select('count(c.id)')
-                ->from('ApplicationSonataClientBundle:Contact', 'c')
-                ->where('c.client = :client')
-                ->andWhere('c.affichage_facture_id IS NULL')
-                ->setParameter(':client', $object->getClient());
+        $dql = $em->createQueryBuilder()
+	        ->select('count(c.id)')
+	        ->from('ApplicationSonataClientBundle:Contact', 'c')
+	        ->where('c.client = :client')
+	        ->andWhere('c.affichage_facture_id IS NOT NULL')
+	        ->setParameter(':client', $object->getClient());
 
-            if ($object->getId()) {
-                $dql->andWhere('c.id != :id')->setParameter(':id', $object->getId());
-            }
 
-            $count = $dql->getQuery()->getSingleScalarResult();
+        $count = $dql->getQuery()->getSingleScalarResult();
 
-            if ($count) {
-                $this->saveAffichageFactureAlertMessage($em, $object, $tab);
-            }
+        if ( !$value && $count == 0 ) {
+        	$this->saveAffichageFactureAlertMessage($em, $object, $tab);
         }
+
     }
 
     /**
