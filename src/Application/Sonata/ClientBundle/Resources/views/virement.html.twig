@@ -64,12 +64,9 @@ BARCLAYS BANK<br />
 <tr><td>
 
 <span class="b">{{ coordonnees.getNom() }}</span><br />
-{{ coordonnees.getAdresse1() }}<br />
-{% if coordonnees.getAdresse2() is not empty %}{{ coordonnees.getAdresse2() }}<br />{% endif %}
-{{ coordonnees.getVille() }} {{ coordonnees.getCodePostal() }}<br />
 Swift: {{ coordonnees.getCodeSwift() }}<br />
 IBAN: {{ coordonnees.getIBAN() }}<br />
-N° de compte: {{ coordonnees.getNoDeCompte() }}<br />
+
 <!--ABI: 05048<br />-->
 <!--CAB: 32760<br />-->
 </td></tr>
