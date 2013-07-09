@@ -21,11 +21,16 @@
 				<table class="table table-bordered table-striped">
 	                <tbody>
 	                <tr>
-	                    <td width="80%">
+	                    <td width="40%">
 	                    {{ form_widget(form.intro_info_id) }}
 	                    </td>
+	                    
 	                    <td class="sonata-ba-list-field sonata-ba-list-field-money" width="20%">
-	                        <p>{{ form_widget(form.intro_info_number) }}</p> 
+	                    	<p>{{ form_widget(form.intro_info_number) }}</p>
+	                    </td>
+	                    
+	                     <td width="20%">&nbsp;</td>
+	                    <td class="sonata-ba-list-field sonata-ba-list-field-money" width="20%">
 							<p>{{ form_widget(form.intro_info_number2) }}</p>
 							<p>{{ form_widget(form.intro_info_text) }}</p>
 	                    </td>
@@ -39,11 +44,14 @@
 				<table class="table table-bordered table-striped">
 	                <tbody>
 	                <tr>
-	                    <td width="80%">
+	                    <td width="40%">
 	                    {{ form_widget(form.exped_info_id) }}
 	                    </td>
 	                    <td class="sonata-ba-list-field sonata-ba-list-field-money" width="20%">
-	                        <p>{{ form_widget(form.exped_info_number) }}</p>
+	                    	<p>{{ form_widget(form.exped_info_number) }}</p>                    
+	                    </td>
+	                    <td width="20%">&nbsp;</td>
+	                    <td class="sonata-ba-list-field sonata-ba-list-field-money" width="20%">
 							<p>{{ form_widget(form.exped_info_number2) }}</p>
 							<p>{{ form_widget(form.exped_info_text) }}</p>
 	                    </td>
