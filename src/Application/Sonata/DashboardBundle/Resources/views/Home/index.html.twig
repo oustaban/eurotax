@@ -120,9 +120,11 @@
             <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client[0].id }}">
                 {#{{ client[0].remboursement_de_TVA }}#}
             </td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-money"  objectId="{{ client[0].id }}">
+            <td class="sonata-ba-list-field sonata-ba-list-field-money2"  objectId="{{ client[0].id }}">
                 <div class="montant{% if client.compte_solde_montant<0 %} negative_value{% endif %}">
-                    {{ client.compte_solde_montant?:0 }}
+                <a class="btn {% if client.compte_solde_montant<0 %}btn-danger{% endif %}" href="{{ path('admin_sonata_client_compte_list', {'filter[client_id][value]':client[0].id}) }}">    
+                    {{ client.compte_solde_montant|number_format(2, ',', ' ') }} €
+                </a>    
                 </div>
             </td>
             <td class="sonata-ba-list-field sonata-ba-list-field-date"  objectId="{{ client[0].id }}">

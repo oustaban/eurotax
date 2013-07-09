@@ -78,7 +78,7 @@ body {
     margin: 0 auto !important;
     position: inherit !important;
 }
-.sonata-ba-list table.table td.sonata-ba-list-field-money{
+.sonata-ba-list table.table td.sonata-ba-list-field-money, .sonata-ba-list table.table td.sonata-ba-list-field-money2{
     text-align: right;
 }
 
