@@ -36,7 +36,7 @@ class DateExtension extends Twig_Extension
             \Locale::getDefault(),
             $dateFormat,
             $timeFormat,
-            null, //$datetime->getTimezone()->getName(),
+            $datetime->getTimezone()->getName(),
             $calendar,
             $pattern
         );
