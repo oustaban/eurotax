@@ -534,8 +534,13 @@ function init_rapprochement_sums() {
     	
     	var recalculer = function() {
     		var calc = function(numSel, numInputSel, outputSel) {
-        		var sum = Number(real_num($(numSel).html()))+ Number(real_num( $(numInputSel).val()));
-	    		$(outputSel).html('<b>'+ euro_num_format(sum) +'</b>');
+        		var sum = Number(real_num($(numSel).html())) - Number(real_num( $(numInputSel).val()));
+        		
+        		
+        		var val = euro_num_format(sum, 2, true);
+        		
+        		
+	    		$(outputSel).html('<b>'+ val +'</b>');
 			};
     		
     		calc('#totals_input_v1', '#rapprochement_intro_info_number', '#totals_input_calcu1');
