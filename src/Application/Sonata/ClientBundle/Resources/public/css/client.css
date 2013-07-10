@@ -118,7 +118,8 @@
 .js-commentaire .sonata-ba-list .table,
 .js-tarif .sonata-ba-list .table,
 .js-compte .sonata-ba-list .table,
-.js-compte_de_depot .sonata-ba-list .table {
+.js-compte_de_depot .sonata-ba-list .table,
+.js-numero_TVA .sonata-ba-list .table {
     width: auto;
 }
 
