@@ -161,3 +161,5 @@
 .modal .modal-body {
     max-height: 420px;
 }
+
+#virement_form {display:none;}

@@ -3,6 +3,7 @@
 {% endif %}
 
 {% if virement_form is defined and virement_form %}
+    <a class="btn" id="virement-btn" href="#">Ordre de Virement</a>
 <br /><br />
 {% include 'ApplicationSonataClientBundle::Form/form_virement.html.twig' with {'form': virement_form} %}
 {% endif %}

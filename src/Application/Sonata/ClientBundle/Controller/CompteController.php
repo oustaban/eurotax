@@ -79,6 +79,9 @@ class CompteController extends Controller
     			
     			return $this->redirect($this->generateUrl('admin_sonata_client_compte_virement', array('filter[client_id][value]' => $this->client_id, 
     				'coordonnees' => $coordonnees->getId(), 'amount' => $amount, 'facture' => $facture)));
+    		} else {
+    			
+    			return $this->redirect($this->generateUrl('admin_sonata_client_compte_list', array('filter[client_id][value]' => $this->client_id)));
     		}
     	}
     	

@@ -347,6 +347,16 @@ jQuery(document).ready(function ($) {
 	                }
 	        };
         }
+        
+        $('#virement-btn').toggle(function(){$('#virement_form').show();}, function(){$('#virement_form').hide();});
+        $('#virement_form').click(function() {
+        	var amount = parseFloat($('#virement_amount').val());
+        	if(amount < 0) {
+        		$('#virement_form .alert-error').html('<p>Valeur fiscale doit être un nombre positif.</p>');
+        		return false;
+        	}
+        	return true;
+        });
     }
     
     /**

@@ -1,13 +1,13 @@
 
-<form action="" method="post" {{ form_enctype(form) }} id="virement_form" class="" target="_blank">
+<form action="{{ app.request.getRequestURI() }}" method="post" {{ form_enctype(form) }} id="virement_form" class="" target="_blank">
 	<span class="alert-error">
  	{{ form_errors(form.amount) }}
+ 	{{ form_errors(form.coordonnees) }}
+ 	{{ form_errors(form.facture) }}
 	{{ form_errors(form) }}
 	</span>
 		{{ form_widget(form.amount) }}
 		{{ form_widget(form.coordonnees) }}
-        
-        
         {{ form_widget(form.facture) }}
         
         {{ form_rest(form) }}

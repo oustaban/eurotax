@@ -7,6 +7,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Application\Sonata\ClientBundle\Entity\Coordonnees;
 use Doctrine\ORM\EntityRepository;
 
+use Symfony\Component\Validator\Constraints\Min;
+
 
 class VirementForm extends AbstractType {
 	
@@ -30,7 +32,7 @@ class VirementForm extends AbstractType {
 		$client_id = $this->client_id;
 			
 		$builder
-			->add('amount', 'money', array('required' => true, 'label' => ''))
+			->add('amount', 'money', array('required' => true, 'label' => '', 'constraints' => array(new Min(array('limit' => 0)))))
 			->add('coordonnees', 'entity', array('label' => '',
 			 		'class' => 'Application\Sonata\ClientBundle\Entity\Coordonnees',
 			 		//'property' => 'option_value',
