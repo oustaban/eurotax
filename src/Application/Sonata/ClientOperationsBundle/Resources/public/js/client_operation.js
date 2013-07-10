@@ -532,14 +532,30 @@ function init_rapprochement_sums() {
     if($('#rapprochement_form').size()) {
     	
     	
+    	
+    	var cloturer = (function() {
+    		var i1 = real_num($('#totals_input_calcu1 b').html()), 
+    			i2 = real_num($('#totals_input_calcu2 b').html()),
+    			o1 = real_num($('#totals_output_calcu1 b').html()), 
+    			o2 = real_num($('#totals_output_calcu2 b').html());
+    		
+    		if(i1 != 0 || i2 != 0 || o1 != 0 || o2 != 0) {
+    			$('#btn_locking').attr('disabled', true);
+    		} else {
+    			$('#btn_locking').attr('disabled', false);
+    		}
+    	});
+    	
+    	
+    	
+    	
+    	
+    	
+    	
     	var recalculer = function() {
     		var calc = function(numSel, numInputSel, outputSel) {
         		var sum = Number(real_num($(numSel).html())) - Number(real_num( $(numInputSel).val()));
-        		
-        		
         		var val = euro_num_format(sum, 2, true);
-        		
-        		
 	    		$(outputSel).html('<b>'+ val +'</b>');
 			};
     		
@@ -548,6 +564,8 @@ function init_rapprochement_sums() {
     		
     		calc('#totals_output_v1', '#rapprochement_exped_info_number', '#totals_output_calcu1');
     		calc('#totals_output_v2', '#rapprochement_exped_info_number2', '#totals_output_calcu2');
+    		
+    		cloturer();
     		
     	};
     	
