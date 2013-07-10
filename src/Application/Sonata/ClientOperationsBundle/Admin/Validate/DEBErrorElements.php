@@ -577,7 +577,7 @@ class DEBErrorElements extends ErrorElements
 									'mode_transport',
 									'departement',
 									'pays_origine',
-									'CEE',
+									//'CEE',
 							)
 					),
 					26 => array(
