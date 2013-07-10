@@ -323,6 +323,7 @@ class Client
 
     /**
      * @ORM\OneToMany (targetEntity="Compte", mappedBy="client")
+     * @ORM\OrderBy({"date" = "ASC"})
      */
     protected $comptes;
 
@@ -1519,6 +1520,7 @@ class Client
     
     
     public function getCompteReelSum() {
+    	$this->_compte_reel_sum = 0;
     	foreach($this->getComptes() as $compte){
     		if(!$compte->getStatut()) {
     			continue;
@@ -1527,13 +1529,17 @@ class Client
     			$this->_compte_reel_sum += $compte->getMontant();
     		}
     	}
-    	if($this->getComptePrevisionnelSum() != 0) {
-    		$this->_compte_reel_sum += $this->getComptePrevisionnelSum();
+    	
+    	$compte_previsionnel_sum = $this->getComptePrevisionnelSum();
+    	
+    	if($compte_previsionnel_sum != 0) {
+    		$this->_compte_reel_sum += $compte_previsionnel_sum;
     	}
     	return $this->_compte_reel_sum;
     }
     
     public function getComptePrevisionnelSum() {
+    	$this->_compte_previsionnel_sum = 0;
     	foreach($this->getComptes() as $compte){
     		if(!$compte->getStatut()) {
     			continue;
