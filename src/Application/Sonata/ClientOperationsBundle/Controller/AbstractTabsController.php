@@ -55,10 +55,6 @@ class AbstractTabsController extends Controller
     protected $_import_file_year,
     	$_import_file_month;
     
-    
-    protected $_compte_reel_sum = 0, 
-    	$_compte_previsionnel_sum = 0;
-    
     /**
      * @var \Application\Sonata\ClientOperationsBundle\Entity\Imports
      */
@@ -352,37 +348,8 @@ class AbstractTabsController extends Controller
             $this->_parameters_url['month'] = $this->_query_month;
         }
         
-        $this->_findCompteSum();
-        
     }
-    
-    
-    protected function _findCompteSum() {
-    	
-    	//$hasCompteComputation = false;
-    	
-    	foreach($this->client->getComptes() as $compte){
-    		if(!$compte->getStatut()) {
-    			continue;
-    		}
-    		if($compte->getStatut()->getId() == 1) {
-    			$this->_compte_reel_sum += $compte->getMontant();
-    		} elseif($compte->getStatut()->getId() == 2) {
-    			//$hasCompteComputation = true;
-    			$this->_compte_previsionnel_sum += $compte->getMontant();
-    		}
-    	}
-    	if($this->_compte_previsionnel_sum != 0) {
-    		//$hasCompteComputation = true;
-    		$this->_compte_reel_sum += $this->_compte_previsionnel_sum;
-    	}
-    	/* if($this->_compte_reel_sum == 0 && $hasCompteComputation == false) {
-    		$this->_compte_reel_sum = 1;
-    	} */
-    }
-    
-    
-    
+
 
     /**
      * @return \Application\Sonata\ClientBundle\Entity\Client|null
@@ -426,8 +393,6 @@ class AbstractTabsController extends Controller
             'blocked' => $this->getLocking() ? 0 : 1,
             'js_settings_json' => $this->_jsSettingsJson,
             '_filter_json' => $this->_parameters_url,
-        	'compte_reel_sum' => $this->_compte_reel_sum,
-        	'compte_previsionnel_sum' => $this->_compte_previsionnel_sum	
         ));
     }
 

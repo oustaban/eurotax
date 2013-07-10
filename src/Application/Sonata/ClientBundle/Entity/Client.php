@@ -373,6 +373,9 @@ class Client
      */
     private $N_TVA_FR;
 
+    
+    private $_compte_reel_sum = 0, $_compte_previsionnel_sum = 0;
+    
     /**
      * Returns a string representation
      *
@@ -389,8 +392,7 @@ class Client
         $this->garantie = new \Doctrine\Common\Collections\ArrayCollection();
         $this->pays_postal = ListCountries::getDefault();
     }
-
-
+    
     /**
      * Get id
      *
@@ -1514,6 +1516,35 @@ class Client
         }
         return $solde;
     }
+    
+    
+    public function getCompteReelSum() {
+    	foreach($this->getComptes() as $compte){
+    		if(!$compte->getStatut()) {
+    			continue;
+    		}
+    		if($compte->getStatut()->getId() == 1) {
+    			$this->_compte_reel_sum += $compte->getMontant();
+    		}
+    	}
+    	if($this->getComptePrevisionnelSum() != 0) {
+    		$this->_compte_reel_sum += $this->getComptePrevisionnelSum();
+    	}
+    	return $this->_compte_reel_sum;
+    }
+    
+    public function getComptePrevisionnelSum() {
+    	foreach($this->getComptes() as $compte){
+    		if(!$compte->getStatut()) {
+    			continue;
+    		}
+    		if($compte->getStatut()->getId() == 2) {
+    			$this->_compte_previsionnel_sum += $compte->getMontant();
+    		}
+    	}
+    	return $this->_compte_previsionnel_sum;
+    }
+    
 
 
     /**
