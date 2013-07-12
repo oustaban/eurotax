@@ -18,8 +18,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  */
 class InitialImportController extends Controller
 {
+	
+	
+	
+	protected $_import_counts = array();
+	protected $_import_reports = array();
+	/** @var null|\DateTime */
+	protected $_import_date = null;
+	
 
 	/**
+	 * Compte
+	 * 
 	 * {@inheritdoc}
 	 */
 	public function indexAction()
@@ -139,7 +149,7 @@ class InitialImportController extends Controller
 	}
 	
 	
-	private function _clientIdByCode($code) {
+	protected function _clientIdByCode($code) {
 		/* @var $em \Doctrine\ORM\EntityManager */
 		$em = $this->getDoctrine()->getManager();
 		 
@@ -152,15 +162,11 @@ class InitialImportController extends Controller
 		return false;
 	}
 	
-	
-	
-	
 	/**
 	 * @param $value
 	 * @return array
 	 */
-	private function _dateFormValue($value)
-	{
+	protected function _dateFormValue($value) {
 		if ($value) {
 			$t = strtotime($value);
 	
@@ -174,5 +180,552 @@ class InitialImportController extends Controller
 		}
 		return null;
 	}
-  
+	
+	/**
+	 * 
+	 * 
+	 * @param string $value
+	 * @return boolean|NULL
+	 */
+	protected function _checkedFormValue($value) {
+		$value = strtoupper($value);
+		if($value == 'OUI') {
+			return true;
+		}
+		
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Fields to insert/update
+	 * 
+
+Code Client*		= code_client
+Gestionnaire*		= user_id
+Nom*				= nom
+Nature client*		= nature_du_client_id
+Raison sociale*		= raison_sociale
+Adresse Postale 1	= adresse_1_postal
+Adresse Postale 2	= adresse_2_postal
+Code postal			= code_postal_postal
+Ville 				= ville_postal
+Pays				= pays_id_postal
+N° TVA CEE*			= N_TVA_CEE
+Activité			= activite
+Date début mission*			= date_debut_mission
+"Mode d'enregistrement*"	= mode_denregistrement_id
+Siret						= siret
+Périodicité facturation		= periodicite_facturation_id
+Num dossier fiscal			= num_dossier_fiscal
+"Taxe additionnelle"		= taxe_additionnelle
+Centre des impôts*			= center_des_impots_id
+Périodicité CA3				= periodicite_CA3_id
+Niveau INTRO				= niveau_dobligation_id
+Langue*						= language_id
+"Autre destinataire de facturation"	 	= autre_destinataire_de_facturation
+Contact*								= contact
+Référence Client	
+Raison sociale*							= raison_sociale_2
+Adresse facturation 1					= adresse_1_facturation
+Adresse facturation 2					= adresse_2_facturation
+Code postal facturation 				= code_postal_facturation
+Ville facturation						= ville_facturation
+Pays facturation						= pays_id_facturation
+N° TVA CEE facturé						= N_TVA_CEE_facture
+Date fin mission						= date_fin_mission
+N° TVA FR*								= N_TVA_FR
+Date de dépôt*							= date_de_depot_id
+Télédéclaration							= teledeclaration
+Niveau EXPED							= niveau_dobligation_exped_id
+
+	 * 
+	 * 
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 */
+	
+	public function clientAction()
+	{
+		set_time_limit(0);
+		$skipToLine = 7;
+		
+		
+		
+		
+		// Fields must be identical w/ ClientAdmin form.
+		// skip_N fields are empty columns and are must be skipped.
+		$fieldsToImport = array(
+				'code_client',
+				'user',
+				'nom',
+				'nature_du_client',
+				'raison_sociale',
+				array('location_postal'=> 'adresse_1_postal'), //'adresse_1_postal',
+				array('location_postal'=> 'adresse_2_postal'),//'adresse_2_postal',
+				array('location_postal'=> 'code_postal_postal'),//'code_postal_postal',
+				array('location_postal'=> 'ville_postal'),//'ville_postal',
+				array('location_postal'=> 'pays_postal'),//'pays_postal',
+				'N_TVA_CEE',
+				'activite',
+				'date_debut_mission',
+				'mode_denregistrement',
+				'siret',
+				'periodicite_facturation',
+				'num_dossier_fiscal',
+				'taxe_additionnelle',
+				'center_des_impots',
+				'periodicite_CA3',
+				'niveau_dobligation_id',
+				'language',
+				'skip_1',	
+				'autre_destinataire_de_facturation',
+				'contact',
+				'reference_client',
+				'raison_sociale_2',
+				array('location_facturation'=> 'adresse_1_facturation'),//'adresse_1_facturation',
+				array('location_facturation'=> 'adresse_2_facturation'),//'adresse_2_facturation',
+				array('location_facturation'=> 'code_postal_facturation'),//'code_postal_facturation',
+				array('location_facturation'=> 'ville_facturation'),//'ville_facturation',
+				array('location_facturation'=> 'pays_facturation'),//'pays_facturation',
+				'N_TVA_CEE_facture',
+				'skip_2',
+				'date_fin_mission',
+				'N_TVA_FR',
+				'date_de_depot_id',
+				'teledeclaration',
+				'niveau_dobligation_exped_id' 
+		);
+		
+		
+		
+		if($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$inserted = 0;
+			$updated = 0;
+			$skipped = 0;
+			
+			
+			if (!empty($_FILES) && !empty($_FILES["inputFile"]["name"])) {
+				$file = TMP_UPLOAD_PATH . '/' . $_FILES["inputFile"]["name"];
+				$tmpFile = $_FILES["inputFile"]["tmp_name"];
+				$inputFile = $_FILES['inputFile'];
+					
+				if (move_uploaded_file($tmpFile, $file)) {
+					/* @var $objReader \PHPExcel_Reader_Excel2007 */
+					$objReader = \PHPExcel_IOFactory::createReaderForFile($file);
+	
+					if (get_class($objReader) == 'PHPExcel_Reader_CSV') {
+						$this->get('session')->setFlash('sonata_flash_error', $this->admin->trans('Fichier non lisible'));
+						return $this->render(':redirects:back.html.twig');
+					} else {
+						$objReader->setReadDataOnly(true);
+					}
+					$objPHPExcel = $objReader->load($file);
+					$sheet = $objPHPExcel->getSheet(0);
+					file_put_contents($tmpFile, '');
+					$rows = $sheet->toArray();
+					for($i = 1; $i < $skipToLine; $i++) {
+						array_shift($rows); 
+					}
+					$rows = array_filter($rows);
+	
+					
+					$class = 'Client';
+					$adminCode = 'application.sonata.admin.client';
+					$admin = $this->container->get('sonata.admin.pool')->getAdminByAdminCode($adminCode);
+					
+					foreach($rows as $key => $row) {
+						if(empty($row[0])) {
+							continue;
+						}
+						
+
+						if($clientId = $this->_clientIdByCode($row[0])) {
+							$object = $admin->getObject($clientId);
+						} else {
+							$object = $admin->getNewInstance();
+						}
+						
+						$admin->setSubject($object);
+						$admin->setValidateImport(true);
+						
+						$form_builder = $admin->getFormBuilder();
+						$form = $form_builder->getForm();
+						$form->setData($object);
+						$formData = array('_token' => $this->get('form.csrf_provider')->generateCsrfToken('unknown'));
+						$hasRowError = false;
+						
+						static $fields = array();
+						
+						foreach($fieldsToImport as $i => $field) {
+							if(is_array($field)) {
+								foreach($field as $k => $v) {
+									$value = $this->getClientFormData($v, $row[$i]);
+									$formData[$k][$v] = $value;
+									$field = $v;
+								}
+							} else {
+								if(strstr($field, 'skip_')) {
+									$i++;
+									continue;
+								}
+								$value = $this->getClientFormData($field, $row[$i]);
+								$formData[$field] = $value;
+							}
+							
+							$fields[$field] = $i;
+						}
+						
+						if($hasRowError) {
+							$skipped++;
+							continue;
+						}
+						
+						$form->bind($formData);
+							
+						if ($form->isValid()) {
+							try {
+								if($clientId) {
+									$admin->update($object);
+									$updated++;
+									$this->setCountImports($class, 'updated');
+									
+								} else {
+									$admin->create($object);
+									$this->setCountImports($class, 'inserted');
+									$inserted++;
+								}
+								
+							} catch (\Exception $e) {
+
+								$message = $this->getErrorsAsString($fields, $class, $admin, $form, $key + ($skipToLine), 0, 0, $e->getMessage());
+								$this->setCountImports($class, 'errors', $message);
+								
+							}
+						} else {
+
+							$message = $this->getErrorsAsString($fields, $class, $admin, $form, $key + ($skipToLine));
+							$this->setCountImports($class, 'errors', $message);
+							
+						}
+						unset($formData, $form, $form_builder, $object);
+						
+					}
+				}
+	
+			} else {
+				$this->get('session')->setFlash('sonata_flash_error|raw', 'Please upload a file');
+			}
+	
+			$messages = $this->getCountMessageImports($admin);
+			if (!empty($messages)) {
+				$this->get('session')->setFlash('sonata_flash_info|raw', implode("<br/>", $messages));
+			}
+			
+			return $this->render(':redirects:back.html.twig');
+		}
+	
+		return $this->render('ApplicationSonataClientBundle:InitialImport:client.html.twig');
+	}
+	
+	protected function getClientFormData($field, $value) {
+		$method = '_getClient' . ucfirst(\Doctrine\Common\Util\Inflector::camelize($field));
+		if(method_exists($this, $method)) {
+			return $this->$method($value);
+		}
+		return $value;
+	}
+	
+	
+	protected function _getClientUser($value) {
+		$value = explode(' ', $value);
+		
+		$firstname = $value[0];
+		$lastname = $value[1];
+		
+		$doctrine = $this->getDoctrine();
+		$em = $doctrine->getManager();
+		$user = $em->getRepository('ApplicationSonataUserBundle:User')->findOneBy(array('firstname' => $firstname, 'lastname' => $lastname));
+		
+		if($user) {
+			return $user->getId();
+		}
+		return $value;
+	}
+	
+	/**
+	 * nature_du_client_id
+	 */
+	protected function _getClientNatureDuClient($value) {
+		$doctrine = $this->getDoctrine();
+		$em = $doctrine->getManager();
+		$obj = $em->getRepository('ApplicationSonataClientBundle:ListNatureDuClients')->findOneBy(array('name' => $value));
+	
+		if($obj) {
+			return $obj->getId();
+		}
+		return $value;
+	}
+	
+	
+	/**
+	 * pays_id_postal
+	 */
+	protected function _getClientPaysPostal($value) {
+		
+		$doctrine = $this->getDoctrine();
+		$em = $doctrine->getManager();
+		$obj = $em->getRepository('ApplicationSonataClientBundle:ListCountries')->findOneBy(array('name' => $value));
+		
+		if($obj) {
+			return $obj->getCode();
+		}
+		return $value;
+		
+	}
+	
+	/**
+	 * mode_denregistrement_id
+	 */
+	protected function _getClientModeDenregistrement($value) {
+		$doctrine = $this->getDoctrine();
+		$em = $doctrine->getManager();
+		$obj = $em->getRepository('ApplicationSonataClientBundle:ListModeDenregistrements')->findOneBy(array('name' => $value));
+	
+		if($obj) {
+			return $obj->getId();
+		}
+		return $value;
+	}
+	
+	/**
+	 * periodicite_facturation_id
+	 */
+	protected function _getClientPeriodiciteFacturation($value) {
+		$doctrine = $this->getDoctrine();
+		$em = $doctrine->getManager();
+		$obj = $em->getRepository('ApplicationSonataClientBundle:ListPeriodiciteFacturations')->findOneBy(array('name' => $value));
+	
+		if($obj) {
+			return $obj->getId();
+		}
+		return $value;
+	}	
+	
+	/**
+	 * center_des_impots_id
+	 */
+	protected function _getClientCenterDesImpots($value) {
+		$doctrine = $this->getDoctrine();
+		$em = $doctrine->getManager();
+		$obj = $em->getRepository('ApplicationSonataImpotsBundle:Impots')->findOneBy(array('nom' => $value));
+	
+		if($obj) {
+			return $obj->getId();
+		}
+		return $value;
+	}	
+	
+	/** 
+	 * periodicite_CA3_id 
+	 */
+	protected function _getClientPeriodiciteCA3($value) {
+		return $this->_getClientPeriodiciteFacturation($value);
+	}
+	
+	
+	/**
+	 * language_id
+	 */
+	protected function _getClientLanguage($value) {
+		$doctrine = $this->getDoctrine();
+		$em = $doctrine->getManager();
+		$obj = $em->getRepository('ApplicationSonataClientBundle:ListLanguages')->findOneBy(array('name' => $value));
+	
+		if($obj) {
+			return $obj->getId();
+		}
+		return $value;
+	}
+
+	
+	
+	/**
+	 * pays_id_facturation
+	 */
+	protected function _getClientPaysFacturation($value) {
+		return $this->_getClientPaysPostal($value);	
+	}
+	
+	
+	/**
+	 * date_debut_mission
+	 */
+	protected function _getClientDateDebutMission($value) {
+		return $this->_dateFormValue($value);
+	}
+	
+	
+	/**
+	 * date_fin_mission
+	 */
+	protected function _getClientDateFinMission($value) {
+		return $this->_dateFormValue($value);
+	}
+	
+	/**
+	 * taxe_additionnelle
+	 */
+	protected function _getClientTaxeAdditionnelle($value) {
+		return $this->_checkedFormValue($value);
+	}
+	
+	/**
+	 * autre_destinataire_de_facturation
+	 */
+	protected function _getClientAutreDestinataireDeFacturation($value) {
+		return $this->_checkedFormValue($value);
+	}
+	
+	/**
+	 * teledeclaration
+	 */
+	protected function _getClientTeledeclaration($value) {
+		return $this->_checkedFormValue($value);
+	}
+	
+	
+	protected function getErrorsAsString($fields, $class, $admin, \Symfony\Component\Form\FormInterface $form, $line, $level = 0, $field = '', $message = null) {
+		$errors = array();
+		if ($form->getErrors()) {
+			$one_view = array();
+			foreach ($form->getErrors() as $keys => $error) {
+				if (!isset($one_view[$field][$line])) {
+					$one_view[$field][$line] = true;
+					$repeat = str_repeat(' ', $level);
+					
+					$label = isset($fields[$field]) ? '(' . ((\PHPExcel_Cell::stringFromColumnIndex($fields[$field])) . ':' . $line) . ') ' : '';
+					$data = $form->getViewData();
+					if (is_array($data)) {
+						$data = implode('-', $data);
+					}
+	
+					if ($error->getMessageParameters()) {
+						$data = implode($error->getMessageParameters());
+					}
+	
+					$errors[] = $repeat . 'VALUE : ' . $label . ($data ? : 'empty') . "\n";
+					$errors[] = $repeat . 'ERROR : ' . $error->getMessage() . "\n\n";
+	
+				}
+			}
+		}
+	
+		foreach ($form->getChildren() as $field => $child) {
+			if ($err = $this->getErrorsAsString($fields, $class, $admin, $child, $line, ($level + 4), $field, null)) {
+				$errors[] = $admin->trans('form.' . $field) . "\n";
+				$errors[] = $err;
+			}
+		}
+	
+		if (!empty($message)) {
+			$errors[] = $message;
+		}
+	
+		return implode($errors);
+	}
+	
+	
+	/**
+	 * @return array
+	 */
+	protected function getCountMessageImports($admin)
+	{
+		$translator = $admin;
+		$messages = array();
+	
+		foreach ($this->_import_counts as $table => $values) {
+	
+			$message = array();
+			$table_trans = $translator->trans('form.' . $table . '.title');
+			switch ($table) {
+	
+				case 'rows';
+				if (isset($values['success'])) {
+					$message[] = $translator->trans('Imported %table% : %count%', array(
+							'%table%' => $table,
+							'%count%' => $values['success'],
+					));
+				}
+				if (isset($values['updated'])) {
+					$message[] = $translator->trans('Updated %table% : %count%', array(
+							'%table%' => $table,
+							'%count%' => $values['updated'],
+					));
+				}
+				if (isset($values['inserted'])) {
+					$message[] = $translator->trans('Inserted %table% : %count%', array(
+							'%table%' => $table,
+							'%count%' => $values['inserted'],
+					));
+				}
+				
+				
+				if (isset($values['errors'])) {
+					$error_log_filename = '/data/imports/import-error-log-' . md5(time() . rand(1, 99999999)) . '.txt';
+	
+					$render_view_popup = $this->renderView('ApplicationSonataClientBundle:popup:popup_message.html.twig', array(
+							'error_reports' => $this->_import_reports,
+							'active_tab' => '',
+							'import_id' =>  null,
+					));
+	
+					preg_match('#<div class="modal-body">(.*)#is', $render_view_popup, $matches);
+					file_put_contents(DOCUMENT_ROOT.$error_log_filename, strip_tags($matches[1]));
+	
+					$message[] = '<span class="error">' . $translator->trans('Not valid %table% : %count%', array(
+							'%table%' => $table,
+							'%count%' => $values['errors'],
+					)) . '</span>, <a id="error_repost_show" href="#">View errors</a> <a target="_blank" href="'.$error_log_filename.'">Save error log</a>' . $render_view_popup;
+				}
+	
+				$messages[] = implode('&nbsp;&nbsp;|&nbsp;&nbsp;', $message);
+				break;
+				default;
+				$str_repeat = str_repeat('&nbsp;', 4);
+				if (isset($values['success'])) {
+					$message[] = $str_repeat . $translator->trans('Imported : %count%', array('%count%' => $values['success']));
+				}
+				if (isset($values['errors'])) {
+					$message[] = $str_repeat . '<span class="error">' . $translator->trans('Not valid : %count%', array('%count%' => $values['errors'])) . '</span>';
+				}
+				$messages[] = '<strong>' . $table_trans . '</strong><br />' . implode('; ', $message);
+				break;
+			}
+		}
+		return $messages;
+	}
+	
+	
+	protected function setCountImports($table, $type, $messages = '')
+	{
+		if (!isset($this->_import_counts['rows'][$type])) {
+			$this->_import_counts['rows'][$type] = 0;
+		}
+	
+		if (!isset($this->_import_counts[$table][$type])) {
+			$this->_import_counts[$table][$type] = 0;
+		}
+	
+		$this->_import_counts['rows'][$type]++;
+		$this->_import_counts[$table][$type]++;
+	
+		if (!empty($messages)) {
+			$this->_import_reports[$table][] = $messages;
+		}
+	}
+	
 }

@@ -800,7 +800,7 @@ class AbstractTabsController extends Controller
     		$errors = array();
     		$count = count($d);
     		for($i=0;$i<$count;$i++) {
-    		$start = $i+1;
+    			$start = $i+1;
     			if( isset($d[$i]) && $start != $d[$i] ) {
     				$line = $skip_line+($i+1);
     				$repeat = str_repeat(' ', 4);

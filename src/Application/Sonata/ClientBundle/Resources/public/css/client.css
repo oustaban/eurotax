@@ -163,3 +163,9 @@
 }
 
 #virement_form {display:none;}
+.error{
+    color:red;
+}
+#error_repost_show{
+    text-decoration: underline;
+}

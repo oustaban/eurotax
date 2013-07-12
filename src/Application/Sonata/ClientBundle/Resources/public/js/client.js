@@ -11,6 +11,24 @@ jQuery(document).ready(function ($) {
     	$('.voir-les-operations').css({marginLeft: '280px', position: 'absolute'});
     }
     
+    
+    /**
+     * import initial
+     */
+    $('input[id=inputFile]').change(function () {
+        $('#inputFileCover').val($(this).val());
+    });
+    
+    
+    
+    $('#error_repost_show').die().live('click', function () {
+        $('#importReportModal').modal('toggle');
+        return false;
+    });
+    
+    
+    
+    
     /**
      * document
      * */
@@ -358,18 +376,6 @@ jQuery(document).ready(function ($) {
         	return true;
         });
     }
-    
-    /**
-     * import initial
-     */
-    $('input[id=inputFile]').change(function () {
-        $('#inputFileCover').val($(this).val());
-    });
-    
-    
-    
-    
-	
 	
     
     

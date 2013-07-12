@@ -375,6 +375,15 @@ class Client
     private $N_TVA_FR;
 
     
+    /**
+     * @var string $reference_client
+     *
+     * @ORM\Column(name="reference_client", type="string", length=200, nullable=true)
+     */
+    private $reference_client;
+    
+    
+    
     private $_compte_reel_sum = 0, $_compte_previsionnel_sum = 0;
     
     /**
@@ -1294,6 +1303,12 @@ class Client
      */
     public function prePersist()
     {
+
+    	if($this->getCodeClient()) {
+    		return;
+    	}
+    	
+    	
         /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
         $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
 
@@ -1862,6 +1877,32 @@ class Client
     {
         return $this->N_TVA_FR;
     }
+    
+    
+    
+    /**
+     * Set reference client
+     *
+     * @param string $value
+     * @return Client
+     */
+    public function setReferenceClient($value)
+    {
+    	$this->reference_client = $value;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get reference client
+     *
+     * @return string
+     */
+    public function getReferenceClient()
+    {
+    	return $this->reference_client;
+    }
+    
 
     /**
      * @return string

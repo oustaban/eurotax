@@ -10,3 +10,7 @@ impression_etiquette:
 initial_import_index:
     pattern: /initial-import
     defaults: { _controller: ApplicationSonataClientBundle:InitialImport:index }
+
+initial_import_client:
+    pattern: /initial-import-client
+    defaults: { _controller: ApplicationSonataClientBundle:InitialImport:client }

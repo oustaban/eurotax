@@ -52,6 +52,9 @@ class ClientAdmin extends Admin
         '_sort_by' => 'raison_sociale'
     );
 
+    protected $_is_validate_import = false;
+    
+    
     /**
      * @return array
      */
@@ -111,8 +114,12 @@ class ClientAdmin extends Admin
         
         $formMapper
         	->add('is_new', 'hidden', array('data' => $id ? 0 : 1, 'mapped' => false, 'attr' => array('class' => 'is_new')))
+        	
+        	
+        	->add('reference_client', 'hidden') //temp only
+        	
             ->with('form.client.row1')
-            ->add('code_client', null, array('label' => 'form.code_client', 'disabled' => true))
+            ->add('code_client', null, array('label' => 'form.code_client', 'disabled' => $this->getValidateImport() ? false : true))
             ->add('autre_destinataire_de_facturation', null, array('label' => 'form.autre_destinataire_de_facturation'))
             ->with('form.client.row2')
             ->add('user', null, array('label' => 'form.user', 'query_builder' => function (EntityRepository $er)
@@ -417,7 +424,7 @@ class ClientAdmin extends Admin
         }
 
         $value = $object->getDateDeDepot();
-        if ($value) {
+        if ($value && $object->getNatureDuClient()) {
             if (in_array($object->getNatureDuClient()->getId(), array(ListNatureDuClients::DEB, ListNatureDuClients::DES)) && $value!=31){
                 $errorElement->with('date_de_depot_id')->addViolation('"Date de dépôt" non cohérente')->end();
             }
@@ -604,5 +611,20 @@ class ClientAdmin extends Admin
     }
     
     
+    /**
+     * @param bool $value
+     */
+    public function setValidateImport($value = true)
+    {
+    	$this->_is_validate_import = $value;
+    }
+    
+    /**
+     * @return bool
+     */
+    protected function getValidateImport()
+    {
+    	return $this->_is_validate_import;
+    }
     
 }
