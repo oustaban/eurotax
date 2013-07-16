@@ -62,7 +62,7 @@ abstract class AbstractTabsAdmin extends Admin
     /**
      * @param $client_id
      */
-    protected function setClient($client_id)
+    public function setClient($client_id)
     {
         /** @var $doctrine  \Doctrine\Bundle\DoctrineBundle\Registry */
         $doctrine = \AppKernel::getStaticContainer()->get('doctrine');

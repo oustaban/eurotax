@@ -31,7 +31,7 @@ class ContactAdmin extends Admin
         $id = $this->request->get($this->getIdParameter());
         $raison_sociale_societe = array('label' => $this->getFieldLabel('raison_sociale_societe')); //, 'data' => !$id ? $this->getClient()->getRaisonSociale() : '');
         
-        if(!$id) {
+        if(!$id && $this->getClient()) {
         	$raison_sociale_societe['data'] = $this->getClient()->getRaisonSociale();
         }
         

@@ -55,35 +55,36 @@ class DocumentAdmin extends Admin
             'disabled' => $typeDocDisabled,
             'query_builder' => function (EntityRepository $er) use ($client) {
                 $builder = $er->createQueryBuilder('t');
-
-                /** @var $client \Application\Sonata\ClientBundle\Entity\Client */
-                switch ($client->getNatureDuClient()->getId()) {
-                    case ListNatureDuClients::sixE:
-                        if ($client->getPaysPostal()->getEU()){
-                            $filter = array(
-                                ListTypeDocuments::Mandat,
-                                ListTypeDocuments::Attestation_de_TVA,
-                                ListTypeDocuments::Mandat_Specifique,
-                            );
-
-                        }
-                        else {
-                            $filter = array(
-                                ListTypeDocuments::Pouvoir,
-                                ListTypeDocuments::Accord,
-                                ListTypeDocuments::Lettre_de_designation,
-                            );
-                        }
-                        break;
-                    case ListNatureDuClients::DEB:
-                    case ListNatureDuClients::DES:
-                        $filter = array(
-                            ListTypeDocuments::Mandat,
-                        );
-                        break;
-                }
-
-                if ($filter){
+                $filter = array();
+				if($client) {
+                	/** @var $client \Application\Sonata\ClientBundle\Entity\Client */
+	                switch ($client->getNatureDuClient()->getId()) {
+	                    case ListNatureDuClients::sixE:
+	                        if ($client->getPaysPostal()->getEU()){
+	                            $filter = array(
+	                                ListTypeDocuments::Mandat,
+	                                ListTypeDocuments::Attestation_de_TVA,
+	                                ListTypeDocuments::Mandat_Specifique,
+	                            );
+	
+	                        }
+	                        else {
+	                            $filter = array(
+	                                ListTypeDocuments::Pouvoir,
+	                                ListTypeDocuments::Accord,
+	                                ListTypeDocuments::Lettre_de_designation,
+	                            );
+	                        }
+	                        break;
+	                    case ListNatureDuClients::DEB:
+	                    case ListNatureDuClients::DES:
+	                        $filter = array(
+	                            ListTypeDocuments::Mandat,
+	                        );
+	                        break;
+	                }
+				}
+                if (!empty($filter)){
                     $builder->andWhere('t.id IN ('.implode(',', $filter).')');
                 }
 
@@ -273,7 +274,7 @@ class DocumentAdmin extends Admin
         $client = $this->getClient();
 
         //ListNatureDuClients::sixE => 6e
-        if ($client->getNatureDuClient() && $client->getNatureDuClient()->getId() == ListNatureDuClients::sixE && !in_array($client->getPaysPostal()->getCode(), $this->getListCountryEU())) {
+        if ($client && $client->getNatureDuClient() && $client->getNatureDuClient()->getId() == ListNatureDuClients::sixE && !in_array($client->getPaysPostal()->getCode(), $this->getListCountryEU())) {
 
             $alert = new ClientAlert();
             $alert->setClient($object->getClient());
@@ -296,10 +297,10 @@ class DocumentAdmin extends Admin
         $client = $this->getClient();
 
         //ListNatureDuClients::sixE => 6e
-        if ($client->getNatureDuClient() &&
-            ($client->getNatureDuClient()->getId() == ListNatureDuClients::sixE && in_array($client->getPaysPostal()->getCode(), $this->getListCountryEU()))
+        if (($client && $client->getNatureDuClient() &&
+            ($client->getNatureDuClient()->getId() == ListNatureDuClients::sixE && in_array($client->getPaysPostal()->getCode(), $this->getListCountryEU())))
             ||
-            ($client->getNatureDuClient()->getId() == ListNatureDuClients::DEB || $client->getNatureDuClient()->getId() == ListNatureDuClients::DES)
+            ($client && ($client->getNatureDuClient()->getId() == ListNatureDuClients::DEB || $client->getNatureDuClient()->getId() == ListNatureDuClients::DES))
         ) {
             $alert = new ClientAlert();
             $alert->setClient($object->getClient());

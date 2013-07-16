@@ -58,7 +58,7 @@ form:
     code_client: Code Client
 
   Contact:
-    title: Ajouter / Modifier un contact
+    title: Contact
     civilite: Civilité
     nom: Nom
     prenom: Prénom
@@ -70,7 +70,7 @@ form:
     affichage_facture_id: N° ordre facturation
 
   Document:
-    title: Ajouter / Modifier un document
+    title: Document
     document: Document
     type_document: Type
     date_document: Date
@@ -78,11 +78,11 @@ form:
     particularite: Particularité
     date_notaire: Notaire
     date_apostille: Apostille
-    statut_document_notaire: Statut
-    statut_document_apostille: Statut
+    statut_document_notaire: Statut Notaire
+    statut_document_apostille: Statut Apostille
 
   Garantie:
-    title: Ajouter / Modifier une garantie
+    title: Garantie
     type_garantie: Type
     montant: Montant
     devise: Devise
@@ -96,7 +96,7 @@ form:
     nom_de_la_banques_id: Statut
 
   Coordonnees:
-      title: Ajouter / Modifier une coordonnées bancaire
+      title: Coordonnees
       nom: Nom de la banque
       orders: Ordre de priorité
       no_de_compte: N° de compte
