@@ -127,8 +127,10 @@ class ErrorElements
         	}
         	
         	
+        	//var_dump($_object->getTauxDeChange());
+        	
         	if(method_exists($_object, 'getMontantTTC')) {
-				if ($_object->getPaiementMontant() && $_object->getTauxDeTVA() && $_object->getTauxDeChange()) {
+				if ($_object->getPaiementMontant() && $_object->getTauxDeTVA() && intval($_object->getTauxDeChange())) {
 					$this->formatTauxDeTVA();
 					//var HT = montant_TTC / (1 + parseFloat(taux_de_TVA)) / taux_de_change;
 					$calcValue = $this->round( $_object->getPaiementMontant() / (1+$_object->getTauxDeTVA() ) / $_object->getTauxDeChange(), 2);
@@ -137,7 +139,7 @@ class ErrorElements
 					}
 	            }
         	} else {
-        		if ( $_object->getMontantHTEnDevise() && $_object->getTauxDeChange()) {
+        		if ( $_object->getMontantHTEnDevise() && intval($_object->getTauxDeChange())) {
         			
         			$calcValue = $this->round( $_object->getMontantHTEnDevise() / $_object->getTauxDeChange(), 2);
         			if((int)$value != (int)$calcValue) {
