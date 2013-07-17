@@ -121,6 +121,11 @@ class ErrorElements
         $value = $_object->getHT();
         if ($value) {
         	
+        	if(!preg_match('/[0-9 ,]/', $value)) {
+        		$this->_errorElement->with('HT')->addViolation('This is an invalid value.')->end();
+        		return $this;
+        	}
+        	
         	
         	if(method_exists($_object, 'getMontantTTC')) {
 				if ($_object->getPaiementMontant() && $_object->getTauxDeTVA() && $_object->getTauxDeChange()) {
