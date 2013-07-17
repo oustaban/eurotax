@@ -574,6 +574,14 @@ function init_rapprochement_sums() {
     		
     	};
     	
+    	
+    	var toEuroFormat = function(object) {
+    		
+    		$(object).val( euro_num_format($(object).val()) );
+    		
+    	};
+    	
+    	
     	/*$('#btn_recalculer').click(function(){
     		recalculer();
     		return false;
@@ -582,7 +590,12 @@ function init_rapprochement_sums() {
     	recalculer();
     	$('#rapprochement_intro_info_number, #rapprochement_intro_info_number2, #rapprochement_exped_info_number, #rapprochement_exped_info_number2').keyup(function(){
     		recalculer();
+    		
     		return false;
+    	}).blur(function() {
+    		
+    		toEuroFormat(this);
+    		
     	});
     	
     

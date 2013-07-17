@@ -516,7 +516,7 @@ class ClientAdmin extends Admin
             }
 
             $value = $object->getNiveauDobligationId();
-            if (!$value) {
+            if (is_null($value)) {
                 $alert = new ClientAlert();
                 $alert->setClient($object);
                 $alert->setTabs($tab);
@@ -524,6 +524,11 @@ class ClientAdmin extends Admin
                 $alert->setText('Clôture Manque Niveau Obligation DEB');
 
                 $em->persist($alert);
+            } else {
+            	$alert = $em->getRepository('ApplicationSonataClientBundle:ClientAlert')->findOneBy(array('client'=>$object, 'text'=>'Clôture Manque Niveau Obligation DEB'));
+            	if($alert) {
+            		$this->delete($alert);
+            	}
             }
 
             $value = $object->getPeriodiciteCA3();
