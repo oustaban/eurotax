@@ -855,7 +855,7 @@ class AbstractTabsController extends Controller
                 $admin->setValidateImport();
                 
                 foreach ($data as $key => $line) {
-                    if ($this->getImportsBreak($data, $key)) {
+                    if ($this->getImportsBreak($data, $key) || empty($line[0])) {
                         break;
                     }
                     $object = $admin->getNewInstance();
