@@ -557,6 +557,11 @@ function init_rapprochement_sums() {
         		var sum = Number(real_num($(numSel).html())) - Number(real_num( $(numInputSel).val()));
         		var val = euro_num_format(sum, 2, true);
 	    		$(outputSel).html('<b>'+ val +'</b>');
+	    		
+	    		if(sum) {
+	    			$(outputSel).parent().css('background-color', '#ff69b4');
+	    		}
+
 			};
     		
     		calc('#totals_input_v1', '#rapprochement_intro_info_number', '#totals_input_calcu1');
@@ -574,6 +579,7 @@ function init_rapprochement_sums() {
     		return false;
     	}).trigger('click');*/
     	
+    	recalculer();
     	$('#rapprochement_intro_info_number, #rapprochement_intro_info_number2, #rapprochement_exped_info_number, #rapprochement_exped_info_number2').keyup(function(){
     		recalculer();
     		return false;
