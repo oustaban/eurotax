@@ -21,6 +21,7 @@ class InitialImportController extends Controller {
 	
 	
 	protected $_client_id = 0;
+	protected $_client_import_set = array();
 	
 	protected $_import_counts = array();
 	protected $_import_reports = array();
@@ -97,7 +98,8 @@ class InitialImportController extends Controller {
 							'fax',
 							'email',
 							'raison_sociale_societe',
-							'affichage_facture_id'
+							'affichage_facture_id',
+							'client'
 					),
 					
 					'slices' => array(40, 49),
@@ -112,7 +114,8 @@ class InitialImportController extends Controller {
 							'date_document',
 							'preavis',
 							'particularite',
-							'type_document'
+							'type_document',
+							'client'
 					),
 					'slices' => array(59),
 					'sliceLength' => 5
@@ -126,7 +129,8 @@ class InitialImportController extends Controller {
 							'skip_2',
 							'date_document',
 							'particularite',
-							'type_document'
+							'type_document',
+							'client'
 					),
 					'slices' => array(65),
 					'sliceLength' => 4
@@ -145,7 +149,8 @@ class InitialImportController extends Controller {
 							'date_notaire',
 							'statut_document_apostille',
 							'date_apostille',
-							'type_document'
+							'type_document',
+							'client'
 							
 					),
 					'slices' => array(70),
@@ -164,7 +169,8 @@ class InitialImportController extends Controller {
 							'date_notaire',
 							'statut_document_apostille',
 							'date_apostille',
-							'type_document'
+							'type_document',
+							'client'
 				
 					),
 					'slices' => array(79),
@@ -180,7 +186,8 @@ class InitialImportController extends Controller {
 							'date_document',
 							'preavis',
 							'particularite',
-							'type_document'
+							'type_document',
+							'client'
 					),
 					'slices' => array(88),
 					'sliceLength' => 5
@@ -195,7 +202,8 @@ class InitialImportController extends Controller {
 							'skip_2',
 							'date_document',
 							'particularite',
-							'type_document'
+							'type_document',
+							'client'
 					),
 					'slices' => array(94),
 					'sliceLength' => 4
@@ -216,7 +224,8 @@ class InitialImportController extends Controller {
 						'date_decheance',
 						'expire',
 						'note',
-						'type_garantie'
+						'type_garantie',
+							'client'
 					),
 			
 					'slices' => array(101),
@@ -231,7 +240,8 @@ class InitialImportController extends Controller {
 							'nom_de_la_banques_id',
 							'date_demission',
 							'note',
-							'type_garantie'
+							'type_garantie',
+							'client'
 					),
 						
 					'slices' => array(111),
@@ -251,7 +261,8 @@ class InitialImportController extends Controller {
 							'date_decheance',
 							'expire',
 							'note',
-							'type_garantie'
+							'type_garantie',
+							'client'
 					),
 					'slices' => array(117),
 					'sliceLength' => 9
@@ -268,7 +279,8 @@ class InitialImportController extends Controller {
 							array('location'=> 'pays'),//'pays',
 							'no_de_compte',
 							'code_swift',
-							'IBAN'
+							'IBAN',
+							'client'
 					),
 					'slices' => array(127),
 					'sliceLength' => 9
@@ -494,16 +506,10 @@ class InitialImportController extends Controller {
 						array_shift($rows); 
 					}
 					$rows = array_filter($rows);
-	
-					
-					/* var_dump($rows);
-					exit; */
-					
 					$clientFieldsToImport = $this->clientFieldsToImport['Client']['fields'];
-					
-					
-					$this->_saveImport('Client', $clientFieldsToImport, $rows, $this->clientImportSkipToLine);
-					
+
+					$this->_saveImport('Client', $clientFieldsToImport, $rows);
+					$this->_saveImportClientEntities();
 					
 				}
 	
@@ -516,7 +522,7 @@ class InitialImportController extends Controller {
 				$this->get('session')->setFlash('sonata_flash_info|raw', implode("<br />", $messages));
 			}
 			
-			//return $this->render(':redirects:back.html.twig');
+			return $this->render(':redirects:back.html.twig');
 		}
 	
 		return $this->render('ApplicationSonataClientBundle:InitialImport:client.html.twig');
@@ -533,30 +539,27 @@ class InitialImportController extends Controller {
 	}
 	
 	
-	private function _saveImport($class, $fieldsToImport, $rows, $skipToLine, $numRow = null) {
+	private function _saveImport($class, $fieldsToImport, $rows, $numRowStart = null) {
+		
+		$skipToLine = $this->clientImportSkipToLine;
+		
 		$adminCode = 'application.sonata.admin.' . strtolower($class);
 		$this->_current_admin = $admin = $this->container->get('sonata.admin.pool')->getAdminByAdminCode($adminCode);
 		
 		foreach($rows as $key => $row) {
-			
-			
-			
-			if(!is_null($numRow)) {
-				$key = $numRow;
+			if(!is_null($numRowStart)) {
+				$key = $numRowStart;
 			}
 			
-			
-			$clientId = 0;
 			if($class == 'Client') {
+				$clientId = 0;
 				if(empty($row[0])) {
 					continue;
 				}	
-				
 				if($clientId = $this->_clientIdByCode($row[0])) {
 					$object = $admin->getObject($clientId);
 				} else {
 					$object = $admin->getNewInstance();
-					
 				}
 			} else {
 				
@@ -571,7 +574,6 @@ class InitialImportController extends Controller {
 			$form->setData($object);
 			$formData = array('_token' => $this->get('form.csrf_provider')->generateCsrfToken('unknown'));
 			
-		
 			static $fields = array();
 		
 			$i = current(array_keys($row));
@@ -597,62 +599,33 @@ class InitialImportController extends Controller {
 				$i++;
 			}
 		
-			if($this->_client_id && $class != 'Client') {
-				$formData['client'] = $this->_client_id;
-			}
+			
+			
+			
+			
 			$form->bind($formData);
 			if ($form->isValid()) {
 				try {
-					if($clientId) {
+					if(isset($clientId) && $clientId) {
 						$admin->update($object);
 						$this->setCountImports($class, 'updated');
 					} else {
-						$created = $admin->create($object);
+						$admin->create($object);
 						$clientId = $object->getId();
 						$this->setCountImports($class, 'inserted');
 					}
 					
 					if($class == 'Client') {
 						$this->_client_id = $clientId;
-					}
-					
-					if($class == 'Client' && $this->_client_id) {
+						$this->_client_import_set['rows'][$clientId] = $row;
+						$this->_client_import_set['numRowStart'][$clientId] = $key;
+						
+						
 						$this->_truncateClientRelatedTables();
+						/* if($this->_client_id && $class != 'Client') {
+							$this->_current_admin->setClient($this->_client_id);
+						} */
 					}
-					
-					if($this->_client_id && $class != 'Client') {
-						$this->_current_admin->setClient($this->_client_id);
-					}
-					
-					
-					$tabs = $this->clientFieldsToImport;
-					unset($tabs['Client']);
-						
-					foreach($tabs as $subclass => $tab) {
-						$newsubclass = array();
-						if(strstr($subclass, '_') !== false) {
-							$newsubclass = explode('_', $subclass);
-							$subclass = $newsubclass[0];
-						}
-						$newRows = array();
-						foreach($tab['slices'] as $offset) {
-							$newRow = array_slice($row, $offset, $tab['sliceLength'], true);
-
-							$checkNewRow = array_filter($newRow);
-							if(!empty($checkNewRow)) {
-								if(isset($newsubclass[1])) {
-									$indexes = array_keys($newRow);
-									$index = end($indexes) + 1;
-									$newRow[$index] = (int) $newsubclass[1];
-								}
-								$newRows[] = $newRow;
-							}
-						}
-						
-						$this->_saveImport($subclass, $tab['fields'], $newRows, $skipToLine, $key);
-					}
-					
-					
 				} catch (\Exception $e) {
 		
 					$message = $this->getErrorsAsString($fields, $class, $admin, $form, $key + ($skipToLine), 0, 0, $e->getMessage());
@@ -668,6 +641,46 @@ class InitialImportController extends Controller {
 			unset($formData, $form, $form_builder, $object);
 		}
 		
+	}
+	
+	
+	
+	
+	private function _saveImportClientEntities() {
+		
+		$tabs = $this->clientFieldsToImport;
+		unset($tabs['Client']);
+			
+		foreach($this->_client_import_set['rows'] as $clientId => $row) {
+			foreach($tabs as $class => $tab) {
+				$newclass = array();
+				if(strstr($class, '_') !== false) {
+					$newclass = explode('_', $class);
+					$class = $newclass[0];
+				}
+				$newRows = array();
+				foreach($tab['slices'] as $offset) {
+					$newRow = array_slice($row, $offset, $tab['sliceLength'], true);
+	
+					$indexes = array_keys($newRow);
+					$index = end($indexes);
+	
+	
+					$checkNewRow = array_filter($newRow);
+					if(!empty($checkNewRow)) {
+						if(isset($newclass[1])) {
+							$newRow[++$index] = (int) $newclass[1];
+						}
+							
+						$newRow[++$index] = $clientId;
+						$newRows[] = $newRow;
+					}
+				}
+					
+				$this->_saveImport($class, $tab['fields'], $newRows, $this->_client_import_set['numRowStart'][$clientId]);
+			}
+		
+		}
 	}
 	
 	
@@ -1042,66 +1055,83 @@ class InitialImportController extends Controller {
 	{
 		$translator = $this->_current_admin;
 		$messages = array();
+		$hasErrors = false;
+		$errorCount = 0;
 	
 		foreach ($this->_import_counts as $table => $values) {
 	
-			$message = array();
-			$table_trans = $translator->trans('form.' . $table . '.title');
-			switch ($table) {
-	
-				case 'rows';
-				if (isset($values['success'])) {
-					$message[] = $translator->trans('Imported %table% : %count%', array(
-							'%table%' => $table,
-							'%count%' => $values['success'],
-					));
-				}
-				if (isset($values['updated'])) {
-					$message[] = $translator->trans('Updated %table% : %count%', array(
-							'%table%' => $table,
-							'%count%' => $values['updated'],
-					));
-				}
-				if (isset($values['inserted'])) {
-					$message[] = $translator->trans('Inserted %table% : %count%', array(
-							'%table%' => $table,
-							'%count%' => $values['inserted'],
-					));
-				}
-				
-				
-				if (isset($values['errors'])) {
-					$error_log_filename = '/data/imports/import-error-log-' . md5(time() . rand(1, 99999999)) . '.txt';
-	
-					$render_view_popup = $this->renderView('ApplicationSonataClientBundle:popup:popup_message.html.twig', array(
-							'error_reports' => $this->_import_reports,
-							'active_tab' => '',
-							'import_id' =>  null,
-					));
-	
-					preg_match('#<div class="modal-body">(.*)#is', $render_view_popup, $matches);
-					file_put_contents(DOCUMENT_ROOT.$error_log_filename, strip_tags($matches[1]));
-	
-					$message[] = '<span class="error">' . $translator->trans('Not valid %table% : %count%', array(
-							'%table%' => $table,
-							'%count%' => $values['errors'],
-					)) . '</span>, <a id="error_repost_show" href="#">View errors</a> <a target="_blank" href="'.$error_log_filename.'">Save error log</a>' . $render_view_popup;
-				}
-	
-				$messages[] = implode('&nbsp;&nbsp;|&nbsp;&nbsp;', $message);
-				break;
-				default;
-				$str_repeat = str_repeat('&nbsp;', 4);
-				if (isset($values['success'])) {
-					$message[] = $str_repeat . $translator->trans('Imported : %count%', array('%count%' => $values['success']));
-				}
-				if (isset($values['errors'])) {
-					$message[] = $str_repeat . '<span class="error">' . $translator->trans('Not valid : %count%', array('%count%' => $values['errors'])) . '</span>';
-				}
-				$messages[] = '<strong>' . $table_trans . '</strong><br />' . implode('; ', $message);
-				break;
+			
+			if($table == 'rows') {
+				continue;
 			}
+			
+			$str_repeat = str_repeat('&nbsp;', 4);
+			$message = array();
+			
+			$table_trans = $translator->trans('form.' . $table . '.title');
+			if (isset($values['success'])) {
+				$message[] = $str_repeat . $translator->trans('Imported %table% : %count%', array(
+						'%table%' => $table,
+						'%count%' => $values['success'],
+				));
+			}
+			if (isset($values['updated'])) {
+				$message[] = $str_repeat . $translator->trans('Updated %table% : %count%', array(
+						'%table%' => $table,
+						'%count%' => $values['updated'],
+				));
+			}
+			if (isset($values['inserted'])) {
+				$message[] = $str_repeat . $translator->trans('Inserted %table% : %count%', array(
+						'%table%' => $table,
+						'%count%' => $values['inserted'],
+				));
+			}
+			
+			
+
+			
+			
+			if (isset($values['success'])) {
+				$message[] = $str_repeat . $translator->trans('Imported : %count%', array('%count%' => $values['success']));
+			}
+			if (isset($values['errors'])) {
+				$message[] = $str_repeat . '<span class="error">' . $translator->trans('Not valid : %count%', array('%count%' => $values['errors'])) . '</span>';
+			}
+			
+				
+			$messages[] = '<strong>' . $table_trans . '</strong><br />' . implode('; ', $message);
+			
+			
+			if (isset($values['errors'])) {
+				$hasErrors = true;
+				$errorCount++;
+			}
+			
 		}
+		
+		
+		
+		if ($hasErrors) {
+			$error_log_filename = '/data/imports/import-error-log-' . md5(time() . rand(1, 99999999)) . '.txt';
+				
+			$render_view_popup = $this->renderView('ApplicationSonataClientBundle:popup:popup_message.html.twig', array(
+					'error_reports' => $this->_import_reports,
+					'active_tab' => '',
+					'import_id' =>  null,
+			));
+				
+			preg_match('#<div class="modal-body">(.*)#is', $render_view_popup, $matches);
+			file_put_contents(DOCUMENT_ROOT.$error_log_filename, strip_tags($matches[1]));
+				
+			$errorMessage[] = '<a id="error_repost_show" href="#">View errors</a> <a target="_blank" href="'.$error_log_filename.'">Save error log</a>' . $render_view_popup;
+		}
+			
+			
+		$messages[] = '<br />' . implode('&nbsp;&nbsp;|&nbsp;&nbsp;', $errorMessage);
+		
+		
+		
 		return $messages;
 	}
 	
