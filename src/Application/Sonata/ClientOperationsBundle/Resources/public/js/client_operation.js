@@ -569,10 +569,10 @@ function init_rapprochement_sums() {
     		
     	};
     	
-    	$('#btn_recalculer').click(function(){
+    	/*$('#btn_recalculer').click(function(){
     		recalculer();
     		return false;
-    	}).trigger('click');
+    	}).trigger('click');*/
     	
     	$('#rapprochement_intro_info_number, #rapprochement_intro_info_number2, #rapprochement_exped_info_number, #rapprochement_exped_info_number2').keyup(function(){
     		recalculer();
