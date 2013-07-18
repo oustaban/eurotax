@@ -830,12 +830,55 @@ class AbstractTabsController extends Controller
     }
     
     
+    
+    protected function hasExcelData($title, $sheets) {
+    	$config_excel = $this->_config_excel[$title];
+    	$data = $sheets[$title];
+    	$data = $this->skipLine($config_excel, $data);
+    	
+    	if(isset($data)) {
+    		if(isset($data[0][0]) && !empty($data[0][0])) {
+    			return true;	
+    		} else {
+    			return false;
+    		}
+    	} else {
+    		return false;
+    	}
+    }
+    
+    
+    
+    protected function _validateAIB06DEBIntro($sheets) {
+    	// if AIB-06 has no data and DEB-Intro has data put a message "AIB-06 vide mais data dans DEB-Intro" and stop the import
+    	// A06-AIB
+    	// DEB Intro
+    	if(!$this->hasExcelData('A06-AIB', $sheets) && $this->hasExcelData('DEB Intro', $sheets)) {
+    		$this->setCountImports('A06AIB', 'errors', 'AIB-06 vide mais data dans DEB-Intro');
+    	}
+    }
+    
+    
+    
+    protected function _validateV05LICDEBExped($sheets) {
+    	//if V05-LIC has no data and DEB-Exped has data put a message "V05-LIC vide mais data dans DEB-Exped" and stop the import
+    	// A06-AIB
+    	// DEB Intro
+    	if(!$this->hasExcelData('V05-LIC', $sheets) && $this->hasExcelData('DEB Exped', $sheets)) {
+    		$this->setCountImports('V05LIC', 'errors', 'V05-LIC vide mais data dans DEB-Exped');
+    	}
+    }
+    
+    
     /**
      * @param $sheets
      * @param bool $save
      */
     protected function importValidateAndSave($sheets, $save = false)
     {
+        $this->_validateAIB06DEBIntro($sheets);
+    	$this->_validateV05LICDEBExped($sheets);
+    	
         foreach ($sheets as $title => $data) {
 
             if (array_key_exists($title, $this->_config_excel)) {
