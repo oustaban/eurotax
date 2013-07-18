@@ -77,8 +77,18 @@ class CompteController extends Controller
     			$em->persist($compte);
     			$em->flush();
     			
-    			return $this->redirect($this->generateUrl('admin_sonata_client_compte_virement', array('filter[client_id][value]' => $this->client_id, 
-    				'coordonnees' => $coordonnees->getId(), 'amount' => $amount, 'facture' => $facture)));
+    			
+    			$url = $this->generateUrl('admin_sonata_client_compte_virement', array('filter[client_id][value]' => $this->client_id, 
+    				'coordonnees' => $coordonnees->getId(), 'amount' => $amount, 'facture' => $facture));
+    			
+    			if ($this->isXmlHttpRequest()) {
+    				return $this->renderJson(array(
+    						'result' => 'ok',
+    						'url' => $url
+    				));
+    			}
+    			
+    			return $this->redirect($url);
     		} else {
     			
     			return $this->redirect($this->generateUrl('admin_sonata_client_compte_list', array('filter[client_id][value]' => $this->client_id)));
