@@ -530,9 +530,7 @@ function init_rapprochement_sums() {
     
     //#rapprochement_form
     if($('#rapprochement_form').size()) {
-    	
-    	
-    	
+    	$('input[name="rapprochement\[intro_info_id\]"], input[name="rapprochement\[exped_info_id\]"]').removeAttr('checked');
     	var cloturer = (function() {
     		var i1 = real_num($('#totals_input_calcu1 b').html()), 
     			i2 = real_num($('#totals_input_calcu2 b').html()),
@@ -545,23 +543,14 @@ function init_rapprochement_sums() {
     			$('#btn_locking').attr('disabled', false);
     		}
     	});
-    	
-    	
-    	
-    	
-    	
-    	
-    	
     	var recalculer = function() {
     		var calc = function(numSel, numInputSel, outputSel) {
         		var sum = Number(real_num($(numSel).html())) - Number(real_num( $(numInputSel).val()));
         		var val = euro_num_format(sum, 2, true);
 	    		$(outputSel).html('<b>'+ val +'</b>');
-	    		
 	    		if(sum) {
 	    			$(outputSel).parent().css('background-color', '#ff69b4');
 	    		}
-
 			};
     		
     		calc('#totals_input_v1', '#rapprochement_intro_info_number', '#totals_input_calcu1');

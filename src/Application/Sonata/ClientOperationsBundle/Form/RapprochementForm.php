@@ -30,7 +30,7 @@ class RapprochementForm extends AbstractType
 			
 			->add('intro_info_number', null, array('attr' => array('class' => 'input-small money')))
 			->add('intro_info_number2', null, array('attr' => array('class' => 'input-small money')))
-			->add('intro_info_text', null, array('attr' => array('class' => 'input-small')))
+			->add('intro_info_text', null, array('attr' => array('class' => '')))
 			
 			
 			->add('exped_info_id', 'choice', array(
@@ -41,7 +41,7 @@ class RapprochementForm extends AbstractType
 			))
 			->add('exped_info_number', null, array('attr' => array('class' => 'input-small money')))
 			->add('exped_info_number2', null, array('attr' => array('class' => 'input-small money')))
-			->add('exped_info_text', null, array('attr' => array('class' => 'input-small')))
+			->add('exped_info_text', null, array('attr' => array('class' => '')))
 	
 		;
 		
