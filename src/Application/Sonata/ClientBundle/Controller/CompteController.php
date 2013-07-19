@@ -69,7 +69,7 @@ class CompteController extends Controller
     			$compte = new Compte();
     			$compte->setClient($this->client)
     				->setStatut($status)
-    				->setMontant( $this->_amountToInt($amount) )
+    				->setMontant( $this->_amountToInt($amount) * -1 )
     				->setOperation('Notre Transfert en votre faveur')
     				->setDate(new \DateTime())
     			;
