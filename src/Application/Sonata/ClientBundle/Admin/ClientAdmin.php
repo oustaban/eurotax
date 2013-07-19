@@ -433,6 +433,8 @@ class ClientAdmin extends Admin
                 $errorElement->with('date_de_depot_id')->addViolation('"Date de dépôt" non cohérente')->end();
             }
         }
+        
+       
     }
 
     /**
@@ -571,6 +573,72 @@ class ClientAdmin extends Admin
                 }
             }
 
+            
+            
+            
+            /* var_dump($object->getPaysPostal()->getCode(), $object->getNatureDuClient()->getId());
+            exit; */
+            
+            
+            
+            /**
+             * If Nature du client =  6e and Pays IN European Union
+             * If no document type  = "Mandat"  create the alert   "Pas de Mandat"
+             */
+            if ($object->getNatureDuClient() && $object->getPaysPostal() &&
+            	$object->getNatureDuClient()->getId() == ListNatureDuClients::sixE && in_array($object->getPaysPostal()->getCode(), ListCountries::getCountryEUCode())) {
+            
+	            	$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+	            	/* @var $em \Doctrine\ORM\EntityManager */
+	            	$em = $doctrine->getManager();
+	            	$docs = $em->getRepository('ApplicationSonataClientBundle:Document')->findBy(
+	           			array(
+	         				'type_document' => \Application\Sonata\ClientBundle\Entity\ListTypeDocuments::Mandat,
+	           				'client' => $object->getId()
+	            			
+		            	)
+	            	);
+	            	if(count($docs) == 0) {
+	            		$alert = new ClientAlert();
+	            		$alert->setClient($object);
+	            		$alert->setTabs($tab);
+	            		$alert->setIsBlocked(false);
+	            		$alert->setText('Pas de Mandat');
+	            		
+	            		$em->persist($alert);
+	            	}
+            }
+            
+            
+            /**
+             * If Nature du client =  Client DEB
+             * If no document type  = "Mandat"  create the alert   "Pas de Mandat"
+             */
+            if ($object->getNatureDuClient() &&  $object->getNatureDuClient()->getId() == ListNatureDuClients::DEB) {
+            
+            	$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+            	/* @var $em \Doctrine\ORM\EntityManager */
+            	$em = $doctrine->getManager();
+            	$docs = $em->getRepository('ApplicationSonataClientBundle:Document')->findBy(
+	           			array(
+	         				'type_document' => \Application\Sonata\ClientBundle\Entity\ListTypeDocuments::Mandat,
+	           				'client' => $object->getId()
+	            			
+		            	)
+	            	);
+            
+            	if(count($docs) == 0) {
+            		$alert = new ClientAlert();
+            		$alert->setClient($object);
+            		$alert->setTabs($tab);
+            		$alert->setIsBlocked(false);
+            		$alert->setText('Pas de Mandat');
+            		
+            		$em->persist($alert);
+            		
+            	}
+            }
+            
             $em->flush();
         }
     }
