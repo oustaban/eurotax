@@ -95,14 +95,24 @@ class CompteController extends Controller
     		}
     	}
     	
+
     	
     	$data = $this->render($this->admin->getTemplate('list'), array(
     			'action'   => 'list',
     			'form'     => $formView,
     			'datagrid' => $datagrid,
-    			'virement_form' => $virementForm instanceof Form ? $virementForm->createView() : false
+    			'virement_form' => $virementForm instanceof Form ? $virementForm->createView() : false,
+    			'coordonnees_count' => $this->coordonneesCount()
     	));
     	return $this->_action($data, 'list');
+    }
+    
+    
+    
+    private function coordonneesCount() {
+    	$em = $this->getDoctrine()->getManager();
+    	$coordonnees = $em->getRepository('ApplicationSonataClientBundle:Coordonnees')->findByClient($this->client_id);
+    	return count($coordonnees);
     }
     
     
@@ -114,7 +124,6 @@ class CompteController extends Controller
     	$amountEuro = $this->_amountToEuro($amount);
     	$amount = $this->_amountToInt($amount);
   
- 
     	$em = $this->getDoctrine()->getManager();
     	$coordonnees = $em->getRepository('ApplicationSonataClientBundle:Coordonnees')->find($coordonneesId);
     	$page = $this->render('ApplicationSonataClientBundle::virement.html.twig', array(

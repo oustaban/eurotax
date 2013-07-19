@@ -2,7 +2,7 @@
     <a class="btn sonata-action-element  " href="{{ admin.generateUrl('create') }}">{{ 'link_action_create'|trans({}, 'SonataAdminBundle') }}</a>
 {% endif %}
 
-{% if virement_form is defined and virement_form %}
+{% if virement_form is defined and virement_form and coordonnees_count is defined and coordonnees_count > 0 %}
     <a class="btn" id="virement-btn" href="#">Ordre de Virement</a>
 <br /><br />
 {% include 'ApplicationSonataClientBundle::Form/form_virement.html.twig' with {'form': virement_form} %}
