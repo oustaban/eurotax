@@ -387,6 +387,10 @@ class ClientAdmin extends Admin
         if (!$object->getNTVACEEFacture() && $object->getPaysFacturation() && $object->getPaysFacturation()->getCode() && in_array($object->getPaysFacturation()->getCode(), ListCountries::getCountryEUCode())) {
             $errorElement->with('N_TVA_CEE_facture')->addViolation('This value should not be blank.')->end();
         }
+        
+        if ($object->getNTVACEEFacture() && !preg_match('/^FR \d{2} \d{3} \d{3} \d{3}$/', $object->getNTVACEEFacture())) {
+        	$errorElement->with('N_TVA_CEE_facture')->addViolation('Le format du N° TVA CEE facturé est incorrect.   Respecter : FR XX XXX XXX XXX')->end();
+        }
 
         if ($object->getAutreDestinataireDeFacturation()) {
 
