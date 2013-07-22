@@ -373,11 +373,11 @@ function init_rapprochement_sums() {
     var TOTAL_DEBExped_valeur_fiscale_HT = 0, TOTAL_DEBExped_valeur_stat_HT = 0;
     $('#DEB-Exped').find('.totals').each(function() {
     	var num = real_num($(this).html());
-    	var isRegime25 = $(this).attr('rel') == 'deb-25' ? true : false;
+    	/*var isRegime25 = $(this).attr('rel') == 'deb-25' ? true : false;
 		if(isRegime25) {
 			num = real_num($(this).html()) * -1;
 				
-		}
+		}*/
 		
 		if($(this).hasClass('v1')) {
 			TOTAL_DEBExped_valeur_fiscale_HT+=num;
