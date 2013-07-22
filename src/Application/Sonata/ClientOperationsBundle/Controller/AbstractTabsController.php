@@ -832,6 +832,10 @@ class AbstractTabsController extends Controller
     
     
     protected function hasExcelData($title, $sheets) {
+    	if(!isset($sheets[$title])) {
+    		return false;
+    	}
+    	
     	$config_excel = $this->_config_excel[$title];
     	$data = $sheets[$title];
     	$data = $this->skipLine($config_excel, $data);
@@ -856,9 +860,11 @@ class AbstractTabsController extends Controller
     	if(!$this->hasExcelData('A06-AIB', $sheets) && $this->hasExcelData('DEB Intro', $sheets)) {
     		$this->setCountImports('A06AIB', 'errors', 'AIB-06 vide mais data dans DEB-Intro');
     	}
+    	 
+    	if($this->hasExcelData('A06-AIB', $sheets) && !$this->hasExcelData('DEB Intro', $sheets)) {
+    		$this->setCountImports('DEBIntro', 'errors', 'DEB-Intro vide mais data dans AIB-06');
+    	} 
     }
-    
-    
     
     protected function _validateV05LICDEBExped($sheets) {
     	//if V05-LIC has no data and DEB-Exped has data put a message "V05-LIC vide mais data dans DEB-Exped" and stop the import
@@ -866,6 +872,10 @@ class AbstractTabsController extends Controller
     	// DEB Intro
     	if(!$this->hasExcelData('V05-LIC', $sheets) && $this->hasExcelData('DEB Exped', $sheets)) {
     		$this->setCountImports('V05LIC', 'errors', 'V05-LIC vide mais data dans DEB-Exped');
+    	}
+    	
+    	if($this->hasExcelData('V05-LIC', $sheets) && !$this->hasExcelData('DEB Exped', $sheets)) {
+    		$this->setCountImports('DEBExped', 'errors', 'DEB-Exped vide mais data dans V05-LIC');
     	}
     }
     
