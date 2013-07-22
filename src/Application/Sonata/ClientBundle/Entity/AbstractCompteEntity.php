@@ -64,7 +64,7 @@ abstract class AbstractCompteEntity
      * @var integer $garantie_id
      *
      * @ORM\ManyToOne(targetEntity="Garantie")
-     * @ORM\JoinColumn(name="garantie_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="garantie_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $garantie;
 
