@@ -421,58 +421,6 @@ class InitialImportController extends Controller {
 	}
 	
 	
-	protected function _clientIdByCode($code) {
-		/* @var $em \Doctrine\ORM\EntityManager */
-		$em = $this->getDoctrine()->getManager();
-		 
-		$client = $em->getRepository('ApplicationSonataClientBundle:Client')->findOneBy(array('code_client' => $code));
-	
-		if ($client) {
-			return $client->getId();
-		}
-		 
-		return false;
-	}
-	
-	/**
-	 * @param $value
-	 * @return array
-	 */
-	protected function _dateFormValue($value) {
-		if ($value) {
-			$t = strtotime($value);
-	
-			if (!$t) {
-				$t = \PHPExcel_Shared_Date::ExcelToPHP($value);
-			}
-	
-			$value = date('d/m/Y', $t);
-	
-			return $value;
-		}
-		return null;
-	}
-	
-	/**
-	 * 
-	 * 
-	 * @param string $value
-	 * @return boolean|NULL
-	 */
-	protected function _checkedFormValue($value) {
-		$value = strtoupper($value);
-		if($value == 'OUI') {
-			return true;
-		}
-		
-		return null;
-	}
-	
-	
-	
-	
-	
-	
 	/**
 	 * 	  
 	 * @return \Symfony\Component\HttpFoundation\Response
@@ -692,6 +640,55 @@ class InitialImportController extends Controller {
 		}
 		return $value;
 	}
+	
+	
+	protected function _clientIdByCode($code) {
+		/* @var $em \Doctrine\ORM\EntityManager */
+		$em = $this->getDoctrine()->getManager();
+			
+		$client = $em->getRepository('ApplicationSonataClientBundle:Client')->findOneBy(array('code_client' => $code));
+	
+		if ($client) {
+			return $client->getId();
+		}
+			
+		return false;
+	}
+	
+	/**
+	 * @param $value
+	 * @return array
+	 */
+	protected function _dateFormValue($value) {
+		if ($value) {
+			$t = strtotime($value);
+	
+			if (!$t) {
+				$t = \PHPExcel_Shared_Date::ExcelToPHP($value);
+			}
+	
+			$value = date('d/m/Y', $t);
+	
+			return $value;
+		}
+		return null;
+	}
+	
+	/**
+	 *
+	 *
+	 * @param string $value
+	 * @return boolean|NULL
+	 */
+	protected function _checkedFormValue($value) {
+		$value = strtoupper($value);
+		if($value == 'OUI') {
+			return true;
+		}
+	
+		return null;
+	}
+	
 	
 	
 	/** Client Entity **/
@@ -1015,7 +1012,6 @@ class InitialImportController extends Controller {
 				if (!isset($one_view[$field][$line])) {
 					$one_view[$field][$line] = true;
 					$repeat = str_repeat(' ', $level);
-					
 					$label = isset($fields[$field]) ? '(' . ((\PHPExcel_Cell::stringFromColumnIndex($fields[$field])) . ':' . $line) . ') ' : '';
 					$data = $form->getViewData();
 					if (is_array($data)) {
@@ -1025,10 +1021,8 @@ class InitialImportController extends Controller {
 					if ($error->getMessageParameters()) {
 						$data = implode($error->getMessageParameters());
 					}
-	
 					$errors[] = $repeat . 'VALUE : ' . $label . ($data ? : 'empty') . "\n";
 					$errors[] = $repeat . 'ERROR : ' . $error->getMessage() . "\n\n";
-	
 				}
 			}
 		}
@@ -1087,10 +1081,6 @@ class InitialImportController extends Controller {
 						'%count%' => $values['inserted'],
 				));
 			}
-			
-			
-
-			
 			
 			if (isset($values['success'])) {
 				$message[] = $str_repeat . $translator->trans('Imported : %count%', array('%count%' => $values['success']));

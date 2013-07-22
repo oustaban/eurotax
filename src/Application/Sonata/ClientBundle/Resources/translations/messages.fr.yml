@@ -56,6 +56,24 @@ form:
     niveau_dobligation_id: Niveau d'obligation
     teledeclaration: Télédéclaration
     code_client: Code Client
+    adresse_1: Adresse 1
+    adresse_2: Adresse 2
+    CP: CP
+    ville: Ville
+    pays: Pays
+    adresse_postal_1: Adresse Postale 1
+    adresse_postal_2: Adresse Postale 2
+    CP_postal: Code Postal
+    ville_postal: Ville
+    pays_postal: Pays
+    adresse_facturation_1: Adresse Facturation 1
+    adresse_facturation_2: Adresse Facturation 2
+    CP_facturation: Code Postal facturation
+    ville_facturation: Ville Facturation
+    pays_facturation: Pays Facturation
+    location_postal: ''
+    location: ''
+    location_facturation: ''
 
   Contact:
     title: Contact
@@ -103,6 +121,8 @@ form:
       code_swift: Code Swift
       IBAN: IBAN
       SEPA: SEPA
+      pays: Pays
+      location: ''
 
   commentaire:
     title: Ajouter / Modifier un commentaire

@@ -3,6 +3,7 @@
 namespace Application\Sonata\ClientBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Application\Sonata\ClientBundle\Entity\Contact
@@ -75,6 +76,7 @@ class Contact
     /**
      * @var string $email
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="email", type="string", length=100)
      */
     private $email;
