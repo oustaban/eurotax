@@ -176,12 +176,12 @@ class ClientAdmin extends Admin
             		'required' => true, 'disabled' => $id ? true : false))
             
             ->with('form.client.row11')
-            ->add('siret', null, array('label' => 'form.siret', 'required' => false, 'disabled' => $id ? true : false))
-            ->add('N_TVA_FR', null, array('label' => 'form.N_TVA_FR', 'disabled' => $id ? true : false))
+            ->add('siret', null, array('label' => 'form.siret', 'required' => false, 'disabled' => $client->getSiret() ? true : false))
+            ->add('N_TVA_FR', null, array('label' => 'form.N_TVA_FR', 'disabled' => $client->getNTVAFR() ? true : false))
             ->with('form.client.row12')
             ->add('periodicite_facturation', null, array('label' => 'form.periodicite_facturation',  'disabled' => $isGestionnaire ? true : false))
             ->with('form.client.row13')
-            ->add('num_dossier_fiscal', null, array('label' => 'form.num_dossier_fiscal', 'required' => false, 'disabled' => $id ? true : false))
+            ->add('num_dossier_fiscal', null, array('label' => 'form.num_dossier_fiscal', 'required' => false, 'disabled' => $client->getNumDossierFiscal() ? true : false))
             ->with('form.client.row14')
             ->add('taxe_additionnelle', 'choice',
             array('expanded' => true,
