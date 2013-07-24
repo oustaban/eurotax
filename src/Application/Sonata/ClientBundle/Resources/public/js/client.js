@@ -368,8 +368,8 @@ jQuery(document).ready(function ($) {
         
         $('#virement-btn').toggle(function(){$('#virement_form').show();}, function(){$('#virement_form').hide();});
         $('#virement_form').submit(function() {
-        	var amount = $('#virement_amount').val();
-        	if(parseFloat(amount) < 0 || isNaN(amount)) {
+        	var amount = real_num($('#virement_amount').val());
+        	if(amount < 0 || isNaN(amount)) {
         		$('#virement_form .alert-error').html('<p>Valeur fiscale doit être un nombre positif.</p>');
         		return false;
         	}

@@ -25,3 +25,57 @@ $(function () {
         }
     });
 });
+
+
+
+function euro_num_format(rnum, rlength, returnzero) { 
+	if(typeof rlength === 'undefined') {
+		rlength = 2;
+	}
+	
+	if(typeof returnzero === 'undefined') {
+		returnzero = false;
+	}
+	
+	rnum = real_num(rnum);
+	
+	
+	if(rnum == 0 && returnzero === true) {
+		return '0,00';	
+	}
+	
+	if(rnum === '') {
+		return '';
+	}
+	
+	
+	var numberStr = rnum.toFixed(rlength).toString().replace('.', ',');
+	var numFormatDec = numberStr.slice(-2); //decimal 00
+	
+	numberStr = numberStr.substring(0, numberStr.length-3); //cut last 3 strings
+	
+	
+	
+	var numFormat = [];
+	while (numberStr.length > 3) {
+		numFormat.unshift(numberStr.slice(-3));
+		numberStr = numberStr.substring(0, numberStr.length-3);
+	}
+	numFormat.unshift(numberStr);
+	
+	
+	
+	return numFormat.join(' ')+','+numFormatDec; //format 000 000 000,00 
+	
+}
+
+
+function real_num(num) {
+	if(num == '' || typeof num === 'undefined') {
+		return '';
+	}
+	num = num.toString().replace(',', '.').replace(/\s+/, '');
+	num = encodeURIComponent(num).replace('%C2%A0', '').replace('%20', ''); // to ensure spaces are replaced w/ empty string
+	
+	return parseFloat(num);
+}
