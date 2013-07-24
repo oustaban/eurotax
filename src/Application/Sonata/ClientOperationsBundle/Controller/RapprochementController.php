@@ -98,24 +98,24 @@ class RapprochementController extends Controller
     		),
     
     		'DEB Exped' => array(
-    		'name' => 'DEB Exped',
-    		'entity' => 'DEBExped',
-    		'skip_line' => 7,
-    		'fields' => array(
-    		'n_ligne',
-    		'nomenclature',
-    		'pays_destination',
-    		'valeur_fiscale',
-    		'regime',
-    		'valeur_statistique',
-    		'masse_mette',
-    		'unites_supplementaires',
-    		'nature_transaction',
-    		'conditions_livraison',
-    		'mode_transport',
-    		'departement',
-    		'pays_origine',
-    		'CEE',
+	    		'name' => 'DEB Exped',
+	    		'entity' => 'DEBExped',
+	    		'skip_line' => 7,
+	    		'fields' => array(
+	    		'n_ligne',
+	    		'nomenclature',
+	    		'pays_destination',
+	    		'valeur_fiscale',
+	    		'regime',
+	    		'valeur_statistique',
+	    		'masse_mette',
+	    		'unites_supplementaires',
+	    		'nature_transaction',
+	    		'conditions_livraison',
+	    		'mode_transport',
+	    		'departement',
+	    		'pays_origine',
+	    		'CEE',
     		)
     		),
     		'V07-EX' => array(
@@ -313,12 +313,12 @@ class RapprochementController extends Controller
         
         $blocked = $this->getLocking() ? 0 : 1;
         
-        
         $a06_aib = $this->_getTableData('A06AIB', true);
         $v05_lic = $this->_getTableData('V05LIC', true);
         $deb_intro = $this->_getTableData('DEBIntro');
         $deb_exped = $this->_getTableData('DEBExped');
         $form = $this->form($client_id, $month, $blocked);
+        
         
         return array(
             'info' => array(
