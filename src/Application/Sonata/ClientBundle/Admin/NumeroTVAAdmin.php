@@ -36,11 +36,7 @@ class NumeroTVAAdmin extends Admin
         		'input' => 'datetime',
         		'format' => $this->date_format_datetime,
         		'required' => false
-        ))
-            
-            
-            
-      ;
+        ));
     }
 
     //list
@@ -61,6 +57,21 @@ class NumeroTVAAdmin extends Admin
         ;
     }
 
+    
+    /**
+     * @param ErrorElement $errorElement
+     * @param mixed $object
+     */
+    public function validate(ErrorElement $errorElement, $object)
+    {
+    	parent::validate($errorElement, $object);
+    	if (is_null($object->getId()) && $object->getDateDeVerification()) {
+    		$date = $object->getDateDeVerification();
+    		if( $date->format('Ymd') > date('Ymd')) {
+    			$errorElement->with('date_de_verification')->addViolation('Date should be not greater than today\'s date.')->end();
+    		}
+    	}
+    }
 
    
 }

@@ -573,14 +573,6 @@ class ClientAdmin extends Admin
                 }
             }
 
-            
-            
-            
-            /* var_dump($object->getPaysPostal()->getCode(), $object->getNatureDuClient()->getId());
-            exit; */
-            
-            
-            
             /**
              * If Nature du client =  6e and Pays IN European Union
              * If no document type  = "Mandat"  create the alert   "Pas de Mandat"
