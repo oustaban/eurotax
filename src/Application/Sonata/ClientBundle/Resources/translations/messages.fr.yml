@@ -179,6 +179,7 @@ form:
 list:
   user: Gestionnaire
   nom: Nom
+  nom_de_client: Nom du client
   nature_du_client: Nature
   raison_sociale: Raison sociale
   activite: Activité
