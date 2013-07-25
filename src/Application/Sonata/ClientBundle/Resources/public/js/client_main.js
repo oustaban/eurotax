@@ -84,12 +84,12 @@ jQuery(document).ready(function ($) {
         
         if (Sonata.country_eu[$(this).val()]) {
             $N_TVA_CEE.attr('required', 'required');
-            $N_TVA_CEE_con.show();
+            $N_TVA_CEE_con.css('visibility', 'visible');
             add_label_required($N_TVA_CEE_label);
         }
         else {
             $N_TVA_CEE.removeAttr('required');
-            $N_TVA_CEE_con.hide();
+            $N_TVA_CEE_con.css('visibility', 'hidden');
             rm_label_required($N_TVA_CEE_label);
         }
 
