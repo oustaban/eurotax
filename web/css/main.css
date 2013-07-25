@@ -87,6 +87,7 @@ body {
 }
 td.sonata-ba-list-field-percent,
 td.sonata-ba-list-field-integer,
+td.sonata-ba-list-field-integer2,
 td.sonata-ba-list-field-number{
     text-align: right;
 }

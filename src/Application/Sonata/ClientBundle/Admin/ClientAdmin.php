@@ -312,7 +312,7 @@ class ClientAdmin extends Admin
                 'edit' => array('template' => 'ApplicationSonataClientBundle:CRUD:edit_action.html.twig'),
             )
         ))
-            ->add('code_client')
+            ->add('code_client', null, array('label' => 'list.code_client', 'attar' => array('class' => 'money')))
             ->add('raison_sociale', null, array('label' => 'list.raison_sociale'))
             ->add('nature_du_client.name', null, array('label' => 'list.nature_du_client'))
             ->add('user', null, $fieldUserOptions)

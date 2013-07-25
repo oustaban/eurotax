@@ -1,5 +1,5 @@
 $(function () {
-    $('td.sonata-ba-list-field-money, td.sonata-ba-list-field-integer, td.sonata-ba-list-field-number').each(function () {
+    $('td.sonata-ba-list-field-money, td.sonata-ba-list-field-number').each(function () {
         var $this = $(this);
         var val = $this.text().trim().replace(/[^\d\.]+/, '');
         if (val == ''){
