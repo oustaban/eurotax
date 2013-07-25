@@ -68,7 +68,7 @@ class NumeroTVAAdmin extends Admin
     	if (is_null($object->getId()) && $object->getDateDeVerification()) {
     		$date = $object->getDateDeVerification();
     		if( $date->format('Ymd') > date('Ymd')) {
-    			$errorElement->with('date_de_verification')->addViolation('La date ne peut pas être supérieur à la date du jour.')->end();
+    			$errorElement->with('date_de_verification')->addViolation('La date ne peut pas être postérieure à la date du jour.')->end();
     		}
     	}
     }
