@@ -90,7 +90,7 @@ jQuery(document).ready(function ($) {
             }
         };
 
-        $('.sonata-ba-list-field-text').removeAttr('objectid');
+        //$('.sonata-ba-list-field-text').removeAttr('objectid');
     }
 
     /**
