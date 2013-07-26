@@ -1433,9 +1433,9 @@ class AbstractTabsController extends Controller
             foreach ($this->_config_excel as $table => $params) {
                 $objects = $em->getRepository('ApplicationSonataClientOperationsBundle:' . $params['entity'])
                     ->createQueryBuilder('o')
-                    ->where('o.date_piece BETWEEN :form_date_piece AND :to_date_piece')
-                    ->setParameter(':form_date_piece', $_year . '-' . $_month . '-01')
-                    ->setParameter(':to_date_piece', $_year . '-' . $_month . '-31')
+                    ->where('o.mois BETWEEN :from_date AND :to_date')
+                    ->setParameter(':from_date', $_year . '-' . $_month . '-01')
+                    ->setParameter(':to_date', $_year . '-' . $_month . '-31')
                     ->getQuery()->getResult();
                 foreach ($objects as $obj) {
                     /** @var $obj \Application\Sonata\ClientOperationsBundle\Entity\AbstractBaseEntity */
