@@ -370,29 +370,40 @@ jQuery(document).ready(function ($) {
 	        };
         }
         
-        $('#virement-btn').toggle(function(){$('#virement_form').show();}, function(){$('#virement_form').hide();});
-        $('#virement_form').submit(function() {
-        	var amount = real_num($('#virement_amount').val());
-        	if(amount < 0 || isNaN(amount)) {
-        		$('#virement_form .alert-error').html('<p>Valeur fiscale doit être un nombre positif.</p>');
-        		return false;
-        	}
-        	
-        	var popup = window.open("about:blank", "myPopup");
-        	$.post($(this).attr('action'), $(this).serialize(), function(json) {
-        		if(json.result == 'ok') {
-        			//window.open(json.url);
-        			popup.location = json.url;
-        			location.reload();
-        			return false;
-        		}
-        		
-        	}, 'json');
-        	
-	        return false;
-        });
+        
     }
 	
+    
+    if ($('.js-compte, .js-coordonnees').size()) {
+    	
+    	if($('#virement-btn').size()) {
+    		
+    		$('.voir-les-operations').css({marginLeft: '230px', position: 'absolute'});
+    		
+	    	$('#virement-btn').toggle(function(){$('#virement_form').show();}, function(){$('#virement_form').hide();});
+	        $('#virement_form').submit(function() {
+	        	var amount = real_num($('#virement_amount').val());
+	        	if(amount < 0 || isNaN(amount)) {
+	        		$('#virement_form .alert-error').html('<p>Valeur fiscale doit être un nombre positif.</p>');
+	        		return false;
+	        	}
+	        	
+	        	var popup = window.open("about:blank", "myPopup");
+	        	$.post($(this).attr('action'), $(this).serialize(), function(json) {
+	        		if(json.result == 'ok') {
+	        			//window.open(json.url);
+	        			popup.location = json.url;
+	        			location.reload();
+	        			return false;
+	        		}
+	        		
+	        	}, 'json');
+	        	
+		        return false;
+	        });
+    	}
+	      
+    }
     
     
 });
