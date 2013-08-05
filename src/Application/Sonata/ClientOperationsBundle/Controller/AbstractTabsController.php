@@ -861,9 +861,9 @@ class AbstractTabsController extends Controller
     		$this->setCountImports('A06AIB', 'errors', 'AIB-06 vide mais data dans DEB-Intro');
     	}
     	 
-    	if($this->hasExcelData('A06-AIB', $sheets) && !$this->hasExcelData('DEB Intro', $sheets)) {
+    	/* if($this->hasExcelData('A06-AIB', $sheets) && !$this->hasExcelData('DEB Intro', $sheets)) {
     		$this->setCountImports('DEBIntro', 'errors', 'DEB-Intro vide mais data dans AIB-06');
-    	} 
+    	} */ 
     }
     
     protected function _validateV05LICDEBExped($sheets) {
@@ -874,9 +874,9 @@ class AbstractTabsController extends Controller
     		$this->setCountImports('V05LIC', 'errors', 'V05-LIC vide mais data dans DEB-Exped');
     	}
     	
-    	if($this->hasExcelData('V05-LIC', $sheets) && !$this->hasExcelData('DEB Exped', $sheets)) {
+    	/* if($this->hasExcelData('V05-LIC', $sheets) && !$this->hasExcelData('DEB Exped', $sheets)) {
     		$this->setCountImports('DEBExped', 'errors', 'DEB-Exped vide mais data dans V05-LIC');
-    	}
+    	} */
     }
     
     
