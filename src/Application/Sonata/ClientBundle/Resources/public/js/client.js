@@ -376,10 +376,11 @@ jQuery(document).ready(function ($) {
     
     if ($('.js-compte, .js-coordonnees').size()) {
     	
-    	if($('#virement-btn').size()) {
-    		
+    	if($('#virement-btn').size() ) {
     		$('.voir-les-operations').css({marginLeft: '230px', position: 'absolute'});
+    	}
     		
+    	if($('#virement-btn').size()  && !$('#virement-btn').hasClass('disabled')) {
 	    	$('#virement-btn').toggle(function(){$('#virement_form').show();}, function(){$('#virement_form').hide();});
 	        $('#virement_form').submit(function() {
 	        	var amount = real_num($('#virement_amount').val());
