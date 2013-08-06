@@ -173,8 +173,25 @@ class DocumentAdmin extends Admin
     public function postRemove($document)
     {
         $document->removeUpload();
+        $this->removePasDeMandat($document);
     }
 
+    
+    public function postPersist($object)
+    {
+    	
+    	$this->removePasDeMandat($object);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function postUpdate($object)
+    {
+    	$this->removePasDeMandat($object);
+    }
+    
+    
     /**
      * @param ErrorElement $errorElement
      * @param mixed $object
@@ -309,6 +326,40 @@ class DocumentAdmin extends Admin
             $alert->setText('Manque Mandat');
             $em->persist($alert);
         }
+    }
+    
+    
+    
+    
+    protected function removePasDeMandat($object) {
+    	$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+    	/* @var $em \Doctrine\ORM\EntityManager */
+    	$em = $doctrine->getManager();
+    	$docs = $em->getRepository('ApplicationSonataClientBundle:Document')->findBy(
+    			array(
+    					'type_document' => \Application\Sonata\ClientBundle\Entity\ListTypeDocuments::Mandat,
+    					'client' => $this->getClient()->getId()
+    	
+    			)
+    	);
+    	
+    	
+    	
+    	
+    	if(count($docs) > 0) {
+    		$tab = $em->getRepository('ApplicationSonataClientBundle:ListClientTabs')->findOneByAlias('general');
+    		
+    		$em->getRepository('ApplicationSonataClientBundle:ClientAlert')
+    		->createQueryBuilder('c')
+    		->delete()
+    		->andWhere('c.client = :client')
+    		->andWhere('c.tabs = :tab')
+    		->andWhere('c.text = :text')
+    		->setParameter(':client', $this->getClient())
+    		->setParameter(':tab', $tab)
+    		->setParameter(':text', 'Pas de Mandat')
+    		->getQuery()->execute();
+    	}
     }
 }
 
