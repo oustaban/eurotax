@@ -350,7 +350,7 @@ jQuery(document).ready(function ($) {
     if ($('.js-compte, .js-compte_de_depot').size()) {
     	
     	//pink bg for rows w/ statut = Prévisionnel
-    	$('.sonata-ba-list').find('.statut-p').parent().parent().find('td').css('background', '#ff69b4');
+    	$('.sonata-ba-list').find('.statut-p').parent().parent().find('td').css('background', '#98B756');
     	
     	//$('.sonata-ba-list').find('.solde').hide();
     	if(typeof Sonata !== 'undefined') {
