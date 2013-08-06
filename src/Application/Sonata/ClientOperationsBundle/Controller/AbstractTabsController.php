@@ -771,7 +771,11 @@ class AbstractTabsController extends Controller
     		$message = "VALUE : $niveauDobligationId \n";
     		$message .= "ERROR :Le niveau d'obligation est à 0 : On ne devrait pas avoir de données\n\n";
     		$this->setCountImports($class, 'errors', $message);
+    		
+    		return false;
     	}
+    	
+    	return true;
     }
     
     
@@ -790,12 +794,13 @@ class AbstractTabsController extends Controller
     	$expectedFirstVal = 1;
     	$nlignes = array();
     	foreach($data as $row) {
-    		if(empty($row[0]) && empty($row[2])) {
+    		if((empty($row[0]) && empty($row[2])) || (!empty($row[1]) && !is_float($row[1]))) {
     			continue;
     		}
     		$nlignes[] = (float)$row[0];
-    		
     	}
+    	
+    	
     	$checkConsec = function($d) use ($fields, $skip_line, $class) {
     		$errors = array();
     		$count = count($d);
@@ -826,7 +831,16 @@ class AbstractTabsController extends Controller
 	    		$msg .= implode($errors);
 	    		$this->setCountImports($class, 'errors', $msg);
 	    	}
+	    	
+	    	
+	    	if(is_array($errors)) {
+	    		return false;
+	    	} else {
+	    		return true;
+	    	}
     	}
+    	
+    	return true;
     }
     
     
@@ -899,8 +913,20 @@ class AbstractTabsController extends Controller
                 $data = $this->skipLine($config_excel, $data);
 
                 //DEB Exped | DEB Intro
-                $this->_validateDEBClientNiveauDobligation($class);
-                $this->_validateDEBNLigne($class, $skip_line, $data);
+                
+                $continue = false;
+                if($this->_validateDEBClientNiveauDobligation($class) === false) {
+                	$continue = true;
+                }
+                if($this->_validateDEBNLigne($class, $skip_line, $data) === false) {
+                	$continue = true;
+                }
+                
+                if($continue) {
+                	continue;
+                }
+                
+                
                 $adminCode = 'application.sonata.admin.' . strtolower($class);
                 /* @var $admin \Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin */
                 $admin = $this->container->get('sonata.admin.pool')->getAdminByAdminCode($adminCode);
