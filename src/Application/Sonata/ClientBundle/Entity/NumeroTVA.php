@@ -38,7 +38,7 @@ class NumeroTVA
      * 
      * @var integer $code
      *
-     * @ORM\Column(name="code", type="string", length=200)
+     * @ORM\Column(name="code", type="string", length=200, nullable=true)
      */
     private $code;
 
