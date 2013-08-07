@@ -388,10 +388,13 @@ class ClientAdmin extends Admin
             $errorElement->with('N_TVA_CEE_facture')->addViolation('This value should not be blank.')->end();
         }
         
-        if ($object->getNTVACEEFacture() && !preg_match('/^FR \d{2} \d{3} \d{3} \d{3}$/', $object->getNTVACEEFacture())) {
+       /*  if ($object->getNTVACEEFacture() && !preg_match('/^FR \d{2} \d{3} \d{3} \d{3}$/', $object->getNTVACEEFacture())) {
         	$errorElement->with('N_TVA_CEE_facture')->addViolation('Le format du N° TVA CEE facturé est incorrect.   Respecter : FR XX XXX XXX XXX')->end();
-        }
+        } */
 
+        
+        $this->validateNTVACEEFacture($errorElement, $object);
+        
         if ($object->getAutreDestinataireDeFacturation()) {
 
             //validate NotBlank
@@ -436,6 +439,87 @@ class ClientAdmin extends Admin
         
        
     }
+    
+    /**
+     * N_TVA_CEE_facture validation
+     * 
+     * @param unknown $errorElement
+     * @param unknown $object
+     */
+    protected function validateNTVACEEFacture(ErrorElement $errorElement, $object) {
+    	 
+    	$validationDef = array(
+			'DE' => array(9),// DE + 9 caractères
+			'AT' => array(9),// AT + 9 caractères
+			'BE' => array(9),// BE + 9 caractères
+			'DK' => array(8),// DK + 8 caractères
+			'ES' => array(9),// ES + 9 caractères ou +A/B et 8 caractères
+			'A/B' => array(8),
+			'FI' => array(8),// FI + 8 caractères
+			'FR' => array(11),// FR + 11 caractères
+			'EL' => array(9),// EL + 9 caractères
+			'IE' => array(8),// IE + 8 caractères
+			'IT' => array(11),// IT + 11 caractères
+			'LU' => array(8),// LU + 8 caractères
+			'NL' => array(12),// NL + 12 caractères
+			'PT' => array(9),// PT + 9 caractères
+			'GB' => array(5,9,12),// GB + 5, 9 ou 12 caractères
+			'SE' => array(12),// SE + 12 caractères
+			'CY' => array(9),// CY + 9 caractères
+			'EE' => array(9),// EE + 9 caractères
+			'HU' => array(8),// HU + 8 caractères
+			'LV' => array(11),// LV + 11 caractères
+			'LT' => array(9,12),// LT + 9 ou 12 caractères
+			'MT' => array(8),// MT + 8 caractères
+			'PL' => array(10),// PL + 10 caractères
+			'CZ' => array(8,9,10),// CZ + 8, 9 ou 10 caractères
+			'SK' => array(10),// SK + 10 caractères
+			'SI' => array(8),// SI + 8 caractères
+			'BG' => array(8),// BG + 10 caractères
+			'RO' => array(8),// RO + 10 caractères
+			'HR' => array(11),// HR + 11 caractères
+    	);
+    	 
+    	$value = $object->getNTVACEEFacture();
+    	
+    	if(!$value) {
+    		return;
+    	}
+    	
+    	
+    	$key = substr($value, 0, 2);
+    	$trail = substr($value, 2); //trailing characters
+    	 
+    	// for 'A/B' key
+    	if(strstr($key,'/')) {
+    		$key = substr($value, 0, 3);
+    		$trail = substr($value, 3); //trailing characters
+    	}
+    	 
+    	 
+    	$validated = function($key, $trail) use ($validationDef) {
+    		if(!array_key_exists($key,$validationDef)) {
+    			return false;
+    		}
+    
+    		if(isset($validationDef[$key])) {
+    			$lengths = $validationDef[$key];
+    			if(!in_array(strlen($trail), $lengths)) {
+    				return false;
+    			}
+    		}
+    		return true;
+    	};
+    	 
+    	 
+    	if($validated($key, $trail) === false) {
+    		$errorElement->with('N_TVA_CEE_facture')->addViolation('Mauvais format de TVA.')->end();
+    	}
+    	 
+    }
+    
+    
+    
 
     /**
      * {@inheritdoc}
