@@ -8,6 +8,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request;
 
+use Application\Sonata\ClientBundle\Entity\Coordonnees;
+use Application\Sonata\ClientBundle\Entity\Compte;
+
+
+use Application\Tools\mPDF;
+
 
 /**
  * AbstractTabsController controller.
@@ -214,7 +220,7 @@ abstract class AbstractTabsController extends Controller
     	$client = $this->getClient();
     	$coordonneesId = (int) $coordonnees;
     	 
-    	$amountEuro = $this->protected($amount);
+    	$amountEuro = $this->amountToEuro($amount);
     	$amount = $this->amountToInt($amount);
     
     	$em = $this->getDoctrine()->getManager();
