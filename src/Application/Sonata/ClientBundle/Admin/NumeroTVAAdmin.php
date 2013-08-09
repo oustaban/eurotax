@@ -164,7 +164,7 @@ SE + 12 caractères
     			'SE' => array(12),//SE + 12 caractères
     	);
     	
-    	$value = $object->getNDeTVA();
+    	$value = str_replace(' ', '', $object->getNDeTVA());
 	    $key = substr($value, 0, 2);
 	    $trail = substr($value, 2); //trailing characters
     	

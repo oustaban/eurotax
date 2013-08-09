@@ -480,7 +480,7 @@ class ClientAdmin extends Admin
 			'HR' => array(11),// HR + 11 caractères
     	);
     	 
-    	$value = $object->getNTVACEEFacture();
+    	$value = str_replace(' ', '', $object->getNTVACEEFacture());
     	
     	if(!$value) {
     		return;
