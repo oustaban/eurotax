@@ -332,6 +332,9 @@ class DocumentAdmin extends Admin
     
     
     protected function removePasDeMandat($object) {
+    	if(!$this->getClient()) return;
+    	
+    	
     	$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
     	/* @var $em \Doctrine\ORM\EntityManager */
     	$em = $doctrine->getManager();
