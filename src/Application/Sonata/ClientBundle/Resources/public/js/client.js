@@ -384,12 +384,8 @@ jQuery(document).ready(function ($) {
     		
     		
     		if($('#virement_coordonnees option').length <= 2) {
-    			
-    			console.log($('#virement_coordonnees option').length);
     			$('#virement_coordonnees option:eq(1)').attr('selected', true);
     		}
-    		
-    		
     		
 	    	$('#virement-btn').toggle(function(){$('#virement_form').show();}, function(){$('#virement_form').hide();});
 	        $('#virement_form').submit(function() {

@@ -28,7 +28,7 @@ BARCLAYS BANK<br />
 <br />
 <p>Messieurs,</p>
 <br />
-<p>Nous vous demandons de bien vouloir transférer (SEPA : Frais de 1€ à notre charge) par le débit de notre compte</p>
+<p>Nous vous demandons de bien vouloir transférer {% if coordonnees.getPays().getSepa() %}(SEPA : Frais de 1€ à notre charge) {% else %} (Frais à la charge du bénéficiaire){% endif %} par le débit de notre compte</p>
 </td></tr>
 </table>
 
