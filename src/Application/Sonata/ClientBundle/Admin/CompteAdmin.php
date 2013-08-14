@@ -18,9 +18,5 @@ use Sonata\AdminBundle\Route\RouteCollection;
 class CompteAdmin extends Admin
 {
 	
-	protected function configureRoutes(RouteCollection $collection)
-	{
-		$collection->add('virement', 'virement/{amount}/{coordonnees}/{facture}');
-		 
-	}
+	
 }

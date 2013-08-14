@@ -146,6 +146,7 @@ class CoordonneesAdmin extends Admin
      */
     protected function configureRoutes(RouteCollection $collection)
     {
+    	parent::configureRoutes($collection);
         $collection->add('sortable');
     }
 }
