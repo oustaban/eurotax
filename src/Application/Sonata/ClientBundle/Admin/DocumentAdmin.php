@@ -345,9 +345,7 @@ class DocumentAdmin extends Admin
     	
     			)
     	);
-    	
-    	
-    	
+  	
     	
     	if(count($docs) > 0) {
     		$tab = $em->getRepository('ApplicationSonataClientBundle:ListClientTabs')->findOneByAlias('general');
@@ -362,6 +360,22 @@ class DocumentAdmin extends Admin
     		->setParameter(':tab', $tab)
     		->setParameter(':text', 'Pas de Mandat')
     		->getQuery()->execute();
+    		
+    		
+    		$tab = $em->getRepository('ApplicationSonataClientBundle:ListClientTabs')->findOneByAlias('documents');
+    		
+    		$em->getRepository('ApplicationSonataClientBundle:ClientAlert')
+    		->createQueryBuilder('c')
+    		->delete()
+    		->andWhere('c.client = :client')
+    		->andWhere('c.tabs = :tab')
+    		->andWhere('c.text = :text')
+    		->setParameter(':client', $this->getClient())
+    		->setParameter(':tab', $tab)
+    		->setParameter(':text', 'Manque Mandat')
+    		->getQuery()->execute();
+    		
+    		
     	}
     }
 }
