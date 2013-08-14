@@ -35,7 +35,8 @@ class NumeroTVAAdmin extends Admin
         		'widget' => 'single_text',
         		'input' => 'datetime',
         		'format' => $this->date_format_datetime,
-        		'required' => false
+        		'required' => true,
+        		'help' => 'Si site VIES non disponible : indiquer la date du 01/01/2000'
         ));
     }
 
