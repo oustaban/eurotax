@@ -9,8 +9,7 @@ class LocationType extends AbstractType
 {
     protected $_extension = '';
     static $_all_field_required = true;
-
-    static $pays_is_disabled = false;
+    public $pays_is_disabled = false;
     
     
     public static function setRequired($required = true)
@@ -26,7 +25,7 @@ class LocationType extends AbstractType
             ->add('adresse_2' . $this->_extension, 'text', array('attr' => array('class' => 'span5'), 'label' => $label . 'adresse' . $this->_extension . '_2', 'required' => false,))
             ->add('code_postal' . $this->_extension, 'text', array('attr' => array('class' => 'span5'), 'label' => $label . 'CP' . $this->_extension, 'required' => static::$_all_field_required,))
             ->add('ville' . $this->_extension, 'text', array('attr' => array('class' => 'span5'), 'label' => $label . 'ville' . $this->_extension, 'required' => static::$_all_field_required,))
-            ->add('pays' . $this->_extension, null, array('empty_value' => '', 'attr' => array('class' => 'span5'), 'label' => $label . 'pays' . $this->_extension, 'required' => static::$_all_field_required,'disabled' => static::$pays_is_disabled));
+            ->add('pays' . $this->_extension, null, array('empty_value' => '', 'attr' => array('class' => 'span5'), 'label' => $label . 'pays' . $this->_extension, 'required' => static::$_all_field_required,'disabled' => $this->pays_is_disabled));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

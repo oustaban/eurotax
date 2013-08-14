@@ -107,7 +107,6 @@ class ClientAdmin extends Admin
         $client = $this->getNewInstance();
         
         if($id) {
-        	LocationPostalType::$pays_is_disabled = true;
         	$client = $this->getObject($id);
         }
         
@@ -136,7 +135,7 @@ class ClientAdmin extends Admin
             ->add('raison_sociale', null, array('label' => 'form.raison_sociale'))
             ->add('raison_sociale_2', null, array('label' => 'form.raison_sociale_2'))
             ->with('form.client.row6')
-            ->add('location_postal', new LocationPostalType(), array(
+            ->add('location_postal', $locPostal = new LocationPostalType(), array(
                 'data_class' => 'Application\Sonata\ClientBundle\Entity\Client',
                 'label' => 'Location',
                 'required' => true,
@@ -240,6 +239,11 @@ class ClientAdmin extends Admin
         ->with('form.client.row18')
         ->add('language', null, array('label' => 'form.language', 'empty_value' => '', 'required' => true))
         ;
+            
+            
+        if($id) {
+           	$locPostal->pays_is_disabled = true;
+        }
     }
 
 

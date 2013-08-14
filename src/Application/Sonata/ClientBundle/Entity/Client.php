@@ -400,7 +400,9 @@ class Client
     public function __construct()
     {
         $this->garantie = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->pays_postal = ListCountries::getDefault();
+        $this->pays_postal = $this->pays_facturation = ListCountries::getDefault();
+        
+        
     }
     
     /**
