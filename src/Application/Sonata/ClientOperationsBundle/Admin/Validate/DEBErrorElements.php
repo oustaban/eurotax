@@ -962,7 +962,7 @@ class DEBErrorElements extends ErrorElements
 	);
 	
 	public function validateDEB() {
-		if ($this->_is_validate_import) {
+		//if ($this->_is_validate_import) {
 			$class = (explode('\\', get_class($this->_object)));
 			$class = end($class);
 			$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
@@ -1008,7 +1008,7 @@ class DEBErrorElements extends ErrorElements
 					}
 				}
 			}
-		}
+		//}
 		return $this;
 	}
 	

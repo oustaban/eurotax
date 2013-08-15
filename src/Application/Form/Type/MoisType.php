@@ -91,7 +91,7 @@ class MoisType extends BaseType
             \Locale::getDefault(),
             $dateFormat,
             $timeFormat,
-            null,
+            $datetime->getTimezone()->getName(),
             $calendar,
             $pattern
         );

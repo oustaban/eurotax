@@ -206,7 +206,8 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
      */
     public function getPaysIdDestination()
     {
-        return $this->pays_destination->getCode();
+    	if($this->pays_destination)
+        	return $this->pays_destination->getCode();
     }
 
     /**
@@ -436,7 +437,8 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
      */
     public function getPaysIdOrigine()
     {
-        return $this->pays_origine->getCode();
+        if($this->pays_origine)
+    		return $this->pays_origine->getCode();
     }
 
     /**

@@ -473,7 +473,7 @@ class AbstractTabsController extends Controller
             \Locale::getDefault(),
             $dateFormat,
             $timeFormat,
-            null,
+            $datetime->getTimezone()->getName(),
             $calendar,
             $pattern
         );
