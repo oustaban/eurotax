@@ -13,6 +13,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Sonata\AdminBundle\Validator\ErrorElement;
 
+use Application\Sonata\ClientBundle\Entity\ClientAlert;
+
+
 use Application\Sonata\ClientBundle\Admin\AbstractTabsAdmin as Admin;
 
 class NumeroTVAAdmin extends Admin
@@ -198,5 +201,68 @@ SE + 12 caractères
     }
     
     
+    
+    
+    protected function _setupAlerts($object)
+    {
+    	/* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+    	$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+    	/* @var $em \Doctrine\ORM\EntityManager */
+    	$em = $doctrine->getManager();
+    
+    	/* @var $tab \Application\Sonata\ClientBundle\Entity\ListClientTabs */
+    	$tab = $em->getRepository('ApplicationSonataClientBundle:ListClientTabs')->findOneByAlias('numerotva');
+    
+    	
+    	if ($object) {
+    		
+    		$em->getRepository('ApplicationSonataClientBundle:ClientAlert')
+    		->createQueryBuilder('c')
+    		->delete()
+    		->andWhere('c.client = :client')
+    		->andWhere('c.tabs = :tab')
+    		->setParameter(':client', $this->getClient())
+    		->setParameter(':tab', $tab)
+    		->getQuery()->execute();
+    		
+	    	$nTVA = $em->getRepository('ApplicationSonataClientBundle:NumeroTVA')
+	    		->findBy(array('date_de_verification' => new \DateTime('2000-01-01')));
+	    	
+	    	$nTVANum = count($nTVA);
+	    	
+	    	if($nTVANum > 0) {
+	    		
+	    		$alert = new ClientAlert();
+	    		$alert->setClient($this->getClient());
+	    		$alert->setTabs($tab);
+	    		$alert->setIsBlocked(false);
+	    		$alert->setText("il y a $nTVANum N° de TVA clients non vérifiés");
+	    		
+	    		$em->persist($alert);
+	    		
+	    		$em->flush();
+	    		
+	    	}
+    
+    	}
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function postPersist($object)
+    {
+    	
+    	$this->_setupAlerts($object);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function postUpdate($object)
+    {
+    	
+    	$this->_setupAlerts($object);
+    }
    
 }
