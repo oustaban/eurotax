@@ -38,12 +38,17 @@ jQuery(document).ready(function ($) {
         var $raison_sociale_2 = $('#sonata-ba-field-container-' + uniqid + '_raison_sociale_2 label');
         var $N_TVA_CEE_facture = $('#sonata-ba-field-container-' + uniqid + '_N_TVA_CEE_facture label');
 
+        var $pays_facturation = $('#sonata-ba-field-container-' + uniqid + '_location_facturation_pays_facturation label');
+
+        
         if ($(this).attr('checked') != 'checked') {
 
             $('#clone_address').die();
             $.each(fields_address, function (i, field) {
                 $('#' + uniqid + '_location_facturation_' + field + '_facturation').attr('disabled', 'disabled').val('');
             });
+            
+            $('#' + uniqid + '_location_facturation_pays_facturation').removeAttr('required');
             
             $('#' + uniqid + '_contact').attr('disabled', 'disabled').val('').removeAttr('required');
             $('#' + uniqid + '_raison_sociale_2').attr('disabled', 'disabled').val('').removeAttr('required');
@@ -52,18 +57,22 @@ jQuery(document).ready(function ($) {
             rm_label_required($contact);
             rm_label_required($raison_sociale_2);
             rm_label_required($N_TVA_CEE_facture);
+            rm_label_required($pays_facturation);
         }
         else {
             copy_address();
             $.each(fields_address, function (i, field) {
                 $('#' + uniqid + '_location_facturation_' + field + '_facturation').removeAttr('disabled');
             });
+            
+            $('#' + uniqid + '_location_facturation_pays_facturation').attr('required', 'required');
             $('#' + uniqid + '_contact').removeAttr('disabled').attr('required', 'required');
             $('#' + uniqid + '_raison_sociale_2').removeAttr('disabled').attr('required', 'required');
             $('#' + uniqid + '_N_TVA_CEE_facture').removeAttr('disabled');
 
             add_label_required($contact);
             add_label_required($raison_sociale_2);
+            add_label_required($pays_facturation);
             $('#' + uniqid + '_location_facturation_pays_facturation').change();
         }
 
