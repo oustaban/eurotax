@@ -38,7 +38,7 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     /**
      * @var float $valeur_fiscale
      *
-     * @Assert\NotBlank()
+     * 
      * @Assert\Min(limit = "0", message = "Valeur fiscale doit être un nombre positif")
      * @ORM\Column(name="valeur_fiscale", type="float", nullable=true)
      */
@@ -54,7 +54,7 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     /**
      * @var float $valeur_statistique
      *
-     * @Assert\NotBlank()
+     * 
      * @Assert\Min(limit = "0", message = "Valeur statistique doit être un nombre positif")
      * @ORM\Column(name="valeur_statistique", type="float", nullable=true)
      */
@@ -129,7 +129,10 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     public function __construct(){
         parent::__construct();
 
-        $this->setMois(new \DateTime('now' . (date('d') < 25 ? ' -1 month' : '')));
+        $date = new \DateTime('now' . (date('d') < 25 ? ' -1 month' : ''));
+        
+        $this->setMois($date);
+        $this->setDatePiece($date);
     }
 
     /**
