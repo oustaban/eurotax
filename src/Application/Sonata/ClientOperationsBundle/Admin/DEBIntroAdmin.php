@@ -30,13 +30,13 @@ class DEBIntroAdmin extends Admin
 
         $formMapper
             ->add('n_ligne', null, array('label' => $this->getFieldLabel('n_ligne')))
-            ->add('date_piece', null, array(
+            /* ->add('date_piece', null, array(
                 'label' => 'Mois TVA',
                 'attr' => array('class' => 'datepicker'),
                 'widget' => 'single_text',
                 'input' => 'datetime',
                 'format' => $this->date_format_datetime)
-        )
+        ) */
             ->add('nomenclature', null, array('label' => $this->getFieldLabel('nomenclature')))
             ->add('pays_destination', null, array('label' => $this->getFieldLabel('pays_id_destination'), 'query_builder' => function (EntityRepository $er)
         {
@@ -45,9 +45,9 @@ class DEBIntroAdmin extends Admin
                 ->orderBy('p.code')
                 ;
         },'property' => 'code',))
-            ->add('valeur_fiscale', 'money', array('label' => $this->getFieldLabel('valeur_fiscale')))
+            ->add('valeur_fiscale', 'money', array('label' => $this->getFieldLabel('valeur_fiscale'), 'required' => false))
             ->add('regime', null, array('label' => $this->getFieldLabel('regime')))
-            ->add('valeur_statistique', 'money', array('label' => $this->getFieldLabel('valeur_statistique')))
+            ->add('valeur_statistique', 'money', array('label' => $this->getFieldLabel('valeur_statistique'), 'required' => false))
             ->add('masse_mette', null, array('label' => $this->getFieldLabel('masse_mette')))
             ->add('unites_supplementaires', null, array('label' => $this->getFieldLabel('unites_supplementaires')))
             ->add('nature_transaction', null, array('label' => $this->getFieldLabel('nature_transaction')))
