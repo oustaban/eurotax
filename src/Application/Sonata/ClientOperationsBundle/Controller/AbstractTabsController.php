@@ -794,12 +794,11 @@ class AbstractTabsController extends Controller
     	$expectedFirstVal = 1;
     	$nlignes = array();
     	foreach($data as $row) {
-    		if((empty($row[0]) && empty($row[2])) || (!empty($row[1]) && !is_float($row[1]))) {
+    		if((empty($row[0]) && empty($row[4]))) {
     			continue;
-    		}
+    		} 
     		$nlignes[] = (float)$row[0];
     	}
-    	
     	
     	$checkConsec = function($d) use ($fields, $skip_line, $class) {
     		$errors = array();
