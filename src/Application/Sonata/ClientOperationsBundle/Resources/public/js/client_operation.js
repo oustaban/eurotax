@@ -546,7 +546,7 @@ function init_rapprochement_sums() {
     	$('input[name="rapprochement\[exped_info_id\]"]').change(function() {
     		if($(this).val()<3) {
     			$('#totals_output_calcu1, #totals_output_calcu2').html('<b>0,00</b>');
-    			$('#totals_output_calcu1, #totals_output_calcu2').parent().css('background', '#fff');
+    			$('#totals_output_calcu1, #totals_output_calcu2').parent().css('background', '#f9f9f9');
    			 	$('#rapprochement_exped_info_number, #rapprochement_exped_info_number2').hide();
     		} else {
     			recalculer();
@@ -574,6 +574,8 @@ function init_rapprochement_sums() {
 	    		$(outputSel).html('<b>'+ val +'</b>');
 	    		if(sum) {
 	    			$(outputSel).parent().css('background-color', '#ff69b4');
+	    		} else {
+	    			$(outputSel).parent().css('background-color', '#f9f9f9');
 	    		}
 			};
     		
