@@ -523,7 +523,7 @@ class InitialImportController extends Controller {
 			$form->setData($object);
 			$formData = array('_token' => $this->get('form.csrf_provider')->generateCsrfToken('unknown'));
 			
-			static $fields = array();
+			$fields = array();
 		
 			$i = current(array_keys($row));
 			foreach($fieldsToImport as $field) {
