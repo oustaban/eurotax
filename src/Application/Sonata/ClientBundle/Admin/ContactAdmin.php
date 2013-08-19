@@ -89,7 +89,6 @@ class ContactAdmin extends Admin
 
         $this->_setupValidate($errorElement, $object);
 
-        $this->_setupAlerts($errorElement, $object);
     }
 
     /**
@@ -130,12 +129,42 @@ class ContactAdmin extends Admin
             }
         }
     }
+    
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function postPersist($object)
+    {
+    	
+    	$this->_setupAlerts($object);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function postUpdate($object)
+    {
+    	
+    	$this->_setupAlerts($object);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function postRemove($object)
+    {
+    	
+    	$this->_setupAlerts($object);
+    }
+    
+    
+    
 
     /**
-     * @param ErrorElement $errorElement
      * @param \Application\Sonata\ClientBundle\Entity\Contact $object
      */
-    protected function _setupAlerts(ErrorElement $errorElement, $object)
+    protected function _setupAlerts($object)
     {
         /** @var $doctrine  \Doctrine\Bundle\DoctrineBundle\Registry */
         $doctrine = $this->getConfigurationPool()->getContainer()->get('doctrine');
@@ -189,5 +218,6 @@ class ContactAdmin extends Admin
         $alert->setText('Aucun contact pour Facturation');
 
         $em->persist($alert);
+        $em->flush();
     }
 }
