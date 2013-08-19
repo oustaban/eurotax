@@ -27,6 +27,11 @@ abstract class AbstractTabsAdmin extends Admin
     protected $_is_validate_import = false;
     
     /**
+     * @var int
+     */
+    protected $maxPerPage = 10000000;
+    
+    /**
      * @param string $code
      * @param string $class
      * @param string $baseControllerName
@@ -91,6 +96,7 @@ abstract class AbstractTabsAdmin extends Admin
         $builder->andWhere($builder->getRootAlias() . '.client=:client')
             ->setParameter(':client', $this->getClient());
 
+        //var_dump($query->__toString(), $this->getClient()->getId());
         return $query;
     }
 
