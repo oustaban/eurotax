@@ -379,6 +379,7 @@ class InitialImportController extends Controller {
 								'operation' => $libelle,
 								'montant' => $montant,
 								'client' => $client_id,
+								'statut' => 1, //Reel
 								'_token' => $this->get('form.csrf_provider')->generateCsrfToken('unknown')
 						);
 						$form->bind($formData);
