@@ -18,8 +18,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  */
 class InitialImportController extends Controller {
 	
-	
-	
 	protected $_client_id = 0;
 	protected $_client_import_set = array();
 	
@@ -28,9 +26,6 @@ class InitialImportController extends Controller {
 	/** @var null|\DateTime */
 	protected $_import_date = null;
 	protected $_current_admin = null;
-	
-
-	
 	
 	
 	protected $clientImportSkipToLine = 7;
@@ -475,6 +470,138 @@ class InitialImportController extends Controller {
 		}
 	
 		return $this->render('ApplicationSonataClientBundle:InitialImport:client.html.twig');
+	}
+	
+	
+	public function numeroAction() {
+		set_time_limit(0);
+		
+		if($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$inserted = 0;
+		
+			if (!empty($_FILES) && !empty($_FILES["inputFile"]["name"])) {
+				$file = TMP_UPLOAD_PATH . '/' . $_FILES["inputFile"]["name"];
+				$tmpFile = $_FILES["inputFile"]["tmp_name"];
+				$inputFile = $_FILES['inputFile'];
+					
+				if (move_uploaded_file($tmpFile, $file)) {
+					/* @var $objReader \PHPExcel_Reader_Excel2007 */
+					$objReader = \PHPExcel_IOFactory::createReaderForFile($file);
+		
+					if (get_class($objReader) == 'PHPExcel_Reader_CSV') {
+						$this->get('session')->setFlash('sonata_flash_error', $this->admin->trans('Fichier non lisible'));
+						return $this->render(':redirects:back.html.twig');
+					} else {
+						$objReader->setReadDataOnly(true);
+					}
+					$objPHPExcel = $objReader->load($file);
+					$sheet = $objPHPExcel->getSheet(1); // Base Donniee tab
+					
+					file_put_contents($tmpFile, '');
+					$rows = $sheet->toArray();
+					array_shift($rows); //remove column header
+					$rows = array_filter($rows);
+		
+					
+					
+		
+					$admin = $this->container->get('sonata.admin.pool')->getAdminByAdminCode('application.sonata.admin.numero_TVA');
+					
+					static $clients = array();
+					
+					foreach($rows as $row) {
+						if(empty($row[0])) {
+							continue;
+						}
+						// Columns  A, C,  E and F
+						$date_de_verification = $this->_dateFormValue($row[5]);
+						$nom = (string)$row[2];
+						$n_de_TVA = (string)$row[4];
+						$client_code = (int)$row[0];
+						
+						$client_id = $this->_clientIdByCode($client_code);
+		
+						if($client_id === false) {
+							continue;
+						}
+						
+						
+						
+						if(!isset($clients[$client_id])) {
+							$em = $this->getDoctrine()->getManager();
+							$em->createQuery("DELETE FROM ApplicationSonataClientBundle:NumeroTVA t WHERE t.client = :clientId") ->setParameter('clientId', $client_id)->execute();
+							$clients[$client_id] = array('inserted' => 0);
+						}
+						
+						
+		
+						$object = $admin->getNewInstance();
+						$admin->setSubject($object);
+		
+						/* @var $form \Symfony\Component\Form\Form */
+						$form_builder = $admin->getFormBuilder();
+						$form = $form_builder->getForm();
+						$form->setData($object);
+		
+						$formData = array(
+								'date_de_verification' => $date_de_verification,
+								'code' => $nom,
+								'n_de_TVA' => $n_de_TVA,
+								'client' => $client_id,
+								'_token' => $this->get('form.csrf_provider')->generateCsrfToken('unknown')
+						);
+						$form->bind($formData);
+							
+						if ($form->isValid()) {
+							try {
+								$admin->create($object);
+								$inserted++;
+								
+								
+								++$clients[$client_id]['inserted'];
+								
+								
+							} catch (\Exception $e) {
+								$this->get('session')->setFlash('sonata_flash_info|raw', $e->getMessage());
+							}
+						} else {
+							if ($form->getErrors()) {
+								$messages = array();
+								foreach ($form->getErrors() as $keys => $error) {
+									$messages[] =$error->getMessage();
+								}
+								if(!empty($messages)) {
+									$this->get('session')->setFlash('sonata_flash_info|raw', implode("<br/>", $messages));
+								}
+		
+							}
+						}
+						unset($formData, $form, $form_builder, $object);
+					}
+				}
+		
+			} else {
+				$this->get('session')->setFlash('sonata_flash_info|raw', 'Please upload a file');
+			}
+		
+			if($inserted > 0) {
+				//$this->get('session')->setFlash('sonata_flash_info|raw', $inserted . ' rows are inserted.');
+				$msg = '';
+				foreach($clients as $id => $client) {
+					//var_dump($client);
+					if(isset($client['inserted']) && $client['inserted'] > 0) {
+						$msg .= "Client = $id " . $client['inserted'] . " rows are inserted. <br />";
+					}
+				}
+				
+				
+				$this->get('session')->setFlash('sonata_flash_info|raw', $msg);
+			}
+				
+			return $this->render(':redirects:back.html.twig');
+		}
+		
+		return $this->render('ApplicationSonataClientBundle:InitialImport:numero.html.twig');
 	}
 
 	

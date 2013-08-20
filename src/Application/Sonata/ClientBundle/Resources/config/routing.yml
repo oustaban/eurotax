@@ -14,3 +14,8 @@ initial_import_index:
 initial_import_client:
     pattern: /initial-import-client
     defaults: { _controller: ApplicationSonataClientBundle:InitialImport:client }
+
+
+initial_import_numero:
+    pattern: /initial-import-numero
+    defaults: { _controller: ApplicationSonataClientBundle:InitialImport:numero }

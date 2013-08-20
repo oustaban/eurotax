@@ -1,0 +1,31 @@
+{% extends 'ApplicationSonataClientBundle:InitialImport:layout.html.twig' %}
+
+{% block title %}
+{{ parent() }}
+{% endblock title %}
+
+{% block initialimport_content %}
+    
+    <span class="span3">
+    <div class="modal-header">
+        <h3 id="importModalLabel">{{'Import Numero TVA'|trans}}</h3>
+    </div>
+    
+    <div class="modal-body">	
+      <form class="form-inline" id="importForm" method="post"
+              action="{{ path('initial_import_numero') }}"
+              enctype="multipart/form-data">
+            <input id="inputFile" type="file" name="inputFile" style="display:none"/>
+            <input id="inputFileCover" class="input-large" type="text"/>
+            <a class="btn" onclick="$('input[id=inputFile]').click();">{{ 'choisir le fichier'|trans }}</a>
+            
+          
+        </form>
+    </div>
+    
+    <div class="modal-footer">   
+       <button class="btn btn-primary" id="doImport" onclick="javascript:$('#importForm').submit();">{{ 'Importer'|trans}}</button>
+    </div>
+    	
+    </span>
+{% endblock initialimport_content %}
