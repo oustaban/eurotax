@@ -97,6 +97,15 @@ class Contact
     private $raison_sociale_societe;
 
 
+    
+    /**
+     * @var string $note
+     *
+     * @ORM\Column(name="commentaire", type="text", nullable=true)
+     */
+    private $commentaire;
+    
+    
     /**
      * Get id
      *
@@ -346,4 +355,29 @@ class Contact
     {
         return $this->client;
     }
+    
+    
+   /**
+    * Set commentaire
+    *
+    * @param string $commentaire
+    * @return Contanct
+    */
+    public function setCommentaire($commentaire)
+    {
+    	$this->commentaire = $commentaire;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get commentaire
+     *
+     * @return string
+     */
+    public function getCommentaire()
+    {
+    	return $this->commentaire;
+    }
+    
 }

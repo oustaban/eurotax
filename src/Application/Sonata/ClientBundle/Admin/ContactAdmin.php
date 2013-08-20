@@ -52,7 +52,8 @@ class ContactAdmin extends Admin
                 1 => 1,
                 2 => 2
             ),
-        ));
+            		
+        ))->add('commentaire', null, array('label' => $this->getFieldLabel('commentaire')));
     }
 
     //list
@@ -73,6 +74,7 @@ class ContactAdmin extends Admin
             ->add('email', null, array('label' => $this->getFieldLabel('email')))
             
             ->add('client.raison_sociale', null, array('label' => 'Raison sociale Société', 'data' => $this->getClient()->getRaisonSociale()))
+            ->add('commentaire', null, array('label' => $this->getFieldLabel('commentaire')))
             
         ;
     }

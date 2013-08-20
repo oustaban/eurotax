@@ -86,6 +86,7 @@ form:
     email: Email
     raison_sociale_societe: Raison sociale
     affichage_facture_id: N° ordre facturation
+    commentaire: Commentaire
 
   Document:
     title: Document
@@ -220,6 +221,7 @@ list:
     email: Email
     raison_sociale_societe: Raison sociale
     affichage_facture_id: N° ordre facturation
+    commentaire: Commentaire
 
   Document:
     title: Ajouter un document
