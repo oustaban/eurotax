@@ -269,6 +269,24 @@ jQuery(document).ready(function ($) {
                 $('#' + _uniqid + '_montant_TTC').val(montant_TTC).trigger('change');
             }
         };
+        
+        
+        
+        
+        
+        symfony_ajax.behaviors.hideDelUpdateButtons = {
+                attach:function (context) {
+                    var _uniqid = symfony_ajax.get_uniqid();
+                    if (_uniqid) {
+                    	var status = $('#' + _uniqid + '_status_id', context);
+                    	if(status && status.val() == 1) { // status = Vérouillé
+                    	
+                    		$('.action-buttons').hide();
+                    	}
+                    }
+                }
+                
+        };
     }
     
     
