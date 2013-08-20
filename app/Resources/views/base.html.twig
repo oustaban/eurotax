@@ -61,7 +61,15 @@
                                 <li><a href="{{ path('admin_sonata_user_group_list') }}">Groupes</a></li>
                                 {% endif %}
                                 {% if is_granted('ROLE_INITIALIMPORTS') %}
-                                <li><a href="{{ path('initial_import_index') }}">Initialisation</a></li>
+                                <li><a href="{{ path('initial_import_index') }}">Initialisation - Compte</a></li>
+                                {% endif %}
+                                
+                                {% if is_granted('ROLE_INITIALIMPORTS') %}
+                                <li><a href="{{ path('initial_import_client') }}">Initialisation - Client</a></li>
+                                {% endif %}
+                                
+                                {% if is_granted('ROLE_INITIALIMPORTS') %}
+                                <li><a href="{{ path('initial_import_numero') }}">Initialisation - Numero TVA</a></li>
                                 {% endif %}
                             </ul>
                         </li>
