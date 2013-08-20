@@ -567,7 +567,7 @@ class AbstractTabsController extends Controller
         // status = Vérouillé cannot be deleted
         if($object instanceof AbstractBaseEntity) {
         	if($object->getStatus() && $object->getStatus()->getId() == 1) {
-        		$this->get('session')->setFlash('sonata_flash_error', 'flash_delete_error');
+        		$this->get('session')->setFlash('sonata_flash_error', 'On ne peut pas supprimer les éléments vérouillés');
         		
         		if ($this->getRequest()->getMethod() == 'DELETE' && $this->isXmlHttpRequest()) {
         			return $this->renderJson(array(
