@@ -114,7 +114,7 @@ jQuery(document).ready(function ($) {
             add_label_required($N_TVA_CEE_label);
         }
         else {
-            $N_TVA_CEE.removeAttr('required');
+            $N_TVA_CEE.removeAttr('required').val('');
             rm_label_required($N_TVA_CEE_label);
         }
 
