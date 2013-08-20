@@ -30,8 +30,9 @@
 </script>
 {{ block('stickyHeader')}}
 {{ block('ajaxCreate')}}
+{{ block('ajaxEdit')}}
 {% if not admin.getLocking %}
-    {{ block('ajaxEdit')}}
+    
     {{ block('ajaxDelete') }}
     {{ block('ajaxClone') }}
 {% endif %}

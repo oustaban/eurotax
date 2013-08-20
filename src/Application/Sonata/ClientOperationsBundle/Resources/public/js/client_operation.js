@@ -279,7 +279,10 @@ jQuery(document).ready(function ($) {
                     var _uniqid = symfony_ajax.get_uniqid();
                     if (_uniqid) {
                     	var status = $('#' + _uniqid + '_status_id', context);
-                    	if(status && status.val() == 1) { // status = Vérouillé
+                    	var locking = $('#' + _uniqid + '_locking', context);
+                    	
+                    	
+                    	if((status && status.val() == 1) || (locking && locking.val() == 1)) { // status = Vérouillé
                     	
                     		$('.action-buttons').hide();
                     	}

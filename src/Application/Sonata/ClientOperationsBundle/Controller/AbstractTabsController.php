@@ -538,8 +538,14 @@ class AbstractTabsController extends Controller
     {
         $this->getObjectMonthYear();
         $this->getLocking();
-        $this->getLockingAccessDenied();
+        
 
+        
+        if ($this->get('request')->getMethod() == 'POST') {
+        	$this->getLockingAccessDenied();
+        }
+        
+        
         $action = $this->_action(parent::editAction(), 'edit', 'form_layout');
         return $action;
     }

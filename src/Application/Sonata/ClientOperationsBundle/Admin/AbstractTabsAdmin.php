@@ -172,7 +172,8 @@ abstract class AbstractTabsAdmin extends Admin
             ->add('client_id', 'hidden', array('data' => $this->client_id, 'attr' => array('class' => 'client_id')))
         	->add('is_new', 'hidden', array('data' => $id ? 0 : 1, 'mapped' => false, 'attr' => array('class' => 'is_new')));
         if($id) {
-        	$formMapper->add('status_id', 'hidden', array('data' => $this->getObject($id)->getStatus()->getId(), 'mapped' => false, 'attr' => array('class' => 'status_id')));
+        	$formMapper->add('status_id', 'hidden', array('data' => $this->getObject($id)->getStatus()->getId(), 'mapped' => false, 'attr' => array('class' => 'status_id')))
+        		->add('locking', 'hidden', array('data' => $this->getLocking() ? 1 : 0, 'mapped' => false, 'attr' => array('class' => 'locking')));
         }
     }
 
