@@ -31,36 +31,31 @@ class TransDeb {
 	 * @return string
 	 */
 	protected function col2($index, $increment) {
-		return $index. str_pad($increment, 5, 0, STR_PAD_LEFT);
+		return str_pad($index, 6, 0, STR_PAD_LEFT) . str_pad($increment, 6, 0, STR_PAD_LEFT);
 	}
 	
 	/**
 	 * 25 to 33 : SIREN number of the client ( Take the first caractere of SIRET on http://eurotax.testenm.com/sonata/client/client/5/edit )
 	 */
 	protected function col3() {
-		return str_replace(' ', '', $this->_client->getSiret());
+		return substr(str_replace(' ', '', $this->_client->getSiret()), 0, 9);
 	}
 	
 	/**
-	 * 39 to 40 : code of the  Département  
+	 *   
+	 * 39 to 40 : code of the  Département
+	 * 41 : Mode Transport
+	
+	 * 
 	 * 
 	 * @param \Application\Sonata\ClientOperationsBundle\Entity\AbstractDEBEntity $row
 	 * @return string
 	 */
 	protected function col4(\Application\Sonata\ClientOperationsBundle\Entity\AbstractDEBEntity $row) {
-		return $row->getDepartement();
+		return $row->getDepartement() . $row->getModeTransport();
 	}
 
 	
-	/**
-	 * 41 : Mode Transport
-	 * 
-	 * @param \Application\Sonata\ClientOperationsBundle\Entity\AbstractDEBEntity $row
-	 * @return string
-	 */
-	protected function col5(\Application\Sonata\ClientOperationsBundle\Entity\AbstractDEBEntity $row) {
-		return $row->getModeTransport();
-	}
 	
 	/**
 	 * 43 to 44 : code of the Pays Dest. Prov.
@@ -78,14 +73,20 @@ class TransDeb {
 	 * @param \Application\Sonata\ClientOperationsBundle\Entity\AbstractDEBEntity $row
 	 * @return string
 	 */
-	protected function col6(\Application\Sonata\ClientOperationsBundle\Entity\AbstractDEBEntity $row) {
-		return $row->getPaysIdDestination() . $row->getNatureTransaction() .  000 . (int) $row->getValeurFiscale() .
-			$row->getConditionsLivraison() . $row->getRegime() .
-			 00000000 . $row->getNomenclature() . // 65 - 72
-             0 .	// 73		
-			 000 . (int) $row->getMasseMette() .
-			 000 . (int) $row->getValeurStatistique() .
-			 000 . (int) $row->getUnitesSupplementaires();
+	protected function col5(\Application\Sonata\ClientOperationsBundle\Entity\AbstractDEBEntity $row) {
+		return $row->getPaysIdDestination() . 
+			$row->getNatureTransaction() .  
+			str_pad( (int) $row->getValeurFiscale(), 11, 0, STR_PAD_LEFT) .
+			str_pad( $row->getConditionsLivraison(), 4, 0, STR_PAD_LEFT) . 
+			str_pad( $row->getRegime(), 2, 0, STR_PAD_LEFT) . 
+			
+			$this->spacer() . // 64 - temp only
+ 		 	str_pad($row->getNomenclature(), 8, 0, STR_PAD_LEFT) . // 65 - 72 
+            0 .	// 73		
+		 	
+		 	str_pad($row->getMasseMette(), 10, 0, STR_PAD_LEFT) . //000 . (int) $row->getMasseMette() .
+			str_pad($row->getValeurStatistique(), 11, 0, STR_PAD_LEFT) .  //000 . (int) $row->getValeurStatistique() .
+			str_pad($row->getUnitesSupplementaires(), 10, 0, STR_PAD_LEFT); //000 . (int) $row->getUnitesSupplementaires();
 	}
 	
 	
@@ -96,11 +97,15 @@ class TransDeb {
 	 * @param \Application\Sonata\ClientOperationsBundle\Entity\AbstractDEBEntity $row
 	 * @return string
 	 */
-	protected function col7(\Application\Sonata\ClientOperationsBundle\Entity\AbstractDEBEntity $row) {
+	protected function col6(\Application\Sonata\ClientOperationsBundle\Entity\AbstractDEBEntity $row) {
 		if($row->getPaysOrigine()) {
-			return $row->getPaysIdOrigine();
+			$pays = $row->getPaysIdOrigine();
+		} else {
+			$pays = $this->spacer(2);
 		}
-		return '';
+		
+		
+		return $pays . $this->spacer(15); //temp
 	}
 	
 	/**
@@ -109,7 +114,7 @@ class TransDeb {
 	 * @param \Application\Sonata\ClientOperationsBundle\Entity\AbstractDEBEntity $row
 	 * @return string
 	 */
-	protected function col8(\Application\Sonata\ClientOperationsBundle\Entity\AbstractDEBEntity $row) {
+	protected function col7(\Application\Sonata\ClientOperationsBundle\Entity\AbstractDEBEntity $row) {
 		return $row->getDatePiece()->format('mY');
 	}
 		
@@ -203,13 +208,12 @@ class TransDeb {
 		$ctr = 1;
 		foreach($result as $row) {
 			$lines[] = $this->col1() . $this->spacer() . 
-				$this->col2($this->_exportCount, $ctr) . $this->spacer(5) .
-				$this->col3() . $this->spacer(4) .
+				$this->col2($this->_exportCount, $ctr) . $this->spacer(6) .
+				$this->col3() . $this->spacer(5) .
 				$this->col4($row) . $this->spacer() .
 				$this->col5($row) . $this->spacer() .
-				$this->col6($row) . $this->spacer() .
-				$this->col7($row) . $this->spacer() .
-				$this->col8($row) . $this->spacer(6) 
+				$this->col6($row) . $this->spacer(2) .
+				$this->col7($row) . $this->spacer(6) 
 			;
 			$ctr++;
 		}
