@@ -281,10 +281,10 @@ jQuery(document).ready(function ($) {
                     	var status = $('#' + _uniqid + '_status_id', context);
                     	var locking = $('#' + _uniqid + '_locking', context);
                     	
-                    	
                     	if((status && status.val() == 1) || (locking && locking.val() == 1)) { // status = Vérouillé
-                    	
                     		$('.action-buttons').hide();
+                    	} else {
+                    		$('.action-buttons').show();
                     	}
                     }
                 }
