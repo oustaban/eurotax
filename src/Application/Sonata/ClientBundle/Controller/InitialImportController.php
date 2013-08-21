@@ -285,15 +285,6 @@ class InitialImportController extends Controller {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Compte
 	 * 
@@ -330,6 +321,7 @@ class InitialImportController extends Controller {
 					static $admincompte = null;
 					static $admincomptededepot = null;
 		
+					static $clients = array();
 		
 					foreach($rows as $row) {
 						if(empty($row[0])) {
@@ -349,10 +341,19 @@ class InitialImportController extends Controller {
 		
 						if($type == 'COURANT') {
 							$class = 'compte';
+							$entity = 'Compte';
 						} elseif($type == 'DEPOT') {
 							$class = 'comptededepot';
+							$entity = 'CompteDeDepot';
 						}
-		
+						
+						
+						if(!isset($clients[$class][$client_id])) {
+							$em = $this->getDoctrine()->getManager();
+							$em->createQuery("DELETE FROM ApplicationSonataClientBundle:$entity t WHERE t.client = :clientId") ->setParameter('clientId', $client_id)->execute();
+							$clients[$class][$client_id] = $client_id;
+						}
+						
 						$adminVar = 'admin'.$class;
 						if(is_null($$adminVar)) {
 							$adminCode = 'application.sonata.admin.'.$class;
