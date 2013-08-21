@@ -84,12 +84,7 @@ jQuery(document).ready(function ($) {
 
         var $N_TVA_CEE = $('#' + uniqid + '_N_TVA_CEE');
         var $N_TVA_CEE_label = $('#sonata-ba-field-container-' + uniqid + '_N_TVA_CEE label');
-
         var $N_TVA_CEE_con = $('#sonata-ba-field-container-' + uniqid + '_N_TVA_CEE');
-        
-        
-        
-        
         
         if (Sonata.country_eu[$(this).val()]) {
             $N_TVA_CEE.attr('required', 'required');
@@ -108,13 +103,16 @@ jQuery(document).ready(function ($) {
 
         var $N_TVA_CEE = $('#' + uniqid + '_N_TVA_CEE_facture');
         var $N_TVA_CEE_label = $('#sonata-ba-field-container-' + uniqid + '_N_TVA_CEE_facture label');
-
+        var $N_TVA_CEE_facture_con = $('#sonata-ba-field-container-' + uniqid + '_N_TVA_CEE_facture');
+        
         if (Sonata.country_eu[$(this).val()]) {
             $N_TVA_CEE.attr('required', 'required');
+            $N_TVA_CEE_facture_con.css('visibility', 'visible');
             add_label_required($N_TVA_CEE_label);
         }
         else {
             $N_TVA_CEE.removeAttr('required').val('');
+            $N_TVA_CEE_facture_con.css('visibility', 'hidden');
             rm_label_required($N_TVA_CEE_label);
         }
 
