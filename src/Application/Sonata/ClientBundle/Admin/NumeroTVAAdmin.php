@@ -104,7 +104,7 @@ ES + 9 caractères ou +A/B et 8 caractères
      * 
      * DE + 9 caractères
 AT + 9 caractères
-BE + 9 caractères
+BE + 9, 10 caractères
 EL + 9 caractères
 CY + 9 caractères
 EE + 9 caractères
@@ -148,7 +148,7 @@ SE + 12 caractères
     			
     			'DE' => array(9),//DE + 9 caractères
     			'AT' => array(9),//AT + 9 caractères
-    			'BE' => array(9),//BE + 9 caractères
+    			'BE' => array(9, 10),//BE + 9, 10 caractères
     			'EL' => array(9),//EL + 9 caractères
     			'CY' => array(9),//CY + 9 caractères
     			'EE' => array(9),//EE + 9 caractères
