@@ -279,6 +279,7 @@ jQuery(document).ready(function ($) {
                     	
                     	if((status && status.val() == 1) || (locking && locking.val() == 1)) { // status = Vérouillé
                     		$('.action-buttons').hide();
+                    		$('.popup-body .content').prepend('<div class="alert alert-error">MOIS-TVA cloturé - Aucune modification possible.</div>');
                     	} else {
                     		$('.action-buttons').show();
                     	}
