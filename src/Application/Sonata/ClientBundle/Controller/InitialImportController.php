@@ -522,11 +522,27 @@ class InitialImportController extends Controller {
 					
 					
 		
-					$admin = $this->container->get('sonata.admin.pool')->getAdminByAdminCode('application.sonata.admin.numero_TVA');
+					$this->_current_admin = $admin = $this->container->get('sonata.admin.pool')->getAdminByAdminCode('application.sonata.admin.numero_TVA');
 					
 					static $clients = array();
 					
-					foreach($rows as $row) {
+					$entity = 'NumeroTVA';
+					
+					$skipToLine = 2;
+						
+					
+					
+					
+					$fields = array(
+						'date_de_verification' => 5,
+						'code' => 2,
+						'n_de_TVA' => 4,
+					);
+					
+					
+					
+					
+					foreach($rows as $key => $row) {
 						if(empty($row[0])) {
 							continue;
 						}
@@ -539,6 +555,14 @@ class InitialImportController extends Controller {
 						$client_id = $this->_clientIdByCode($client_code);
 		
 						if($client_id === false) {
+							
+							$label = '(' . \PHPExcel_Cell::stringFromColumnIndex(3) . ':' . ($key+$skipToLine) . ') ';
+							$message = 'VALUE : ' . $label . $client_code . "\n" .
+									"ERROR : Client does not exist in the system. \n\n";
+							$this->setCountImports($entity, 'errors', $message);
+							
+							
+							
 							continue;
 						}
 						
@@ -576,22 +600,18 @@ class InitialImportController extends Controller {
 								
 								
 								++$clients[$client_id]['inserted'];
+								$this->setCountImports($entity, 'inserted');
+								
+							}catch (\Exception $e) {
+								//$this->get('session')->setFlash('sonata_flash_info|raw', $e->getMessage());
+								$message = $this->getErrorsAsString($fields, $entity, $admin, $form, $key + ($skipToLine), 0, 0, $e->getMessage());
+								$this->setCountImports($entity, 'errors', $message);
 								
 								
-							} catch (\Exception $e) {
-								$this->get('session')->setFlash('sonata_flash_info|raw', $e->getMessage());
 							}
 						} else {
-							if ($form->getErrors()) {
-								$messages = array();
-								foreach ($form->getErrors() as $keys => $error) {
-									$messages[] =$error->getMessage();
-								}
-								if(!empty($messages)) {
-									$this->get('session')->setFlash('sonata_flash_info|raw', implode("<br/>", $messages));
-								}
-		
-							}
+							$message = $this->getErrorsAsString($fields, $entity, $admin, $form, $key + ($skipToLine));
+							$this->setCountImports($entity, 'errors', $message);
 						}
 						unset($formData, $form, $form_builder, $object);
 					}
@@ -601,7 +621,7 @@ class InitialImportController extends Controller {
 				$this->get('session')->setFlash('sonata_flash_info|raw', 'Please upload a file');
 			}
 		
-			if($inserted > 0) {
+			/* if($inserted > 0) {
 				//$this->get('session')->setFlash('sonata_flash_info|raw', $inserted . ' rows are inserted.');
 				$msg = '';
 				foreach($clients as $id => $client) {
@@ -613,7 +633,13 @@ class InitialImportController extends Controller {
 				
 				
 				$this->get('session')->setFlash('sonata_flash_info|raw', $msg);
+			} */
+			
+			$messages = $this->getCountMessageImports();
+			if (!empty($messages)) {
+				$this->get('session')->setFlash('sonata_flash_info|raw', implode("<br />", $messages));
 			}
+			
 				
 			return $this->render(':redirects:back.html.twig');
 		}
