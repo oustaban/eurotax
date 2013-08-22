@@ -322,11 +322,21 @@ class InitialImportController extends Controller {
 					static $admincomptededepot = null;
 		
 					static $clients = array();
-		
-					foreach($rows as $row) {
+					$skipToLine = 2;
+					
+					$fields = array(
+						'date' => 0,
+						'operation' => 1,
+						'montant' => 2,
+					);
+					
+					
+					foreach($rows as $key => $row) {
 						if(empty($row[0])) {
 							continue;
 						}
+						
+						
 						$date = $this->_dateFormValue($row[0]);
 						$libelle = (string)$row[1];
 						$montant = (double)$row[2];
@@ -334,11 +344,7 @@ class InitialImportController extends Controller {
 						$type = $row[4];
 						$class = '';
 						$client_id = $this->_clientIdByCode($client_code);
-		
-						if($client_id === false) {
-							continue;
-						}
-		
+								
 						if($type == 'COURANT') {
 							$class = 'compte';
 							$entity = 'Compte';
@@ -347,7 +353,14 @@ class InitialImportController extends Controller {
 							$entity = 'CompteDeDepot';
 						}
 						
-						
+						if($client_id === false) {
+							$label = '(' . \PHPExcel_Cell::stringFromColumnIndex(3) . ':' . ($key+$skipToLine) . ') ';
+							$message = 'VALUE : ' . $label . $client_code . "\n" .
+							 	"ERROR : Client does not exist in the system. \n\n";
+							$this->setCountImports($entity, 'errors', $message);
+							continue;
+						}
+ 
 						if(!isset($clients[$class][$client_id])) {
 							$em = $this->getDoctrine()->getManager();
 							$em->createQuery("DELETE FROM ApplicationSonataClientBundle:$entity t WHERE t.client = :clientId") ->setParameter('clientId', $client_id)->execute();
@@ -362,6 +375,8 @@ class InitialImportController extends Controller {
 							$$adminVar = $admin;
 						}
 		
+						$this->_current_admin = $admin;
+						
 						$object = $admin->getNewInstance();
 						$admin->setSubject($object);
 		
@@ -384,20 +399,20 @@ class InitialImportController extends Controller {
 							try {
 								$admin->create($object);
 								$inserted++;
+								
+								$this->setCountImports($entity, 'inserted');
+								
 							}catch (\Exception $e) {
-								$this->get('session')->setFlash('sonata_flash_info|raw', $e->getMessage());
+								//$this->get('session')->setFlash('sonata_flash_info|raw', $e->getMessage());
+								$message = $this->getErrorsAsString($fields, $entity, $admin, $form, $key + ($skipToLine), 0, 0, $e->getMessage());
+								$this->setCountImports($entity, 'errors', $message);
+								
+								
 							}
 						} else {
-							if ($form->getErrors()) {
-								$messages = array();
-								foreach ($form->getErrors() as $keys => $error) {
-									$messages[] =$error->getMessage();
-								}
-								if(!empty($messages)) {
-									$this->get('session')->setFlash('sonata_flash_info|raw', implode("<br/>", $messages));
-								}
-		
-							}
+							$message = $this->getErrorsAsString($fields, $entity, $admin, $form, $key + ($skipToLine));
+							$this->setCountImports($entity, 'errors', $message);
+					
 						}
 						unset($formData, $form, $form_builder, $object);
 					}
@@ -407,8 +422,9 @@ class InitialImportController extends Controller {
 				$this->get('session')->setFlash('sonata_flash_info|raw', 'Please upload a file');
 			}
 		
-			if($inserted > 0) {
-				$this->get('session')->setFlash('sonata_flash_info|raw', $inserted . ' rows are inserted.');
+			$messages = $this->getCountMessageImports();
+			if (!empty($messages)) {
+				$this->get('session')->setFlash('sonata_flash_info|raw', implode("<br />", $messages));
 			}
 			
 			return $this->render(':redirects:back.html.twig');

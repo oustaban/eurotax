@@ -155,7 +155,7 @@ form:
     is_blocked: Blocked
 
   Compte:
-    title: Ajouter / Modifier Une opération du Compte
+    title: Compte
     date: Date
     operation: Opération
     montant: Montant
@@ -163,7 +163,7 @@ form:
     statut: Statut
 
   CompteDeDepot:
-    title: Ajouter / Modifier Une opération du Compte de dépot
+    title: Compte de dépot
     date: Date
     operation: Opération
     montant: Montant
@@ -171,7 +171,7 @@ form:
     statut: Statut
 
   NumeroTVA:
-    title: Ajouter / Modifier un numero TVA
+    title: Numero TVA
     code: Nom du client
     n_de_TVA: N° de TVA
     date_de_verification: Date de vérification
