@@ -122,7 +122,7 @@
             </td>
             <td class="sonata-ba-list-field sonata-ba-list-field-money2"  objectId="{{ client[0].id }}">
                 <div class="montant{% if client.compte_solde_montant<0 %} negative_value{% endif %}">
-                <a class="btn {% if client[0].getCompteReelSum<0 %}btn-danger{% endif %}" href="{{ path('admin_sonata_client_compte_list', {'filter[client_id][value]':client[0].id}) }}">    
+                <a class="btn {% if client[0].getCompteReelSum|number_format(2)<0 %}btn-danger{% endif %}" href="{{ path('admin_sonata_client_compte_list', {'filter[client_id][value]':client[0].id}) }}">    
                     {% if client[0].getComptePrevisionnelSum %}P {% endif %}{{ client[0].getCompteReelSum|number_format(2, ',', ' ') }} €
                 </a>    
                 </div>
