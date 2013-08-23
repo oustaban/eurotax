@@ -96,8 +96,8 @@ class ClientAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        LocationPostalType::setRequired();
-        LocationFacturationType::setRequired(false);
+        //LocationPostalType::setRequired();
+        //LocationFacturationType::setRequired(false);
 
         $id = $this->getRequest()->get($this->getIdParameter());
         $class = $id ? '' : ' hidden';
@@ -138,13 +138,20 @@ class ClientAdmin extends Admin
             ->add('location_postal', $locPostal = new LocationPostalType(), array(
                 'data_class' => 'Application\Sonata\ClientBundle\Entity\Client',
                 'label' => 'Location',
-                'required' => true,
+                //'required' => true,
+            	'pays' => array('required' => true, 'disabled' => $id ? true: false),
             ),
             array('type' => 'location'))
             ->add('location_facturation', new LocationFacturationType(), array(
             'data_class' => 'Application\Sonata\ClientBundle\Entity\Client',
             'label' => 'Location',
-            'required' => true,
+            
+            'pays' => array('required' => false, 'disabled' => false),
+            'adresse_1' => array('required' => false),
+            'code_postal' => array('required' => false),
+            'ville' => array('required' => false),
+            		
+            		
         ), array('type' => 'location'))
             ->with('form.client.row7')
             ->add('N_TVA_CEE', null, array('label' => 'form.N_TVA_CEE'))
@@ -241,9 +248,9 @@ class ClientAdmin extends Admin
         ;
             
             
-        if($id) {
+       /*  if($id) {
            	$locPostal->pays_is_disabled = true;
-        }
+        } */
     }
 
 

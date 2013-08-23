@@ -55,8 +55,11 @@ class CoordonneesAdmin extends Admin
             'label' => $this->getFieldLabel('orders')
         ))
             ->add('nom', null, array('label' => $this->getFieldLabel('nom')))
-            ->add('location', new LocationType(), array(
+            ->add('location', new LocationType(array('pays' => array('required' => false))), array(
                 'data_class' => 'Application\Sonata\ClientBundle\Entity\Coordonnees',
+            	'adresse_1' => array('required' => false),
+            	'code_postal' => array('required' => false),
+            	'ville' => array('required' => false),
             ),
             array('type' => 'location'))
             ->add('no_de_compte', null, array('label' => $this->getFieldLabel('no_de_compte')))
