@@ -537,12 +537,20 @@ class AbstractTabsController extends Controller
     public function editAction($id = null)
     {
         $this->getObjectMonthYear();
-        $this->getLocking();
+        //$this->getLocking();
         
 
         
         if ($this->get('request')->getMethod() == 'POST') {
-        	$this->getLockingAccessDenied();
+        	$id     = $this->get('request')->get($this->admin->getIdParameter());
+        	$object = $this->admin->getObject($id);
+        	
+        	if($object instanceof AbstractBaseEntity) {
+        		if($object->getStatus() && $object->getStatus()->getId() == 1) {
+        			$this->getLockingAccessDenied();
+        		}
+        	}
+        		
         }
         
         

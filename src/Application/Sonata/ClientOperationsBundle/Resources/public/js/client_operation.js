@@ -275,9 +275,9 @@ jQuery(document).ready(function ($) {
                     var _uniqid = symfony_ajax.get_uniqid();
                     if (_uniqid) {
                     	var status = $('#' + _uniqid + '_status_id', context);
-                    	var locking = $('#' + _uniqid + '_locking', context);
+                    	//var locking = $('#' + _uniqid + '_locking', context);
                     	
-                    	if((status && status.val() == 1) || (locking && locking.val() == 1)) { // status = Vérouillé
+                    	if(status && status.val() == 1) { // status = Vérouillé
                     		$('.action-buttons').hide();
                     		$('.popup-body .content').prepend('<div class="alert alert-error">MOIS-TVA cloturé - Aucune modification possible.</div>');
                     	} else {
