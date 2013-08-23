@@ -262,9 +262,14 @@ abstract class AbstractTabsAdmin extends Admin
             $this->month = $value->format('m');
             $this->year = $value->format('Y');
 
-            if ($this->getLocking()) {
-                $errorElement->with('date_piece')->addViolation('Sorry with month is locked')->end();
-            }
+                
+                
+           	if($this->getLocking() && $object instanceof AbstractBaseEntity) {
+           		if($object->getStatus() && $object->getStatus()->getId() == 1) {
+           			$errorElement->with('date_piece')->addViolation('Sorry with month is locked')->end();
+           		}
+           	}
+            	
         }
     }
 
