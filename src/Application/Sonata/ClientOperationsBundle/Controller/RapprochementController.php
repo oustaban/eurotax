@@ -407,6 +407,11 @@ class RapprochementController extends Controller
     {
     	list($_month, $_year) = $this->getQueryMonth($month);
     
+    	
+    	/* var_dump($_month, $_year);
+    	exit; */
+    	
+    	
     	/* @var $em \Doctrine\ORM\EntityManager */
     	$em = $this->getDoctrine()->getManager();
     
@@ -427,6 +432,12 @@ class RapprochementController extends Controller
     		$em->flush();
     		$status_id = 1;
     	}
+    	
+    	
+    	
+    	/* var_dump($status_id);
+    	exit; */
+    	
     
     	$status = $em->getRepository('ApplicationSonataClientOperationsBundle:ListStatuses')->find($status_id);
     
@@ -434,10 +445,10 @@ class RapprochementController extends Controller
     		foreach ($this->_config_excel as $table => $params) {
     			$objects = $em->getRepository('ApplicationSonataClientOperationsBundle:' . $params['entity'])
     			->createQueryBuilder('o')
-    			->where('o.date_piece BETWEEN :form_date_piece AND :to_date_piece')
+    			->where('o.mois BETWEEN :from_date AND :to_date')
     			->andWhere('o.client_id = :client_id')
-    			->setParameter(':form_date_piece', $_year . '-' . $_month . '-01')
-    			->setParameter(':to_date_piece', $_year . '-' . $_month . '-31')
+    			->setParameter(':from_date', $_year . '-' . $_month . '-01')
+    			->setParameter(':to_date', $_year . '-' . $_month . '-31')
     			->setParameter(':client_id', $client_id)
     			->getQuery()->getResult();
     			foreach ($objects as $obj) {
@@ -457,6 +468,8 @@ class RapprochementController extends Controller
      */
     public function getLocking()
     {
+    	
+    	
     	if ($this->_locking === false) {
     		$this->_locking = $this->getDoctrine()->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $this->_client_id, 'month' => $this->_month, 'year' => $this->_year));
     		$this->_locking = $this->_locking ? : 0;
