@@ -47,7 +47,7 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     /**
      * @var string $regime
      *
-     * @ORM\Column(name="regime", type="float", length=255, nullable=true)
+     * @ORM\Column(name="regime", type="integer", length=255, nullable=true)
      */
     private $regime;
 
