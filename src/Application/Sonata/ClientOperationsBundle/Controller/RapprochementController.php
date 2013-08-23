@@ -435,8 +435,10 @@ class RapprochementController extends Controller
     			$objects = $em->getRepository('ApplicationSonataClientOperationsBundle:' . $params['entity'])
     			->createQueryBuilder('o')
     			->where('o.date_piece BETWEEN :form_date_piece AND :to_date_piece')
+    			->andWhere('o.client_id = :client_id')
     			->setParameter(':form_date_piece', $_year . '-' . $_month . '-01')
     			->setParameter(':to_date_piece', $_year . '-' . $_month . '-31')
+    			->setParameter(':client_id', $client_id)
     			->getQuery()->getResult();
     			foreach ($objects as $obj) {
     				/** @var $obj \Application\Sonata\ClientOperationsBundle\Entity\AbstractBaseEntity */
