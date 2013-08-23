@@ -156,7 +156,7 @@ SE + 12 caractères
     			
     			'PL' => array(10),//PL + 10 caractères
     			'SK' => array(10),//SK + 10 caractères
-    			'BG' => array(10),//BG + 10 caractères
+    			'BG' => array(9, 10),//BG + 10 caractères
     			'RO' => array(2,3,4,5,6,7,8,9,10),//RO + 10 caractères
     			
     			'FR' => array(11),//FR + 11 caractères
