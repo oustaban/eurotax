@@ -1544,7 +1544,7 @@ class AbstractTabsController extends Controller
             /** @var $import \Application\Sonata\ClientOperationsBundle\Entity\Imports */
             $lastImportsArray[] = array(
                 'id' => $import->getId(),
-                'date' => $import->getDate(),
+                'date' => checkdate($import->getTs()->format('m'), $import->getTs()->format('d'), $import->getTs()->format('Y')) ? $import->getTs(): $import->getDate(),
                 'username' => (string)$import->getUser(),
                 'filename' => (string)$import->getFileName(),
             );

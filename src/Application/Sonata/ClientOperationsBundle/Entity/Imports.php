@@ -28,6 +28,18 @@ class Imports
      */
     private $date;
 
+    
+
+    /**
+     * Timestamp
+     * 
+     * @var \DateTime $ts
+     *
+     * @ORM\Column(name="ts", type="datetime")
+     */
+    private $ts;
+    
+    
     /**
      * @var integer $user_id
      *
@@ -69,7 +81,7 @@ class Imports
      *
      */
     public function __construct(){
-        $this->date = new \DateTime();
+        $this->date = $this->ts = new \DateTime();
     }
 
     /**
@@ -105,6 +117,29 @@ class Imports
         return $this->date;
     }
 
+    /**
+     * Set timestamp
+     *
+     * @param \DateTime $date
+     * @return Imports
+     */
+    public function setTs($date)
+    {
+    	$this->ts = $date;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get timestamp
+     *
+     * @return \DateTime
+     */
+    public function getTs()
+    {
+    	return $this->ts;
+    }
+    
 
     /**
      * Set user
