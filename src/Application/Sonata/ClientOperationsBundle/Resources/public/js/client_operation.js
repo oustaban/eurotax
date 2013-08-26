@@ -552,24 +552,56 @@ function init_rapprochement_sums() {
     	$('input[name="rapprochement\[intro_info_id\]"], input[name="rapprochement\[exped_info_id\]"]').removeAttr('checked');
     	$('input[name="rapprochement\[intro_info_id\]"]').change(function() {
     		if($(this).val()<4) {
-    			$('#totals_input_calcu1, #totals_input_calcu2').html('<b>0,00</b>');
+    			
+    			//$('#totals_input_calcu1, #totals_input_calcu2').html('<b>0,00</b>');
     			$('#totals_input_calcu1, #totals_input_calcu2').parent().css('background', '#fff'); 
     			$('#rapprochement_intro_info_number, #rapprochement_intro_info_number2').hide();
+    			
+    			$('#rapprochement_intro_info_number').val(totals_input_v1);
+    			$('#rapprochement_intro_info_number2').val(totals_input_v2);
+    			
+    			//recalculer();
+    			
     		} else {
-    			recalculer();
+    			
+    			$('#rapprochement_intro_info_number').val('');
+    			$('#rapprochement_intro_info_number2').val('');
+    			
+    			//recalculer();
     			$('#rapprochement_intro_info_number, #rapprochement_intro_info_number2').show();
     		}
+    		
+    		
+    		calc('#totals_input_v1', '#rapprochement_intro_info_number', '#totals_input_calcu1');
+    		calc('#totals_input_v2', '#rapprochement_intro_info_number2', '#totals_input_calcu2');
+    		cloturer();
+    		
     	});
     	
     	$('input[name="rapprochement\[exped_info_id\]"]').change(function() {
     		if($(this).val()<3) {
-    			$('#totals_output_calcu1, #totals_output_calcu2').html('<b>0,00</b>');
+    			//$('#totals_output_calcu1, #totals_output_calcu2').html('<b>0,00</b>');
     			$('#totals_output_calcu1, #totals_output_calcu2').parent().css('background', '#f9f9f9');
    			 	$('#rapprochement_exped_info_number, #rapprochement_exped_info_number2').hide();
+   			 	
+   			 	
+   			 	$('#rapprochement_exped_info_number').val(totals_output_v1);
+   			 	$('#rapprochement_exped_info_number2').val(totals_output_v2);
+   			 	//recalculer();
+   			 	
     		} else {
-    			recalculer();
+    			
+    			$('#rapprochement_exped_info_number').val('');
+   			 	$('#rapprochement_exped_info_number2').val('');
+    			
+    			//recalculer();
     			$('#rapprochement_exped_info_number, #rapprochement_exped_info_number2').show();
     		}
+    		
+    		
+    		calc('#totals_output_v1', '#rapprochement_exped_info_number', '#totals_output_calcu1');
+    		calc('#totals_output_v2', '#rapprochement_exped_info_number2', '#totals_output_calcu2');
+    		cloturer();
     	});
 
     	
@@ -585,18 +617,21 @@ function init_rapprochement_sums() {
     			$('#btn_locking').attr('disabled', false);
     		}
     	});
+    	
+    	
+    	var calc = function(numSel, numInputSel, outputSel) {
+    		var sum = Number(real_num($(numSel).html())) - Number(real_num( $(numInputSel).val()));
+    		var val = euro_num_format(sum, 2, true);
+    		$(outputSel).html('<b>'+ val +'</b>');
+    		if(sum) {
+    			$(outputSel).parent().css('background-color', '#ff69b4');
+    		} else {
+    			$(outputSel).parent().css('background-color', '#f9f9f9');
+    		}
+		};
+    	
+    	
     	var recalculer = function() {
-    		var calc = function(numSel, numInputSel, outputSel) {
-        		var sum = Number(real_num($(numSel).html())) - Number(real_num( $(numInputSel).val()));
-        		var val = euro_num_format(sum, 2, true);
-	    		$(outputSel).html('<b>'+ val +'</b>');
-	    		if(sum) {
-	    			$(outputSel).parent().css('background-color', '#ff69b4');
-	    		} else {
-	    			$(outputSel).parent().css('background-color', '#f9f9f9');
-	    		}
-			};
-    		
     		calc('#totals_input_v1', '#rapprochement_intro_info_number', '#totals_input_calcu1');
     		calc('#totals_input_v2', '#rapprochement_intro_info_number2', '#totals_input_calcu2');
     		
