@@ -24,7 +24,7 @@ BARCLAYS BANK<br />
 
 <table class="left">
 <tr><td>
-<p>DOSSIER {{ client.getCodeClient() }}</p>
+<p>DOSSIER {{ client.getCodeClient() }} : {{ client.getNom() }}</p>
 <br />
 <p>Messieurs,</p>
 <br />
@@ -54,6 +54,7 @@ BARCLAYS BANK<br />
 
 <table class="center border">
 <tr><td>
+<span class="b">{{ client.getRaisonSociale() }}</span><br />
 <span class="b">{{ coordonnees.getNom() }}</span><br />
 Swift: {{ coordonnees.getCodeSwift() }}<br />
 IBAN: {{ coordonnees.getIBAN() }}<br />
