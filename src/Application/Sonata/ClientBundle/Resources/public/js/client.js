@@ -72,25 +72,72 @@ jQuery(document).ready(function ($) {
                 }
                 
                 
-                
-                $('#' + _uniqid + '_statut_document_notaire').change(function(){
-                	if($(this).val() != '') {
-                		$('#' + _uniqid + '_date_notaire').attr('disabled', false);
-                	} else {
-                		$('#' + _uniqid + '_date_notaire').attr('disabled', true);
-                	}
-                });
-                
+                if(Sonata.client.nature_du_client == '6e' && typeof Sonata.client.country_eu[Sonata.client.pays_code] === 'undefined') {
+                	/*
+                	 * If Status = A obtenir or  Non demandé => We must not see the date "Notaire" and  "Apostille (champ de "Date") 
+                	 * 
+                	 * On "If Statut = empty => Date  "Notaire" et "Apostille (champ de "Date") are mandatory
+					The default value should be : "A obtenir"
 
-                $('#' + _uniqid + '_statut_document_apostille').change(function(){
-                	if($(this).val() != '') {
-                		$('#' + _uniqid + '_date_apostille').attr('disabled', false);
-                	} else {
-                		$('#' + _uniqid + '_date_notaire').attr('disabled', true);
-                	}
-                });
+                	 */
+                	
+                	 $('#' + _uniqid + '_type_document', context).change(function () {
+                		 $('#' + _uniqid + '_date_notaire, #' + _uniqid + '_date_apostille').attr('disabled', false);
+                		 
+                		 if($(this).val() == 3) { //Accord
+                			 console.log(123);
+                			 //s521b5b3dc2609_date_document
+                			 $('#' + _uniqid + '_date_document').after('<span class="help-block sonata-ba-field-help">date d\'effet en clause 2</span>');
+                		 }
+                	 });
+                	
+                	
+                	$('#' + _uniqid + '_statut_document_notaire').change(function(){
+	                	if($(this).val() != '') {
+	                		rm_label_required($('#sonata-ba-field-container-' + _uniqid + '_date_notaire label', context));
+	                		$('#' + _uniqid + '_date_notaire').removeAttr('required');
+	                		$('#sonata-ba-field-container-' + _uniqid + '_date_notaire', context).css('visibility', 'hidden');
+	                	} else {
+	                		add_label_required($('#sonata-ba-field-container-' + _uniqid + '_date_notaire label', context));
+	                		$('#' + _uniqid + '_date_notaire').attr('required', true);
+	                		$('#sonata-ba-field-container-' + _uniqid + '_date_notaire', context).css('visibility', 'visible');
+	                	}
+	                }).trigger('change');
+                	
+                	
+                	$('#' + _uniqid + '_statut_document_apostille').change(function(){
+	                	if($(this).val() != '') {
+	                		rm_label_required($('#sonata-ba-field-container-' + _uniqid + '_date_apostille label', context));
+	                		$('#' + _uniqid + '_date_apostille').removeAttr('required');
+	                		$('#sonata-ba-field-container-' + _uniqid + '_date_apostille', context).css('visibility', 'hidden');
+	                	} else {
+	                		add_label_required($('#sonata-ba-field-container-' + _uniqid + '_date_apostille label', context));
+	                		$('#' + _uniqid + '_date_apostille').attr('required', true);
+	                		$('#sonata-ba-field-container-' + _uniqid + '_date_apostille', context).css('visibility', 'visible');
+	                	}
+	                }).trigger('change');
+                	
+                	
+                	
+                } else {
+	                $('#' + _uniqid + '_statut_document_notaire').change(function(){
+	                	if($(this).val() != '') {
+	                		$('#' + _uniqid + '_date_notaire').attr('disabled', false);
+	                	} else {
+	                		$('#' + _uniqid + '_date_notaire').attr('disabled', true);
+	                	}
+	                });
+	                
+	
+	                $('#' + _uniqid + '_statut_document_apostille').change(function(){
+	                	if($(this).val() != '') {
+	                		$('#' + _uniqid + '_date_apostille').attr('disabled', false);
+	                	} else {
+	                		$('#' + _uniqid + '_date_notaire').attr('disabled', true);
+	                	}
+	                });
 
-                
+                }
                
                 
             }
