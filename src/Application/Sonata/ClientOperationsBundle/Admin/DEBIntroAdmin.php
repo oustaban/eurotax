@@ -46,7 +46,13 @@ class DEBIntroAdmin extends Admin
                 ;
         },'property' => 'code',))
             ->add('valeur_fiscale', 'money', array('label' => $this->getFieldLabel('valeur_fiscale'), 'required' => false))
-            ->add('regime', null, array('label' => $this->getFieldLabel('regime')))
+            ->add('regime', 'choice', array('label' => $this->getFieldLabel('regime'),
+            		'choices' => array(
+            				11 => 11,
+            				19 => 19,
+            		),
+            		'empty_value' => '',
+        	))
             ->add('valeur_statistique', 'money', array('label' => $this->getFieldLabel('valeur_statistique'), 'required' => false))
             ->add('masse_mette', null, array('label' => $this->getFieldLabel('masse_mette')))
             ->add('unites_supplementaires', null, array('label' => $this->getFieldLabel('unites_supplementaires')))
@@ -106,7 +112,7 @@ class DEBIntroAdmin extends Admin
         $error->setValidateImport($this->getValidateImport())
         	->validateRegime(array(11, 19))
         	->validateDEB()
-        	->setMois()
+        	->setMois($this)
         	->setDatePieceByFilename();
 
        

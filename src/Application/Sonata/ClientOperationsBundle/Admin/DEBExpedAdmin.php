@@ -46,7 +46,16 @@ class DEBExpedAdmin extends Admin
                 ;
         },'property' => 'code',))
             ->add('valeur_fiscale', 'money', array('label' => $this->getFieldLabel('valeur_fiscale'), 'required' => false))
-            ->add('regime', null, array('label' => $this->getFieldLabel('regime')))
+            ->add('regime', 'choice', array('label' => $this->getFieldLabel('regime'),
+            		'choices' => array(
+            				21 => 21,
+            				25 => 25,
+            				26 => 26,
+            				29 => 29,
+            				31 => 31
+            		),
+            		'empty_value' => '',
+        	))
             ->add('valeur_statistique', 'money', array('label' => $this->getFieldLabel('valeur_statistique'), 'required' => false))
             ->add('masse_mette', null, array('label' => $this->getFieldLabel('masse_mette')))
             ->add('unites_supplementaires', null, array('label' => $this->getFieldLabel('unites_supplementaires')))
@@ -105,7 +114,7 @@ class DEBExpedAdmin extends Admin
         $error->setValidateImport($this->getValidateImport())
         	->validateRegime(array(21, 29, 25, 26, 31))
         	->validateDEB()
-        	->setMois()
+        	->setMois($this)
         	->setDatePieceByFilename()
         	->validateNomenclature();
     }

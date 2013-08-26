@@ -131,7 +131,7 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
 
         $date = new \DateTime('now' . (date('d') < 25 ? ' -1 month' : ''));
         
-        $this->setMois($date);
+        //$this->setMois($date);
         $this->setDatePiece($date);
     }
 

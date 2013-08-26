@@ -601,11 +601,16 @@ class ErrorElements
     
     
     
-    public function setMois() {
+    public function setMois($admin) {
     	if ($this->_is_validate_import) {
     		$ts = $this->_import_file_year . '-' . $this->_import_file_month . '-01';
     		$date = new \DateTime($ts);
     		$this->_object->setMois($date);
+    	} else {
+    		if(!$admin->getLocking()) {
+    			$date = new \DateTime('now' . (date('d') < 25 ? ' -1 month' : ''));
+    			$this->_object->setMois($date);
+    		}
     	}
     	return $this;
     }
