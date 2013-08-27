@@ -1040,6 +1040,13 @@ class InitialImportController extends Controller {
 	
 	
 	
+	/** Coordonnees Entity **/
+	
+	protected function _getPays($value) {
+		return $this->_getPaysPostal($value);
+	}
+	/** End Coordonnees Entity **/
+	
 	
 	/** Document Entity **/
 	
@@ -1066,12 +1073,7 @@ class InitialImportController extends Controller {
 	/** End Document Entity **/
 	
 	
-	/** Coordonnees Entity **/
 	
-	protected function _getPays($value) {
-		return $this->_getPaysPostal($value);
-	}
-	/** End Coordonnees Entity **/
 
 	protected function _getStatutDocument($value) {
 		$doctrine = $this->getDoctrine();
@@ -1081,6 +1083,11 @@ class InitialImportController extends Controller {
 		if($obj) {
 			return $obj->getId();
 		}
+		
+		if('obtenu' == strtolower($value)) {
+			return '';
+		}
+		
 		return $value;
 	}
 	
@@ -1142,6 +1149,11 @@ class InitialImportController extends Controller {
 		if(isset($choices[$value])) {
 			return $choices[$value];
 		}
+		
+		if('obtenu' == strtolower($value)) {
+			return 0;
+		}
+		
 		return $value;
 	}
 	
