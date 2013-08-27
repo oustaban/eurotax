@@ -619,6 +619,19 @@ class ErrorElements
     	}
     	return $this;
     }
+    
+    
+    public function setMois2($admin) {
+
+    	if($admin->getLocking()) {
+    	
+    		$this->_object->setMois(null);
+    	
+    	}
+    	return $this;
+    }
+    
+    
 
     /**
      * @return bool

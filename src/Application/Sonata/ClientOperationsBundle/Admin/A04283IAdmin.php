@@ -109,6 +109,7 @@ class A04283IAdmin extends Admin
 
         $error = new ErrorElements($errorElement, $object, $this->import_file_year, $this->import_file_month);
         $error->setValidateImport($this->getValidateImport())
+        	->setMois2($this)
             ->validateDevise()
             ->validateHT()
             ->validateMois()

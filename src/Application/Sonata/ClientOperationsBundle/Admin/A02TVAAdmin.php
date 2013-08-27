@@ -134,6 +134,7 @@ class A02TVAAdmin extends Admin
         $error = new ErrorElements($errorElement, $object, $this->import_file_year, $this->import_file_month);
         $error->setValidateImport($this->getValidateImport())
             ->validatePaiementDateCloneMois()
+            ->setMois2($this)
             ->validateMontantTVAFrancaise()
             ->validateMontantTTC()
             ->validateTauxDeChange()
