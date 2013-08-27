@@ -610,6 +610,11 @@ class ErrorElements
     		if(!$admin->getLocking()) {
     			$date = new \DateTime('now' . (date('d') < 25 ? ' -1 month' : ''));
     			$this->_object->setMois($date);
+    		} else {
+    			if(date('d') > 25) {
+    				$date = new \DateTime('now');
+    				$this->_object->setMois($date);
+    			}
     		}
     	}
     	return $this;
