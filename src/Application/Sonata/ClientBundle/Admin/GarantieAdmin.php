@@ -229,22 +229,10 @@ class GarantieAdmin extends Admin
     			$compte->setStatut($status_object);
     			$em->persist($compte);
     	
-    			
-    			$compte = new Compte();
-    			$compte->setDate($object->getDateDemission());
-    			$compte->setMontant($object->getMontant() * -1);
-    			$compte->setOperation('Versement du dépôt de garantie');
-    			$compte->setClient($object->getClient());
-    			$compte->setGarantie($object);
-    			$compte->setStatut($status_object);
-    			$em->persist($compte);
-    			
-    			
-    			
     			//2
     			$compte = new Compte();
     			$compte->setDate($object->getDateDemission());
-    			$compte->setMontant(-$object->getMontant());
+    			$compte->setMontant($object->getMontant() * -1);
     			$compte->setOperation('Transfert dans compte de dépôt');
     			$compte->setClient($object->getClient());
     			$compte->setGarantie($object);
