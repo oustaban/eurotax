@@ -555,7 +555,7 @@ function init_rapprochement_sums() {
     			
     			//$('#totals_input_calcu1, #totals_input_calcu2').html('<b>0,00</b>');
     			$('#totals_input_calcu1, #totals_input_calcu2').parent().css('background', '#fff'); 
-    			$('#rapprochement_intro_info_number, #rapprochement_intro_info_number2').hide();
+    			$('#rapprochement_intro_info_number, #rapprochement_intro_info_number2').hide().removeAttr('required');
     			
     			$('#rapprochement_intro_info_number').val(totals_input_v1);
     			$('#rapprochement_intro_info_number2').val(totals_input_v2);
@@ -568,7 +568,7 @@ function init_rapprochement_sums() {
     			$('#rapprochement_intro_info_number2').val('');
     			
     			//recalculer();
-    			$('#rapprochement_intro_info_number, #rapprochement_intro_info_number2').show();
+    			$('#rapprochement_intro_info_number, #rapprochement_intro_info_number2').show().attr('required', true);
     		}
     		
     		
@@ -582,7 +582,7 @@ function init_rapprochement_sums() {
     		if($(this).val()<3) {
     			//$('#totals_output_calcu1, #totals_output_calcu2').html('<b>0,00</b>');
     			$('#totals_output_calcu1, #totals_output_calcu2').parent().css('background', '#f9f9f9');
-   			 	$('#rapprochement_exped_info_number, #rapprochement_exped_info_number2').hide();
+   			 	$('#rapprochement_exped_info_number, #rapprochement_exped_info_number2').hide().removeAttr('required');
    			 	
    			 	
    			 	$('#rapprochement_exped_info_number').val(totals_output_v1);
@@ -595,7 +595,7 @@ function init_rapprochement_sums() {
    			 	$('#rapprochement_exped_info_number2').val('');
     			
     			//recalculer();
-    			$('#rapprochement_exped_info_number, #rapprochement_exped_info_number2').show();
+    			$('#rapprochement_exped_info_number, #rapprochement_exped_info_number2').show().attr('required', true);
     		}
     		
     		
