@@ -173,6 +173,11 @@ class GarantieAdmin extends Admin
                 unset($compte, $compte_de_depot);
             }
         }
+        
+   
+    	if($nom_de_la_banques_id == 0) {
+           	$this->_versementDuDepotDeGarantie($object);
+        }
     }
 
     /**
@@ -239,27 +244,29 @@ class GarantieAdmin extends Admin
     	$nom_de_la_banques_id_old = $formRequestData['nom_de_la_banques_id_old'];
     	
     	if(!$nom_de_la_banques_id  &&  $nom_de_la_banques_id_old == 1) {
-    		/* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
-    		$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
-    		
-    		/* @var $em \Doctrine\ORM\EntityManager */
-    		$em = $doctrine->getManager();
-    		
-    		//example: http://redmine.testenm.com/issues/880
-    		$status_object = $em->getRepository('ApplicationSonataClientBundle:ListCompteStatuts')->find(1);
-    		
-    		//1
-    		$compte = new Compte();
-    		$compte->setDate($object->getDateDemission());
-    		$compte->setMontant($object->getMontant());
-    		$compte->setOperation('Versement du dépôt de garantie');
-    		$compte->setClient($object->getClient());
-    		$compte->setGarantie($object);
-    		$compte->setStatut($status_object);
-    		$em->persist($compte);
-    		
-    		$em->flush();
+    		$this->_versementDuDepotDeGarantie($object);
     	}
+    }
+    
+    
+    
+    protected function _versementDuDepotDeGarantie($object) {
+    	/* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+    	$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+    	/* @var $em \Doctrine\ORM\EntityManager */
+    	$em = $doctrine->getManager();
+    	//example: http://redmine.testenm.com/issues/880
+    	$status_object = $em->getRepository('ApplicationSonataClientBundle:ListCompteStatuts')->find(1);
+    	//1
+    	$compte = new Compte();
+    	$compte->setDate($object->getDateDemission());
+    	$compte->setMontant($object->getMontant());
+    	$compte->setOperation('Versement du dépôt de garantie');
+    	$compte->setClient($object->getClient());
+    	$compte->setGarantie($object);
+    	$compte->setStatut($status_object);
+    	$em->persist($compte);
+    	$em->flush();
     }
 }
 
