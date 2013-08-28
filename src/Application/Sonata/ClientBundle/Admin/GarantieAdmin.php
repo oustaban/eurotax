@@ -120,62 +120,10 @@ class GarantieAdmin extends Admin
     public function postPersist($object)
     {
     	
-    	$nom_de_la_banques_id = $object->getNomDeLaBanquesId();
-    	
-        /** @var $object  \Application\Sonata\ClientBundle\Entity\Garantie */
-        if ($object->getTypeGarantie() && $nom_de_la_banques_id != 1) { // not "a etablir"
-
-            //2 => Dépôt de Garantie
-            if ($object->getTypeGarantie()->getId() == 2) {
-
-                /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
-                $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
-
-                /* @var $em \Doctrine\ORM\EntityManager */
-                $em = $doctrine->getManager();
-
-                //example: http://redmine.testenm.com/issues/880
-                $status_object = $em->getRepository('ApplicationSonataClientBundle:ListCompteStatuts')->find(1);
-
-                //1
-               /*  $compte = new Compte();
-                $compte->setDate($object->getDateDemission());
-                $compte->setMontant($object->getMontant());
-                $compte->setOperation('Versement du dépôt de garantie');
-                $compte->setClient($object->getClient());
-                $compte->setGarantie($object);
-                $compte->setStatut($status_object);
-                $em->persist($compte); */
-
-
-                //2
-                $compte = new Compte();
-                $compte->setDate($object->getDateDemission());
-                $compte->setMontant(-$object->getMontant());
-                $compte->setOperation('Transfert dans compte de dépôt');
-                $compte->setClient($object->getClient());
-                $compte->setGarantie($object);
-                $compte->setStatut($status_object);
-                $em->persist($compte);
-
-                //3
-                $compte_de_depot = new CompteDeDepot();
-                $compte_de_depot->setDate($object->getDateDemission());
-                $compte_de_depot->setMontant($object->getMontant());
-                $compte_de_depot->setOperation('Transfert du compte courant');
-                $compte_de_depot->setClient($object->getClient());
-                $compte_de_depot->setGarantie($object);
-                $compte_de_depot->setStatut($status_object);
-                $em->persist($compte_de_depot);
-
-                $em->flush();
-
-                unset($compte, $compte_de_depot);
-            }
-        }
+    	$this->_addCompteCompteDeDepotLines($object);
         
    
-    	if($nom_de_la_banques_id == 0) {
+    	if($object->getNomDeLaBanquesId() == 0) {
            	$this->_versementDuDepotDeGarantie($object);
         }
     }
@@ -246,8 +194,64 @@ class GarantieAdmin extends Admin
     	if(!$nom_de_la_banques_id  &&  $nom_de_la_banques_id_old == 1) {
     		$this->_versementDuDepotDeGarantie($object);
     	}
+    	
+    	$this->_addCompteCompteDeDepotLines($object);
     }
     
+    
+    
+    protected function _addCompteCompteDeDepotLines($object) {
+    	/** @var $object  \Application\Sonata\ClientBundle\Entity\Garantie */
+    	if ($object->getTypeGarantie() && $object->getNomDeLaBanquesId() == 0) { // not "a etablir"
+    	
+    		//2 => Dépôt de Garantie
+    		if ($object->getTypeGarantie()->getId() == 2) {
+    	
+    			/* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+    			$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+    	
+    			/* @var $em \Doctrine\ORM\EntityManager */
+    			$em = $doctrine->getManager();
+    	
+    			//example: http://redmine.testenm.com/issues/880
+    			$status_object = $em->getRepository('ApplicationSonataClientBundle:ListCompteStatuts')->find(1);
+    	
+    			//1
+    			$compte = new Compte();
+    			$compte->setDate($object->getDateDemission());
+    			$compte->setMontant($object->getMontant());
+    			$compte->setOperation('Versement du dépôt de garantie');
+    			$compte->setClient($object->getClient());
+    			$compte->setGarantie($object);
+    			$compte->setStatut($status_object);
+    			$em->persist($compte);
+    	
+    			//2
+    			$compte = new Compte();
+    			$compte->setDate($object->getDateDemission());
+    			$compte->setMontant(-$object->getMontant());
+    			$compte->setOperation('Transfert dans compte de dépôt');
+    			$compte->setClient($object->getClient());
+    			$compte->setGarantie($object);
+    			$compte->setStatut($status_object);
+    			$em->persist($compte);
+    	
+    			//3
+    			$compte_de_depot = new CompteDeDepot();
+    			$compte_de_depot->setDate($object->getDateDemission());
+    			$compte_de_depot->setMontant($object->getMontant());
+    			$compte_de_depot->setOperation('Transfert du compte courant');
+    			$compte_de_depot->setClient($object->getClient());
+    			$compte_de_depot->setGarantie($object);
+    			$compte_de_depot->setStatut($status_object);
+    			$em->persist($compte_de_depot);
+    	
+    			$em->flush();
+    	
+    			unset($compte, $compte_de_depot);
+    		}
+    	}
+    }
     
     
     protected function _versementDuDepotDeGarantie($object) {
