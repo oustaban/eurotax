@@ -25,6 +25,8 @@ class GarantieAdmin extends Admin
 {
     protected $_prefix_label = 'garantie';
 
+    private $is_compte_added = false;
+    
     /**
      * @param FormMapper $formMapper
      */
@@ -119,11 +121,9 @@ class GarantieAdmin extends Admin
      */
     public function postPersist($object)
     {
-    	
     	$this->_addCompteCompteDeDepotLines($object);
-        
    
-    	if($object->getNomDeLaBanquesId() == 0) {
+    	if($object->getNomDeLaBanquesId() == 0 && $this->is_compte_added === false) {
            	$this->_versementDuDepotDeGarantie($object);
         }
     }
@@ -192,10 +192,13 @@ class GarantieAdmin extends Admin
     	$nom_de_la_banques_id_old = $formRequestData['nom_de_la_banques_id_old'];
     	
     	if(!$nom_de_la_banques_id  &&  $nom_de_la_banques_id_old == 1) {
+    		$this->_addCompteCompteDeDepotLines($object);
+    	}
+    	
+    	if($this->is_compte_added === false) {
     		$this->_versementDuDepotDeGarantie($object);
     	}
     	
-    	$this->_addCompteCompteDeDepotLines($object);
     }
     
     
@@ -226,6 +229,18 @@ class GarantieAdmin extends Admin
     			$compte->setStatut($status_object);
     			$em->persist($compte);
     	
+    			
+    			$compte = new Compte();
+    			$compte->setDate($object->getDateDemission());
+    			$compte->setMontant($object->getMontant() * -1);
+    			$compte->setOperation('Versement du dépôt de garantie');
+    			$compte->setClient($object->getClient());
+    			$compte->setGarantie($object);
+    			$compte->setStatut($status_object);
+    			$em->persist($compte);
+    			
+    			
+    			
     			//2
     			$compte = new Compte();
     			$compte->setDate($object->getDateDemission());
@@ -248,6 +263,9 @@ class GarantieAdmin extends Admin
     	
     			$em->flush();
     	
+    			
+    			$this->is_compte_added = true;
+    			
     			unset($compte, $compte_de_depot);
     		}
     	}
