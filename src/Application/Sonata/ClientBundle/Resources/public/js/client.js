@@ -62,6 +62,14 @@ jQuery(document).ready(function ($) {
                         else {
                             //$('#' + _uniqid + '_statut_document_notaire, #' + _uniqid + '_statut_document_apostille').val('');
                         }
+                        
+                        
+                        
+                        if ($(this).val() > 2) {
+                        	$('#' + _uniqid + '_date_notaire').removeAttr('required');
+                        	$('#' + _uniqid + '_date_apostille').removeAttr('required');
+                        }
+                        
 
                     }).trigger('change');
 
