@@ -1,0 +1,14 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+{% if object.getTypeDocument and object.getTypeDocument.getId == 2 %}{# Pouvoir #}
+	
+	{% if object.getStatutDocumentApostille and object.getStatutDocumentApostille.getId == 1 %} {# A obtenir #}
+	<img src="{{ asset('bundles/sonataadmin/famfamfam/exclamation.png') }}" alt="{%- trans from 'SonataAdminBundle' %}label_type_no{% endtrans -%}" />
+	{% else %}
+	<img src="{{ asset('bundles/sonataadmin/famfamfam/accept.png') }}" alt="{%- trans from 'SonataAdminBundle' %}label_type_yes{% endtrans -%}" />
+	{% endif %}
+
+
+{% endif %}	
+{% endblock field %}
