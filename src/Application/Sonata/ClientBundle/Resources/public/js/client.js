@@ -60,7 +60,7 @@ jQuery(document).ready(function ($) {
                             });
                         }
                         else {
-                            $('#' + _uniqid + '_statut_document_notaire, #' + _uniqid + '_statut_document_apostille').val('');
+                            //$('#' + _uniqid + '_statut_document_notaire, #' + _uniqid + '_statut_document_apostille').val('');
                         }
 
                     }).trigger('change');
@@ -85,9 +85,12 @@ jQuery(document).ready(function ($) {
                 		 $('#' + _uniqid + '_date_notaire, #' + _uniqid + '_date_apostille').attr('disabled', false);
                 		 
                 		 if($(this).val() == 3) { //Accord
-                			 console.log(123);
-                			 //s521b5b3dc2609_date_document
-                			 $('#' + _uniqid + '_date_document').after('<span class="help-block sonata-ba-field-help">date d\'effet en clause 2</span>');
+                			 if($('.date_document_help-block').size() == 0) {
+                			 	$('#' + _uniqid + '_date_document').after('<span class="help-block sonata-ba-field-help date_document_help-block">date d\'effet en clause 2</span>');
+                			 }
+                			 $('.date_document_help-block').show();
+                		 } else {
+                			 $('.date_document_help-block').hide();
                 		 }
                 	 });
                 	
