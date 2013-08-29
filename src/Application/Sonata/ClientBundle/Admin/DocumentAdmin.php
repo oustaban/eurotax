@@ -145,6 +145,15 @@ class DocumentAdmin extends Admin
             'label' => $this->getFieldLabel('date_document'),
             'template' => 'ApplicationSonataClientBundle:CRUD:list_date_document.html.twig'
         ))
+        
+        ->add('statut_document_notaire', null, array(
+        	'label' => 'Statut Notaire',
+        	'template' => 'ApplicationSonataClientBundle:CRUD:list_statut_document_notaire.html.twig'
+        ))
+        ->add('statut_document_apostille', null, array(
+        	'label' => 'Statut Apostille',
+        	'template' => 'ApplicationSonataClientBundle:CRUD:list_statut_document_apostille.html.twig'
+        ))
         ;
     }
 
