@@ -287,6 +287,21 @@ jQuery(document).ready(function ($) {
                 }
                 
         };
+        
+        
+        symfony_ajax.behaviors.debEntityTopInfo = {
+                attach:function (context) {
+                    var _uniqid = symfony_ajax.get_uniqid();
+                    if (_uniqid) {
+                    	if(typeof Sonata.active_tab !== 'undefined') {
+                    		if(Sonata.active_tab == 'debexped' || Sonata.active_tab == 'debintro') {
+                    			$('.form-horizontal').before('<div class="alert">Certains champs ne sont obligatoires que selon le Niveau de DEB et le Régime</div>');
+                    		}
+                    	}
+                    }
+                }
+                
+        };
     }
     
     
