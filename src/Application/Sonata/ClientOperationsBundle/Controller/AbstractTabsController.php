@@ -370,11 +370,13 @@ class AbstractTabsController extends Controller
         if ($this->isXmlHttpRequest()) {
             return $data;
         }
-
+        
         $this->jsSettingsJson(array(
             'url' => array(
                 'rdevises' => $this->admin->generateUrl('RDevises', array('filter' => array('client_id' => array('value' => $this->client_id)))),
             ),
+        	'locked' => $this->getLocking() ? 1 : 0,
+        	'active_tab' => $this->_tabAlias,
         ));
 
         return $this->render('ApplicationSonataClientOperationsBundle::' . $template . '.html.twig', array(
@@ -391,11 +393,15 @@ class AbstractTabsController extends Controller
             'operation_type' => $this->_operationType,
             'action' => $action,
             'blocked' => $this->getLocking() ? 0 : 1,
+        	'locked' => $this->getLocking() ? 1 : 0,
             'js_settings_json' => $this->_jsSettingsJson,
             '_filter_json' => $this->_parameters_url,
         ));
     }
 
+    
+   
+    
     /**
      * @return mixed
      */
@@ -527,6 +533,10 @@ class AbstractTabsController extends Controller
      */
     public function createAction()
     {
+    	if ($this->getLocking() && ($this->_tabAlias == 'debexped' || $this->_tabAlias == 'debintro')) {
+    		throw new AccessDeniedException();
+    	}
+    	
         return $this->_action(parent::createAction(), 'create', 'form_layout');
     }
 

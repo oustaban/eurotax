@@ -305,6 +305,12 @@ function substr_replace($object, limit) {
 
 function init_clientoperations_buttons(o) {
 
+	if(typeof Sonata.locked !== 'undefined' && typeof Sonata.active_tab !== 'undefined') {
+		if(Sonata.locked == 1 && (Sonata.active_tab == 'debexped' || Sonata.active_tab == 'debintro')) {
+			$('#block_actions .btn-add').addClass('disabled').attr('href', 'javascript:void(0);');
+		}
+	}
+	
     var btn_client_alert_click = false;
     $('#btn_client_alert').live('click', function (event) {
 
