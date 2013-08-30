@@ -320,7 +320,7 @@ function substr_replace($object, limit) {
 
 function init_clientoperations_buttons(o) {
 
-	if(typeof Sonata.locked !== 'undefined' && typeof Sonata.active_tab !== 'undefined') {
+	if(typeof Sonata !== 'undefined' && typeof Sonata.locked !== 'undefined' && typeof Sonata.active_tab !== 'undefined') {
 		if(Sonata.locked == 1 && (Sonata.active_tab == 'debexped' || Sonata.active_tab == 'debintro')) {
 			$('#block_actions .btn-add').addClass('disabled').attr('href', 'javascript:void(0);');
 		}
@@ -675,12 +675,28 @@ function init_rapprochement_sums() {
     	}).trigger('click');*/
     	
     	recalculer();
-    	$('#rapprochement_intro_info_number, #rapprochement_intro_info_number2, #rapprochement_exped_info_number, #rapprochement_exped_info_number2').keyup(function(){
-    		recalculer();
+    	$('#rapprochement_intro_info_number, #rapprochement_intro_info_number2').keyup(function(){
+    		calc('#totals_input_v1', '#rapprochement_intro_info_number', '#totals_input_calcu1');
+    		calc('#totals_input_v2', '#rapprochement_intro_info_number2', '#totals_input_calcu2');
+    		cloturer();
+    		
     		return false;
     	}).blur(function() {
     		toEuroFormat(this);
     	});
+    	
+    	
+    	$('#rapprochement_exped_info_number, #rapprochement_exped_info_number2').keyup(function(){
+    		calc('#totals_output_v1', '#rapprochement_exped_info_number', '#totals_output_calcu1');
+    		calc('#totals_output_v2', '#rapprochement_exped_info_number2', '#totals_output_calcu2');
+    		cloturer();
+    		
+    		return false;
+    	}).blur(function() {
+    		toEuroFormat(this);
+    	});
+    	
+    	
     	
     
 	    $('#rapprochement_exped_info_text').hide();
