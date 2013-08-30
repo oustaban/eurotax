@@ -17,6 +17,19 @@ class ClientController extends Controller
 {
     protected $_jsSettingsJson = null;
 
+    
+    public function deleteAction($id)
+    {
+    	$object = $this->admin->getObject($id);
+    	if ($this->getRequest()->getMethod() == 'DELETE') {
+	    	if (!$object->getDateFinMission()) {
+	    		$this->get('session')->setFlash('sonata_flash_error', '"Fin de Mission" : Un client ouvert ne peut être supprimé.');
+	    		return $this->redirectTo($object);
+	    	}
+    	}
+    	return parent::deleteAction($id);
+    }
+    
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
