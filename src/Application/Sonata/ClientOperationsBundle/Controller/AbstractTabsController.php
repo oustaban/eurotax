@@ -283,7 +283,7 @@ class AbstractTabsController extends Controller
                 'mode_transport',
                 'departement',
                 'pays_origine',
-                'CEE',
+                //'CEE',
             )
         ),
 

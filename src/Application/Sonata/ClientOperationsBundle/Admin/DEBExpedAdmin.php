@@ -96,7 +96,8 @@ class DEBExpedAdmin extends Admin
             ->add('mode_transport', null, array('label' => $this->getFieldLabel('mode_transport')))
             ->add('departement', null, array('label' => $this->getFieldLabel('departement')))
             ->add('pays_origine.name', null, array('label' => $this->getFieldLabel('pays_id_origine')))
-            ->add('CEE', null, array('label' => $this->getFieldLabel('CEE')));
+            ->add('CEE', null, array('label' => $this->getFieldLabel('CEE')))
+        ;
 
         $this->postConfigureListFields($listMapper);
     }
