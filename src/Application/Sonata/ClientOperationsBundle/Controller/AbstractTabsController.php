@@ -1461,21 +1461,34 @@ class AbstractTabsController extends Controller
         $locking = $em->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $client_id, 'month' => $_month, 'year' => $_year));
 
         if ($locking) {
-            $em->remove($locking);
-            $em->flush();
             $status_id = 2;
         }
 
         if ($blocked) {
-            $locking = new Locking();
-            $locking->setClientId($client_id);
-            $locking->setMonth($_month);
-            $locking->setYear($_year);
-            $em->persist($locking);
-            $em->flush();
             $status_id = 1;
         }
 
+        if($status_id == 1 && !$this->acceptLocking($client_id, $month)) {
+        	$this->get('session')->setFlash('sonata_flash_error', 'Le mois précédent n\'est pas vérouillé.');
+        	return $this->redirect($this->generateUrl('admin_sonata_clientoperations_' . $this->_tabAlias . '_list', array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)));
+        }
+        
+        
+        
+        if($locking) {
+        	$em->remove($locking);
+        	$em->flush();
+        }
+        
+        if ($blocked) {
+        	$locking = new Locking();
+        	$locking->setClientId($client_id);
+        	$locking->setMonth($_month);
+        	$locking->setYear($_year);
+        	$em->persist($locking);
+        	$em->flush();
+        }
+        
         $status = $em->getRepository('ApplicationSonataClientOperationsBundle:ListStatuses')->find($status_id);
 
         if ($status) {
@@ -1502,6 +1515,51 @@ class AbstractTabsController extends Controller
         return $this->redirect($this->generateUrl('admin_sonata_clientoperations_' . $this->_tabAlias . '_list', array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)));
     }
 
+    
+    
+    protected function acceptLocking($client_id, $month) {
+    	list($_month, $_year) = $this->admin->getQueryMonth($month);
+    	
+    	$lastMonth = new \DateTime("$_year-$_month-01 -1 month");
+    	$hasRecordLastMonth = false;
+    	
+    	$_year = $lastMonth->format('Y');
+    	$_month = $lastMonth->format('m');
+    	//var_dump($lastMonth->format('Y m'));
+    	 
+    	$em = $this->getDoctrine()->getManager();
+    	
+    	foreach ($this->_config_excel as $table => $params) {
+    		$objects = $em->getRepository('ApplicationSonataClientOperationsBundle:' . $params['entity'])
+    		->createQueryBuilder('o')
+    		->where('o.mois BETWEEN :from_date AND :to_date')
+    		->andWhere('o.client_id = :client_id')
+    		->setParameter(':from_date', $_year . '-' . $_month . '-01')
+    		->setParameter(':to_date', $_year . '-' . $_month . '-31')
+    		->setParameter(':client_id', $client_id)
+    		->getQuery()->getResult();
+    		foreach ($objects as $obj) {
+    			$hasRecordLastMonth = true;
+    			break;
+    		}
+    		if($hasRecordLastMonth) {
+    			break;
+    		}
+    		unset($objects);
+    	}
+    	
+    	$lastMonthLocking = $em->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $client_id, 'month' => $_month, 'year' => $_year));
+    	
+    	// Last month must be locked first
+    	if($hasRecordLastMonth && !$lastMonthLocking) {
+    		return false;
+    	}
+    	
+    	return true;
+    }
+    
+    
+    
     /**
      * @param $id
      * @return \Symfony\Component\HttpFoundation\Response

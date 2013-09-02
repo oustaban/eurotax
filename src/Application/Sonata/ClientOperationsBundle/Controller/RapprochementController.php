@@ -380,7 +380,25 @@ class RapprochementController extends Controller
     			//$this->get('session')->setFlash('notice', 'Success');
     			//return $this->render(':redirects:back.html.twig');
     			//return $this->redirect($this->generateUrl('rapprochement_index', array('client_id' => $client_id, 'month' => $month), true));
-    			$this->setLocking($client_id, $month, $blocked);
+    			
+    			
+    			
+    			list($_month, $_year) = $this->getQueryMonth($month);
+    			$locking = $em->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $client_id, 'month' => $_month, 'year' => $_year));
+    			
+    			if ($locking) {
+    				$status_id = 2;
+    			}
+    			
+    			if ($blocked) {
+    				$status_id = 1;
+    			}
+    			
+    			if($status_id ==1 && !$this->acceptLocking($client_id, $month)) {
+    				$this->get('session')->setFlash('sonata_flash_error', 'Le mois précédent n\'est pas vérouillé.');
+    			} else {
+    				$this->setLocking($client_id, $month, $blocked);
+    			}
 
     				
     			header('Location: ' . $this->generateUrl('admin_sonata_clientoperations_v01tva_list', array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)));
@@ -406,11 +424,6 @@ class RapprochementController extends Controller
     public function setLocking($client_id, $month, $blocked = 1)
     {
     	list($_month, $_year) = $this->getQueryMonth($month);
-    
-    	
-    	/* var_dump($_month, $_year);
-    	exit; */
-    	
     	
     	/* @var $em \Doctrine\ORM\EntityManager */
     	$em = $this->getDoctrine()->getManager();
@@ -432,11 +445,6 @@ class RapprochementController extends Controller
     		$em->flush();
     		$status_id = 1;
     	}
-    	
-    	
-    	
-    	/* var_dump($status_id);
-    	exit; */
     	
     
     	$status = $em->getRepository('ApplicationSonataClientOperationsBundle:ListStatuses')->find($status_id);
@@ -460,6 +468,48 @@ class RapprochementController extends Controller
     			unset($objects);
     		}
     	}
+    }
+    
+    
+    protected function acceptLocking($client_id, $month) {
+    	list($_month, $_year) = $this->getQueryMonth($month);
+    	
+    	$lastMonth = new \DateTime("$_year-$_month-01 -1 month");
+    	$hasRecordLastMonth = false;
+    	
+    	$_year = $lastMonth->format('Y');
+    	$_month = $lastMonth->format('m');
+    	//var_dump($lastMonth->format('Y m'));
+    	 
+    	$em = $this->getDoctrine()->getManager();
+    	
+    	foreach ($this->_config_excel as $table => $params) {
+    		$objects = $em->getRepository('ApplicationSonataClientOperationsBundle:' . $params['entity'])
+    		->createQueryBuilder('o')
+    		->where('o.mois BETWEEN :from_date AND :to_date')
+    		->andWhere('o.client_id = :client_id')
+    		->setParameter(':from_date', $_year . '-' . $_month . '-01')
+    		->setParameter(':to_date', $_year . '-' . $_month . '-31')
+    		->setParameter(':client_id', $client_id)
+    		->getQuery()->getResult();
+    		foreach ($objects as $obj) {
+    			$hasRecordLastMonth = true;
+    			break;
+    		}
+    		if($hasRecordLastMonth) {
+    			break;
+    		}
+    		unset($objects);
+    	}
+    	
+    	$lastMonthLocking = $em->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $client_id, 'month' => $_month, 'year' => $_year));
+    	
+    	// Last month must be locked first
+    	if($hasRecordLastMonth && !$lastMonthLocking) {
+    		return false;
+    	}
+    	
+    	return true;
     }
     
     
