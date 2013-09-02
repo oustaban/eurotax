@@ -27,7 +27,17 @@ class ClientController extends Controller
 	    		return $this->redirectTo($object);
 	    	}
     	}
-    	return parent::deleteAction($id);
+
+    	return $this->render('ApplicationSonataClientBundle:CRUD:delete.html.twig', array(
+    			'current_client' => $object,
+    			'content' => parent::deleteAction($id)->getContent(),
+    			'action' => 'delete',
+    			'object' => $object
+
+    	));
+    	 
+    	
+    	
     }
     
     /**
