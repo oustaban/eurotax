@@ -319,8 +319,11 @@ class ErrorElements
     	} else {
     		return $this;
     	}
-    	
 
+    	if(!$value) {
+    		return $this;
+    	}
+    	
     	$validationDef = array(
     			'GB' => array(5,9,12),//GB + 5, 9 ou 12 caractères
     			'CZ' => array(8,9,10),//CZ + 8, 9 ou 10 caractères

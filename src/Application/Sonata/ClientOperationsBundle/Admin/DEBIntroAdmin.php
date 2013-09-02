@@ -56,7 +56,7 @@ class DEBIntroAdmin extends Admin
             ->add('valeur_statistique', 'money', array('label' => $this->getFieldLabel('valeur_statistique'), 'required' => false))
             ->add('masse_mette', null, array('label' => $this->getFieldLabel('masse_mette')))
             ->add('unites_supplementaires', null, array('label' => $this->getFieldLabel('unites_supplementaires')))
-            ->add('nature_transaction', null, array('label' => $this->getFieldLabel('nature_transaction')))
+            ->add('nature_transaction', 'choice', array('label' => $this->getFieldLabel('nature_transaction'), 'choices' => $this->_nature_transaction_source, 'empty_value' => null, 'data' => !$id ? 0 : null))
             ->add('conditions_livraison', null, array('label' => $this->getFieldLabel('conditions_livraison')))
             ->add('mode_transport', null, array('label' => $this->getFieldLabel('mode_transport')))
             ->add('departement', null, array('label' => $this->getFieldLabel('departement')))

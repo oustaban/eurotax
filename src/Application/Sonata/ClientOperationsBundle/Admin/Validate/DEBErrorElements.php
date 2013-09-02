@@ -994,17 +994,8 @@ class DEBErrorElements extends ErrorElements
 					$method = 'get' . strtoupper(\Doctrine\Common\Util\Inflector::camelize($field));
 					$value = $this->_object->$method();
 					
-					if(is_float($value)) {
-						if($value != 0) {
-							$hasViolation = true;
-						}
-					} elseif (!empty($value) || !is_null($value) ) {
-						$hasViolation = true;
-					}
-					
-					
-					if($hasViolation) {
-						$this->_errorElement->with($field)->addViolation( 'La cellule doit être vide.' )->end();
+					if((int)$value != 0) {
+						$this->_errorElement->with($field)->addViolation( 'La cellule doit être vide.')->end();
 					}
 				}
 			}

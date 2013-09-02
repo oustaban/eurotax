@@ -44,6 +44,32 @@ abstract class AbstractTabsAdmin extends Admin
     public $import_file_year,
     	$import_file_month;
     
+    
+    
+    protected $_nature_transaction_source = array(
+    		11 => '11 : Achat/vente ferme',
+    		12 => '12 : Livraison pour vente à vue ou à l\'essai (transfert de stock en clair)',
+			21 => '21 : Retour de biens',
+			0 => '',//( WHITE LINE )
+			13 => '13 : Troc (compensation en nature)',
+			14 => '14 : Leasing financier (location-vente)',
+			19 => '19 : Transactions entraînant un transfert que propriété : Autres que 11,12,13,14',
+			22 => '22 : Remplacement de biens retournés',
+			23 => '23 : Remplacement de biens non retournés (ex : garantie)',
+			29 => '29 : Retours de biens : Autres que 21,22,23',
+			30 => '30 : Transactions non temporaires impliquant le transfert de propriété sans compensation',
+			41 => '41 : Opérations en vue d\'un travail à façon : biens réexpédiés vers l\'état membre initial',
+			42 => '42 : Opérations en vue d\'un travail à façon : biens non destinés à être réexpédiés vers état membre initial',
+    		51 => '51 : Opération après travail à façon : biens réexpédiés vers l\'état membre initial',
+			52 => '52 : Opération après travail à façon : biens réexpédiés vers un état membre autre que l\'état membre initial',
+    		70 => '70 : Programme de défense ou inter-gouvernementaux',
+    		80 => '80 : Matériaux dans le cadre d\'un contrat de construction',
+    		91 => '91 : Location, prêt, leasing pour une durée supérieure à 24 mois',
+    		99 => '99 : Autres transactions',
+    );
+    
+    
+    
     /**
      * @param string $code
      * @param string $class
