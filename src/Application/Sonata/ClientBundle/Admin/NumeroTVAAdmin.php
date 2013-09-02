@@ -194,7 +194,7 @@ SE + 12 caractères
     	};
     	
     	
-    	if($validated($key, $trail) === false) {
+    	if(!$key || $validated($key, $trail) === false) {
     		$errorElement->with('n_de_TVA')->addViolation('Mauvais format de TVA.')->end();
     	}
     	

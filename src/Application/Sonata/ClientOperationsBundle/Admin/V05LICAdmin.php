@@ -101,6 +101,7 @@ class V05LICAdmin extends Admin
         $error = new ErrorElements($errorElement, $object, $this->import_file_year, $this->import_file_month);
         $error->setValidateImport($this->getValidateImport())
         	->setMois2($this)
+        	->validateNoTVATiers()
         	->validateRegime2(array(21, 25, 26, 29, 31))
         	->validateDEB()
             ->validateDevise()

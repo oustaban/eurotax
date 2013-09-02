@@ -309,13 +309,87 @@ class ErrorElements
      */
     public function validateNoTVATiers()
     {
-        $value = $this->_object->getNoTVATiers();
-        if ($value) {
-            if (!preg_match('/^FR.*/', $value)) {
-                $this->_errorElement->with('no_TVA_tiers')->addViolation('"N° TVA Tiers" should begin with "FR"')->end();
-            }
-        }
+        
+    	if(method_exists($this->_object, 'getNoTVATiers')) {
+    		$value = $this->_object->getNoTVATiers();
+    		$field = 'no_TVA_tiers';
+    	} else if(method_exists($this->_object, 'getCEE')) {
+    		$value = $this->_object->getCEE();
+    		$field = 'CEE';
+    	} else {
+    		return $this;
+    	}
+    	
 
+    	$validationDef = array(
+    			'GB' => array(5,9,12),//GB + 5, 9 ou 12 caractères
+    			'CZ' => array(8,9,10),//CZ + 8, 9 ou 10 caractères
+
+    			'DK' => array(8), //DK + 8 caractères
+    			'FI' => array(8),//FI + 8 caractères
+    			'IE' => array(8),//IE + 8 caractères
+    			'LU' => array(8),//LU + 8 caractères
+    			'HU' => array(8),//HU + 8 caractères
+    			'MT' => array(8),//MT + 8 caractères
+    			'SI' => array(8),//SI + 8 caractères
+
+    			'LT' => array(9, 12),//LT + 9 ou 12 caractères
+
+    			'ES' => array(9),//ES + 9 caractères ou +A/B et 8 caractères
+    			'A/B' => array(8),
+
+    			'DE' => array(9),//DE + 9 caractères
+    			'AT' => array(9),//AT + 9 caractères
+    			'BE' => array(9, 10),//BE + 9, 10 caractères
+    			'EL' => array(9),//EL + 9 caractères
+    			'CY' => array(9),//CY + 9 caractères
+    			'EE' => array(9),//EE + 9 caractères
+    			'PT' => array(9),//PT + 9 caractères
+
+    			'PL' => array(10),//PL + 10 caractères
+    			'SK' => array(10),//SK + 10 caractères
+    			'BG' => array(9, 10),//BG + 10 caractères
+    			'RO' => array(2,3,4,5,6,7,8,9,10),//RO + 10 caractères
+
+    			'FR' => array(11),//FR + 11 caractères
+    			'IT' => array(11),//IT + 11 caractères
+    			'LV' => array(11),//LV + 11 caractères
+    			'HR' => array(11),//HR + 11 caractères
+
+    			'NL' => array(12),//NL + 12 caractères
+    			'SE' => array(12),//SE + 12 caractères
+    	);
+    	 
+    	$value = str_replace(' ', '', $value);
+    	$key = substr($value, 0, 2);
+    	$trail = substr($value, 2); //trailing characters
+    	 
+    	// for 'A/B' key
+    	if(strstr($key,'/')) {
+    		$key = substr($value, 0, 3);
+    		$trail = substr($value, 3); //trailing characters
+    	}
+    	 
+    	 
+    	$validated = function($key, $trail) use ($validationDef) {
+    		if(!array_key_exists($key,$validationDef)) {
+    			return false;
+    		}
+    	
+    		if(isset($validationDef[$key])) {
+    			$lengths = $validationDef[$key];
+    			if(!in_array(strlen($trail), $lengths)) {
+    				return false;
+    			}
+    		}
+    		return true;
+    	};
+    	 
+    	 
+    	if(!$key || $validated($key, $trail) === false) {
+    		$this->_errorElement->with($field)->addViolation('Mauvais format de TVA.')->end();
+    	}
+    	
         return $this;
     }
 
