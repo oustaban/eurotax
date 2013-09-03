@@ -74,7 +74,7 @@ function real_num(num) {
 	if(num == '' || typeof num === 'undefined') {
 		return '';
 	}
-	num = num.toString().replace(',', '.').replace(/\s+/, '');
+	num = num.toString().replace(/^\s+|\s+$/g, '').replace(',', '.').replace(/\s+/, '');
 	num = encodeURIComponent(num).replace('%C2%A0', '').replace('%20', ''); // to ensure spaces are replaced w/ empty string
 	
 	return parseFloat(num);
