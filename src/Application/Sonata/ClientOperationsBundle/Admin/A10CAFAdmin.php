@@ -35,6 +35,7 @@ class A10CAFAdmin extends Admin
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'required'=>false))
             ->add('mois', 'mois', array(
             'label' => $this->getFieldLabel('mois'),
+            'disabled' => $this->getLocking() ? true : false
         ))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
     }

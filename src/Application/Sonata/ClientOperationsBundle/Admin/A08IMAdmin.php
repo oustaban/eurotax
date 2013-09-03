@@ -50,6 +50,7 @@ class A08IMAdmin extends Admin
             ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA'), 'required'=>false))
             ->add('mois', 'mois', array(
             'label' => $this->getFieldLabel('mois'),
+            'disabled' => $this->getLocking() ? true : false
         ))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
     }

@@ -70,7 +70,8 @@ class A02TVAAdmin extends Admin
                 'format' => $this->date_format_datetime)
         )
             ->add('mois', 'mois', array(
-            'label' => $this->getFieldLabel('mois'),
+            'label' => $this->getFieldLabel('mois'), 
+             'disabled' => $this->getLocking() ? true : false
         ))
             ->add('taux_de_change', null, array(
             'label' => $this->getFieldLabel('taux_de_change'),

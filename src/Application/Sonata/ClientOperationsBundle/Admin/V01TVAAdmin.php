@@ -70,6 +70,7 @@ class V01TVAAdmin extends Admin
         )
             ->add('mois', 'mois', array(
             'label' => $this->getFieldLabel('mois'),
+            'disabled' => $this->getLocking() ? true : false
         ))
             ->add('taux_de_change', null, array(
             'label' => $this->getFieldLabel('taux_de_change'),

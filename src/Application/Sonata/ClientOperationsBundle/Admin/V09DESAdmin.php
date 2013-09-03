@@ -41,6 +41,7 @@ class V09DESAdmin extends Admin
             ->add('montant_HT_en_devise', null, array('attr'=>array('class'=>'money'), 'label' => $this->getFieldLabel('montant_HT_en_devise')))
             ->add('mois', 'mois', array(
             'label' => $this->getFieldLabel('mois'),
+            'disabled' => $this->getLocking() ? true : false            		
         ))
             ->add('mois_complementaire', null, array('label' => $this->getFieldLabel('mois_complementaire')))
             ->add('taux_de_change', null, array(
