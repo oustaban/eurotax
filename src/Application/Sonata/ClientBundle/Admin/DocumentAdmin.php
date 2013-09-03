@@ -140,12 +140,11 @@ class DocumentAdmin extends Admin
             'label' => $this->getFieldLabel('document'),
             'template' => 'ApplicationSonataClientBundle:CRUD:document_link.html.twig'
         ))
-            ->add('type_document.name', null, array('label' => $this->getFieldLabel('type_document')))
+        ->add('type_document.name', null, array('label' => $this->getFieldLabel('type_document')))
             ->add('date_document', null, array(
             'label' => $this->getFieldLabel('date_document'),
             'template' => 'ApplicationSonataClientBundle:CRUD:list_date_document.html.twig'
         ))
-        
         ->add('statut_document_notaire', null, array(
         	'label' => 'Statut Notaire',
         	'template' => 'ApplicationSonataClientBundle:CRUD:list_statut_document_notaire.html.twig'
@@ -153,6 +152,9 @@ class DocumentAdmin extends Admin
         ->add('statut_document_apostille', null, array(
         	'label' => 'Statut Apostille',
         	'template' => 'ApplicationSonataClientBundle:CRUD:list_statut_document_apostille.html.twig'
+        ))
+        ->add('client.N_TVA_CEE', null, array('label' => 'N TVA CEE',
+        	'template' => 'ApplicationSonataClientBundle:CRUD:list_client_n_tva_cee_document.html.twig'
         ))
         ;
     }
