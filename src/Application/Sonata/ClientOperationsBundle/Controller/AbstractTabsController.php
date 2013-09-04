@@ -55,6 +55,9 @@ class AbstractTabsController extends Controller
     protected $_import_file_year,
     	$_import_file_month;
     
+    protected $_lockingTab, $_lockingDate, $_lockingMonth, $_lockingYear, 
+    	$_unlockingMonth, $_unlockingYear;
+    
     /**
      * @var \Application\Sonata\ClientOperationsBundle\Entity\Imports
      */
@@ -1469,7 +1472,7 @@ class AbstractTabsController extends Controller
         }
 
         if($status_id == 1 && !$this->acceptLocking($client_id, $month)) {
-        	$this->get('session')->setFlash('sonata_flash_error', 'Le mois précédent n\'est pas vérouillé.');
+        	$this->get('session')->setFlash('sonata_flash_error', 'Cloture Mois-TVA ' . $this->_lockingYear . '-' . $this->_lockingMonth . ' impossible car au moins une opération n\'a pas été prise en compte sur une des Ca3 précédente dans : ' . $this->_lockingTab . ' - ' . $this->_lockingDate->format('Y-m-d'));
         	return $this->redirect($this->generateUrl('admin_sonata_clientoperations_' . $this->_tabAlias . '_list', array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)));
         }
         
@@ -1539,6 +1542,7 @@ class AbstractTabsController extends Controller
     		->createQueryBuilder('o')
     		->where('o.mois BETWEEN :from_date AND :to_date')
     		->andWhere('o.client_id = :client_id')
+    		->orderBy('o.mois', 'DESC')
     		->setParameter(':from_date', $_year . '-' . $_month . '-01')
     		->setParameter(':to_date', $_year . '-' . $_month . '-31')
     		->setParameter(':client_id', $client_id)
@@ -1548,6 +1552,10 @@ class AbstractTabsController extends Controller
     			break;
     		}
     		if($hasRecordLastMonth) {
+    			$this->_lockingMonth = $obj->getMois()->format('m');
+    			$this->_lockingYear = $obj->getMois()->format('Y');
+    			$this->_lockingTab = $params['name'];
+    			$this->_lockingDate = $obj->getMois();
     			break;
     		}
     		unset($objects);
@@ -1563,7 +1571,7 @@ class AbstractTabsController extends Controller
     	return true;
     }
     
-    protected $_unlockingMonth, $_unlockingYear;
+    
     
     protected function acceptUnlocking($client_id, $month) {
     	list($_month, $_year) = $this->admin->getQueryMonth($month);
