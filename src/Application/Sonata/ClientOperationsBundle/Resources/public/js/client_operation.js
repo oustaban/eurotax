@@ -106,7 +106,15 @@ jQuery(document).ready(function ($) {
                         //If « Date du paiement » is empty.. « Mois de TVA » should be empty too
                         // When I delete the data “Date de paiement”, I should empty the field “Taux de change”, “HT” and “TVA”
                         if(paiement_date == '') {
-                        	$('#' + _uniqid + '_mois_mois').val('');
+                        	//$('#' + _uniqid + '_mois_mois').val('');
+                        	
+                        	$('#' + _uniqid + '_mois_mois option').removeAttr('selected');
+                        	
+                        	$('#' + _uniqid + '_mois_month option').removeAttr('selected');
+                        	$('#' + _uniqid + '_mois_day option').removeAttr('selected');
+                        	$('#' + _uniqid + '_mois_year option').removeAttr('selected');
+                        	
+                        	
                         	$('#' + _uniqid + '_taux_de_change').val('');
                         	$('#' + _uniqid + '_TVA').val('');
                         	$('#' + _uniqid + '_HT').val('');
@@ -134,7 +142,7 @@ jQuery(document).ready(function ($) {
                                 }
                             });
                         }
-                    });
+                    }).trigger('change');
                 }
             }
         };
