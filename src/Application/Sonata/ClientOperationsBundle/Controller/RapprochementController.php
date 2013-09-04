@@ -396,6 +396,8 @@ class RapprochementController extends Controller
     			
     			if($status_id ==1 && !$this->acceptLocking($client_id, $month)) {
     				$this->get('session')->setFlash('sonata_flash_error', 'Le mois précédent n\'est pas vérouillé.');
+    			} elseif($status_id == 2 && !$this->acceptUnlocking($client_id, $month)) {
+    				$this->get('session')->setFlash('sonata_flash_error', 'Le mois ' . $this->_unlockingYear . '-' . $this->_unlockingMonth . ' est déjà vérouillé, vous ne pouvez donc pas dévérouillé le mois sélectionné.');
     			} else {
     				$this->setLocking($client_id, $month, $blocked);
     			}
@@ -510,6 +512,60 @@ class RapprochementController extends Controller
     	}
     	
     	return true;
+    }
+    
+    
+    protected $_unlockingMonth, $_unlockingYear;
+    
+    protected function acceptUnlocking($client_id, $month) {
+    	list($_month, $_year) = $this->getQueryMonth($month);
+    	 
+    	 
+    	$hasRecordLatestMonth = false;
+    	 
+    	$em = $this->getDoctrine()->getManager();
+    	 
+    	 
+    	$emConfig = $em->getConfiguration();
+    	$emConfig->addCustomStringFunction('DATE_FORMAT', 'Application\Sonata\ClientOperationsBundle\DQL\DateFormatFunction');
+    
+    	foreach ($this->_config_excel as $table => $params) {
+    		$objects = $em->getRepository('ApplicationSonataClientOperationsBundle:' . $params['entity'])
+    		->createQueryBuilder('o')
+    		->where("DATE_FORMAT(o.mois, '%Y-%m') > :date")
+    		->andWhere('o.client_id = :client_id')
+    		->andWhere('o.status = 1') //verrouillé
+    		->orderBy('o.mois', 'ASC')
+    		->setParameter(':date', $_year . '-' . str_pad($_month, 2, 0, STR_PAD_LEFT))
+    		->setParameter(':client_id', $client_id)
+    		->getQuery()
+    
+    		//->getSQL();exit($objects);
+    		->getResult();
+    
+    		foreach ($objects as $obj) {
+    			$hasRecordLatestMonth = true;
+    			break;
+    		}
+    		if($hasRecordLatestMonth) {
+    			 
+    			$this->_unlockingMonth = $obj->getMois()->format('m');
+    			$this->_unlockingYear = $obj->getMois()->format('Y');
+    			 
+    			break;
+    		}
+    		unset($objects);
+    		 
+    	}
+    	 
+    	if($hasRecordLatestMonth) {
+    		return false;
+    	}
+    
+    	return true;
+    	 
+    	 
+    	 
     }
     
     

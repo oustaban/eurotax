@@ -256,7 +256,7 @@ abstract class AbstractTabsAdmin extends Admin
     		$fieldDescription = $this->getFormFieldDescription($field);
     		if ($fieldDescription && $type = $fieldDescription->getType()) {
     			if($type == 'money' || $type == 'number' || $type == 'float') {
-    				if(isset($formRequestData[$field])) {
+    				if(isset($formRequestData[$field]) && !empty($formRequestData[$field])) {
     					$method = ucfirst(\Doctrine\Common\Util\Inflector::classify($field));
     					$setMethod = 'set'.$method;
     					$getMethod = 'get'.$method;
