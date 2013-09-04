@@ -1,0 +1,9 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+{% if object.getTypeDocument and (object.getTypeDocument.getId == 5) %}{# Attestation de TVA #}
+	
+	{{ object.client.getNTVACEE }}
+
+{% endif %}	
+{% endblock field %}
