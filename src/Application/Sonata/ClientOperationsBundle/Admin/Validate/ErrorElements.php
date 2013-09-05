@@ -307,8 +307,7 @@ class ErrorElements
     /**
      * @return ErrorElements
      */
-    public function validateNoTVATiers()
-    {
+    public function validateNoTVATiers()  {
         
     	if(method_exists($this->_object, 'getNoTVATiers')) {
     		$value = $this->_object->getNoTVATiers();
@@ -321,6 +320,29 @@ class ErrorElements
     	}
 
     	if(!$value) {
+    		return $this;
+    	}
+    	
+    	
+    	
+    	$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+        $em = $doctrine->getManager();
+    	 
+    	 
+    	$emConfig = $em->getConfiguration();
+    	$emConfig->addCustomStringFunction('REPLACE', 'Application\Sonata\ClientOperationsBundle\DQL\ReplaceFunction');
+    	
+    	
+    	$numeros = $em->getRepository('ApplicationSonataClientBundle:NumeroTVA')
+	    	->createQueryBuilder('o')
+	    	->where("REPLACE(o.n_de_TVA, ' ', '') = '" . str_replace(' ', '', $value) . "'")
+	    	->andWhere('o.client = ' . $this->_object->getClientId())
+	    	->getQuery()
+	    	//->getSQL();exit($numeros);
+	    	->getResult();
+    	
+    	if(count($numeros) == 0) {
+    		$this->_errorElement->with($field)->addViolation('Le N° de TVA n\'est pas dans la liste des N° TVA des clients du client.')->end();
     		return $this;
     	}
     	
