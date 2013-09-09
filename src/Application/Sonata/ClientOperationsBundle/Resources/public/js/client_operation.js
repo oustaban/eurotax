@@ -310,6 +310,50 @@ jQuery(document).ready(function ($) {
                 }
                 
         };
+        
+        
+        
+        
+        symfony_ajax.behaviors.positiveNumberOnly = {
+                attach:function (context) {
+                    var _uniqid = symfony_ajax.get_uniqid();
+                    if (_uniqid) {
+                    
+                    	
+                    	if($('#' + _uniqid + '_masse_mette, #' + _uniqid + '_unites_supplementaires', context).size()) {
+                    		
+                    		
+                    		$('#' + _uniqid + '_masse_mette, #' + _uniqid + '_unites_supplementaires', context).keydown(function(event) {
+                    			var key = event.charCode || event.keyCode || 0;
+                    			// allow backspace, tab, delete, arrows, numbers and keypad numbers ONLY
+                    			// home, end, period, and numpad decimal
+
+                    			//console.log(key);
+
+                    			// Allow: backspace, delete, tab, escape, and enter
+                    			if ( key == 46 || key == 8 || key == 9 || key == 27 || key == 13 || 
+                    					// Allow: Ctrl+A
+                    					(key == 65 && event.ctrlKey === true) || 
+                    					// Allow: home, end, left, right
+                    					(key >= 35 && key <= 39)) {
+                    				// let it happen, don't do anything
+                    				return;
+                    			}
+                    			else {
+                    				// Ensure that it is a number and stop the keypress
+                    				if (event.shiftKey || (key < 48 || key > 57) && (key < 96 || key > 105 )) {
+                    					event.preventDefault(); 
+                    				}   
+                    			}
+
+                    		});
+                    		
+                    	}
+                    	
+                    }
+                }
+        };
+        
     }
     
     
