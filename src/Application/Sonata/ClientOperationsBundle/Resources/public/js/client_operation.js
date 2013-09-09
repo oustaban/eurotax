@@ -335,7 +335,7 @@ jQuery(document).ready(function ($) {
                     					// Allow: Ctrl+A
                     					(key == 65 && event.ctrlKey === true) || 
                     					// Allow: home, end, left, right
-                    					(key >= 35 && key <= 39)) {
+                    					(key >= 35 && key <= 40)) {
                     				// let it happen, don't do anything
                     				return;
                     			}
