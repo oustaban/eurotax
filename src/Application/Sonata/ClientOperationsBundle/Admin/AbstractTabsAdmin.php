@@ -99,10 +99,18 @@ abstract class AbstractTabsAdmin extends Admin
             
             if ($this->query_month == 'all'){
                 $this->query_month = -1;
-                $this->_show_all_operations = true;
+                
             }
             
 
+            if ($this->query_month == -1){
+            	
+            	$this->_show_all_operations = true;
+            }
+            
+            
+            
+            
             list($this->month, $this->year) = $this->getQueryMonth($this->query_month);
         }
     }
