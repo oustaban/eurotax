@@ -26,12 +26,16 @@ class TransDeb {
 	 * 7 to 12 : this is a sequence completed with 0000 on the left. Create a table for counter.. and add an index for this file that you increment each time
 	 * 13 to 18 :  Begin on 000001 and incremet on each line
 	 *
+	 * Update: On position 7+8+9+10+11+12 : replace by the date of generation of file format YYMMDD
+	 * 
 	 * @param unknown $index
 	 * @param unknown $increment
 	 * @return string
 	 */
 	protected function col2($index, $increment) {
-		return str_pad($index, 6, 0, STR_PAD_LEFT) . str_pad($increment, 6, 0, STR_PAD_LEFT);
+		//return str_pad($index, 6, 0, STR_PAD_LEFT) . str_pad($increment, 6, 0, STR_PAD_LEFT);
+		
+		return date('ymd') . str_pad($increment, 6, 0, STR_PAD_LEFT);
 	}
 	
 	/**
@@ -63,7 +67,9 @@ class TransDeb {
 	 * 47 to 57 : Valeur Fiscale  ( with 000 before to comple... no digit after ,)
 	 * 58 to 61 : Conditions Livraison
 	 * 62 to 63 : Régime
-	 * 64 : I have to check the other one..
+	 * 64 : replace by "Niveau Obligation INTRO " for the line from DEB Intro 
+	 * "Niveau Obligation EXPED" for line from DEB exped
+	 * 
 	 * 65 to 72 : Nomenclature du produit on http://eurotax.testenm.com/sonata/clientoperations/debexped/list?filter[client_id][value]=1 + "00000000" to complete on the left
 	 * 73 : 0 ( all the time the same caractere)
 	 * 74 à 83 : Masse Nette  ( complete with 000 before.. no digit after ,)
@@ -74,13 +80,16 @@ class TransDeb {
 	 * @return string
 	 */
 	protected function col5(\Application\Sonata\ClientOperationsBundle\Entity\AbstractDEBEntity $row) {
+		
+		
 		return $row->getPaysIdDestination() . 
 			$row->getNatureTransaction() .  
 			str_pad( (int) $row->getValeurFiscale(), 11, 0, STR_PAD_LEFT) .
 			str_pad( $row->getConditionsLivraison(), 4, 0, STR_PAD_LEFT) . 
 			str_pad( $row->getRegime(), 2, 0, STR_PAD_LEFT) . 
 			
-			$this->spacer() . // 64 - temp only
+			//$this->spacer() . // 64 - temp only
+			(($row instanceof \Application\Sonata\ClientOperationsBundle\Entity\DEBIntro) ? $this->_client->getNiveauDobligationId() : $this->_client->getNiveauDobligationExpedId()) .
  		 	str_pad($row->getNomenclature(), 8, 0, STR_PAD_LEFT) . // 65 - 72 
             0 .	// 73		
 		 	
