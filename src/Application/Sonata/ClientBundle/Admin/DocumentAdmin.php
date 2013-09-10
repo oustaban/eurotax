@@ -39,9 +39,20 @@ class DocumentAdmin extends Admin
         $typeDocumentId = 0;
         $typeDocDisabled = false;
         
+        $dateNotaire = null;
+        $dateApostille = null;
+        
         if($id && $document = $em->getRepository('ApplicationSonataClientBundle:Document')->find($id)) {
         	$typeDocumentId = $document->getTypeDocument()->getId();
+        	
+        	$dateNotaire = $document->getDateNotaire();
+        	$dateApostille = $document->getDateApostille();
+        	
+        	var_dump($dateApostille);
         }
+        
+        
+        
         
         // 2 = Pouvoir || 3 = Accord
         if($typeDocumentId == 2 || $typeDocumentId == 3) {
@@ -105,12 +116,14 @@ class DocumentAdmin extends Admin
             'attr' => array('class' => 'datepicker'),
             'widget' => 'single_text',
             'input' => 'datetime',
-            'format' => $this->date_format_datetime
+            'format' => $this->date_format_datetime,
+            'disabled' => $dateNotaire ? true : false
         ))
             ->add('statut_document_notaire', null, array(
             'label' => $this->getFieldLabel('statut_document_notaire'),
             'empty_value' => '',
             'required' => false,
+            'disabled' => $dateNotaire ? true : false
         ))
 
             ->add('date_apostille', null, array(
@@ -118,13 +131,15 @@ class DocumentAdmin extends Admin
             'attr' => array('class' => 'datepicker'),
             'widget' => 'single_text',
             'input' => 'datetime',
-            'format' => $this->date_format_datetime
+            'format' => $this->date_format_datetime,
+            'disabled' => $dateApostille ? true : false
         ))
 
             ->add('statut_document_apostille', null, array(
             'label' => $this->getFieldLabel('statut_document_apostille'),
             'empty_value' => '',
             'required' => false,
+            'disabled' => $dateApostille ? true : false
         ));
     }
 
