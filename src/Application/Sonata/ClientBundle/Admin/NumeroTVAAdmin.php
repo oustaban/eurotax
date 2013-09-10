@@ -226,9 +226,12 @@ SE + 12 caractères
     		->getQuery()->execute();
     		
 	    	$nTVA = $em->getRepository('ApplicationSonataClientBundle:NumeroTVA')
-	    		->findBy(array('date_de_verification' => new \DateTime('2000-01-01')));
+	    		->findBy(array('date_de_verification' => new \DateTime('2000-01-01'), 'client' => $this->getClient()));
 	    	
 	    	$nTVANum = count($nTVA);
+	    	
+	    	
+	    	
 	    	
 	    	if($nTVANum > 0) {
 	    		

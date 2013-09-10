@@ -48,7 +48,7 @@ class DocumentAdmin extends Admin
         	$dateNotaire = $document->getDateNotaire();
         	$dateApostille = $document->getDateApostille();
         	
-        	var_dump($dateApostille);
+        	
         }
         
         
