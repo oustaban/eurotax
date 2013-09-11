@@ -1472,7 +1472,7 @@ class AbstractTabsController extends Controller
         }
 
         if($status_id == 1 && !$this->acceptLocking($client_id, $month)) {
-        	$this->get('session')->setFlash('sonata_flash_error', 'Cloture Mois-TVA ' . $this->_lockingYear . '-' . $this->_lockingMonth . ' impossible car au moins une opération n\'a pas été prise en compte sur une des Ca3 précédente dans : ' . $this->_lockingTab . ' - ' . $this->_lockingDate->format('Y-m-d'));
+        	$this->get('session')->setFlash('sonata_flash_error', 'Cloture Mois-TVA ' . $_year . '-' . $_month . ' impossible car au moins une opération n\'a pas été prise en compte sur une des Ca3 précédente dans : ' . $this->_lockingTab . ' - ' . $this->_lockingDate->format('Y-m-d'));
         	return $this->redirect($this->generateUrl('admin_sonata_clientoperations_' . $this->_tabAlias . '_list', array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)));
         }
         
@@ -1552,8 +1552,8 @@ class AbstractTabsController extends Controller
     			break;
     		}
     		if($hasRecordLastMonth) {
-    			$this->_lockingMonth = $obj->getMois()->format('m');
-    			$this->_lockingYear = $obj->getMois()->format('Y');
+    			//$this->_lockingMonth = $obj->getMois()->format('m');
+    			//$this->_lockingYear = $obj->getMois()->format('Y');
     			$this->_lockingTab = $params['name'];
     			$this->_lockingDate = $obj->getMois();
     			break;

@@ -397,7 +397,7 @@ class RapprochementController extends Controller
     			}
     			
     			if($status_id ==1 && !$this->acceptLocking($client_id, $month)) {
-    				$this->get('session')->setFlash('sonata_flash_error', 'Cloture Mois-TVA ' . $this->_lockingYear . '-' . $this->_lockingMonth . ' impossible car au moins une opération n\'a pas été prise en compte sur une des Ca3 précédente dans : ' . $this->_lockingTab . ' - ' . $this->_lockingDate->format('Y-m-d'));
+    				$this->get('session')->setFlash('sonata_flash_error', 'Cloture Mois-TVA ' . $_year . '-' . $_month . ' impossible car au moins une opération n\'a pas été prise en compte sur une des Ca3 précédente dans : ' . $this->_lockingTab . ' - ' . $this->_lockingDate->format('Y-m-d'));
     			} elseif($status_id == 2 && !$this->acceptUnlocking($client_id, $month)) {
     				$this->get('session')->setFlash('sonata_flash_error', 'Le mois ' . $this->_unlockingYear . '-' . $this->_unlockingMonth . ' est déjà vérouillé, vous ne pouvez donc pas dévérouillé le mois sélectionné.');
     			} else {
@@ -501,8 +501,8 @@ class RapprochementController extends Controller
     			break;
     		}
     		if($hasRecordLastMonth) {
-    			$this->_lockingMonth = $obj->getMois()->format('m');
-    			$this->_lockingYear = $obj->getMois()->format('Y');
+    			//$this->_lockingMonth = $obj->getMois()->format('m');
+    			//$this->_lockingYear = $obj->getMois()->format('Y');
     			$this->_lockingTab = $params['name'];
     			$this->_lockingDate = $obj->getMois();
     			break;
