@@ -15,10 +15,13 @@ class TransDeb {
 	 * caractere 1 to 4 : 0000
 	 * Caractere 5 : 1
 	 * 
-	 * @param number $id
+	 * @param $row
 	 * @return string
 	 */
-	protected function col1($id = 1) {
+	protected function col1(\Application\Sonata\ClientOperationsBundle\Entity\AbstractDEBEntity $row) {
+		
+		$id = ($row instanceof \Application\Sonata\ClientOperationsBundle\Entity\DEBIntro) ? 1 : 2;
+		
 		return str_pad($id, 5, 0, STR_PAD_LEFT);
 	} 
 	
@@ -171,7 +174,7 @@ class TransDeb {
 	
 	/**
 	 caractere 1 to 4 : 0000
-	 Caractere 5 : 1
+	 Caractere 5 : Put 1 for Deb Intro ... and 2 for Deb Exped
 	 
 	 Caractere 6 : white caractere
 	 7 to 12 : this is a sequence completed with 0000 on the left. Create a table for counter.. and add an index for this file that you increment each time
@@ -212,21 +215,24 @@ class TransDeb {
 	 *
 	 */
 	private function _render() {
-		$result = $this->queryResult(array('entity'=>'DEBExped'));
+		$entities = array('DEBIntro', 'DEBExped');
 		$lines = array();
 		$ctr = 1;
-		foreach($result as $row) {
-			$lines[] = $this->col1() . $this->spacer() . 
-				$this->col2($this->_exportCount, $ctr) . $this->spacer(6) .
-				$this->col3() . $this->spacer(5) .
-				$this->col4($row) . $this->spacer() .
-				$this->col5($row) . $this->spacer() .
-				$this->col6($row) . $this->spacer(2) .
-				$this->col7($row) . $this->spacer(6) 
-			;
-			$ctr++;
+		foreach($entities as $entity) {
+			$result = $this->queryResult(array('entity'=>$entity));
+			
+			foreach($result as $row) {
+				$lines[] = $this->col1($row) . $this->spacer() . 
+					$this->col2($this->_exportCount, $ctr) . $this->spacer(6) .
+					$this->col3() . $this->spacer(5) .
+					$this->col4($row) . $this->spacer() .
+					$this->col5($row) . $this->spacer() .
+					$this->col6($row) . $this->spacer(2) .
+					$this->col7($row) . $this->spacer(6) 
+				;
+				$ctr++;
+			}
 		}
-		
 		
 		$this->_data = implode("\n", $lines);
 		return $this->_data;
