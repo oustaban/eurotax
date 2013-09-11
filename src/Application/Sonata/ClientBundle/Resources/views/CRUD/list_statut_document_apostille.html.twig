@@ -1,7 +1,7 @@
 {% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
 
 {% block field %}
-{% if object.getTypeDocument and (object.getTypeDocument.getId == 2 or object.getTypeDocument.getId == 1 or object.getTypeDocument.getId == 6) %}{# Pouvoir/Mandat/Mandat_Specifique #}
+{% if object.getTypeDocument and (object.getTypeDocument.getId == 2 or object.getTypeDocument.getId == 6) %}{# Pouvoir/Mandat_Specifique #}
 	
 	{% if object.getStatutDocumentApostille and object.getStatutDocumentApostille.getId == 1 %} {# A obtenir #}
 	<img src="{{ asset('bundles/sonataadmin/famfamfam/exclamation.png') }}" alt="{%- trans from 'SonataAdminBundle' %}label_type_no{% endtrans -%}" />
