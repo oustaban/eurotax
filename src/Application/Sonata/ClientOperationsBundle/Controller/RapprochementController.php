@@ -397,7 +397,7 @@ class RapprochementController extends Controller
     			}
     			
     			if($status_id ==1 && !$this->acceptLocking($client_id, $month)) {
-    				$this->get('session')->setFlash('sonata_flash_error', 'Cloture Mois-TVA ' . $_year . '-' . $_month . ' impossible car au moins une opération n\'a pas été prise en compte sur une des Ca3 précédente dans : ' . $this->_lockingTab . ' - ' . $this->_lockingDate->format('Y-m-d'));
+    				$this->get('session')->setFlash('sonata_flash_error', 'Cloture Mois-TVA ' . $_year . '-' . $_month . ' impossible car au moins une opération n\'a pas été prise en compte sur une des Ca3 précédente dans : ' . $this->_lockingTab . ' - ' . $this->_lockingDate->format('Y M'));
     			} elseif($status_id == 2 && !$this->acceptUnlocking($client_id, $month)) {
     				$this->get('session')->setFlash('sonata_flash_error', 'Le mois ' . $this->_unlockingYear . '-' . $this->_unlockingMonth . ' est déjà vérouillé, vous ne pouvez donc pas dévérouillé le mois sélectionné.');
     			} else {
