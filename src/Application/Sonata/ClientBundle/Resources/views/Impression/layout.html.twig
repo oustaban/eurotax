@@ -3,7 +3,7 @@
 {% use 'ApplicationSonataClientBundle:CRUD:form_tabs.html.twig' with form_tabs as formTabs %}
 
 {% block title %}
-{{ client ~ ' - Impression' }}
+{{ client.getCodeClient ~  ' - ' ~ client ~ ' - Impression' }}
 {% endblock title %}
 
 {% block sonata_admin_content %}
