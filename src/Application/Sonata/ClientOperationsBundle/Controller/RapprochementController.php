@@ -397,7 +397,7 @@ class RapprochementController extends Controller
     			}
     			
     			if($status_id ==1 && !$this->acceptLocking($client_id, $month)) {
-    				$this->get('session')->setFlash('sonata_flash_error', 'Cloture Mois-TVA ' . $_year . '-' . $_month . ' impossible car au moins une opération n\'a pas été prise en compte sur une des Ca3 précédente dans : ' . $this->_lockingTab . ' - ' . strftime('%Y %B', $this->_lockingDate->getTimestamp()));
+    				$this->get('session')->setFlash('sonata_flash_error', 'Cloture Mois-TVA ' . $_year . '-' . $_month . ' impossible car au moins une opération n\'a pas été prise en compte sur une des Ca3 précédente dans : ' . $this->_lockingTab . ' - ' . $this->datefmtFormatFilter($this->_lockingDate, 'YYYY MMMM'));
     			} elseif($status_id == 2 && !$this->acceptUnlocking($client_id, $month)) {
     				$this->get('session')->setFlash('sonata_flash_error', 'Le mois ' . $this->_unlockingYear . '-' . $this->_unlockingMonth . ' est déjà vérouillé, vous ne pouvez donc pas dévérouillé le mois sélectionné.');
     			} else {
@@ -651,4 +651,26 @@ class RapprochementController extends Controller
         return $qb->getQuery()->execute();
     }
 
+    
+    public function datefmtFormatFilter($datetime, $format = null)
+    {
+    	$dateFormat = is_int($format) ? $format : \IntlDateFormatter::MEDIUM;
+    	$timeFormat = \IntlDateFormatter::NONE;
+    	$calendar = \IntlDateFormatter::GREGORIAN;
+    	$pattern = is_string($format) ? $format : null;
+    
+    	$formatter = new \IntlDateFormatter(
+    			\Locale::getDefault(),
+    			$dateFormat,
+    			$timeFormat,
+    			$datetime->getTimezone()->getName(),
+    			$calendar,
+    			$pattern
+    	);
+    	$formatter->setLenient(false);
+    	$timestamp = $datetime->getTimestamp();
+    
+    	return $formatter->format($timestamp);
+    }
+    
 }
