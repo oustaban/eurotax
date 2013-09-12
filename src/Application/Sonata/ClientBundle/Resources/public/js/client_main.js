@@ -165,19 +165,29 @@ jQuery(document).ready(function ($) {
     		"Niveau Obligation EXPED" could be 0, 1, 2 , 3, 4  ( 2 and 3 are missing)
     		"Niveau Obligation INTRO " could be 0, 1,2 ,3   (2 and 3 are missing ... need to delete 4 )
       
+      
+      	If Nature du client = "DEB"
+		On " Niveau Obligation INTRO", we should have only value 0 and 1
+		On " Niveau Obligation EXPED" , we should have only value 0, 1 and 4 ( we should  not see 2 and 3 
+      
              * 
              */
         	
         	
         	$('#' + uniqid + '_niveau_dobligation_id option').each(function () {
-                if ($(this).val() == 4) {
+                if ($(this).val() > 1) {
                     $(this).hide();
                 }
             });
         	
         	
         	$('#' + uniqid + '_niveau_dobligation_exped_id option').each(function () {
-                if ($(this).val() == 4) {
+                
+        		if ($(this).val() == 2 || $(this).val() == 3) {
+                    $(this).hide();
+                }
+        		
+        		if ($(this).val() == 4) {
                     $(this).show();
                 }
             });
