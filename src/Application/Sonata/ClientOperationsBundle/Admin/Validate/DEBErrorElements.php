@@ -22,14 +22,14 @@ class DEBErrorElements extends ErrorElements
 							'nomenclature',
 							'pays_destination',
 							'valeur_fiscale',
-							'valeur_statistique',
+							//'valeur_statistique',
 							'masse_mette',
 							'unites_supplementaires',
 							'nature_transaction',
 							//'conditions_livraison',
 							'mode_transport',
 							'departement',
-							'pays_origine',
+							//'pays_origine',
 							'CEE',
 						)	
 					),
@@ -48,7 +48,7 @@ class DEBErrorElements extends ErrorElements
 							//'conditions_livraison',
 							'mode_transport',
 							'departement',
-							'pays_origine',
+							//'pays_origine',
 							//'CEE',
 						)	
 					), 
@@ -418,7 +418,7 @@ class DEBErrorElements extends ErrorElements
 							'pays_destination',
 							'valeur_fiscale',
 							
-							'valeur_statistique',
+							//'valeur_statistique',
 							'masse_mette',
 							'unites_supplementaires',
 							'nature_transaction',
@@ -462,7 +462,7 @@ class DEBErrorElements extends ErrorElements
 							'pays_destination',
 							'valeur_fiscale',
 							
-							'valeur_statistique',
+							//'valeur_statistique',
 							'masse_mette',
 							'unites_supplementaires',
 							'nature_transaction',
@@ -549,6 +549,8 @@ class DEBErrorElements extends ErrorElements
 							'regime' => 21,
 							'fields' => array(
 								'conditions_livraison',
+								'valeur_statistique',
+								'pays_origine',
 
 							)
 					),
@@ -559,6 +561,7 @@ class DEBErrorElements extends ErrorElements
 									'valeur_fiscale',
 									'conditions_livraison',
 									'CEE',
+									'pays_origine',
 							)
 					),
 					25 => array(
@@ -888,6 +891,7 @@ class DEBErrorElements extends ErrorElements
 					'fields' => array(
 						'conditions_livraison',
 						'CEE',
+						'valeur_statistique',
 					)
 				),
 				19 => array(
@@ -911,6 +915,7 @@ class DEBErrorElements extends ErrorElements
 					'mode_transport',
 					'departement',
 					'CEE',
+					'valeur_statistique',
 					)
 			),
 			19 => array(
@@ -994,7 +999,7 @@ class DEBErrorElements extends ErrorElements
 					$method = 'get' . strtoupper(\Doctrine\Common\Util\Inflector::camelize($field));
 					$value = $this->_object->$method();
 					
-					if((int)$value != 0) {
+					if( (!is_object($value) && (int)$value != 0) || $value) {
 						$this->_errorElement->with($field)->addViolation( 'La cellule doit être vide.')->end();
 					}
 				}
