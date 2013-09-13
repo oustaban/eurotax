@@ -54,8 +54,13 @@ class HomeController extends Controller
 
         
         $now = new \DateTime();
-        // if DD > 25 Mois-TVA MM.YYYY - 1MM  else Mois-TVA MM.YYYY - 2MM
-        $moisExtraColTitle = $now->format('d') > 25 ? date('m.Y', strtotime('now -1 month')) : date('m.Y', strtotime('now -2 month'));
+        
+        /*
+         *
+         We should have "Mois TVA (M-1).YYYY" if days <= 25
+		"Mois TVA (M).YYYY" if days > 25
+         */
+        $moisExtraColTitle = $now->format('d') > 25 ? date('m.Y', strtotime('now')) : date('m.Y', strtotime('now -1 month'));
         
         return array(
             'clients' => array_merge($clients, $clientsDimmed),

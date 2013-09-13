@@ -314,7 +314,13 @@ class ClientAdmin extends Admin
         
         
         $now = new \DateTime();
-        $moisExtraColTitle = $now->format('m.Y');
+        //$moisExtraColTitle = $now->format('m.Y');
+        /*
+         *
+        We should have "Mois TVA (M-1).YYYY" if days <= 25
+        "Mois TVA (M).YYYY" if days > 25
+        */
+        $moisExtraColTitle = $now->format('d') > 25 ? date('m.Y', strtotime('now')) : date('m.Y', strtotime('now -1 month'));
 
         $listMapper
             ->add('_action', 'actions', array(
