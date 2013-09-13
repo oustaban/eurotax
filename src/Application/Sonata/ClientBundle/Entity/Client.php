@@ -1228,6 +1228,15 @@ class Client
      */
     public function getAlertCount()
     {
+    	if($this->alert_count == 0) {    		
+    		/* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+    		$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+    		/* @var $em \Doctrine\ORM\EntityManager */
+    		$em = $doctrine->getManager();
+    		
+    		$alerts = $em->getRepository('ApplicationSonataClientBundle:ClientAlert')->findBy(array('client'=>$this));
+    		$this->alert_count = count($alerts);
+    	}
         return $this->alert_count;
     }
 
