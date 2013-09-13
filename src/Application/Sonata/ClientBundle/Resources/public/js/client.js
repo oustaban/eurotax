@@ -52,7 +52,7 @@ jQuery(document).ready(function ($) {
                         $('#sonata-ba-field-container-' + _uniqid + '_date_notaire, #sonata-ba-field-container-' + _uniqid + '_date_apostille, #sonata-ba-field-container-' + _uniqid + '_statut_document_notaire, #sonata-ba-field-container-' + _uniqid + '_statut_document_apostille')[['show', 'hide'][($(this).val() == 2 || $(this).val() == 6) ? 0 : 1]]();
                         $('#sonata-ba-field-container-' + _uniqid + '_preavis')[['show', 'hide'][($(this).val() == 1 || $(this).val() == 3) ? 0 : 1]]();
 
-                        if ($(this).val() == 6){
+                        if ($(this).val() == 2 || $(this).val() == 6){
                         	//$('#' + _uniqid + '_date_notaire, #' + _uniqid + '_date_apostille').removeAttr('disabled');
                             $('#' + _uniqid + '_statut_document_notaire, #' + _uniqid + '_statut_document_apostille').each(function(){
                                 if ($(this).val() == ''){
@@ -66,7 +66,7 @@ jQuery(document).ready(function ($) {
                         
                         
                         
-                        if ($(this).val() > 2) {
+                        if ($(this).val() > 2 && $(this).val() != 6) {
                         	$('#' + _uniqid + '_date_notaire').removeAttr('required');
                         	$('#' + _uniqid + '_date_apostille').removeAttr('required');
                         }
