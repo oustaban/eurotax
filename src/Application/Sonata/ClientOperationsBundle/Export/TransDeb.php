@@ -59,7 +59,8 @@ class TransDeb {
 	 * @return string
 	 */
 	protected function col4(\Application\Sonata\ClientOperationsBundle\Entity\AbstractDEBEntity $row) {
-		return $row->getDepartement() . $row->getModeTransport();
+		return ($row->getDepartement() ? : $this->spacer(2)) 
+			. $row->getModeTransport();
 	}
 
 	
