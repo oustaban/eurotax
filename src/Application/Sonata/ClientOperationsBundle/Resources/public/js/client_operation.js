@@ -23,8 +23,9 @@ jQuery(document).ready(function ($) {
                     $('#' + _uniqid + '_date_piece, #' + _uniqid + '_paiement_date', context).change(function(){
                     	var date = $('#' + _uniqid + '_paiement_date');
                         if(date.val()) {
-                    		$('#' + _uniqid + '_mois_mois option:last').attr('selected', true).trigger('change');
-                    		
+                        	if(!$('#' + _uniqid + '_mois_mois').attr('disabled')) {
+                    			$('#' + _uniqid + '_mois_mois option:last').attr('selected', true).trigger('change');
+                        	}
                         } else if (symfony_ajax.is_new()) {
                         	$('#' + _uniqid + '_mois_mois option:last').removeAttr('selected');
                         }
