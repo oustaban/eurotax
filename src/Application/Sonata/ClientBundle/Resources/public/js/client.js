@@ -118,7 +118,7 @@ jQuery(document).ready(function ($) {
 					The default value should be : "A obtenir"
 
                 	 */
-                	console.log('nature_du_client: ' + Sonata.client.nature_du_client);
+                	//console.log('nature_du_client: ' + Sonata.client.nature_du_client);
                 	
                 	 $('#' + _uniqid + '_type_document', context).change(function () {
                 		 $('#' + _uniqid + '_date_notaire, #' + _uniqid + '_date_apostille').removeAttr('disabled');
@@ -163,9 +163,13 @@ jQuery(document).ready(function ($) {
                 	
                 } else {
                 	
-                	//console.log(4);
                 	
-                	    $('#' + _uniqid + '_statut_document_notaire').change(function(){
+                	if($('#' + _uniqid + '_type_document', context).val() == 2 || $('#' + _uniqid + '_type_document', context).val() == 6) {
+                		//console.log(4);
+                		
+                	} else {
+                		//console.log(5);
+                		$('#' + _uniqid + '_statut_document_notaire').change(function(){
 		                	if($(this).val() != '') {
 		                		$('#' + _uniqid + '_date_notaire').removeAttr('disabled');
 		                	} else {
@@ -181,7 +185,7 @@ jQuery(document).ready(function ($) {
 		                		$('#' + _uniqid + '_date_apostille').attr('disabled', true);
 		                	}
 		                });
-                	
+                	}
                 }
                
                 
