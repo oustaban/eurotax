@@ -52,19 +52,20 @@ jQuery(document).ready(function ($) {
                         $('#sonata-ba-field-container-' + _uniqid + '_date_notaire, #sonata-ba-field-container-' + _uniqid + '_date_apostille, #sonata-ba-field-container-' + _uniqid + '_statut_document_notaire, #sonata-ba-field-container-' + _uniqid + '_statut_document_apostille')[['show', 'hide'][($(this).val() == 2 || $(this).val() == 6) ? 0 : 1]]();
                         $('#sonata-ba-field-container-' + _uniqid + '_preavis')[['show', 'hide'][($(this).val() == 1 || $(this).val() == 3) ? 0 : 1]]();
 
-                        if ($(this).val() == 2 || $(this).val() == 6){
-                        	//$('#' + _uniqid + '_date_notaire, #' + _uniqid + '_date_apostille').removeAttr('disabled');
-                            $('#' + _uniqid + '_statut_document_notaire, #' + _uniqid + '_statut_document_apostille').each(function(){
-                                if ($(this).val() == ''){
-                                    $(this).val(1);
-                                }
-                            });
-                            //console.log(2);
+                        if(symfony_ajax.is_new()) {
+	                        if ($(this).val() == 2 || $(this).val() == 6){
+	                        	//$('#' + _uniqid + '_date_notaire, #' + _uniqid + '_date_apostille').removeAttr('disabled');
+	                            $('#' + _uniqid + '_statut_document_notaire, #' + _uniqid + '_statut_document_apostille').each(function(){
+	                                if ($(this).val() == ''){
+	                                    $(this).val(1);
+	                                }
+	                            });
+	                            //console.log(2);
+	                        }
+	                        else {
+	                            //$('#' + _uniqid + '_statut_document_notaire, #' + _uniqid + '_statut_document_apostille').val('');
+	                        }
                         }
-                        else {
-                            //$('#' + _uniqid + '_statut_document_notaire, #' + _uniqid + '_statut_document_apostille').val('');
-                        }
-                        
                         
                         
                         if ($(this).val() > 2 && $(this).val() != 6) {
