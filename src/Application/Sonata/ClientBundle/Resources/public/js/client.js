@@ -46,7 +46,7 @@ jQuery(document).ready(function ($) {
 
                 if (_uniqid) {
                     $('#' + _uniqid + '_type_document', context).change(function () {
-
+                    	//console.log(1);
                     	$('#' + _uniqid + '_date_notaire, #' + _uniqid + '_date_apostille').attr('disabled', true);
                     	//$('#' + _uniqid + '_statut_document_notaire option:first, #' + _uniqid + '_statut_document_apostille option:first').attr('selected', true);
                         $('#sonata-ba-field-container-' + _uniqid + '_date_notaire, #sonata-ba-field-container-' + _uniqid + '_date_apostille, #sonata-ba-field-container-' + _uniqid + '_statut_document_notaire, #sonata-ba-field-container-' + _uniqid + '_statut_document_apostille')[['show', 'hide'][($(this).val() == 2 || $(this).val() == 6) ? 0 : 1]]();
@@ -59,6 +59,7 @@ jQuery(document).ready(function ($) {
                                     $(this).val(1);
                                 }
                             });
+                            //console.log(2);
                         }
                         else {
                             //$('#' + _uniqid + '_statut_document_notaire, #' + _uniqid + '_statut_document_apostille').val('');
@@ -67,6 +68,7 @@ jQuery(document).ready(function ($) {
                         
                         
                         if ($(this).val() > 2 && $(this).val() != 6) {
+                        	//console.log(3);
                         	$('#' + _uniqid + '_date_notaire').removeAttr('required');
                         	$('#' + _uniqid + '_date_apostille').removeAttr('required');
                         }
@@ -74,8 +76,8 @@ jQuery(document).ready(function ($) {
                         
                         
                         if($(this).val() == 2 || $(this).val() == 6) {
-                			console.log('test');
-	                		 $('#' + _uniqid + '_statut_document_notaire').change(function(){
+                			//console.log('test');
+	                		$('#' + _uniqid + '_statut_document_notaire').change(function(){
 	 		                	if($(this).val() != '') {
 	 		                		$('#' + _uniqid + '_date_notaire').attr('disabled', true);
 	 		                	} else {
@@ -99,10 +101,6 @@ jQuery(document).ready(function ($) {
                 		
                 		
                         }
-                        
-                        
-                        
-
                     }).trigger('change');
 
                     $('#sonata-ba-field-container-' + _uniqid + '_date_notaire').addClass('date_notaire');
@@ -165,13 +163,15 @@ jQuery(document).ready(function ($) {
                 	
                 } else {
                 	
+                	//console.log(4);
+                	
                 	    $('#' + _uniqid + '_statut_document_notaire').change(function(){
 		                	if($(this).val() != '') {
 		                		$('#' + _uniqid + '_date_notaire').removeAttr('disabled');
 		                	} else {
 		                		$('#' + _uniqid + '_date_notaire').attr('disabled', true);
 		                	}
-		                }).trigger('change');
+		                });
 		                
 		
 		                $('#' + _uniqid + '_statut_document_apostille').change(function(){
@@ -180,7 +180,7 @@ jQuery(document).ready(function ($) {
 		                	} else {
 		                		$('#' + _uniqid + '_date_apostille').attr('disabled', true);
 		                	}
-		                }).trigger('change');
+		                });
                 	
                 }
                
