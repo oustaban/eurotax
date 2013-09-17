@@ -115,7 +115,8 @@ class DEBIntroAdmin extends Admin
         	->validateRegime(array(11, 19))
         	->validateDEB()
         	->setMois($this)
-        	->setDatePieceByFilename();
+        	->setDatePieceByFilename()
+        	->validateNomenclature2();
 
        
     }
