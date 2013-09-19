@@ -25,12 +25,14 @@ class ClientController extends Controller
 	    	if (!$object->getDateFinMission()) {
 	    		$this->get('session')->setFlash('sonata_flash_error', '"Fin de Mission" : Un client ouvert ne peut être supprimé.');
 	    		return $this->redirectTo($object);
+	    	} else {
+	    		return parent::deleteAction($id);
 	    	}
     	}
 
     	return $this->render('ApplicationSonataClientBundle:CRUD:delete.html.twig', array(
     			'current_client' => $object,
-    			'content' => parent::deleteAction($id)->getContent(),
+    			//'content' => parent::deleteAction($id)->getContent(),
     			'action' => 'delete',
     			'object' => $object
 
