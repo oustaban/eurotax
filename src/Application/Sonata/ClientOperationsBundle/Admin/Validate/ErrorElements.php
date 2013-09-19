@@ -22,6 +22,8 @@ class ErrorElements
     	$_import_file_month;
     
     
+    protected $_admin;
+    
     /**
      * @param \Sonata\AdminBundle\Validator\ErrorElement $errorElement
      * @param $object
@@ -33,6 +35,13 @@ class ErrorElements
         
         $this->_import_file_month = $xlsFileMonth;
         $this->_import_file_year = $xlsFileYear;
+    }
+    
+    
+    
+    public function setAdmin($admin) {
+    	
+    	$this->_admin = $admin;
     }
 
     /**
@@ -454,7 +463,7 @@ class ErrorElements
                 $year = $value['year'];
             }
 
-            if (!($year == $current_year && $month == $current_month)) {
+            if (!$this->_admin->getLocking() && !($year == $current_year && $month == $current_month)) {
 
                 $this->_errorElement->with('mois')->addViolation('Mois TVA = ' . $this->formatMonth($month) . '-' . $this->formatYear($year) . ' au lieu de ' . $this->formatMonth($current_month) . '-' . $this->formatYear($current_year))->end();
             }
@@ -721,13 +730,13 @@ class ErrorElements
     
     
     
-    public function setMois($admin) {
+    public function setMois() {
     	if ($this->_is_validate_import) {
     		$ts = $this->_import_file_year . '-' . $this->_import_file_month . '-01';
     		$date = new \DateTime($ts);
     		$this->_object->setMois($date);
     	} else {
-    		if(!$admin->getLocking()) {
+    		if(!$this->_admin->getLocking()) {
     			$date = new \DateTime('now' . (date('d') < 25 ? ' -1 month' : ''));
     			$this->_object->setMois($date);
     		} else {
@@ -741,12 +750,9 @@ class ErrorElements
     }
     
     
-    public function setMois2($admin) {
-
-    	if($admin->getLocking()) {
-    	
+    public function setMois2() {
+    	if($this->_admin->getLocking()) {
     		$this->_object->setMois(null);
-    	
     	}
     	return $this;
     }

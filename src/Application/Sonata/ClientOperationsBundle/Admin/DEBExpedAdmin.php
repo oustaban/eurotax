@@ -112,11 +112,12 @@ class DEBExpedAdmin extends Admin
         parent::validate($errorElement, $object);
 
         $error = new DEBErrorElements($errorElement, $object, $this->import_file_year, $this->import_file_month);
-        $error->setValidateImport($this->getValidateImport())
+        $error->setAdmin($this)
+        	->setValidateImport($this->getValidateImport())
         	->validateRegime(array(21, 29, 25, 26, 31))
         	->validateNoTVATiers()
         	->validateDEB()
-        	->setMois($this)
+        	->setMois()
         	->setDatePieceByFilename()
         	->validateNomenclature()
         	->validateNomenclature2();

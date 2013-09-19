@@ -126,8 +126,9 @@ class V01TVAAdmin extends Admin
         parent::validate($errorElement, $object);
 
         $error = new ErrorElements($errorElement, $object, $this->import_file_year, $this->import_file_month);
-        $error->setValidateImport($this->getValidateImport())
-        	->setMois2($this)
+        $error->setAdmin($this)
+        	->setValidateImport($this->getValidateImport())
+        	->setMois2()
             ->validatePaiementDateCloneMois()
             ->validateMontantTVAFrancaise()
             ->validateMontantTTC()

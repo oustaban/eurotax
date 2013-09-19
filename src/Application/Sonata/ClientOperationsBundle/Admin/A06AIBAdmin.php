@@ -117,8 +117,9 @@ class A06AIBAdmin extends Admin
         parent::validate($errorElement, $object);
 
         $error = new ErrorElements($errorElement, $object, $this->import_file_year, $this->import_file_month);
-        $error->setValidateImport($this->getValidateImport())
-        	->setMois2($this)
+        $error->setAdmin($this)
+        	->setValidateImport($this->getValidateImport())
+        	->setMois2()
         	->validateRegime2(array(11,19))
         	->validateDEB()
             ->validateDevise()
