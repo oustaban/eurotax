@@ -42,6 +42,7 @@ class ErrorElements
     public function setAdmin($admin) {
     	
     	$this->_admin = $admin;
+    	return $this;
     }
 
     /**
