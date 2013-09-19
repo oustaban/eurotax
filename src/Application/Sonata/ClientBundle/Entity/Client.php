@@ -1326,18 +1326,49 @@ class Client
         /* @var $em \Doctrine\ORM\EntityManager */
         $em = $doctrine->getManager();
 
-        list($code_client) = $em->getRepository('ApplicationSonataClientBundle:Client')
-            ->createQueryBuilder('c')
-            ->select('c.code_client as code_client')
-            ->addOrderBy('c.id', 'DESC')
-            ->setMaxResults(1)
-            ->getQuery()
-            ->execute();
+       
+        
+        $natureDuClientId = $this->getNatureDuClient()->getId();
+        
+        
+        if($natureDuClientId == ListNatureDuClients::sixE) {
+        	list($code_client) = $em->getRepository('ApplicationSonataClientBundle:Client')
+        	->createQueryBuilder('c')
+        	->select('c.code_client as code_client')
+        	->addOrderBy('c.code_client', 'DESC')
+        	->setMaxResults(1)
+        	->getQuery()
+        	->execute();
+        	
+        	$maxCodeClient = $code_client['code_client'];
+        	
+        	// 9000, 9001 .... 9100
+        	if($maxCodeClient > 9000) {
+        		
+        	} else {
+        		$maxCodeClient = 9000;
+        	}
+        	
+        } elseif($natureDuClientId == ListNatureDuClients::DEB || $natureDuClientId == ListNatureDuClients::DES) {
 
+        	list($code_client) = $em->getRepository('ApplicationSonataClientBundle:Client')
+        	->createQueryBuilder('c')
+        	->select('c.code_client as code_client')
+        	->where('c.code_client < 9000')
+        	->addOrderBy('c.code_client', 'DESC')
+        	->setMaxResults(1)
+        	->getQuery()
+        	->execute();
+        	 
+        	$maxCodeClient = $code_client['code_client'];
+        }
+        
+        
         /**
          * UPDATE et_client SET code_client = id
          */
-        $this->setCodeClient($code_client['code_client'] + 1);
+        $this->setCodeClient($maxCodeClient + 1);
+        
     }
 
     /**
