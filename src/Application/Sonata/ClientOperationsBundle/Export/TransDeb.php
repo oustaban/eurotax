@@ -42,10 +42,10 @@ class TransDeb {
 	}
 	
 	/**
-	 * 25 to 33 : SIREN number of the client ( Take the first caractere of SIRET on http://eurotax.testenm.com/sonata/client/client/5/edit )
+	 * 25 to 38 : SIRET number of the client 
 	 */
 	protected function col3() {
-		return substr(str_replace(' ', '', $this->_client->getSiret()), 0, 9);
+		return str_replace(' ', '', $this->_client->getSiret());
 	}
 	
 	/**
@@ -183,9 +183,8 @@ class TransDeb {
 	 
 	 19 to 22 : white caractere
 	 23 to 24 : white caractere
-	  25 to 33 : SIREN number of the client ( Take the first caractere of SIRET on http://eurotax.testenm.com/sonata/client/client/5/edit )
+	 25 to 38 : SIREN number of the client ( Take the first caractere of SIRET on http://eurotax.testenm.com/sonata/client/client/5/edit )
 	 
-	 34 to 38 : white caractere
 	 39 to 40 : code of the  Département
 	 41 : Mode Transport
 	
@@ -225,7 +224,7 @@ class TransDeb {
 			foreach($result as $row) {
 				$lines[] = $this->col1($row) . $this->spacer() . 
 					$this->col2($this->_exportCount, $ctr) . $this->spacer(6) .
-					$this->col3() . $this->spacer(5) .
+					$this->col3() .
 					$this->col4($row) . $this->spacer() .
 					$this->col5($row) . $this->spacer() .
 					$this->col6($row) . $this->spacer(2) .
