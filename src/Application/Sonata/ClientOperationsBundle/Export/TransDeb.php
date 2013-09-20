@@ -45,7 +45,11 @@ class TransDeb {
 	 * 25 to 38 : SIRET number of the client 
 	 */
 	protected function col3() {
-		return str_replace(' ', '', $this->_client->getSiret());
+		if($this->_client->getSiret()) {
+			return str_replace(' ', '', $this->_client->getSiret());
+		}
+		
+		return $this->spacer(14);
 	}
 	
 	/**
@@ -60,7 +64,7 @@ class TransDeb {
 	 */
 	protected function col4(\Application\Sonata\ClientOperationsBundle\Entity\AbstractDEBEntity $row) {
 		return ($row->getDepartement() ? : $this->spacer(2)) 
-			. $row->getModeTransport();
+			. ($row->getModeTransport() ? : $this->spacer(1));
 	}
 
 	
@@ -86,8 +90,8 @@ class TransDeb {
 	protected function col5(\Application\Sonata\ClientOperationsBundle\Entity\AbstractDEBEntity $row) {
 		
 		
-		return $row->getPaysIdDestination() . 
-			$row->getNatureTransaction() .  
+		return ($row->getPaysIdDestination() ? : $this->spacer(2)). 
+			($row->getNatureTransaction() ? : $this->spacer(2)).  
 			str_pad( (int) $row->getValeurFiscale(), 11, 0, STR_PAD_LEFT) .
 			str_pad( $row->getConditionsLivraison(), 4, 0, STR_PAD_LEFT) . 
 			str_pad( $row->getRegime(), 2, 0, STR_PAD_LEFT) . 
