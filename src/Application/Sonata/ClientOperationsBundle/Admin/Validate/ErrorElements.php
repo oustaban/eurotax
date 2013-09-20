@@ -615,18 +615,18 @@ class ErrorElements
     {
     
     	$nomenclature = $this->_object->getNomenclature();
-    
-    	/* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
-    	$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
-    
-    	/* @var $em \Doctrine\ORM\EntityManager */
-    	$em = $doctrine->getManager();
-    	$nomenclatures = $em->getRepository('ApplicationSonataClientBundle:Nomenclature')->findBy(array('code' => ltrim($nomenclature, 0)));
-    
-    	if(count($nomenclatures) == 0) {
-    		$this->_errorElement->with('nomenclature')->addViolation('Cellules devant être vide car nomenclature = ' . $nomenclature)->end();
-    	}
-    
+		if($nomenclature) {    
+	    	/* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+	    	$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+	    
+	    	/* @var $em \Doctrine\ORM\EntityManager */
+	    	$em = $doctrine->getManager();
+	    	$nomenclatures = $em->getRepository('ApplicationSonataClientBundle:Nomenclature')->findBy(array('code' => ltrim($nomenclature, 0)));
+	    
+	    	if(count($nomenclatures) == 0) {
+	    		$this->_errorElement->with('nomenclature')->addViolation('Cellules devant être vide car nomenclature = ' . $nomenclature)->end();
+	    	}
+		}
     	return $this;
     }
     
