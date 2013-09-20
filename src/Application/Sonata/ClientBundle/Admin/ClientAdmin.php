@@ -558,7 +558,7 @@ class ClientAdmin extends Admin
     /**
      * {@inheritdoc}
      */
-    public function postRemove($object)
+    public function preRemove($object)
     {
         /* @var $object \Application\Sonata\ClientBundle\Entity\Client */
         $this->_setupAlerts($object);
@@ -569,6 +569,7 @@ class ClientAdmin extends Admin
      */
     protected function _setupAlerts($object)
     {
+    	
         /* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
         $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
         /* @var $em \Doctrine\ORM\EntityManager */

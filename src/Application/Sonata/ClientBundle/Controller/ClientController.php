@@ -3,6 +3,7 @@
 namespace Application\Sonata\ClientBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Application\Sonata\ClientBundle\Entity\ListCountries;
@@ -20,16 +21,35 @@ class ClientController extends Controller
     
     public function deleteAction($id)
     {
+    	$id     = $this->get('request')->get($this->admin->getIdParameter());
     	$object = $this->admin->getObject($id);
-    	if ($this->getRequest()->getMethod() == 'DELETE') {
-	    	if (!$object->getDateFinMission()) {
-	    		$this->get('session')->setFlash('sonata_flash_error', '"Fin de Mission" : Un client ouvert ne peut être supprimé.');
-	    		return $this->redirectTo($object);
-	    	} else {
-	    		return parent::deleteAction($id);
-	    	}
+    	
+    	if (!$object) {
+    		throw new NotFoundHttpException(sprintf('unable to find the object with id : %s', $id));
     	}
-
+    	
+    	if (false === $this->admin->isGranted('DELETE', $object)) {
+    		throw new AccessDeniedException();
+    	}
+    	
+    	if ($this->getRequest()->getMethod() == 'DELETE') {
+    		
+    		if (!$object->getDateFinMission()) {
+    			$this->get('session')->setFlash('sonata_flash_error', '"Fin de Mission" : Un client ouvert ne peut être supprimé.');
+    			return $this->redirectTo($object);
+    		}
+    		
+    		
+    		try {
+    			$this->admin->delete($object);
+    			$this->get('session')->setFlash('sonata_flash_success', 'flash_delete_success');
+    		} catch (ModelManagerException $e) {
+    			$this->get('session')->setFlash('sonata_flash_error', 'flash_delete_error');
+    		}
+    	
+    		return $this->redirect($this->admin->generateUrl('list'));
+    	}
+    	
     	return $this->render('ApplicationSonataClientBundle:CRUD:delete.html.twig', array(
     			'current_client' => $object,
     			//'content' => parent::deleteAction($id)->getContent(),
@@ -37,7 +57,9 @@ class ClientController extends Controller
     			'object' => $object
 
     	));
+ 
     	 
+    	
     	
     	
     }

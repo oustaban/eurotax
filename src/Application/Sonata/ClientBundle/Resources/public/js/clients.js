@@ -1,6 +1,6 @@
 function addClient(client, cls){
     var columns = [
-        '<a href="/sonata/clientoperations/v01tva/list?filter[client_id][value]='+client.id+'">' +
+        '<a href="/sonata/clientoperations/v01tva/list?filter%5Bclient_id%5D%5Bvalue%5D='+client.id+'">' +
             '<i class="icon icon-th-list" rel="tooltip" data-original-title="Operations"></i>' +
             '</a>' +
             '<a href="/sonata/client/client/'+client.id+'/edit">' +
