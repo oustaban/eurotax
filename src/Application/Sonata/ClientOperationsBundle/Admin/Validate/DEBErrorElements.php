@@ -982,6 +982,37 @@ class DEBErrorElements extends ErrorElements
 			
 			$regime = $this->_object->getRegime();
 	
+			
+			
+			
+			
+			
+			/*
+			  On deb Exped and Deb Intro... when the user put a code for 'Nomenclature" and 
+			  we have a data on the colum "Unité supplémentaire" of the file 
+			  ( http://outils.prodinternet.com/mantis/view.php?id=4210) ... 
+			  check that the field "Unité supplémentaire" is mandatory
+			 */
+			
+			
+			$unitesSupplementairesRequired = false;
+
+			$nomenclature = $this->_object->getNomenclature();
+			if($nomenclature && $this->_object->getUnitesSupplementaires()) {
+				/* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+				$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+				 
+				/* @var $em \Doctrine\ORM\EntityManager */
+				$em = $doctrine->getManager();
+				$findNomenclature = $em->getRepository('ApplicationSonataClientBundle:Nomenclature')->findOneBy(array('code' => ltrim($nomenclature, 0)));
+				 
+				if($findNomenclature->getUnitesSupplementaires() && !$this->_object->getUnitesSupplementaires()) {
+					$this->_errorElement->with('unites_supplementaires')->addViolation( 'La valeur de est obligatoire.' )->end();
+					$unitesSupplementairesRequired = true;
+				}
+			}
+			
+			
 			$requiredFields = @$this->_requiredFields[$class][$niveauDobligationId][$regime]['fields'];
 			if(!empty($requiredFields)) {
 				foreach($requiredFields as $field) {
@@ -994,6 +1025,10 @@ class DEBErrorElements extends ErrorElements
 			
 			$emptyFields = @$this->_emptyFields[$class][$niveauDobligationId][$regime]['fields'];
 			if(!empty($emptyFields)) {
+				if($unitesSupplementairesRequired) {
+					unset($emptyFields['unites_supplementaires']);
+				}
+				
 				foreach($emptyFields as $field) {
 					$hasViolation = false;
 					$method = 'get' . strtoupper(\Doctrine\Common\Util\Inflector::camelize($field));
