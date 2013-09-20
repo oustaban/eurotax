@@ -103,7 +103,7 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
     /**
      * @var string $departement
      *
-     * @Assert\Range(min = "1", max = "99", minMessage = "Le département n'est pas correct", maxMessage = "Le département n'est pas correct")
+     * @Assert\Range(min = "1", max = "95", minMessage = "Le département n'est pas correct", maxMessage = "Le département n'est pas correct")
      * @ORM\Column(name="departement", type="string", length=255, nullable=true)
      */
     private $departement;
