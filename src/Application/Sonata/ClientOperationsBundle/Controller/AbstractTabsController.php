@@ -1001,6 +1001,13 @@ class AbstractTabsController extends Controller
 	                    	unset($formData['TVA']);
 	                    }
                     }
+                    
+                    // Ensure that CEE field is excluded from existing excel files
+                    if($class == 'DEBIntro' && isset($formData['CEE'])) {
+                    	unset($formData['CEE']);	
+                    }
+                    
+                    
 		            $form->bind($formData);
 
                     if ($form->isValid()) {

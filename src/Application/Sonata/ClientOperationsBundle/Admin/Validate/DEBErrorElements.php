@@ -890,7 +890,7 @@ class DEBErrorElements extends ErrorElements
 					'regime' => 11,
 					'fields' => array(
 						'conditions_livraison',
-						'CEE',
+						//'CEE',
 						'valeur_statistique',
 					)
 				),
@@ -900,7 +900,7 @@ class DEBErrorElements extends ErrorElements
 				'fields' => array(
 						'valeur_fiscale',
 						'conditions_livraison',
-						'CEE',
+						//'CEE',
 					)
 				),
 		),
@@ -914,7 +914,7 @@ class DEBErrorElements extends ErrorElements
 					'conditions_livraison',
 					'mode_transport',
 					'departement',
-					'CEE',
+					//'CEE',
 					'valeur_statistique',
 					)
 			),
@@ -926,7 +926,7 @@ class DEBErrorElements extends ErrorElements
 					'conditions_livraison',
 					'mode_transport',
 					'departement',
-					'CEE',
+					//'CEE',
 				)
 			),
 		),
@@ -943,7 +943,7 @@ class DEBErrorElements extends ErrorElements
 						'mode_transport',
 						'departement',
 						'pays_origine',
-						'CEE',
+						//'CEE',
 					)
 				),
 				19 => array(
@@ -958,7 +958,7 @@ class DEBErrorElements extends ErrorElements
 						'mode_transport',
 						'departement',
 						'pays_origine',
-						'CEE',
+						//'CEE',
 					)
 				),
 			)
