@@ -4,6 +4,7 @@ namespace Application\Sonata\ClientOperationsBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Application\Sonata\ClientBundle\Entity\Client;
 
 
 /**
@@ -92,6 +93,21 @@ abstract class AbstractBaseEntity
         return $this->client_id;
     }
 
+    /**
+     * Get client object
+     * 
+     * @return Client
+     */
+    public function getClient() {
+    	
+    	$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+    	$em = $doctrine->getManager();
+    	
+    	return $em->getRepository('ApplicationSonataClientBundle:Client')->find($this->client_id);
+    }
+    
+    
+    
     /**
      * Set date_piece
      *

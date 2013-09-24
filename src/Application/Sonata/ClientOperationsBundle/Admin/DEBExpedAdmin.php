@@ -115,6 +115,7 @@ class DEBExpedAdmin extends Admin
         $error->setAdmin($this)
         	->setValidateImport($this->getValidateImport())
         	->validateRegime(array(21, 29, 25, 26, 31))
+        	->validateNiveauDEBRegime()
         	->validateNoTVATiers()
         	->validateDEB()
         	->setMois()
