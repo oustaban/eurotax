@@ -1006,7 +1006,7 @@ class DEBErrorElements extends ErrorElements
 				$em = $doctrine->getManager();
 				$findNomenclature = $em->getRepository('ApplicationSonataClientBundle:Nomenclature')->findOneBy(array('code' => ltrim($nomenclature, 0)));
 				 
-				if($findNomenclature->getUnitesSupplementaires() && !$this->_object->getUnitesSupplementaires()) {
+				if($findNomenclature && $findNomenclature->getUnitesSupplementaires() && !$this->_object->getUnitesSupplementaires()) {
 					$this->_errorElement->with('unites_supplementaires')->addViolation( 'La valeur de est obligatoire.' )->end();
 					$unitesSupplementairesRequired = true;
 				}
