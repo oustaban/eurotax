@@ -233,7 +233,7 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
      */
     public function getValeurFiscale()
     {
-        return $this->valeur_fiscale;
+        return round($this->valeur_fiscale);
     }
 
     /**
@@ -279,7 +279,7 @@ abstract class AbstractDEBEntity extends AbstractBaseEntity
      */
     public function getValeurStatistique()
     {
-        return $this->valeur_statistique;
+        return round($this->valeur_statistique);
     }
 
     /**
