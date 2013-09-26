@@ -1,6 +1,9 @@
 $(function () {
     $('td.sonata-ba-list-field-money, td.sonata-ba-list-field-number').each(function () {
         var $this = $(this);
+        if($this.find('div').hasClass('valeur_statistique') || $this.find('div').hasClass('valeur_fiscale')) {
+        	return;
+        }
         var val = $this.text().trim().replace(/[^\d\.]+/, '');
         if (val == ''){
             return;
