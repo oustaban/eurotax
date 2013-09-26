@@ -433,7 +433,7 @@ class ClientAdmin extends Admin
             $value = $object->getNTVAFR();
             $siret = substr($object->getSiret(), 0, 11);
             if ($value) {
-                if (!preg_match('/^FR \d{2} '.$siret.'$/', $value)) {
+                if (!preg_match('/^FR (\d{2}|ZW) '.$siret.'$/', $value)) {
                     $errorElement->with('N_TVA_FR')->addViolation('Non concordance entre le SIRET et le N° TVA FR.   Respecter FR xx (+SIREN xxx xxx xxx)')->end();
                 }
             }
