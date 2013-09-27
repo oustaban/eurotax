@@ -1,15 +1,13 @@
 $(function () {
     $('td.sonata-ba-list-field-money, td.sonata-ba-list-field-number').each(function () {
         var $this = $(this);
-        if($this.find('div').hasClass('valeur_statistique') || $this.find('div').hasClass('valeur_fiscale')) {
-        	return;
-        }
+        
         var val = $this.text().trim().replace(/[^\d\.]+/, '');
         if (val == ''){
             return;
         }
         var repl = Number(val);
-        if ($this.hasClass('sonata-ba-list-field-money')) {
+        if ($this.hasClass('sonata-ba-list-field-money') && (!$this.find('div').hasClass('valeur_statistique') && !$this.find('div').hasClass('valeur_fiscale'))) {
             repl = repl.toFixed(2);
         }
         repl = repl.toString().split('.');
