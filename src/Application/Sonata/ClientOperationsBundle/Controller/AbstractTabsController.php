@@ -781,7 +781,7 @@ class AbstractTabsController extends Controller
      * 
      * @param string $class
      */
-    private function _validateDEBClientNiveauDobligation($class) {
+    private function _validateDEBClientNiveauDobligation($class, $sheets) {
     	if(!in_array($class, array('DEBExped', 'DEBIntro'))) {
     		return;
     	}
@@ -790,11 +790,13 @@ class AbstractTabsController extends Controller
     		
     	if($class == 'DEBIntro') {
     		$niveauDobligationId = $client->getNiveauDobligationId(); //INTRO
+    		$hasExcelData = $this->hasExcelData('DEB Intro', $sheets);
     	} elseif($class == 'DEBExped') {
     		$niveauDobligationId = $client->getNiveauDobligationExpedId(); //DEB
+    		$hasExcelData = $this->hasExcelData('DEB Exped', $sheets);
     	}
     		
-    	if($niveauDobligationId == 0) {
+    	if($niveauDobligationId == 0 && $hasExcelData) {
     		$message = "VALUE : $niveauDobligationId \n";
     		$message .= "ERROR :Le niveau d'obligation est à 0 : On ne devrait pas avoir de données\n\n";
     		$this->setCountImports($class, 'errors', $message);
@@ -941,7 +943,7 @@ class AbstractTabsController extends Controller
                 //DEB Exped | DEB Intro
                 
                 $continue = false;
-                if($this->_validateDEBClientNiveauDobligation($class) === false) {
+                if($this->_validateDEBClientNiveauDobligation($class, $sheets) === false) {
                 	$continue = true;
                 }
                 if($this->_validateDEBNLigne($class, $skip_line, $data) === false) {
