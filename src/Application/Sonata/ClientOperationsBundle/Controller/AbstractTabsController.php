@@ -942,6 +942,12 @@ class AbstractTabsController extends Controller
 
                 //DEB Exped | DEB Intro
                 
+                
+                if($this->getLocking() && ($class == 'DEBExped' || $class == 'DEBIntro')) {
+                	continue;
+                }
+                
+                
                 $continue = false;
                 if($this->_validateDEBClientNiveauDobligation($class, $sheets) === false) {
                 	$continue = true;
