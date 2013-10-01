@@ -157,7 +157,7 @@ class ClientAdmin extends Admin
             ->add('N_TVA_CEE', null, array('label' => 'form.N_TVA_CEE'))
             ->add('N_TVA_CEE_facture', null, array('label' => 'form.N_TVA_CEE_facture'))
             ->with('form.client.row8')
-            ->add('activite', null, array('label' => 'form.activite', 'required' => false,))
+            ->add('activite', null, array('label' => 'form.activite', 'required' => false, 'attr' => array('style' => 'width: 670px;')))
             ->with('form.client.row9')
             ->add('date_debut_mission', 'date', array(
             'label' => 'form.date_debut_mission',
