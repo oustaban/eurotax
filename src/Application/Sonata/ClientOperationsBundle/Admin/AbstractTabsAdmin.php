@@ -97,18 +97,12 @@ abstract class AbstractTabsAdmin extends Admin
             //$this->month_default = date('m' . $this->date_filter_separator . 'Y', strtotime('-1 month'));
             $this->query_month = isset($filter['month']) ? $filter['month'] : $request->query->get('month', $this->month_default);
             
-            if ($this->query_month == 'all'){
-                $this->query_month = -1;
-                
-            }
             
 
-            if ($this->query_month == -1){
-            	
+            if ($this->query_month == 'all'){
+            	$this->query_month = -1;
             	$this->_show_all_operations = true;
             }
-            
-            
             
             
             list($this->month, $this->year) = $this->getQueryMonth($this->query_month);
