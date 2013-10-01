@@ -12,8 +12,8 @@
     <tr>
         <td class="o_title">{% if loop.index == 1 %} V01-TVA {% endif %}</td>
         <td class="o_value">{{ (data.getTauxDeTVA() * 100) }}%</td>
-        <td class="o_nett">{{ data.getHT()|number_format(2, ',', ' ') }}</td>
-        <td class="o_tva">{{ data.getTVA()|number_format(2, ',', ' ') }}</td>
+        <td class="o_nett">{{ data.getHT()|number_format(0, ',', ' ') }}</td>
+        <td class="o_tva">{{ data.getTVA()|number_format(0, ',', ' ') }}</td>
     </tr>
     {% endfor %}
     
