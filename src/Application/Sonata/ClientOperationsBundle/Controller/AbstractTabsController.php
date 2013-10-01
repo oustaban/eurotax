@@ -351,6 +351,9 @@ class AbstractTabsController extends Controller
             $this->_parameters_url['month'] = $this->_query_month;
         }
         
+        if($this->_query_month == -1 && $this->_show_all_operations) {
+        	$this->_parameters_url['month'] = 'all';
+        }
     }
 
 
