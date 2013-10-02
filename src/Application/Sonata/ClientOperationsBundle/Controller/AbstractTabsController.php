@@ -1739,6 +1739,10 @@ class AbstractTabsController extends Controller
         $A02TVAlist = $this->getEntityList('A02TVA');
         $A08IMlist = $this->getEntityList('A08IM');
         
+        $A02TVAPrevlist = $this->getEntityList('A02TVA', true); // Previous month
+        $A08IMPrevlist = $this->getEntityList('A08IM', true); // Previous month
+        
+        
         $A06AIBlist = $this->getEntityList('A06AIB');
         
         
@@ -1755,6 +1759,8 @@ class AbstractTabsController extends Controller
         	'V01TVAlist' => $V01TVAlist,
         	'A02TVAlist' => $A02TVAlist,
         	'A08IMlist' => $A08IMlist,
+        	'A02TVAPrevlist' => $A02TVAPrevlist,
+        	'A08IMPrevlist' => $A08IMPrevlist,
         	'A06AIBlist' => $A06AIBlist
         ));
 
@@ -1853,13 +1859,13 @@ class AbstractTabsController extends Controller
     
     
     
-    protected function getEntityList($entity)
+    protected function getEntityList($entity, $isPrevMonth = false)
     {
     	/* @var $em \Doctrine\ORM\EntityManager */
     	$em = $this->getDoctrine()->getManager();
     	$qb = $em->createQueryBuilder();
     	$q = $qb->select('v')->from("Application\Sonata\ClientOperationsBundle\Entity\\". $entity, 'v');
-    	$qb = $this->_listQueryFilter($qb);
+    	$qb = $this->_listQueryFilter($qb, $isPrevMonth);
     	$data =	$q->getQuery()
     		->getResult();
     	if (!empty($data)) {
@@ -1868,15 +1874,20 @@ class AbstractTabsController extends Controller
     	return null;
     }
     
-    private function _listQueryFilter(\Doctrine\ORM\QueryBuilder $qb) {
+    private function _listQueryFilter(\Doctrine\ORM\QueryBuilder $qb, $isPrevMonth = false) {
     	if (!$this->_show_all_operations){
     	
     		$form_month = $this->_year . '-' . $this->_month . '-01';
     		$to_month = $this->_year . '-' . $this->_month . '-31';
+    		if($isPrevMonth) {
+    			$lastMonth = new \DateTime($form_month);
+    			$lastMonth->sub(\DateInterval::createFromDateString('1 month'));
+    			
+    			$to_month = $lastMonth->format('Y-m') . '-31';
+    			$form_month = $lastMonth->format('Y-m') . '-01';
+    		}
+
     		$monthField = 'mois';
-    		
-    		//var_dump($form_month, $to_month);
-    		
     	
     		if ($this->_query_month == -1) {
     			$qb->orWhere($qb->getRootAlias() . '.'.$monthField.' IS NULL');
