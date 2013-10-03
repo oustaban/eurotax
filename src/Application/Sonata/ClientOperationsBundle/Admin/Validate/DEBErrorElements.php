@@ -1014,8 +1014,15 @@ class DEBErrorElements extends ErrorElements
 			
 			
 			$requiredFields = @$this->_requiredFields[$class][$niveauDobligationId][$regime]['fields'];
+			
 			if(!empty($requiredFields)) {
-				foreach($requiredFields as $field) {
+				$requiredFields = array_flip($requiredFields);
+				
+				if(isset($requiredFields['nomenclature'])) {
+					$this->validateNomenclature2();
+				}
+				
+				foreach($requiredFields as $field => $v) {
 					$method = 'get' . strtoupper(\Doctrine\Common\Util\Inflector::camelize($field));
 					if(!$this->_object->$method()) {
 						$this->_errorElement->with($field)->addViolation( 'La valeur de est obligatoire.' )->end();
@@ -1024,12 +1031,19 @@ class DEBErrorElements extends ErrorElements
 			}
 			
 			$emptyFields = @$this->_emptyFields[$class][$niveauDobligationId][$regime]['fields'];
+			
 			if(!empty($emptyFields)) {
+				
+				$emptyFields = array_flip($emptyFields);
+				
 				if($unitesSupplementairesRequired) {
 					unset($emptyFields['unites_supplementaires']);
 				}
 				
-				foreach($emptyFields as $field) {
+			
+				
+				
+				foreach($emptyFields as $field => $v) {
 					$hasViolation = false;
 					$method = 'get' . strtoupper(\Doctrine\Common\Util\Inflector::camelize($field));
 					$value = $this->_object->$method();

@@ -121,6 +121,6 @@ class DEBExpedAdmin extends Admin
         	->setMois()
         	->setDatePieceByFilename()
         	->validateNomenclature()
-        	->validateNomenclature2();
+        	;
     }
 }

@@ -616,6 +616,13 @@ class ErrorElements
     
     	$nomenclature = $this->_object->getNomenclature();
 		if($nomenclature) {    
+			
+			$lenNomen = strlen($nomenclature);
+			
+			if($lenNomen < 7 || $lenNomen > 9) {
+				$this->_errorElement->with('nomenclature')->addViolation('La nomenclature doit avoir entre 7 et 9 caractères')->end();
+			}
+			
 	    	/* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
 	    	$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
 	    

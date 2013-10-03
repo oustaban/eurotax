@@ -117,7 +117,7 @@ class DEBIntroAdmin extends Admin
         	->validateDEB()
         	->setMois()
         	->setDatePieceByFilename()
-        	->validateNomenclature2();
+        	;
 
        
     }
