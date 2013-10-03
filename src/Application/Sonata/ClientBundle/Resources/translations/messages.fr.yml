@@ -163,7 +163,7 @@ form:
     statut: Statut
 
   CompteDeDepot:
-    title: Compte de dépot
+    title: Compte de dépôt
     date: Date
     operation: Opération
     montant: Montant
