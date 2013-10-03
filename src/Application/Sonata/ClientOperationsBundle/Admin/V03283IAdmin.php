@@ -22,6 +22,8 @@ class V03283IAdmin extends Admin
     {
         parent::configureFormFields($formMapper);
 
+        $id = $this->getRequest()->get($this->getIdParameter());
+        
         $formMapper
             ->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
             ->add('no_TVA_tiers', null, array('label' => $this->getFieldLabel('no_TVA_tiers')))
@@ -41,7 +43,7 @@ class V03283IAdmin extends Admin
             ->add('montant_HT_en_devise', null, array('attr'=>array('class'=>'money'), 'label' => $this->getFieldLabel('montant_HT_en_devise')))
             ->add('mois', 'mois', array(
             'label' => $this->getFieldLabel('mois'),
-            'disabled' => $this->getLocking() ? true : false
+            'disabled' => ((!$id && $this->getLocking()) || $this->isObjectLocked()) ? true : false
         ))->add('taux_de_change', null, array(
             'label' => $this->getFieldLabel('taux_de_change'),
             'required' => false,

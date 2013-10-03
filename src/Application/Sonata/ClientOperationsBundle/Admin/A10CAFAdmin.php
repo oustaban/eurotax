@@ -22,6 +22,8 @@ class A10CAFAdmin extends Admin
     {
         parent::configureFormFields($formMapper);
 
+        $id = $this->getRequest()->get($this->getIdParameter());
+        
         $formMapper
             ->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
             ->add('date_piece', null, array(
@@ -35,7 +37,7 @@ class A10CAFAdmin extends Admin
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'required'=>false))
             ->add('mois', 'mois', array(
             'label' => $this->getFieldLabel('mois'),
-            'disabled' => $this->getLocking() ? true : false
+           'disabled' => ((!$id && $this->getLocking()) || $this->isObjectLocked()) ? true : false
         ))
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
     }

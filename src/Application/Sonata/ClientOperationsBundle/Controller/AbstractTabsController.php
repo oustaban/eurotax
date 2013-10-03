@@ -559,14 +559,9 @@ class AbstractTabsController extends Controller
         
         if ($this->get('request')->getMethod() == 'POST') {
         	$id     = $this->get('request')->get($this->admin->getIdParameter());
-        	$object = $this->admin->getObject($id);
-        	
-        	if($object instanceof AbstractBaseEntity) {
-        		if($object->getStatus() && $object->getStatus()->getId() == 1) {
-        			$this->getLockingAccessDenied();
-        		}
+        	if($this->admin->isObjectLocked($id)) {
+        		$this->getLockingAccessDenied();
         	}
-        		
         }
         
         
@@ -595,19 +590,18 @@ class AbstractTabsController extends Controller
         }
 
         // status = Vérouillé cannot be deleted
-        if($object instanceof AbstractBaseEntity) {
-        	if($object->getStatus() && $object->getStatus()->getId() == 1) {
-        		$this->get('session')->setFlash('sonata_flash_error', 'On ne peut pas supprimer les éléments vérouillés');
-        		
-        		if ($this->getRequest()->getMethod() == 'DELETE' && $this->isXmlHttpRequest()) {
-        			return $this->renderJson(array(
-        					'result' => 'ok',
-        			));
-        		} else if ($this->getRequest()->getMethod() == 'DELETE' && $this->isXmlHttpRequest() === false) {
-        			return new RedirectResponse($this->admin->generateUrl('list'));
-        		}
+        if($this->admin->isObjectLocked($id)) {
+        	$this->get('session')->setFlash('sonata_flash_error', 'On ne peut pas supprimer les éléments vérouillés');
+
+        	if ($this->getRequest()->getMethod() == 'DELETE' && $this->isXmlHttpRequest()) {
+        		return $this->renderJson(array(
+        				'result' => 'ok',
+        		));
+        	} else if ($this->getRequest()->getMethod() == 'DELETE' && $this->isXmlHttpRequest() === false) {
+        		return new RedirectResponse($this->admin->generateUrl('list'));
         	}
         }
+        
         
         
         if (false === $this->admin->isGranted('DELETE', $object)) {

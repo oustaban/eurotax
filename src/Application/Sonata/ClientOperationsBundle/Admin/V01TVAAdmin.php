@@ -21,6 +21,8 @@ class V01TVAAdmin extends Admin
     {
         parent::configureFormFields($formMapper);
 
+        $id = $this->getRequest()->get($this->getIdParameter());
+        
         $formMapper
             ->add('tiers', null, array('label' => $this->getFieldLabel('tiers')))
             ->add('date_piece', null, array(
@@ -70,7 +72,7 @@ class V01TVAAdmin extends Admin
         )
             ->add('mois', 'mois', array(
             'label' => $this->getFieldLabel('mois'),
-            'disabled' => $this->getLocking() ? true : false
+            'disabled' => ((!$id && $this->getLocking()) || $this->isObjectLocked()) ? true : false
         ))
             ->add('taux_de_change', null, array(
             'label' => $this->getFieldLabel('taux_de_change'),

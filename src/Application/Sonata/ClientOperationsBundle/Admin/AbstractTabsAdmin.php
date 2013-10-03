@@ -12,6 +12,8 @@ use Sonata\AdminBundle\Validator\ErrorElement;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 
+use Application\Sonata\ClientOperationsBundle\Entity\AbstractBaseEntity;
+
 abstract class AbstractTabsAdmin extends Admin
 {
     public $dashboards = array();
@@ -661,4 +663,27 @@ abstract class AbstractTabsAdmin extends Admin
     {
         return $this->_index_import;
     }
+    
+    
+    /**
+     * Checks object status = 1/locked/verrouillé
+     * 
+     * @param int $id
+     * @return boolean
+     */
+    public function isObjectLocked($id = null) {
+    	if(is_null($id)) {
+    		 $id = $this->getRequest()->get($this->getIdParameter());
+    	}
+    	$object = $this->getObject($id);
+    	
+    	if($object instanceof AbstractBaseEntity) {
+    		if($object->getStatus() && $object->getStatus()->getId() == 1) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
+    
 }
