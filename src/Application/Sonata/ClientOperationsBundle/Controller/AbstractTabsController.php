@@ -581,8 +581,8 @@ class AbstractTabsController extends Controller
     public function deleteAction($id)
     {
         $this->getObjectMonthYear();
-        $this->getLocking();
-        $this->getLockingAccessDenied();
+        /* $this->getLocking();
+        $this->getLockingAccessDenied(); */
 
         /** @var $action RedirectResponse */
         //$action = parent::deleteAction($id);
