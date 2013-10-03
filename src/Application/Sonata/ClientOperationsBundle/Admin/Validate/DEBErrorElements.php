@@ -1004,7 +1004,7 @@ class DEBErrorElements extends ErrorElements
 				 
 				/* @var $em \Doctrine\ORM\EntityManager */
 				$em = $doctrine->getManager();
-				$findNomenclature = $em->getRepository('ApplicationSonataClientBundle:Nomenclature')->findOneBy(array('code' => ltrim($nomenclature, 0)));
+				$findNomenclature = $em->getRepository('ApplicationSonataClientBundle:Nomenclature')->findOneBy(array('code' => ltrim(str_replace(' ', '', $nomenclature), 0)));
 				 
 				if($findNomenclature && $findNomenclature->getUnitesSupplementaires() && !$this->_object->getUnitesSupplementaires()) {
 					$this->_errorElement->with('unites_supplementaires')->addViolation( 'La valeur de est obligatoire.' )->end();
@@ -1022,6 +1022,12 @@ class DEBErrorElements extends ErrorElements
 					$this->validateNomenclature2();
 				}
 				
+				
+				if($unitesSupplementairesRequired) {
+					unset($requiredFields['unites_supplementaires']);
+				}
+				
+				
 				foreach($requiredFields as $field => $v) {
 					$method = 'get' . strtoupper(\Doctrine\Common\Util\Inflector::camelize($field));
 					if(!$this->_object->$method()) {
@@ -1035,13 +1041,6 @@ class DEBErrorElements extends ErrorElements
 			if(!empty($emptyFields)) {
 				
 				$emptyFields = array_flip($emptyFields);
-				
-				if($unitesSupplementairesRequired) {
-					unset($emptyFields['unites_supplementaires']);
-				}
-				
-			
-				
 				
 				foreach($emptyFields as $field => $v) {
 					$hasViolation = false;
