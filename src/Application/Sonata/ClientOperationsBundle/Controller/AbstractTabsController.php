@@ -730,6 +730,8 @@ class AbstractTabsController extends Controller
      */
     public function importAction()
     {
+    	
+    	$this->getLockingAccessDenied();
         if (!empty($_FILES) && !empty($_FILES["inputFile"])) {
             $file = TMP_UPLOAD_PATH . '/' . $_FILES["inputFile"]["name"];
             $tmpFile = $_FILES["inputFile"]["tmp_name"];
