@@ -380,7 +380,7 @@ function init_clientoperations_buttons(o) {
 		}
 		
 		if(Sonata.locked == 1) {
-			$('#toggleImportModal').addClass('disabled').attr('href', 'javascript:void(0);');
+			$('#toggleImportModal').addClass('disabled').attr('disabled', true).unbind('click');
 		}
 	}
 	
