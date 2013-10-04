@@ -453,6 +453,38 @@ class ClientAdmin extends Admin
             }
         }
         
+        
+        
+        
+        /**
+         * If CENTRE DES IMPOTS = DRESG/6 and date <> 19 : No validation possible - Message on DATE : "CDI = DRESG, date = 19"
+
+If CENTRE DES IMPOTS = CDI-94/7 and date <> 15 or 24 : No validation possible - Message on DATE : "CDI = CDI-94, date = 15 or 24"
+
+If CENTRE DES IMPOTS = CISD/9 and date <> 31 : No validation possible - Message on DATE : "CDI = CISD, date = 31"
+
+         */
+        
+        $centerDesImpotsID = $object->getCenterDesImpots() ? $object->getCenterDesImpots()->getId() : 0;
+        $dateDepot = $object->getDateDeDepot();
+        
+        if($centerDesImpotsID && $dateDepot) {
+        	
+        	if($centerDesImpotsID == 6 && $dateDepot != 19) {
+        		$errorElement->with('date_de_depot_id')->addViolation('CDI = DRESG, date = 19')->end();
+        	}
+        	
+        	if($centerDesImpotsID == 7 && ($dateDepot != 15 || $dateDepot != 24)) {
+        		$errorElement->with('date_de_depot_id')->addViolation('CDI = CDI-94, date = 15 or 24')->end();
+        	}
+        	
+        	if($centerDesImpotsID == 9 && $dateDepot != 31) {
+        		$errorElement->with('date_de_depot_id')->addViolation('CDI = CISD, date = 31')->end();
+        	}
+        }
+        
+        
+        
        
     }
     
