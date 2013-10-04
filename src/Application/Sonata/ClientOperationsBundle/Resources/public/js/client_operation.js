@@ -555,7 +555,10 @@ function init_rapprochement_sums() {
     $plus = $plus.length ? $plus.html() : '0';
     var $minus = $('.rapprochement_content_deb .rapprochement_content_input table.table tr.totals_row div b :last');
     $minus = $minus.length ? $minus.html() : '0';
-    var diff = Number(real_num($minus))-Number(real_num($plus)) ;
+    //var diff = Number(real_num($minus))-Number(real_num($plus)) ;
+    
+    var diff = Number(real_num($minus));
+    
     ECARTsumm += diff;
     
     
@@ -603,7 +606,10 @@ function init_rapprochement_sums() {
     $plus = $plus.length ? $plus.html() : '0';
     var $minus = $('.rapprochement_content_deb .rapprochement_content_output table.table tr.totals_row div b :last');
     $minus = $minus.length ? $minus.html() : '0';
-    var diff = Number(real_num($minus))-Number(real_num($plus)) ;
+    //var diff = Number(real_num($minus))-Number(real_num($plus)) ;
+    
+    var diff = Number(real_num($minus));
+    
     ECARTsumm += diff;
     
     var result = Math.round((diff) * 100) / 100;
