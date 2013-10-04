@@ -621,18 +621,19 @@ class ErrorElements
 			
 			if($lenNomen < 7 || $lenNomen > 9) {
 				$this->_errorElement->with('nomenclature')->addViolation('La nomenclature doit avoir entre 7 et 9 caractères')->end();
-			}
+			} else {
 			
-	    	/* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
-	    	$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
-	    
-	    	/* @var $em \Doctrine\ORM\EntityManager */
-	    	$em = $doctrine->getManager();
-	    	$nomenclatures = $em->getRepository('ApplicationSonataClientBundle:Nomenclature')->findBy(array('code' => ltrim($nomenclature, 0)));
-	    
-	    	if(count($nomenclatures) == 0) {
-	    		$this->_errorElement->with('nomenclature')->addViolation('Cellules devant être vide car nomenclature = ' . $nomenclature)->end();
-	    	}
+		    	/* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+		    	$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+		    
+		    	/* @var $em \Doctrine\ORM\EntityManager */
+		    	$em = $doctrine->getManager();
+		    	$nomenclatures = $em->getRepository('ApplicationSonataClientBundle:Nomenclature')->findBy(array('code' => ltrim($nomenclature, 0)));
+		    
+		    	if(count($nomenclatures) == 0) {
+		    		$this->_errorElement->with('nomenclature')->addViolation('Code non trouvé')->end();
+		    	}
+			}
 		}
     	return $this;
     }
