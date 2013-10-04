@@ -69,7 +69,7 @@ class A06AIBAdmin extends Admin
             ->add('regime', null, array('label' => $this->getFieldLabel('regime')))
             //->add('DEB', null, array('label' => $this->getFieldLabel('DEB')))
             
-            ->add('DEB', 'choice', array('label' => 'DEB', 'choices' => array(1 => 'Oui', 0 => 'Non'),'multiple' => false,'expanded'=>true))
+            ->add('DEB', 'choice', array('label' => 'DEB', 'choices' => array(1 => 'Oui', 0 => 'Non'),'multiple' => false,'expanded'=>false))
             
             ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')))
             ;
