@@ -682,6 +682,22 @@ abstract class AbstractTabsAdmin extends Admin
     			return true;
     		}
     	}
+    	
+    	
+    	//when day > 25 and Month+1 is not vérouillé
+    	$nextMonth = new \DateTime('now +1 month');
+      	$isLocked = $this->getConfigurationPool()->getContainer()->get('doctrine')->getRepository('ApplicationSonataClientOperationsBundle:Locking')
+    		->findOneBy(array('client_id' => $this->client_id, 'month' => $nextMonth->format('m'), 'year' => $nextMonth->format('Y')));
+    	
+    	
+    	
+    	if(date('d') < 25 && $isLocked) {
+    		return true;
+    	}
+    	
+    	
+    	
+    	
     	return false;
     }
     
