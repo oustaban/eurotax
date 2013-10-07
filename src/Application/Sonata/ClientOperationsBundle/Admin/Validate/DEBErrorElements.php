@@ -1007,7 +1007,7 @@ class DEBErrorElements extends ErrorElements
 				$findNomenclature = $em->getRepository('ApplicationSonataClientBundle:Nomenclature')->findOneBy(array('code' => ltrim(str_replace(' ', '', $nomenclature), 0)));
 				 
 				if($findNomenclature && $findNomenclature->getUnitesSupplementaires() && !$this->_object->getUnitesSupplementaires()) {
-					$this->_errorElement->with('unites_supplementaires')->addViolation( 'La valeur de est obligatoire.' )->end();
+					$this->_errorElement->with('unites_supplementaires')->addViolation( 'UNITES SUPPLEMENTAIRES devrait être rempli pour '. $this->_object->getUnitesSupplementaires() )->end();
 					$unitesSupplementairesRequired = true;
 				}
 			}
@@ -1023,15 +1023,17 @@ class DEBErrorElements extends ErrorElements
 				}
 				
 				
-				if($unitesSupplementairesRequired) {
-					unset($requiredFields['unites_supplementaires']);
-				}
 				
 				
 				foreach($requiredFields as $field => $v) {
 					$method = 'get' . strtoupper(\Doctrine\Common\Util\Inflector::camelize($field));
 					if(!$this->_object->$method()) {
-						$this->_errorElement->with($field)->addViolation( 'La valeur de est obligatoire.' )->end();
+						
+						if($field == 'unites_supplementaires') {
+							$this->_errorElement->with('unites_supplementaires')->addViolation( 'UNITES SUPPLEMENTAIRES devrait être rempli pour '. $this->_object->$method() )->end();
+						} else {
+							$this->_errorElement->with($field)->addViolation( 'La valeur de est obligatoire.' )->end();
+						}
 					}
 				}
 			}
@@ -1042,13 +1044,25 @@ class DEBErrorElements extends ErrorElements
 				
 				$emptyFields = array_flip($emptyFields);
 				
+				if($unitesSupplementairesRequired) {
+					unset($emptyFields['unites_supplementaires']);
+				}
+				
+				
+				
+				
 				foreach($emptyFields as $field => $v) {
 					$hasViolation = false;
 					$method = 'get' . strtoupper(\Doctrine\Common\Util\Inflector::camelize($field));
 					$value = $this->_object->$method();
 					
 					if( (!is_object($value) && (int)$value != 0) || $value) {
-						$this->_errorElement->with($field)->addViolation( 'La cellule doit être vide.')->end();
+						
+						if($field == 'unites_supplementaires') {
+							$this->_errorElement->with('unites_supplementaires')->addViolation( 'UNITES SUPPLEMENTAIRES devrait être vide pour '. $value )->end();
+						} else {
+							$this->_errorElement->with($field)->addViolation( 'La cellule doit être vide.')->end();
+						}
 					}
 				}
 			}
