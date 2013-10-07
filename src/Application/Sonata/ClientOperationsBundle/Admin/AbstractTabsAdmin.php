@@ -691,7 +691,7 @@ abstract class AbstractTabsAdmin extends Admin
     	
     	
     	
-    	if(date('d') < 25 && $isLocked) {
+    	if($nextMonth->format('d') < 25 && $isLocked) {
     		return true;
     	}
     	
