@@ -453,16 +453,17 @@ class AbstractTabsController extends Controller
 
         $month_list = array();
         $month_list[] = array('key' => '', 'name' => 'Operations en cours');
+        $minDate = explode('-', date('Y-m', strtotime('-24 days')));
 
-        for ($month = date('n'); $month > date('n') - 12; $month--) {
-
-            $mktime = mktime(0, 0, 0, $month, 1, $year);
-
-            $month_list[] = array(
-                'key' => date('n' . $this->admin->date_filter_separator . 'Y', $mktime),
-                'name' => ucwords($this->datefmtFormatFilter(new \DateTime(date('Y-m-d', $mktime)), 'YYYY MMMM')));
+        for ($month = $minDate[1]; $month > date('n') - 12; $month--) {
+        
+        	$mktime = mktime(0, 0, 0, $month, 1, $minDate[0]);
+        
+        	$month_list[] = array(
+        			'key' => date('n' . $this->admin->date_filter_separator . 'Y', $mktime),
+        			'name' => ucwords($this->datefmtFormatFilter(new \DateTime(date('Y-m-d', $mktime)), 'YYYY MMMM')));
         }
-
+        
         $month_list[] = array('key' => 'all', 'name' => 'Toutes les opérations');
 
         return $month_list;
