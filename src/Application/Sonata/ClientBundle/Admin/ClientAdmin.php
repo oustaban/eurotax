@@ -474,7 +474,7 @@ If CENTRE DES IMPOTS = CISD/9 and date <> 31 : No validation possible - Message 
         		$errorElement->with('date_de_depot_id')->addViolation('CDI = DRESG, date = 19')->end();
         	}
         	
-        	if($centerDesImpotsID == 7 && ($dateDepot != 15 || $dateDepot != 24)) {
+        	if($centerDesImpotsID == 7 && ($dateDepot != 15 && $dateDepot != 24)) {
         		$errorElement->with('date_de_depot_id')->addViolation('CDI = CDI-94, date = 15 or 24')->end();
         	}
         	
