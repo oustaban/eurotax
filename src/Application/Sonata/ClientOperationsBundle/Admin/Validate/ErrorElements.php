@@ -619,8 +619,8 @@ class ErrorElements
 			
 			$lenNomen = strlen($nomenclature);
 			
-			if($lenNomen < 7 || $lenNomen > 9) {
-				$this->_errorElement->with('nomenclature')->addViolation('La nomenclature doit avoir entre 7 et 9 caractères')->end();
+			if($lenNomen < 8 || $lenNomen > 9) {
+				$this->_errorElement->with('nomenclature')->addViolation('Code incorrect')->end();
 			} else {
 			
 		    	/* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
