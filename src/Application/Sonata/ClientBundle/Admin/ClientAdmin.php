@@ -644,7 +644,7 @@ If CENTRE DES IMPOTS = CISD/9 and date <> 31 : No validation possible - Message 
             }
 
             $value = $object->getNumDossierFiscal();
-            if (!$value) {
+            if (!$value && $object->getNatureDuClient() && $object->getNatureDuClient()->getId() == 1) {
                 $alert = new ClientAlert();
                 $alert->setClient($object);
                 $alert->setTabs($tab);

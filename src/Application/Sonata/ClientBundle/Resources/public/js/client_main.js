@@ -212,14 +212,19 @@ jQuery(document).ready(function ($) {
         
         var $N_TVA_FR = $('#' + uniqid + '_N_TVA_FR');
         var $N_TVA_FR_label = $('#sonata-ba-field-container-' + uniqid + '_N_TVA_FR label');
+        
+        var $num_dossier_fiscal_label = $('#sonata-ba-field-container-' + uniqid + '_num_dossier_fiscal label');
 
         if ($(this).val() == 1) {
             $N_TVA_FR.attr('required', 'required');
             add_label_required($N_TVA_FR_label);
+            
+            $num_dossier_fiscal_label.show();
         }
         else {
             $N_TVA_FR.removeAttr('required');
             rm_label_required($N_TVA_FR_label);
+            $num_dossier_fiscal_label.hide();
         }
     }).trigger('change');
 
