@@ -1066,6 +1066,32 @@ class Client
     {
         return $this->periodicite_CA3;
     }
+    
+    
+    public function getPeriodiciteCA3Info($year, $month) {
+    	
+    	if($period = $this->getPeriodiciteCA3()) {
+    		
+    		switch($period->getId()) {
+    			case 1: //Mensuelle
+    				//$date = new \DateTime('now');
+    				//return $date->format('Y-m');
+					return date('Y-m', strtotime($year . '-' . $month . '-01'));			
+    				break;
+    			case 2: //Trimestrielle
+    				return 'T'. floor(($this->_month - 1) / 3) + 1;
+    				break;
+    			
+    		}
+    		
+    		
+    	}
+    	
+    }
+    
+    
+    
+    
 
     /**
      * Set center_des_impots

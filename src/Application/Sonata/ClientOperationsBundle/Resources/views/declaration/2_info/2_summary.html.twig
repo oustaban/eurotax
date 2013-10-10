@@ -6,7 +6,7 @@
     </thead>
     <tbody>
     <tr>
-        <td>{{ info.time|date('Y-m') }} - T{{ info.quarter }}</td>
+        <td>{{ client.getPeriodiciteCA3Info(info.year, info.month) }}</td>
     </tr>
     </tbody>
 </table>
