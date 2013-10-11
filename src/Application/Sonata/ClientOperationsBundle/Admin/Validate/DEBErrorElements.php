@@ -998,7 +998,7 @@ class DEBErrorElements extends ErrorElements
 			$unitesSupplementairesRequired = false;
 
 			$nomenclature = $this->_object->getNomenclature();
-			if($nomenclature && $this->_object->getUnitesSupplementaires()) {
+			if($nomenclature) {
 				/* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
 				$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
 				 
@@ -1006,11 +1006,15 @@ class DEBErrorElements extends ErrorElements
 				$em = $doctrine->getManager();
 				$findNomenclature = $em->getRepository('ApplicationSonataClientBundle:Nomenclature')->findOneBy(array('code' => ltrim(str_replace(' ', '', $nomenclature), 0)));
 				 
-				if($findNomenclature && $findNomenclature->getUnitesSupplementaires() && !$this->_object->getUnitesSupplementaires()) {
-					//$this->_errorElement->with('unites_supplementaires')->addViolation( 'UNITES SUPPLEMENTAIRES devrait être rempli pour '. $this->_object->getUnitesSupplementaires() )->end();
-					$unitesSupplementairesRequired = false;
-				} else {
-					$unitesSupplementairesRequired = true;
+				if($findNomenclature) {
+					if($findNomenclature->getUnitesSupplementaires() && !$this->_object->getUnitesSupplementaires()) {
+						
+						$unitesSupplementairesRequired = true;
+						
+					} else if(!$findNomenclature->getUnitesSupplementaires() && $this->_object->getUnitesSupplementaires()) {
+						
+						$unitesSupplementairesRequired = false;
+					}
 				}
 			}
 			
@@ -1024,12 +1028,17 @@ class DEBErrorElements extends ErrorElements
 					$this->validateNomenclature2();
 				}
 				
-				if(!$unitesSupplementairesRequired && isset($requiredFields['unites_supplementaires'])) {
+				if(!$unitesSupplementairesRequired) {
 					unset($requiredFields['unites_supplementaires']);
+				} else {
+					$requiredFields['unites_supplementaires'] = true;
+					
+					
 				}
 				
 				foreach($requiredFields as $field => $v) {
 					$method = 'get' . strtoupper(\Doctrine\Common\Util\Inflector::camelize($field));
+					
 					if(!$this->_object->$method()) {
 						
 						if($field == 'unites_supplementaires') {
@@ -1049,6 +1058,8 @@ class DEBErrorElements extends ErrorElements
 				
 				if($unitesSupplementairesRequired) {
 					unset($emptyFields['unites_supplementaires']);
+				} else {
+					$emptyFields['unites_supplementaires'] = true;
 				}
 				
 				
