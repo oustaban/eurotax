@@ -1007,7 +1007,9 @@ class DEBErrorElements extends ErrorElements
 				$findNomenclature = $em->getRepository('ApplicationSonataClientBundle:Nomenclature')->findOneBy(array('code' => ltrim(str_replace(' ', '', $nomenclature), 0)));
 				 
 				if($findNomenclature && $findNomenclature->getUnitesSupplementaires() && !$this->_object->getUnitesSupplementaires()) {
-					$this->_errorElement->with('unites_supplementaires')->addViolation( 'UNITES SUPPLEMENTAIRES devrait être rempli pour '. $this->_object->getUnitesSupplementaires() )->end();
+					//$this->_errorElement->with('unites_supplementaires')->addViolation( 'UNITES SUPPLEMENTAIRES devrait être rempli pour '. $this->_object->getUnitesSupplementaires() )->end();
+					$unitesSupplementairesRequired = false;
+				} else {
 					$unitesSupplementairesRequired = true;
 				}
 			}
@@ -1022,8 +1024,9 @@ class DEBErrorElements extends ErrorElements
 					$this->validateNomenclature2();
 				}
 				
-				
-				
+				if(!$unitesSupplementairesRequired && isset($requiredFields['unites_supplementaires'])) {
+					unset($requiredFields['unites_supplementaires']);
+				}
 				
 				foreach($requiredFields as $field => $v) {
 					$method = 'get' . strtoupper(\Doctrine\Common\Util\Inflector::camelize($field));
