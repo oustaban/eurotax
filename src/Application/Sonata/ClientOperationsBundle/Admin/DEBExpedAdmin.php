@@ -63,13 +63,13 @@ class DEBExpedAdmin extends Admin
             ->add('conditions_livraison', null, array('label' => $this->getFieldLabel('conditions_livraison')))
             ->add('mode_transport', null, array('label' => $this->getFieldLabel('mode_transport')))
             ->add('departement', null, array('label' => $this->getFieldLabel('departement')))
-            ->add('pays_origine', null, array('label' => $this->getFieldLabel('pays_id_origine'), 'query_builder' => function (EntityRepository $er)
+            /* ->add('pays_origine', null, array('label' => $this->getFieldLabel('pays_id_origine'), 'query_builder' => function (EntityRepository $er)
         {
             return $er->createQueryBuilder('p')
                 //->andWhere('p.destination=1')
                 ->orderBy('p.code')
                 ;
-        },'property' => 'code',))
+        },'property' => 'code',)) */
             ->add('CEE', null, array('label' => $this->getFieldLabel('CEE')));
     }
 
@@ -95,7 +95,7 @@ class DEBExpedAdmin extends Admin
             ->add('conditions_livraison', null, array('label' => $this->getFieldLabel('conditions_livraison')))
             ->add('mode_transport', null, array('label' => $this->getFieldLabel('mode_transport')))
             ->add('departement', null, array('label' => $this->getFieldLabel('departement')))
-            ->add('pays_origine.name', null, array('label' => $this->getFieldLabel('pays_id_origine')))
+            //->add('pays_origine.name', null, array('label' => $this->getFieldLabel('pays_id_origine')))
             ->add('CEE', null, array('label' => $this->getFieldLabel('CEE')))
         ;
 

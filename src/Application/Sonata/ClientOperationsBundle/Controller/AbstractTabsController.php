@@ -1016,6 +1016,11 @@ class AbstractTabsController extends Controller
                     }
                     
                     
+                    // Ensure that pays_origine field is excluded from existing excel files
+                    if($class == 'DEBExped' && isset($formData['pays_origine'])) {
+                    	unset($formData['pays_origine']);
+                    }
+                    
 		            $form->bind($formData);
 
                     if ($form->isValid()) {
