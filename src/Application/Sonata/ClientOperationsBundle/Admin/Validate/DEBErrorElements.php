@@ -1042,7 +1042,7 @@ class DEBErrorElements extends ErrorElements
 					if(!$this->_object->$method()) {
 						
 						if($field == 'unites_supplementaires') {
-							$this->_errorElement->with('unites_supplementaires')->addViolation( 'UNITES SUPPLEMENTAIRES devrait être rempli pour '. $this->_object->$method() )->end();
+							$this->_errorElement->with('unites_supplementaires')->addViolation( 'UNITES SUPPLEMENTAIRES devrait être rempli pour '. $this->_object->getNomenclature() )->end();
 						} else {
 							$this->_errorElement->with($field)->addViolation( 'La valeur de est obligatoire.' )->end();
 						}
@@ -1073,7 +1073,7 @@ class DEBErrorElements extends ErrorElements
 					if( (!is_object($value) && (int)$value != 0) || $value) {
 						
 						if($field == 'unites_supplementaires') {
-							$this->_errorElement->with('unites_supplementaires')->addViolation( 'UNITES SUPPLEMENTAIRES devrait être vide pour '. $value )->end();
+							$this->_errorElement->with('unites_supplementaires')->addViolation( 'UNITES SUPPLEMENTAIRES devrait être vide pour '. $this->_object->getNomenclature() )->end();
 						} else {
 							$this->_errorElement->with($field)->addViolation( 'La cellule doit être vide.')->end();
 						}
