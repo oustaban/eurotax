@@ -995,7 +995,7 @@ class DEBErrorElements extends ErrorElements
 			 */
 			
 			
-			$unitesSupplementairesRequired = false;
+			$unitesSupplementairesRequired = null;
 
 			$nomenclature = $this->_object->getNomenclature();
 			if($nomenclature) {
@@ -1028,12 +1028,12 @@ class DEBErrorElements extends ErrorElements
 					$this->validateNomenclature2();
 				}
 				
-				if(!$unitesSupplementairesRequired) {
-					unset($requiredFields['unites_supplementaires']);
-				} else {
-					$requiredFields['unites_supplementaires'] = true;
-					
-					
+				if(!is_null($unitesSupplementairesRequired)) {
+					if(!$unitesSupplementairesRequired) {
+						unset($requiredFields['unites_supplementaires']);
+					} else {
+						$requiredFields['unites_supplementaires'] = true;
+					}
 				}
 				
 				foreach($requiredFields as $field => $v) {
@@ -1055,14 +1055,14 @@ class DEBErrorElements extends ErrorElements
 			if(!empty($emptyFields)) {
 				
 				$emptyFields = array_flip($emptyFields);
+				if(!is_null($unitesSupplementairesRequired)) {
+					if($unitesSupplementairesRequired) {
+						unset($emptyFields['unites_supplementaires']);
+					} else {
+						$emptyFields['unites_supplementaires'] = true;
+					}
 				
-				if($unitesSupplementairesRequired) {
-					unset($emptyFields['unites_supplementaires']);
-				} else {
-					$emptyFields['unites_supplementaires'] = true;
 				}
-				
-				
 				
 				
 				foreach($emptyFields as $field => $v) {
