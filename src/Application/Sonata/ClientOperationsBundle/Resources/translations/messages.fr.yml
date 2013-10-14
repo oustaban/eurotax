@@ -2,7 +2,7 @@ ApplicationSonataClientOperationsBundle:
   link_action_create: Ajouter une ligne
   declaration:
     address: 77-79 Av. A. Briand<br />94110 ARCUEIL
-    vat_entity: DECLARANT #VAT-Registered Entity
+    vat_entity: DECLARANT #VAT-Registered
     summ: RESUME de la Période #SUMMARY of the Period
     fin_situation: Situation Financière #Financial Situation
     vat_situation: Situation  TVA en EUROS #VAT Situation in EUROS
