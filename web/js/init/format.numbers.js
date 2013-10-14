@@ -64,9 +64,9 @@ function euro_num_format(rnum, rlength, returnzero) {
 	}
 	numFormat.unshift(numberStr);
 	
+	var implode = numFormat.join(' ')+','+numFormatDec; //format 000 000 000,00
 	
-	
-	return numFormat.join(' ')+','+numFormatDec; //format 000 000 000,00 
+	return implode.replace('- ', '-');
 	
 }
 
