@@ -1029,9 +1029,9 @@ class DEBErrorElements extends ErrorElements
 				}
 				
 				if(!is_null($unitesSupplementairesRequired)) {
-					if(!$unitesSupplementairesRequired) {
+					if($unitesSupplementairesRequired === false) {
 						unset($requiredFields['unites_supplementaires']);
-					} else {
+					} elseif($unitesSupplementairesRequired === true) {
 						$requiredFields['unites_supplementaires'] = true;
 					}
 				}
@@ -1056,9 +1056,9 @@ class DEBErrorElements extends ErrorElements
 				
 				$emptyFields = array_flip($emptyFields);
 				if(!is_null($unitesSupplementairesRequired)) {
-					if($unitesSupplementairesRequired) {
+					if($unitesSupplementairesRequired === true) {
 						unset($emptyFields['unites_supplementaires']);
-					} else {
+					} elseif($unitesSupplementairesRequired === false) {
 						$emptyFields['unites_supplementaires'] = true;
 					}
 				

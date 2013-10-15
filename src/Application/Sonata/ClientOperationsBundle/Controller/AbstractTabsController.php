@@ -820,7 +820,11 @@ class AbstractTabsController extends Controller
     	}
     	$fields = array_flip($this->_config_excel[$this->admin->trans('ApplicationSonataClientOperationsBundle.form.' . $class . '.title')]['fields']);
     	
-    	$expectedFirstVal = 1;
+    	$entities = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientOperationsBundle:' . $class)
+    		->findBy(array('client_id' => $this->client_id, 'mois' =>  new \DateTime("{$this->_import_file_year}-{$this->_import_file_month}-01")));
+    	
+    	
+    	$expectedFirstVal = $entities ? count($entities) + 1 : 1;
     	$nlignes = array();
     	foreach($data as $row) {
     		if((empty($row[0]) && empty($row[4]))) {
@@ -829,11 +833,11 @@ class AbstractTabsController extends Controller
     		$nlignes[] = (float)$row[0];
     	}
     	
-    	$checkConsec = function($d) use ($fields, $skip_line, $class) {
+    	$checkConsec = function($d) use ($fields, $skip_line, $class, $expectedFirstVal) {
     		$errors = array();
     		$count = count($d);
     		for($i=0;$i<$count;$i++) {
-    			$start = $i+1;
+    			$start = $i+$expectedFirstVal;
     			if( isset($d[$i]) && $start != $d[$i] ) {
     				$line = $skip_line+($i+1);
     				$repeat = str_repeat(' ', 4);
