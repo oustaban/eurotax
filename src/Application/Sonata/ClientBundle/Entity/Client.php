@@ -1621,6 +1621,20 @@ class Client
     	return $this->_compte_reel_sum;
     }
     
+    public function getCompteReel() {
+    	$comptes = array();
+    	foreach($this->getComptes() as $compte){
+    		if(!$compte->getStatut()) {
+    			continue;
+    		}
+    		if($compte->getStatut()->getId() == 1) {
+    			$comptes[] = $compte;
+    		}
+    	}
+    	return $comptes;
+    }
+    
+    
     public function getComptePrevisionnelSum() {
     	$this->_compte_previsionnel_sum = 0;
     	foreach($this->getComptes() as $compte){
