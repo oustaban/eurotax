@@ -1007,17 +1007,18 @@ class DEBErrorElements extends ErrorElements
 				$findNomenclature = $em->getRepository('ApplicationSonataClientBundle:Nomenclature')->findOneBy(array('code' => ltrim(str_replace(' ', '', $nomenclature), 0)));
 				 
 				if($findNomenclature) {
-					if($findNomenclature->getUnitesSupplementaires() && !$this->_object->getUnitesSupplementaires()) {
-						
+					
+					if($findNomenclature->getUnitesSupplementaires() && $this->_object->getUnitesSupplementaires()) {
 						$unitesSupplementairesRequired = true;
-						
+					} else if($findNomenclature->getUnitesSupplementaires() && !$this->_object->getUnitesSupplementaires()) {
+						$unitesSupplementairesRequired = true;
 					} else if(!$findNomenclature->getUnitesSupplementaires() && $this->_object->getUnitesSupplementaires()) {
-						
+						$unitesSupplementairesRequired = false;
+					} else if(!$findNomenclature->getUnitesSupplementaires() && !$this->_object->getUnitesSupplementaires()) {
 						$unitesSupplementairesRequired = false;
 					}
 				}
 			}
-			
 			
 			$requiredFields = @$this->_requiredFields[$class][$niveauDobligationId][$regime]['fields'];
 			
