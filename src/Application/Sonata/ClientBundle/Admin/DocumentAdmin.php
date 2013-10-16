@@ -88,6 +88,12 @@ class DocumentAdmin extends Admin
 	                        }
 	                        break;
 	                    case ListNatureDuClients::DEB:
+	                    	$filter = array(
+	                    		ListTypeDocuments::Mandat,
+	                    		ListTypeDocuments::Attestation_de_TVA
+	                    	);
+	                    	
+	                    	break;
 	                    case ListNatureDuClients::DES:
 	                        $filter = array(
 	                            ListTypeDocuments::Mandat,
