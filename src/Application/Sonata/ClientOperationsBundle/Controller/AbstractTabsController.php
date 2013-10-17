@@ -1741,7 +1741,7 @@ class AbstractTabsController extends Controller
         $bank = $em->getRepository('ApplicationSonataClientBundle:Coordonnees')->findOneBy(array());
 
         $debug = isset($_GET['d']);
-        $V01TVAlist = $this->getEntityList('V01TVA');
+        $V01TVAlist = $this->getEntityList('V01TVA', false, true);
         $A02TVAlist = $this->getEntityList('A02TVA');
         $A08IMlist = $this->getEntityList('A08IM');
         
@@ -1865,7 +1865,7 @@ class AbstractTabsController extends Controller
     
     
     
-    protected function getEntityList($entity, $isPrevMonth = false)
+    protected function getEntityList($entity, $isPrevMonth = false, $mergeData = false)
     {
     	/* @var $em \Doctrine\ORM\EntityManager */
     	$em = $this->getDoctrine()->getManager();
@@ -1875,10 +1875,62 @@ class AbstractTabsController extends Controller
     	$data =	$q->getQuery()
     		->getResult();
     	if (!empty($data)) {
-    		return $data;
+    		if($mergeData) {
+    			return $this->_mergeData($data);
+    		} else{
+    			return $data;
+    		}
     	}
     	return null;
     }
+    
+    
+    /**
+     * Merge entities based on percentage
+     * 
+     * @param unknown $entities
+     * @return array
+     */
+    private function _mergeData($entities) {
+    	$dataSet = array();
+    	$hts = array();
+    	$tvas = array();
+    	$rawEntities = array();
+    	
+    	foreach($entities as $entity) {
+    		$key = base64_encode($entity->getTauxDeTVA());
+    		
+    		$hts[$key][] = $entity->getHT();
+    		$tvas[$key][] = $entity->getTVA();
+    		
+    		/* var_dump($entity->getHT());
+    		echo '<br />'; */
+    		
+    		$rawEntities[$key] = $entity;
+    	}
+    	
+    	foreach($rawEntities as $k => $entity) {
+    		$ht = 0;
+    		$tva = 0;
+    		foreach ($hts[$k] as $v) {
+    			$ht+=$v;
+    		}
+
+    		foreach ($tvas[$k] as $v) {
+    			$tva+=$v;
+    		}
+    		
+    		
+    		$entity->setTVA($tva);
+    		$entity->setHT($ht);
+    		
+    		$dataSet[] = $entity;
+    	}
+    	
+    	return $dataSet;
+    	
+    }
+    
     
     private function _listQueryFilter(\Doctrine\ORM\QueryBuilder $qb, $isPrevMonth = false) {
     	if (!$this->_show_all_operations){
