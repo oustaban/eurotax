@@ -80,7 +80,7 @@ set templates = {
 }
 %}
 {% set cw = {'A':72.6, 'B':66.9, 'C':77.6, 'D':92.5, 'E':37.7, 'F':60.8, 'G':66.9, 'H':92.5, 'I':112.5} %}
-{% set font = 13 %}
+{% set font = 10 %}
 {% set lh = 1.35*font %}
 
 <style type="text/css">
@@ -101,9 +101,15 @@ div {
 }
 {%endif%}
 
+
+body {
+    font-size: {{ font }}px !important;
+    font-family: arial !important;
+
+}
+
+
 #content {
-    font-size: {{ font }}px;
-    font-family: arial;
     width: 681px;
     margin: 0 auto;
 }
@@ -320,6 +326,8 @@ td.i_tva {
     border: 1px solid black;
     /* height: {{ 1.18*lh*18 + 3*lh + 2  }}px; */
     padding-bottom: 15px;
+    
+    {% if V01TVAlist is null %}display: none;{% endif %}
 }
 
 .block_vat_totals_output_content table th {
@@ -365,6 +373,7 @@ td.i_tva {
     clear: both;
     border: 1px solid black;
     padding-bottom: {{ lh }}px;
+    {% if A02TVAlist is null %}display: none;{% endif %}
 }
 
 .block_vat_totals_input_this table th {
@@ -378,6 +387,7 @@ td.i_tva {
     border: 1px solid black;
     margin-top: {{ lh }}px;
     padding-bottom: {{ lh }}px;
+    {% if A02TVAPrevlist is null and A08IMPrevlist is null %}display: none;{% endif %}
 }
 
 .block_vat_totals_input_prev table th {
