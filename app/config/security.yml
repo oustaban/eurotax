@@ -76,7 +76,7 @@ security:
         - { path: ^/dashboard/etats, role: [ROLE_EDIT_ETATS] }			
 
         - { path: ^/sonata/client/client/create, role: [ROLE_ADD_CLIENTS] }
-        - { path: ^/sonata/client, role: [ROLE_EDIT_CLIENTS] }
+        - { path: ^/sonata/client/, role: [ROLE_EDIT_CLIENTS] }
 
         - { path: ^/sonata/clientoperations, role: [ROLE_EDIT_CLIENTOPERATIONS] }
         - { path: ^/sonata/client/initial-import, role: [ROLE_INITIALIMPORTS] }
