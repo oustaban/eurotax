@@ -1204,7 +1204,10 @@ class AbstractTabsController extends Controller
         $dql = "SELECT COUNT(i.client_id) + 1 AS counts FROM ApplicationSonataClientOperationsBundle:Imports i
                         WHERE i.client_id = :client_id
                         AND YEAR(i.date) = :year
-                        AND MONTH(i.date) = :month";
+                        AND MONTH(i.date) = :month
+        				AND i.is_deleted = 0
+        		
+        		";
 
         $sql = $em->createQuery($dql);
         $sql->setParameter(':client_id', $client->getId());
