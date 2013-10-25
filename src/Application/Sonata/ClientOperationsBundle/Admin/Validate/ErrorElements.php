@@ -452,6 +452,12 @@ class ErrorElements
      */
     public function validateMois()
     {
+    	//skip this validation on import mode
+    	if ($this->_is_validate_import) {
+    		return $this;
+    	}
+    	
+    	
         list($current_year, $current_month) = explode('-', date('Y-m', strtotime('now' . (date('d') < 25 ? ' -1 month' : ''))));
 
         $value = $this->_object->getMois();
@@ -713,7 +719,7 @@ class ErrorElements
         $this->_is_validate_import = $value;
         
         
-        $this->validateMois2();
+        //$this->validateMois2();
         
         return $this;
     }

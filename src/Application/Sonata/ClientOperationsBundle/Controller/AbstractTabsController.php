@@ -1003,6 +1003,31 @@ class AbstractTabsController extends Controller
                         }
                     }
                     
+                    
+                    if(isset($formData['mois']) && $mois = $formData['mois']) {
+                    	
+                    	list($current_year, $current_month) = explode('-', date('Y-m', strtotime('now' . (date('d') < 25 ? ' -1 month' : ''))));
+                    	
+                    	if ($mois) {
+                    		if ($mois instanceof \DateTime) {
+                    			$month = $value->format('n');
+                    			$year = $value->format('Y');
+                    		} else {
+                    			$month = $mois['month'];
+                    			$year = $mois['year'];
+                    		}
+                    	
+                    		if (!$this->admin->getLocking() && !($year == $current_year && $month == $current_month)) {
+                    			
+                    			var_dump($month, $year);
+                    			
+                    			continue;
+                    			//$this->_errorElement->with('mois')->addViolation('Mois TVA = ' . $this->formatMonth($month) . '-' . $this->formatYear($year) . ' au lieu de ' . $this->formatMonth($current_month) . '-' . $this->formatYear($current_year))->end();
+                    		}
+                    	}
+                    }
+                    
+                    
 
                     if(in_array('paiement_date', $fields)) {
 	                    //if paiement_date is empty, empty the ff. fields.
