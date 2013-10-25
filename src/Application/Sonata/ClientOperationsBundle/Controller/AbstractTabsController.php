@@ -1019,7 +1019,7 @@ class AbstractTabsController extends Controller
                     	
                     		if (!$this->admin->getLocking() && !($year == $current_year && $month == $current_month)) {
                     			
-                    			var_dump($month, $year);
+                    			//var_dump($month, $year);
                     			
                     			continue;
                     			//$this->_errorElement->with('mois')->addViolation('Mois TVA = ' . $this->formatMonth($month) . '-' . $this->formatYear($year) . ' au lieu de ' . $this->formatMonth($current_month) . '-' . $this->formatYear($current_year))->end();
