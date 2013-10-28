@@ -4,7 +4,7 @@
 set templates = {
     '1_head':{
         '1_logo':'',
-        
+        '4_non-cloture':'',
         '3_contacts':''
     },
     '2_info':{
@@ -107,7 +107,9 @@ body {
     font-family: arial !important;
 
 }
-
+.non-cloture{
+	
+}
 
 #content {
     width: 681px;
@@ -161,13 +163,19 @@ td.i_tva {
 .block_head_logo {
     float: left;
     /* clear: none; */
-    width: 50%;
+    width: 30%;
     /* text-align: center;
     width: {{ cw.A }}px;
     height: {{ lh*3 - 1 }}px;
     line-height: {{ lh*3 - 1 }}px;
     border-top: 1px solid black;
     vertical-align: middle; */
+}
+
+.block_head_non-cloture {
+    float: left;
+    width: 30%;
+    text-align: center
 }
 
 .block_head_address {
@@ -184,7 +192,7 @@ td.i_tva {
     /* clear: none; */
     text-align: right;
     /* width: {{ cw.C + cw.D }}px; */
-    width: 50%;
+    width: 30%;
     height: {{ lh*3 }}px;
 }
 

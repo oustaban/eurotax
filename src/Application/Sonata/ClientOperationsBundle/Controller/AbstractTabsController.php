@@ -1796,13 +1796,16 @@ class AbstractTabsController extends Controller
         	'A02TVAPrevlist' => $A02TVAPrevlist,
         	'A08IMPrevlist' => $A08IMPrevlist,
         	'A06AIBlist' => $A06AIBlist,
-        	'A04283Ilist' => $A04283Ilist
+        	'A04283Ilist' => $A04283Ilist,
+        	'locked' => $this->getLocking()
         ));
 
 
         if (!$debug) {
             $mpdf = new mPDF('c', 'A4', 0, '', 15, 15, 13, 13, 9, 2);
             //$mpdf->SetDisplayMode('fullpage');
+            //$mpdf->SetHeader('test header', 'E');
+            
             $mpdf->WriteHTML($page->getContent());
             $mpdf->Output();
 
