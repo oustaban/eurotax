@@ -1040,14 +1040,28 @@ class DEBErrorElements extends ErrorElements
 				foreach($requiredFields as $field => $v) {
 					$method = 'get' . strtoupper(\Doctrine\Common\Util\Inflector::camelize($field));
 					
-					if(!$this->_object->$method()) {
+					
+					if($field == 'masse_mette') {
+					
+						if($this->_object->$method() == '') {
 						
-						if($field == 'unites_supplementaires') {
-							$this->_errorElement->with('unites_supplementaires')->addViolation( 'UNITES SUPPLEMENTAIRES devrait être rempli '. ($this->_object->getNomenclature() ? 'pour ' . $this->_object->getNomenclature() : '' ) )->end();
-						} else {
 							$this->_errorElement->with($field)->addViolation( 'La valeur de est obligatoire.' )->end();
 						}
+						
+						
+						
+					} else {
+						if(!$this->_object->$method()) {
+							
+							if($field == 'unites_supplementaires') {
+								$this->_errorElement->with('unites_supplementaires')->addViolation( 'UNITES SUPPLEMENTAIRES devrait être rempli '. ($this->_object->getNomenclature() ? 'pour ' . $this->_object->getNomenclature() : '' ) )->end();
+							} else {
+								$this->_errorElement->with($field)->addViolation( 'La valeur de est obligatoire.' )->end();
+							}
+						}
 					}
+					
+					
 				}
 			}
 			
