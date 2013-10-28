@@ -1778,7 +1778,7 @@ class AbstractTabsController extends Controller
         
         
         $A06AIBlist = $this->getEntityList('A06AIB');
-        
+        $A04283Ilist = $this->getEntityList('A04283I');
         
         $page = $this->render('ApplicationSonataClientOperationsBundle::declaration.html.twig', array(
             'info' => array(
@@ -1795,7 +1795,8 @@ class AbstractTabsController extends Controller
         	'A08IMlist' => $A08IMlist,
         	'A02TVAPrevlist' => $A02TVAPrevlist,
         	'A08IMPrevlist' => $A08IMPrevlist,
-        	'A06AIBlist' => $A06AIBlist
+        	'A06AIBlist' => $A06AIBlist,
+        	'A04283Ilist' => $A04283Ilist
         ));
 
 
