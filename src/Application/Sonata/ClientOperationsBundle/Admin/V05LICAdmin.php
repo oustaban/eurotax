@@ -85,7 +85,8 @@ class V05LICAdmin extends Admin
         ))
             ->add('regime', null, array('label' => $this->getFieldLabel('regime')))
             ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:HT.html.twig'))
-            ->add('DEB', null, array('label' => $this->getFieldLabel('DEB')));
+            ->add('DEB', null, array('label' => $this->getFieldLabel('DEB')))
+            ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
 
         $this->postConfigureListFields($listMapper);
     }

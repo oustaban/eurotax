@@ -73,7 +73,8 @@ class V03283IAdmin extends Admin
             'template' => $this->_bundle_name . ':CRUD:list_mois.html.twig',
         ))
             ->add('taux_de_change', null, array('label' => $this->getFieldLabel('taux_de_change')))
-            ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:HT.html.twig'));
+            ->add('HT', 'money', array('label' => $this->getFieldLabel('HT'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:HT.html.twig'))
+            ->add('commentaires', null, array('label' => $this->getFieldLabel('commentaires')));
 
         $this->postConfigureListFields($listMapper);
     }
