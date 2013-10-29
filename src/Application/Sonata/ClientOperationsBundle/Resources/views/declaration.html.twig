@@ -407,6 +407,7 @@ td.i_tva {
     border: 1px solid black;
     margin-top: {{ lh }}px;
     padding-bottom: {{ lh }}px;
+    {% if A04283Ilist is null %}display: none;{% endif %}
 }
 
 .block_vat_charge_header {
@@ -433,6 +434,7 @@ td.i_tva {
     border: 1px solid black;
     margin-top: {{ lh }}px;
     padding-bottom: {{ lh }}px;
+    {% if A06AIBlist is null %}display: none;{% endif %}
 }
 
 .block_vat_acquisitions_header {
