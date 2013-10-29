@@ -1018,11 +1018,7 @@ class AbstractTabsController extends Controller
                     		}
                     	
                     		if (!$this->admin->getLocking() && !($year == $current_year && $month == $current_month)) {
-                    			
-                    			//var_dump($month, $year);
-                    			
                     			continue;
-                    			//$this->_errorElement->with('mois')->addViolation('Mois TVA = ' . $this->formatMonth($month) . '-' . $this->formatYear($year) . ' au lieu de ' . $this->formatMonth($current_month) . '-' . $this->formatYear($current_year))->end();
                     		}
                     	}
                     }
@@ -1108,10 +1104,10 @@ class AbstractTabsController extends Controller
          */
 
         $validate_fields = array();
-        if (preg_match('/(.*)\-[Import|Importation]+\-TVA\-(\d{4}+)\-(\d{2}+)\-(\d+)\.xlsx/i', $file_name, $matches)) {
+        if (preg_match('/(.*)\-[Import|Importation]+\-TVA\-(\d{4}+)\-(\d{2}+)\.xlsx/i', $file_name, $matches)) {
 
             array_shift($matches);
-            list($nom_client, $year, $month, $version) = $matches;
+            list($nom_client, $year, $month) = $matches;
             
             
             $this->_import_file_month = $month;
@@ -1130,13 +1126,11 @@ class AbstractTabsController extends Controller
                         $validate_fields[] = 'nom_client';
                     }
 
-                    $ver = $this->getImportFileValidateVersion($client, $y, $m);
-                    if ($ver == (int)$version) {
-                        $validate = true;
-                    } else {
-                        $validate_fields[] = 'version';
-                    }
                     
+                    if($this->getImportFileValidateExist($client, $y, $m)) {
+                    	$this->get('session')->setFlash('sonata_flash_info|raw', 'Vous ne pouvez pas uploader le fichier pour le mois courant');
+                    	return false;
+                    }
                     
                     $dateDebut = $client->getDateDebutMission();
                     
@@ -1154,6 +1148,8 @@ class AbstractTabsController extends Controller
                 if (count($validate_fields) > 0) {
                     $this->getImportFileValidateMessage($y, $m);
                     $validate = false;
+                } else {
+                	$validate = true;
                 }
             } else {
 
@@ -1173,11 +1169,10 @@ class AbstractTabsController extends Controller
         $data = array(
             '%nom_client%' => strtoupper($this->client),
             '%year%' => $y,
-            '%month%' => $m,
-            '%version%' => $this->getImportFileValidateVersion($this->client, $y, $m),
+            '%month%' => $m
         );
 
-        $filename = '<strong>' . strtr("%nom_client%-Importation-TVA-%year%-%month%-%version%.xlsx", $data) . '</strong>';
+        $filename = '<strong>' . strtr("%nom_client%-Importation-TVA-%year%-%month%.xlsx", $data) . '</strong>';
 
         $this->get('session')->setFlash('sonata_flash_info|raw', $this->admin->trans('Nom de fichier invalide: Format requis %filename%', array('%filename%' => $filename)));
     }
@@ -1213,7 +1208,7 @@ class AbstractTabsController extends Controller
      * @param $month
      * @return int
      */
-    protected function getImportFileValidateVersion($client, $year, $month)
+    protected function getImportFileValidateExist($client, $year, $month)
     {
         /*
         * example source : http://www.simukti.net/blog/2012/04/05/how-to-select-year-month-day-in-doctrine2/
@@ -1226,12 +1221,11 @@ class AbstractTabsController extends Controller
         $emConfig->addCustomStringFunction('YEAR', 'Application\Sonata\ClientOperationsBundle\DQL\YearFunction');
         $emConfig->addCustomDatetimeFunction('MONTH', 'Application\Sonata\ClientOperationsBundle\DQL\MonthFunction');
 
-        $dql = "SELECT COUNT(i.client_id) + 1 AS counts FROM ApplicationSonataClientOperationsBundle:Imports i
+        $dql = "SELECT i.id AS counts FROM ApplicationSonataClientOperationsBundle:Imports i
                         WHERE i.client_id = :client_id
                         AND YEAR(i.date) = :year
                         AND MONTH(i.date) = :month
         				AND i.is_deleted = 0
-        		
         		";
 
         $sql = $em->createQuery($dql);
@@ -1239,15 +1233,12 @@ class AbstractTabsController extends Controller
         $sql->setParameter(':year', $year);
         $sql->setParameter(':month', $month);
 
-        $ver = $sql->getArrayResult();
+        $result = $sql->getArrayResult();
 
-        $version = 1;
-        if (!empty($ver)) {
-            $ver = array_shift($ver);
-            $version = $ver['counts'];
+        if(!empty($result)) {
+        	return true;
         }
-
-        return (int)$version;
+        return false;
     }
 
     /**
@@ -1375,51 +1366,57 @@ class AbstractTabsController extends Controller
         $translator = $this->admin;
         $messages = array();
 
-        foreach ($this->_import_counts as $table => $values) {
-
-            $message = array();
-            $table_trans = $translator->trans('ApplicationSonataClientOperationsBundle.form.' . $table . '.title');
-            switch ($table) {
-
-                case 'rows';
-                    if (isset($values['success'])) {
-                        $message[] = $translator->trans('Imported %table% : %count%', array(
-                            '%table%' => $table,
-                            '%count%' => $values['success'],
-                        ));
-                    }
-                    if (isset($values['errors'])) {
-                        $error_log_filename = '/data/imports/import-error-log-' . md5(time() . rand(1, 99999999)) . '.txt';
-
-                        $render_view_popup = $this->renderView('ApplicationSonataClientOperationsBundle:popup:popup_message.html.twig', array(
-                            'error_reports' => $this->_import_reports,
-                            'active_tab' => $this->_tabAlias,
-                            'import_id' => $this->_imports ? $this->_imports->getId() : null,
-                        ));
-
-                        preg_match('#<div class="modal-body">(.*)#is', $render_view_popup, $matches);
-                        file_put_contents(DOCUMENT_ROOT.$error_log_filename, strip_tags($matches[1]));
-
-                        $message[] = '<span class="error">' . $translator->trans('Not valid %table% : %count%', array(
-                            '%table%' => $table,
-                            '%count%' => $values['errors'],
-                        )) . '</span>, <a id="error_repost_show" href="#">View errors</a> <a target="_blank" href="'.$error_log_filename.'">Save error log</a>' . $render_view_popup;
-                    }
-
-                    $messages[] = implode('&nbsp;&nbsp;|&nbsp;&nbsp;', $message);
-                    break;
-                default;
-                    $str_repeat = str_repeat('&nbsp;', 4);
-                    if (isset($values['success'])) {
-                        $message[] = $str_repeat . $translator->trans('Imported : %count%', array('%count%' => $values['success']));
-                    }
-                    if (isset($values['errors'])) {
-                        $message[] = $str_repeat . '<span class="error">' . $translator->trans('Not valid : %count%', array('%count%' => $values['errors'])) . '</span>';
-                    }
-                    $messages[] = '<strong>' . $table_trans . '</strong><br />' . implode('; ', $message);
-                    break;
-            }
-        }
+        
+        
+        if(!empty($this->_import_counts)) {
+	        foreach ($this->_import_counts as $table => $values) {
+	
+	            $message = array();
+	            $table_trans = $translator->trans('ApplicationSonataClientOperationsBundle.form.' . $table . '.title');
+	            switch ($table) {
+	
+	                case 'rows';
+	                    if (isset($values['success'])) {
+	                        $message[] = $translator->trans('Imported %table% : %count%', array(
+	                            '%table%' => $table,
+	                            '%count%' => $values['success'],
+	                        ));
+	                    }
+	                    if (isset($values['errors'])) {
+	                        $error_log_filename = '/data/imports/import-error-log-' . md5(time() . rand(1, 99999999)) . '.txt';
+	
+	                        $render_view_popup = $this->renderView('ApplicationSonataClientOperationsBundle:popup:popup_message.html.twig', array(
+	                            'error_reports' => $this->_import_reports,
+	                            'active_tab' => $this->_tabAlias,
+	                            'import_id' => $this->_imports ? $this->_imports->getId() : null,
+	                        ));
+	
+	                        preg_match('#<div class="modal-body">(.*)#is', $render_view_popup, $matches);
+	                        file_put_contents(DOCUMENT_ROOT.$error_log_filename, strip_tags($matches[1]));
+	
+	                        $message[] = '<span class="error">' . $translator->trans('Not valid %table% : %count%', array(
+	                            '%table%' => $table,
+	                            '%count%' => $values['errors'],
+	                        )) . '</span>, <a id="error_repost_show" href="#">View errors</a> <a target="_blank" href="'.$error_log_filename.'">Save error log</a>' . $render_view_popup;
+	                    }
+	
+	                    $messages[] = implode('&nbsp;&nbsp;|&nbsp;&nbsp;', $message);
+	                    break;
+	                default;
+	                    $str_repeat = str_repeat('&nbsp;', 4);
+	                    if (isset($values['success'])) {
+	                        $message[] = $str_repeat . $translator->trans('Imported : %count%', array('%count%' => $values['success']));
+	                    }
+	                    if (isset($values['errors'])) {
+	                        $message[] = $str_repeat . '<span class="error">' . $translator->trans('Not valid : %count%', array('%count%' => $values['errors'])) . '</span>';
+	                    }
+	                    $messages[] = '<strong>' . $table_trans . '</strong><br />' . implode('; ', $message);
+	                    break;
+	            }
+	        }
+    	} else {
+    		$messages[] = $translator->trans('Imported : %count%', array('%count%' => 0));
+    	}
         return $messages;
     }
 
