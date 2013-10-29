@@ -1767,15 +1767,15 @@ class AbstractTabsController extends Controller
 
         $debug = isset($_GET['d']);
         $V01TVAlist = $this->getEntityList('V01TVA', false, true);
-        $A02TVAlist = $this->getEntityList('A02TVA');
-        $A08IMlist = $this->getEntityList('A08IM');
+        $A02TVAlist = $this->getEntityList('A02TVA', false, true);
+        $A08IMlist = $this->getEntityList('A08IM', false, true);
         
-        $A02TVAPrevlist = $this->getEntityList('A02TVA', true); // Previous month
-        $A08IMPrevlist = $this->getEntityList('A08IM', true); // Previous month
+        $A02TVAPrevlist = $this->getEntityList('A02TVA', true, true); // Previous month
+        $A08IMPrevlist = $this->getEntityList('A08IM', true, true); // Previous month
         
         
-        $A06AIBlist = $this->getEntityList('A06AIB');
-        $A04283Ilist = $this->getEntityList('A04283I');
+        $A06AIBlist = $this->getEntityList('A06AIB', false, true);
+        $A04283Ilist = $this->getEntityList('A04283I', false, true);
         
         $page = $this->render('ApplicationSonataClientOperationsBundle::declaration.html.twig', array(
             'info' => array(
