@@ -769,6 +769,14 @@ class AbstractTabsController extends Controller
         $messages = $this->getCountMessageImports();
         if (!empty($messages)) {
             $this->get('session')->setFlash('sonata_flash_info|raw', implode("<br/>", $messages));
+        } else {
+        	
+        	$message = trim($this->get('session')->getFlash('sonata_flash_info|raw'));
+        	if($message == '') {
+        		$this->get('session')->setFlash('sonata_flash_info|raw', $this->admin->trans('Imported : %count%', array('%count%' => 0)));
+        	} else {
+        		$this->get('session')->setFlash('sonata_flash_info|raw', $message);
+        	}
         }
 
         return $this->render(':redirects:back.html.twig');
@@ -1136,7 +1144,7 @@ class AbstractTabsController extends Controller
                     
                     
                     if($dateDebut->format('Ym') > $year . $month) {
-                    	$this->get('session')->setFlash('sonata_flash_info|raw', 'Le fichier de données est antérieur à la date de début de mission');
+                    	$this->get('session')->setFlash('sonata_flash_info|raw', 'Le fichier de données est antérieur à la date de début de mission');              	
                     	return false;
                     }
                     
@@ -1414,8 +1422,7 @@ class AbstractTabsController extends Controller
 	                    break;
 	            }
 	        }
-    	} else {
-    		$messages[] = $translator->trans('Imported : %count%', array('%count%' => 0));
+    	
     	}
         return $messages;
     }
