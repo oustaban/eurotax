@@ -1042,14 +1042,11 @@ class DEBErrorElements extends ErrorElements
 					
 					
 					if($field == 'masse_mette') {
-					
-						if($this->_object->$method() == '') {
+						$value = trim($this->_object->$method());
 						
-							$this->_errorElement->with($field)->addViolation( 'La valeur de est obligatoire.' )->end();
+						if($value === '') {
+							$this->_errorElement->with($field)->addViolation( 'La valeur de est obligatoire. ')->end();
 						}
-						
-						
-						
 					} else {
 						if(!$this->_object->$method()) {
 							
