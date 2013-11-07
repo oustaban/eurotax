@@ -52,8 +52,7 @@ class AbstractTabsController extends Controller
     protected $_client_dir = '';
     protected $_show_all_operations = false;
 
-    protected $_import_file_year,
-    	$_import_file_month;
+    
     
     protected $_lockingTab, $_lockingDate, $_lockingMonth, $_lockingYear, 
     	$_unlockingMonth, $_unlockingYear;
@@ -829,7 +828,7 @@ class AbstractTabsController extends Controller
     	$fields = array_flip($this->_config_excel[$this->admin->trans('ApplicationSonataClientOperationsBundle.form.' . $class . '.title')]['fields']);
     	
     	$entities = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientOperationsBundle:' . $class)
-    		->findBy(array('client_id' => $this->client_id, 'mois' =>  new \DateTime("{$this->_import_file_year}-{$this->_import_file_month}-01")));
+    		->findBy(array('client_id' => $this->client_id, 'mois' =>  new \DateTime("{$this->_year}-{$this->_month}-01")));
     	
     	
     	$expectedFirstVal = $entities ? count($entities) + 1 : 1;
@@ -987,8 +986,8 @@ class AbstractTabsController extends Controller
                     $admin->setSubject($object);
                     $admin->setIndexImport($key + 1);
                     
-                    $admin->import_file_year = $this->_import_file_year;
-                    $admin->import_file_month = $this->_import_file_month;
+                    $admin->import_file_year = $this->_year;
+                    $admin->import_file_month = $this->_month;
                     
 
                     /* @var $form \Symfony\Component\Form\Form */
@@ -1112,75 +1111,63 @@ class AbstractTabsController extends Controller
          */
 
         $validate_fields = array();
-        if (preg_match('/(.*)\-[Import|Importation]+\-TVA\-(\d{4}+)\-(\d{2}+)\.xlsx/i', $file_name, $matches)) {
+        if (preg_match('/(.*)\-(TVA|DEB)\.xlsx/i', $file_name, $matches)) {
 
             array_shift($matches);
-            list($nom_client, $year, $month) = $matches;
+            list($nom_client) = $matches;
             
             
-            $this->_import_file_month = $month;
-            $this->_import_file_year = $year;
-            
+            $this->_import_date = new \DateTime($this->_year . '-' . $this->_month . '-' . date('d H:i:s'));
 
-            $this->_import_date = new \DateTime($year . '-' . $month . '-' . date('d H:i:s'));
+            $client = $this->getImportFileValidateNomClient($nom_client);
 
-            if ($year == $y && $month == $m) {
+            if (!empty($client)) {
 
-                $client = $this->getImportFileValidateNomClient($nom_client);
+            	if ($this->client_id != $client->getId()) {
+            		$validate_fields[] = 'nom_client';
+            	}
 
-                if (!empty($client)) {
 
-                    if ($this->client_id != $client->getId()) {
-                        $validate_fields[] = 'nom_client';
-                    }
+            	if($this->getImportFileValidateExist($client, $y, $m)) {
+            		$this->get('session')->setFlash('sonata_flash_info|raw', 'Vous ne pouvez pas uploader le fichier pour le mois courant');
+            		return false;
+            	}
 
-                    
-                    if($this->getImportFileValidateExist($client, $y, $m)) {
-                    	$this->get('session')->setFlash('sonata_flash_info|raw', 'Vous ne pouvez pas uploader le fichier pour le mois courant');
-                    	return false;
-                    }
-                    
-                    $dateDebut = $client->getDateDebutMission();
-                    
-                    
-                    if($dateDebut->format('Ym') > $year . $month) {
-                    	$this->get('session')->setFlash('sonata_flash_info|raw', 'Le fichier de données est antérieur à la date de début de mission');              	
-                    	return false;
-                    }
-                    
-                    
-                } else {
-                    $validate_fields[] = 'nom_client';
-                }
+            	$dateDebut = $client->getDateDebutMission();
 
-                if (count($validate_fields) > 0) {
-                    $this->getImportFileValidateMessage($y, $m);
-                    $validate = false;
-                } else {
-                	$validate = true;
-                }
+
+            	if($dateDebut->format('Ym') > $y . $m) {
+            		$this->get('session')->setFlash('sonata_flash_info|raw', 'Le fichier de données est antérieur à la date de début de mission');
+            		return false;
+            	}
+
+
             } else {
+            	$validate_fields[] = 'nom_client';
+            }
 
-                $this->getImportFileValidateMessage($y, $m);
+            if (count($validate_fields) > 0) {
+            	$this->getImportFileValidateMessage();
+            	$validate = false;
+            } else {
+            	$validate = true;
             }
 
         } else {
 
-            $this->getImportFileValidateMessage($y, $m);
+            $this->getImportFileValidateMessage();
         }
 
         return $validate;
     }
 
-    protected function getImportFileValidateMessage($y, $m)
+    protected function getImportFileValidateMessage()
     {
         $data = array(
             '%nom_client%' => strtoupper($this->client),
-            '%year%' => $y,
-            '%month%' => $m
         );
 
-        $filename = '<strong>' . strtr("%nom_client%-Importation-TVA-%year%-%month%.xlsx", $data) . '</strong>';
+        $filename = '<strong>' . strtr("%nom_client%-TVA.xlsx", $data) . '</strong>';
 
         $this->get('session')->setFlash('sonata_flash_info|raw', $this->admin->trans('Nom de fichier invalide: Format requis %filename%', array('%filename%' => $filename)));
     }
