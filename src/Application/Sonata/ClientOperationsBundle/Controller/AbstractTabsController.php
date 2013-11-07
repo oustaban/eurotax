@@ -1959,8 +1959,11 @@ class AbstractTabsController extends Controller
     		
     		$key = base64_encode($key);
     		
-    		$hts[$key][] = $entity->getHT();
+    		if(method_exists($entity, 'getHT')) {	
+    			$hts[$key][] = $entity->getHT();
+    		}
     		
+    			
     		if(method_exists($entity, 'getTVA')) {
     			$tvas[$key][] = $entity->getTVA();
     		}
@@ -1989,7 +1992,9 @@ class AbstractTabsController extends Controller
     		if(method_exists($entity, 'setTVA')) {
     			$entity->setTVA($tva);
     		}
-    		$entity->setHT($ht);
+    		if(method_exists($entity, 'setHT')) {
+    			$entity->setHT($ht);
+    		}
     		
     		$dataSet[] = $entity;
     	}
