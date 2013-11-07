@@ -6,17 +6,20 @@
     </tr>
     </thead>
     <tbody>
+    
+    
+    
+    {% for data in V11INTlist %}
     <tr>
         <td class="o_title">V11-INT</td>
-        <td class="o_value">0,00%</td>
-        <td class="o_nett">0</td>
+        <td class="o_value">0%</td>
+        <td class="o_nett">{{ data.getHT()|number_format(0, ',', ' ') }}</td>
         <td class="o_tva">&nbsp;</td>
     </tr>
-    <tr>
-        <td class="o_title">V11-INT</td>
-        <td class="o_value">0,00%</td>
-        <td class="o_nett">{{ nn }}</td>
-        <td class="o_tva">&nbsp;</td>
-    </tr>
+    {% endfor %}   
+    
+    
+    
+    
     </tbody>
 </table>

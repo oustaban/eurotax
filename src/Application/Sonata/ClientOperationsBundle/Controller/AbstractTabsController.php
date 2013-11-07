@@ -1774,6 +1774,16 @@ class AbstractTabsController extends Controller
 
         $debug = isset($_GET['d']);
         $V01TVAlist = $this->getEntityList('V01TVA', false, true);
+        
+        $V07EXlist = $this->getEntityList('V07EX', false, true);
+        $V05LIClist = $this->getEntityList('V05LIC', false, true);
+        $V03283Ilist = $this->getEntityList('V03283I', false, true);
+        $V11INTlist = $this->getEntityList('V11INT', false, true);
+        
+        
+        
+        $A10CAFlist = $this->getEntityList('A10CAF', false, true);
+        
         $A02TVAlist = $this->getEntityList('A02TVA', false, true);
         $A08IMlist = $this->getEntityList('A08IM', false, true);
         
@@ -1795,12 +1805,20 @@ class AbstractTabsController extends Controller
             'bank' => $bank,
         		
         	'V01TVAlist' => $V01TVAlist,
+        	'V07EXlist' => $V07EXlist,
+        	'V05LIClist' => $V05LIClist,
+        	'V03283Ilist' => $V03283Ilist,
+        	'V11INTlist' => $V11INTlist,	
+        			
+        		
         	'A02TVAlist' => $A02TVAlist,
         	'A08IMlist' => $A08IMlist,
         	'A02TVAPrevlist' => $A02TVAPrevlist,
         	'A08IMPrevlist' => $A08IMPrevlist,
         	'A06AIBlist' => $A06AIBlist,
         	'A04283Ilist' => $A04283Ilist,
+        	'A10CAFlist' => $A10CAFlist,	
+        		
         	'locked' => $this->getLocking()
         ));
 
@@ -1934,11 +1952,19 @@ class AbstractTabsController extends Controller
     	$rawEntities = array();
     	
     	foreach($entities as $entity) {
-    		$key = base64_encode($entity->getTauxDeTVA());
+    		
+    		$key = method_exists($entity, 'getTauxDeTVA') ? $entity->getTauxDeTVA() : time();
+    		
+    		
+    		
+    		$key = base64_encode($key);
     		
     		$hts[$key][] = $entity->getHT();
-    		$tvas[$key][] = $entity->getTVA();
     		
+    		if(method_exists($entity, 'getTVA')) {
+    			$tvas[$key][] = $entity->getTVA();
+    		}
+    			
     		/* var_dump($entity->getHT());
     		echo '<br />'; */
     		
@@ -1948,16 +1974,21 @@ class AbstractTabsController extends Controller
     	foreach($rawEntities as $k => $entity) {
     		$ht = 0;
     		$tva = 0;
-    		foreach ($hts[$k] as $v) {
-    			$ht+=$v;
-    		}
-
-    		foreach ($tvas[$k] as $v) {
-    			$tva+=$v;
+    		if(isset($hts[$k])) {
+	    		foreach ($hts[$k] as $v) {
+	    			$ht+=$v;
+	    		}
     		}
     		
+    		if(isset($tvas[$k])) {
+	    		foreach ($tvas[$k] as $v) {
+	    			$tva+=$v;
+	    		}
+    		}
     		
-    		$entity->setTVA($tva);
+    		if(method_exists($entity, 'setTVA')) {
+    			$entity->setTVA($tva);
+    		}
     		$entity->setHT($ht);
     		
     		$dataSet[] = $entity;
@@ -1995,7 +2026,9 @@ class AbstractTabsController extends Controller
     		 
     	}
     	 
-    	$qb->andWhere($qb->getRootAlias() . '.client_id=' . $this->client_id)->orderBy($qb->getRootAlias() .'.TVA');
+    	$qb->andWhere($qb->getRootAlias() . '.client_id=' . $this->client_id)
+    		//->orderBy($qb->getRootAlias() .'.TVA')
+    		;
     	
     	return $qb;
     }

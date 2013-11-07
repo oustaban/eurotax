@@ -554,6 +554,7 @@ td.i_tva {
 .block_operations_output_exports {
     margin-top: {{ lh }}px;
     border: 1px solid black;
+    {% if V07EXlist is null %}display: none;{% endif %}
 }
 
 .block_operations_output_exports th{
@@ -568,6 +569,7 @@ td.i_tva {
 .block_operations_output_deliveries {
     border: 1px solid black;
     border-top: none;
+    {% if V05LIClist is null %}display: none;{% endif %}
 }
 
 .block_operations_output_deliveries th{
@@ -582,6 +584,7 @@ td.i_tva {
 .block_operations_output_no_tva {
     border: 1px solid black;
     border-top: none;
+    {% if V03283Ilist is null %}display: none;{% endif %}
 }
 
 .block_operations_output_no_tva th{
@@ -596,6 +599,7 @@ td.i_tva {
 .block_operations_output_other {
     border: 1px solid black;
     border-top: none;
+    {% if V11INTlist is null %}display: none;{% endif %}
 }
 
 .block_operations_output_other th{
@@ -616,6 +620,7 @@ td.i_tva {
 .block_operations_input_quota {
     margin-top: {{ lh }}px;
     border: 1px solid black;
+    {% if A10CAFlist is null %}display: none;{% endif %}
 }
 
 .block_operations_input_quota th{
