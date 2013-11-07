@@ -1913,6 +1913,15 @@ class AbstractTabsController extends Controller
     	$qb = $em->createQueryBuilder();
     	$q = $qb->select('v')->from("Application\Sonata\ClientOperationsBundle\Entity\\". $entity, 'v');
     	$qb = $this->_listQueryFilter($qb, $isPrevMonth);
+    	
+    	
+    	if($entity == 'V05LIC') {
+    		$qb->andWhere($qb->getRootAlias() . '.regime IN (21, 25, 26)');
+    	} elseif($entity == 'A06AIB') {
+    		$qb->andWhere($qb->getRootAlias() . '.regime IN (11)');
+    	}
+    	
+    	
     	$data =	$q->getQuery()
     		->getResult();
     	if (!empty($data)) {
@@ -2017,6 +2026,9 @@ class AbstractTabsController extends Controller
     		$qb->setParameter(':to_month', $to_month);
     		 
     	}
+    	
+    	
+    	
     	 
     	$qb->andWhere($qb->getRootAlias() . '.client_id=' . $this->client_id)
     		//->orderBy($qb->getRootAlias() .'.TVA')
