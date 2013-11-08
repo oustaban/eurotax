@@ -1760,26 +1760,46 @@ class AbstractTabsController extends Controller
         $bank = $em->getRepository('ApplicationSonataClientBundle:Coordonnees')->findOneBy(array());
 
         $debug = isset($_GET['d']);
-        $V01TVAlist = $this->getEntityList('V01TVA', false, true);
-        
-        $V07EXlist = $this->getEntityList('V07EX', false, true);
-        $V05LIClist = $this->getEntityList('V05LIC', false, true);
-        $V03283Ilist = $this->getEntityList('V03283I', false, true);
-        $V11INTlist = $this->getEntityList('V11INT', false, true);
         
         
+        $V01TVAlist = $this->getEntityList('V01TVA', false);
+        $V03283Ilist = $this->getEntityList('V03283I', false);
+        $V05LIClist = $this->getEntityList('V05LIC', false);
+        $V07EXlist = $this->getEntityList('V07EX', false);
+        $V11INTlist = $this->getEntityList('V11INT', false);
         
-        $A10CAFlist = $this->getEntityList('A10CAF', false, true);
+        $A02TVAlist = $this->getEntityList('A02TVA', false);
+        $A04283Ilist = $this->getEntityList('A04283I', false);
+        $A06AIBlist = $this->getEntityList('A06AIB', false);
+        $A08IMlist = $this->getEntityList('A08IM', false);
+        $A10CAFlist = $this->getEntityList('A10CAF', false);
         
-        $A02TVAlist = $this->getEntityList('A02TVA', false, true);
-        $A08IMlist = $this->getEntityList('A08IM', false, true);
+        $A02TVAPrevlist = $this->getEntityList('A02TVA', true); // Previous month
+        $A08IMPrevlist = $this->getEntityList('A08IM', true); // Previous month
         
-        $A02TVAPrevlist = $this->getEntityList('A02TVA', true, true); // Previous month
-        $A08IMPrevlist = $this->getEntityList('A08IM', true, true); // Previous month
+        $totalLines = count($V01TVAlist) + count($V03283Ilist) + count($V05LIClist) + count($V07EXlist)
+        	+ count($A02TVAlist) + count($A04283Ilist) + count($A06AIBlist);
         
         
-        $A06AIBlist = $this->getEntityList('A06AIB', false, true);
-        $A04283Ilist = $this->getEntityList('A04283I', false, true);
+        if($totalLines > 3) {
+        	$V01TVAlist = $this->getEntityList('V01TVA', false, true);
+        	$V03283Ilist = $this->getEntityList('V03283I', false, true);
+        	$V05LIClist = $this->getEntityList('V05LIC', false, true);
+        	$V07EXlist = $this->getEntityList('V07EX', false, true);
+        	$V11INTlist = $this->getEntityList('V11INT', false);
+        	
+        	$A02TVAlist = $this->getEntityList('A02TVA', false, true);
+        	$A04283Ilist = $this->getEntityList('A04283I', false, true);
+        	$A06AIBlist = $this->getEntityList('A06AIB', false, true);
+        	$A08IMlist = $this->getEntityList('A08IM', false, true);
+        	$A10CAFlist = $this->getEntityList('A10CAF', false, true);
+        	
+        	$A02TVAPrevlist = $this->getEntityList('A02TVA', true, true); // Previous month
+        	$A08IMPrevlist = $this->getEntityList('A08IM', true, true); // Previous month
+        }
+        
+        
+        
         
         $page = $this->render('ApplicationSonataClientOperationsBundle::declaration.html.twig', array(
             'info' => array(
@@ -1908,27 +1928,30 @@ class AbstractTabsController extends Controller
     
     protected function getEntityList($entity, $isPrevMonth = false, $mergeData = false)
     {
-    	/* @var $em \Doctrine\ORM\EntityManager */
-    	$em = $this->getDoctrine()->getManager();
-    	$qb = $em->createQueryBuilder();
-    	$q = $qb->select('v')->from("Application\Sonata\ClientOperationsBundle\Entity\\". $entity, 'v');
-    	$qb = $this->_listQueryFilter($qb, $isPrevMonth);
+    	static $results = array();
+    	$key = $entity . $isPrevMonth;
+    	
+    	if(!isset($results[$key])) {
+	    	/* @var $em \Doctrine\ORM\EntityManager */
+	    	$em = $this->getDoctrine()->getManager();
+	    	$qb = $em->createQueryBuilder();
+	    	$q = $qb->select('v')->from("Application\Sonata\ClientOperationsBundle\Entity\\". $entity, 'v');
+	    	$qb = $this->_listQueryFilter($qb, $isPrevMonth);
+	    	
+	    	if($entity == 'V05LIC') {
+	    		$qb->andWhere($qb->getRootAlias() . '.regime IN (21, 25, 26)');
+	    	} elseif($entity == 'A06AIB') {
+	    		$qb->andWhere('(' . $qb->getRootAlias() . '.regime IN (11) OR ' . $qb->getRootAlias() . '.regime IS NULL)');
+	    	}
+	    	$results[$key] = $q->getQuery()->getResult();
+    	}	
     	
     	
-    	if($entity == 'V05LIC') {
-    		$qb->andWhere($qb->getRootAlias() . '.regime IN (21, 25, 26)');
-    	} elseif($entity == 'A06AIB') {
-    		$qb->andWhere('(' . $qb->getRootAlias() . '.regime IN (11) OR ' . $qb->getRootAlias() . '.regime IS NULL)');
-    	}
-    	
-    	
-    	$data =	$q->getQuery()
-    		->getResult();
-    	if (!empty($data)) {
+    	if (!empty($results[$key])) {
     		if($mergeData) {
-    			return $this->_mergeData($data);
+    			return $this->_mergeData($results[$key]);
     		} else{
-    			return $data;
+    			return $results[$key];
     		}
     	}
     	return null;

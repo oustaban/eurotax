@@ -381,7 +381,7 @@ td.i_tva {
     clear: both;
     border: 1px solid black;
     padding-bottom: {{ lh }}px;
-    {% if A02TVAlist is null %}display: none;{% endif %}
+    {% if A02TVAlist is null and A08IMlist is null %}display: none;{% endif %}
 }
 
 .block_vat_totals_input_this table th {
