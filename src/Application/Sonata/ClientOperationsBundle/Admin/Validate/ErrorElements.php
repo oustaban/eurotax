@@ -654,14 +654,18 @@ class ErrorElements
     
     
     /**
-     *  If Niveau DEB = 4 .... then
+     *  Nature client = DEB
+     *  Niveau d'obligation = 4
+     *  Régime = 29
+     *  
      *  Régime = 29 is an error = "Régime 29 impossible en Niveau 4"
      */
     public function validateNiveauDEBRegime() {
     	$regime = (int)$this->_object->getRegime();
     	$client = $this->_object->getClient();
     	
-    	if($regime == 29 && $client->getNatureDuClient()->getId() == \Application\Sonata\ClientBundle\Entity\ListNatureDuClients::DEB) {
+    	if($regime == 29 && $client->getNatureDuClient()->getId() == \Application\Sonata\ClientBundle\Entity\ListNatureDuClients::DEB
+    		&& $client->getNiveauDobligationExpedId() == 4) {
     		$this->_errorElement->with('regime')->addViolation('Régime 29 impossible en Niveau 4.')->end();
     	}
     	
