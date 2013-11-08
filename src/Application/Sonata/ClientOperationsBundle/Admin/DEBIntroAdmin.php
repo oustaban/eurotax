@@ -84,7 +84,7 @@ class DEBIntroAdmin extends Admin
             'template' => $this->_bundle_name . ':CRUD:list_date_piece_2.html.twig'
         ))
             ->add('nomenclature', null, array('label' => $this->getFieldLabel('nomenclature')))
-            ->add('pays_destination.name', null, array('label' => $this->getFieldLabel('pays_id_destination')))
+            ->add('pays_destination.code', null, array('label' => $this->getFieldLabel('pays_id_destination')))
             ->add('valeur_fiscale', 'money', array('label' => $this->getFieldLabel('valeur_fiscale'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:valeur_fiscale.html.twig'))
             ->add('regime', null, array('label' => $this->getFieldLabel('regime')))
             ->add('valeur_statistique', 'money', array('label' => $this->getFieldLabel('valeur_statistique'), 'template' => 'ApplicationSonataClientOperationsBundle:CRUD:valeur_statistique.html.twig'))
