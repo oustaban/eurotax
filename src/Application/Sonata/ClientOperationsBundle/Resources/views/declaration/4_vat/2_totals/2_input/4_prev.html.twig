@@ -11,7 +11,7 @@
     
     {% for data in A02TVAPrevlist %}
     <tr>
-        <td class="i_title">{% if loop.index == 1 %} V02-TVA {% endif %}</td>
+        <td class="i_title">{% if loop.index == 1 %} A02-TVA {% endif %}</td>
         <td class="i_value">{{ (data.getTauxDeTVA() * 100) }}%</td>
         <td class="i_nett"></td>
         <td class="i_tva">{{ data.getTVA()|number_format(0, ',', ' ') }}</td>

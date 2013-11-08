@@ -1786,7 +1786,7 @@ class AbstractTabsController extends Controller
         	$V03283Ilist = $this->getEntityList('V03283I', false, true);
         	$V05LIClist = $this->getEntityList('V05LIC', false, true);
         	$V07EXlist = $this->getEntityList('V07EX', false, true);
-        	$V11INTlist = $this->getEntityList('V11INT', false);
+        	$V11INTlist = $this->getEntityList('V11INT', false, true);
         	
         	$A02TVAlist = $this->getEntityList('A02TVA', false, true);
         	$A04283Ilist = $this->getEntityList('A04283I', false, true);
@@ -1939,7 +1939,7 @@ class AbstractTabsController extends Controller
 	    	$qb = $this->_listQueryFilter($qb, $isPrevMonth);
 	    	
 	    	if($entity == 'V05LIC') {
-	    		$qb->andWhere($qb->getRootAlias() . '.regime IN (21, 25, 26)');
+	    		$qb->andWhere('(' . $qb->getRootAlias() . '.regime IN (21, 25, 26) OR ' . $qb->getRootAlias() . '.regime IS NULL)');
 	    	} elseif($entity == 'A06AIB') {
 	    		$qb->andWhere('(' . $qb->getRootAlias() . '.regime IN (11) OR ' . $qb->getRootAlias() . '.regime IS NULL)');
 	    	}
@@ -1972,7 +1972,7 @@ class AbstractTabsController extends Controller
     	
     	foreach($entities as $entity) {
     		
-    		$key = method_exists($entity, 'getTauxDeTVA') ? $entity->getTauxDeTVA() : time();
+    		$key = method_exists($entity, 'getTauxDeTVA') ? $entity->getTauxDeTVA() : 0;
     		
     		
     		
