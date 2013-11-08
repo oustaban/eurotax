@@ -28,9 +28,9 @@ ApplicationSonataClientOperationsBundle:
     no_tva_header: Sales withtout TVA (Art. 283-1)
     other_header: Other non taxable operations
     quota_header: Quota Free Purchases
-    ruling_header: REVERSE CHARGE RULING
+    ruling_header: REVERSE CHARGE RULING - Line 21 of TVA Return
     ruling_nett_title: Nett (€)
-    ruling_vat_title: VAT (€) - line 21 Ca3
+    ruling_vat_title: VAT (€)
 
     balance:
       tva: TVA

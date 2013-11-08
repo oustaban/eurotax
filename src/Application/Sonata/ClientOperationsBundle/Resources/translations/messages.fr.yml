@@ -29,9 +29,9 @@ ApplicationSonataClientOperationsBundle:
     no_tva_header: Ventes Art 283-I #Sales withtout TVA (Art. 283-1)
     other_header: Autres opérations non imposables #Other non taxable operations
     quota_header: Achats en Franchise #Quota Free Purchases
-    ruling_header: RESCRIT autoliquidation #REVERSE CHARGE RULING
+    ruling_header: RESCRIT Autoliquidation - Ligne 21 de la déclaration de TVA #REVERSE CHARGE RULING
     ruling_nett_title: HT (€) #Nett (€)
-    ruling_vat_title: TVA (€) - ligne 21 Ca3 #VAT (€) - line 21 Ca3
+    ruling_vat_title: TVA (€) #VAT (€) - line 21 Ca3
 
     balance:
       tva: TVA #TVA
