@@ -1079,7 +1079,7 @@ class Client
 					return date('Y-m', strtotime($year . '-' . $month . '-01'));			
     				break;
     			case 2: //Trimestrielle
-    				return 'T'. floor(($this->_month - 1) / 3) + 1;
+    				return 'T'. floor(($month - 1) / 3) + 1;
     				break;
     			
     		}
