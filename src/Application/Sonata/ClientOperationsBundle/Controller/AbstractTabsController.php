@@ -1918,7 +1918,7 @@ class AbstractTabsController extends Controller
     	if($entity == 'V05LIC') {
     		$qb->andWhere($qb->getRootAlias() . '.regime IN (21, 25, 26)');
     	} elseif($entity == 'A06AIB') {
-    		$qb->andWhere($qb->getRootAlias() . '.regime IN (11)');
+    		$qb->andWhere('(' . $qb->getRootAlias() . '.regime IN (11) OR ' . $qb->getRootAlias() . '.regime IS NULL)');
     	}
     	
     	
