@@ -1976,14 +1976,22 @@ class AbstractTabsController extends Controller
     		
     		
     		
-    		$key = base64_encode($key);
     		
-    		if(method_exists($entity, 'getHT')) {	
+    		
+    		if(method_exists($entity, 'getHT')) {
+
+    			if($entity->getHT() < 0) {
+    				$key++;
+    			}
+    			
+    			$key = base64_encode($key);
     			$hts[$key][] = $entity->getHT();
     		}
     		
     			
     		if(method_exists($entity, 'getTVA')) {
+    			
+    			$key = base64_encode($key);
     			$tvas[$key][] = $entity->getTVA();
     		}
     			
