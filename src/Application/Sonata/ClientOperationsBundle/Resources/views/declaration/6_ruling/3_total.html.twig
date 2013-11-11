@@ -2,8 +2,8 @@
     <tbody>
     <tr>
         <td class="title">{{ "ApplicationSonataClientOperationsBundle.declaration.total"|trans() }}</td>
-        <td class="nett">0</td>
-        <td class="vat">0</td>
+        <td class="nett">{{ RulingNettTotal|number_format(0, ',', ' ') }}</td>
+        <td class="vat">{{ RulingVatTotal|number_format(0, ',', ' ') }}</td>
     </tr>
     </tbody>
 </table>

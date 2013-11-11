@@ -1794,10 +1794,36 @@ class AbstractTabsController extends Controller
         	$A08IMlist = $this->getEntityList('A08IM', false, true);
         	$A10CAFlist = $this->getEntityList('A10CAF', false, true);
         	
-        	$A02TVAPrevlist = $this->getEntityList('A02TVA', true, true); // Previous month
-        	$A08IMPrevlist = $this->getEntityList('A08IM', true, true); // Previous month
+        	$A02TVAPrevlist = $this->getEntityList('A02TVA', true, true, 'date_piece'); // Previous month
+        	$A08IMPrevlist = $this->getEntityList('A08IM', true, true, 'date_piece'); // Previous month
         }
         
+        
+        
+        
+        
+        $A04283ISumPrev = $this->_sumData($this->getEntityList('A04283I', true, false, 'date_piece'));
+        $A06AIBSumPrev = $this->_sumData($this->getEntityList('A06AIB', true, false, 'date_piece'));
+        
+        
+        $rulingNettTotal = 0;
+        $rulingVatTotal = 0;
+        
+        
+        if($A04283ISumPrev) {
+        	$rulingNettTotal += $A04283ISumPrev->getHT();
+        	$rulingVatTotal += $A04283ISumPrev->getTVA();
+        }
+        
+        if($A06AIBSumPrev) {
+        	$rulingNettTotal += $A06AIBSumPrev->getHT();
+        	$rulingVatTotal += $A06AIBSumPrev->getTVA();
+        }
+        
+        
+        
+        
+        //var_dump($A04283ISumPrev);
         
         
         
@@ -1825,6 +1851,11 @@ class AbstractTabsController extends Controller
         	'A06AIBlist' => $A06AIBlist,
         	'A04283Ilist' => $A04283Ilist,
         	'A10CAFlist' => $A10CAFlist,	
+        		
+        	'A04283ISumPrev' => $A04283ISumPrev,	
+			'A06AIBSumPrev' => $A06AIBSumPrev,
+			'RulingNettTotal' => $rulingNettTotal,
+			'RulingVatTotal' => $rulingVatTotal,
         		
         	'locked' => $this->getLocking()
         ));
@@ -1926,17 +1957,17 @@ class AbstractTabsController extends Controller
     
     
     
-    protected function getEntityList($entity, $isPrevMonth = false, $mergeData = false)
+    protected function getEntityList($entity, $isPrevMonth = false, $mergeData = false, $monthField = 'mois')
     {
     	static $results = array();
-    	$key = $entity . $isPrevMonth;
+    	$key = $entity . $isPrevMonth . $monthField;
     	
     	if(!isset($results[$key])) {
 	    	/* @var $em \Doctrine\ORM\EntityManager */
 	    	$em = $this->getDoctrine()->getManager();
 	    	$qb = $em->createQueryBuilder();
 	    	$q = $qb->select('v')->from("Application\Sonata\ClientOperationsBundle\Entity\\". $entity, 'v');
-	    	$qb = $this->_listQueryFilter($qb, $isPrevMonth);
+	    	$qb = $this->_listQueryFilter($qb, $isPrevMonth, $monthField);
 	    	
 	    	if($entity == 'V05LIC') {
 	    		$qb->andWhere('(' . $qb->getRootAlias() . '.regime IN (21, 25, 26) OR ' . $qb->getRootAlias() . '.regime IS NULL)');
@@ -1973,10 +2004,6 @@ class AbstractTabsController extends Controller
     	foreach($entities as $entity) {
     		
     		$key = method_exists($entity, 'getTauxDeTVA') ? $entity->getTauxDeTVA() : 0;
-    		
-    		
-    		
-    		
     		
     		if(method_exists($entity, 'getHT')) {
 
@@ -2029,9 +2056,48 @@ class AbstractTabsController extends Controller
     	return $dataSet;
     	
     }
+
+	/**
+	 * Sets total values for Nett = HT (€) and VAT = TVA (€)
+	 * 
+	 * @param unknown $entities
+	 * @return NULL|unknown
+	 */    
+    private function _sumData($entities) {
+    	$ht = 0;
+    	$tva = 0;
+    	 
+    	if(empty($entities)) {
+    		return null;
+    	}
+    	
+    	foreach($entities as $entity) {
+    		if(method_exists($entity, 'getHT')) {
+    			$ht += $entity->getHT();
+    		}
+    
+    		 
+    		if(method_exists($entity, 'getTVA')) {
+    			$tva += $entity->getTVA();
+    		}
+    		 
+    	}
+    	 
+    	if(method_exists($entity, 'setTVA')) {
+    		$entity->setTVA($tva);
+    	}
+    	if(method_exists($entity, 'setHT')) {
+    		$entity->setHT($ht);
+    	}
+    	 
+    	return $entity;
+    	 
+    }
     
     
-    private function _listQueryFilter(\Doctrine\ORM\QueryBuilder $qb, $isPrevMonth = false) {
+    
+    
+    private function _listQueryFilter(\Doctrine\ORM\QueryBuilder $qb, $isPrevMonth = false, $monthField = 'mois') {
     	if (!$this->_show_all_operations){
     	
     		$form_month = $this->_year . '-' . $this->_month . '-01';
@@ -2044,7 +2110,7 @@ class AbstractTabsController extends Controller
     			$form_month = $lastMonth->format('Y-m') . '-01';
     		}
 
-    		$monthField = 'mois';
+    		
     	
     		if ($this->_query_month == -1) {
     			$qb->orWhere($qb->getRootAlias() . '.'.$monthField.' IS NULL');
@@ -2057,9 +2123,6 @@ class AbstractTabsController extends Controller
     		$qb->setParameter(':to_month', $to_month);
     		 
     	}
-    	
-    	
-    	
     	 
     	$qb->andWhere($qb->getRootAlias() . '.client_id=' . $this->client_id)
     		//->orderBy($qb->getRootAlias() .'.TVA')

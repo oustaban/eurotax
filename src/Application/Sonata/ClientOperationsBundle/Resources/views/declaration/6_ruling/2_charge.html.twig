@@ -12,13 +12,13 @@
     <tbody>
     <tr>
         <td class="title">A04-283-I</td>
-        <td class="nett">&nbsp;</td>
-        <td class="vat">&nbsp;</td>
+        <td class="nett">{% if A04283ISumPrev %}{{ A04283ISumPrev.getHT|number_format(0, ',', ' ') }}{% endif %}</td>
+        <td class="vat">{% if A04283ISumPrev %}{{ A04283ISumPrev.getTVA|number_format(0, ',', ' ') }}{% endif %}</td>
     </tr>
     <tr>
         <td class="title">A06-AIB</td>
-        <td class="nett">&nbsp;</td>
-        <td class="vat">&nbsp;</td>
+        <td class="nett">{% if A06AIBSumPrev %}{{ A06AIBSumPrev.getHT|number_format(0, ',', ' ') }}{% endif %}</td>
+        <td class="vat">{% if A06AIBSumPrev %}{{ A06AIBSumPrev.getTVA|number_format(0, ',', ' ') }}{% endif %}</td>
     </tr>
     </tbody>
 </table>
