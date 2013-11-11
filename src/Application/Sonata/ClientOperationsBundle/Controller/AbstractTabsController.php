@@ -1774,8 +1774,8 @@ class AbstractTabsController extends Controller
         $A08IMlist = $this->getEntityList('A08IM', false);
         $A10CAFlist = $this->getEntityList('A10CAF', false);
         
-        $A02TVAPrevlist = $this->getEntityList('A02TVA', true); // Previous month
-        $A08IMPrevlist = $this->getEntityList('A08IM', true); // Previous month
+        $A02TVAPrevlist = $this->getEntityList('A02TVA', true, false, 'date_piece'); // Previous month
+        $A08IMPrevlist = $this->getEntityList('A08IM', true, false, 'date_piece'); // Previous month
         
         $totalLines = count($V01TVAlist) + count($V03283Ilist) + count($V05LIClist) + count($V07EXlist)
         	+ count($A02TVAlist) + count($A04283Ilist) + count($A06AIBlist);
@@ -1821,10 +1821,22 @@ class AbstractTabsController extends Controller
         }
         
         
+        /**
+         
+         Total Nett = sum of Nett of V01, A04, A06
+		 Total TVA = sum of TVA of V01, A04, A06
+		 Total Nett ( 2nd) = sum of Nett A02, AO4 ( 2Nd), A06 (2nd)
+		 Total TVA (2nd ) = sum of TVA A02, AO4 ( 2Nd), A06 (2nd)
+         
+         */
+        
+        $Total1 = $this->_sumData(array_merge($V01TVAlist?:array(), $A04283Ilist?:array(), $A06AIBlist?:array()));
+        $Total2 = $this->_sumData(array_merge($A02TVAlist?:array(), $A04283Ilist?:array(), $A06AIBlist?:array()));
         
         
-        //var_dump($A04283ISumPrev);
         
+        
+        var_dump($Total1->getHT(), $Total1->getTVA());
         
         
         $page = $this->render('ApplicationSonataClientOperationsBundle::declaration.html.twig', array(
@@ -1856,6 +1868,10 @@ class AbstractTabsController extends Controller
 			'A06AIBSumPrev' => $A06AIBSumPrev,
 			'RulingNettTotal' => $rulingNettTotal,
 			'RulingVatTotal' => $rulingVatTotal,
+			
+			'Total1' => $Total1,
+			'Total2' => $Total2,
+			
         		
         	'locked' => $this->getLocking()
         ));
@@ -2080,22 +2096,20 @@ class AbstractTabsController extends Controller
     		if(method_exists($entity, 'getTVA')) {
     			$tva += $entity->getTVA();
     		}
-    		 
     	}
+    	
+    	
+    	$cEntity = clone $entity;
     	 
-    	if(method_exists($entity, 'setTVA')) {
-    		$entity->setTVA($tva);
+    	if(method_exists($cEntity, 'setTVA')) {
+    		$cEntity->setTVA($tva);
     	}
-    	if(method_exists($entity, 'setHT')) {
-    		$entity->setHT($ht);
+    	if(method_exists($cEntity, 'setHT')) {
+    		$cEntity->setHT($ht);
     	}
-    	 
-    	return $entity;
-    	 
+
+    	return $cEntity;
     }
-    
-    
-    
     
     private function _listQueryFilter(\Doctrine\ORM\QueryBuilder $qb, $isPrevMonth = false, $monthField = 'mois') {
     	if (!$this->_show_all_operations){
