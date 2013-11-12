@@ -1794,8 +1794,8 @@ class AbstractTabsController extends Controller
         	$A08IMlist = $this->getEntityList('A08IM', false, true);
         	$A10CAFlist = $this->getEntityList('A10CAF', false, true);
         	
-        	$A02TVAPrevlist = $this->getEntityList('A02TVA', true, true, 'date_piece'); // Previous month
-        	$A08IMPrevlist = $this->getEntityList('A08IM', true, true, 'date_piece'); // Previous month
+        	$A02TVAPrevlist = $this->getEntityList('A02TVA', true, true); // Previous month
+        	$A08IMPrevlist = $this->getEntityList('A08IM', true, true); // Previous month
         }
         
         $A04283ISumPrev = $this->_sumData($this->getEntityList('A04283I', true, false));
@@ -1804,7 +1804,6 @@ class AbstractTabsController extends Controller
         
         $rulingNettTotal = 0;
         $rulingVatTotal = 0;
-        
         
         if($A04283ISumPrev) {
         	$rulingNettTotal += $A04283ISumPrev->getHT();
@@ -1984,9 +1983,7 @@ class AbstractTabsController extends Controller
 	    		->getResult()
 	    		//->getSql()
 	    		;
-	    	
     	}	
-    	
     	
     	if (!empty($results[$key])) {
     		if($mergeData) {
@@ -2010,6 +2007,10 @@ class AbstractTabsController extends Controller
     	$hts = array();
     	$tvas = array();
     	$rawEntities = array();
+    	
+    	if(empty($entities) || !is_array($entities)) {
+    		return null;
+    	}
     	
     	foreach($entities as $entity) {
     		
@@ -2119,8 +2120,8 @@ class AbstractTabsController extends Controller
     			
     			$qb->andWhere($qb->getRootAlias() . '.date_piece BETWEEN :dp_form_month AND :dp_to_month');
     			
-    			$qb->setParameter(':dp_form_month', $dp_to_month);
-    			$qb->setParameter(':dp_to_month', $dp_form_month);
+    			$qb->setParameter(':dp_form_month', $dp_form_month);
+    			$qb->setParameter(':dp_to_month', $dp_to_month);
     		}
     		
     		$qb->setParameter(':form_month', $form_month);
