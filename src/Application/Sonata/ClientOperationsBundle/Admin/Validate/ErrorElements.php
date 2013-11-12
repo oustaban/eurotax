@@ -395,6 +395,16 @@ class ErrorElements
     			'SE' => array(12),//SE + 12 caractères
     	);
     	 
+    	
+    	
+    	//For V05, DEB EXPED, V09, there is an additional rule : "The VAT number must not start with FR".
+    	$class = (explode('\\', get_class($this->_object)));
+    	$class = end($class);
+    	
+    	if(in_array($class, array('V05LIC', 'DEBExped', 'V09DES'))) {
+    		unset($validationDef['FR']);
+    	}
+    	
     	$value = str_replace(' ', '', $value);
     	$key = substr($value, 0, 2);
     	$trail = substr($value, 2); //trailing characters
