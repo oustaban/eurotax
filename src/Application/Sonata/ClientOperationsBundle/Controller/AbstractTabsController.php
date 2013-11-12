@@ -2016,26 +2016,17 @@ class AbstractTabsController extends Controller
     		$key = method_exists($entity, 'getTauxDeTVA') ? $entity->getTauxDeTVA() : 0;
     		
     		if(method_exists($entity, 'getHT')) {
-
     			if($entity->getHT() < 0) {
     				$key++;
     			}
-    			
-    			$key = base64_encode($key);
-    			$hts[$key][] = $entity->getHT();
+    			$hts[base64_encode($key)][] = $entity->getHT();
     		}
     		
     			
     		if(method_exists($entity, 'getTVA')) {
-    			
-    			$key = base64_encode($key);
-    			$tvas[$key][] = $entity->getTVA();
+    			$tvas[base64_encode($key)][] = $entity->getTVA();
     		}
-    			
-    		/* var_dump($entity->getHT());
-    		echo '<br />'; */
-    		
-    		$rawEntities[$key] = $entity;
+    		$rawEntities[base64_encode($key)] = $entity;
     	}
     	
     	foreach($rawEntities as $k => $entity) {
