@@ -1992,9 +1992,9 @@ class AbstractTabsController extends Controller
 	    	
 	    	
 	    	
-	    	if($entity == 'A02TVA' && $isPrevMonth) {
+	    	/* if($entity == 'A02TVA' && $isPrevMonth) {
 	    		var_dump($this->_query_month, ($this->_query_month == -1), $q->getQuery()->getSql());
-	    	}
+	    	} */
 	    	
     	}	
     	
@@ -2140,7 +2140,7 @@ class AbstractTabsController extends Controller
     			$qb->setParameter(':dp_to_month', $dp_to_month);
     			
     			
-    			var_dump($form_month, $to_month, $dp_form_month, $dp_to_month);
+    			//var_dump($form_month, $to_month, $dp_form_month, $dp_to_month);
     			
     		}
     		
