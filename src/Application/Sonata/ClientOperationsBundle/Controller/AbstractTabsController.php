@@ -1768,10 +1768,10 @@ class AbstractTabsController extends Controller
         $V07EXlist = $this->getEntityList('V07EX', false);
         $V11INTlist = $this->getEntityList('V11INT', false);
         
-        $A02TVAlist = $this->getEntityList('A02TVA', false);
+        $A02TVAlist = $this->getEntityList('A02TVA', false, false, 'date_piece');
         $A04283Ilist = $this->getEntityList('A04283I', false);
         $A06AIBlist = $this->getEntityList('A06AIB', false);
-        $A08IMlist = $this->getEntityList('A08IM', false);
+        $A08IMlist = $this->getEntityList('A08IM', false, false, 'date_piece');
         $A10CAFlist = $this->getEntityList('A10CAF', false);
         
         $A02TVAPrevlist = $this->getEntityList('A02TVA', true, false); // Previous month
@@ -1788,10 +1788,10 @@ class AbstractTabsController extends Controller
         	$V07EXlist = $this->getEntityList('V07EX', false, true);
         	$V11INTlist = $this->getEntityList('V11INT', false, true);
         	
-        	$A02TVAlist = $this->getEntityList('A02TVA', false, true);
+        	$A02TVAlist = $this->getEntityList('A02TVA', false, true, 'date_piece');
         	$A04283Ilist = $this->getEntityList('A04283I', false, true);
         	$A06AIBlist = $this->getEntityList('A06AIB', false, true);
-        	$A08IMlist = $this->getEntityList('A08IM', false, true);
+        	$A08IMlist = $this->getEntityList('A08IM', false, true, 'date_piece');
         	$A10CAFlist = $this->getEntityList('A10CAF', false, true);
         	
         	$A02TVAPrevlist = $this->getEntityList('A02TVA', true, true); // Previous month
@@ -1803,9 +1803,6 @@ class AbstractTabsController extends Controller
         
         
         
-        foreach($A02TVAPrevlist as $row) {
-        	var_dump($row->getHT());
-        }
         
         
         $rulingNettTotal = 0;
@@ -1832,7 +1829,7 @@ class AbstractTabsController extends Controller
          */
         
         $Total1 = $this->_sumData(array_merge($V01TVAlist?:array(), $A04283Ilist?:array(), $A06AIBlist?:array()));
-        $Total2 = $this->_sumData(array_merge($A02TVAlist?:array(), $A04283Ilist?:array(), $A06AIBlist?:array()));
+        $Total2 = $this->_sumData(array_merge($A02TVAlist?:array(), $A08IMlist?:array(), $A02TVAPrevlist?:array(), $A08IMPrevlist?:array(), $A04283Ilist?:array(), $A06AIBlist?:array()));
         
         $page = $this->render('ApplicationSonataClientOperationsBundle::declaration.html.twig', array(
             'info' => array(
@@ -1968,7 +1965,7 @@ class AbstractTabsController extends Controller
     
     
     
-    protected function getEntityList($entity, $isPrevMonth = false, $mergeData = false)
+    protected function getEntityList($entity, $isPrevMonth = false, $mergeData = false, $monthField = 'mois')
     {
     	static $results = array();
     	$key = $entity . $isPrevMonth;
@@ -1978,7 +1975,7 @@ class AbstractTabsController extends Controller
 	    	$em = $this->getDoctrine()->getManager();
 	    	$qb = $em->createQueryBuilder();
 	    	$q = $qb->select('v')->from("Application\Sonata\ClientOperationsBundle\Entity\\". $entity, 'v');
-	    	$qb = $this->_listQueryFilter($qb, $isPrevMonth);
+	    	$qb = $this->_listQueryFilter($qb, $isPrevMonth, $monthField);
 	    	
 	    	if($entity == 'V05LIC') {
 	    		$qb->andWhere('(' . $qb->getRootAlias() . '.regime IN (21, 25, 26) OR ' . $qb->getRootAlias() . '.regime IS NULL)');
@@ -2091,6 +2088,11 @@ class AbstractTabsController extends Controller
     	
     	foreach($entities as $entity) {
     		if(method_exists($entity, 'getHT')) {
+    			
+    			if(get_class($entity) == 'Application\Sonata\ClientOperationsBundle\Entity\A02TVA') {
+    				continue;
+    			}
+    			
     			$ht += $entity->getHT();
     		}
     
@@ -2113,11 +2115,11 @@ class AbstractTabsController extends Controller
     	return $cEntity;
     }
     
-    private function _listQueryFilter(\Doctrine\ORM\QueryBuilder $qb, $isPrevMonth = false) {
+    private function _listQueryFilter(\Doctrine\ORM\QueryBuilder $qb, $isPrevMonth = false, $monthField = 'mois') {
     	if (!$this->_show_all_operations){
     		$form_month = $this->_year . '-' . $this->_month . '-01';
     		$to_month = $this->_year . '-' . $this->_month . '-31';
-    		$monthField = 'mois';
+    		
     			
 //     		if ($this->_query_month == -1) {
 //     			$qb->orWhere($qb->getRootAlias() . '.'.$monthField.' IS NULL');
