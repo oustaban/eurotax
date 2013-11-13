@@ -2115,8 +2115,8 @@ class AbstractTabsController extends Controller
     			$lastMonth->sub(\DateInterval::createFromDateString('1 month'));
     			 
     			$dp_to_month = $lastMonth->format('Y-m') . '-31';
-    			$dp_form_month = $lastMonth->format('Y-m') . '-01';
-    			
+    			//$dp_form_month = $lastMonth->format('Y-m') . '-01';
+    			$dp_form_month = '2000-12-01';
     			
     			$qb->andWhere($qb->getRootAlias() . '.date_piece BETWEEN :dp_form_month AND :dp_to_month');
     			
