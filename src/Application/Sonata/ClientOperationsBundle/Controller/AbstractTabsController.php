@@ -1802,6 +1802,12 @@ class AbstractTabsController extends Controller
         $A06AIBSumPrev = $this->_sumData($this->getEntityList('A06AIB', true, false));
         
         
+        
+        foreach($A02TVAPrevlist as $row) {
+        	var_dump($row->getHT());
+        }
+        
+        
         $rulingNettTotal = 0;
         $rulingVatTotal = 0;
         
@@ -1983,6 +1989,13 @@ class AbstractTabsController extends Controller
 	    		->getResult()
 	    		//->getSql()
 	    		;
+	    	
+	    	
+	    	
+	    	if($entity == 'A02TVA' && $isPrevMonth) {
+	    		var_dump($this->_query_month, ($this->_query_month == -1), $q->getQuery()->getSql());
+	    	}
+	    	
     	}	
     	
     	if (!empty($results[$key])) {
@@ -2044,15 +2057,18 @@ class AbstractTabsController extends Controller
 	    			$tva+=$v;
 	    		}
     		}
+
+    		$cEntity = clone $entity;
     		
-    		if(method_exists($entity, 'setTVA')) {
-    			$entity->setTVA($tva);
+    		if(method_exists($cEntity, 'setTVA')) {
+    			$cEntity->setTVA($tva);
     		}
-    		if(method_exists($entity, 'setHT')) {
-    			$entity->setHT($ht);
+    		if(method_exists($cEntity, 'setHT')) {
+    			$cEntity->setHT($ht);
     		}
     		
-    		$dataSet[] = $entity;
+    		
+    		$dataSet[] = $cEntity;
     	}
     	
     	return $dataSet;
@@ -2103,12 +2119,12 @@ class AbstractTabsController extends Controller
     		$to_month = $this->_year . '-' . $this->_month . '-31';
     		$monthField = 'mois';
     			
-    		if ($this->_query_month == -1) {
-    			$qb->orWhere($qb->getRootAlias() . '.'.$monthField.' IS NULL');
-    			$qb->orWhere($qb->getRootAlias() . '.'.$monthField.' BETWEEN :form_month AND :to_month');
-    		} else {
+//     		if ($this->_query_month == -1) {
+//     			$qb->orWhere($qb->getRootAlias() . '.'.$monthField.' IS NULL');
+//     			$qb->orWhere($qb->getRootAlias() . '.'.$monthField.' BETWEEN :form_month AND :to_month');
+//     		} else {
     			$qb->andWhere($qb->getRootAlias() . '.'.$monthField.' BETWEEN :form_month AND :to_month');
-    		}
+//     		}
     		
     		if($isPrevMonth) {
     			$lastMonth = new \DateTime($form_month);
@@ -2122,6 +2138,10 @@ class AbstractTabsController extends Controller
     			
     			$qb->setParameter(':dp_form_month', $dp_form_month);
     			$qb->setParameter(':dp_to_month', $dp_to_month);
+    			
+    			
+    			var_dump($form_month, $to_month, $dp_form_month, $dp_to_month);
+    			
     		}
     		
     		$qb->setParameter(':form_month', $form_month);

@@ -13,7 +13,7 @@
     <tr>
         <td class="i_title">{% if loop.index == 1 %} A02-TVA {% endif %}</td>
         <td class="i_value">{{ (data.getTauxDeTVA() * 100) }}%</td>
-        <td class="i_nett">{{ data.getHT()|number_format(0, ',', ' ') }}</td>
+        <td class="i_nett">&nbsp;</td>
         <td class="i_tva">{{ data.getTVA()|number_format(0, ',', ' ') }}</td>
     </tr>
     {% endfor %}
