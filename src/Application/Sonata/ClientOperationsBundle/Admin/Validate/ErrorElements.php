@@ -333,7 +333,20 @@ class ErrorElements
     		return $this;
     	}
     	
+    	//For V05, DEB EXPED, V09, there is an additional rule : "The VAT number must not start with FR".
+    	$class = (explode('\\', get_class($this->_object)));
+    	$class = end($class);
+    	
     	$noFRcode = false;
+    	if(in_array($class, array('V05LIC', 'DEBExped', 'V09DES'))) {
+
+    		$noFRcode = true;
+    		if(preg_match('/^FR/', $value)) {
+    			$this->_errorElement->with($field)->addViolation('Pas de N°TVA commençant par FR pour ce type d\'opération.')->end();
+    			return $this;
+    		}
+    		
+    	}
     	
     	$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
         $em = $doctrine->getManager();
@@ -395,15 +408,8 @@ class ErrorElements
     			'SE' => array(12),//SE + 12 caractères
     	);
     	 
-    	
-    	
-    	//For V05, DEB EXPED, V09, there is an additional rule : "The VAT number must not start with FR".
-    	$class = (explode('\\', get_class($this->_object)));
-    	$class = end($class);
-    	
-    	if(in_array($class, array('V05LIC', 'DEBExped', 'V09DES'))) {
+    	if($noFRcode === true) {
     		unset($validationDef['FR']);
-    		$noFRcode = true;
     	}
     	
     	$value = str_replace(' ', '', $value);
@@ -433,11 +439,7 @@ class ErrorElements
     	 
     	 
     	if(!$key || $validated($key, $trail) === false) {
-    		if($noFRcode) {
-    			$this->_errorElement->with($field)->addViolation('Pas de N°TVA commençant par FR pour ce type d\'opération.')->end();
-    		} else {
-    			$this->_errorElement->with($field)->addViolation('Mauvais format de TVA.')->end();
-    		}
+    		$this->_errorElement->with($field)->addViolation('Mauvais format de TVA.')->end();
     	}
     	
         return $this;
