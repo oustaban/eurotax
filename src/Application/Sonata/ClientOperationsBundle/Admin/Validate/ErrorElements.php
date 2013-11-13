@@ -333,7 +333,7 @@ class ErrorElements
     		return $this;
     	}
     	
-    	
+    	$noFRcode = false;
     	
     	$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
         $em = $doctrine->getManager();
@@ -403,6 +403,7 @@ class ErrorElements
     	
     	if(in_array($class, array('V05LIC', 'DEBExped', 'V09DES'))) {
     		unset($validationDef['FR']);
+    		$noFRcode = true;
     	}
     	
     	$value = str_replace(' ', '', $value);
@@ -432,7 +433,11 @@ class ErrorElements
     	 
     	 
     	if(!$key || $validated($key, $trail) === false) {
-    		$this->_errorElement->with($field)->addViolation('Mauvais format de TVA.')->end();
+    		if($noFRcode) {
+    			$this->_errorElement->with($field)->addViolation('Pas de N°TVA commençant par FR pour ce type d\'opération.')->end();
+    		} else {
+    			$this->_errorElement->with($field)->addViolation('Mauvais format de TVA.')->end();
+    		}
     	}
     	
         return $this;
