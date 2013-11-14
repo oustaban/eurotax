@@ -1777,8 +1777,8 @@ class AbstractTabsController extends Controller
         $A08IMlist = $this->getEntityList('A08IM', false, false, 'date_piece');
         $A10CAFlist = $this->getEntityList('A10CAF', false);
         
-        $A02TVAPrevlist = $this->getEntityList('A02TVA', true, false); // Previous month
-        $A08IMPrevlist = $this->getEntityList('A08IM', true, false); // Previous month
+        $A02TVAPrevlist = $this->getEntityList('A02TVA', true, false, 'mois', 'paiement_date'); // Previous month
+        $A08IMPrevlist = $this->getEntityList('A08IM', true, false, 'mois', 'date_piece'); // Previous month
         
         $totalLines = count($V01TVAlist) + count($V03283Ilist) + count($V05LIClist) + count($V07EXlist)
         	+ count($A02TVAlist) + count($A04283Ilist) + count($A06AIBlist);
@@ -1797,8 +1797,8 @@ class AbstractTabsController extends Controller
         	$A08IMlist = $this->getEntityList('A08IM', false, true, 'date_piece');
         	$A10CAFlist = $this->getEntityList('A10CAF', false, true);
         	
-        	$A02TVAPrevlist = $this->getEntityList('A02TVA', true, true); // Previous month
-        	$A08IMPrevlist = $this->getEntityList('A08IM', true, true); // Previous month
+        	$A02TVAPrevlist = $this->getEntityList('A02TVA', true, true, 'mois', 'paiement_date'); // Previous month
+        	$A08IMPrevlist = $this->getEntityList('A08IM', true, true, 'mois', 'date_piece'); // Previous month
         }
         
         $A04283ISumPrev = $this->_sumData($this->getEntityList('A04283I', true, false));
@@ -1968,7 +1968,7 @@ class AbstractTabsController extends Controller
     
     
     
-    protected function getEntityList($entity, $isPrevMonth = false, $mergeData = false, $monthField = 'mois')
+    protected function getEntityList($entity, $isPrevMonth = false, $mergeData = false, $monthField = 'mois', $prevMonthField = 'date_piece')
     {
     	static $results = array();
     	$key = $entity . $isPrevMonth;
@@ -1978,7 +1978,7 @@ class AbstractTabsController extends Controller
 	    	$em = $this->getDoctrine()->getManager();
 	    	$qb = $em->createQueryBuilder();
 	    	$q = $qb->select('v')->from("Application\Sonata\ClientOperationsBundle\Entity\\". $entity, 'v');
-	    	$qb = $this->_listQueryFilter($qb, $isPrevMonth, $monthField);
+	    	$qb = $this->_listQueryFilter($qb, $isPrevMonth, $monthField, $prevMonthField);
 	    	
 	    	if($entity == 'V05LIC') {
 	    		$qb->andWhere('(' . $qb->getRootAlias() . '.regime IN (21, 25, 26) OR ' . $qb->getRootAlias() . '.regime IS NULL)');
@@ -2118,7 +2118,7 @@ class AbstractTabsController extends Controller
     	return $cEntity;
     }
     
-    private function _listQueryFilter(\Doctrine\ORM\QueryBuilder $qb, $isPrevMonth = false, $monthField = 'mois') {
+    private function _listQueryFilter(\Doctrine\ORM\QueryBuilder $qb, $isPrevMonth = false, $monthField = 'mois', $prevMonthField = 'date_piece') {
     	if (!$this->_show_all_operations){
     		$form_month = $this->_year . '-' . $this->_month . '-01';
     		$to_month = $this->_year . '-' . $this->_month . '-31';
@@ -2139,7 +2139,7 @@ class AbstractTabsController extends Controller
     			//$dp_form_month = $lastMonth->format('Y-m') . '-01';
     			$dp_form_month = '2000-12-01';
     			
-    			$qb->andWhere($qb->getRootAlias() . '.date_piece BETWEEN :dp_form_month AND :dp_to_month');
+    			$qb->andWhere($qb->getRootAlias() . '.'. $prevMonthField .' BETWEEN :dp_form_month AND :dp_to_month');
     			
     			$qb->setParameter(':dp_form_month', $dp_form_month);
     			$qb->setParameter(':dp_to_month', $dp_to_month);
