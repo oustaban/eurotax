@@ -1768,7 +1768,7 @@ class AbstractTabsController extends Controller
         $V07EXlist = $this->getEntityList('V07EX', false);
         $V11INTlist = $this->getEntityList('V11INT', false);
         
-        $A02TVAlist = $this->getEntityList('A02TVA', false, false, 'date_piece');
+        $A02TVAlist = $this->getEntityList('A02TVA', false, false, 'paiement_date');
         $A04283Ilist = $this->getEntityList('A04283I', false);
         $A06AIBlist = $this->getEntityList('A06AIB', false);
         $A08IMlist = $this->getEntityList('A08IM', false, false, 'date_piece');
@@ -1788,7 +1788,7 @@ class AbstractTabsController extends Controller
         	$V07EXlist = $this->getEntityList('V07EX', false, true);
         	$V11INTlist = $this->getEntityList('V11INT', false, true);
         	
-        	$A02TVAlist = $this->getEntityList('A02TVA', false, true, 'date_piece');
+        	$A02TVAlist = $this->getEntityList('A02TVA', false, true, 'paiement_date');
         	$A04283Ilist = $this->getEntityList('A04283I', false, true);
         	$A06AIBlist = $this->getEntityList('A06AIB', false, true);
         	$A08IMlist = $this->getEntityList('A08IM', false, true, 'date_piece');
