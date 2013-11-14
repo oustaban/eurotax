@@ -1011,6 +1011,7 @@ class AbstractTabsController extends Controller
                     }
                     
                     
+                    //Only lines with MOIS = current month must be imported.
                     if(isset($formData['mois']) && $mois = $formData['mois']) {
                     	
                     	list($current_year, $current_month) = explode('-', date('Y-m', strtotime('now' . (date('d') < 25 ? ' -1 month' : ''))));
@@ -1028,6 +1029,8 @@ class AbstractTabsController extends Controller
                     			continue;
                     		}
                     	}
+                    } else {
+                    	continue;
                     }
                     
                     
