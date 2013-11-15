@@ -1782,32 +1782,48 @@ class AbstractTabsController extends Controller
         $A02TVAPrevlist = $this->getEntityList('A02TVA', true, false, 'mois', 'paiement_date'); // Previous month
         $A08IMPrevlist = $this->getEntityList('A08IM', true, false, 'mois', 'date_piece'); // Previous month
         
-        $totalLines = count($V01TVAlist) + count($V03283Ilist) + count($V05LIClist) + count($V07EXlist)
-        	+ count($A02TVAlist) + count($A04283Ilist) + count($A06AIBlist);
         
-        
-        if($totalLines > 3) {
+        //Grouped by percentage
+        if(count($V01TVAlist) > 3) {
         	$V01TVAlist = $this->getEntityList('V01TVA', false, true);
+        }
+        if(count($V03283Ilist) > 3) {
         	$V03283Ilist = $this->getEntityList('V03283I', false, true);
+        }
+        if(count($V05LIClist) > 3) {
         	$V05LIClist = $this->getEntityList('V05LIC', false, true);
+        }
+        if(count($V07EXlist) > 3) {
         	$V07EXlist = $this->getEntityList('V07EX', false, true);
+        }
+        if(count($V11INTlist) > 3) {	
         	$V11INTlist = $this->getEntityList('V11INT', false, true);
-        	
+        }
+        if(count($A02TVAlist) > 3) {	
         	$A02TVAlist = $this->getEntityList('A02TVA', false, true, 'paiement_date');
+        }
+        if(count($A04283Ilist) > 3) {
         	$A04283Ilist = $this->getEntityList('A04283I', false, true);
+        }
+        if(count($A06AIBlist) > 3) {
         	$A06AIBlist = $this->getEntityList('A06AIB', false, true);
+        }
+        if(count($A08IMlist) > 3) {
         	$A08IMlist = $this->getEntityList('A08IM', false, true, 'date_piece');
+        }
+        if(count($A10CAFlist) > 3) {
         	$A10CAFlist = $this->getEntityList('A10CAF', false, true);
-        	
+        }
+        if(count($A02TVAPrevlist) > 3) {	
         	$A02TVAPrevlist = $this->getEntityList('A02TVA', true, true, 'mois', 'paiement_date'); // Previous month
+        }
+        if(count($A08IMPrevlist) > 3) {
         	$A08IMPrevlist = $this->getEntityList('A08IM', true, true, 'mois', 'date_piece'); // Previous month
         }
         
+        
         $A04283ISumPrev = $this->_sumData($this->getEntityList('A04283I', true, false));
         $A06AIBSumPrev = $this->_sumData($this->getEntityList('A06AIB', true, false));
-        
-        
-        
         
         
         $rulingNettTotal = 0;
@@ -1836,16 +1852,7 @@ class AbstractTabsController extends Controller
         $Total1 = $this->_sumData(array_merge($V01TVAlist?:array(), $A04283Ilist?:array(), $A06AIBlist?:array()));
         $Total2 = $this->_sumData(array_merge($A02TVAlist?:array(), $A08IMlist?:array(), $A02TVAPrevlist?:array(), $A08IMPrevlist?:array(), $A04283Ilist?:array(), $A06AIBlist?:array()));
         
-        
-        
         $soldeTVATotal = ($Total1?$Total1->getTVA():0) - ($Total2?$Total2->getTVA():0);
-        
-        
-        
-        
-       
-        
-        
         
         $page = $this->render('ApplicationSonataClientOperationsBundle::declaration.html.twig', array(
             'info' => array(
