@@ -1679,6 +1679,8 @@ class AbstractTabsController extends Controller
      */
     public function importRemoveAction($id)
     {
+    	$this->getLockingAccessDenied();
+    	
         $id = (int)$id;
         if ($id) {
             /* @var $em \Doctrine\ORM\EntityManager */
