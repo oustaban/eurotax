@@ -1834,6 +1834,17 @@ class AbstractTabsController extends Controller
         $Total1 = $this->_sumData(array_merge($V01TVAlist?:array(), $A04283Ilist?:array(), $A06AIBlist?:array()));
         $Total2 = $this->_sumData(array_merge($A02TVAlist?:array(), $A08IMlist?:array(), $A02TVAPrevlist?:array(), $A08IMPrevlist?:array(), $A04283Ilist?:array(), $A06AIBlist?:array()));
         
+        
+        
+        $soldeTVATotal = ($Total1?$Total1->getTVA():0) - ($Total2?$Total2->getTVA():0);
+        
+        
+        
+        
+       
+        
+        
+        
         $page = $this->render('ApplicationSonataClientOperationsBundle::declaration.html.twig', array(
             'info' => array(
                 'time' => strtotime($this->_year . '-' . $this->_month . '-01'),
@@ -1866,7 +1877,7 @@ class AbstractTabsController extends Controller
 			
 			'Total1' => $Total1,
 			'Total2' => $Total2,
-			
+        	'SoldeTVATotal' => $soldeTVATotal,
         		
         	'locked' => $this->getLocking()
         ));
