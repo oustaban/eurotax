@@ -1486,6 +1486,10 @@ class AbstractTabsController extends Controller
     	$transdeb->set('_client', $this->client);
     	
     	$transdeb->set('_admin', $this->admin);
+    	$transdeb->set('_year', $this->_year);
+    	$transdeb->set('_month', $this->_month);
+    	
+    	
     	$transdeb->render();
     	$transdeb->download();
     	
