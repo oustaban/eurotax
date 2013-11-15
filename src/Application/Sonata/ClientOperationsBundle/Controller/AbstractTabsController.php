@@ -2030,9 +2030,15 @@ class AbstractTabsController extends Controller
     		$key = method_exists($entity, 'getTauxDeTVA') ? $entity->getTauxDeTVA() : 0;
     		
     		if(method_exists($entity, 'getHT')) {
-    			if($entity->getHT() < 0) {
+    			if($entity->getHT() < 0 && get_class($entity) != 'Application\Sonata\ClientOperationsBundle\Entity\A02TVA' 
+    				&& get_class($entity) != 'Application\Sonata\ClientOperationsBundle\Entity\A08IM') {
+    					
     				$key++;
     			}
+    			
+    			//var_dump(get_class($entity));
+    			
+    			
     			$hts[base64_encode($key)][] = $entity->getHT();
     		}
     		
