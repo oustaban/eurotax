@@ -1,14 +1,8 @@
 <table cellpadding="0" cellspacing="-1" border="0">
     <tbody>
     <tr>
-        <td class="title">{{ "ApplicationSonataClientOperationsBundle.declaration.balance_title"|trans() }} {{ "ApplicationSonataClientOperationsBundle.declaration.period_this"|trans() }} 
-        {% if SoldeTVATotal < 0 %}
-        	(si<0)
-        {% else %}
-        	(si>=0)
-        {% endif %}
-        </td>
-        <td class="i_tva">{{ SoldeTVATotal|number_format(0, ',', ' ') }}</td>
+        <td class="title">{{ "ApplicationSonataClientOperationsBundle.declaration.balance_title"|trans() }} {{ "ApplicationSonataClientOperationsBundle.declaration.period_this"|trans() }} (si<0) </td>
+        <td class="i_tva">{% if SoldeTVATotal < 0 %}{{ SoldeTVATotal|number_format(0, ',', ' ') }}{% endif %}</td>
     </tr>
     <tr>
         <td class="title">{{ "ApplicationSonataClientOperationsBundle.declaration.claim"|trans() }}</td>
