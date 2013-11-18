@@ -1031,27 +1031,30 @@ class AbstractTabsController extends Controller
                         }
                     }
                     
-                    
-                    //Only lines with MOIS = current month must be imported.
-                    if(isset($formData['mois']) && $mois = $formData['mois']) {
-                    	
-                    	list($current_year, $current_month) = explode('-', date('Y-m', strtotime('now' . (date('d') < 25 ? ' -1 month' : ''))));
-                    	
-                    	if ($mois) {
-                    		if ($mois instanceof \DateTime) {
-                    			$month = $value->format('n');
-                    			$year = $value->format('Y');
-                    		} else {
-                    			$month = $mois['month'];
-                    			$year = $mois['year'];
-                    		}
-                    	
-                    		if (!$this->admin->getLocking() && !($year == $current_year && $month == $current_month)) {
-                    			continue;
-                    		}
-                    	}
-                    } else {
-                    	continue;
+                    if($class != 'DEBExped' && $class != 'DEBIntro') {
+	                    //Only lines with MOIS = current month must be imported.
+	                    if(isset($formData['mois']) && $mois = $formData['mois']) {
+	                    	
+	                    	list($current_year, $current_month) = explode('-', date('Y-m', strtotime('now' . (date('d') < 25 ? ' -1 month' : ''))));
+	                    	
+	                    	if ($mois) {
+	                    		if ($mois instanceof \DateTime) {
+	                    			$month = $value->format('n');
+	                    			$year = $value->format('Y');
+	                    		} else {
+	                    			$month = $mois['month'];
+	                    			$year = $mois['year'];
+	                    		}
+	                    	
+	                    		if (!$this->admin->getLocking() && !($year == $current_year && $month == $current_month)) {
+	                    			continue;
+	                    		}
+	                    	}
+	                    } else {
+	                    	
+	                    	continue;
+	                    	
+	                    }
                     }
                     
                     
