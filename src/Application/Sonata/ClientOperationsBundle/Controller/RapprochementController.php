@@ -352,7 +352,6 @@ class RapprochementController extends Controller
     		$form->bindRequest($request);
     		if ($form->isValid())
     		{
-    			
     			$moisDate = explode('|', $month);
     			
     			$rap = new Rapprochement();
@@ -383,27 +382,27 @@ class RapprochementController extends Controller
     			//return $this->render(':redirects:back.html.twig');
     			//return $this->redirect($this->generateUrl('rapprochement_index', array('client_id' => $client_id, 'month' => $month), true));
     			
+    			if(isset($_POST['btn_locking'])) {
     			
-    			
-    			list($_month, $_year) = $this->getQueryMonth($month);
-    			$locking = $em->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $client_id, 'month' => $_month, 'year' => $_year));
-    			
-    			if ($locking) {
-    				$status_id = 2;
+	    			list($_month, $_year) = $this->getQueryMonth($month);
+	    			$locking = $em->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $client_id, 'month' => $_month, 'year' => $_year));
+	    			
+	    			if ($locking) {
+	    				$status_id = 2;
+	    			}
+	    			
+	    			if ($blocked) {
+	    				$status_id = 1;
+	    			}
+	    			
+	    			if($status_id ==1 && !$this->acceptLocking($client_id, $month)) {
+	    				$this->get('session')->setFlash('sonata_flash_error', 'Cloture Mois-TVA ' . $_year . '-' . $_month . ' impossible car au moins une opération n\'a pas été prise en compte sur une des Ca3 précédente dans : ' . $this->_lockingTab . ' - ' . $this->datefmtFormatFilter($this->_lockingDate, 'YYYY MMMM'));
+	    			} elseif($status_id == 2 && !$this->acceptUnlocking($client_id, $month)) {
+	    				$this->get('session')->setFlash('sonata_flash_error', 'Le mois ' . $this->_unlockingYear . '-' . $this->_unlockingMonth . ' est déjà vérouillé, vous ne pouvez donc pas dévérouillé le mois sélectionné.');
+	    			} else {
+	    				$this->setLocking($client_id, $month, $blocked);
+	    			}
     			}
-    			
-    			if ($blocked) {
-    				$status_id = 1;
-    			}
-    			
-    			if($status_id ==1 && !$this->acceptLocking($client_id, $month)) {
-    				$this->get('session')->setFlash('sonata_flash_error', 'Cloture Mois-TVA ' . $_year . '-' . $_month . ' impossible car au moins une opération n\'a pas été prise en compte sur une des Ca3 précédente dans : ' . $this->_lockingTab . ' - ' . $this->datefmtFormatFilter($this->_lockingDate, 'YYYY MMMM'));
-    			} elseif($status_id == 2 && !$this->acceptUnlocking($client_id, $month)) {
-    				$this->get('session')->setFlash('sonata_flash_error', 'Le mois ' . $this->_unlockingYear . '-' . $this->_unlockingMonth . ' est déjà vérouillé, vous ne pouvez donc pas dévérouillé le mois sélectionné.');
-    			} else {
-    				$this->setLocking($client_id, $month, $blocked);
-    			}
-
     				
     			header('Location: ' . $this->generateUrl('admin_sonata_clientoperations_v01tva_list', array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)));
 	    		//return $this->redirect($this->generateUrl('admin_sonata_clientoperations_v01tva_list', array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)));
