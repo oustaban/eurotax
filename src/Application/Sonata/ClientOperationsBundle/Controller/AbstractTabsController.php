@@ -62,6 +62,8 @@ class AbstractTabsController extends Controller
      */
     protected $_imports = null;
 
+    protected $_hasImportErrors = false;
+    
     /**
      * @var array
      */
@@ -766,19 +768,38 @@ class AbstractTabsController extends Controller
         }
 
         $messages = $this->getCountMessageImports();
+        
+        
+        
+        
+        
         if (!empty($messages)) {
             $this->get('session')->setFlash('sonata_flash_info|raw', implode("<br/>", $messages));
+            
+            
         } else {
         	
         	$message = trim($this->get('session')->getFlash('sonata_flash_info|raw'));
         	if($message == '') {
         		$this->get('session')->setFlash('sonata_flash_info|raw', $this->admin->trans('Imported : %count%', array('%count%' => 0)));
+        		
         	} else {
         		$this->get('session')->setFlash('sonata_flash_info|raw', $message);
-        	}
+        	} 
+        	
+        	
+        	
         }
-
-        return $this->render(':redirects:back.html.twig');
+        
+        if($this->_hasImportErrors) {
+        	return $this->render(':redirects:back.html.twig');
+        } else {
+        	//return $this->forward('ApplicationSonataClientOperationsBundle:Rapprochement:index', array('client_id' => $this->client_id, 'month' => $this->_query_month));
+        	
+        	
+        	return $this->redirect($this->generateUrl('rapprochement_index', array('client_id' => $this->client_id, 'month' => $this->_query_month)));
+        	
+        }
     }
 
 
@@ -1133,6 +1154,7 @@ class AbstractTabsController extends Controller
 
             	if($this->getImportFileValidateExist($client, $y, $m)) {
             		$this->get('session')->setFlash('sonata_flash_info|raw', 'Vous ne pouvez pas uploader le fichier pour le mois courant');
+            		$this->_hasImportErrors = true;
             		return false;
             	}
 
@@ -1140,6 +1162,7 @@ class AbstractTabsController extends Controller
 
 
             	if($dateDebut->format('Ym') > $y . $m) {
+            		$this->_hasImportErrors = true;
             		$this->get('session')->setFlash('sonata_flash_info|raw', 'Le fichier de données est antérieur à la date de début de mission');
             		return false;
             	}
@@ -1166,6 +1189,8 @@ class AbstractTabsController extends Controller
 
     protected function getImportFileValidateMessage()
     {
+    	
+    	$this->_hasImportErrors = true;
         $data = array(
             '%nom_client%' => strtoupper($this->client),
         );
@@ -1381,6 +1406,9 @@ class AbstractTabsController extends Controller
 	                        ));
 	                    }
 	                    if (isset($values['errors'])) {
+	                    	
+	                    	$this->_hasImportErrors = true;
+	                    	
 	                        $error_log_filename = '/data/imports/import-error-log-' . md5(time() . rand(1, 99999999)) . '.txt';
 	
 	                        $render_view_popup = $this->renderView('ApplicationSonataClientOperationsBundle:popup:popup_message.html.twig', array(
@@ -1406,6 +1434,7 @@ class AbstractTabsController extends Controller
 	                        $message[] = $str_repeat . $translator->trans('Imported : %count%', array('%count%' => $values['success']));
 	                    }
 	                    if (isset($values['errors'])) {
+	                    	$this->_hasImportErrors = true;
 	                        $message[] = $str_repeat . '<span class="error">' . $translator->trans('Not valid : %count%', array('%count%' => $values['errors'])) . '</span>';
 	                    }
 	                    $messages[] = '<strong>' . $table_trans . '</strong><br />' . implode('; ', $message);
