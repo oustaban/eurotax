@@ -1812,10 +1812,6 @@ class AbstractTabsController extends Controller
         $A08IMlist = $this->getEntityList('A08IM', false, false, 'date_piece');
         $A10CAFlist = $this->getEntityList('A10CAF', false);
         
-        $A02TVAPrevlist = $this->getEntityList('A02TVA', true, false, 'mois', 'paiement_date'); // Previous month
-        $A08IMPrevlist = $this->getEntityList('A08IM', true, false, 'mois', 'date_piece'); // Previous month
-        
-        
         //Grouped by percentage
         if(count($V01TVAlist) > 3) {
         	$V01TVAlist = $this->getEntityList('V01TVA', false, true);
@@ -1847,12 +1843,11 @@ class AbstractTabsController extends Controller
         if(count($A10CAFlist) > 3) {
         	$A10CAFlist = $this->getEntityList('A10CAF', false, true);
         }
-        if(count($A02TVAPrevlist) > 3) {	
-        	$A02TVAPrevlist = $this->getEntityList('A02TVA', true, true, 'mois', 'paiement_date'); // Previous month
-        }
-        if(count($A08IMPrevlist) > 3) {
-        	$A08IMPrevlist = $this->getEntityList('A08IM', true, true, 'mois', 'date_piece'); // Previous month
-        }
+        
+        	
+        $A02TVAPrevlist = $this->getEntityList('A02TVA', true, true, 'mois', 'paiement_date'); // Previous month
+        $A08IMPrevlist = $this->getEntityList('A08IM', true, true, 'mois', 'date_piece'); // Previous month
+        
         
         
         $A04283ISumPrev = $this->_sumData($this->getEntityList('A04283I', true, false));
@@ -2024,7 +2019,7 @@ class AbstractTabsController extends Controller
     protected function getEntityList($entity, $isPrevMonth = false, $mergeData = false, $monthField = 'mois', $prevMonthField = 'date_piece')
     {
     	static $results = array();
-    	$key = $entity . $isPrevMonth;
+    	$key = $entity . $isPrevMonth . $monthField . $prevMonthField;
     	
     	if(!isset($results[$key])) {
 	    	/* @var $em \Doctrine\ORM\EntityManager */
@@ -2082,13 +2077,19 @@ class AbstractTabsController extends Controller
     		
     		$key = method_exists($entity, 'getTauxDeTVA') ? $entity->getTauxDeTVA() : 0;
     		
-    		if(method_exists($entity, 'getHT')) {
-    			if($entity->getHT() < 0 && get_class($entity) != 'Application\Sonata\ClientOperationsBundle\Entity\A02TVA' 
-    				&& get_class($entity) != 'Application\Sonata\ClientOperationsBundle\Entity\A08IM') {
-    					
-    				$key++;
-    			}
+    		
+    		//var_dump(get_class($entity));
     			
+    		if( ( ( method_exists($entity, 'getHT') && $entity->getHT() < 0 ) || ( method_exists($entity, 'getTVA') && $entity->getTVA() < 0) ) 
+
+    		 	&& (get_class($entity) != 'Application\Sonata\ClientOperationsBundle\Entity\A02TVA' && get_class($entity) != 'Application\Sonata\ClientOperationsBundle\Entity\A08IM')) {
+
+    			$key++;
+    		}
+    		 
+    		
+    			
+    		if(method_exists($entity, 'getHT')) {	
     			//var_dump(get_class($entity));
     			
     			
