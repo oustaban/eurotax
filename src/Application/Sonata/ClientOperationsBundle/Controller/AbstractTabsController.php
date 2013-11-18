@@ -1883,7 +1883,7 @@ class AbstractTabsController extends Controller
          */
         
         $Total1 = $this->_sumData(array_merge($V01TVAlist?:array(), $A04283Ilist?:array(), $A06AIBlist?:array()));
-        $Total2 = $this->_sumData(array_merge($A02TVAlist?:array(), $A08IMlist?:array(), $A02TVAPrevlist?:array(), $A08IMPrevlist?:array(), $A04283Ilist?:array(), $A06AIBlist?:array()));
+        $Total2 = $this->_sumData(array_merge($A08IMlist?:array(), $A02TVAPrevlist?:array(), $A08IMPrevlist?:array(), $A04283Ilist?:array(), $A06AIBlist?:array(), $A02TVAlist?:array()));
         
         $soldeTVATotal = ($Total1?$Total1->getTVA():0) - ($Total2?$Total2->getTVA():0);
         
