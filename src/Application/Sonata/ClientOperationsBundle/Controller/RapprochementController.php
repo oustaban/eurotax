@@ -336,7 +336,8 @@ class RapprochementController extends Controller
             'v05_lic' => $v05_lic,
             'deb_intro' => $deb_intro,
             'deb_exped' => $deb_exped,
-        	'form' => 	$form instanceof Form ? $form->createView() : false
+        	'form' => 	$form instanceof Form ? $form->createView() : false,
+        	'nocloturer' => isset($_GET['nocloturer'])
         );
     }
 

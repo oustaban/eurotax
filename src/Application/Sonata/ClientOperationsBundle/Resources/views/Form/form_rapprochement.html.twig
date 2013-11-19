@@ -117,7 +117,9 @@
 
 
     {% set text_lock = info.blocked ? 'Clôturer' : 'Déverrouiller' %}
-    <button id="btn_locking" name="btn_locking" rel="tooltip" title="{{ text_lock|trans}}" class="btn pull-right"><i class="icon icon-lock"></i> {{ text_lock|trans}}</button>
+    {% if nocloturer == false %}
+    	<button id="btn_locking" name="btn_locking" rel="tooltip" title="{{ text_lock|trans}}" class="btn pull-right"><i class="icon icon-lock"></i> {{ text_lock|trans}}</button>
+    {% endif %}
     &nbsp;&nbsp;
     
     <button id="btn_saving" name="btn_saving" rel="tooltip" title="Save" class="btn pull-right"><i class="icon icon-ok-sign"></i> Save</button>
