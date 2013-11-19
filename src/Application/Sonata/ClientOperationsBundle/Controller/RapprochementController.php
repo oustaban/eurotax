@@ -286,18 +286,27 @@ class RapprochementController extends Controller
     );
     
     
+    
+    protected function validateClient($client_id) {
+    	/** @var $em \Doctrine\ORM\EntityManager */
+    	$em = $this->getDoctrine()->getManager();
+    	$client = $em->getRepository('ApplicationSonataClientBundle:Client')->find($client_id);
+    	
+    	if (empty($client)) {
+    		throw new NotFoundHttpException(sprintf('unable to find Client with id : %s', $client_id));
+    	}
+    	
+    	return $client;
+    }
+    
+    
     /**
      * @Template()
      */
     public function indexAction($client_id, $month)
     {
-        /** @var $em \Doctrine\ORM\EntityManager */
-        $em = $this->getDoctrine()->getManager();
-        $client = $em->getRepository('ApplicationSonataClientBundle:Client')->find($client_id);
-
-        if (empty($client)) {
-            throw new NotFoundHttpException(sprintf('unable to find Client with id : %s', $client_id));
-        }
+    	$client = $this->validateClient($client_id);
+    	
 
         $this->_client_id = $client_id;
         list($this->_month, $this->_year) = $this->getQueryMonth($month);
@@ -403,10 +412,13 @@ class RapprochementController extends Controller
 	    			} else {
 	    				$this->setLocking($client_id, $month, $blocked);
 	    			}
+	    			
+	    			header('Location: ' . $this->generateUrl('rapprochement_frame', array('client_id' =>  $client_id, 'month' => $month)));
+	    			exit;
+	    			
     			}
     				
     			header('Location: ' . $this->generateUrl('admin_sonata_clientoperations_v01tva_list', array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)));
-	    		//return $this->redirect($this->generateUrl('admin_sonata_clientoperations_v01tva_list', array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)));
 	    		exit;
     			
     			
@@ -671,6 +683,19 @@ class RapprochementController extends Controller
     	$timestamp = $datetime->getTimestamp();
     
     	return $formatter->format($timestamp);
+    }
+    
+    
+    
+    public function frameAction($client_id, $month) {
+    	$this->validateClient($client_id);
+
+    	return $this->render('ApplicationSonataClientOperationsBundle:Rapprochement:frame.html.twig', array(
+    		'declarationLink' => $this->generateUrl('admin_sonata_clientoperations_v01tva_declaration', array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)),
+    		'exporterDebLink' => $this->generateUrl('admin_sonata_clientoperations_v01tva_exportTransDeb', array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)),
+    	));
+    	
+    		
     }
     
 }

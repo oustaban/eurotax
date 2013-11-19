@@ -1,3 +1,8 @@
 rapprochement_index:
     pattern: /rapprochement/{client_id}/{month}
     defaults: { _controller: ApplicationSonataClientOperationsBundle:Rapprochement:index }
+
+rapprochement_frame:
+    pattern: /rapprochement/frame/{client_id}/{month}
+    defaults: { _controller: ApplicationSonataClientOperationsBundle:Rapprochement:frame }
+

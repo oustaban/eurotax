@@ -1,0 +1,9 @@
+<div style="height:10%; width:100%; text-align: center">
+	<button onclick="javascript:window.open('{{ exporterDebLink }}');">Valider</button>
+	<button onclick="javascript:window.close();">Annuler</button>
+</div>
+
+<object data="{{ declarationLink }}" type="application/pdf" height="90%" width="100%">
+	<p align="center">It appears your Web browser is not configured to display PDF files. 
+No worries, just <a href="{{ declarationLink }}">click here to download the PDF file.</a></p>
+</object>
