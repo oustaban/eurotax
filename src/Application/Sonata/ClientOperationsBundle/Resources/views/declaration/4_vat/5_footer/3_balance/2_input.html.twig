@@ -6,11 +6,11 @@
     </tr>
     <tr>
         <td class="title">{{ "ApplicationSonataClientOperationsBundle.declaration.claim"|trans() }}</td>
-        <td class="i_tva">0</td>
+        <td class="i_tva">{{ rapState.getDemandeDeRemboursement }}</td>
     </tr>
     <tr>
         <td class="title">{{ "ApplicationSonataClientOperationsBundle.declaration.credit_carried"|trans() }}</td>
-        <td class="i_tva">0</td>
+        <td class="i_tva">{{ rapState.getCreditTvaAReporter }}</td>
     </tr>
     </tbody>
 </table>

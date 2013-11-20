@@ -16,6 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Application\Sonata\ClientOperationsBundle\Entity\Locking;
 use Application\Sonata\ClientOperationsBundle\Entity\Rapprochement;
+use Application\Sonata\ClientOperationsBundle\Entity\RapprochementState;
 use Application\Sonata\ClientOperationsBundle\Form\RapprochementForm;
 
 /**
@@ -689,8 +690,41 @@ class RapprochementController extends Controller
     
     public function frameAction($client_id, $month) {
     	$this->validateClient($client_id);
-
+    	
+    	list($_month, $_year) = $this->getQueryMonth($month);
+    	
+    	
+    	$em = $this->get('doctrine')->getEntityManager();
+    	$rap = $em->getRepository('ApplicationSonataClientOperationsBundle:RapprochementState')
+    		->findOneBy(array('client_id' => $client_id, 'month' => $_month, 'year' => $_year));
+    	
+    	if(!$rap) {
+    		$rap = new RapprochementState();
+    	}
+    	
+    	$request = $this->get('request');
+    	
+    	if ($request->getMethod() == 'POST') {
+    		$rap->setClientId((int)$client_id)
+    			->setMonth($_month)
+    			->setYear($_year);
+    		
+    		if($_POST['type'] == 'ddr') {
+    			$rap->setDemandeDeRemboursement((float)$_POST['number']);
+    		} elseif($_POST['type'] == 'ctar') {
+    			$rap->setCreditTvaAReporter((float)$_POST['number']);
+    		}
+    		$em->persist($rap);
+    		$em->flush();
+    		
+    		return $this->render(':redirects:back.html.twig');
+    	}
+    	
     	return $this->render('ApplicationSonataClientOperationsBundle:Rapprochement:frame.html.twig', array(
+    		'client_id' => $client_id,
+    		'month' => $_month,
+    		'year' => $_year,	
+			'rapState' => $rap,
     		'declarationLink' => $this->generateUrl('admin_sonata_clientoperations_v01tva_declaration', array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)),
     		'exporterDebLink' => $this->generateUrl('admin_sonata_clientoperations_v01tva_exportTransDeb', array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)),
     	));

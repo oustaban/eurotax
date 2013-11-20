@@ -1800,6 +1800,16 @@ class AbstractTabsController extends Controller
         /** @var $bank \Application\Sonata\ClientBundle\Entity\Coordonnees */
         $bank = $em->getRepository('ApplicationSonataClientBundle:Coordonnees')->findOneBy(array());
 
+        $rap = $em->getRepository('ApplicationSonataClientOperationsBundle:RapprochementState')
+        ->findOneBy(array('client_id' => $this->client_id, 'month' => $this->_month, 'year' => $this->_year));
+         
+        if(!$rap) {
+        	$rap = new RapprochementState();
+        }
+        
+        
+        
+        
         $debug = isset($_GET['d']);
         
         
@@ -1894,6 +1904,7 @@ class AbstractTabsController extends Controller
             'debug' => $debug,
             'client' => $client,
             'bank' => $bank,
+        	'rapState' => $rap,
         		
         	'V01TVAlist' => $V01TVAlist,
         	'V07EXlist' => $V07EXlist,
