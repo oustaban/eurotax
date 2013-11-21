@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request;
 use Application\Sonata\ClientOperationsBundle\Entity\Locking;
+use Application\Sonata\ClientOperationsBundle\Entity\RapprochementState;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Application\Sonata\ClientOperationsBundle\Entity\Imports;
 use Application\Tools\mPDF;

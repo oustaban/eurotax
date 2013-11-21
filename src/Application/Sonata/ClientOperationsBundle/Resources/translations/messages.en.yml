@@ -1,7 +1,7 @@
 ApplicationSonataClientOperationsBundle:
   declaration:
     address: 77-79 Av. A. Briand<br />94110 ARCUEIL
-    vat_entity: VAT-Registered
+    vat_entity: VAT-Registered Company
     summ: SUMMARY of the Period
     fin_situation: Financial Situation
     vat_situation: VAT Situation in EUROS
