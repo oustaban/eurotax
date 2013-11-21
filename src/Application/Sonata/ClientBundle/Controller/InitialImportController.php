@@ -104,7 +104,7 @@ class InitialImportController extends Controller {
 			'Document_1' => array( // Document w/ mandat type
 					'fields' => array(
 							// (lien ?)	Type	"Mandat Date*"	"Mandat Préavis"	"Mandat Particularité"
-							'skip_1',
+							'local_file_path',
 							'skip_2',
 							'date_document',
 							'preavis',
@@ -120,7 +120,7 @@ class InitialImportController extends Controller {
 			'Document_5' => array( // Document w/ attestation type
 					'fields' => array(
 							// (lien ?)	Type	"Attestation de TVA Date*"	"Attestation de TVA Particularité"
-							'skip_1',
+							'local_file_path',
 							'skip_2',
 							'date_document',
 							'particularite',
@@ -136,7 +136,7 @@ class InitialImportController extends Controller {
 			'Document_6' => array( // Document w/ Mandat Spécifique type
 					'fields' => array(
 							//  (lien ?)	Type	"Mandat spécifique Date*"	"Mandat spécifique Particularité"	"Mandat spécifique Statut Notaire"	"Mandat spécifique Notaire"	"Mandat spécifique Statut Apostille"	"Mandat spécifique Apostille"
-							'skip_1',
+							'local_file_path',
 							'skip_2',
 							'date_document',
 							'particularite',
@@ -156,7 +156,7 @@ class InitialImportController extends Controller {
 			'Document_2' => array( // Document w/ "Pouvoir" type
 					'fields' => array(
 							//   (lien ?)	Type 	"Pouvoir Date*"	 "Pouvoir Particularité"	"Pouvoir Statut Notaire"	"Pouvoir Notaire"	"Pouvoir Statut Apostille"	"Pouvoir Apostille" 
-							'skip_1',
+							'local_file_path',
 							'skip_2',
 							'date_document',
 							'particularite',
@@ -176,7 +176,7 @@ class InitialImportController extends Controller {
 			'Document_3' => array( // Document w/ "Accord" type
 					'fields' => array(
 							//    (lien ?)	Type	"Accord Date*"	"Accord Préavis"	"Accord Particularité"				
-							'skip_1',
+							'local_file_path',
 							'skip_2',
 							'date_document',
 							'preavis',
@@ -193,7 +193,7 @@ class InitialImportController extends Controller {
 			'Document_4' => array( // Document w/ "Lettre désignation" type
 					'fields' => array(
 							//  (lien ?)	Type	"Lettre Désignation Date*"	"Lettre Désignation Particularité"				
-							'skip_1',
+							'local_file_path',
 							'skip_2',
 							'date_document',
 							'particularite',

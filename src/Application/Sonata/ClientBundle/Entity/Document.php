@@ -49,6 +49,16 @@ class Document
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $file_alias;
+    
+    
+    /**
+     * C:\eurotax\Clients\A-B\ADDCON\Docs légaux\POUVOIR ADDCON-REMBST TVA.pdf
+     * 
+     * @var string $local_file_path
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $local_file_path;
+    
 
     /**
      * @var integer $type_document_id
@@ -402,8 +412,30 @@ class Document
     {
         return $this->file_alias;
     }
-
-
+    
+    
+    /**
+     * Set local_file_path
+     *
+     * @param string $localFilePath
+     * @return Document
+     */
+    public function setLocalFilePath($localFilePath)
+    {
+    	$this->local_file_path = $localFilePath;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get local_file_path
+     *
+     * @return string
+     */
+    public function getLocalFilePath()
+    {
+    	return $this->local_file_path;
+    }
 
     /**
      * Set statut_document_notaire

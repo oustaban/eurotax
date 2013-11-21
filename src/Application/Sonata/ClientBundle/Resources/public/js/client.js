@@ -40,6 +40,9 @@ jQuery(document).ready(function ($) {
      * */
     if ($('.js-document').size()) {
 
+    	$('.sonata-ba-list a.document_local_file_path').parent().removeAttr('objectid').unbind('click').css('cursor', 'default');
+    	
+    	
         symfony_ajax.behaviors.type_document = {
             attach:function (context) {
                 var _uniqid = symfony_ajax.get_uniqid();

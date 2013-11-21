@@ -1,0 +1,5 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+<a href="{{ object.localFilePath }}" class="document_local_file_path" target="_blank">{{ object.localFilePath }}</a>
+{% endblock field %}

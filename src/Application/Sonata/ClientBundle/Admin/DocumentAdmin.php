@@ -60,6 +60,8 @@ class DocumentAdmin extends Admin
         }
         
         $formMapper->with($this->getFieldLabel('title'))
+        
+        	->add('local_file_path', 'hidden')
             ->add('file', 'file', array('label' => $this->getFieldLabel('document'), 'required' => false))
             ->add('type_document', null, array(
             'label' => $this->getFieldLabel('type_document'),
@@ -158,8 +160,9 @@ class DocumentAdmin extends Admin
         parent::configureListFields($listMapper);
 
         $listMapper->add('document', null, array(
+        	'attr' => array('class' => 'no-edit'),
             'label' => $this->getFieldLabel('document'),
-            'template' => 'ApplicationSonataClientBundle:CRUD:document_link.html.twig'
+            'template' => 'ApplicationSonataClientBundle:CRUD:document_local_file_path.html.twig'
         ))
         ->add('type_document.name', null, array('label' => $this->getFieldLabel('type_document')))
             ->add('date_document', null, array(
