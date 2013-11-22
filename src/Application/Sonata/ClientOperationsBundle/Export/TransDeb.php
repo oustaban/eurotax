@@ -240,7 +240,7 @@ class TransDeb {
 					$this->col3() .
 					$this->col4($row) . $this->spacer() .
 					$this->col5($row) . $this->spacer() .
-					$this->col6($row) . $this->spacer(2) .
+					$this->col6($row) . $this->spacer() .
 					$this->col7($row) . $this->spacer(6) 
 				;
 				$ctr++;
