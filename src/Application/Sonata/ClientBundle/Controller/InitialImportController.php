@@ -680,6 +680,9 @@ class InitialImportController extends Controller {
 				} else {
 					$object = $admin->getNewInstance();
 				}
+				
+				$object->getFilesAbsoluteDir($object);
+				
 			} else {
 				
 				$object = $admin->getNewInstance();

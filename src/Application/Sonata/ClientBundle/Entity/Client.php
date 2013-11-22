@@ -403,8 +403,11 @@ class Client
         $this->pays_postal = $this->pays_facturation = ListCountries::getDefault();
         
         
+        
+        
     }
     
+   
     /**
      * Get id
      *
@@ -1445,13 +1448,57 @@ class Client
      */
     public static function getFilesWebDir($client)
     {
-        if ($client instanceof Client) {
-            $client = $client->getId();
-        }
-
-        return UPLOAD_DOCUMENTS_WEB_PATH . '/' . $client;
+        return UPLOAD_DOCUMENTS_WEB_PATH . '/' . self::clientSortDirectoryPath($client);
     }
 
+    
+    public static function clientSortDirectoryPath($client, $isWindowsOSPath = false) {
+    	
+    	/* @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry */
+    	$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
+    	/* @var $em \Doctrine\ORM\EntityManager */
+    	$em = $doctrine->getManager();
+    	
+    	if (!($client instanceof Client)) {
+    		$client = $em->getRepository('ApplicationSonataClientBundle:Client')->find($client);
+    	}
+    	
+    	$nom = $client->getNom();
+    	$nomKey = strtoupper(substr($nom, 0,1)); // first letter
+    	
+    	
+    	//var_dump($nom);
+    	//exit;
+    	
+    	$alphas = range('A', 'Z');
+    	static $newAlphas = array();
+    	
+    	if(empty($newAlphas)) {
+    		foreach($alphas as $i => $alpha) {
+    			if($i % 2 == 0) {
+    				$newAlphas[$alpha] = $alpha . '-' . $alphas[$i+1];
+    				$newAlphas[$alphas[$i+1]] = $alpha . '-' . $alphas[$i+1];
+    			}
+    		}
+    	}
+    	$sortDir = isset($newAlphas[$nomKey]) ? $newAlphas[$nomKey]
+    		: $newAlphas['A']; //Nom that starts in number will reside at A-B directory
+    	
+    	$slash = '/';
+    	
+    	if($isWindowsOSPath) {
+    		$slash = '\\';
+    	}
+    	
+    	return $sortDir . $slash . $nom;
+    	
+    }
+    
+    public function localWindowsDirectoryPath() {
+    	return LOCAL_CLIENTS_PATH . '\\' . self::clientSortDirectoryPath($this, true);
+    }
+    
+    
     /**
      * Move file
      *
