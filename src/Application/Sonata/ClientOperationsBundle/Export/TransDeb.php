@@ -39,8 +39,7 @@ class TransDeb {
 	 */
 	protected function col2($index, $increment) {
 		//return str_pad($index, 6, 0, STR_PAD_LEFT) . str_pad($increment, 6, 0, STR_PAD_LEFT);
-		
-		return date('ymd') . str_pad($increment, 6, 0, STR_PAD_LEFT);
+		return date('d') . str_pad($this->_month, 2, 0, STR_PAD_LEFT) . substr($this->_year, 2, 2) . str_pad($increment, 6, 0, STR_PAD_LEFT);
 	}
 	
 	/**
@@ -92,7 +91,7 @@ class TransDeb {
 	protected function col5(\Application\Sonata\ClientOperationsBundle\Entity\AbstractDEBEntity $row) {
 		
 		
-		return ($row->getPaysIdDestination() ? : $this->spacer(2)). 
+		return (($row->getPaysIdDestination() && ($row instanceof \Application\Sonata\ClientOperationsBundle\Entity\DEBIntro)) ? $row->getPaysIdDestination() : $this->spacer(2)). 
 			($row->getNatureTransaction() ? : $this->spacer(2)).  
 			str_pad( (int) $row->getValeurFiscale(), 11, 0, STR_PAD_LEFT) .
 			str_pad( $row->getConditionsLivraison(), 4, 0, STR_PAD_LEFT) . 
@@ -117,14 +116,22 @@ class TransDeb {
 	 * @return string
 	 */
 	protected function col6(\Application\Sonata\ClientOperationsBundle\Entity\AbstractDEBEntity $row) {
-		if($row->getPaysOrigine()) {
+		
+		if($row->getPaysOrigine() && $row instanceof \Application\Sonata\ClientOperationsBundle\Entity\DEBIntro) {
 			$pays = $row->getPaysIdOrigine();
+		} elseif($row->getPaysDestination() && $row instanceof \Application\Sonata\ClientOperationsBundle\Entity\DEBExped) {
+			$pays = $row->getPaysIdDestination();
 		} else {
 			$pays = $this->spacer(2);
 		}
 		
+		if($row->getCEE() && $row instanceof \Application\Sonata\ClientOperationsBundle\Entity\DEBExped) {
+			$cee = str_pad($row->getCEE(), 15, ' ', STR_PAD_RIGHT);
+		} else {
+			$cee = $this->spacer(15);
+		}
 		
-		return $pays . $this->spacer(15); //temp
+		return $pays . $cee;
 	}
 	
 	/**
