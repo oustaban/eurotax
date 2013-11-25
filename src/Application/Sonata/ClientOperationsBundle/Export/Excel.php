@@ -476,6 +476,8 @@ class Excel
 
             if ((in_array($field, array('mois', 'montant_TTC', 'montant_TVA_francaise', 'paiement_montant', 'paiement_devise')) || isset($this->_sum[$field]) && !($params['entity'] == 'DEBIntro' || $params['entity'] == 'DEBExped'))) {
                 $this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_styleArrayGray);
+            } elseif($field == 'taux_de_TVA') { //percentage
+            	$this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_styleBorders)->getNumberFormat()->setFormatCode('0.0%');;
             } else {
                 $this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_styleBorders);
             }
@@ -525,9 +527,9 @@ class Excel
 
             if ($position == 'left') {
 
-                if (isset($this->_header_cell[$key - 1])) {
-                    $this->_sheet->setCellValue($this->_header_cell[$key - 1] . $wRow, $text);
-                    $this->_sheet->getStyle($this->_header_cell[$key - 1] . $wRow)->applyFromArray(array(
+                if (isset($this->_header_cell[$key - 2])) {
+                    $this->_sheet->setCellValue($this->_header_cell[$key - 2] . $wRow, $text);
+                    $this->_sheet->getStyle($this->_header_cell[$key - 2] . $wRow)->applyFromArray(array(
                         'borders' => array(
                             'top' => array(
                                 'style' => \PHPExcel_Style_Border::BORDER_THIN,
@@ -542,15 +544,12 @@ class Excel
                                 'style' => \PHPExcel_Style_Border::BORDER_THIN,
                             ),
                         ),
-                    ));
+                    ))->getFont()->setBold($bold);
+                    
+                    $this->_sheet->getStyle($this->_header_cell[$key - 2] . $wRow)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+                    $this->_sheet->mergeCells($this->_header_cell[$key - 2] . $wRow. ':' . $this->_header_cell[$key - 1] . $wRow);                    	
                 }
 
-                if ($bold) {
-                    $styleArray += array(
-                        'font' => array(
-                            'bold' => true,
-                        ));
-                }
 
             } else {
                 if (isset($this->_header_cell[$key + 1])) {
@@ -566,7 +565,7 @@ class Excel
             $this->_sheet->setCellValue($cell . $wRow, $this->getFormula($value, $cell, $wRow))
                 ->getStyle($cell . $wRow)->getNumberFormat()->setFormatCode('# ##0\ "€";[Red]-# ##0\ "€"');
 
-            $this->_sheet->getStyle($cell . $wRow)->applyFromArray($styleArray);
+            $this->_sheet->getStyle($cell . $wRow)->applyFromArray($styleArray)->getFont()->setBold($bold);
         }
     }
 
@@ -1011,10 +1010,40 @@ class Excel
     protected function setWidthSize($wColumn, $field, $params)
     {
         switch ($field) {
-
-            case 'commentaires':
-                $this->_sheet->getColumnDimension($wColumn)->setWidth(16);
+        	case 'devise':
+                $this->_sheet->getColumnDimension($wColumn)->setWidth(14);
                 break;
+
+        	case 'taux_de_change':
+        		$this->_sheet->getColumnDimension($wColumn)->setWidth(15);
+        		break;
+                
+        	case 'mois':
+        		$this->_sheet->getColumnDimension($wColumn)->setWidth(17);
+        		break;
+                
+            case 'numero_piece':
+        	case 'taux_de_TVA':
+        	case 'paiement_montant':
+        	case 'paiement_devise':
+        	case 'paiement_date':
+        		$this->_sheet->getColumnDimension($wColumn)->setWidth(18);
+                break;
+                
+            case 'montant_TVA_francaise':
+            case 'montant_TTC':                
+            case 'montant_HT_en_devise':                
+            case 'date_piece':
+        	case 'HT':
+        	case 'TVA':
+        		$this->_sheet->getColumnDimension($wColumn)->setWidth(22);
+                break;
+            case 'commentaires':
+                $this->_sheet->getColumnDimension($wColumn)->setWidth(32);
+                break;
+            case 'tiers':
+            	$this->_sheet->getColumnDimension($wColumn)->setWidth(36);
+            	break;
         }
 
         if ($params['entity'] == 'DEBIntro' || $params['entity'] == 'DEBExped') {
