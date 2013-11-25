@@ -331,7 +331,6 @@ class RapprochementController extends Controller
         $deb_exped = $this->_getTableData('DEBExped');
         $form = $this->form($client_id, $month, $blocked);
         
-        
         return array(
             'info' => array(
                 'time' => strtotime($this->_year . '-' . $this->_month . '-01'),
@@ -601,12 +600,10 @@ class RapprochementController extends Controller
     	return $this->_locking;
     }
     
-    
-   
     public function getQueryMonth($query_month)
     {
     	if ($query_month == -1) {
-    		$month = date('n|Y', strtotime('-1 month'));
+    		$month = date('n|Y', (date('d') < 25 ? strtotime('-1 month') : time()) );
     	}
     	else {
     		$month = $query_month;
@@ -614,6 +611,7 @@ class RapprochementController extends Controller
     
     	return explode('|', $month);
     }
+    
     
     
     protected function _getTableData($clientOperationName, $isDEB = false)
@@ -656,11 +654,8 @@ class RapprochementController extends Controller
         	->setParameter(':DEB', (int) $isDEB);
         }
         
-        
         /* var_dump($isDEB, (string)$qb->getQuery()->getSql(), $this->_year . '-' . $this->_month . '-01', $this->_year . '-' . $this->_month . '-31');
         exit; */
-        
-        
         return $qb->getQuery()->execute();
     }
 
