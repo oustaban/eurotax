@@ -1002,6 +1002,13 @@ class Excel
         }
     }
 
+    
+    private function _pxToExcelWidth($px) {
+    	return ($px * 0.026458333) * 5.099;
+    }
+    
+    
+    
     /**
      * @param $wColumn
      * @param $field
@@ -1011,23 +1018,26 @@ class Excel
     {
         switch ($field) {
         	case 'devise':
-                $this->_sheet->getColumnDimension($wColumn)->setWidth(14);
+                $this->_sheet->getColumnDimension($wColumn)->setWidth($this->_pxToExcelWidth(68));
                 break;
 
         	case 'taux_de_change':
-        		$this->_sheet->getColumnDimension($wColumn)->setWidth(15);
+        		$this->_sheet->getColumnDimension($wColumn)->setWidth($this->_pxToExcelWidth(75));
         		break;
                 
         	case 'mois':
-        		$this->_sheet->getColumnDimension($wColumn)->setWidth(17);
+        		$this->_sheet->getColumnDimension($wColumn)->setWidth($this->_pxToExcelWidth(82));
         		break;
                 
             case 'numero_piece':
         	case 'taux_de_TVA':
         	case 'paiement_montant':
         	case 'paiement_devise':
+        		$this->_sheet->getColumnDimension($wColumn)->setWidth($this->_pxToExcelWidth(89));
+        		break;
+        		
         	case 'paiement_date':
-        		$this->_sheet->getColumnDimension($wColumn)->setWidth(18);
+        		$this->_sheet->getColumnDimension($wColumn)->setWidth($this->_pxToExcelWidth(93));
                 break;
                 
             case 'montant_TVA_francaise':
@@ -1036,13 +1046,13 @@ class Excel
             case 'date_piece':
         	case 'HT':
         	case 'TVA':
-        		$this->_sheet->getColumnDimension($wColumn)->setWidth(22);
+        		$this->_sheet->getColumnDimension($wColumn)->setWidth(14.84);
                 break;
             case 'commentaires':
-                $this->_sheet->getColumnDimension($wColumn)->setWidth(32);
+                $this->_sheet->getColumnDimension($wColumn)->setWidth($this->_pxToExcelWidth(140));
                 break;
             case 'tiers':
-            	$this->_sheet->getColumnDimension($wColumn)->setWidth(36);
+            	$this->_sheet->getColumnDimension($wColumn)->setWidth(24.17);
             	break;
         }
 
