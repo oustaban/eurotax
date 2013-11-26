@@ -1063,7 +1063,7 @@ class Excel
                 break;
             case 'commentaires': {
 
-            	if ($params['entity'] == 'V03283I') {
+            	if ($params['entity'] == 'V03283I' || $params['entity'] == 'A04283I') {
             		$this->_sheet->getColumnDimension($wColumn)->setWidth($this->_pxToExcelWidth(178));
             	} else {
             		$this->_sheet->getColumnDimension($wColumn)->setWidth($this->_pxToExcelWidth(140));
