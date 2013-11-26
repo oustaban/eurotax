@@ -346,8 +346,13 @@ class RapprochementController extends Controller
             'deb_intro' => $deb_intro,
             'deb_exped' => $deb_exped,
         	'form' => 	$form instanceof Form ? $form->createView() : false,
-        	'nocloturer' => isset($_GET['nocloturer'])
+        	'nocloturer' => isset($_GET['nocloturer']),
+       		'declarationLink' => $this->generateUrl('admin_sonata_clientoperations_v01tva_declaration', 
+       				array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)),
+        	'listLink' => $this->generateUrl('admin_sonata_clientoperations_v01tva_list',
+        				array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)),
         );
+        
     }
 
     
@@ -640,15 +645,13 @@ class RapprochementController extends Controller
             ->setParameter(':form_date_mois', $this->_year . '-' . $this->_month . '-01')
             ->setParameter(':to_date_mois', $this->_year . '-' . $this->_month . '-31')
             ->andWhere('o.client_id = :client_id')
+            ->andWhere('o.imports IS NOT NULL')
             ->setParameter(':client_id', $this->_client_id)
             /*  */
-            
-            
             ->groupBy('DEB')
             ->orderBy('DEB');
         
         if ($isDEB) {
-        	
         	$qb
         	->andWhere('o.DEB = :DEB')
         	->setParameter(':DEB', (int) $isDEB);
