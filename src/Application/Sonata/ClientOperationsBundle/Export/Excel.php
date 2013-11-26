@@ -461,27 +461,40 @@ class Excel
                 if ($field == 'mois') {
                     $this->_sheet->getStyle($wColumn . $wRow)->getNumberFormat()->setFormatCode('MM-YY');
                 } else {
-                    $this->_sheet->getStyle($wColumn . $wRow)->getNumberFormat()->setFormatCode('dd.mm.YYYY');
+                    $this->_sheet->getStyle($wColumn . $wRow)->getNumberFormat()->setFormatCode('dd/mm/YYYY');
                 }
                 $ceil[$field] = $date > 0 ? $date : '';
 
             } else {
                 if (is_float($value)) {
-                    $ceil[$field] = (double)$value;
-                    $this->_sheet->getStyle($wColumn . $wRow)->getNumberFormat()->setFormatCode('#\ ##0\ ;[Red]-#\ ##0\ ');
+                	$ceil[$field] = (double)$value;
+
+                	if (in_array($field, array('montant_HT_en_devise', 'montant_TTC', 'montant_TVA_francaise', 'paiement_montant', 'HT', 'TVA')) ) {
+                		$this->_sheet->getStyle($wColumn . $wRow)->getNumberFormat()->setFormatCode('#\ ##0.00\ ;[Red]-#\ ##0.00\ ');
+                	} elseif($field == 'taux_de_change') {
+                		$this->_sheet->getStyle($wColumn . $wRow)->getNumberFormat()->setFormatCode('#\ ##0.00000\ ;[Red]-#\ ##0.00000\ ');
+                	} else {
+                		$this->_sheet->getStyle($wColumn . $wRow)->getNumberFormat()->setFormatCode('#\ ##0\ ;[Red]-#\ ##0\ ');
+                	}
+                    
                 } else {
                     $ceil[$field] = (string)$value;
                 }
+                //#,##0.00_);[RED](#,##0.00)
             }
 
             if ((in_array($field, array('mois', 'montant_TTC', 'montant_TVA_francaise', 'paiement_montant', 'paiement_devise')) || isset($this->_sum[$field]) && !($params['entity'] == 'DEBIntro' || $params['entity'] == 'DEBExped'))) {
                 $this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_styleArrayGray);
-            } elseif($field == 'taux_de_TVA') { //percentage
-            	$this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_styleBorders)->getNumberFormat()->setFormatCode('0.0%');;
             } else {
                 $this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_styleBorders);
             }
 
+            
+            if($field == 'taux_de_TVA') { //percentage
+            	$this->_sheet->getStyle($wColumn . $wRow)->getNumberFormat()->setFormatCode('0.0%');
+            }
+            
+            
             $this->_header_cell[$key] = $wColumn;
             $wColumn++;
         }
