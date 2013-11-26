@@ -1061,14 +1061,27 @@ class Excel
         	case 'TVA':
         		$this->_sheet->getColumnDimension($wColumn)->setWidth(14.84);
                 break;
-            case 'commentaires':
-                $this->_sheet->getColumnDimension($wColumn)->setWidth($this->_pxToExcelWidth(140));
+            case 'commentaires': {
+
+            	if ($params['entity'] == 'V03283I') {
+            		$this->_sheet->getColumnDimension($wColumn)->setWidth($this->_pxToExcelWidth(178));
+            	} else {
+            		$this->_sheet->getColumnDimension($wColumn)->setWidth($this->_pxToExcelWidth(140));
+            	}
                 break;
+            }
             case 'tiers':
             	$this->_sheet->getColumnDimension($wColumn)->setWidth(24.17);
             	break;
+            	
+            case 'no_TVA_tiers':
+            	$this->_sheet->getColumnDimension($wColumn)->setWidth($this->_pxToExcelWidth(123));
+            	break;
         }
 
+        
+        
+        
         if ($params['entity'] == 'DEBIntro' || $params['entity'] == 'DEBExped') {
             switch ($field) {
 
