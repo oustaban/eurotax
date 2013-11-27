@@ -120,10 +120,19 @@
     	<button id="btn_locking" name="btn_locking" rel="tooltip" title="{{ text_lock|trans}}" class="btn pull-right"><i class="icon icon-lock"></i> {{ text_lock|trans}}</button>
     {% endif %}
     
-    <button id="btn_saving" name="btn_saving" rel="tooltip" title="Save" class="btn pull-right"><i class="icon icon-ok-sign"></i> Save</button>
-    <a href="{{ declarationLink }}" target="_blank" class="btn pull-right"><i class="icon icon-print"></i> Declaration</a>
+    <!-- <button id="btn_saving" name="btn_saving" rel="tooltip" title="Save" class="btn pull-right"><i class="icon icon-ok-sign"></i> Save</button> -->
     
+    <a href="{{ listLink }}" id=""  rel="tooltip" title="Annuler" class="btn pull-right"><i class="icon icon-chevron-left"></i> Annuler</a>
+    
+    
+    {% if hasImportDataOnly %}
+    <a href="{{ declarationLink }}" target="_blank" class="btn pull-right"><i class="icon icon-print"></i> Declaration</a>
+    {% else %}
     <a href="{{ listLink }}" class="btn pull-right"><i class="icon icon-list-alt"></i> Analyse des données saisies</a>
+    {% endif %}
+    
+
+    
     
     
     <!--button id="btn_recalculer" rel="tooltip" title="Recalculer" class="btn pull-right"><i class="icon icon-lock"></i> Recalculer</button-->

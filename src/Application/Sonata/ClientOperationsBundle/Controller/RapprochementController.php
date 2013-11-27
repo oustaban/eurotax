@@ -323,11 +323,23 @@ class RapprochementController extends Controller
         }
         
         
+        $hasImportDataOnly = true;
         $blocked = $this->getLocking() ? 0 : 1;
         
         $a06_aib = $this->_getTableData('A06AIB', true);
-        $v05_lic = $this->_getTableData('V05LIC', true);
         $deb_intro = $this->_getTableData('DEBIntro');
+        
+        
+        
+        if( $this->_noImportIdFromTableData($this->_getTableData('A06AIB', true, false)) ||
+        	 $this->_noImportIdFromTableData($this->_getTableData('DEBIntro', false, false)) ) {
+        	
+        	$hasImportDataOnly = false;
+        }
+        
+        //var_dump($hasImportDataOnly);
+        
+        $v05_lic = $this->_getTableData('V05LIC', true);
         $deb_exped = $this->_getTableData('DEBExped');
         $form = $this->form($client_id, $month, $blocked);
         
@@ -347,6 +359,7 @@ class RapprochementController extends Controller
             'deb_exped' => $deb_exped,
         	'form' => 	$form instanceof Form ? $form->createView() : false,
         	'nocloturer' => isset($_GET['nocloturer']),
+        	'hasImportDataOnly' => $hasImportDataOnly,
        		'declarationLink' => $this->generateUrl('admin_sonata_clientoperations_v01tva_declaration', 
        				array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)),
         	'listLink' => $this->generateUrl('admin_sonata_clientoperations_v01tva_list',
@@ -617,45 +630,77 @@ class RapprochementController extends Controller
     	return explode('|', $month);
     }
     
+    protected function _noImportIdFromTableData($rows) {
+    	$found = false;
+    	foreach($rows as $row) {
+    		
+    		//var_dump($row[0]->getImports()->getId());
+    		
+    		if( !$row[0]->getImports()  ) {
+    			$found = true;
+    			break;
+    		}
+
+    	}
+    	return $found;
+    } 
     
     
-    protected function _getTableData($clientOperationName, $isDEB = false)
+    
+    protected function _setTableQuery($clientOperationName) {
+    	
+    }
+    
+    
+    protected function _getTableData($clientOperationName, $isDEB = false, $groupResults = true)
     {
         /** @var $em \Doctrine\ORM\EntityManager */
         $em = $this->getDoctrine()->getManager();
+        $groupSelect = '';
 
         if ($isDEB) {
-
         	$deb = '*o.DEB';
         	$v1 = 'montant_HT_en_devise/o.taux_de_change';
         	$v2 = 'HT';
-        }
-        else {
-        	
+        } else {
         	$deb = '';
         	$v1 = 'valeur_statistique';
         	$v2 = 'valeur_fiscale';
-        	
         }
+        
+        
+        if($groupResults) {
+        	$groupSelect = ', SUM(o.' . $v1 . ') AS v1, COUNT(o.id) AS nb , SUM(o.' . $v2 . ') AS v2';
+        }
+        
 
         $qb = $em->getRepository('ApplicationSonataClientOperationsBundle:' . $clientOperationName)
             ->createQueryBuilder('o')
-            ->select('o.regime' . $deb . ' AS DEB, o.regime, SUM(o.' . $v1 . ') AS v1, COUNT(o.id) AS nb , SUM(o.' . $v2 . ') AS v2')
+            ->select('o, o.client_id, o.regime' . $deb . ' AS DEB, o.regime' . $groupSelect)
             ->andWhere('o.mois BETWEEN :form_date_mois AND :to_date_mois')
             ->setParameter(':form_date_mois', $this->_year . '-' . $this->_month . '-01')
             ->setParameter(':to_date_mois', $this->_year . '-' . $this->_month . '-31')
             ->andWhere('o.client_id = :client_id')
-            ->andWhere('o.imports IS NOT NULL')
             ->setParameter(':client_id', $this->_client_id)
-            /*  */
-            ->groupBy('DEB')
-            ->orderBy('DEB');
+        	;
+        
+        
+        if($clientOperationName == 'DEBExped' || $clientOperationName == 'V05LIC') {
+        	$qb->andWhere('o.imports IS NOT NULL');
+        }
         
         if ($isDEB) {
         	$qb
         	->andWhere('o.DEB = :DEB')
         	->setParameter(':DEB', (int) $isDEB);
         }
+        
+        if($groupResults) {
+        	$qb->groupBy('DEB');
+        }
+        
+        $qb->orderBy('DEB')->orderBy('o.imports', 'ASC');
+        
         
         /* var_dump($isDEB, (string)$qb->getQuery()->getSql(), $this->_year . '-' . $this->_month . '-01', $this->_year . '-' . $this->_month . '-31');
         exit; */
