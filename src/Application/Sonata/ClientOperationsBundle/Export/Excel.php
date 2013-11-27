@@ -434,6 +434,20 @@ class Excel
                 break;
         }
     }
+    
+    
+    
+    protected function setEmptyCell($wRow, $params)
+    {
+    	$ceil = array();
+    	$wColumn = 'A';
+    	foreach ($params['fields'] as $key => $field) {
+    		$ceil[$field] = '';
+    		$this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_styleBorders);
+    	 	$wColumn++;
+        }
+        return $ceil;
+    }
 
     /**
      * @param $wRow
@@ -483,17 +497,18 @@ class Excel
                 //#,##0.00_);[RED](#,##0.00)
             }
 
-            if ((in_array($field, array('mois', 'montant_TTC', 'montant_TVA_francaise', 'paiement_montant', 'paiement_devise')) || isset($this->_sum[$field]) && !($params['entity'] == 'DEBIntro' || $params['entity'] == 'DEBExped'))) {
-                $this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_styleArrayGray);
-            } else {
+            //if ((in_array($field, array('mois', 'montant_TTC', 'montant_TVA_francaise', 'paiement_montant', 'paiement_devise')) || isset($this->_sum[$field]) && !($params['entity'] == 'DEBIntro' || $params['entity'] == 'DEBExped'))) {
+            //    $this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_styleArrayGray);
+            //} else {
                 $this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_styleBorders);
-            }
+            //}
 
             
             if($field == 'taux_de_TVA') { //percentage
             	$this->_sheet->getStyle($wColumn . $wRow)->getNumberFormat()->setFormatCode('0.0%');
             }
             
+            $this->setColumnAlignment($wColumn, $wRow, $field);
             
             $this->_header_cell[$key] = $wColumn;
             $wColumn++;
@@ -559,7 +574,8 @@ class Excel
                         ),
                     ))->getFont()->setBold($bold);
                     
-                    $this->_sheet->getStyle($this->_header_cell[$key - 2] . $wRow)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+                    $this->_sheet->getStyle($this->_header_cell[$key - 2] . $wRow)->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+                    $this->_sheet->getStyle($this->_header_cell[$key - 2] . $wRow)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                     $this->_sheet->mergeCells($this->_header_cell[$key - 2] . $wRow. ':' . $this->_header_cell[$key - 1] . $wRow);                    	
                 }
 
@@ -674,7 +690,11 @@ class Excel
         foreach ($result as $key => $row) {
             $rows[] = $this->getCell($key + $count, $row, $params);
         }
-
+		
+        if(!empty($result)) {
+        	$rows[] = $this->setEmptyCell($key + $count + 1, $params);
+        }
+        
         $count = count($rows) + 1;
         $this->footer($params, $count);
 
@@ -772,12 +792,12 @@ class Excel
             //sum_positive
             $count += 2;
             if (isset($this->_sum['HT'])) {
-                $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUMIFGreaterThanZero', 'Dont factures', 'left', false);
+                $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUMIFGreaterThanZero', 'Dont factures', 'left');
 
             }
 
             if (isset($this->_sum['valeur_fiscale'])) {
-                $this->getTotal($count + $this->_skip, $this->_sum['valeur_fiscale'], 'SUMIFGreaterThanZero', 'Dont factures', 'left', false);
+                $this->getTotal($count + $this->_skip, $this->_sum['valeur_fiscale'], 'SUMIFGreaterThanZero', 'Dont factures', 'left');
             }
 
             if (isset($this->_sum['TVA'])) {
@@ -799,11 +819,11 @@ class Excel
             //sum_negative
             $count += 2;
             if (isset($this->_sum['HT'])) {
-                $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUMIFLessThanZero', 'Dont avoirs', 'left', false);
+                $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUMIFLessThanZero', 'Dont avoirs', 'left');
             }
 
             if (isset($this->_sum['valeur_fiscale'])) {
-                $this->getTotal($count + $this->_skip, $this->_sum['valeur_fiscale'], 'SUMIFLessThanZero', 'Dont avoirs', 'left', false);
+                $this->getTotal($count + $this->_skip, $this->_sum['valeur_fiscale'], 'SUMIFLessThanZero', 'Dont avoirs', 'left');
             }
 
 
@@ -992,7 +1012,7 @@ class Excel
 
         //autofilter
         $this->_sheet->setAutoFilter('A' . $wRows . ':' . $last . $wRows);
-
+        
         return $col;
     }
 
@@ -1020,6 +1040,14 @@ class Excel
     	return ($px * 0.026458333) * 5.099;
     }
     
+
+    protected function setColumnAlignment($wColumn, $wRow, $field) {
+    	switch ($field) {
+    		case 'tiers':
+    			$this->_sheet->getStyle($wColumn . $wRow)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+    			break;
+    	}
+    }
     
     
     /**
