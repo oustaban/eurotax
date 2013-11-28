@@ -796,9 +796,7 @@ class AbstractTabsController extends Controller
         	return $this->render(':redirects:back.html.twig');
         } else {
         	//return $this->forward('ApplicationSonataClientOperationsBundle:Rapprochement:index', array('client_id' => $this->client_id, 'month' => $this->_query_month));
-        	
-        	
-        	return $this->redirect($this->generateUrl('rapprochement_index', array('client_id' => $this->client_id, 'month' => $this->_query_month, 'nocloturer' => 1)));
+        	return $this->redirect($this->generateUrl('rapprochement_index', array('client_id' => $this->client_id, 'month' => $this->_query_month, 'fromImport' => 1)));
         	
         }
     }

@@ -312,37 +312,33 @@ class RapprochementController extends Controller
         $this->_client_id = $client_id;
         list($this->_month, $this->_year) = $this->getQueryMonth($month);
 
-        
-        
         $month_default = '-1' . date('|Y', strtotime('-1 month'));
-        
         $query_month = $month ? $month : $month_default;
         
         if ($query_month == 'all'){
         	$query_month = -1;
         }
         
-        
+        $fromImport = isset($_GET['fromImport']);
         $hasImportDataOnly = true;
         $blocked = $this->getLocking() ? 0 : 1;
         
-        $a06_aib = $this->_getTableData('A06AIB', true);
+        //array('isDEB' => false, 'groupResults' => true, 'importDataOnly' => false)
+        $a06_aib = $this->_getTableData('A06AIB', array('isDEB' => true));
         $deb_intro = $this->_getTableData('DEBIntro');
         
-        
-        
-        if( $this->_noImportIdFromTableData($this->_getTableData('A06AIB', true, false)) ||
-        	 $this->_noImportIdFromTableData($this->_getTableData('DEBIntro', false, false)) ||
-        	 $this->_noImportIdFromTableData($this->_getTableData('V05LIC', true, false, false)) ||
-        	 $this->_noImportIdFromTableData($this->_getTableData('DEBExped', false, false, false)) ) {
+        if( ($this->_noImportIdFromTableData($this->_getTableData('A06AIB', array('isDEB' => true, 'groupResults' => false))) ||
+        	 $this->_noImportIdFromTableData($this->_getTableData('DEBIntro', array('isDEB' => false, 'groupResults' => false))) ||
+        	 $this->_noImportIdFromTableData($this->_getTableData('V05LIC', array('isDEB' => true, 'groupResults' => false, 'importDataOnly' => false))) ||
+        	 $this->_noImportIdFromTableData($this->_getTableData('DEBExped', array('isDEB' => false, 'groupResults' => false, 'importDataOnly' => false)))) && $fromImport ) {
         	
         	$hasImportDataOnly = false;
         }
         
-        //var_dump($hasImportDataOnly);
+
         
-        $v05_lic = $this->_getTableData('V05LIC', true, true, true);
-        $deb_exped = $this->_getTableData('DEBExped', false, true, true);
+        $v05_lic = $this->_getTableData('V05LIC', array('isDEB' => true, 'groupResults' => true, 'importDataOnly' => $fromImport ? true : false));
+        $deb_exped = $this->_getTableData('DEBExped', array('isDEB' => false, 'groupResults' => true, 'importDataOnly' => $fromImport ? true : false));
         
         
         $form = $this->form($client_id, $month, $blocked);
@@ -362,7 +358,7 @@ class RapprochementController extends Controller
             'deb_intro' => $deb_intro,
             'deb_exped' => $deb_exped,
         	'form' => 	$form instanceof Form ? $form->createView() : false,
-        	'nocloturer' => isset($_GET['nocloturer']),
+        	'fromImport' => $fromImport,
         	'hasImportDataOnly' => $hasImportDataOnly,
        		'declarationLink' => $this->generateUrl('admin_sonata_clientoperations_v01tva_declaration', 
        				array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)),
@@ -600,9 +596,6 @@ class RapprochementController extends Controller
     	}
     
     	return true;
-    	 
-    	 
-    	 
     }
     
     
@@ -642,13 +635,15 @@ class RapprochementController extends Controller
     	return $found;
     } 
     
-    protected function _getTableData($clientOperationName, $isDEB = false, $groupResults = true, $importDataOnly = false)
+    protected function _getTableData($clientOperationName, Array $params = array())
     {
+    	$params = $params + array('isDEB' => false, 'groupResults' => true, 'importDataOnly' => false);
+    	
         /** @var $em \Doctrine\ORM\EntityManager */
         $em = $this->getDoctrine()->getManager();
         $groupSelect = '';
 
-        if ($isDEB) {
+        if ($params['isDEB']) {
         	$deb = '*o.DEB';
         	$v1 = 'montant_HT_en_devise/o.taux_de_change';
         	$v2 = 'HT';
@@ -659,7 +654,7 @@ class RapprochementController extends Controller
         }
         
         
-        if($groupResults) {
+        if($params['groupResults']) {
         	$groupSelect = ', SUM(o.' . $v1 . ') AS v1, COUNT(o.id) AS nb , SUM(o.' . $v2 . ') AS v2';
         }
         
@@ -675,17 +670,17 @@ class RapprochementController extends Controller
         	;
         
         
-        if($importDataOnly) {
+        if($params['importDataOnly']) {
         	$qb->andWhere('o.imports IS NOT NULL');
         }
         
-        if ($isDEB) {
+        if ($params['isDEB']) {
         	$qb
         	->andWhere('o.DEB = :DEB')
-        	->setParameter(':DEB', (int) $isDEB);
+        	->setParameter(':DEB', (int) $params['isDEB']);
         }
         
-        if($groupResults) {
+        if($params['groupResults']) {
         	$qb->groupBy('DEB');
         }
         
