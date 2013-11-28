@@ -778,7 +778,15 @@ class Excel
                 if ($params['entity'] == 'A08IM') {
                     $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUM', 'TOTAL du mois', 'left');
                 }
-                $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUM', 'selon filtre', 'right');
+                
+                $text = 'selon filtre';
+                if($params['entity'] == 'V01TVA' || $params['entity'] == 'A02TVA') {
+                	$text = '';
+                }
+                
+                $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUM', $text, 'right');
+                
+                
             } elseif (isset($this->_sum['HT'])) {
                 $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUM', 'selon filtre', 'right');
             }
@@ -805,7 +813,13 @@ class Excel
                 if ($params['entity'] == 'A08IM') {
                     $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUMIFGreaterThanZero', 'Dont factures', 'left');
                 }
-                $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUMIFGreaterThanZero', 'tout data', 'right', false);
+                
+                $text = 'tout data';
+                if($params['entity'] == 'V01TVA' || $params['entity'] == 'A02TVA') {
+                	$text = '';
+                }
+                
+                $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUMIFGreaterThanZero', $text, 'right', false);
 
             } elseif (isset($this->_sum['HT'])) {
                 $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUMIFGreaterThanZero', 'tout data', 'right', false);
@@ -832,7 +846,14 @@ class Excel
                 if ($params['entity'] == 'A08IM') {
                     $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUMIFLessThanZero', 'avoirs', 'left');
                 }
-                $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUMIFLessThanZero', 'tout data', 'right', false);
+                
+                $text = 'tout data';
+                if($params['entity'] == 'V01TVA' || $params['entity'] == 'A02TVA') {
+                	$text = '';
+                }
+                
+                
+                $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUMIFLessThanZero', $text, 'right', false);
 
 
             } elseif (isset($this->_sum['HT'])) {
@@ -1045,6 +1066,15 @@ class Excel
     	switch ($field) {
     		case 'tiers':
     			$this->_sheet->getStyle($wColumn . $wRow)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+    			break;
+    			
+    		case 'montant_HT_en_devise':
+    		case 'montant_TTC':
+    		case 'montant_TVA_francaise':
+    		case 'paiement_montant':
+    		case 'HT':
+    		case 'TVA':
+    			$this->_sheet->getStyle($wColumn . $wRow)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
     			break;
     	}
     }
