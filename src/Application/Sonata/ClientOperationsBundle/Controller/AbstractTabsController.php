@@ -1861,8 +1861,7 @@ class AbstractTabsController extends Controller
         	
         $A02TVAPrevlist = $this->getEntityList('A02TVA', true, true, 'mois', 'paiement_date'); // Previous month
         $A08IMPrevlist = $this->getEntityList('A08IM', true, true, 'mois', 'date_piece'); // Previous month
-        
-        
+       
         
         $A04283ISumPrev = $this->_sumData($this->getEntityList('A04283I', true, false));
         $A06AIBSumPrev = $this->_sumData($this->getEntityList('A06AIB', true, false));
@@ -1890,10 +1889,12 @@ class AbstractTabsController extends Controller
 		 Total TVA (2nd ) = sum of TVA A02, AO4 ( 2Nd), A06 (2nd)
          
          */
-        
         $Total1 = $this->_sumData(array_merge($V01TVAlist?:array(), $A04283Ilist?:array(), $A06AIBlist?:array()));
-        $Total2 = $this->_sumData(array_merge($A08IMlist?:array(), $A02TVAPrevlist?:array(), $A08IMPrevlist?:array(), $A04283Ilist?:array(), $A06AIBlist?:array(), $A02TVAlist?:array()));
+        $Total2 = $this->_sumData(
+        	$Total2MergedData = array_merge($A08IMlist?:array(), $A02TVAPrevlist?:array(), $A08IMPrevlist?:array(), $A04283Ilist?:array(), $A06AIBlist?:array(), $A02TVAlist?:array())
+        );
         
+
         $soldeTVATotal = ($Total1?$Total1->getTVA():0) - ($Total2?$Total2->getTVA():0);
         
         $page = $this->render('ApplicationSonataClientOperationsBundle::declaration.html.twig', array(
@@ -2091,26 +2092,15 @@ class AbstractTabsController extends Controller
     	foreach($entities as $entity) {
     		
     		$key = method_exists($entity, 'getTauxDeTVA') ? $entity->getTauxDeTVA() : 0;
-    		
-    		
-    		//var_dump(get_class($entity));
-    			
     		if( ( ( method_exists($entity, 'getHT') && $entity->getHT() < 0 ) || ( method_exists($entity, 'getTVA') && $entity->getTVA() < 0) ) 
-
     		 	&& (get_class($entity) != 'Application\Sonata\ClientOperationsBundle\Entity\A02TVA' && get_class($entity) != 'Application\Sonata\ClientOperationsBundle\Entity\A08IM')) {
 
     			$key++;
     		}
-    		 
-    		
     			
     		if(method_exists($entity, 'getHT')) {	
-    			//var_dump(get_class($entity));
-    			
-    			
     			$hts[base64_encode($key)][] = $entity->getHT();
     		}
-    		
     			
     		if(method_exists($entity, 'getTVA')) {
     			$tvas[base64_encode($key)][] = $entity->getTVA();
@@ -2166,20 +2156,14 @@ class AbstractTabsController extends Controller
     	
     	foreach($entities as $entity) {
     		if(method_exists($entity, 'getHT')) {
-    			
-    			if(get_class($entity) == 'Application\Sonata\ClientOperationsBundle\Entity\A02TVA') {
-    				continue;
+    			if(get_class($entity) != 'Application\Sonata\ClientOperationsBundle\Entity\A02TVA') {
+    				$ht += $entity->getHT();
     			}
-    			
-    			$ht += $entity->getHT();
     		}
-    
-    		 
     		if(method_exists($entity, 'getTVA')) {
     			$tva += $entity->getTVA();
     		}
     	}
-    	
     	
     	$cEntity = clone $entity;
     	 
