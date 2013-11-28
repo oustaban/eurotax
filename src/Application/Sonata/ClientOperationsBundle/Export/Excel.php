@@ -535,12 +535,12 @@ class Excel
                     'style' => \PHPExcel_Style_Border::BORDER_THIN,
                 ),
             ),
-            'fill' => array(
+            /* 'fill' => array(
                 'type' => \PHPExcel_Style_Fill::FILL_SOLID,
                 'color' => array(
                     'argb' => 'bfbfbf',
                 ),
-            ),
+            ), */
         );
 
         if ($bold) {
@@ -575,7 +575,7 @@ class Excel
                     ))->getFont()->setBold($bold);
                     
                     $this->_sheet->getStyle($this->_header_cell[$key - 2] . $wRow)->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
-                    $this->_sheet->getStyle($this->_header_cell[$key - 2] . $wRow)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                    $this->_sheet->getStyle($this->_header_cell[$key - 2] . $wRow)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
                     $this->_sheet->mergeCells($this->_header_cell[$key - 2] . $wRow. ':' . $this->_header_cell[$key - 1] . $wRow);                    	
                 }
 
@@ -819,14 +819,14 @@ class Excel
                 	$text = '';
                 }
                 
-                $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUMIFGreaterThanZero', $text, 'right', false);
+                $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUMIFGreaterThanZero', $text, 'right');
 
             } elseif (isset($this->_sum['HT'])) {
-                $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUMIFGreaterThanZero', 'tout data', 'right', false);
+                $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUMIFGreaterThanZero', 'tout data', 'right');
             }
 
             if (isset($this->_sum['valeur_statistique'])) {
-                $this->getTotal($count + $this->_skip, $this->_sum['valeur_statistique'], 'SUMIFGreaterThanZero', 'tout data', 'right', false);
+                $this->getTotal($count + $this->_skip, $this->_sum['valeur_statistique'], 'SUMIFGreaterThanZero', 'tout data', 'right');
             }
 
 
@@ -853,15 +853,15 @@ class Excel
                 }
                 
                 
-                $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUMIFLessThanZero', $text, 'right', false);
+                $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUMIFLessThanZero', $text, 'right');
 
 
             } elseif (isset($this->_sum['HT'])) {
-                $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUMIFLessThanZero', 'tout data', 'right', false);
+                $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUMIFLessThanZero', 'tout data', 'right');
             }
 
             if (isset($this->_sum['valeur_statistique'])) {
-                $this->getTotal($count + $this->_skip, $this->_sum['valeur_statistique'], 'SUMIFLessThanZero', 'tout data', 'right', false);
+                $this->getTotal($count + $this->_skip, $this->_sum['valeur_statistique'], 'SUMIFLessThanZero', 'tout data', 'right');
             }
         }
     }
