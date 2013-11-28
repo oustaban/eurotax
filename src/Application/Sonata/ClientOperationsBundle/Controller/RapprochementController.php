@@ -332,15 +332,19 @@ class RapprochementController extends Controller
         
         
         if( $this->_noImportIdFromTableData($this->_getTableData('A06AIB', true, false)) ||
-        	 $this->_noImportIdFromTableData($this->_getTableData('DEBIntro', false, false)) ) {
+        	 $this->_noImportIdFromTableData($this->_getTableData('DEBIntro', false, false)) ||
+        	 $this->_noImportIdFromTableData($this->_getTableData('V05LIC', false, false, true)) ||
+        	 $this->_noImportIdFromTableData($this->_getTableData('DEBExped', false, false, true)) ) {
         	
         	$hasImportDataOnly = false;
         }
         
         //var_dump($hasImportDataOnly);
         
-        $v05_lic = $this->_getTableData('V05LIC', true);
-        $deb_exped = $this->_getTableData('DEBExped');
+        $v05_lic = $this->_getTableData('V05LIC', true, true, true);
+        $deb_exped = $this->_getTableData('DEBExped', false, true, true);
+        
+        
         $form = $this->form($client_id, $month, $blocked);
         
         return array(
@@ -371,7 +375,6 @@ class RapprochementController extends Controller
     
     private function form($client_id = null, $month = null, $blocked = 1)
     {
-    
     	$form = $this->get('form.factory')->create(new RapprochementForm($blocked));
     	$request = $this->get('request');
     
@@ -608,8 +611,6 @@ class RapprochementController extends Controller
      */
     public function getLocking()
     {
-    	
-    	
     	if ($this->_locking === false) {
     		$this->_locking = $this->getDoctrine()->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $this->_client_id, 'month' => $this->_month, 'year' => $this->_year));
     		$this->_locking = $this->_locking ? : 0;
@@ -633,26 +634,15 @@ class RapprochementController extends Controller
     protected function _noImportIdFromTableData($rows) {
     	$found = false;
     	foreach($rows as $row) {
-    		
-    		//var_dump($row[0]->getImports()->getId());
-    		
     		if( !$row[0]->getImports()  ) {
     			$found = true;
     			break;
     		}
-
     	}
     	return $found;
     } 
     
-    
-    
-    protected function _setTableQuery($clientOperationName) {
-    	
-    }
-    
-    
-    protected function _getTableData($clientOperationName, $isDEB = false, $groupResults = true)
+    protected function _getTableData($clientOperationName, $isDEB = false, $groupResults = true, $importDataOnly = false)
     {
         /** @var $em \Doctrine\ORM\EntityManager */
         $em = $this->getDoctrine()->getManager();
@@ -685,7 +675,7 @@ class RapprochementController extends Controller
         	;
         
         
-        if($clientOperationName == 'DEBExped' || $clientOperationName == 'V05LIC') {
+        if($importDataOnly) {
         	$qb->andWhere('o.imports IS NOT NULL');
         }
         
