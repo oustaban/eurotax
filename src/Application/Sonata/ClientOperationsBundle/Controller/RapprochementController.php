@@ -333,8 +333,8 @@ class RapprochementController extends Controller
         
         if( $this->_noImportIdFromTableData($this->_getTableData('A06AIB', true, false)) ||
         	 $this->_noImportIdFromTableData($this->_getTableData('DEBIntro', false, false)) ||
-        	 $this->_noImportIdFromTableData($this->_getTableData('V05LIC', false, false, true)) ||
-        	 $this->_noImportIdFromTableData($this->_getTableData('DEBExped', false, false, true)) ) {
+        	 $this->_noImportIdFromTableData($this->_getTableData('V05LIC', true, false, false)) ||
+        	 $this->_noImportIdFromTableData($this->_getTableData('DEBExped', false, false, false)) ) {
         	
         	$hasImportDataOnly = false;
         }
