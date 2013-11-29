@@ -7,7 +7,21 @@ app/bootstrap*
 vendor/*
 */logs/*
 */cache/*
-web/uploads/*
+web/uploads/tmp/*
+web/uploads/documents/*
+web/uploads/Clients/A-B/*
+web/uploads/Clients/C-D/*
+web/uploads/Clients/E-F/*
+web/uploads/Clients/G-H/*
+web/uploads/Clients/I-J/*
+web/uploads/Clients/K-L/*
+web/uploads/Clients/M-N/*
+web/uploads/Clients/O-P/*
+web/uploads/Clients/Q-R/*
+web/uploads/Clients/S-T/*
+web/uploads/Clients/U-V/*
+web/uploads/Clients/W-X/*
+web/uploads/Clients/Y-Z/*
 web/bundles/*
 
 # Configuration files
