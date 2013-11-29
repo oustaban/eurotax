@@ -557,7 +557,9 @@ class Excel
 
                 if (isset($this->_header_cell[$key - 2])) {
                     $this->_sheet->setCellValue($this->_header_cell[$key - 2] . $wRow, $text);
-                    $this->_sheet->getStyle($this->_header_cell[$key - 2] . $wRow)->applyFromArray(array(
+                    $this->_sheet->mergeCells($this->_header_cell[$key - 2] . $wRow. ':' . $this->_header_cell[$key - 1] . $wRow);
+                    $this->_sheet->getStyle($this->_header_cell[$key - 2] . $wRow. ':' . $this->_header_cell[$key - 1] . $wRow)->applyFromArray(array(
+                    			
                         'borders' => array(
                             'top' => array(
                                 'style' => \PHPExcel_Style_Border::BORDER_THIN,
@@ -576,7 +578,7 @@ class Excel
                     
                     $this->_sheet->getStyle($this->_header_cell[$key - 2] . $wRow)->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
                     $this->_sheet->getStyle($this->_header_cell[$key - 2] . $wRow)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-                    $this->_sheet->mergeCells($this->_header_cell[$key - 2] . $wRow. ':' . $this->_header_cell[$key - 1] . $wRow);                    	
+                                        	
                 }
 
 
