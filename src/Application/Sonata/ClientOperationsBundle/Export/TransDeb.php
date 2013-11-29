@@ -269,7 +269,11 @@ class TransDeb {
 	public function download() {
 		//$filename = 'transdeb-'.time() . '.txt'; // temp only
 		//CLIENTNAME + _ "transdeb" + "-" + year + "-" + month . ".txt"
-				
+
+		if(!is_dir(DEB_A_ENVOYER_ABSPATH)) {
+			mkdir(DEB_A_ENVOYER_ABSPATH, 0777, true);
+		}
+		
 		$filename = ucwords($this->_client->getNom()) . '-transdeb-' . $this->_year . '-' . $this->_month . '.txt';
 		file_put_contents(DEB_A_ENVOYER_ABSPATH. '/' . $filename, $this->_data);
 		
