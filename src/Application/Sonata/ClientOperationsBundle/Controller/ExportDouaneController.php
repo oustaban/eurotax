@@ -21,6 +21,16 @@ class ExportDouaneController extends Controller {
 		$request = $this->get('request');
 		if ($request->getMethod() == 'POST') {
 			
+			
+			if(!is_dir(DEB_A_COMPILER_ABSPATH)) {
+				mkdir(DEB_A_COMPILER_ABSPATH, 0777, true);
+			}
+			
+			if(!is_dir(DEB_A_COMPILER_BACKUP_ABSPATH)) {
+				mkdir(DEB_A_COMPILER_BACKUP_ABSPATH, 0777, true);
+			}
+			
+			
 			$filesToConcat = array();
 			$filesToConcatData = array();
 			
