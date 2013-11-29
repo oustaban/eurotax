@@ -1,0 +1,24 @@
+{% extends 'ApplicationSonataClientOperationsBundle::layout.html.twig' %}
+
+{% block title %}
+Export Douane
+{% endblock title %}
+
+{% block stylesheets %}
+{{ parent() }}
+<style>
+.page-header{display: block}
+</style>
+{% endblock %}
+
+{% set content%}
+<div class="exportdouane_content">
+
+<form action="" method="post" id="exportdouane_form" class="">
+	<button id="btn_export" name="btn_export" rel="tooltip" title=Exporter le fichier" class="btn"><i class="icon icon-download-alt"></i> Exporter le fichier</button>
+</form>
+
+
+
+</div>
+{% endset %}

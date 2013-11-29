@@ -6,3 +6,7 @@ rapprochement_frame:
     pattern: /rapprochement/frame/{client_id}/{month}
     defaults: { _controller: ApplicationSonataClientOperationsBundle:Rapprochement:frame }
 
+exportdouane_index:
+    pattern: /exportdouane
+    defaults: { _controller: ApplicationSonataClientOperationsBundle:ExportDouane:index }
+
