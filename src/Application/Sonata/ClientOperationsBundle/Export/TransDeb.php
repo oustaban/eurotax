@@ -271,7 +271,7 @@ class TransDeb {
 		//CLIENTNAME + _ "transdeb" + "-" + year + "-" + month . ".txt"
 				
 		$filename = ucwords($this->_client->getNom()) . '-transdeb-' . $this->_year . '-' . $this->_month . '.txt';
-		file_put_contents(DOCUMENT_ROOT. '/data/DEB_a_envoyer/' . $filename, $this->_data);
+		file_put_contents(DEB_A_ENVOYER_ABSPATH. '/' . $filename, $this->_data);
 		
 		$response = new Response(
 			$this->_data,

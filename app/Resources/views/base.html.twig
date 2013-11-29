@@ -42,6 +42,9 @@
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
+                                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                <li><a href="{{ path('exportdouane_index') }}">Export Douane</a></li>
+                                {% endif %}
                                 {% if is_granted('ROLE_EDIT_IMPOTS') %}
                                 <li><a href="{{ path('admin_sonata_impots_impots_list') }}">Centres des Impôts</a></li>
                                 {% endif %}
