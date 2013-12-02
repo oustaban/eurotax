@@ -94,8 +94,12 @@ class AbstractTabsController extends Controller
                 'taux_de_change',
                 'HT',
                 'TVA',
-                //'commentaires',
-            )
+                'commentaires',
+            ),
+        	'skip_fields' => array(
+        		'export' => array('commentaires'),
+        		'import' => array()
+        	)
         ),
 
         'V03-283-I' => array(
@@ -112,7 +116,11 @@ class AbstractTabsController extends Controller
                 'mois',
                 'taux_de_change',
                 'HT',
-                //'commentaires',
+                'commentaires',
+            ),
+            'skip_fields' => array(
+            	'export' => array('commentaires'),
+            	'import' => array()
             )
         ),
 
@@ -133,6 +141,10 @@ class AbstractTabsController extends Controller
                 'regime',
                 'DEB',
                 'commentaires',
+            ),
+            'skip_fields' => array(
+            	'export' => array('commentaires', 'regime'),
+            	'import' => array()
             )
         ),
 
@@ -155,6 +167,10 @@ class AbstractTabsController extends Controller
                 'departement',
                 'pays_origine',
                 'CEE',
+            ),
+            'skip_fields' => array(
+            	'export' => array(),
+            	'import' => array()
             )
         ),
         'V07-EX' => array(
@@ -171,6 +187,10 @@ class AbstractTabsController extends Controller
                 'taux_de_change',
                 'HT',
                 'commentaires',
+            ),
+            'skip_fields' => array(
+            	'export' => array('commentaires'),
+            	'import' => array()
             )
         ),
         'V09-DES' => array(
@@ -189,6 +209,10 @@ class AbstractTabsController extends Controller
                 'taux_de_change',
                 'HT',
                 'commentaires',
+            ),
+            'skip_fields' => array(
+            	'export' => array(),
+            	'import' => array()
             )
         ),
         'V11-INT' => array(
@@ -205,6 +229,10 @@ class AbstractTabsController extends Controller
                 'taux_de_change',
                 'HT',
                 'commentaires',
+            ),
+            'skip_fields' => array(
+            	'export' => array('commentaires'),
+            	'import' => array()
             )
         ),
         'A02-TVA' => array(
@@ -227,7 +255,11 @@ class AbstractTabsController extends Controller
                 'taux_de_change',
                 'HT',
                 'TVA',
-                //'commentaires',
+                'commentaires',
+            ),
+            'skip_fields' => array(
+            	'export' => array('commentaires'),
+            	'import' => array()
             )
         ),
         'A04-283-I' => array(
@@ -245,7 +277,11 @@ class AbstractTabsController extends Controller
                 'taux_de_change',
                 'HT',
                 'TVA',
-                //'commentaires',
+                'commentaires',
+            ),
+            'skip_fields' => array(
+            	'export' => array('commentaires'),
+            	'import' => array()
             )
         ),
 
@@ -267,6 +303,10 @@ class AbstractTabsController extends Controller
                 'TVA',
                 'DEB',
                 'commentaires',
+            ),
+            'skip_fields' => array(
+            	'export' => array(),
+            	'import' => array()
             )
         ),
 
@@ -289,6 +329,10 @@ class AbstractTabsController extends Controller
                 'departement',
                 'pays_origine',
                 //'CEE',
+            ),
+            'skip_fields' => array(
+            	'export' => array(),
+            	'import' => array()
             )
         ),
 
@@ -304,6 +348,10 @@ class AbstractTabsController extends Controller
                 'TVA',
                 'mois',
                 'commentaires',
+            ),
+            'skip_fields' => array(
+            	'export' => array(),
+            	'import' => array()
             )
         ),
 
@@ -318,6 +366,10 @@ class AbstractTabsController extends Controller
                 'HT',
                 'mois',
                 'commentaires',
+            ),
+            'skip_fields' => array(
+            	'export' => array(),
+            	'import' => array()
             )
         ),
     );

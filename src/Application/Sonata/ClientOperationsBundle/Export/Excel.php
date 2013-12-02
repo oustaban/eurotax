@@ -442,6 +442,9 @@ class Excel
     	$ceil = array();
     	$wColumn = 'A';
     	foreach ($params['fields'] as $key => $field) {
+    		if(in_array($field, $params['skip_fields']['export'])) {
+    			continue;
+    		}
     		$ceil[$field] = '';
     		$this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_styleBorders);
     	 	$wColumn++;
@@ -462,7 +465,11 @@ class Excel
         $this->_header_cell = array();
 
         foreach ($params['fields'] as $key => $field) {
-
+        	
+        	if(in_array($field, $params['skip_fields']['export'])) {
+        		continue;
+        	}
+        	
             $this->_sheet->getStyle($wColumn . $wRow)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
             $value = call_user_func(array($row, $this->getMethod($field)));
@@ -876,12 +883,17 @@ class Excel
      */
     protected function headers($params)
     {
+    	
         $col = array();
         $wColumn = 'A';
         $last = '';
         $wRows = $params['skip_line'];
         $styleHeader = array();
         foreach ($params['fields'] as $field) {
+        	if(in_array($field, $params['skip_fields']['export'])) {
+        		continue;
+        	}
+        	
             $col[] = $this->translator->trans('ApplicationSonataClientOperationsBundle.list.' . $params['entity'] . '.' . $field);
 
             if ($params['entity'] == 'V05LIC' || $params['entity'] == 'A06AIB') {
@@ -1012,7 +1024,6 @@ class Excel
             $wColumn = 'A';
             $index = 6;
             foreach ($params['fields'] as $key => $field) {
-
                 $this->_sheet->getCell($wColumn . $index)->setValue($key + 1);
                 $this->_sheet->getStyle($wColumn . $index)->applyFromArray($this->_styleBorders + array('fill' => array(
                     'type' => \PHPExcel_Style_Fill::FILL_SOLID,
