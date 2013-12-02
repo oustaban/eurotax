@@ -305,7 +305,7 @@ class AbstractTabsController extends Controller
                 'commentaires',
             ),
             'skip_fields' => array(
-            	'export' => array(),
+            	'export' => array('commentaires', 'regime'),
             	'import' => array()
             )
         ),
@@ -350,7 +350,7 @@ class AbstractTabsController extends Controller
                 'commentaires',
             ),
             'skip_fields' => array(
-            	'export' => array(),
+            	'export' => array('commentaires'),
             	'import' => array()
             )
         ),
@@ -368,7 +368,7 @@ class AbstractTabsController extends Controller
                 'commentaires',
             ),
             'skip_fields' => array(
-            	'export' => array(),
+            	'export' => array('commentaires'),
             	'import' => array()
             )
         ),
