@@ -112,7 +112,7 @@ class AbstractTabsController extends Controller
                 'mois',
                 'taux_de_change',
                 'HT',
-                'commentaires',
+                //'commentaires',
             )
         ),
 
