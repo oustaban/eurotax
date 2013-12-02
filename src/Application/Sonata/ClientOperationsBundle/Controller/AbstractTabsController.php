@@ -245,7 +245,7 @@ class AbstractTabsController extends Controller
                 'taux_de_change',
                 'HT',
                 'TVA',
-                'commentaires',
+                //'commentaires',
             )
         ),
 

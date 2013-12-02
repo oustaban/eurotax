@@ -58,7 +58,7 @@ class RapprochementController extends Controller
     						'taux_de_change',
     						'HT',
     						'TVA',
-    						'commentaires',
+    						//'commentaires',
     				)
     		),
     
@@ -191,7 +191,7 @@ class RapprochementController extends Controller
 	    		'taux_de_change',
 	    		'HT',
 	    		'TVA',
-	    		'commentaires',
+	    		//'commentaires',
     		)
     		),
     		'A04-283-I' => array(
@@ -209,7 +209,7 @@ class RapprochementController extends Controller
 	    		'taux_de_change',
 	    		'HT',
 	    		'TVA',
-	    		'commentaires',
+	    		//'commentaires',
     		)
     		),
     
