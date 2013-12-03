@@ -17,7 +17,6 @@ class Excel
     private $_header_cell = array();
     private $_params = array();
     
-    
     protected $_admin;
     
     protected $_styleBorders = array(
@@ -36,6 +35,42 @@ class Excel
             ),
         ),
     );
+    
+    protected $_debStyleBorders = array(
+    	'borders' => array(
+    		'top' => array(
+    			'style' => \PHPExcel_Style_Border::BORDER_NONE,
+    		),
+    		'bottom' => array(
+    			'style' => \PHPExcel_Style_Border::BORDER_NONE,
+    		),
+    		'left' => array(
+    			'style' => \PHPExcel_Style_Border::BORDER_MEDIUM,
+    		),
+    		'right' => array(
+    			'style' => \PHPExcel_Style_Border::BORDER_MEDIUM,
+    		),
+    	),
+    );
+    
+    
+    protected $_debStyleLastRowBorders = array(
+   		'borders' => array(
+   			'top' => array(
+   				'style' => \PHPExcel_Style_Border::BORDER_NONE,
+   			),
+   			'bottom' => array(
+   				'style' => \PHPExcel_Style_Border::BORDER_MEDIUM,
+   			),
+   			'left' => array(
+   				'style' => \PHPExcel_Style_Border::BORDER_MEDIUM,
+   			),
+   			'right' => array(
+   				'style' => \PHPExcel_Style_Border::BORDER_MEDIUM,
+   			),
+   		),
+    );
+    
 
     protected $_styleArrayGray = array(
         'borders' => array(
@@ -169,12 +204,8 @@ class Excel
     public function getData()
     {
         $this->getProperties();
-        
-        
-        
         $this->keyTabData();
         $this->accountTabData();
-       	
         $i = 2;
         foreach ($this->get('_config_excel') as $table => $params) {
 
@@ -207,44 +238,30 @@ class Excel
     	$this->_sheet = $this->_excel->getActiveSheet();
     	$this->_sheet->getDefaultColumnDimension()->setWidth(10);
     	$this->_sheet->setTitle('Account ' . date('Y'));
-    	
-    	
-    	
     	$this->_excel->getActiveSheet()->getColumnDimension('A')->setWidth(15);
     	$this->_excel->getActiveSheet()->getColumnDimension('B')->setWidth(50);
     	$this->_excel->getActiveSheet()->getColumnDimension('C')->setWidth(15);
     	$this->_excel->getActiveSheet()->getColumnDimension('D')->setWidth(20);
-    	
-    	
     	$this->_excel->getActiveSheet()->getColumnDimension('F')->setWidth(15);
     	$this->_excel->getActiveSheet()->getColumnDimension('G')->setWidth(50);
     	$this->_excel->getActiveSheet()->getColumnDimension('H')->setWidth(15);
     	$this->_excel->getActiveSheet()->getColumnDimension('I')->setWidth(20);
-    	
-    	
-    	
     	$this->_excel->getActiveSheet()->getCell('A1')->setValue('eurotax');
     	$this->_excel->getActiveSheet()->getStyle('A1')->getFont()->setName('Arial');
     	$this->_excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(14);
-    	
-    	
     	$this->_excel->getActiveSheet()->setCellValue('B1', 'SHRIEVE PRODUCTS INTL. ACCOUNT as at 06/12/2012');
     	$this->_excel->getActiveSheet()->mergeCells('B1:I1');
     	$this->yellowHeader('B1');
     	
-    	
     	$this->_excel->getActiveSheet()->setCellValue('A3', 'French VAT return Curreny:');
     	$this->_excel->getActiveSheet()->setCellValue('D3', 'EURO');
     	$this->_excel->getActiveSheet()->getStyle('D3')->getFont()->setBold(true);
-    	
     	$this->_excel->getActiveSheet()->setCellValue('F3', 'Account Number:');
     	$this->_excel->getActiveSheet()->setCellValue('I3', $this->get('_admin')->client_id);
     	$this->_excel->getActiveSheet()->getStyle('I3')->getFont()->setBold(true);
-    	 
     	$excel = $this->_excel;
     	
 		$headerFunc = function($row, $cols) use($excel) {    	
-    	
 	    	$headers = array(
 	    		'Date', 'Description', 'Euro', 'Balance'		
 	    	);
@@ -271,14 +288,10 @@ class Excel
 	    				)
 	    		);
 	    	}
-	    	
-    	
 		};
-		
 		
 		$headerFunc(5, range('A', 'D'));
 		$headerFunc(5, range('F', 'I'));
-		
 		$result = $this->queryResult(array('entity'=>'compte'));
 		$i = 8;
 		foreach ($result as $key => $row) {
@@ -292,10 +305,6 @@ class Excel
 			if($i > 8) {
 				$this->_excel->getActiveSheet()->setCellValue("D$i", '=SUM(C'.($i-1).':C'.$i.')');
 			}
-			
-			
-			
-			
 			$i++;
 		}
     }
@@ -316,7 +325,6 @@ class Excel
     	$this->_excel->getActiveSheet()->getColumnDimension('A')->setWidth(10);
     	$this->_excel->getActiveSheet()->getColumnDimension('B')->setWidth(40);
     	$this->_excel->getActiveSheet()->getColumnDimension('C')->setWidth(90);
-    	 
     	
     	$this->_excel->getActiveSheet()->getCell('B1')->setValue($objRichText);
     	$this->_excel->getActiveSheet()->mergeCells('B1:C1');
@@ -437,16 +445,27 @@ class Excel
     
     
     
-    protected function setEmptyCell($wRow, $params)
+    protected function setEmptyCell($wRow, $params, $lastRow = false)
     {
     	$ceil = array();
     	$wColumn = 'A';
-    	foreach ($params['fields'] as $key => $field) {
+    	foreach ($params['fields'] as $field) {
     		if(in_array($field, $params['skip_fields']['export'])) {
     			continue;
     		}
     		$ceil[$field] = '';
-    		$this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_styleBorders);
+    		//$this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_styleBorders);
+    		if ($params['entity'] == 'DEBExped' || $params['entity'] == 'DEBIntro') {
+    			
+    			if($lastRow) {
+    				$this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_debStyleLastRowBorders);
+    			} else {
+    				$this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_debStyleBorders);
+    			}
+    			
+    		} else {
+    			$this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_styleBorders);
+    		}
     	 	$wColumn++;
         }
         return $ceil;
@@ -505,11 +524,11 @@ class Excel
                 //#,##0.00_);[RED](#,##0.00)
             }
 
-            //if ((in_array($field, array('mois', 'montant_TTC', 'montant_TVA_francaise', 'paiement_montant', 'paiement_devise')) || isset($this->_sum[$field]) && !($params['entity'] == 'DEBIntro' || $params['entity'] == 'DEBExped'))) {
-            //    $this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_styleArrayGray);
-            //} else {
-                $this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_styleBorders);
-            //}
+            if ($params['entity'] == 'DEBExped' || $params['entity'] == 'DEBIntro') {
+				$this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_debStyleBorders);
+			} else {
+           		$this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_styleBorders);
+			}
 
             
             if($field == 'taux_de_TVA') { //percentage
@@ -544,38 +563,14 @@ class Excel
                     'style' => \PHPExcel_Style_Border::BORDER_THIN,
                 ),
             ),
-            /* 'fill' => array(
-                'type' => \PHPExcel_Style_Fill::FILL_SOLID,
-                'color' => array(
-                    'argb' => 'bfbfbf',
-                ),
-            ), */
         );
 
-       /*  if ($bold) {
-            $styleArray += array(
-                'font' => array(
-                    'bold' => true,
-                ));
-        }
- */
-
         if (isset($this->_header_cell[$key]) && $cell = $this->_header_cell[$key]) {
-
             if ($position == 'left') {
-
                 if (isset($this->_header_cell[$key - 2])) {
-                	
-                	
                 	$labelCellCol = $this->_header_cell[$key - 2];
-                	
-                	
                 	$labelCellColEnd = $this->_header_cell[$key - 1];
-                	
                 	//$labelCellColEnd = chr(ord($labelCellCol) + 1 );
-                	
-               	
-                	
                     $this->_sheet->setCellValue( $labelCellCol . $wRow, $text);
                     $this->_sheet->mergeCells($labelCellCol . $wRow. ':' . $labelCellColEnd . $wRow);
                     $this->_sheet->getStyle($labelCellCol . $wRow. ':' . $labelCellColEnd . $wRow)->applyFromArray(array(
@@ -719,13 +714,26 @@ class Excel
             $rows[] = $this->getCell($key + $count, $row, $params);
         }
 		
-        if(!empty($result)) {
-        	$rows[] = $this->setEmptyCell($key + $count + 1, $params);
+        // DebExped and DebIntro must be at 11 rows at default
+        if ($params['entity'] == 'DEBExped' || $params['entity'] == 'DEBIntro') {
+        	$countRows = count($rows) - $params['skip_line'];
+        	if($countRows < 11) {
+        		$rowsToAdd = 10 - $countRows;
+        		for($i = 0; $i < $rowsToAdd; $i++) {
+        			$rows[] = $this->setEmptyCell($key + $count + 1, $params);
+        			$key++;
+        		}
+        	}
+
+        	$rows[] = $this->setEmptyCell($key + $count + 1, $params, true);
+        } else {
+        	if(!empty($result)) {
+        		$rows[] = $this->setEmptyCell($key + $count + 1, $params);
+        	}
         }
         
         $count = count($rows) + 1;
         $this->footer($params, $count);
-
         return $rows;
     }
 
@@ -1173,21 +1181,47 @@ class Excel
         }
 
         
-        
-        
         if ($params['entity'] == 'DEBIntro' || $params['entity'] == 'DEBExped') {
             switch ($field) {
 
-                case 'CEE':
-                case 'valeur_statistique':
-                    $this->_sheet->getColumnDimension($wColumn)->setWidth(16);
-                    break;
+            	case 'n_ligne':
+            		$this->_sheet->getColumnDimension($wColumn)->setWidth($this->_pxToExcelWidth(80));
+            		break;
+            	case 'nomenclature':
+            		$this->_sheet->getColumnDimension($wColumn)->setWidth($this->_pxToExcelWidth(103));
+            		break;
+            	
+            	case 'pays_destination':
+            		$this->_sheet->getColumnDimension($wColumn)->setWidth($this->_pxToExcelWidth(68));
+            		break;
+            	
+            	case 'valeur_fiscale':
+            	case 'valeur_statistique':
+            		$this->_sheet->getColumnDimension($wColumn)->setWidth($this->_pxToExcelWidth(89));
+            		break;
+            		
+            	case 'regime':
+            		$this->_sheet->getColumnDimension($wColumn)->setWidth($this->_pxToExcelWidth(61));
+            		break;
+
+            	case 'masse_mette':
+            	case 'unites_supplementaires':
+            	case 'departement':
+            	case 'mode_transport':
+            	case 'pays_origine':
+            						 
+            		$this->_sheet->getColumnDimension($wColumn)->setWidth($this->_pxToExcelWidth(75));
+            		break;
+
 
                 case 'conditions_livraison':
                 case 'nature_transaction':
-                    $this->_sheet->getColumnDimension($wColumn)->setWidth(15);
+                    $this->_sheet->getColumnDimension($wColumn)->setWidth($this->_pxToExcelWidth(82));
                     break;
-
+                    
+                case 'CEE':
+                	$this->_sheet->getColumnDimension($wColumn)->setWidth(16);
+                	break;
             }
         }
     }
