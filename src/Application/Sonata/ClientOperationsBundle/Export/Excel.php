@@ -590,6 +590,8 @@ class Excel
             $this->_sheet->getStyle($wColumn . $wRow)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
             $value = call_user_func(array($row, $this->getMethod($field)));
+            
+            
 
             if ($value instanceof \Application\Sonata\ClientBundle\Entity\ListDevises) {
                 $ceil[$field] = $value->getAlias();
@@ -604,6 +606,7 @@ class Excel
                 $ceil[$field] = $date > 0 ? $date : '';
 
             } else {
+            	
                 if (is_float($value)) {
                 	$ceil[$field] = (double)$value;
 
@@ -616,7 +619,17 @@ class Excel
                 	}
                     
                 } else {
-                    $ceil[$field] = (string)$value;
+                	
+                	if($field == 'DEB') {
+                		if($value == 1) {
+                			$value =  'OUI';
+                		} else {
+                			$value = 'NON';
+                		}
+                	}
+                	
+                	$ceil[$field] = (string)$value;
+                	
                 }
                 //#,##0.00_);[RED](#,##0.00)
             }
