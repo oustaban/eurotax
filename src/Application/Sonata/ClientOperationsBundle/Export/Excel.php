@@ -36,6 +36,24 @@ class Excel
         ),
     );
     
+    
+    protected $_headerStyleBorders = array(
+    		'borders' => array(
+    				'top' => array(
+    						'style' => \PHPExcel_Style_Border::BORDER_THIN,
+    				),
+    				'bottom' => array(
+    						'style' => \PHPExcel_Style_Border::BORDER_MEDIUM,
+    				),
+    				'left' => array(
+    						'style' => \PHPExcel_Style_Border::BORDER_THIN,
+    				),
+    				'right' => array(
+    						'style' => \PHPExcel_Style_Border::BORDER_THIN,
+    				),
+    		),
+    );
+    
     protected $_debStyleBorders = array(
     	'borders' => array(
     		'top' => array(
@@ -93,6 +111,85 @@ class Excel
                 'argb' => 'bfbfbf',
             ),
         ),
+    );
+    
+    
+    
+    protected $_customStyleBorders = array(
+    		
+    	'V01TVA' => array(
+    		'devise',
+    		'montant_TTC',
+    		'paiement_date',
+    		'taux_de_change',
+    		'TVA'
+    	),
+    	
+    	'V03283I' => array(
+    		'devise',
+    		'montant_HT_en_devise',
+    		'taux_de_change',
+    		'HT'
+    	),
+    	
+    	'V05LIC' => array(
+    		'devise',
+    		'montant_HT_en_devise',
+    		'taux_de_change',
+    		'HT',
+    		'DEB'
+    	),
+    	
+    	'V07EX' => array(
+    		'devise',
+    		'montant_HT_en_devise',
+    		'taux_de_change',
+    		'HT'
+    	),
+    	
+    	
+    	'V11INT' => array(
+    		'devise',
+    		'montant_HT_en_devise',
+    		'taux_de_change',
+    		'HT'
+    	),
+    	
+    	'A02TVA' => array(
+    		'devise',
+    		'montant_TTC',
+    		'paiement_date',
+    		'taux_de_change',
+    		'TVA',
+    	),
+    	
+    	'A04283I' => array(
+    		'devise',
+    		'taux_de_TVA',
+    		'taux_de_change',
+    		'TVA',
+    	),
+    	
+    	'A06AIB' => array(
+    		'devise',
+    		'taux_de_TVA',
+    		'taux_de_change',
+    		'TVA',
+    		'DEB'
+    	),
+    	
+    	'A08IM' => array(
+    		'numero_piece',
+    		'TVA',
+    		'mois',
+    	),
+    	
+    	'A10CAF' => array(
+    		'numero_piece',
+    		'HT',
+    		'mois',
+    	)
+    		
     );
 
 
@@ -464,7 +561,7 @@ class Excel
     			}
     			
     		} else {
-    			$this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_styleBorders);
+    			$this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->getCustomStyleBorders($params, $field, 'lastRow'));
     		}
     	 	$wColumn++;
         }
@@ -527,7 +624,7 @@ class Excel
             if ($params['entity'] == 'DEBExped' || $params['entity'] == 'DEBIntro') {
 				$this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_debStyleBorders);
 			} else {
-           		$this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->_styleBorders);
+           		$this->_sheet->getStyle($wColumn . $wRow)->applyFromArray($this->getCustomStyleBorders($params, $field));
 			}
 
             
@@ -551,16 +648,16 @@ class Excel
         $styleArray = array(
             'borders' => array(
                 'top' => array(
-                    'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                    'style' => \PHPExcel_Style_Border::BORDER_MEDIUM,
                 ),
                 'bottom' => array(
-                    'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                    'style' => \PHPExcel_Style_Border::BORDER_MEDIUM,
                 ),
                 'left' => array(
                     'style' => \PHPExcel_Style_Border::BORDER_THIN,
                 ),
                 'right' => array(
-                    'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                    'style' => \PHPExcel_Style_Border::BORDER_MEDIUM,
                 ),
             ),
         );
@@ -579,13 +676,13 @@ class Excel
                     	),
                         'borders' => array(
                             'top' => array(
-                                'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                                'style' => \PHPExcel_Style_Border::BORDER_MEDIUM,
                             ),
                             'bottom' => array(
-                                'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                                'style' => \PHPExcel_Style_Border::BORDER_MEDIUM,
                             ),
                             'left' => array(
-                                'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                                'style' => \PHPExcel_Style_Border::BORDER_MEDIUM,
                             ),
                             'right' => array(
                                 'style' => \PHPExcel_Style_Border::BORDER_THIN,
@@ -606,12 +703,12 @@ class Excel
                         'font' => array(
                             'bold' => $bold,
                         ),
+                    	
                     ));
                 }
             }
 
-            $this->_sheet->setCellValue($cell . $wRow, $this->getFormula($value, $cell, $wRow))
-                ->getStyle($cell . $wRow)->getNumberFormat()->setFormatCode('# ##0\ "€";[Red]-# ##0\ "€"');
+            $this->_sheet->setCellValue($cell . $wRow, $this->getFormula($value, $cell, $wRow))->getStyle($cell . $wRow)->getNumberFormat()->setFormatCode('# ##0\ "€";[Red]-# ##0\ "€"');
 
             $this->_sheet->getStyle($cell . $wRow)->applyFromArray($styleArray)->getFont()->setBold($bold);
         }
@@ -709,11 +806,16 @@ class Excel
             $key++;
         }
 
+        $key = 0;
         //default result
-        foreach ($result as $key => $row) {
-            $rows[] = $this->getCell($key + $count, $row, $params);
+        if(!empty($result)) {
+	        foreach ($result as $key => $row) {
+	            $rows[] = $this->getCell($key + $count, $row, $params);
+	        }
+        } else {
+        	$key = -1;
         }
-		
+	      
         // DebExped and DebIntro must be at 11 rows at default
         if ($params['entity'] == 'DEBExped' || $params['entity'] == 'DEBIntro') {
         	$countRows = count($rows) - $params['skip_line'];
@@ -987,7 +1089,7 @@ class Excel
             }
 
             $this->_sheet->getStyle($wColumn . $wRows)
-                ->applyFromArray($this->_styleBorders + (isset($styleHeader[$field]) ? $styleHeader[$field] : array()))
+                ->applyFromArray($this->getCustomStyleBorders($params, $field, 'header') + (isset($styleHeader[$field]) ? $styleHeader[$field] : array()))
                 ->getAlignment()
                 ->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER)
                 ->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER)
@@ -1226,6 +1328,88 @@ class Excel
         }
     }
 
+    
+    
+    
+    protected function getCustomStyleBorders($params, $field, $mode = 'cell') {
+    	
+    	
+    	if(isset($this->_customStyleBorders[$params['entity']]) && in_array($field, $this->_customStyleBorders[$params['entity']])) {
+    		
+    		if($mode == 'cell') {
+    			return array(
+			        'borders' => array(
+			        	'top' => array(
+			        		'style' => \PHPExcel_Style_Border::BORDER_THIN,
+			        	),
+			        	'bottom' => array(
+			        		'style' => \PHPExcel_Style_Border::BORDER_THIN,
+			        	),
+			        	'left' => array(
+			        		'style' => \PHPExcel_Style_Border::BORDER_THIN,
+			        	),
+			        	'right' => array(
+			        		'style' => \PHPExcel_Style_Border::BORDER_MEDIUM,
+			        	),
+			        ),
+    			);
+    			
+    		} elseif($mode == 'header' || $mode == 'lastRow') {
+    			
+    			return array(
+			        'borders' => array(
+			        	'top' => array(
+			        		'style' => \PHPExcel_Style_Border::BORDER_THIN,
+			        	),
+			        	'bottom' => array(
+			        		'style' => \PHPExcel_Style_Border::BORDER_MEDIUM,
+			        	),
+			        	'left' => array(
+			        		'style' => \PHPExcel_Style_Border::BORDER_THIN,
+			        	),
+			        	'right' => array(
+			        		'style' => \PHPExcel_Style_Border::BORDER_MEDIUM,
+			        	),
+			        ),
+    			);
+    		}
+    		
+    	} else {
+    		
+    		
+    		if($mode == 'cell') {
+    			return $this->_styleBorders;
+    		} elseif($mode == 'header') {
+    			return $this->_headerStyleBorders;
+    		} elseif($mode == 'lastRow') {
+    			return array(
+    				'borders' => array(
+	    				'top' => array(
+	    					'style' => \PHPExcel_Style_Border::BORDER_THIN,
+	    				),
+	    				'bottom' => array(
+	    					'style' => \PHPExcel_Style_Border::BORDER_MEDIUM,
+	    				),
+	    				'left' => array(
+	    					'style' => \PHPExcel_Style_Border::BORDER_THIN,
+	    				),
+	    				'right' => array(
+	    					'style' => \PHPExcel_Style_Border::BORDER_THIN,
+	    				),
+	    			)
+    			);
+    		}
+    		
+    		
+    		
+    	}
+    	
+    	
+    	
+    }
+    
+    
+    
 
     /**
      * @param $params
