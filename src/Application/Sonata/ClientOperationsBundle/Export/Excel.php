@@ -708,7 +708,8 @@ class Excel
                 }
             }
 
-            $this->_sheet->setCellValue($cell . $wRow, $this->getFormula($value, $cell, $wRow))->getStyle($cell . $wRow)->getNumberFormat()->setFormatCode('# ##0\ "€";[Red]-# ##0\ "€"');
+            $this->_sheet->setCellValue($cell . $wRow, $this->getFormula($value, $cell, $wRow))->getStyle($cell . $wRow)
+            	->getNumberFormat()->setFormatCode('#\ ##0\ "€";[Red]-#\ ##0\ "€"');
 
             $this->_sheet->getStyle($cell . $wRow)->applyFromArray($styleArray)->getFont()->setBold($bold);
         }
@@ -889,6 +890,8 @@ class Excel
                     $this->_sheet->setCellValue($this->_header_cell[$key - 2] . $wRow, 'Totaux');
                     $this->_sheet->setCellValue($cell . $wRow, $this->getFormula('SUM', $cell, $wRow));
                     $this->_sheet->getStyle($this->_header_cell[$key - 2] . $wRow . ':' . $this->_header_cell[$key] . $wRow)->applyFromArray($styleArray);
+                    $this->_sheet->getStyle($this->_header_cell[$key - 2] . $wRow . ':' . $this->_header_cell[$key] . $wRow)
+                    	->getNumberFormat()->setFormatCode('#\ ##0\ "€";[Red]-#\ ##0\ "€"');
                 }
             }
             if (isset($this->_sum['valeur_statistique'])) {
@@ -900,6 +903,10 @@ class Excel
 
                     $this->_sheet->setCellValue($cell . $wRow, $this->getFormula('SUM', $cell, $wRow));
                     $this->_sheet->getStyle($this->_header_cell[$key - 1] . $wRow . ':' . $this->_header_cell[$key] . $wRow)->applyFromArray($styleArray);
+                    
+                    $this->_sheet->getStyle($this->_header_cell[$key - 1] . $wRow . ':' . $this->_header_cell[$key] . $wRow)
+                    	->getNumberFormat()->setFormatCode('#\ ##0\ "€";[Red]-#\ ##0\ "€"');
+                    
                 }
             }
         } else {
@@ -1046,7 +1053,7 @@ class Excel
                     'nomenclature',
                     'pays_destination',
                     'regime',
-                    'valeur_statistique',
+                    //'valeur_statistique',
                     'masse_mette',
                     'unites_supplementaires',
                     'nature_transaction',
@@ -1070,7 +1077,7 @@ class Excel
                             ),
                         ),
                     );
-                } elseif ($field == 'valeur_fiscale') {
+                } elseif ($field == 'valeur_fiscale' || $field == 'valeur_statistique') {
                     $styleHeader[$field] = array(
                         'fill' => array(
                             'type' => \PHPExcel_Style_Fill::FILL_SOLID,
@@ -1086,6 +1093,10 @@ class Excel
                         ),
                     );
                 }
+                
+                
+                $this->_sheet->getStyle($wColumn . $wRows)->getBorders()->getTop()->setColor(new \PHPExcel_Style_Color(\PHPExcel_Style_Color::COLOR_WHITE));
+                $this->_sheet->getStyle($wColumn . $wRows)->getBorders()->getLeft()->setColor(new \PHPExcel_Style_Color(\PHPExcel_Style_Color::COLOR_WHITE));
             }
 
             $this->_sheet->getStyle($wColumn . $wRows)
@@ -1167,9 +1178,11 @@ class Excel
                             'argb' => 'ffffff',
                         ),
                     ),));
+                
+                
 
                 $this->_sheet->getStyle($wColumn . $index)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
+                $this->_sheet->getStyle($wColumn . $index)->getBorders()->getLeft()->setColor(new \PHPExcel_Style_Color(\PHPExcel_Style_Color::COLOR_WHITE));
                 $wColumn++;
             }
         }
