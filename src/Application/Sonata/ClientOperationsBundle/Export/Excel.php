@@ -605,6 +605,8 @@ class Excel
                 }
                 $ceil[$field] = $date > 0 ? $date : '';
 
+            } elseif ($value instanceof \Application\Sonata\ClientBundle\Entity\ListCountries) {                
+            	$ceil[$field] = $value->getCode();
             } else {
             	
                 if (is_float($value)) {
