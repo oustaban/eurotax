@@ -920,7 +920,9 @@ class Excel
             }
             
             $text = 'selon filtre';
-            if($params['entity'] == 'V01TVA' || $params['entity'] == 'A02TVA' || $params['entity'] == 'A06AIB' || $params['entity'] == 'A08IM' || $params['entity'] == 'A10CAF') {
+            if($params['entity'] == 'V01TVA' || $params['entity'] == 'A02TVA' || $params['entity'] == 'A06AIB' || $params['entity'] == 'A08IM' 
+            	|| $params['entity'] == 'A10CAF' || $params['entity'] == 'V05LIC') {
+            	
             	$text = '';
             }
             
@@ -957,7 +959,9 @@ class Excel
 
             
             $text = 'tout data';
-            if($params['entity'] == 'V01TVA' || $params['entity'] == 'A02TVA' || $params['entity'] == 'A06AIB' || $params['entity'] == 'A08IM' || $params['entity'] == 'A10CAF') {
+            if($params['entity'] == 'V01TVA' || $params['entity'] == 'A02TVA' || $params['entity'] == 'A06AIB' || $params['entity'] == 'A08IM' 
+            	|| $params['entity'] == 'A10CAF' || $params['entity'] == 'V05LIC') {
+            	
             	$text = '';
             }
             
@@ -991,7 +995,9 @@ class Excel
             
             
             $text = 'tout data';
-            if($params['entity'] == 'V01TVA' || $params['entity'] == 'A02TVA' || $params['entity'] == 'A06AIB' || $params['entity'] == 'A08IM' || $params['entity'] == 'A10CAF') {
+            if($params['entity'] == 'V01TVA' || $params['entity'] == 'A02TVA' || $params['entity'] == 'A06AIB' || $params['entity'] == 'A08IM' 
+            	|| $params['entity'] == 'A10CAF' || $params['entity'] == 'V05LIC') {
+            	
             	$text = '';
             }
             
