@@ -306,6 +306,10 @@ class Excel
         $i = 2;
         foreach ($this->get('_config_excel') as $table => $params) {
 
+        	
+        	$title = $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.' . $params['entity'] . '.title');
+        	
+        	
             $this->setParams($params);
             //if ($i > 0) {
                 $this->_excel->createSheet($i);
@@ -316,7 +320,7 @@ class Excel
             $this->_sheet = $this->_excel->getActiveSheet();
             $this->_sheet->getDefaultColumnDimension()->setWidth(10);
 
-            $this->_sheet->setTitle($table);
+            $this->_sheet->setTitle($title);
             $this->setTabsColor($params);
 
             $this->_sum = array();

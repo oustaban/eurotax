@@ -42,6 +42,39 @@ ApplicationSonataClientOperationsBundle:
       nett: Nett
       tva: TVA
 
+  imports:
+    list_title: Liste des importations sans ligne clôturée
+    confirm_delete: Etes vous sur de vouloir effacer le dernier lot importé
+
+  exports:
+    V01TVA:
+      title: Ventes en France avec TVA
+    V03283I:
+      title: Ventes en France sans TVA
+    V05LIC:
+      title: Livraisons Intra-UE
+    DEBExped:
+      title: DEB à l'expédition
+    V07EX:
+      title: Exports Biens vers pays tiers
+    V09DES:
+      title: V09DES
+    V11INT:
+      title: Autres Ventes Services Intl 0%
+    A02TVA:
+      title: Achats avec TVA à récupérer
+    A04283I:
+      title: Achats France TVA autoliquidée
+    A06AIB:
+      title: Acquisitions Intra-UE
+    DEBIntro:
+      title: DEB à l'introduction
+    A08IM:
+      title: Imports avec TVA à récupérer
+    A10CAF:
+      title: Achats en Franchise
+
+
 V11 I N T List: V11-INT
 V11 I N T Edit: Edit
 V09 D E S List: V09-DES
