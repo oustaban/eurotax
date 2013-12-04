@@ -8,7 +8,7 @@
         <div class="btn-group inline">
             <button rel="tooltip" title="{{ 'Importer un fichier'|trans }}" class="btn" id="toggleImportModal" onclick="javascript:$('#importModal').modal('toggle');"><i class="icon icon-hdd"></i> {{ 'Importer'|trans }}</button>
             <button rel="tooltip" title="{{ 'Exporter les opérations'|trans }}" class="btn" id="exportExcel" onclick="javascript:location.href = '{{ admin.generateUrl('exportExcel', _filter_json) }}'.replace('&amp;', '&');"><i class="icon icon-download-alt"></i> {{ 'Exporter'|trans }}</button>
-            <button rel="tooltip" title="{{ 'Exporter les opérations'|trans }}" class="btn" id="exportExcel" onclick="javascript:location.href = '{{ admin.generateUrl('exportTransDeb', _filter_json) }}'.replace('&amp;', '&');"><i class="icon icon-download-alt"></i> {{ 'Exporter DEB'|trans }}</button>
+            <!-- <button rel="tooltip" title="{{ 'Exporter les opérations'|trans }}" class="btn" id="exportExcel" onclick="javascript:location.href = '{{ admin.generateUrl('exportTransDeb', _filter_json) }}'.replace('&amp;', '&');"><i class="icon icon-download-alt"></i> {{ 'Exporter DEB'|trans }}</button> -->
             <button rel="tooltip" title="{{ 'Supprimer un lot importé'|trans }}" class="btn" id="deleteImport"><i class="icon icon-trash"></i> {{ 'Supprimer'|trans }}</button>
         </div>
 

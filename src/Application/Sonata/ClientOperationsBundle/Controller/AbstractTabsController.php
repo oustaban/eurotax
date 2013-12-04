@@ -1574,6 +1574,7 @@ class AbstractTabsController extends Controller
     	
     	
     	$transdeb->render();
+    	$transdeb->saveFile();
     	$transdeb->download();
     	
     	exit;

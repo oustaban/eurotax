@@ -27,6 +27,7 @@ class RapprochementController extends Controller
 {
     protected $_month = '';
     protected $_year = '';
+    protected $_client = null;
     protected $_client_id = null;
     protected $_locking = false;
 
@@ -300,13 +301,18 @@ class RapprochementController extends Controller
     	return $client;
     }
     
+    public function configure()
+    {
+    	parent::configure();
+    	
+    }
     
     /**
      * @Template()
      */
     public function indexAction($client_id, $month)
     {
-    	$client = $this->validateClient($client_id);
+    	$this->_client = $client = $this->validateClient($client_id);
     	
 
         $this->_client_id = $client_id;
@@ -379,6 +385,8 @@ class RapprochementController extends Controller
     		$form->bindRequest($request);
     		if ($form->isValid())
     		{
+    			
+    			$hasError = false;
     			$moisDate = explode('|', $month);
     			
     			$rap = new Rapprochement();
@@ -423,28 +431,30 @@ class RapprochementController extends Controller
 	    			}
 	    			
 	    			if($status_id ==1 && !$this->acceptLocking($client_id, $month)) {
+	    				$hasError = true;
 	    				$this->get('session')->setFlash('sonata_flash_error', 'Cloture Mois-TVA ' . $_year . '-' . $_month . ' impossible car au moins une opération n\'a pas été prise en compte sur une des Ca3 précédente dans : ' . $this->_lockingTab . ' - ' . $this->datefmtFormatFilter($this->_lockingDate, 'YYYY MMMM'));
 	    			} elseif($status_id == 2 && !$this->acceptUnlocking($client_id, $month)) {
+	    				$hasError = true;
 	    				$this->get('session')->setFlash('sonata_flash_error', 'Le mois ' . $this->_unlockingYear . '-' . $this->_unlockingMonth . ' est déjà vérouillé, vous ne pouvez donc pas dévérouillé le mois sélectionné.');
 	    			} else {
 	    				$this->setLocking($client_id, $month, $blocked);
+	    				$this->exportTransDeb();
 	    			}
 	    			
-	    			header('Location: ' . $this->generateUrl('rapprochement_frame', array('client_id' =>  $client_id, 'month' => $month)));
+	    			if($hasError) {
+	    				header('Location: ' . $this->generateUrl('rapprochement_index', array('client_id' =>  $client_id, 'month' => $month)));
+	    			} else {
+	    				header('Location: ' . $this->generateUrl('rapprochement_frame', array('client_id' =>  $client_id, 'month' => $month)));
+	    			}
 	    			exit;
 	    			
     			}
     				
     			header('Location: ' . $this->generateUrl('admin_sonata_clientoperations_v01tva_list', array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)));
 	    		exit;
-    			
-    			
     		}
     	}
-    	
     	return $form;
-    
-    
     }
     
     
@@ -452,7 +462,6 @@ class RapprochementController extends Controller
      * @param $client_id
      * @param $month
      * @param int $blocked
-     
      */
     public function setLocking($client_id, $month, $blocked = 1)
     {
@@ -503,6 +512,15 @@ class RapprochementController extends Controller
     	}
     }
     
+    
+    protected function exportTransDeb() {
+    	$transdeb = $this->get('client.operation.transdeb');
+    	$transdeb->set('_client', $this->_client);
+    	$transdeb->set('_year', $this->_year);
+    	$transdeb->set('_month', $this->_month);
+    	$transdeb->render();
+    	$transdeb->saveFile();
+    }
     
     protected function acceptLocking($client_id, $month) {
     	list($_month, $_year) = $this->getQueryMonth($month);

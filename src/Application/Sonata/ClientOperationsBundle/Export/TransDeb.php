@@ -267,22 +267,12 @@ class TransDeb {
 	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
 	public function download() {
-		//$filename = 'transdeb-'.time() . '.txt'; // temp only
-		//CLIENTNAME + _ "transdeb" + "-" + year + "-" + month . ".txt"
-
-		if(!is_dir(DEB_A_ENVOYER_ABSPATH)) {
-			mkdir(DEB_A_ENVOYER_ABSPATH, 0777, true);
-		}
-		
-		$filename = ucwords($this->_client->getNom()) . '-transdeb-' . $this->_year . '-' . $this->_month . '.txt';
-		file_put_contents(DEB_A_ENVOYER_ABSPATH. '/' . $filename, $this->_data);
-		
 		$response = new Response(
 			$this->_data,
 			200,
 			array(
 				'Content-Type' => 'text/plain',
-				'Content-Disposition' => 'attachment; filename="'.$filename.'"'
+				'Content-Disposition' => 'attachment; filename="'.$this->getFilename().'"'
 			)
 		);
 		$response->sendHeaders();
@@ -293,6 +283,24 @@ class TransDeb {
 		return $response;
 	}
 	
+	/**
+	 * 
+	 */
+	public function saveFile() {
+		if(!is_dir(DEB_A_ENVOYER_ABSPATH)) {
+			mkdir(DEB_A_ENVOYER_ABSPATH, 0777, true);
+		}
+		file_put_contents(DEB_A_ENVOYER_ABSPATH. '/' . $this->getFilename(), $this->_data);
+	}
+	
+	/**
+	 * 
+	 * @return string
+	 */
+	protected function getFilename() {
+		$filename = ucwords($this->_client->getNom()) . '-transdeb-' . $this->_year . '-' . $this->_month . '.txt';
+		return $filename;
+	}
 	
 	
 	
@@ -302,7 +310,16 @@ class TransDeb {
 	 */
 	protected function queryResult($params)
 	{
+		
+		
+		
 		$admin = \AppKernel::getStaticContainer()->get('application.sonata.admin.' . strtolower($params['entity']));
+		
+		
+		/* \AppKernel::getStaticContainer()->setParameter('filter', array('client_id' => array('value' => $this->_client->getId())));
+		\AppKernel::getStaticContainer()->setParameter('month', $this->_month);
+		\AppKernel::getStaticContainer()->setParameter('year', $this->_year); */
+		
 		$result = $admin->createQuery()
 		->getQuery()
 		->execute();
@@ -311,9 +328,6 @@ class TransDeb {
 	
 		return $result;
 	}
-	
-	
-	
 	
 	/**
 	 * @param $field
