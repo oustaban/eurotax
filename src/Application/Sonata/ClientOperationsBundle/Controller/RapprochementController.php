@@ -293,7 +293,7 @@ class RapprochementController extends Controller
     	),
     );
     
-    protected function validateClient($client_id) {
+    protected function validateParams($client_id, $month) {
     	/** @var $em \Doctrine\ORM\EntityManager */
     	$em = $this->getDoctrine()->getManager();
     	$client = $em->getRepository('ApplicationSonataClientBundle:Client')->find($client_id);
@@ -302,7 +302,13 @@ class RapprochementController extends Controller
     		throw new NotFoundHttpException(sprintf('unable to find Client with id : %s', $client_id));
     	}
     	
-    	return $client;
+    	$this->_client = $client;
+        $this->_client_id = $client->getId();
+        $this->_query_month = $month;
+        
+        list($this->_month, $this->_year) = $this->getQueryMonth($month);
+        
+        $this->_blocked = $this->getLocking() ? 0 : 1;
     }
     
     public function configure() {
@@ -314,11 +320,8 @@ class RapprochementController extends Controller
      * @Template()
      */
     public function indexAction($client_id, $month) {
-    	$this->_client = $client = $this->validateClient($client_id);
-        $this->_client_id = $client_id;
-        $this->_query_month = $month;
-        
-        list($this->_month, $this->_year) = $this->getQueryMonth($month);
+
+    	$this->validateParams($client_id, $month);
 
         $month_default = '-1' . date('|Y', strtotime('-1 month'));
         $query_month = $month ? $month : $month_default;
@@ -329,7 +332,7 @@ class RapprochementController extends Controller
         
         $fromImport = isset($_GET['fromImport']);
         $hasImportDataOnly = true;
-        $this->_blocked = $this->getLocking() ? 0 : 1;
+        
         
         //array('isDEB' => false, 'groupResults' => true, 'importDataOnly' => false)
         $a06_aib = $this->_getTableData('A06AIB', array('isDEB' => true));
@@ -356,7 +359,7 @@ class RapprochementController extends Controller
             	'blocked' => $this->_blocked,
             	'query_month' => $query_month
             ),
-            'client' => $client,
+            'client' => $this->_client,
             'a06_aib' => $a06_aib,
             'v05_lic' => $v05_lic,
             'deb_intro' => $deb_intro,
@@ -365,9 +368,9 @@ class RapprochementController extends Controller
         	'fromImport' => $fromImport,
         	'hasImportDataOnly' => $hasImportDataOnly,
        		'declarationLink' => $this->generateUrl('admin_sonata_clientoperations_v01tva_declaration', 
-       				array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)),
+       				array('filter' => array('client_id' => array('value' => $this->_client_id)), 'month' => $this->_query_month)),
         	'listLink' => $this->generateUrl('admin_sonata_clientoperations_v01tva_list',
-        				array('filter' => array('client_id' => array('value' => $client_id)), 'month' => $month)),
+        				array('filter' => array('client_id' => array('value' => $this->_client_id)), 'month' => $this->_query_month)),
         );
     }
 
@@ -702,16 +705,8 @@ class RapprochementController extends Controller
     	return $formatter->format($timestamp);
     }
     
-    
-    
     public function frameAction($client_id, $month) {
-    	
-    	$this->_client = $client = $this->validateClient($client_id);
-    	$this->_client_id = $client_id;
-    	$this->_query_month = $month;
-    	
-    	list($this->_month, $this->_year) = $this->getQueryMonth($month);
-    	
+    	$this->validateParams($client_id, $month);
     	
     	$em = $this->get('doctrine')->getEntityManager();
     	$rap = $em->getRepository('ApplicationSonataClientOperationsBundle:RapprochementState')
@@ -743,12 +738,18 @@ class RapprochementController extends Controller
     		'client_id' => $this->_client_id,
     		'month' => $this->_month,
     		'year' => $this->_year,	
+    		'blocked' => $this->_blocked,
 			'rapState' => $rap,
     		'declarationLink' => $this->generateUrl('admin_sonata_clientoperations_v01tva_declaration', array('filter' => array('client_id' => array('value' => $this->_client_id)), 'month' => $this->_query_month)),
     		'exporterDebLink' => $this->generateUrl('admin_sonata_clientoperations_v01tva_exportTransDeb', array('filter' => array('client_id' => array('value' => $this->_client_id)), 'month' => $this->_query_month)),
     	));
-    	
-    		
+    }
+    
+    
+    public function lockingAction($client_id, $month) {
+    	$this->validateParams($client_id, $month);
+    	$this->executeLocking();
+    	return $this->render(':redirects:back.html.twig');
     }
     
 }
