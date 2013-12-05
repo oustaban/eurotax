@@ -749,7 +749,9 @@ class RapprochementController extends Controller
     public function lockingAction($client_id, $month) {
     	$this->validateParams($client_id, $month);
     	$this->executeLocking();
-    	return $this->render(':redirects:back.html.twig');
+    	//return $this->render(':redirects:back.html.twig');
+    	
+    	return $this->redirect($this->generateUrl('admin_sonata_clientoperations_v01tva_list', array('filter' => array('client_id' => array('value' => $this->_client_id)), 'month' => $this->_query_month)));
     }
     
 }
