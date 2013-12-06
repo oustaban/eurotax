@@ -335,9 +335,9 @@ class ClientAdmin extends Admin
             ->add('center_des_impots.nom', null, array('label' => 'list.center_des_impots'))
             ->add('date_de_depot_id', null, array('label' => 'list.date_de_depot_id'))
             ->add('teledeclaration', null, array('label' => 'list.teledeclaration'))
-            ->add('mois_tva', null, array('label' => 'Mois-TVA ' . $moisExtraColTitle))
-            ->add('BAPSA', null, array('label' => 'list.taxes_assimilees'))
-            ->add('remboursement_de_TVA', null, array('label' => 'list.remboursement_de_TVA'))
+            ->add('mois_tva', null, array('label' => 'Mois-TVA ' . $moisExtraColTitle, 'template' => 'ApplicationSonataClientBundle:CRUD:declaration_solde_TVA_total_text.html.twig'))
+            ->add('BAPSA', null, array('label' => 'list.taxes_assimilees', 'template' => 'ApplicationSonataClientBundle:CRUD:declaration_credit_TVA_reporter.html.twig'))
+            ->add('remboursement_de_TVA', null, array('label' => 'list.remboursement_de_TVA', 'template' => 'ApplicationSonataClientBundle:CRUD:declaration_demande_de_remboursement.html.twig'))
             ->add('comptes', "money", array('label' => 'list.solde_du_compte', 'template' => 'ApplicationSonataClientBundle:CRUD:comptes.html.twig'))
             ->add('date_debut_mission', null, array(
             'template' => 'ApplicationSonataClientBundle:CRUD:list_date_debut_mission.html.twig',

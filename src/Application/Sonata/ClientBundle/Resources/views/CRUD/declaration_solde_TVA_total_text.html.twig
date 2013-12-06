@@ -1,0 +1,9 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% set value = object.getDeclaration.getSoldeTVATotalText %}
+
+{% block field %}
+
+    {{ value }}
+
+{% endblock field %}
