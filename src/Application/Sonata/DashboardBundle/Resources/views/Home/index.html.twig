@@ -113,12 +113,17 @@
             </td>
             <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client[0].id }}">
                 {#{{ client[0].mois_tva }}#}
+                {{ client[0].declaration.getSoldeTVATotalText }}
+                
+                
             </td>
             <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client[0].id }}">
                 {#{{ client[0].BAPSA }}#}
+                 {{ client[0].declaration.getRapprochementState.getCreditTvaAReporter }}
             </td>
             <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client[0].id }}">
                 {#{{ client[0].remboursement_de_TVA }}#}
+                {{ client[0].declaration.getRapprochementState.getDemandeDeRemboursement }}
             </td>
             <td class="sonata-ba-list-field sonata-ba-list-field-money2"  objectId="{{ client[0].id }}">
                 <div class="montant{% if client.compte_solde_montant<0 %} negative_value{% endif %}">

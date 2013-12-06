@@ -4,6 +4,8 @@ namespace Application\Sonata\ClientBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Application\Sonata\ClientOperationsBundle\Helpers\ClientDeclaration;
+
 
 /**
  * Application\Sonata\ClientBundle\Entity\Client
@@ -2045,4 +2047,25 @@ class Client
 
         return $this->getCodePostalPostal().' '.$this->getVillePostal();
     }
+    
+    
+    
+    public function getDeclaration() {
+    	
+    	$now = new \DateTime();
+    	
+    	$dateQuery = $now->format('d') > 25 ? $now : new \DateTime('now -1 month');
+    	$year = $dateQuery->format('Y');
+    	$month = $dateQuery->format('m');
+    	
+    	
+    	$clientDeclaration = new ClientDeclaration($this);
+    	$clientDeclaration->setYear($year)
+    		->setMonth($month);
+    	
+    	
+    	return $clientDeclaration;
+    }
+    
+    
 }
