@@ -67,6 +67,41 @@ class LoadListDevisesData extends AbstractLoadListData
             'name' => 'Couronne Suédoise',
             'symbol' => 'kr',
         ),
+        'CZK' => array(
+        	'name' => 'Czech Koruna',
+        	'symbol' => 'Kč',
+        ),
+        'HRK' => array(
+        	'name' => 'Croatian Kuna',
+        	'symbol' => 'kn',
+        ),
+        'HUF' => array(
+        	'name' => 'Hungarian Forint',
+        	'symbol' => 'Ft',
+        ),
+        'PLN' => array(
+        	'name' => 'Polish Zloty',
+        	'symbol' => 'zł',
+        ),
+        'RON' => array(
+        	'name' => 'Romanian Leu',
+        	'symbol' => 'le',
+        ),
+        'RUB' => array(
+        	'name' => 'Russian Rouble',
+        	'symbol' => 'ру,;',
+        ),
+        'TRY' => array(
+        	'name' => 'Turkish Lira',
+        	'symbol' => 'YTL',
+        ),
+        'ZAR' => array(
+        	'name' => 'South African Rand',
+        	'symbol' => 'R',
+        ),
+        
+        
+        
         // Before add new Devise be sure You added it to \Application\Sonata\DevisesBundle\Entity\Devises
     );
 

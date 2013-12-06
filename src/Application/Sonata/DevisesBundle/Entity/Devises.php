@@ -93,6 +93,78 @@ class Devises
      */
     private $moneySEK;
 
+    /**
+     * CZK - Czech Koruna
+     * 
+     * @var string $moneyCZK
+     *
+     * @ORM\Column(name="moneyCZK", type="float", nullable=true)
+     */
+    private $moneyCZK;
+    
+    /**
+     * HRK - Croatian Kuna
+     * 
+     * @var string $moneyHRK
+     *
+     * @ORM\Column(name="moneyHRK", type="float", nullable=true)
+     */
+    private $moneyHRK;
+    
+    /**
+     * HUF - Hungarian Forint
+     * 
+     * @var string $moneyHUF
+     *
+     * @ORM\Column(name="moneyHUF", type="float", nullable=true)
+     */
+    private $moneyHUF;
+    
+    /**
+     * PLN - Polish Zloty
+     * 
+     * @var string $moneyPLN
+     *
+     * @ORM\Column(name="moneyPLN", type="float", nullable=true)
+     */
+    private $moneyPLN;
+    
+    /**
+     * RON - Romanian Leu
+     * 
+     * @var string $moneyRON
+     *
+     * @ORM\Column(name="moneyRON", type="float", nullable=true)
+     */
+    private $moneyRON;
+    
+    /**
+     * RUB - Russian Rouble
+     * 
+     * @var string $moneyRUB
+     *
+     * @ORM\Column(name="moneyRUB", type="float", nullable=true)
+     */
+    private $moneyRUB;
+    
+    /**
+     * TRY - Turkish Lira
+     * 
+     * @var string $moneyTRY
+     *
+     * @ORM\Column(name="moneyTRY", type="float", nullable=true)
+     */
+    private $moneyTRY;
+    
+    /**
+     * ZAR - South African Rand
+     * 
+     * @var string $moneyZAR
+     *
+     * @ORM\Column(name="moneyZAR", type="float", nullable=true)
+     */
+    private $moneyZAR;
+    
 
     /**
      *
@@ -396,5 +468,189 @@ class Devises
     public function getMoneySEK()
     {
         return $this->moneySEK;
+    }
+    
+     /**
+     * Set moneyCZK
+     *
+     * @param float $moneyCZK
+     * @return Devises
+     */
+    public function setMoneyCZK($moneyCZK)
+    {
+        $this->moneyCZK = $moneyCZK;
+
+        return $this;
+    }
+
+    /**
+     * Get moneyCZK
+     *
+     * @return float
+     */
+    public function getMoneyCZK()
+    {
+        return $this->moneyCZK;
+    }
+    
+    /**
+     * Set moneyHRK
+     *
+     * @param float $moneyHRK
+     * @return Devises
+     */
+    public function setMoneyHRK($moneyHRK)
+    {
+    	$this->moneyHRK = $moneyHRK;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get moneyHRK
+     *
+     * @return float
+     */
+    public function getMoneyHRK()
+    {
+    	return $this->moneyHRK;
+    }
+    
+    /**
+     * Set moneyHUF
+     *
+     * @param float $moneyHUF
+     * @return Devises
+     */
+    public function setMoneyHUF($moneyHUF)
+    {
+    	$this->moneyHUF = $moneyHUF;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get moneyHUF
+     *
+     * @return float
+     */
+    public function getMoneyHUF()
+    {
+    	return $this->moneyHUF;
+    }
+    
+    /**
+     * Set moneyPLN
+     *
+     * @param float $moneyPLN
+     * @return Devises
+     */
+    public function setMoneyPLN($moneyPLN)
+    {
+    	$this->moneyPLN = $moneyPLN;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get moneyPLN
+     *
+     * @return float
+     */
+    public function getMoneyPLN()
+    {
+    	return $this->moneyPLN;
+    }
+     
+    /**
+     * Set moneyRON
+     *
+     * @param float $moneyRON
+     * @return Devises
+     */
+    public function setMoneyRON($moneyRON)
+    {
+    	$this->moneyRON = $moneyRON;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get moneyRON
+     *
+     * @return float
+     */
+    public function getMoneyRON()
+    {
+    	return $this->moneyRON;
+    }
+     
+    /**
+     * Set moneyRUB
+     *
+     * @param float $moneyRUB
+     * @return Devises
+     */
+    public function setMoneyRUB($moneyRUB)
+    {
+    	$this->moneyRUB = $moneyRUB;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get moneyRUB
+     *
+     * @return float
+     */
+    public function getMoneyRUB()
+    {
+    	return $this->moneyRUB;
+    }
+    
+    /**
+     * Set moneyTRY
+     *
+     * @param float $moneyTRY
+     * @return Devises
+     */
+    public function setMoneyTRY($moneyTRY)
+    {
+    	$this->moneyTRY = $moneyTRY;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get moneyTRY
+     *
+     * @return float
+     */
+    public function getMoneyTRY()
+    {
+    	return $this->moneyTRY;
+    }
+    
+    /**
+     * Set moneyZAR
+     *
+     * @param float $moneyZAR
+     * @return Devises
+     */
+    public function setMoneyZAR($moneyZAR)
+    {
+    	$this->moneyZAR = $moneyZAR;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get moneyZAR
+     *
+     * @return float
+     */
+    public function getMoneyZAR()
+    {
+    	return $this->moneyZAR;
     }
 }
