@@ -208,10 +208,8 @@ class ClientDeclaration {
 	//
 	
 	public function getSoldeTVATotal() {
-		
 		$Total1 = $this->getTotalVat1();
 		$Total2 = $this->getTotalVat2();
-		
 		$soldeTVATotal = ($Total1?$Total1->getTVA():0) - ($Total2?$Total2->getTVA():0);
 		
 		return $soldeTVATotal;
@@ -229,15 +227,23 @@ class ClientDeclaration {
 	}
 	
 	public function getRapprochementState() {
-		$em = \AppKernel::getStaticContainer()->get('doctrine')->getManager();
-		$rap = $em->getRepository('ApplicationSonataClientOperationsBundle:RapprochementState')
-			->findOneBy(array('client_id' => $this->client->getId(), 'month' => $this->_month, 'year' => $this->_year));
-		 
-		if(!$rap) {
-			$rap = new RapprochementState();
-		}
+		static $instances = array();
 		
-		return $rap;
+		$key = $this->client->getId(). $this->_year . $this->_month;
+		
+		if(!isset($instances[$key])) {
+			$em = \AppKernel::getStaticContainer()->get('doctrine')->getManager();
+			$rap = $em->getRepository('ApplicationSonataClientOperationsBundle:RapprochementState')
+				->findOneBy(array('client_id' => $this->client->getId(), 'month' => $this->_month, 'year' => $this->_year));
+			
+			
+			if(!$rap) {
+				$rap = new RapprochementState();
+			}
+		
+			$instances[$key] = $rap;
+		}
+		return $instances[$key];
 	}
 	
 	

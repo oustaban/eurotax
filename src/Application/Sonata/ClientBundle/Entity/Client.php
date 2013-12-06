@@ -2051,20 +2051,21 @@ class Client
     
     
     public function getDeclaration() {
-    	
+    	static $instances = array();
     	$now = new \DateTime();
-    	
     	$dateQuery = $now->format('d') > 25 ? $now : new \DateTime('now -1 month');
     	$year = $dateQuery->format('Y');
     	$month = $dateQuery->format('m');
     	
-    	
-    	$clientDeclaration = new ClientDeclaration($this);
-    	$clientDeclaration->setYear($year)
-    		->setMonth($month);
-    	
-    	
-    	return $clientDeclaration;
+    	$key = $this->getId(). $year . $month;
+    	if(!isset($instances[$key])) {
+	    	$clientDeclaration = new ClientDeclaration($this);
+	    	$clientDeclaration->setYear($year)
+	    		->setMonth($month);
+	    	
+	    	$instances[$key] = $clientDeclaration;
+    	}
+    	return $instances[$key];
     }
     
     
