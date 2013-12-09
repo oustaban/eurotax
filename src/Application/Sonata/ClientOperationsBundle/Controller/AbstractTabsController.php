@@ -409,6 +409,8 @@ class AbstractTabsController extends Controller
         if($this->_query_month == -1 && $this->_show_all_operations) {
         	$this->_parameters_url['month'] = 'all';
         }
+        
+        $this->get('request')->setLocale(strtolower($this->client->getLanguage()));
     }
 
 
