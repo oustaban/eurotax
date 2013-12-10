@@ -3,6 +3,7 @@ namespace Application\Sonata\ClientOperationsBundle\Helpers;
 
 use Application\Sonata\ClientBundle\Entity\Client;
 use Application\Sonata\ClientOperationsBundle\Entity\RapprochementState;
+use Application\Sonata\ClientBundle\Entity\ListNatureDuClients;
 
 class ClientDeclaration {
 	
@@ -219,14 +220,18 @@ class ClientDeclaration {
 	
 	public function getSoldeTVATotalText() {
 		$soldeTVATotal = $this->getSoldeTVATotal();
-		if($soldeTVATotal >= 0) {
-			return 'SOLDE TVA de la période (si>=0) ' . $soldeTVATotal;
-		} else {
-			return 'SOLDE TVA de la période (si<0) ' . $soldeTVATotal;
+		
+		if($this->client->getNatureDuClient()->getId() == ListNatureDuClients::sixE && $this->isOperationLocked()) {
+			return $soldeTVATotal;
 		}
 	}
 	
 	public function getRapprochementState() {
+		
+		if($this->client->getNatureDuClient()->getId() != ListNatureDuClients::sixE && $this->isOperationLocked()) {
+			return new RapprochementState();
+		}
+		
 		static $instances = array();
 		
 		$key = $this->client->getId(). $this->_year . $this->_month;
@@ -245,6 +250,10 @@ class ClientDeclaration {
 		}
 		return $instances[$key];
 	}
+	
+	
+	
+	
 	
 	
 	/**
@@ -441,6 +450,14 @@ class ClientDeclaration {
 			;
 			 
 		return $qb;
+	}
+	
+	
+	private function isOperationLocked() {
+		$this->_locking = \AppKernel::getStaticContainer()->get('doctrine')->getRepository('ApplicationSonataClientOperationsBundle:Locking')
+			->findOneBy(array('client_id' => $this->client->getId(), 'month' => $this->_month, 'year' => $this->_year));
+		
+		return $this->_locking ? true : false;
 	}
 	
 	
