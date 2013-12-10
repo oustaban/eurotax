@@ -189,8 +189,8 @@ tr.dimmed, tr.dimmed a {
     width: auto;
 }
 
-.sonata-ba-list .sonata-ba-list-field-date{
-    text-align: center;
+.sonata-ba-list .sonata-ba-list-field-date, .sonata-ba-list .sonata-ba-list-field-center{
+    text-align: center !important;
 }
 
 .important_hidden {

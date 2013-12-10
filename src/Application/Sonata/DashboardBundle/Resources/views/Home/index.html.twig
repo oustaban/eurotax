@@ -111,17 +111,17 @@
                 {% set img = client[0].teledeclaration ? 'accept' : 'exclamation' %}
                 <img alt="{{ ('ApplicationSonataDashboardBundle.alt.' ~ img)|trans() }}" src="{{ asset('/bundles/sonataadmin/famfamfam/' ~ img|trans() ~ '.png') }}">
             </td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client[0].id }}">
+            <td class="sonata-ba-list-field sonata-ba-list-field-text sonata-ba-list-field-center"  objectId="{{ client[0].id }}">
                 {#{{ client[0].mois_tva }}#}
                 {{ client[0].declaration.getSoldeTVATotalText }}
                 
                 
             </td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client[0].id }}">
+            <td class="sonata-ba-list-field sonata-ba-list-field-text sonata-ba-list-field-center"  objectId="{{ client[0].id }}">
                 {#{{ client[0].BAPSA }}#}
                  {{ client[0].declaration.getRapprochementState.getCreditTvaAReporter }}
             </td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-text"  objectId="{{ client[0].id }}">
+            <td class="sonata-ba-list-field sonata-ba-list-field-text sonata-ba-list-field-center"  objectId="{{ client[0].id }}">
                 {#{{ client[0].remboursement_de_TVA }}#}
                 {{ client[0].declaration.getRapprochementState.getDemandeDeRemboursement }}
             </td>
