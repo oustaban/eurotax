@@ -309,6 +309,8 @@ class Excel
         	
         	$title = $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.' . $params['entity'] . '.title');
         	
+        	$printHeader = $this->_client->getNom() . ' : ' . $title;
+        	
         	
             $this->setParams($params);
             //if ($i > 0) {
@@ -318,6 +320,25 @@ class Excel
             $this->_excel->setActiveSheetIndex($i);
 
             $this->_sheet = $this->_excel->getActiveSheet();
+            
+            
+            $this->_sheet->getPageSetup()->setPaperSize(\PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
+            $this->_sheet->getPageSetup()->setOrientation(\PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+            $this->_sheet->getPageMargins()->setTop(1.5);
+            $this->_sheet->getPageMargins()->setBottom(1);
+            $this->_sheet->getPageMargins()->setLeft(0.5);
+            $this->_sheet->getPageMargins()->setRight(0.5);
+            $this->_sheet->getPageMargins()->setHeader(0.5);
+            $this->_sheet->getPageMargins()->setFooter(0.5);
+            
+            
+            $this->_sheet->getPageSetup()->setHorizontalCentered(true);
+            
+            
+            $this->_sheet->getHeaderFooter()->setOddHeader('&Leurotax &C&U'.$printHeader);
+            $this->_sheet->getHeaderFooter()->setEvenHeader('&Leurotax &C&U'.$printHeader);
+            
+            
             $this->_sheet->getDefaultColumnDimension()->setWidth(10);
 
             $this->_sheet->setTitle($title);
