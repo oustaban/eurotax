@@ -127,7 +127,7 @@ ApplicationSonataClientOperationsBundle:
       taux_de_change: Exchange Rate
       HT: Nett
       regime: Régime
-      DEB: DEB (OUI/NON)
+      DEB: Intrastat (YES/NO)
       commentaires: Commentaires
       n_ligne: N° Ligne
       nomenclature: Nomenclature
@@ -256,7 +256,7 @@ ApplicationSonataClientOperationsBundle:
       taux_de_change: Exchange Rate
       regime: Régime
       HT: Nett
-      DEB: DEB
+      DEB: Intrastat (YES/NO)
       commentaires: Commentaires
       n_ligne: N° Ligne
       nomenclature: Nomenclature
@@ -495,7 +495,7 @@ ApplicationSonataClientOperationsBundle:
       taux_de_change: Exchange Rate
       regime: Régime
       HT: Nett (€)
-      DEB: DEB
+      DEB: Intrastat (YES/NO)
       commentaires: Commentaires
       n_ligne: N° Ligne
       nomenclature: Nomenclature
@@ -626,3 +626,8 @@ a08im:
 
 a10caf:
   title: A10-CAF
+
+
+
+OUI: YES
+NON: NO

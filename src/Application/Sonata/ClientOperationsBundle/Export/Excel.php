@@ -649,9 +649,9 @@ class Excel
                 	
                 	if($field == 'DEB') {
                 		if($value == 1) {
-                			$value =  'OUI';
+                			$value =  $this->translator->trans('OUI');
                 		} else {
-                			$value = 'NON';
+                			$value = $this->translator->trans('NON');
                 		}
                 	}
                 	
