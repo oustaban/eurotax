@@ -1902,6 +1902,7 @@ class AbstractTabsController extends Controller
 			'Total1' => $clientDeclaration->getTotalVat1(),
 			'Total2' => $clientDeclaration->getTotalVat2(),
         	'SoldeTVATotal' => $clientDeclaration->getSoldeTVATotal(),
+        	'CreditToBeReportedTotal' => $clientDeclaration->getCreditToBeReportedTotal(),
         		
         	'locked' => $this->getLocking()
         ));

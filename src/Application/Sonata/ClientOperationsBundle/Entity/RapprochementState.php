@@ -75,6 +75,8 @@ class RapprochementState {
 	
 	
 	/**
+	 * ADDITIONAL TAXES
+	 * 
 	 * @var integer $credit_tva_a_reporter
 	 *
 	 * @ORM\Column(name="credit_tva_a_reporter", type="float", nullable=true)

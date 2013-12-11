@@ -182,6 +182,8 @@ class ClientDeclaration {
 	
 	
 	/**
+	 * 
+	 * OUTPUT TVA
 	 
 	Total Nett = sum of Nett of V01, A04, A06
 	Total TVA = sum of TVA of V01, A04, A06
@@ -194,7 +196,10 @@ class ClientDeclaration {
 		return $Total1;
 	}
 	
-	
+	/**
+	 * INPUT TVA
+	 * 
+	 */
 	public function getTotalVat2() {
 		$Total2 = $this->_sumData(
         	$Total2MergedData = array_merge($this->getA08IMList()?:array(), $this->getA02TVAPrevList()?:array(), 
@@ -204,10 +209,11 @@ class ClientDeclaration {
 		return $Total2;
 	}
 	
-	
-	
-	//
-	
+	/**
+	 * TVA Credit
+	 * 
+	 * @return number
+	 */
 	public function getSoldeTVATotal() {
 		$Total1 = $this->getTotalVat1();
 		$Total2 = $this->getTotalVat2();
@@ -216,14 +222,21 @@ class ClientDeclaration {
 		return $soldeTVATotal;
 	}
 	
-	
-	
 	public function getSoldeTVATotalText() {
 		$soldeTVATotal = $this->getSoldeTVATotal();
 		
 		if($this->client->getNatureDuClient()->getId() == ListNatureDuClients::sixE && $this->isOperationLocked()) {
 			return $soldeTVATotal;
 		}
+	}
+	
+	public function getTVACredit() {
+		return $this->getSoldeTVATotal();
+	}
+	
+	public function getCreditToBeReportedTotal() {
+		$value = $this->getTVACredit() - $this->getRapprochementState()->getDemandeDeRemboursement();
+		return number_format($value, 0);
 	}
 	
 	public function getRapprochementState() {
@@ -250,11 +263,6 @@ class ClientDeclaration {
 		}
 		return $instances[$key];
 	}
-	
-	
-	
-	
-	
 	
 	/**
 	 * 
