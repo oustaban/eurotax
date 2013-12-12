@@ -235,7 +235,7 @@ class ClientDeclaration {
 	}
 	
 	public function getCreditToBeReportedTotal() {
-		$value = number_format($this->getTVACredit(), 0) + number_format($this->getRapprochementState()->getDemandeDeRemboursement(), 0);
+		$value = round($this->getTVACredit()) + round($this->getRapprochementState()->getDemandeDeRemboursement());
 		return $value;
 	}
 	

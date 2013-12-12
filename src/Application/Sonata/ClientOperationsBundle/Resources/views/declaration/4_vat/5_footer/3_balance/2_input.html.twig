@@ -10,7 +10,7 @@
     </tr>
     <tr>
         <td class="title">{{ "ApplicationSonataClientOperationsBundle.declaration.credit_carried"|trans() }}</td>
-        <td class="i_tva">{{ CreditToBeReportedTotal }}</td>
+        <td class="i_tva">{% if SoldeTVATotal < 0 %}{{ CreditToBeReportedTotal }}{% endif %}</td>
     </tr>
     </tbody>
 </table>
