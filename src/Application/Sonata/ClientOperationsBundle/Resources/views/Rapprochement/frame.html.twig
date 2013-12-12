@@ -58,19 +58,30 @@
         <h3 id="formModalLabel"></h3>
     </div>
     <div class="modal-body">
-        <p>
+        <div class="row-fluid">
+    <div class="content span12">
 
+		<div class="alert alert-error hide">
+        </div>
         <form class="form-inline" id="form" method="post" action=""  enctype="multipart/form-data">
+        <fieldset>
+        <div class="sonata-ba-collapsed-fields">
             <input id="type" type="hidden" name="type" />
             
             <input id="client_id" type="hidden" name="client_id" />
             <input id="month" type="hidden" name="month" />
             <input id="year" type="hidden" name="year" />  
               
-            <label>Montant des taxes <input class="input-large" id="number" type="text" name="number" /></label>
+            
+            
+            <div class="controls sonata-ba-field sonata-ba-field-standard-natural ">
+        		<label for="number">Montant des taxes</label> <input class="input-large" id="number" type="text" name="number" />
+            </div>
+        </div>
+        </fieldset>
         </form>
         
-        </p>
+        </div></div>
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" id="doImport" onclick="javascript:$('#form').submit();">{{ 'Ok'|trans}}</button>
@@ -80,6 +91,19 @@
 		
 	<script type="text/javascript">
     $(function(){
+    	
+    	$('#number').height(25);
+    	
+    	$('#form').submit(function() {
+    		var value = parseFloat($('#number').val());
+    		if(value < 0) {
+    			$('.alert').html('Negative value is not allowed.').show();
+    			return false;
+    		}
+    		$('.alert').html('').hide();
+    		return true;
+    	});
+    	
     	$('#demandeBtn, #creditBtn').click(function(){    	
     		$('#form #type').val($(this).attr('type'));
     		$('#form #number').val($(this).attr('value'));
