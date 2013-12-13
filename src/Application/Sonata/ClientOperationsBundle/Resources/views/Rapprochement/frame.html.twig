@@ -37,8 +37,8 @@
 		    {% set text_lock = blocked ? 'Clôturer' : 'Déverrouiller' %}
     		<a id="btn_locking" href="{{ path('rapprochement_locking', {client_id: client_id, month: month~'|'~year } ) }}?filter%5Bclient_id%5D%5Bvalue%5D={{ client_id }}&month={{ month }}|{{ year }}" name="btn_locking" rel="tooltip" title="{{ text_lock|trans}}" class="btn"><i class="icon icon-lock"></i> {{ text_lock|trans}}</a>
 			<button class="btn" onclick="javascript:window.close();"><i class="icon icon-remove"></i> Annuler</button>
-			<button class="btn" id="creditBtn" title="Taxes Assimilées" type="ctar" value="{{ rapState.getCreditTvaAReporter }}"><i class="icon icon-list-alt"></i> Taxes Assimilées</button>
-			<button class="btn" id="demandeBtn" title="Demande de remboursement" type="ddr" value="{{ rapState.getDemandeDeRemboursement }}"><i class="icon icon-list-alt"></i> Demande de remboursement</button>
+			<button class="btn" id="creditBtn" title="Taxes Assimilées" label="Montant des taxes" type="ctar" value="{{ rapState.getCreditTvaAReporter }}"><i class="icon icon-list-alt"></i> Taxes Assimilées</button>
+			<button class="btn" id="demandeBtn" title="Demande de remboursement" label="Remboursement demande" type="ddr" value="{{ rapState.getDemandeDeRemboursement }}"><i class="icon icon-list-alt"></i> Demande de remboursement</button>
 		
 			<!-- <button class="btn" onclick="javascript:window.open('{{ exporterDebLink }}');"><i class="icon icon-ok-sign"></i> Valider</button> -->
 			
@@ -75,7 +75,7 @@
             
             
             <div class="controls sonata-ba-field sonata-ba-field-standard-natural ">
-        		<label for="number">Montant des taxes</label> <input class="input-large" id="number" type="text" name="number" />
+        		<label id="numberLabel" for="number"></label> <input class="input-large" id="number" type="text" name="number" />
             </div>
         </div>
         </fieldset>
@@ -107,6 +107,7 @@
     	$('#demandeBtn, #creditBtn').click(function(){    	
     		$('#form #type').val($(this).attr('type'));
     		$('#form #number').val($(this).attr('value'));
+    		$('#form #numberLabel').text($(this).attr('label'));
     		$('#formModalLabel').html($(this).attr('title'));
     		$('#formModal').modal('toggle')
     	});
