@@ -410,7 +410,7 @@ class AbstractTabsController extends Controller
         	$this->_parameters_url['month'] = 'all';
         }
         
-        $this->get('request')->setLocale(strtolower($this->client->getLanguage()));
+        //$this->get('request')->setLocale(strtolower($this->client->getLanguage()));
     }
 
 
@@ -1548,6 +1548,7 @@ class AbstractTabsController extends Controller
      */
     public function exportExcelAction()
     {
+    	$this->get('request')->setLocale(strtolower($this->client->getLanguage()));
         $excel = $this->get('client.operation.excel');
         $excel->set('_client', $this->client);
         $excel->set('_config_excel', $this->_config_excel);
