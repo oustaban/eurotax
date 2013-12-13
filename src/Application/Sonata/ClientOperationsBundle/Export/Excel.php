@@ -324,16 +324,21 @@ class Excel
             
             $this->_sheet->getPageSetup()->setPaperSize(\PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
             $this->_sheet->getPageSetup()->setOrientation(\PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
-            $this->_sheet->getPageMargins()->setTop(1.5);
-            $this->_sheet->getPageMargins()->setBottom(1);
-            $this->_sheet->getPageMargins()->setLeft(0.5);
-            $this->_sheet->getPageMargins()->setRight(0.5);
-            $this->_sheet->getPageMargins()->setHeader(0.5);
-            $this->_sheet->getPageMargins()->setFooter(0.5);
+            $this->_sheet->getPageMargins()->setTop(1.50 / 2.54);
+            $this->_sheet->getPageMargins()->setBottom(1.00/ 2.54);
+            $this->_sheet->getPageMargins()->setLeft(0.50/ 2.54);
+            $this->_sheet->getPageMargins()->setRight(0.50 / 2.54);
+            $this->_sheet->getPageMargins()->setHeader(0.50 / 2.54);
+            $this->_sheet->getPageMargins()->setFooter(0.50 / 2.54);
+            
+
+            
             
             
             $this->_sheet->getPageSetup()->setHorizontalCentered(true);
             
+            
+            $this->_sheet->getPageSetup()->setFitToPage(true);
             
             $this->_sheet->getHeaderFooter()->setOddHeader('&Leurotax &C&U'.$printHeader);
             $this->_sheet->getHeaderFooter()->setEvenHeader('&Leurotax &C&U'.$printHeader);
