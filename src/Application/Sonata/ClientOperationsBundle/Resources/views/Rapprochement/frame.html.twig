@@ -38,7 +38,7 @@
     		<a id="btn_locking" href="{{ path('rapprochement_locking', {client_id: client_id, month: month~'|'~year } ) }}?filter%5Bclient_id%5D%5Bvalue%5D={{ client_id }}&month={{ month }}|{{ year }}" name="btn_locking" rel="tooltip" title="{{ text_lock|trans}}" class="btn"><i class="icon icon-lock"></i> {{ text_lock|trans}}</a>
 			<button class="btn" onclick="javascript:window.close();"><i class="icon icon-remove"></i> Annuler</button>
 			<button class="btn" id="creditBtn" title="Taxes Assimilées" label="Montant des taxes" type="ctar" value="{{ rapState.getCreditTvaAReporter }}"><i class="icon icon-list-alt"></i> Taxes Assimilées</button>
-			<button class="btn" id="demandeBtn" title="Demande de remboursement" label="Remboursement demande" type="ddr" value="{{ rapState.getDemandeDeRemboursement }}"><i class="icon icon-list-alt"></i> Demande de remboursement</button>
+			<button class="btn" id="demandeBtn" title="Demande de remboursement" label="Remboursement demandé" type="ddr" value="{{ rapState.getDemandeDeRemboursement }}"><i class="icon icon-list-alt"></i> Demande de remboursement</button>
 		
 			<!-- <button class="btn" onclick="javascript:window.open('{{ exporterDebLink }}');"><i class="icon icon-ok-sign"></i> Valider</button> -->
 			
