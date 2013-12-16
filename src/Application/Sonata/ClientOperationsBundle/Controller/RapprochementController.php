@@ -367,8 +367,7 @@ class RapprochementController extends Controller
         	'form' => 	$form instanceof Form ? $form->createView() : false,
         	'fromImport' => $fromImport,
         	'hasImportDataOnly' => $hasImportDataOnly,
-       		'declarationLink' => $this->generateUrl('admin_sonata_clientoperations_v01tva_declaration', 
-       				array('filter' => array('client_id' => array('value' => $this->_client_id)), 'month' => $this->_query_month)),
+       		'declarationLink' => $this->generateUrl('rapprochement_frame', array('client_id' =>  $this->_client_id, 'month' => $this->_query_month)),
         	'listLink' => $this->generateUrl('admin_sonata_clientoperations_v01tva_list',
         				array('filter' => array('client_id' => array('value' => $this->_client_id)), 'month' => $this->_query_month)),
         );
