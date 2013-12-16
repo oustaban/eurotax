@@ -1156,6 +1156,8 @@ class Excel
                 ->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER)
                 ->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER)
                 ->setWrapText(true);
+                
+            $this->_sheet->getStyle($wColumn . $wRows)->getFont()->setBold(true);
 
             $this->setWidthSize($wColumn, $field, $params);
 //            $this->_sheet->getColumnDimension($wColumn)->setAutoSize(true);
@@ -1167,6 +1169,7 @@ class Excel
 
             $index = 1;
             $objRichText = new \PHPExcel_RichText();
+            
             $objPayable = $objRichText->createTextRun("DECLARATION D'ECHANGES DE BIENS ENTRE ETATS MEMBRES DE LA C.E.E. (DEB)");
             $objPayable->getFont()
                 ->setName('Arial')
@@ -1179,7 +1182,7 @@ class Excel
                 ->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER)
                 ->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             $this->_sheet->getRowDimension(1)->setRowHeight(25);
-
+            $this->_sheet->getStyle('A' . $index . ':' . $last . $index)->getFont()->setBold(true);
 
             $index = 3;
             $objRichText = new \PHPExcel_RichText();
@@ -1196,7 +1199,7 @@ class Excel
                 ->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             $this->_sheet->getStyle('A' . $index . ':' . $last . $index)->applyFromArray($this->_styleBorders);
             $this->_sheet->getRowDimension($index)->setRowHeight(25);
-
+            $this->_sheet->getStyle('A' . $index . ':' . $last . $index)->getFont()->setBold(true);
 
             $index = 4;
             $objRichText = new \PHPExcel_RichText();
@@ -1212,7 +1215,8 @@ class Excel
                 ->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             $this->_sheet->getStyle('A' . $index . ':' . $last . $index)->applyFromArray($this->_styleBorders);
             $this->_sheet->getRowDimension($index)->setRowHeight(25);
-
+            $this->_sheet->getStyle('A' . $index . ':' . $last . $index)->getFont()->setBold(true);
+            
             $wColumn = 'A';
             $index = 6;
             foreach ($params['fields'] as $key => $field) {
@@ -1242,6 +1246,9 @@ class Excel
 
         //autofilter
         $this->_sheet->setAutoFilter('A' . $wRows . ':' . $last . $wRows);
+        
+        
+        
         
         return $col;
     }
