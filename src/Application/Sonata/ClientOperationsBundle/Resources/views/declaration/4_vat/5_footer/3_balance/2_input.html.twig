@@ -6,11 +6,11 @@
     </tr>
     <tr>
         <td class="title">{{ "ApplicationSonataClientOperationsBundle.declaration.claim"|trans() }}</td>
-        <td class="i_tva">{{ rapState.getDemandeDeRemboursement }}</td>
+        <td class="i_tva">{{ rapState.getDemandeDeRemboursement|number_format(0, ',', ' ') }}</td>
     </tr>
     <tr>
         <td class="title">{{ "ApplicationSonataClientOperationsBundle.declaration.credit_carried"|trans() }}</td>
-        <td class="i_tva">{% if SoldeTVATotal < 0 %}{{ CreditToBeReportedTotal }}{% endif %}</td>
+        <td class="i_tva">{% if SoldeTVATotal < 0 %}{{ CreditToBeReportedTotal|number_format(0, ',', ' ') }}{% endif %}</td>
     </tr>
     </tbody>
 </table>
