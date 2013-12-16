@@ -330,20 +330,10 @@ class Excel
             $this->_sheet->getPageMargins()->setRight(0.50 / 2.54);
             $this->_sheet->getPageMargins()->setHeader(0.50 / 2.54);
             $this->_sheet->getPageMargins()->setFooter(0.50 / 2.54);
-            
-
-            
-            
-            
             $this->_sheet->getPageSetup()->setHorizontalCentered(true);
-            
-            
             $this->_sheet->getPageSetup()->setFitToPage(true);
-            
-            $this->_sheet->getHeaderFooter()->setOddHeader('&Leurotax &C&U'.$printHeader);
-            $this->_sheet->getHeaderFooter()->setEvenHeader('&Leurotax &C&U'.$printHeader);
-            
-            
+            $this->_sheet->getHeaderFooter()->setOddHeader('&L&Beurotax&B &C&U&B'.$printHeader);
+            $this->_sheet->getHeaderFooter()->setEvenHeader('&L&Beurotax&B &C&U&B'.$printHeader);
             $this->_sheet->getDefaultColumnDimension()->setWidth(10);
 
             $this->_sheet->setTitle($title);
