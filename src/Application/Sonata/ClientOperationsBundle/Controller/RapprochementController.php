@@ -537,7 +537,7 @@ class RapprochementController extends Controller
     		unset($objects);
     	}
     	
-    	$lastMonthLocking = $em->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $this->_client_id, 'month' => $this->_month, 'year' => $this->_year));
+    	$lastMonthLocking = $em->getRepository('ApplicationSonataClientOperationsBundle:Locking')->findOneBy(array('client_id' => $this->_client_id, 'month' => $_month, 'year' => $_year));
     	
     	// Last month must be locked first
     	if($hasRecordLastMonth && !$lastMonthLocking) {
