@@ -193,19 +193,20 @@ class Excel
     );
 
 
+    // Texts are now translatable
     protected $_keyTabData = array(
     			'Overview' => array(
     					array('title' => 'French VAT summary', 'desc' => 'Summary of operations related to the return period'),
     					array('title' => 'Account', 'desc' => 'Financial statement of your account with us'),
-    					array('title' => 'Funds request', 'desc' => 'Funds request for payment of the TVA'),
+    					//array('title' => 'Funds request', 'desc' => 'Funds request for payment of the TVA'),
     			),
     			'Sales'	=> array(
     					array('title' => 'Sales with Output TVA', 'desc' => 'Sales of Goods & Services in France. TVA charged'),
     					array('title' => 'Sales without TVA (Art 283-1)', 'desc' => 'Sales of Goods & Services in France. TVA not charged (Art 283-1 FTC)'),
     					array('title' => 'Intra-EU deliveries of goods', 'desc' => 'Exempt sales of Goods from France to the E.U. (Intra-EU deliveries)'),
     					array('title' => 'Intrastat (Dispatches)', 'desc' => 'Intrastat return (for Customs purposes) : Dispatches from France to the EU'),
-    					array('title' => 'Other Intl Service Sales 0%', 'desc' => 'Exempt Sales of International Services from France & Other Exempt Operations'),
-    					array('title' => 'Exports of Goods 0%', 'desc' => 'Exempt Sales of Goods from France to a non EU country (exportation)')
+    					array('title' => 'Exports of Goods 0%', 'desc' => 'Exempt Sales of Goods from France to a non EU country (exportation)'),
+    					array('title' => 'Other Intl Service Sales 0%', 'desc' => 'Exempt Sales of International Services from France & Other Exempt Operations')
     			),
     			'Purchases' => array(
     					array('title' => 'Purchases with TVA', 'desc' => 'Purchases of Goods & Services taxable in France. Charged and recoverable TVA'),
@@ -344,6 +345,9 @@ class Excel
             $this->_sheet->setTitle($title);
             $this->setTabsColor($params);
 
+            
+            //$this->_sheet->getSheetView()->setZoomScale(true);
+            
             $this->_sum = array();
 
             $this->_sheet->fromArray($this->fromArray($params));
@@ -438,11 +442,11 @@ class Excel
     	$this->_excel->setActiveSheetIndex(0);
     	$this->_sheet = $this->_excel->getActiveSheet();
     	$this->_sheet->getDefaultColumnDimension()->setWidth(10);
-    	$this->_sheet->setTitle('Key');
+    	$this->_sheet->setTitle($this->translator->trans('ApplicationSonataClientOperationsBundle.exports.KEY_TAB.key'));
     	$this->_excel->getActiveSheet()->getRowDimension(1)->setRowHeight(25);
     	$this->_excel->getActiveSheet()->getRowDimension(3)->setRowHeight(25);
     	$objRichText = new \PHPExcel_RichText();
-    	$key = $objRichText->createTextRun('KEY');
+    	$key = $objRichText->createTextRun($this->translator->trans('ApplicationSonataClientOperationsBundle.exports.KEY_TAB.key'));
     	
     	$this->_excel->getActiveSheet()->getColumnDimension('A')->setWidth(10);
     	$this->_excel->getActiveSheet()->getColumnDimension('B')->setWidth(40);
@@ -467,19 +471,21 @@ class Excel
     	);
     	
     	$this->yellowHeader('A3');
-    	$this->_excel->getActiveSheet()->setCellValue('B3', 'Title');
+    	$this->_excel->getActiveSheet()->setCellValue('B3', $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.KEY_TAB.title'));
     	$this->yellowHeader('B3');
-    	$this->_excel->getActiveSheet()->setCellValue('C3', 'Description of operations');
+    	$this->_excel->getActiveSheet()->setCellValue('C3', $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.KEY_TAB.description_operations'));
     	$this->yellowHeader('C3');
     	
     	
     	
     	$startRow = 4;
     	foreach($this->_keyTabData as $head => $rows) {
+    		
+    		$head = strtolower($head);
     		$rowCount = count($rows)-1;
     		$lastRow = $startRow + $rowCount;
     		$objRichText = new \PHPExcel_RichText();
-    		$headTitle = $objRichText->createTextRun($head);
+    		$headTitle = $objRichText->createTextRun($this->translator->trans('ApplicationSonataClientOperationsBundle.exports.KEY_TAB.' . $head));
     		$cells = "A$startRow:A$lastRow";
     		$this->_excel->getActiveSheet()->getCell("A$startRow")->setValue($objRichText);
     		$this->_excel->getActiveSheet()->mergeCells($cells);
@@ -491,12 +497,15 @@ class Excel
     		 
     		unset($objRichText);
     		 
+    		$ctr = 1;
     		$i = $startRow;
     		foreach($rows as $row) {
     			$this->_excel->getActiveSheet()->getRowDimension($i)->setRowHeight(20);
-    			$this->_excel->getActiveSheet()->getCell("B$i")->setValue($row['title']);
-    			$this->_excel->getActiveSheet()->getCell("C$i")->setValue($row['desc']);
+    			$this->_excel->getActiveSheet()->getCell("B$i")->setValue($this->translator->trans('ApplicationSonataClientOperationsBundle.exports.KEY_TAB.' . $head . '_title_' . $ctr));
+    			$this->_excel->getActiveSheet()->getCell("C$i")->setValue($this->translator->trans('ApplicationSonataClientOperationsBundle.exports.KEY_TAB.' . $head . '_desc_' . $ctr));
     			$i++;
+    			
+    			$ctr++;
     		}
     		 
     		 

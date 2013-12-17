@@ -75,6 +75,58 @@ ApplicationSonataClientOperationsBundle:
     A10CAF:
       title: Achats en Franchise
     
+    KEY_TAB:
+      key: Legende
+      title: Titre
+      description_operations: Libellé (détail des opérations)
+      overview: Overview
+      sales: Ventes #Sales
+      purchases: Achats #Purchases
+
+      overview_title_1: Résumé TVA #French VAT summary
+      overview_desc_1: Résumé des opérations de la période déclarée #Summary of operations related to the return period
+
+      overview_title_2: Compte #Account
+      overview_desc_2: Relevé des opérations financières de l'année #Financial statement of your account with us
+
+      sales_title_1: Ventes en France avec TVA #Sales with Output TVA
+      sales_desc_1: Ventes de biens & services imposables en France. TVA facturée. #Sales of Goods & Services in France. TVA charged
+
+      sales_title_2: Ventes en France sans TVA #Sales without TVA (Art 283-1)
+      sales_desc_2: Ventes de biens & services imposables en France. TVA non facturée : art 283-1 (assujetti français) #Sales of Goods & Services in France. TVA not charged (Art 283-1 FTC)
+
+      sales_title_3: Livraisons Intra-UE #Intra-EU deliveries of goods
+      sales_desc_3: Ventes exonérées de biens depuis la France vers l'UE (livraisons intra-UE) #Exempt sales of Goods from France to the E.U. (Intra-EU deliveries)
+
+      sales_title_4: DEB à l'expédition #Intrastat (Dispatches)
+      sales_desc_4: DEB à l'expédition #Intrastat return (for Customs purposes) : Dispatches from France to the EU
+
+      sales_title_5: Exports Biens vers pays tiers #Exports of Goods 0%
+      sales_desc_5: Ventes exonérées de biens depuis la France en dehors de l'UE (exportation) #Exempt Sales of Goods from France to a non EU country (exportation)
+
+      sales_title_6: Autres Ventes Services Intl 0% #Other Intl Service Sales 0%
+      sales_desc_6: Ventes exonérées de services depuis la France vers l'International et Autres Opérations Non Imposables #Exempt Sales of International Services from France & Other Exempt Operations
+
+      purchases_title_1: Achats avec TVA à récupérer #Purchases with TVA
+      purchases_desc_1: Achats de biens & services imposables en France. TVA facturée et récupérable.. #Purchases of Goods & Services taxable in France. Charged and recoverable TVA
+
+      purchases_title_2: Imports avec TVA à récupérer #Imports of Goods
+      purchases_desc_2: Importations de biens hors UE vers la France #Imports of Goods from a non-EU country to France
+
+      purchases_title_3: Achats France TVA autoliquidée #Purchases without TVA
+      purchases_desc_3: Achats de biens & services imposables en France. Art 283-1 : TVA auto-liquidée #Purchases of Goods & Services taxable in France. Art 283-1 : Reverse Charge
+
+      purchases_title_4: Acquisitions Intra-UE de biens #Intra-EU Acquisitions of Goods
+      purchases_desc_4: Acquisitions Intra-UE de biens depuis l'UE vers la France : TVA auto-liquidée #Intra-EU Acquisitions of Goods from the EU to France : Reverse Charge
+
+      purchases_title_5: DEB à l'introduction #Intrastat (Arrivals)
+      purchases_desc_5: DEB à l'introduction #Intrastat return (for Customs purposes) : Arrivals from another EU country to France
+
+      purchases_title_6: Achats Services Internationaux #Purch. of EU & non-EU Services
+      purchases_desc_6: Achats de services à l'international : TVA auto-liquidée #EU & non-EU Purchases of Services : Reverse Charge
+
+      purchases_title_7: Achats en France  CAF-AI2 #QFP Evolution
+      purchases_desc_7: Achats de biens & services imposables en France, TVA non facturée :  CAF #Purchases of Goods & Services taxable in France. TVA not charged : Quota of Free Purchase (QFP)
 
   form:
     Month: Mois

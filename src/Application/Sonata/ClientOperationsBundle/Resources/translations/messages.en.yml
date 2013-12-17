@@ -74,6 +74,60 @@ ApplicationSonataClientOperationsBundle:
     A10CAF:
       title: Quota Free Purchase #Achats en Franchise
 
+    KEY_TAB:
+      key: Key
+      title: Title
+      description_operations: Description of operations
+      overview: Overview
+      sales: Sales
+      purchases: Purchases
+
+      overview_title_1: French VAT summary
+      overview_desc_1: Summary of operations related to the return period
+
+      overview_title_2: Account
+      overview_desc_2: Financial statement of your account with us
+
+      sales_title_1: Sales with Output TVA
+      sales_desc_1: Sales of Goods & Services in France. TVA charged
+
+      sales_title_2: Sales without TVA (Art 283-1)
+      sales_desc_2: Sales of Goods & Services in France. TVA not charged (Art 283-1 FTC)
+
+      sales_title_3: Intra-EU deliveries of goods
+      sales_desc_3: Exempt sales of Goods from France to the E.U. (Intra-EU deliveries)
+
+      sales_title_4: Intrastat (Dispatches)
+      sales_desc_4: Intrastat return (for Customs purposes) : Dispatches from France to the EU
+
+      sales_title_5: Exports of Goods 0%
+      sales_desc_5: Exempt Sales of Goods from France to a non EU country (exportation)
+
+      sales_title_6: Other Intl Service Sales 0%
+      sales_desc_6: Exempt Sales of International Services from France & Other Exempt Operations
+
+      purchases_title_1: Purchases with TVA
+      purchases_desc_1: Purchases of Goods & Services taxable in France. Charged and recoverable TVA
+
+      purchases_title_2: Imports of Goods
+      purchases_desc_2: Imports of Goods from a non-EU country to France
+
+      purchases_title_3: Purchases without TVA
+      purchases_desc_3: Purchases of Goods & Services taxable in France. Art 283-1 : Reverse Charge
+
+      purchases_title_4: Intra-EU Acquisitions of Goods
+      purchases_desc_4: Intra-EU Acquisitions of Goods from the EU to France : Reverse Charge
+
+      purchases_title_5: Intrastat (Arrivals)
+      purchases_desc_5: Intrastat return (for Customs purposes) : Arrivals from another EU country to France
+
+      purchases_title_6: Purch. of EU & non-EU Services
+      purchases_desc_6: EU & non-EU Purchases of Services : Reverse Charge
+
+      purchases_title_7: QFP Evolution
+      purchases_desc_7: Purchases of Goods & Services taxable in France. TVA not charged : Quota of Free Purchase (QFP)
+
+
   form:
     Month: Mois
     Year:  Année
