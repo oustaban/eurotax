@@ -511,7 +511,6 @@ class RapprochementController extends Controller
     	
     	$_year = $lastMonth->format('Y');
     	$_month = $lastMonth->format('m');
-    	//var_dump($lastMonth->format('Y m'));
     	 
     	$em = $this->getDoctrine()->getManager();
     	
@@ -520,8 +519,8 @@ class RapprochementController extends Controller
     		->createQueryBuilder('o')
     		->where('o.mois BETWEEN :from_date AND :to_date')
     		->andWhere('o.client_id = :client_id')
-    		->setParameter(':from_date', $this->_year . '-' . $this->_month . '-01')
-    		->setParameter(':to_date', $this->_year . '-' . $this->_month . '-31')
+    		->setParameter(':from_date', $_year . '-' . $_month . '-01')
+    		->setParameter(':to_date', $_year . '-' . $_month . '-31')
     		->setParameter(':client_id', $this->_client_id)
     		->getQuery()->getResult();
     		foreach ($objects as $obj) {
