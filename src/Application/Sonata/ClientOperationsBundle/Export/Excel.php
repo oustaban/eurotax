@@ -306,6 +306,11 @@ class Excel
         $i = 2;
         foreach ($this->get('_config_excel') as $table => $params) {
 
+        	$result = $this->queryResult($params);
+        	
+        	if(!$result) {
+        		continue;
+        	}
         	
         	$title = $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.' . $params['entity'] . '.title');
         	
