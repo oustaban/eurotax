@@ -845,6 +845,10 @@ function init_rapprochement_sums() {
 	    //if( (totals_input_v1 === 0 && totals_input_v2 === 0) && (totals_output_v1 === 0 && totals_output_v2 === 0)) {
 	    	//$('#rapprochement_form').hide();
 	    //}
+	    
+	    if($('.rapprochement_intro').is(':hidden') && $('.rapprochement_exped').is(':hidden')) {
+	    	$('#btn_locking').hide();
+	    }
     
     }
     
