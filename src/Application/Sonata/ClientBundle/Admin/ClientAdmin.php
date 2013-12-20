@@ -190,9 +190,10 @@ class ClientAdmin extends Admin
             ->add('num_dossier_fiscal', null, array('label' => 'form.num_dossier_fiscal', 'required' => false, 'disabled' => $client->getNumDossierFiscal() ? true : false))
             ->with('form.client.row14')
             ->add('taxe_additionnelle', 'choice',
-            array('expanded' => true,
+            array('expanded' => false,
                 'label' => 'form.taxe_additionnelle',
                 'choices' => array(1 => 'Oui', 0 => 'Non'),
+            	'empty_value' => '',
                 'required' => false,
             	'disabled' => $isGestionnaire ? true : false
             ))

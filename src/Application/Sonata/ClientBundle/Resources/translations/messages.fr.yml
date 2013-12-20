@@ -10,7 +10,7 @@ form:
   date_debut_mission: Date début mission
   periodicite_facturation: Périodicité Facturation
   num_dossier_fiscal: Num dossier fiscal
-  taxe_additionnelle: Taxe additionnelle
+  taxe_additionnelle: Taxes Assimilées
   periodicite_CA3: Périodicité CA3
   center_des_impots: Centre des impôts
   language: Langue
@@ -42,7 +42,7 @@ form:
     date_debut_mission: Date début mission
     periodicite_facturation: Périodicité Facturation
     num_dossier_fiscal: Num dossier fiscal
-    taxe_additionnelle: Taxe additionnelle
+    taxe_additionnelle: Taxes Assimilées
     periodicite_CA3: Périodicité CA3
     center_des_impots: Centre des impôts
     language: Langue
@@ -189,7 +189,7 @@ list:
   date_debut_mission: Début
   periodicite_facturation: Périodicité Facturation
   num_dossier_fiscal: Num dossier fiscal
-  taxe_additionnelle: Taxe additionnelle
+  taxe_additionnelle: Taxes Assimilées
   periodicite_CA3: Périodicité CA3
   center_des_impots: Centre impôts
   language: Langue
@@ -314,7 +314,7 @@ filter:
   date_debut_mission: Date début mission
   periodicite_facturation: Périodicité Facturation
   num_dossier_fiscal: Num dossier fiscal
-  taxe_additionnelle: Taxe additionnelle
+  taxe_additionnelle: Taxe assimilées
   periodicite_CA3: Périodicité CA3
   center_des_impots: Centre des impôts
   language: Langue
