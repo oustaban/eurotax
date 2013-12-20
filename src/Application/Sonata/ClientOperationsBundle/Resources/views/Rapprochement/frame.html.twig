@@ -37,9 +37,15 @@
 		    {% set text_lock = blocked ? 'Clôturer' : 'Déverrouiller' %}
     		<a id="btn_locking" href="{{ path('rapprochement_locking', {client_id: client_id, month: month~'|'~year } ) }}?filter%5Bclient_id%5D%5Bvalue%5D={{ client_id }}&month={{ month }}|{{ year }}" name="btn_locking" rel="tooltip" title="{{ text_lock|trans}}" class="btn"><i class="icon icon-lock"></i> {{ text_lock|trans}}</a>
 			<button class="btn" onclick="javascript:window.close();"><i class="icon icon-remove"></i> Annuler</button>
+			
+			{% if client.getTaxeAdditionnelle %} 
 			<button class="btn" id="creditBtn" title="Taxes Assimilées" label="Montant des taxes" type="ctar" value="{{ rapState.getCreditTvaAReporter }}"><i class="icon icon-list-alt"></i> Taxes Assimilées</button>
+			{% endif %}
+			
+			{% if clientDeclaration.getSoldeTVATotal() < 0 %}
 			<button class="btn" id="demandeBtn" title="Demande de remboursement" label="Remboursement demandé" type="ddr" value="{{ rapState.getDemandeDeRemboursement }}"><i class="icon icon-list-alt"></i> Demande de remboursement</button>
-		
+			{% endif %}
+			
 			<!-- <button class="btn" onclick="javascript:window.open('{{ exporterDebLink }}');"><i class="icon icon-ok-sign"></i> Valider</button> -->
 			
 		</div>
@@ -91,9 +97,7 @@
 		
 	<script type="text/javascript">
     $(function(){
-    	
     	$('#number').height(25);
-    	
     	$('#form').submit(function() {
     		var value = parseFloat($('#number').val());
     		if(value < 0) {
@@ -103,7 +107,6 @@
     		$('.alert').html('').hide();
     		return true;
     	});
-    	
     	$('#demandeBtn, #creditBtn').click(function(){    	
     		$('#form #type').val($(this).attr('type'));
     		$('#form #number').val($(this).attr('value'));
@@ -111,10 +114,7 @@
     		$('#formModalLabel').html($(this).attr('title'));
     		$('#formModal').modal('toggle')
     	});
-    	
     });
     </script>
-    
-		
 </body>
 </html>		

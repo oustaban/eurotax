@@ -714,6 +714,9 @@ class RapprochementController extends Controller
     		$rap = new RapprochementState();
     	}
     	
+    	$clientDeclaration = $this->_client->getDeclaration($this->_year, $this->_month);
+    	
+    	
     	$request = $this->get('request');
     	
     	if ($request->getMethod() == 'POST') {
@@ -734,6 +737,8 @@ class RapprochementController extends Controller
     	
     	return $this->render('ApplicationSonataClientOperationsBundle:Rapprochement:frame.html.twig', array(
     		'client_id' => $this->_client_id,
+    		'client' => $this->_client,
+    		'clientDeclaration' => $clientDeclaration,
     		'month' => $this->_month,
     		'year' => $this->_year,	
     		'blocked' => $this->_blocked,

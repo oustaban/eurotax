@@ -5,11 +5,13 @@
         <td class="balance_value">{{ SoldeTVATotal|number_format(0, ',', ' ') }} €</td>
         <td class="balance_type">A</td>
     </tr>
+    
     <tr>
         <td class="balance_title">{{ "ApplicationSonataClientOperationsBundle.declaration.balance.additional_taxes"|trans() }}</td>
-        <td class="balance_value">{{ rapState.getCreditTvaAReporter }} €</td>
+        <td class="balance_value">{% if client.getTaxeAdditionnelle %} {{ rapState.getCreditTvaAReporter|number_format(0, ',', ' ') }}{% else %} 0,00 {% endif %} €</td>
         <td class="balance_type">B</td>
     </tr>
+    
     <tr>
         <td class="balance_title">{{ "ApplicationSonataClientOperationsBundle.declaration.balance.account_balance"|trans() }}</td>
         <td class="balance_value">{{ client.CompteReelSum|number_format(2, ',', ' ') }} €</td>

@@ -2050,12 +2050,15 @@ class Client
     
     
     
-    public function getDeclaration() {
+    public function getDeclaration($year = null, $month = null) {
     	static $instances = array();
-    	$now = new \DateTime();
-    	$dateQuery = $now->format('d') > 25 ? $now : new \DateTime('now -1 month');
-    	$year = $dateQuery->format('Y');
-    	$month = $dateQuery->format('m');
+    	
+    	if(is_null($year) || is_null($month)) {
+	    	$now = new \DateTime();
+	    	$dateQuery = $now->format('d') > 25 ? $now : new \DateTime('now -1 month');
+	    	$year = $dateQuery->format('Y');
+	    	$month = $dateQuery->format('m');
+    	}
     	
     	$key = $this->getId(). $year . $month;
     	if(!isset($instances[$key])) {
