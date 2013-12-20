@@ -4,7 +4,7 @@
     <tbody>
      {% for data in A04283Ilist %}
     <tr>
-        <td class="o_title">{% if loop.index == 1 %} A04-283-I {% endif %}</td>
+        <td class="o_title">{% if loop.index == 1 %}  {{ "ApplicationSonataClientOperationsBundle.exports.A04283I.title"|trans() }}{% endif %}</td>
         <td class="o_value">{{ (data.getTauxDeTVA() * 100) }}%</td>
         <td class="o_nett">{{ data.getHT()|number_format(0, ',', ' ') }}</td>
         <td class="o_tva">{{ data.getTVA()|number_format(0, ',', ' ') }}</td>

@@ -9,7 +9,7 @@
     
 	{% for data in A10CAFlist %}
     <tr>
-        <td class="i_title">A10-CAF</td>
+        <td class="i_title">{{ "ApplicationSonataClientOperationsBundle.exports.A10CAF.title"|trans() }}</td>
         <td class="i_value">0%</td>
         <td class="i_nett">{{ data.getHT()|number_format(0, ',', ' ') }}</td>
         <td class="i_tva">&nbsp;</td>
