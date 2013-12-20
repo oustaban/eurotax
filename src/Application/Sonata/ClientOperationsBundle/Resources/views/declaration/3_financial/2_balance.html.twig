@@ -2,7 +2,7 @@
     <tbody>
     <tr>
         <td class="balance_title">{{ "ApplicationSonataClientOperationsBundle.declaration.balance.tva"|trans() }}</td>
-        <td class="balance_value">0,00 €</td>
+        <td class="balance_value">{{ SoldeTVATotal|number_format(0, ',', ' ') }} €</td>
         <td class="balance_type">A</td>
     </tr>
     <tr>
