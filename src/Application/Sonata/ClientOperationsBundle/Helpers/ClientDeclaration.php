@@ -234,6 +234,18 @@ class ClientDeclaration {
 		return $this->getSoldeTVATotal();
 	}
 	
+	
+	public function getTotalBalance() {
+		$total = $this->getTVACredit();
+		if($this->client->getTaxeAdditionnelle()) {
+			$total += $this->getRapprochementState()->getCreditTvaAReporter();
+		}
+		
+		$total += $this->client->getCompteReelSum();
+		return $total;
+	}
+	
+	
 	public function getCreditToBeReportedTotal() {
 		$value = round($this->getTVACredit()) + round($this->getRapprochementState()->getDemandeDeRemboursement());
 		return $value;
