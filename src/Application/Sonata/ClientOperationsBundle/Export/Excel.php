@@ -446,7 +446,7 @@ class Excel
     	$this->_excel->getActiveSheet()->getRowDimension(1)->setRowHeight(25);
     	$this->_excel->getActiveSheet()->getRowDimension(3)->setRowHeight(25);
     	$objRichText = new \PHPExcel_RichText();
-    	$key = $objRichText->createTextRun($this->translator->trans('ApplicationSonataClientOperationsBundle.exports.KEY_TAB.key'));
+    	$key = $objRichText->createTextRun(strtoupper($this->translator->trans('ApplicationSonataClientOperationsBundle.exports.KEY_TAB.key')));
     	
     	$this->_excel->getActiveSheet()->getColumnDimension('A')->setWidth(10);
     	$this->_excel->getActiveSheet()->getColumnDimension('B')->setWidth(40);
@@ -462,7 +462,7 @@ class Excel
     	$this->_excel->getActiveSheet()->getStyle('B1:C1')->applyFromArray(
     			array('fill' 	=> array(
     					'type'		=> \PHPExcel_Style_Fill::FILL_SOLID,
-    					'color'		=> array('argb' => 'FFCCFFCC')
+    					'color'		=> array('argb' => 'CCFFCC')
     			),
     					'borders' => array(
     							'allborders'	=> array('style' => \PHPExcel_Style_Border::BORDER_THIN),
@@ -500,9 +500,18 @@ class Excel
     		$ctr = 1;
     		$i = $startRow;
     		foreach($rows as $row) {
-    			$this->_excel->getActiveSheet()->getRowDimension($i)->setRowHeight(20);
+    			if($head == 'overview') {
+    				$this->_excel->getActiveSheet()->getRowDimension($i)->setRowHeight(30);
+    			} else {
+    				$this->_excel->getActiveSheet()->getRowDimension($i)->setRowHeight(20);
+    			}
+    			
     			$this->_excel->getActiveSheet()->getCell("B$i")->setValue($this->translator->trans('ApplicationSonataClientOperationsBundle.exports.KEY_TAB.' . $head . '_title_' . $ctr));
+    			$this->_excel->getActiveSheet()->getStyle("B$i")->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+    			
     			$this->_excel->getActiveSheet()->getCell("C$i")->setValue($this->translator->trans('ApplicationSonataClientOperationsBundle.exports.KEY_TAB.' . $head . '_desc_' . $ctr));
+    			$this->_excel->getActiveSheet()->getStyle("C$i")->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+    			
     			$i++;
     			
     			$ctr++;
@@ -514,7 +523,7 @@ class Excel
     		$this->_excel->getActiveSheet()->getStyle("A$i:C$i")->applyFromArray(
     				array('fill' 	=> array(
     						'type'		=> \PHPExcel_Style_Fill::FILL_SOLID,
-    						'color'		=> array('argb' => 'FFFFFF00')
+    						'color'		=> array('argb' => 'FFFF99')
     					),
     	
     						'borders' => array(
@@ -537,7 +546,7 @@ class Excel
     	$this->_excel->getActiveSheet()->getStyle($cellCoordinate)->applyFromArray(
     			array('fill' 	=> array(
     					'type'		=> \PHPExcel_Style_Fill::FILL_SOLID,
-    					'color'		=> array('argb' => 'FFFFFF00')
+    					'color'		=> array('argb' => 'FFFF99')
     			),
     	
     					'borders' => array(
