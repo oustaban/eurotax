@@ -36,17 +36,7 @@ class A08IMAdmin extends Admin
             ->add('numero_piece', null, array('label' => $this->getFieldLabel('numero_piece')))
             ->add('taux_de_TVA', 'choice', array(
             'label' => $this->getFieldLabel('taux_de_TVA'),
-            'choices' => array(
-                '0.196' => '19.6%',
-                '0.13' => '13%',
-                '0.085' => '8.5%',
-                '0.08' => '8%',
-                '0.07' => '7%',
-                '0.055' => '5.5%',
-                '0.021' => '2.1%',
-                '0.0105' => '1.05%',
-                '0.009' => '0.9%',
-            ),
+            'choices' => $this->_taux_de_TVA_rates,
             'empty_value' => '',
         ))
             ->add('TVA', 'money', array('label' => $this->getFieldLabel('TVA'), 'required'=>false))

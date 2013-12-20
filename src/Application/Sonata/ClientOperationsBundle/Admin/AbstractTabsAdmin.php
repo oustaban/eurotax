@@ -42,10 +42,22 @@ abstract class AbstractTabsAdmin extends Admin
     protected $_index_import = 0;
     public $_show_all_operations = false;
 
-    
     public $import_file_year,
     	$import_file_month;
     
+    protected $_taux_de_TVA_rates = array(
+    	'0.20' => '20%',
+    	'0.196' => '19.6%',
+    	'0.13' => '13%',
+    	'0.10' => '10%',
+    	'0.085' => '8.5%',
+    	'0.08' => '8%',
+    	'0.07' => '7%',
+    	'0.055' => '5.5%',
+    	'0.021' => '2.1%',
+    	'0.0105' => '1.05%',
+    	'0.009' => '0.9%',
+    );
     
     
     protected $_nature_transaction_source = array(
