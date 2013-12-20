@@ -782,7 +782,7 @@ class AbstractTabsController extends Controller
      */
     public function importAction()
     {
-    	set_time_limit(0);
+    	//set_time_limit(0);
     	$this->getLockingAccessDenied();
         if (!empty($_FILES) && !empty($_FILES["inputFile"])) {
             $file = TMP_UPLOAD_PATH . '/' . $_FILES["inputFile"]["name"];
@@ -803,14 +803,22 @@ class AbstractTabsController extends Controller
                     $objPHPExcel = $objReader->load($file);
                     $sheets = $objPHPExcel->getAllSheets();
 
+                    
+                    
                     $content_arr = array();
                     foreach ($sheets as $sheet) {
 
                         $title = $sheet->getTitle();
+                       
+                        
                         $content_arr[$title] = $sheet->toArray();
                     }
+                    
+                    $objPHPExcel->disconnectWorksheets();
                     unset($sheets, $objPHPExcel, $objReader);
 
+                    //var_dump($content_arr); exit;
+                    
                     file_put_contents($tmpFile, '');
                     $this->importValidateAndSave($content_arr);
 
