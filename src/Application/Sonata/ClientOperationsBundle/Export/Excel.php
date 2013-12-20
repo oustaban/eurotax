@@ -363,7 +363,7 @@ class Excel
     	$this->_excel->setActiveSheetIndex(1);
     	$this->_sheet = $this->_excel->getActiveSheet();
     	$this->_sheet->getDefaultColumnDimension()->setWidth(10);
-    	$this->_sheet->setTitle('Account ' . date('Y'));
+    	$this->_sheet->setTitle($this->translator->trans('ApplicationSonataClientOperationsBundle.exports.ACCOUNT_TAB.account') . ' ' . date('Y'));
     	$this->_excel->getActiveSheet()->getColumnDimension('A')->setWidth(15);
     	$this->_excel->getActiveSheet()->getColumnDimension('B')->setWidth(50);
     	$this->_excel->getActiveSheet()->getColumnDimension('C')->setWidth(15);
@@ -446,7 +446,7 @@ class Excel
     	$this->_excel->getActiveSheet()->getRowDimension(1)->setRowHeight(25);
     	$this->_excel->getActiveSheet()->getRowDimension(3)->setRowHeight(25);
     	$objRichText = new \PHPExcel_RichText();
-    	$key = $objRichText->createTextRun(strtoupper($this->translator->trans('ApplicationSonataClientOperationsBundle.exports.KEY_TAB.key')));
+    	$key = $objRichText->createTextRun(mb_strtoupper($this->translator->trans('ApplicationSonataClientOperationsBundle.exports.KEY_TAB.key'), 'UTF-8'));
     	
     	$this->_excel->getActiveSheet()->getColumnDimension('A')->setWidth(10);
     	$this->_excel->getActiveSheet()->getColumnDimension('B')->setWidth(40);

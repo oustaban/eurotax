@@ -127,6 +127,8 @@ ApplicationSonataClientOperationsBundle:
       purchases_title_7: QFP Evolution
       purchases_desc_7: Purchases of Goods & Services taxable in France. TVA not charged : Quota of Free Purchase (QFP)
 
+    ACCOUNT_TAB:
+      account: Account
 
   form:
     Month: Mois

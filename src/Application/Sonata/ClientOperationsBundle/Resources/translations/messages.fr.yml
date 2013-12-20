@@ -76,7 +76,7 @@ ApplicationSonataClientOperationsBundle:
       title: Achats en Franchise
     
     KEY_TAB:
-      key: Legende
+      key: Légende
       title: Titre
       description_operations: Libellé (détail des opérations)
       overview: Overview
@@ -127,6 +127,9 @@ ApplicationSonataClientOperationsBundle:
 
       purchases_title_7: Achats en France  CAF-AI2 #QFP Evolution
       purchases_desc_7: Achats de biens & services imposables en France, TVA non facturée :  CAF #Purchases of Goods & Services taxable in France. TVA not charged : Quota of Free Purchase (QFP)
+
+    ACCOUNT_TAB:
+      account: Compte
 
   form:
     Month: Mois
