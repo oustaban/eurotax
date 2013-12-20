@@ -343,7 +343,7 @@ class ClientDeclaration {
 	
 			$key = method_exists($entity, 'getTauxDeTVA') ? $entity->getTauxDeTVA() : 0;
 			if( ( ( method_exists($entity, 'getHT') && $entity->getHT() < 0 ) || ( method_exists($entity, 'getTVA') && $entity->getTVA() < 0) )
-			&& (get_class($entity) != 'Application\Sonata\ClientOperationsBundle\Entity\A02TVA' && get_class($entity) != 'Application\Sonata\ClientOperationsBundle\Entity\A08IM')) {
+				&& (get_class($entity) != 'Application\Sonata\ClientOperationsBundle\Entity\A02TVA' && get_class($entity) != 'Application\Sonata\ClientOperationsBundle\Entity\A08IM')) {
 	
 				$key++;
 			}
