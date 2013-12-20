@@ -22,8 +22,8 @@ class ExportDouaneController extends Controller {
 		if ($request->getMethod() == 'POST') {
 			
 			
-			if(!is_dir(DEB_A_COMPILER_ABSPATH)) {
-				mkdir(DEB_A_COMPILER_ABSPATH, 0777, true);
+			if(!is_dir(DEB_A_ENVOYER_ABSPATH)) {
+				mkdir(DEB_A_ENVOYER_ABSPATH, 0777, true);
 			}
 			
 			if(!is_dir(DEB_A_COMPILER_BACKUP_ABSPATH)) {
@@ -34,7 +34,7 @@ class ExportDouaneController extends Controller {
 			$filesToConcat = array();
 			$filesToConcatData = array();
 			
-			$iterator = new \DirectoryIterator( DEB_A_ENVOYER_ABSPATH );
+			$iterator = new \DirectoryIterator( DEB_A_COMPILER_ABSPATH );
 			foreach ( $iterator as $fileinfo ) {
 				if ( $fileinfo->isFile() && preg_match( '/^(.+)\-transdeb\-([0-9]{4})\-([0-9]{1,2})\.txt$/i', $fileinfo->getFilename() ) ) {
 					array_push($filesToConcat, $fileinfo->getPathname());
@@ -45,7 +45,7 @@ class ExportDouaneController extends Controller {
 			if(!empty($filesToConcatData)) {
 				//name = "tansdeb-" + Year + Month "_fait-le-" dd "-" + mm
 				$filename = 'transdeb-' . date('Y-m') . '_fait-le-' . date('d-m') . '.txt';
-				$created = file_put_contents(DEB_A_COMPILER_ABSPATH. '/' . $filename, implode(PHP_EOL, $filesToConcatData));
+				$created = file_put_contents(DEB_A_ENVOYER_ABSPATH. '/' . $filename, implode(PHP_EOL, $filesToConcatData));
 				if($created) {
 					foreach($filesToConcat as $file) {
 						rename($file, DEB_A_COMPILER_BACKUP_ABSPATH . '/' . basename($file));

@@ -184,8 +184,6 @@ class TransDeb {
 		fclose($fp);
 	}
 	
-	
-	
 	/**
 	 caractere 1 to 4 : 0000
 	 Caractere 5 : Put 1 for Deb Intro ... and 2 for Deb Exped
@@ -249,9 +247,7 @@ class TransDeb {
 		
 		$this->_data = implode("\n", $lines);
 		return $this->_data;
-		
 	}
-	
 	
 	/**
 	 * 
@@ -277,8 +273,6 @@ class TransDeb {
 		);
 		$response->sendHeaders();
 		$response->sendContent();
-		
-		
 		$this->_incrementFileIndex();
 		return $response;
 	}
@@ -287,10 +281,10 @@ class TransDeb {
 	 * 
 	 */
 	public function saveFile() {
-		if(!is_dir(DEB_A_ENVOYER_ABSPATH)) {
-			mkdir(DEB_A_ENVOYER_ABSPATH, 0777, true);
+		if(!is_dir(DEB_A_COMPILER_ABSPATH)) {
+			mkdir(DEB_A_COMPILER_ABSPATH, 0777, true);
 		}
-		file_put_contents(DEB_A_ENVOYER_ABSPATH. '/' . $this->getFilename(), $this->_data);
+		file_put_contents(DEB_A_COMPILER_ABSPATH. '/' . $this->getFilename(), $this->_data);
 	}
 	
 	/**
@@ -302,19 +296,13 @@ class TransDeb {
 		return $filename;
 	}
 	
-	
-	
 	/**
 	 * @param $params
 	 * @return mixed
 	 */
 	protected function queryResult($params)
 	{
-		
-		
-		
 		$admin = \AppKernel::getStaticContainer()->get('application.sonata.admin.' . strtolower($params['entity']));
-		
 		
 		/* \AppKernel::getStaticContainer()->setParameter('filter', array('client_id' => array('value' => $this->_client->getId())));
 		\AppKernel::getStaticContainer()->setParameter('month', $this->_month);
