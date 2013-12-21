@@ -420,8 +420,9 @@ class Excel
     	
     	$excel = $this->_excel;
     	$styleBorders = $this->_styleBorders;
+    	$translator = $this->translator;
     	
-		$headerFunc = function($row, $cols) use($excel, $styleBorders) {    	
+		$headerFunc = function($row, $cols) use($excel, $styleBorders, $translator) {    	
 	    	$headers = array(
 	    		'date', 'description', 'euro', 'balance'		
 	    	);
@@ -438,7 +439,7 @@ class Excel
 	    		}
 	    		
 	    		
-	    		$header = $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.ACCOUNT_TAB.'. $header);
+	    		$header = $translator->trans('ApplicationSonataClientOperationsBundle.exports.ACCOUNT_TAB.'. $header);
 	    		
 	    		$excel->getActiveSheet()->setCellValue($cell, $header);
 	    		$excel->getActiveSheet()->getStyle($cellStyle)->getFont()->setBold(true);
