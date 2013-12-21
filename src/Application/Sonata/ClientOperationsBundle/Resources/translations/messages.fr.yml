@@ -130,6 +130,11 @@ ApplicationSonataClientOperationsBundle:
 
     ACCOUNT_TAB:
       account: Compte
+      financial_statement: RELEVE des OPERATIONS FINANCIERES
+      description: Opérations
+      balance: Solde
+      euro: €
+      date: Date
 
   form:
     Month: Mois

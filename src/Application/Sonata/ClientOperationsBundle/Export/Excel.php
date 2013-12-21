@@ -364,72 +364,131 @@ class Excel
     	$this->_sheet = $this->_excel->getActiveSheet();
     	$this->_sheet->getDefaultColumnDimension()->setWidth(10);
     	$this->_sheet->setTitle($this->translator->trans('ApplicationSonataClientOperationsBundle.exports.ACCOUNT_TAB.account') . ' ' . date('Y'));
-    	$this->_excel->getActiveSheet()->getColumnDimension('A')->setWidth(15);
-    	$this->_excel->getActiveSheet()->getColumnDimension('B')->setWidth(50);
+    	$this->_excel->getActiveSheet()->getColumnDimension('A')->setWidth(20);
+    	//$this->_excel->getActiveSheet()->getColumnDimension('B')->setWidth(50);
     	$this->_excel->getActiveSheet()->getColumnDimension('C')->setWidth(15);
-    	$this->_excel->getActiveSheet()->getColumnDimension('D')->setWidth(20);
-    	$this->_excel->getActiveSheet()->getColumnDimension('F')->setWidth(15);
-    	$this->_excel->getActiveSheet()->getColumnDimension('G')->setWidth(50);
-    	$this->_excel->getActiveSheet()->getColumnDimension('H')->setWidth(15);
+    	$this->_excel->getActiveSheet()->getColumnDimension('D')->setWidth(10);
+    	$this->_excel->getActiveSheet()->getColumnDimension('F')->setWidth(30);
+    	$this->_excel->getActiveSheet()->getColumnDimension('G')->setWidth(15);
+    	$this->_excel->getActiveSheet()->getColumnDimension('H')->setWidth(17);
     	$this->_excel->getActiveSheet()->getColumnDimension('I')->setWidth(20);
-    	$this->_excel->getActiveSheet()->getCell('A1')->setValue('eurotax');
+    	
+    	$this->_excel->getActiveSheet()->getCell('A1')->setValue('EUROTAX');
     	$this->_excel->getActiveSheet()->getStyle('A1')->getFont()->setName('Arial');
-    	$this->_excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(14);
-    	$this->_excel->getActiveSheet()->setCellValue('B1', 'SHRIEVE PRODUCTS INTL. ACCOUNT as at 06/12/2012');
-    	$this->_excel->getActiveSheet()->mergeCells('B1:I1');
-    	$this->yellowHeader('B1');
+    	$this->_excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(10);
     	
-    	$this->_excel->getActiveSheet()->setCellValue('A3', 'French VAT return Curreny:');
-    	$this->_excel->getActiveSheet()->setCellValue('D3', 'EURO');
-    	$this->_excel->getActiveSheet()->getStyle('D3')->getFont()->setBold(true);
-    	$this->_excel->getActiveSheet()->setCellValue('F3', 'Account Number:');
-    	$this->_excel->getActiveSheet()->setCellValue('I3', $this->get('_admin')->client_id);
-    	$this->_excel->getActiveSheet()->getStyle('I3')->getFont()->setBold(true);
+    	$this->_excel->getActiveSheet()->mergeCells('A1:A2');
+    	
+    	$this->_excel->getActiveSheet()->getStyle('A1:A2')->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+    	$this->_excel->getActiveSheet()->getStyle('A1:A2')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    	$this->_excel->getActiveSheet()->getStyle('A1:A2')->applyFromArray($this->_styleBorders);
+    	
+    	$this->_excel->getActiveSheet()->getRowDimension(1)->setRowHeight(25);
+    	$this->_excel->getActiveSheet()->getRowDimension(2)->setRowHeight(25);
+    	$this->_excel->getActiveSheet()->getRowDimension(3)->setRowHeight(25);
+    	
+    	
+    	$this->_excel->getActiveSheet()->setCellValue('B1', $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.ACCOUNT_TAB.financial_statement'));
+    	
+    	$this->_excel->getActiveSheet()->mergeCells('B1:H1');
+    	$this->_excel->getActiveSheet()->getStyle('B1:H1')->getFont()->setBold(true);
+    	$this->_excel->getActiveSheet()->getStyle('B1:H1')->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+    	$this->_excel->getActiveSheet()->getStyle('B1:H1')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    	$this->_excel->getActiveSheet()->getStyle('B1:H1')->applyFromArray($this->_styleBorders);
+    	
+    	
+    	$this->_excel->getActiveSheet()->mergeCells('B2:E2');
+    	$this->_excel->getActiveSheet()->getCell('B2')->setValue( $this->_client->getRaisonSociale() ); //NOM Complet du Client
+    	$this->_excel->getActiveSheet()->getStyle('B2:E2')->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+    	$this->_excel->getActiveSheet()->getStyle('B2:E2')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    	$this->_excel->getActiveSheet()->getStyle('B2:E2')->applyFromArray($this->_styleBorders);
+    	
+    	
+    	$this->_excel->getActiveSheet()->mergeCells('F2:G2');
+    	$this->_excel->getActiveSheet()->getCell('F2')->setValue( $this->_client->getNTVAFR() ); //N° TVA FR du client
+    	$this->_excel->getActiveSheet()->getStyle('F2:G2')->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+    	$this->_excel->getActiveSheet()->getStyle('F2:G2')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    	$this->_excel->getActiveSheet()->getStyle('F2:G2')->applyFromArray($this->_styleBorders);
+    	 
+    	
+    	$this->_excel->getActiveSheet()->getCell('H2')->setValue( $this->_client->getCodeClient() ); //N° Compte xxxx
+    	$this->_excel->getActiveSheet()->getStyle('H2')->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+    	$this->_excel->getActiveSheet()->getStyle('H2')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    	$this->_excel->getActiveSheet()->getStyle('H2')->applyFromArray($this->_styleBorders);
+	
+    	
+    	
     	$excel = $this->_excel;
+    	$styleBorders = $this->_styleBorders;
     	
-		$headerFunc = function($row, $cols) use($excel) {    	
+		$headerFunc = function($row, $cols) use($excel, $styleBorders) {    	
 	    	$headers = array(
-	    		'Date', 'Description', 'Euro', 'Balance'		
+	    		'date', 'description', 'euro', 'balance'		
 	    	);
 	    	$i = 0;
 	    	$col = '';
 	    	foreach($headers as $header) {
 	    		$col = $cols[$i];
-	    		$cell = $col.$row;
+	    		$cell = $cellStyle = $col.$row;
+	    		
+	    		if($header == 'description') {
+	    			$i+=4;
+	    			$cellStyle = $cell.':'.$cols[$i].$row;
+	    			$excel->getActiveSheet()->mergeCells($cellStyle);
+	    		}
+	    		
+	    		
+	    		$header = $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.ACCOUNT_TAB.'. $header);
+	    		
 	    		$excel->getActiveSheet()->setCellValue($cell, $header);
-	    		$excel->getActiveSheet()->getStyle($cell)->getFont()->setBold(true);
+	    		$excel->getActiveSheet()->getStyle($cellStyle)->getFont()->setBold(true);
+	    		$excel->getActiveSheet()->getStyle($cellStyle)->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+	    		$excel->getActiveSheet()->getStyle($cellStyle)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+	    		$excel->getActiveSheet()->getStyle($cellStyle)->applyFromArray($styleBorders);
 	    		$i++;
 	    	}
-	    	
-	    	$excel->getActiveSheet()->setCellValue($col.($row+1), 'EURO');
-	    	$excel->getActiveSheet()->getStyle($cell)->getFont()->setBold(true);
-	    	
-	    	
-	    	foreach($cols as $col) {
-	    		$excel->getActiveSheet()->getStyle($col.($row+2))->applyFromArray(
-	    				array('fill' 	=> array(
-	    						'type'		=> \PHPExcel_Style_Fill::FILL_SOLID,
-	    						'color'		=> array('argb' => 'FF000000')
-	    					)
-	    				)
-	    		);
-	    	}
+	    	$excel->getActiveSheet()->getRowDimension($row)->setRowHeight(25);
 		};
 		
-		$headerFunc(5, range('A', 'D'));
-		$headerFunc(5, range('F', 'I'));
+		$headerFunc(4, range('A', 'H'));
+		
 		$result = $this->queryResult(array('entity'=>'compte'));
-		$i = 8;
+		$i = 5;
+		$startSumIndex = $i + 1;
 		foreach ($result as $key => $row) {
+			
+			$this->_excel->getActiveSheet()->getRowDimension($i)->setRowHeight(20);
+			
+			
 			$date = \PHPExcel_Shared_Date::PHPToExcel($row->getDate());
 			$this->_excel->getActiveSheet()->setCellValue("A$i", $date);
-			$this->_sheet->getStyle("A$i")->getNumberFormat()->setFormatCode('dd.mm.YYYY');
-			$this->_excel->getActiveSheet()->setCellValue("B$i", $row->getOperation());
-			$this->_excel->getActiveSheet()->setCellValue("C$i", $row->getMontant());
+			$this->_sheet->getStyle("A$i")->getNumberFormat()->setFormatCode('DD-MM-YY;@');
 			
+			
+			
+			$this->_excel->getActiveSheet()->getStyle("A$i")->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+			$this->_excel->getActiveSheet()->getStyle("A$i")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			$this->_excel->getActiveSheet()->getStyle("A$i")->applyFromArray($styleBorders);
+			
+			
+			
+			
+			$this->_excel->getActiveSheet()->setCellValue("B$i", $row->getOperation());
+			
+			$this->_excel->getActiveSheet()->mergeCells("B$i:F$i");
+			$this->_excel->getActiveSheet()->getStyle("B$i:F$i")->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+			$this->_excel->getActiveSheet()->getStyle("B$i:F$i")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			$this->_excel->getActiveSheet()->getStyle("B$i:F$i")->applyFromArray($styleBorders);
+			
+			$this->_excel->getActiveSheet()->setCellValue("G$i", $row->getMontant());
+			$this->_sheet->getStyle("G$i")->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+			$this->_excel->getActiveSheet()->getStyle("G$i")->applyFromArray($styleBorders);
+
+			$this->_excel->getActiveSheet()->getStyle("H$i")->applyFromArray($styleBorders);
 			//Balance column			
-			if($i > 8) {
-				$this->_excel->getActiveSheet()->setCellValue("D$i", '=SUM(C'.($i-1).':C'.$i.')');
+			if($i > 5) {
+				$this->_excel->getActiveSheet()->setCellValue("H$i", '=SUM(G$'.($startSumIndex).':G'.($i+1).')');
+				$this->_sheet->getStyle("H$i")->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 			}
 			$i++;
 		}

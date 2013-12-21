@@ -129,6 +129,11 @@ ApplicationSonataClientOperationsBundle:
 
     ACCOUNT_TAB:
       account: Account
+      financial_statement: FINANCIAL STATEMENT
+      description: Description
+      balance: Balance
+      euro: €
+      date: Date
 
   form:
     Month: Mois
