@@ -34,9 +34,12 @@ class ExportDouaneController extends Controller {
 			$filesToConcat = array();
 			$filesToConcatData = array();
 			
+			$filesToConcatData[] = $this->header();
+			
+			
 			$iterator = new \DirectoryIterator( DEB_A_COMPILER_ABSPATH );
 			foreach ( $iterator as $fileinfo ) {
-				if ( $fileinfo->isFile() && preg_match( '/^(.+)\-transdeb\-([0-9]{4})\-([0-9]{1,2})\.txt$/i', $fileinfo->getFilename() ) ) {
+				if ( $fileinfo->isFile() && preg_match( '/^(.+)\_transdeb\-([0-9]{4})\-([0-9]{1,2})\.txt$/i', $fileinfo->getFilename() ) ) {
 					array_push($filesToConcat, $fileinfo->getPathname());
 					array_push($filesToConcatData, file_get_contents($fileinfo->getPathname()));
 				}
@@ -62,5 +65,15 @@ class ExportDouaneController extends Controller {
 		
 		return array();
 	}
+	
+	
+	protected function header() {
+		//INTRACOMD0IO1131       1218332089218000410141984819          0141984818          Fabrice COCHET
+		
+		list($current_year, $current_month) = explode('-', date('Y-m', strtotime('now' . (date('d') < 25 ? ' -1 month' : ''))));
+		$user = $this->get('security.context')->getToken()->getUser();
+		return "INTRACOMD0IO" . $current_month . "31       ". date('dm') ."332089218000410141984819          0141984818           " . $user->getFullname();
+	}
+	
 	
 }

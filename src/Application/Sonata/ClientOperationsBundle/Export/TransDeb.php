@@ -292,7 +292,7 @@ class TransDeb {
 	 * @return string
 	 */
 	protected function getFilename() {
-		$filename = ucwords($this->_client->getNom()) . '-transdeb-' . $this->_year . '-' . $this->_month . '.txt';
+		$filename = ucwords($this->_client->getNom()) . '_transdeb-' . $this->_year . '-' . $this->_month . '.txt';
 		return $filename;
 	}
 	
