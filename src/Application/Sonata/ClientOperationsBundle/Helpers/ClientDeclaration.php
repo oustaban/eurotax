@@ -241,7 +241,7 @@ class ClientDeclaration {
 			$total += $this->getRapprochementState()->getCreditTvaAReporter();
 		}
 		
-		$total += $this->client->getCompteReelSum();
+		$total -= $this->client->getCompteReelSum();
 		return $total;
 	}
 	
