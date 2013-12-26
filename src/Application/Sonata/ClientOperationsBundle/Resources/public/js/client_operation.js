@@ -464,8 +464,6 @@ function init_clientoperations_buttons(o) {
 }
 
 function init_rapprochement_sums() {
-
-	
 	 //Total 
     var TOTAL_DEBExped_valeur_fiscale_HT = 0, TOTAL_DEBExped_valeur_stat_HT = 0;
     $('#DEB-Exped').find('.totals').each(function() {

@@ -106,9 +106,11 @@
 
 <div class="content cboth ">
 	&nbsp;&nbsp;
-    {% set text_lock = info.blocked ? 'Clôturer' : 'Déverrouiller' %}
-    {% if fromImport == false %}
-    	<button id="btn_locking" name="btn_locking" rel="tooltip" title="{{ text_lock|trans}}" class="btn pull-right"><i class="icon icon-lock"></i> {{ text_lock|trans}}</button>
+	{% if info.blocked %}
+	    {% set text_lock = info.blocked ? 'Clôturer' : 'Déverrouiller' %}
+	    {% if fromImport == false %}
+	    	<button id="btn_locking" name="btn_locking" rel="tooltip" title="{{ text_lock|trans}}" class="btn pull-right"><i class="icon icon-lock"></i> {{ text_lock|trans}}</button>
+	    {% endif %}
     {% endif %}
     
     <!-- <button id="btn_saving" name="btn_saving" rel="tooltip" title="Save" class="btn pull-right"><i class="icon icon-ok-sign"></i> Save</button> -->
