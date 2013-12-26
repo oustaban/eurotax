@@ -8,7 +8,7 @@ ApplicationSonataClientOperationsBundle:
     total_header_output: Total Output TVA
     total_header_input: Total Input TVA
     sales: Sales with French TVA
-    vat_purchases: Purchases&importation with VAT
+    vat_purchases: Purchases & importation with VAT
     period_this_month: of the month
     period_prev_month: of previous months
     period_this: of the period
