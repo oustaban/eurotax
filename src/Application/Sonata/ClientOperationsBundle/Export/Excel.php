@@ -422,7 +422,15 @@ class Excel
     	$styleBorders = $this->_styleBorders;
     	$translator = $this->translator;
     	
-		$headerFunc = function($row, $cols) use($excel, $styleBorders, $translator) {    	
+    	
+    	$euroColStyleBorders = $styleBorders + array('fill' 	=> array(
+    					'type'		=> \PHPExcel_Style_Fill::FILL_SOLID,
+    					'color'		=> array('argb' => 'FFFF99')
+    			));
+    	
+    	
+    	
+		$headerFunc = function($row, $cols) use($excel, $styleBorders, $translator, $euroColStyleBorders) {    	
 	    	$headers = array(
 	    		'date', 'description', 'euro', 'balance'		
 	    	);
@@ -439,13 +447,20 @@ class Excel
 	    		}
 	    		
 	    		
-	    		$header = $translator->trans('ApplicationSonataClientOperationsBundle.exports.ACCOUNT_TAB.'. $header);
+	    		$headerTitle = $translator->trans('ApplicationSonataClientOperationsBundle.exports.ACCOUNT_TAB.'. $header);
 	    		
-	    		$excel->getActiveSheet()->setCellValue($cell, $header);
+	    		$excel->getActiveSheet()->setCellValue($cell, $headerTitle);
 	    		$excel->getActiveSheet()->getStyle($cellStyle)->getFont()->setBold(true);
 	    		$excel->getActiveSheet()->getStyle($cellStyle)->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
 	    		$excel->getActiveSheet()->getStyle($cellStyle)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-	    		$excel->getActiveSheet()->getStyle($cellStyle)->applyFromArray($styleBorders);
+	    			
+	    		if($header == 'euro') {
+	    			$excel->getActiveSheet()->getStyle($cellStyle)->applyFromArray($euroColStyleBorders);
+	    		} else {
+	    			
+	    			$excel->getActiveSheet()->getStyle($cellStyle)->applyFromArray($styleBorders);
+	    		}
+	    		
 	    		$i++;
 	    	}
 	    	$excel->getActiveSheet()->getRowDimension($row)->setRowHeight(25);
@@ -463,7 +478,7 @@ class Excel
 			
 			$date = \PHPExcel_Shared_Date::PHPToExcel($row->getDate());
 			$this->_excel->getActiveSheet()->setCellValue("A$i", $date);
-			$this->_sheet->getStyle("A$i")->getNumberFormat()->setFormatCode('DD-MM-YY;@');
+			$this->_sheet->getStyle("A$i")->getNumberFormat()->setFormatCode('DD\/MM\/YY;@');
 			
 			
 			
@@ -483,7 +498,7 @@ class Excel
 			
 			$this->_excel->getActiveSheet()->setCellValue("G$i", $row->getMontant());
 			$this->_sheet->getStyle("G$i")->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
-			$this->_excel->getActiveSheet()->getStyle("G$i")->applyFromArray($styleBorders);
+			$this->_excel->getActiveSheet()->getStyle("G$i")->applyFromArray($euroColStyleBorders);
 
 			$this->_excel->getActiveSheet()->getStyle("H$i")->applyFromArray($styleBorders);
 			//Balance column			
