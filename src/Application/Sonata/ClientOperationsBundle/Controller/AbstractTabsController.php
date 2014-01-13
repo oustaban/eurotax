@@ -13,6 +13,7 @@ use Application\Sonata\ClientOperationsBundle\Entity\Locking;
 use Application\Sonata\ClientOperationsBundle\Entity\RapprochementState;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Application\Sonata\ClientOperationsBundle\Entity\Imports;
+use Application\Sonata\ClientOperationsBundle\Entity\ImportNotification;
 use Application\Tools\mPDF;
 use Application\Sonata\DevisesBundle\Entity\Devises;
 use Application\Sonata\ClientOperationsBundle\Helpers\ClientDeclaration;
@@ -59,10 +60,7 @@ class AbstractTabsController extends Controller
     protected $_lockingTab, $_lockingDate, $_lockingMonth, $_lockingYear, 
     	$_unlockingMonth, $_unlockingYear;
     
-    /**
-     * @var \Application\Sonata\ClientOperationsBundle\Entity\Imports
-     */
-    protected $_imports = null;
+    
 
     protected $_hasImportErrors = false;
     
@@ -758,32 +756,18 @@ class AbstractTabsController extends Controller
         return parent::redirectTo($object);
     }
 
-    /**
-     * saveImports
-     */
-    protected function saveImports($inputFile)
-    {
-        $user = $this->get('security.context')->getToken()->getUser();
-        $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository('ApplicationSonataUserBundle:User')->find($user->getId());
-
-        $this->_imports = new Imports();
-        $this->_imports->setUser($users);
-        $this->_imports->setDate($this->_import_date);
-        $this->_imports->setClientId($this->client_id);
-        $this->_imports->setFileName($inputFile['name']);
-
-        $em->persist($this->_imports);
-        $em->flush();
-    }
-
+    
     /**
      * {@inheritdoc}
      */
     public function importAction()
     {
-    	//set_time_limit(0);
+    	set_time_limit(1200);
     	$this->getLockingAccessDenied();
+    	
+    	$import_counts = array();
+    	$messages = array();
+    	
         if (!empty($_FILES) && !empty($_FILES["inputFile"])) {
             $file = TMP_UPLOAD_PATH . '/' . $_FILES["inputFile"]["name"];
             $tmpFile = $_FILES["inputFile"]["tmp_name"];
@@ -791,56 +775,77 @@ class AbstractTabsController extends Controller
 
             if ($this->importFileValidate($inputFile)) {
                 if (move_uploaded_file($tmpFile, $file)) {
-                    /* @var $objReader \PHPExcel_Reader_Excel2007 */
-                    $objReader = \PHPExcel_IOFactory::createReaderForFile($file);
+                	
+                	
+                	$objReader = \PHPExcel_IOFactory::createReaderForFile($file);
+		
+					if (get_class($objReader) == 'PHPExcel_Reader_CSV') {
+						unset($objReader);
+						$this->get('session')->setFlash('sonata_flash_error', $this->admin->trans('Fichier non lisible'));
+						return $this->render(':redirects:back.html.twig');
+					}
+                	
+                	$_FILES = array();
+                	
 
-                    if (get_class($objReader) == 'PHPExcel_Reader_CSV') {
-                        $this->get('session')->setFlash('sonata_flash_error', $this->admin->trans('Fichier non lisible'));
-                        return $this->render(':redirects:back.html.twig');
-                    } else {
-                        $objReader->setReadDataOnly(true);
-                    }
-                    $objPHPExcel = $objReader->load($file);
-                    $sheets = $objPHPExcel->getAllSheets();
+                	//create fake process id
+                	$pid = time();
+                	
+                	$user = $this->get('security.context')->getToken()->getUser();
+                	$kernel = $this->get('kernel');
+                	$command = 'php '. $kernel->getRootDir() .'/console clientoperationsbundle:import:excel ' 
+                		. $user->getId() . ' ' . $this->client_id . ' application.sonata.admin.v01tva ' 
+                		. $file . ' ' . $inputFile['name'] . ' ' . $this->getLocking() . ' ' . $this->_year . ' ' . $this->_month . ' '. $pid . ' --env='. $kernel->getEnvironment() . ' --no-debug ';
+                	
 
-                    
-                    
-                    $content_arr = array();
-                    foreach ($sheets as $sheet) {
-
-                        $title = $sheet->getTitle();
-                       
-                        
-                        $content_arr[$title] = $sheet->toArray();
-                    }
-                    
-                    $objPHPExcel->disconnectWorksheets();
-                    unset($sheets, $objPHPExcel, $objReader);
-
-                    //var_dump($content_arr); exit;
-                    
-                    file_put_contents($tmpFile, '');
-                    $this->importValidateAndSave($content_arr);
-
-                    if (empty($this->_import_counts['rows']['errors'])) {
-
-                        $this->saveImports($inputFile);
-                        $this->importValidateAndSave($content_arr, true);
-                    }
+                	/* var_dump($command);
+                	exit; */
+                	
+                	
+                	
+                	$process = new \Symfony\Component\Process\Process($command);
+                	$process->setTimeout(3600);
+                	
+                	$process->start();
+                	$start = microtime(true);
+                	
+                	
+                	
+                	while ($process->isRunning()) {
+                		$total = microtime(true) - $start;
+                		if(($total/60) >= 2) { // if process is too long (2 minutes)
+                			//var_dump(($total/60));
+                			
+                			$em = $this->getDoctrine()->getManager();
+                			
+                			$importNotif = new ImportNotification();
+                			$importNotif->setPid($pid)
+                				->setUser($user)
+                				->setClientId($this->client_id);
+                			
+                			$em->persist($importNotif);
+                			$em->flush(); 
+                			
+                			$this->_hasImportErrors = true;
+                			
+                			$this->get('session')->setFlash('sonata_flash_error', $this->admin->trans('There are too many data to be processed. We will just notify you once it\'s done. Check your email ('.$user->getEmail().') within few hours.'));
+                			
+                			break;
+                			return $this->render(':redirects:back.html.twig');
+                		}
+                	}
+                	
+                	$output = unserialize($process->getOutput());
+                	
+                	$messages = $output['messages'];
+                	$import_counts = $output['import_counts'];
                 }
             }
         }
 
-        $messages = $this->getCountMessageImports();
-        
-        
-        
-        
         
         if (!empty($messages)) {
             $this->get('session')->setFlash('sonata_flash_info|raw', implode("<br/>", $messages));
-            
-            
         } else {
         	
         	$message = trim($this->get('session')->getFlash('sonata_flash_info|raw'));
@@ -855,7 +860,7 @@ class AbstractTabsController extends Controller
         	
         }
         
-        if($this->_hasImportErrors) {
+        if( (isset($import_counts['rows']['errors']) && !empty($import_counts['rows']['errors'])) || $this->_hasImportErrors) {
         	return $this->render(':redirects:back.html.twig');
         } else {
         	//return $this->forward('ApplicationSonataClientOperationsBundle:Rapprochement:index', array('client_id' => $this->client_id, 'month' => $this->_query_month));
@@ -865,323 +870,7 @@ class AbstractTabsController extends Controller
     }
 
 
-    
-    /**
-     * If client has NiveauDobligationId | NiveauDobligationExpedId = 0, disallow import
-     * 
-     * @param string $class
-     */
-    private function _validateDEBClientNiveauDobligation($class, $sheets) {
-    	if(!in_array($class, array('DEBExped', 'DEBIntro'))) {
-    		return;
-    	}
-
-    	$client = $this->client;
-    		
-    	if($class == 'DEBIntro') {
-    		$niveauDobligationId = $client->getNiveauDobligationId(); //INTRO
-    		$hasExcelData = $this->hasExcelData('DEB Intro', $sheets);
-    	} elseif($class == 'DEBExped') {
-    		$niveauDobligationId = $client->getNiveauDobligationExpedId(); //DEB
-    		$hasExcelData = $this->hasExcelData('DEB Exped', $sheets);
-    	}
-    		
-    	if($niveauDobligationId == 0 && $hasExcelData) {
-    		$message = "VALUE : $niveauDobligationId \n";
-    		$message .= "ERROR :Le niveau d'obligation est à 0 : On ne devrait pas avoir de données\n\n";
-    		$this->setCountImports($class, 'errors', $message);
-    		
-    		return false;
-    	}
-    	
-    	return true;
-    }
-    
-    
-    /**
-     * NLigne rows must be consecutive 1,2,3,4,5...
-     * 
-     * @param unknown $class
-     * @param unknown $data
-     */
-    private function _validateDEBNLigne($class, $skip_line, $data) {
-    	if(!in_array($class, array('DEBExped', 'DEBIntro'))) {
-    		return;
-    	}
-    	$fields = array_flip($this->_config_excel[$this->admin->trans('ApplicationSonataClientOperationsBundle.form.' . $class . '.title')]['fields']);
-    	
-    	$entities = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientOperationsBundle:' . $class)
-    		->findBy(array('client_id' => $this->client_id, 'mois' =>  new \DateTime("{$this->_year}-{$this->_month}-01")));
-    	
-    	
-    	$expectedFirstVal = $entities ? count($entities) + 1 : 1;
-    	$nlignes = array();
-    	foreach($data as $row) {
-    		if((empty($row[0]) && empty($row[4]))) {
-    			continue;
-    		} 
-    		$nlignes[] = (float)$row[0];
-    	}
-    	
-    	$checkConsec = function($d) use ($fields, $skip_line, $class, $expectedFirstVal) {
-    		$errors = array();
-    		$count = count($d);
-    		for($i=0;$i<$count;$i++) {
-    			$start = $i+$expectedFirstVal;
-    			if( isset($d[$i]) && $start != $d[$i] ) {
-    				$line = $skip_line+($i+1);
-    				$repeat = str_repeat(' ', 4);
-    				$label = isset($fields['n_ligne']) ? '(' . (($fields['n_ligne'] ? chr($fields['n_ligne'] + 65) : 'A') . ':' . $line) . ') ' : '';
-    				$errors[] = $repeat . 'VALUE : ' . $label . ($d[$i] ? $d[$i] : '(empty)') . "\n";
-    				$errors[] = $repeat . 'ERROR : Le numero de ligne n\'est pas correct (numéro consécutif)' . "\n\n";
-    			}
-    		}
-    		
-    		
-    		if(!empty($errors)) {
-    			return $errors;
-    		}
-    		
-    		return true;
-    	};
-    	
-    	
-    	if(!empty($nlignes)) {
-    		$errors = $checkConsec($nlignes);
-	    	if($data[0][0] != $expectedFirstVal || is_array($errors)) {
-	    		$msg = $this->admin->trans('ApplicationSonataClientOperationsBundle.form.' . $class . '.n_ligne') . "\n";
-	    		$msg .= implode($errors);
-	    		$this->setCountImports($class, 'errors', $msg);
-	    	}
-	    	
-	    	
-	    	if(is_array($errors)) {
-	    		return false;
-	    	} else {
-	    		return true;
-	    	}
-    	}
-    	
-    	return true;
-    }
-    
-    
-    
-    protected function hasExcelData($title, $sheets) {
-    	if(!isset($sheets[$title])) {
-    		return false;
-    	}
-    	
-    	$config_excel = $this->_config_excel[$title];
-    	$data = $sheets[$title];
-    	$data = $this->skipLine($config_excel, $data);
-    	
-    	if(isset($data)) {
-    		if(isset($data[0][0]) && !empty($data[0][0])) {
-    			return true;	
-    		} else {
-    			return false;
-    		}
-    	} else {
-    		return false;
-    	}
-    }
-    
-    
-    
-    protected function _validateAIB06DEBIntro($sheets) {
-    	// if AIB-06 has no data and DEB-Intro has data put a message "AIB-06 vide mais data dans DEB-Intro" and stop the import
-    	// A06-AIB
-    	// DEB Intro
-    	if(!$this->hasExcelData('A06-AIB', $sheets) && $this->hasExcelData('DEB Intro', $sheets)) {
-    		$this->setCountImports('A06AIB', 'errors', 'AIB-06 vide mais data dans DEB-Intro');
-    	}
-    	 
-    	/* if($this->hasExcelData('A06-AIB', $sheets) && !$this->hasExcelData('DEB Intro', $sheets)) {
-    		$this->setCountImports('DEBIntro', 'errors', 'DEB-Intro vide mais data dans AIB-06');
-    	} */ 
-    }
-    
-    protected function _validateV05LICDEBExped($sheets) {
-    	//if V05-LIC has no data and DEB-Exped has data put a message "V05-LIC vide mais data dans DEB-Exped" and stop the import
-    	// A06-AIB
-    	// DEB Intro
-    	if(!$this->hasExcelData('V05-LIC', $sheets) && $this->hasExcelData('DEB Exped', $sheets)) {
-    		$this->setCountImports('V05LIC', 'errors', 'V05-LIC vide mais data dans DEB-Exped');
-    	}
-    	
-    	/* if($this->hasExcelData('V05-LIC', $sheets) && !$this->hasExcelData('DEB Exped', $sheets)) {
-    		$this->setCountImports('DEBExped', 'errors', 'DEB-Exped vide mais data dans V05-LIC');
-    	} */
-    }
-    
-    
-    /**
-     * @param $sheets
-     * @param bool $save
-     */
-    protected function importValidateAndSave($sheets, $save = false)
-    {
-        $this->_validateAIB06DEBIntro($sheets);
-    	$this->_validateV05LICDEBExped($sheets);
-    	
-        foreach ($sheets as $title => $data) {
-
-            if (array_key_exists($title, $this->_config_excel)) {
-                $config_excel = $this->_config_excel[$title];
-                $class = $config_excel['entity'];
-                $fields = $config_excel['fields'];
-                $skip_line = $config_excel['skip_line'];
-                $data = $this->skipLine($config_excel, $data);
-
-                //DEB Exped | DEB Intro
-                
-                
-                if($this->getLocking() && ($class == 'DEBExped' || $class == 'DEBIntro')) {
-                	continue;
-                }
-                
-                
-                $continue = false;
-                if($this->_validateDEBClientNiveauDobligation($class, $sheets) === false) {
-                	$continue = true;
-                }
-                if($this->_validateDEBNLigne($class, $skip_line, $data) === false) {
-                	$continue = true;
-                }
-                
-                if($continue) {
-                	continue;
-                }
-                
-                
-                $adminCode = 'application.sonata.admin.' . strtolower($class);
-                /* @var $admin \Application\Sonata\ClientOperationsBundle\Admin\AbstractTabsAdmin */
-                $admin = $this->container->get('sonata.admin.pool')->getAdminByAdminCode($adminCode);
-                $admin->setDeviseList($this->getDeviseList());
-                $admin->setValidateImport();
-                
-                foreach ($data as $key => $line) {
-                    if ($this->getImportsBreak($data, $key) || ( empty($line[0]) && empty($line[1]) && empty($line[2]) && empty($line[3]) ) ) {
-                        break;
-                    }
-                    $object = $admin->getNewInstance();
-                    $admin->setSubject($object);
-                    $admin->setIndexImport($key + 1);
-                    
-                    $admin->import_file_year = $this->_year;
-                    $admin->import_file_month = $this->_month;
-                    
-
-                    /* @var $form \Symfony\Component\Form\Form */
-                    $form_builder = $admin->getFormBuilder();
-                    $form = $form_builder->getForm();
-
-                    
-                    if($object instanceof ListDevises) {
-                    	continue;
-                    }
-                    
-                    $form->setData($object);
-                    $formData = array('client_id' => $this->client_id, '_token' => $this->get('form.csrf_provider')->generateCsrfToken('unknown'));
-
-                    foreach ($line as $index => $value) {
-                        if (isset($fields[$index])) {
-                            $fieldName = $fields[$index];
-                            $newValue = $admin->getFormValue($fieldName, $value);
-                            $formData[$fieldName] = $newValue;
-                        }
-                    }
-                    
-                    if($class != 'DEBExped' && $class != 'DEBIntro') {
-	                    //Only lines with MOIS = current month must be imported.
-	                    if(isset($formData['mois']) && $mois = $formData['mois']) {
-	                    	
-	                    	list($current_year, $current_month) = explode('-', date('Y-m', strtotime('now' . (date('d') < 25 ? ' -1 month' : ''))));
-	                    	
-	                    	if ($mois) {
-	                    		if ($mois instanceof \DateTime) {
-	                    			$month = $value->format('n');
-	                    			$year = $value->format('Y');
-	                    		} else {
-	                    			$month = $mois['month'];
-	                    			$year = $mois['year'];
-	                    		}
-	                    	
-	                    		if (!$this->admin->getLocking() && !($year == $current_year && $month == $current_month)) {
-	                    			continue;
-	                    		}
-	                    	}
-	                    } else {
-	                    	
-	                    	continue;
-	                    	
-	                    }
-                    }
-                    
-                    
-
-                    if(in_array('paiement_date', $fields)) {
-	                    //if paiement_date is empty, empty the ff. fields.
-	                    if(!isset($formData['paiement_date']) || (isset($formData['paiement_date']) && empty($formData['paiement_date']))) {
-	                    	unset($formData['mois']);
-	                    	unset($formData['taux_de_change']);
-	                    	unset($formData['HT']);
-	                    	unset($formData['TVA']);
-	                    }
-                    }
-                    
-                    // Ensure that CEE field is excluded from existing excel files
-                    if($class == 'DEBIntro' && isset($formData['CEE'])) {
-                    	unset($formData['CEE']);	
-                    }
-                    
-                    
-                    // Ensure that pays_origine field is excluded from existing excel files
-                    if($class == 'DEBExped' && isset($formData['pays_origine'])) {
-                    	unset($formData['pays_origine']);
-                    }
-                    
-		            $form->bind($formData);
-
-                    if ($form->isValid()) {
-                        try {
-                            if ($save) {
-                                $object->setImports($this->_imports);
-                                $admin->create($object);
-                                $this->setCountImports($class, 'success');
-                            }
-                        } catch (\Exception $e) {
-
-                            $message = $this->getErrorsAsString($class, $form, $key + ($skip_line+1), 0, 0, $e->getMessage());
-                            $this->setCountImports($class, 'errors', $message);
-                        }
-                    } else {
-                        $message = $this->getErrorsAsString($class, $form, $key + ($skip_line+1));
-                        $this->setCountImports($class, 'errors', $message);
-                    }
-                    unset($formData, $form, $form_builder, $object);
-                }
-        
-                unset($data, $admin);
-            }
-        }
-    }
-
-
-    /**
-     * @param $config_excel
-     * @param $data
-     * @return mixed
-     */
-    private function skipLine($config_excel, $data)
-    {
-        $skip_line = $config_excel['skip_line'];
-        for ($i = 0; $i < $skip_line; $i++) {
-            array_shift($data);
-        }
-        return $data;
-    }
+ 
 
     /**
      * @param $file
@@ -1329,64 +1018,7 @@ class AbstractTabsController extends Controller
         return false;
     }
 
-    /**
-     * @param $class
-     * @param $form
-     * @param $line
-     * @param int $level
-     * @param string $field
-     * @param null $message
-     * @return string
-     */
-    public function getErrorsAsString($class, $form, $line, $level = 0, $field = '', $message = null)
-    {
-        $fields = array_flip($this->_config_excel[$this->admin->trans('ApplicationSonataClientOperationsBundle.form.' . $class . '.title')]['fields']);
-
-        $errors = array();
-
-        if ($form->getErrors()) {
-
-            $one_view = array();
-            foreach ($form->getErrors() as $keys => $error) {
-                /** @var $error \Symfony\Component\Form\FormError */
-
-                if (!isset($one_view[$field][$line])) {
-
-                    $one_view[$field][$line] = true;
-
-                    $repeat = str_repeat(' ', $level);
-                    $label = isset($fields[$field]) ? '(' . (($fields[$field] ? chr($fields[$field] + 65) : 'A') . ':' . $line) . ') ' : '';
-
-                    $data = $form->getViewData();
-
-                    if (is_array($data)) {
-                        $data = implode('-', $data);
-                    }
-
-                    if ($error->getMessageParameters()) {
-                        $data = implode($error->getMessageParameters());
-                    }
-
-                    $errors[] = $repeat . 'VALUE : ' . $label . ($data ? : 'empty') . "\n";
-                    $errors[] = $repeat . 'ERROR : ' . $error->getMessage() . "\n\n";
-
-                }
-            }
-        }
-
-        foreach ($form->getChildren() as $field => $child) {
-            if ($err = $this->getErrorsAsString($class, $child, $line, ($level + 4), $field, null)) {
-                $errors[] = $this->admin->trans('ApplicationSonataClientOperationsBundle.form.' . $class . '.' . $field) . "\n";
-                $errors[] = $err;
-            }
-        }
-
-        if (!empty($message)) {
-            $errors[] = $message;
-        }
-
-        return implode($errors);
-    }
+    
 
 
     /**
@@ -1404,136 +1036,7 @@ class AbstractTabsController extends Controller
         return $this->devise;
     }
 
-    /**
-     * @param $data
-     * @param $key
-     * @param int $tabs
-     * @return bool
-     */
-    protected function getImportsBreak($data, $key, $tabs = 3)
-    {
-        $data_counter = 0;
-
-        $limit = $key + ($tabs - 1);
-        for ($i = $key; $i <= $limit; $i++) {
-            $line_counter = false;
-
-            if (!empty($data[$i]) && $line = $data[$i]) {
-                $columns = 0;
-                foreach ($line as $value) {
-                    $columns++;
-                    if ($columns > 4){
-                        break;
-                    }
-
-                    $value = trim($value);
-                    if (empty($value) || $value == '#VALUE!') {
-                        $line_counter = true;
-                    } else {
-                        $line_counter = false;
-                        break;
-                    }
-                }
-            }
-            if ($line_counter) {
-                $data_counter++;
-            }
-        }
-
-        if ($data_counter >= $tabs) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getCountMessageImports()
-    {
-        $translator = $this->admin;
-        $messages = array();
-
-        
-        
-        if(!empty($this->_import_counts)) {
-	        foreach ($this->_import_counts as $table => $values) {
-	
-	            $message = array();
-	            $table_trans = $translator->trans('ApplicationSonataClientOperationsBundle.form.' . $table . '.title');
-	            switch ($table) {
-	
-	                case 'rows';
-	                    if (isset($values['success'])) {
-	                        $message[] = $translator->trans('Imported %table% : %count%', array(
-	                            '%table%' => $table,
-	                            '%count%' => $values['success'],
-	                        ));
-	                    }
-	                    if (isset($values['errors'])) {
-	                    	
-	                    	$this->_hasImportErrors = true;
-	                    	
-	                        $error_log_filename = '/data/imports/import-error-log-' . md5(time() . rand(1, 99999999)) . '.txt';
-	
-	                        $render_view_popup = $this->renderView('ApplicationSonataClientOperationsBundle:popup:popup_message.html.twig', array(
-	                            'error_reports' => $this->_import_reports,
-	                            'active_tab' => $this->_tabAlias,
-	                            'import_id' => $this->_imports ? $this->_imports->getId() : null,
-	                        ));
-	
-	                        preg_match('#<div class="modal-body">(.*)#is', $render_view_popup, $matches);
-	                        file_put_contents(DOCUMENT_ROOT.$error_log_filename, strip_tags($matches[1]));
-	
-	                        $message[] = '<span class="error">' . $translator->trans('Not valid %table% : %count%', array(
-	                            '%table%' => $table,
-	                            '%count%' => $values['errors'],
-	                        )) . '</span>, <a id="error_repost_show" href="#">View errors</a> <a target="_blank" href="'.$error_log_filename.'">Save error log</a>' . $render_view_popup;
-	                    }
-	
-	                    $messages[] = implode('&nbsp;&nbsp;|&nbsp;&nbsp;', $message);
-	                    break;
-	                default;
-	                    $str_repeat = str_repeat('&nbsp;', 4);
-	                    if (isset($values['success'])) {
-	                        $message[] = $str_repeat . $translator->trans('Imported : %count%', array('%count%' => $values['success']));
-	                    }
-	                    if (isset($values['errors'])) {
-	                    	$this->_hasImportErrors = true;
-	                        $message[] = $str_repeat . '<span class="error">' . $translator->trans('Not valid : %count%', array('%count%' => $values['errors'])) . '</span>';
-	                    }
-	                    $messages[] = '<strong>' . $table_trans . '</strong><br />' . implode('; ', $message);
-	                    break;
-	            }
-	        }
-    	
-    	}
-        return $messages;
-    }
-
-    /**
-     * @param $table
-     * @param $type
-     * @param string $messages
-     */
-    protected function setCountImports($table, $type, $messages = '')
-    {
-        if (!isset($this->_import_counts['rows'][$type])) {
-            $this->_import_counts['rows'][$type] = 0;
-        }
-
-        if (!isset($this->_import_counts[$table][$type])) {
-            $this->_import_counts[$table][$type] = 0;
-        }
-
-        $this->_import_counts['rows'][$type]++;
-        $this->_import_counts[$table][$type]++;
-
-        if (!empty($messages)) {
-            $this->_import_reports[$table][] = $messages;
-        }
-    }
-
+    
     /**
      * blankAction
      */

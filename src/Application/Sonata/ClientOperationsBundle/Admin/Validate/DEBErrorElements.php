@@ -972,7 +972,10 @@ class DEBErrorElements extends ErrorElements
 			$class = end($class);
 			$doctrine = \AppKernel::getStaticContainer()->get('doctrine');
 			$em = $doctrine->getManager();
-			$client = $em->getRepository('ApplicationSonataClientBundle:Client')->find($this->_object->getClientId());
+			$client = $em->getRepository('ApplicationSonataClientBundle:Client')->findOneBy(array('id' => $this->_object->getClientId()));
+			
+			
+			
 			
 			if($class == 'DEBIntro') {
 				$niveauDobligationId = $client->getNiveauDobligationId(); //INTRO
