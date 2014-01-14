@@ -124,7 +124,7 @@ class RapprochementState {
 	 * @return float
 	 */
 	public function getCreditTvaAReporter() {
-		return $this->credit_tva_a_reporter;
+		return round($this->credit_tva_a_reporter);
 	}
 	
 	

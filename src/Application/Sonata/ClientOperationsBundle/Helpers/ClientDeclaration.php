@@ -160,7 +160,7 @@ class ClientDeclaration {
 			$rulingNettTotal += $A04283ISumPrev->getHT();
 		}
 		
-		return $rulingNettTotal;
+		return round($rulingNettTotal);
 	}
 	
 	public function getRulingVatTotal() {
@@ -176,7 +176,7 @@ class ClientDeclaration {
 			$rulingVatTotal += $A06AIBSumPrev->getTVA();
 		}
 		
-		return $rulingVatTotal;
+		return round($rulingVatTotal);
 		
 	}
 	
@@ -219,7 +219,7 @@ class ClientDeclaration {
 		$Total2 = $this->getTotalVat2();
 		$soldeTVATotal = ($Total1?$Total1->getTVA():0) - ($Total2?$Total2->getTVA():0);
 		
-		return $soldeTVATotal;
+		return round($soldeTVATotal);
 	}
 	
 	public function getSoldeTVATotalText() {
@@ -241,8 +241,8 @@ class ClientDeclaration {
 			$total += $this->getRapprochementState()->getCreditTvaAReporter();
 		}
 		
-		$total -= $this->client->getCompteReelSum();
-		return $total;
+		$total -= round($this->client->getCompteReelSum());
+		return round($total);
 	}
 	
 	
