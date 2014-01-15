@@ -407,11 +407,11 @@ class ClientDeclaration {
 		foreach($entities as $entity) {
 			if(method_exists($entity, 'getHT')) {
 				if(get_class($entity) != 'Application\Sonata\ClientOperationsBundle\Entity\A02TVA') {
-					$ht += $entity->getHT();
+					$ht += round($entity->getHT());
 				}
 			}
 			if(method_exists($entity, 'getTVA')) {
-				$tva += $entity->getTVA();
+				$tva += round($entity->getTVA());
 			}
 		}
 		 
