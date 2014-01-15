@@ -55,6 +55,27 @@ class ExportDouaneController extends Controller {
 					}
 					
 					$this->get('session')->setFlash('sonata_flash_info|raw', $filename . ' is created.');
+					
+					if(isset($_POST['dl'])) {
+						
+						$response = new Response(
+							implode(PHP_EOL, $filesToConcatData),
+							200,
+							array(
+								'Content-Type' => 'text/plain',
+								'Content-Disposition' => 'attachment;filename='.$filename
+							)
+						);
+						$response->sendHeaders();
+						$response->sendContent();
+						
+						return $response;
+						
+						
+						
+					}
+					
+					
 				}
 			} else {
 				$this->get('session')->setFlash('sonata_flash_info|raw', 'Deb-à-Envoyer directory is empty.');
