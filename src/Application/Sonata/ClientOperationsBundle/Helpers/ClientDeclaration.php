@@ -192,7 +192,8 @@ class ClientDeclaration {
 	 
 	*/
 	public function getTotalVat1() {
-		$Total1 = $this->_sumData(array_merge($this->getV01TVAList()?:array(), $this->getA04283IList()?:array(), $this->getA06AIBList()?:array(), $this->getA02TVAList()?:array()));
+		$Total1 = $this->_sumData(array_merge($this->getV01TVAList()?:array(), $this->getA04283IList()?:array(), 
+			$this->getA06AIBList()?:array()));
 		return $Total1;
 	}
 	
