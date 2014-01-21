@@ -38,7 +38,10 @@ class RapprochementController extends Controller
 	    $_lockingMonth, 
 	    $_lockingYear,
 	    $_unlockingMonth, 
-		$_unlockingYear;
+		$_unlockingYear,
+	
+		$rapprochement,
+		$mois;
     
     
     /**
@@ -346,6 +349,19 @@ class RapprochementController extends Controller
         	$hasImportDataOnly = false;
         }
         
+        $this->mois = new \DateTime();
+        $this->mois->setDate($this->_year, $this->_month, '01');
+         
+        $em = $this->get('doctrine')->getEntityManager();
+         
+        $this->rapprochement = $em->getRepository('ApplicationSonataClientOperationsBundle:Rapprochement')->findOneBy(array('client_id' => $this->_client_id, 'mois' => $this->mois));
+         
+        if(!$this->rapprochement) {
+        	$this->rapprochement = new Rapprochement();
+        }
+        
+        
+        
         $v05_lic = $this->_getTableData('V05LIC', array('isDEB' => true, 'groupResults' => true, 'importDataOnly' => $fromImport ? true : false));
         $deb_exped = $this->_getTableData('DEBExped', array('isDEB' => false, 'groupResults' => true, 'importDataOnly' => $fromImport ? true : false));
         $form = $this->form();
@@ -370,38 +386,44 @@ class RapprochementController extends Controller
        		'declarationLink' => $this->generateUrl('rapprochement_frame', array('client_id' =>  $this->_client_id, 'month' => $this->_query_month)),
         	'listLink' => $this->generateUrl('admin_sonata_clientoperations_v01tva_list',
         				array('filter' => array('client_id' => array('value' => $this->_client_id)), 'month' => $this->_query_month)),
+        	'intro_info_id' => $this->rapprochement->getIntroInfoId(),
+        	'exped_info_id' => $this->rapprochement->getExpedInfoId(),
         );
     }
 
     
     private function form() {
-    	$form = $this->get('form.factory')->create(new RapprochementForm($this->_blocked));
-    	$request = $this->get('request');
-    
+    	
+    	
+    	
+    	//$rap->setIntroInfoId(1);
+    	
+    	//var_dump($rap->getIntroInfoId());
+    	
+    	
+    	$form = $this->get('form.factory')->create(new RapprochementForm(), $this->rapprochement);
+    	$request = $this->get('request');	
+    	
     	if ($request->getMethod() == 'POST') {
     		$form->bindRequest($request);
     		if ($form->isValid()) {
     			//$moisDate = explode('|', $this->_query_month);
-    			$rap = new Rapprochement();
-    			$em = $this->get('doctrine')->getEntityManager();
-    			$mois = new \DateTime();
-    			$mois->setDate($this->_year, $this->_month, '01');
     			
-    			$rap->setIntroInfoId((int)$form['intro_info_id']->getData());
-    			$rap->setIntroInfoNumber((double)$form['intro_info_number']->getData());
-    			$rap->setIntroInfoNumber2((double)$form['intro_info_number2']->getData());
-    			$rap->setIntroInfoText($form['intro_info_text']->getData());
+    			$this->rapprochement->setIntroInfoId((int)$form['intro_info_id']->getData());
+    			$this->rapprochement->setIntroInfoNumber((double)$form['intro_info_number']->getData());
+    			$this->rapprochement->setIntroInfoNumber2((double)$form['intro_info_number2']->getData());
+    			$this->rapprochement->setIntroInfoText($form['intro_info_text']->getData());
     			
-    			$rap->setExpedInfoId((int)$form['exped_info_id']->getData());
-    			$rap->setExpedInfoNumber((double)$form['exped_info_number']->getData());
-    			$rap->setExpedInfoNumber2((double)$form['exped_info_number2']->getData());
-    			$rap->setExpedInfoText($form['exped_info_text']->getData());
+    			$this->rapprochement->setExpedInfoId((int)$form['exped_info_id']->getData());
+    			$this->rapprochement->setExpedInfoNumber((double)$form['exped_info_number']->getData());
+    			$this->rapprochement->setExpedInfoNumber2((double)$form['exped_info_number2']->getData());
+    			$this->rapprochement->setExpedInfoText($form['exped_info_text']->getData());
     			
-    			$rap->setClientId((int)$this->_client_id);
-    			$rap->setMois($mois);
-    			$rap->setDate(new \DateTime());
+    			$this->rapprochement->setClientId((int)$this->_client_id);
+    			$this->rapprochement->setMois($this->mois);
+    			$this->rapprochement->setDate(new \DateTime());
     			
-    			$em->persist($rap);
+    			$em->persist($this->rapprochement);
     			$em->flush(); 
     			//return $this->render(':redirects:back.html.twig');
     			//return $this->redirect($this->generateUrl('rapprochement_index', array('client_id' => $client_id, 'month' => $month), true));

@@ -1,6 +1,10 @@
 <form action="?filter%5Bclient_id%5D%5Bvalue%5D={{ client.id }}&month={{ info.month }}|{{ info.year }}" method="post" {{ form_enctype(form) }} id="rapprochement_form" class="">
 
 
+	<a href="#" id="intro_info_id_hidden" value="{{ intro_info_id }}"></a>
+	<a href="#" id="exped_info_id_hidden" value="{{ exped_info_id }}"></a>
+
+
 	<div class="alert-error">
  	{{ form_errors(form.intro_info_id) }}
  	{{ form_errors(form.intro_info_text) }}

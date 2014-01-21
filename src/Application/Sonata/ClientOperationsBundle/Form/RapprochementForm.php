@@ -24,8 +24,8 @@ class RapprochementForm extends AbstractType
 		$builder->add('intro_info_id', 'choice', array(
 				'label' => 'Intro',
 				'choices' => Rapprochement::$intro_info_id_options,
-				'empty_value' => '',
-				'expanded' => true
+				'expanded' => true,
+				'multiple' => false
 			))
 			
 			->add('intro_info_number', null, array('attr' => array('class' => 'input-small money')))
@@ -44,7 +44,8 @@ class RapprochementForm extends AbstractType
 			->add('exped_info_text', null, array('attr' => array('class' => '')))
 	
 		;
-		
+			
+			
 	}
 	
 	/**
