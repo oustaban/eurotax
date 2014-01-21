@@ -311,7 +311,8 @@ class ErrorElements
      */
     protected function round($value, $precision = 2)
     {
-        return round($value, $precision);
+        //return round($value, $precision);
+        return $value;
     }
 
     /**
