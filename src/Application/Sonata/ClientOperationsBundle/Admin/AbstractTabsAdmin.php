@@ -433,9 +433,24 @@ abstract class AbstractTabsAdmin extends Admin
             $v = trim($v);
         }
         if ($fieldDescription && $type = $fieldDescription->getType()) {
-            $method = 'get' . ucfirst($type) . 'TypeFormValue';
-            $v = method_exists($this, $method) ? $this->$method($v) : $v;
+            $method2 = 'get' . ucfirst($type) . 'TypeFormValue';
+            //$v = method_exists($this, $method) ? $this->$method($v) : $v;
+            
+            
+            if(method_exists($this, $method2)) {
+            	$v = $this->$method2($v);
+            	
+            	$method = $method2;
+            }
+            
+
         }
+        
+        
+        //var_dump("$field $v $method");
+        
+        
+        
         
         return $v;
     }
@@ -640,6 +655,14 @@ abstract class AbstractTabsAdmin extends Admin
     	//workaround for this strange issue in the test server
     	//http://stackoverflow.com/questions/12965816/php-round-working-strange
     	return rtrim(number_format((float)$value, 4), 0);
+    }
+    
+    
+    protected function getFloatTypeFormValue($value)
+    {
+    	//workaround for this strange issue in the test server
+    	//http://stackoverflow.com/questions/12965816/php-round-working-strange
+    	return rtrim(number_format((float)$value, 2, '.', ''), 0);
     }
     
     

@@ -715,6 +715,7 @@ class ImportExcelCommand extends ContainerAwareCommand {
 							$formData[$fieldName] = $newValue;
 						}
 					}
+					//exit;
 	
 					if($class != 'DEBExped' && $class != 'DEBIntro') {
 						//Only lines with MOIS = current month must be imported.
