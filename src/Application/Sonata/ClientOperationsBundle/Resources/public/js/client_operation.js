@@ -800,13 +800,13 @@ function init_rapprochement_sums() {
 		    		var i1 = real_num($('#totals_input_calcu1 b').html()),
 		    			i2 = real_num($('#totals_input_calcu2 b').html());
 
-		    		if(i1 == 0) {
+		    		if(i1 == 0 && $('#rapprochement_intro_info_number').val() == '') {
 		    			$('#rapprochement_intro_info_number').removeAttr('required').hide();
 		    		} else {
 		    			$('#rapprochement_intro_info_number').attr('required', 'required').show();
 		    		}
 		    		
-		    		if(i2 == 0) {
+		    		if(i2 == 0 && $('#rapprochement_intro_info_number2').val() == '') {
 		    			$('#rapprochement_intro_info_number2').removeAttr('required').hide();
 		    		} else {
 		    			$('#rapprochement_intro_info_number2').attr('required', 'required').show();
@@ -850,13 +850,13 @@ function init_rapprochement_sums() {
 		    		var o1 = real_num($('#totals_output_calcu1 b').html()), 
 	    				o2 = real_num($('#totals_output_calcu2 b').html());
 
-		    		if(o1 == 0) {
+		    		if(o1 == 0 && $('#rapprochement_exped_info_number').val() == '') {
 		    			$('#rapprochement_exped_info_number').removeAttr('required').hide();
 		    		} else {
 		    			$('#rapprochement_exped_info_number').attr('required', 'required').show();
 		    		}
 		    		
-		    		if(o2 == 0) {
+		    		if(o2 == 0 && $('#rapprochement_exped_info_number2').val() == '') {
 		    			$('#rapprochement_exped_info_number2').removeAttr('required').hide();
 		    		} else {
 		    			$('#rapprochement_exped_info_number2').attr('required', 'required').show();
