@@ -81,7 +81,8 @@
             <input id="month" type="hidden" name="month" />
             <input id="year" type="hidden" name="year" />  
               
-            
+            <input id="demandeValue" type="hidden" name="year" value="{{ rapState.getDemandeDeRemboursement }}" />    
+            <input id="creditValue" type="hidden" name="year" value="{{ rapState.getCreditTvaAReporter }}" />  
             
             <div class="controls sonata-ba-field sonata-ba-field-standard-natural ">
         		<label id="numberLabel" for="number"></label> <input class="input-large" id="number" type="text" name="number" />
@@ -107,6 +108,16 @@
     			$('.alert').html('Negative value is not allowed.').show();
     			return false;
     		}
+    		
+    		var creditValue = $('#creditValue').val();
+    		var demandeValue = $('#demandeValue').val();
+    		
+    		
+    		if(demandeValue > creditValue) {
+    			$('.alert').html('Remboursement demandé supérieur au crédit de TVA.').show();
+    			return false;
+    		}
+    		
     		$('.alert').html('').hide();
     		return true;
     	});
