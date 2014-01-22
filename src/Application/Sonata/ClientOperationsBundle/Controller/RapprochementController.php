@@ -41,7 +41,8 @@ class RapprochementController extends Controller
 		$_unlockingYear,
 	
 		$rapprochement,
-		$mois;
+		$mois,
+		$em;
     
     
     /**
@@ -352,9 +353,9 @@ class RapprochementController extends Controller
         $this->mois = new \DateTime();
         $this->mois->setDate($this->_year, $this->_month, '01');
          
-        $em = $this->get('doctrine')->getEntityManager();
+        $this->em = $this->get('doctrine')->getEntityManager();
          
-        $this->rapprochement = $em->getRepository('ApplicationSonataClientOperationsBundle:Rapprochement')->findOneBy(array('client_id' => $this->_client_id, 'mois' => $this->mois));
+        $this->rapprochement = $this->em->getRepository('ApplicationSonataClientOperationsBundle:Rapprochement')->findOneBy(array('client_id' => $this->_client_id, 'mois' => $this->mois));
          
         if(!$this->rapprochement) {
         	$this->rapprochement = new Rapprochement();
@@ -423,8 +424,8 @@ class RapprochementController extends Controller
     			$this->rapprochement->setMois($this->mois);
     			$this->rapprochement->setDate(new \DateTime());
     			
-    			$em->persist($this->rapprochement);
-    			$em->flush(); 
+    			$this->em->persist($this->rapprochement);
+    			$this->em->flush(); 
     			//return $this->render(':redirects:back.html.twig');
     			//return $this->redirect($this->generateUrl('rapprochement_index', array('client_id' => $client_id, 'month' => $month), true));
     			
