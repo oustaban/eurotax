@@ -36,7 +36,7 @@
 		
 			{% if blocked %}
 		    {% set text_lock = blocked ? 'Clôturer' : 'Déverrouiller' %}
-    		<a id="btn_locking" href="{{ path('rapprochement_locking', {client_id: client_id, month: month~'|'~year } ) }}?filter%5Bclient_id%5D%5Bvalue%5D={{ client_id }}&month={{ month }}|{{ year }}" name="btn_locking" rel="tooltip" title="{{ text_lock|trans}}" class="btn"><i class="icon icon-lock"></i> {{ text_lock|trans}}</a>
+    		<!-- <a id="btn_locking" href="{{ path('rapprochement_locking', {client_id: client_id, month: month~'|'~year } ) }}?filter%5Bclient_id%5D%5Bvalue%5D={{ client_id }}&month={{ month }}|{{ year }}" name="btn_locking" rel="tooltip" title="{{ text_lock|trans}}" class="btn"><i class="icon icon-lock"></i> {{ text_lock|trans}}</a> -->
 			{% endif %}
 			
 			<button class="btn" onclick="javascript:window.close();"><i class="icon icon-remove"></i> Annuler</button>
