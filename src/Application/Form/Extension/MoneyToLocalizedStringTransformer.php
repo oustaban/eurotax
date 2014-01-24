@@ -8,10 +8,10 @@ class MoneyToLocalizedStringTransformer extends BaseStringTransformer
     /**
      * {@inheritdoc}
      */
-    public function reverseTransform($value)
+    /* public function reverseTransform($value)
     {
         return parent::reverseTransform(str_replace('.', ',', $value));
-    }
+    } */
 
     protected function getNumberFormatter()
     {
