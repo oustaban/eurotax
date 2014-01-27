@@ -13,6 +13,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class ExportDouaneController extends Controller {
 
+	protected $_year, $_month;
+	
 	
 	/**
 	 * @Template()
@@ -30,16 +32,20 @@ class ExportDouaneController extends Controller {
 				mkdir(DEB_A_COMPILER_BACKUP_ABSPATH, 0777, true);
 			}
 			
+			list($this->_year, $this->_month) = explode('-', date('Y-m', strtotime('now' . (date('d') < 25 ? ' -1 month' : ''))));
+			
 			
 			$filesToConcat = array();
 			$filesToConcatData = array();
 			
-			$filesToConcatData[] = $this->header();
+			$filesToConcatData[] = $this->_header();
 			
+			/* var_dump($this->_year, $this->_month);
+			exit; */
 			
 			$iterator = new \DirectoryIterator( DEB_A_COMPILER_ABSPATH );
 			foreach ( $iterator as $fileinfo ) {
-				if ( $fileinfo->isFile() && preg_match( '/^(.+)\_transdeb\-([0-9]{4})\-([0-9]{1,2})\.txt$/i', $fileinfo->getFilename() ) ) {
+				if ( $fileinfo->isFile() && preg_match( '/^(.+)\_transdeb\-'.$this->_year.'\-'. ltrim($this->_month, 0).'\.txt$/i', $fileinfo->getFilename() ) ) {
 					array_push($filesToConcat, $fileinfo->getPathname());
 					array_push($filesToConcatData, file_get_contents($fileinfo->getPathname()));
 				}
@@ -70,6 +76,7 @@ class ExportDouaneController extends Controller {
 						$response->sendContent();
 						
 						return $response;
+						exit;
 						
 						
 						
@@ -88,12 +95,10 @@ class ExportDouaneController extends Controller {
 	}
 	
 	
-	protected function header() {
+	protected function _header() {
 		//INTRACOMD0IO1131       1218332089218000410141984819          0141984818          Fabrice COCHET
-		
-		list($current_year, $current_month) = explode('-', date('Y-m', strtotime('now' . (date('d') < 25 ? ' -1 month' : ''))));
-		$user = $this->get('security.context')->getToken()->getUser();
-		return "INTRACOMD0IO" . $current_month . "31       ". date('dm') ."332089218000410141984819          0141984818           Fabrice COCHET";
+		//$user = $this->get('security.context')->getToken()->getUser();
+		return "INTRACOMD0IO" . $this->_month . "31       ". date('dm') ."332089218000410141984819          0141984818           Fabrice COCHET";
 	}
 	
 	
