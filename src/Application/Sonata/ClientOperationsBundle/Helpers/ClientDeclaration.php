@@ -36,12 +36,57 @@ class ClientDeclaration {
 		return $this;
 	}
 	
-	
+	protected function isGrouped() {
+		/*
+		 * V01 = 9 lines
+V03 = 6 lines
+V05 = 6 lines
+V07 = 3 lines
+A02 = 3 lines
+A04 = 11 lines
+A06 = 2 lines
+
+		 */
+		
+		
+		$entities = array(
+			'V01TVA' => $V01TVAlist = $this->getEntityList('V01TVA', false),
+			'V03283I' => $V03283Ilist = $this->getEntityList('V03283I', false),
+			'V05LIC' => $V05LIClist = $this->getEntityList('V05LIC', false),
+			'V07EX' => $V07EXlist = $this->getEntityList('V07EX', false),
+			'A02TVA' => $A02TVAlist = $this->getEntityList('A02TVA', false, false, 'paiement_date'),
+			'A04283I' => $A04283Ilist = $this->getEntityList('A04283I', false),
+			'A06AIB' => $A06AIBlist = $this->getEntityList('A06AIB', false),
+			'A08IM' => $A08IMlist = $this->getEntityList('A08IM', false, false, 'date_piece'),
+			'A10CAF' => $A10CAFlist = $this->getEntityList('A10CAF', false)
+		);
+		
+		$count = 0;
+		foreach($entities as $k => $entity) {
+			//var_dump($k, count($entity));
+			//echo '<br />';
+			if(count($entity) > 3) {
+				$count++;
+			}
+		}
+		
+		//exit;
+		//var_dump($count);
+		
+		if($count > 3) {
+			return true;
+		}
+		
+		
+		return false;
+		
+		
+	}
 	public function getV01TVAList() {
 		$V01TVAlist = $this->getEntityList('V01TVA', false);
 		
 		//Grouped by percentage
-		if(count($V01TVAlist) > 3) {
+		if($this->isGrouped()) {
 			$V01TVAlist = $this->getEntityList('V01TVA', false, true);
 		}
 		
@@ -51,7 +96,7 @@ class ClientDeclaration {
 	
 	public function getV03283IList() {
 		$V03283Ilist = $this->getEntityList('V03283I', false);
-		if(count($V03283Ilist) > 3) {
+		if($this->isGrouped()) {
 			$V03283Ilist = $this->getEntityList('V03283I', false, true);
 		}
 		return $V03283Ilist;
@@ -59,7 +104,7 @@ class ClientDeclaration {
 
 	public function getV05LICList() {
 		$V05LIClist = $this->getEntityList('V05LIC', false);
-		if(count($V05LIClist) > 3) {
+		if($this->isGrouped()) {
 			$V05LIClist = $this->getEntityList('V05LIC', false, true);
 		}
 		return $V05LIClist;
@@ -68,7 +113,7 @@ class ClientDeclaration {
 	public function getV07EXList() {
 		$V07EXlist = $this->getEntityList('V07EX', false);
 		
-		if(count($V07EXlist) > 3) {
+		if($this->isGrouped()) {
 			$V07EXlist = $this->getEntityList('V07EX', false, true);
 		}
 		
@@ -77,7 +122,7 @@ class ClientDeclaration {
 	
 	public function getV11INTList() {
 		$V11INTlist = $this->getEntityList('V11INT', false);
-		if(count($V11INTlist) > 3) {
+		if($this->isGrouped()) {
 			$V11INTlist = $this->getEntityList('V11INT', false, true);
 		}
 		return $V11INTlist;
@@ -86,7 +131,7 @@ class ClientDeclaration {
 	public function getA02TVAList() {	
 		$A02TVAlist = $this->getEntityList('A02TVA', false, false, 'paiement_date');
 		
-		if(count($A02TVAlist) > 3) {
+		if($this->isGrouped()) {
 			$A02TVAlist = $this->getEntityList('A02TVA', false, true, 'paiement_date');
 		}
 		return $A02TVAlist;
@@ -94,7 +139,7 @@ class ClientDeclaration {
 	
 	public function getA04283IList() {
 		$A04283Ilist = $this->getEntityList('A04283I', false);
-		if(count($A04283Ilist) > 3) {
+		if($this->isGrouped()) {
 			$A04283Ilist = $this->getEntityList('A04283I', false, true);
 		}
 		return $A04283Ilist;
@@ -102,7 +147,7 @@ class ClientDeclaration {
 	
 	public function getA06AIBList() {
 		$A06AIBlist = $this->getEntityList('A06AIB', false);
-		if(count($A06AIBlist) > 3) {
+		if($this->isGrouped()) {
 			$A06AIBlist = $this->getEntityList('A06AIB', false, true);
 		}
 		return $A06AIBlist;
@@ -110,7 +155,7 @@ class ClientDeclaration {
 	
 	public function getA08IMList() {
 		$A08IMlist = $this->getEntityList('A08IM', false, false, 'date_piece');
-		if(count($A08IMlist) > 3) {
+		if($this->isGrouped()) {
 			$A08IMlist = $this->getEntityList('A08IM', false, true, 'date_piece');
 		}
 		return $A08IMlist;
@@ -118,7 +163,7 @@ class ClientDeclaration {
 	
 	public function getA10CAFList() {
 		$A10CAFlist = $this->getEntityList('A10CAF', false);
-		if(count($A10CAFlist) > 3) {
+		if($this->isGrouped()) {
 			$A10CAFlist = $this->getEntityList('A10CAF', false, true);
 		}
 		
