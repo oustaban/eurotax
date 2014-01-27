@@ -21,7 +21,9 @@ class RapprochementForm extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		
-		$builder->add('intro_info_id', 'choice', array(
+		$builder
+			->add('id', 'hidden')
+			->add('intro_info_id', 'choice', array(
 				'label' => 'Intro',
 				'choices' => Rapprochement::$intro_info_id_options,
 				'expanded' => true,

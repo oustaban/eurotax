@@ -363,6 +363,9 @@ class RapprochementController extends Controller
         
         
         
+        
+        
+        
         $v05_lic = $this->_getTableData('V05LIC', array('isDEB' => true, 'groupResults' => true, 'importDataOnly' => $fromImport ? true : false));
         $deb_exped = $this->_getTableData('DEBExped', array('isDEB' => false, 'groupResults' => true, 'importDataOnly' => $fromImport ? true : false));
         $form = $this->form();
@@ -392,15 +395,10 @@ class RapprochementController extends Controller
         );
     }
 
-    
     private function form() {
-    	
-    	
-    	
     	//$rap->setIntroInfoId(1);
-    	
     	//var_dump($rap->getIntroInfoId());
-    	
+    	//var_dump($this->rapprochement->getIntroInfoNumber());
     	
     	$form = $this->get('form.factory')->create(new RapprochementForm(), $this->rapprochement);
     	$request = $this->get('request');	
