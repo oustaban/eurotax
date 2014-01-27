@@ -93,7 +93,7 @@ class ExportDouaneController extends Controller {
 		
 		list($current_year, $current_month) = explode('-', date('Y-m', strtotime('now' . (date('d') < 25 ? ' -1 month' : ''))));
 		$user = $this->get('security.context')->getToken()->getUser();
-		return "INTRACOMD0IO" . $current_month . "31       ". date('dm') ."332089218000410141984819          0141984818           " . $user->getFullname();
+		return "INTRACOMD0IO" . $current_month . "31       ". date('dm') ."332089218000410141984819          0141984818           Fabrice COCHET";
 	}
 	
 	
