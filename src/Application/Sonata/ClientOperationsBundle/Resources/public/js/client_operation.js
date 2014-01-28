@@ -641,9 +641,9 @@ function init_rapprochement_sums() {
     			o2 = real_num($('#totals_output_calcu2 b').html());
     		
     		if(i1 != 0 || i2 != 0 || o1 != 0 || o2 != 0) {
-    			$('#btn_locking').attr('disabled', true);
+    			$('#btn_locking, #link_declaration').attr('disabled', true);
     		} else {
-    			$('#btn_locking').attr('disabled', false);
+    			$('#btn_locking, #link_declaration').attr('disabled', false);
     		}
     	});
     	
