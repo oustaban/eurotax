@@ -19,6 +19,8 @@ use Application\Sonata\ClientOperationsBundle\Entity\Rapprochement;
 use Application\Sonata\ClientOperationsBundle\Entity\RapprochementState;
 use Application\Sonata\ClientOperationsBundle\Form\RapprochementForm;
 
+use Application\Sonata\ClientOperationsBundle\Export\ExcelDeclaration;
+
 /**
  * Rapprochement controller.
  *
@@ -466,6 +468,7 @@ class RapprochementController extends Controller
     	} else {
     		$this->setLocking();
     		$this->exportTransDeb();
+    		$this->exportExcelDeclaration();
     	}
     	return $success;
     }
@@ -515,7 +518,6 @@ class RapprochementController extends Controller
     	}
     }
     
-    
     protected function exportTransDeb() {
     	$transdeb = $this->get('client.operation.transdeb');
     	$transdeb->set('_client', $this->_client);
@@ -523,6 +525,12 @@ class RapprochementController extends Controller
     	$transdeb->set('_month', $this->_month);
     	$transdeb->render();
     	$transdeb->saveFile();
+    }
+    
+    protected function exportExcelDeclaration() {
+    	$excel = new ExcelDeclaration($this->_client, false, $this->_year, $this->_month);
+    	$excel->set('_locking', $this->getLocking());
+    	$excel->render();
     }
     
     protected function acceptLocking() {
