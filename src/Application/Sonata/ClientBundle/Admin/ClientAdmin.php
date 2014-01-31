@@ -808,8 +808,7 @@ If CENTRE DES IMPOTS = CISD/9 and date <> 31 : No validation possible - Message 
     		if($user->hasGroup('Gestionnaire')) {
     			return false;
     		}
-    	}
-    	 
+    	} 
     	return parent::isGranted($name, $object);
     }
     
@@ -829,5 +828,27 @@ If CENTRE DES IMPOTS = CISD/9 and date <> 31 : No validation possible - Message 
     {
     	return $this->_is_validate_import;
     }
+    
+    /**
+     * Gives access if client is closed and user is supervisuer
+     *
+     * @return boolean
+     */
+    public function hasClosedClientAccess() {
+    	$id = $this->getRequest()->get($this->getIdParameter());    	
+    	$user = \AppKernel::getStaticContainer()->get('security.context')->getToken()->getUser();
+    	$client = $this->getObject($id);
+    	
+    	$user = \AppKernel::getStaticContainer()->get('security.context')->getToken()->getUser();
+    	//return $client->getDateFinMission() && $user->hasGroup('Superviseur');
+    	
+    	if($client->getDateFinMission()) {
+    		return $user->hasGroup('Superviseur');
+    	}
+    	
+    	
+    	return true;
+    }
+    
     
 }

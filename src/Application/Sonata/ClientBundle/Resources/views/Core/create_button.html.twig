@@ -1,5 +1,5 @@
 {% if admin.hasRoute('create') and admin.isGranted('CREATE') %}
-    <a class="btn sonata-action-element  " href="{{ admin.generateUrl('create') }}">{{ 'link_action_create'|trans({}, 'SonataAdminBundle') }}</a>
+    <a class="btn sonata-action-element  {% if admin.hasClosedClientAccess is defined %}{% if not admin.hasClosedClientAccess %}disabled{% endif %}{% endif %}" href="{% if admin.hasClosedClientAccess is defined %}{% if not admin.hasClosedClientAccess %}javascript:void(0);{% else %}{{ admin.generateUrl('create') }}{% endif %}{% endif %}">{{ 'link_action_create'|trans({}, 'SonataAdminBundle') }}</a>
 {% endif %}
 
 {% if virement_form is defined and virement_form %}

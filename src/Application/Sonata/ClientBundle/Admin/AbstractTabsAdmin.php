@@ -256,5 +256,33 @@ abstract class AbstractTabsAdmin extends Admin
     		
     }
     
+    public function isGranted($name, $object = null)
+    {
+    
+    	/* if($name == 'CREATE') {
+    
+    		return $this->hasClosedClientAccess() && parent::isGranted($name, $object);
+    	} */
+    
+    	return parent::isGranted($name, $object);
+    }
+    
+    
+    /**
+     * Gives access if client is closed and user is supervisuer
+     * 
+     * @return boolean
+     */
+    public function hasClosedClientAccess() {
+    	$user = \AppKernel::getStaticContainer()->get('security.context')->getToken()->getUser();
+    	//return $this->_client->getDateFinMission() && $user->hasGroup('Superviseur');
+    	
+    	if($this->_client->getDateFinMission()) {
+    		return $user->hasGroup('Superviseur');
+    	}
+    	 
+    	 
+    	return true;
+    }
     
 }
