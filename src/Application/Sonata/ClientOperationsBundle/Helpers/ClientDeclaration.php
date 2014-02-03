@@ -70,10 +70,8 @@ A06 = 2 lines
 			}
 		}
 		
-		//exit;
-		//var_dump($count);
-		
-		if($count > 3) {
+		//It should be merged if there is at least one entity with more than 3 lines.
+		if($count > 0) {
 			return true;
 		}
 		
