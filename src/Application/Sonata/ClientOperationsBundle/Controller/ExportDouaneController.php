@@ -63,23 +63,15 @@ class ExportDouaneController extends Controller {
 					$this->get('session')->setFlash('sonata_flash_info|raw', $filename . ' is created.');
 					
 					if(isset($_POST['dl'])) {
-						
-						$response = new Response(
-							implode(PHP_EOL, $filesToConcatData),
-							200,
-							array(
-								'Content-Type' => 'text/plain',
-								'Content-Disposition' => 'attachment;filename='.$filename
-							)
-						);
-						$response->sendHeaders();
-						$response->sendContent();
-						
-						return $response;
+						$data = implode(PHP_EOL, $filesToConcatData);
+						header('Content-Encoding: UTF-8');
+						header('Content-Type: text/csv; charset=UTF-8');
+						header('Content-Disposition: attachment;filename=' .$filename);
+
+						$fp = fopen('php://output', 'w');
+						fwrite($fp, $data);
+						fclose($fp);
 						exit;
-						
-						
-						
 					}
 					
 					
