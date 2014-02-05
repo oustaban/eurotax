@@ -441,8 +441,8 @@ class InitialImportController extends Controller {
 	
 	public function clientAction() {
 		set_time_limit(0);
-		ini_set('max_execution_time', 0);
-		
+		//ini_set('max_execution_time', 0);
+		ini_set('memory_limit', '256M');
 		if($_SERVER['REQUEST_METHOD'] == 'POST') {
 			
 			if (!empty($_FILES) && !empty($_FILES["inputFile"]["name"])) {
