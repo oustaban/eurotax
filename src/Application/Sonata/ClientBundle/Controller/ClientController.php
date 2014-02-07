@@ -104,6 +104,13 @@ class ClientController extends Controller
      */
     public function listAction()
     {
+    	
+    	$user = \AppKernel::getStaticContainer()->get('security.context')->getToken()->getUser();
+    	$this->jsSettingsJson(array(
+    		
+    		'isSuperviseur' => $user->hasGroup('Superviseur'),
+    	));
+    	
         global $clientsDimmed;
 
         /** @var $em \Doctrine\ORM\EntityManager */
@@ -126,7 +133,24 @@ class ClientController extends Controller
         , 256)
         ;
 
-        return parent::listAction();
+        //return parent::listAction();
+        
+        if (false === $this->admin->isGranted('LIST')) {
+        	throw new AccessDeniedException();
+        }
+        
+        $datagrid = $this->admin->getDatagrid();
+        $formView = $datagrid->getForm()->createView();
+        
+        // set the theme for the current Admin Form
+        $this->get('twig')->getExtension('form')->renderer->setTheme($formView, $this->admin->getFilterTheme());
+        
+        return $this->render($this->admin->getTemplate('list'), array(
+        	'action'   => 'list',
+        	'form'     => $formView,
+        	'datagrid' => $datagrid,
+        	'js_settings_json' => $this->_jsSettingsJson,
+        ));
     }
 
     /**
@@ -141,10 +165,11 @@ class ClientController extends Controller
         if($id){
             $client = $this->getDoctrine()->getManager()->getRepository('ApplicationSonataClientBundle:Client')->find($id);
         }
-
+        
         $this->jsSettingsJson(array(
             'country_eu' => ListCountries::getCountryEU(),
             'niveau_dobligation' => $this->admin->getNiveauDobligationIdListHelp(),
+        
         ));
 
         return $this->render('ApplicationSonataClientBundle::' . $template . '.html.twig', array(

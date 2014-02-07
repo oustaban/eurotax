@@ -41,7 +41,7 @@ abstract class AbstractTabsController extends Controller
     /**
      * @var string
      */
-    protected $_jsSettingsJson = null;
+    protected $_jsSettingsJson = null, $_jsSettingsJsonData = array();
 
     public function configure()
     {
@@ -120,6 +120,12 @@ abstract class AbstractTabsController extends Controller
      */
     public function listAction()
     {
+    	
+    	$user = \AppKernel::getStaticContainer()->get('security.context')->getToken()->getUser();
+    	$this->jsSettingsJson(array(
+    		'isSuperviseur' => $user->hasGroup('Superviseur'),
+    	));
+    	
         return $this->_action(parent::listAction(), 'list');
     }
 
@@ -184,11 +190,9 @@ abstract class AbstractTabsController extends Controller
      */
     public function jsSettingsJson(array $data)
     {
-        $this->_jsSettingsJson = json_encode($data);
+    	$this->_jsSettingsJsonData = array_merge($this->_jsSettingsJsonData, $data);
+        $this->_jsSettingsJson = json_encode($this->_jsSettingsJsonData);
     }
-    
-    
-    
     
     protected function saveCompte($amount) {
     	/* @var $em \Doctrine\ORM\EntityManager */

@@ -76,6 +76,9 @@
         {% for client in clients %}
         <tr class="{% if client.dimmed%}dimmed{% endif %}">
             <td>
+            {% if isSuperviseur and client[0].getDateFinMission %}
+            	<span class="label label-warning">Client ferme</span>
+            {% else %}
                 {% spaceless %}
                 <a href="{{ path('admin_sonata_clientoperations_v01tva_list', {'filter[client_id][value]' : client[0].id}) }}">
                     <i rel="tooltip" title="Operations" class="icon icon-th-list"></i>
@@ -88,6 +91,10 @@
                     <span rel="tooltip" title="{{alert_count}} {{ 'alertes'|trans }}" href="{{ path('admin_sonata_clientoperations_clientalert_list', {'filter[client_id][value]':client[0].id}) }}" class="badge badge-warning btn-link"  clientname="{{ client[0].codeClient }} - {{ client[0].nom }}" id="btn_client_alert">{{ alert_count }}</span>
                 {% endif%}
                 {% endspaceless %}
+                
+                
+                
+            {% endif%}    
             </td>
             <td class="sonata-ba-list-field sonata-ba-list-field-integer2"  objectId="{{ client[0].id }}">
                 {{ client[0].getCodeClient }}
@@ -164,7 +171,6 @@
 
 {% block javascripts %}
 {{parent()}}
-
 <script src="{{ asset('js/init/ajax.popup.js') }}" type="text/javascript"></script>
 <script src="{{ asset('bundles/applicationsonataclientoperations/js/jquery.tablesorter.js') }}" type="text/javascript"></script>
 <script src="{{ asset('bundles/applicationsonataclientoperations/js/jquery.columnfilters.js') }}" type="text/javascript"></script>

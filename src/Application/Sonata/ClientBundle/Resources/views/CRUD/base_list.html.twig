@@ -4,12 +4,21 @@
 
 {% block javascripts %}
 {{ parent() }}
+ 	<script>
+ 	{% if js_settings_json is defined and js_settings_json is not empty %}
+    var Sonata = {};
+    jQuery.extend(Sonata, {{ js_settings_json|raw }});
+    {% endif%}
+    </script>
 <script type="text/javascript" src="{{ asset('bundles/applicationsonataclient/js/clients.js') }}"></script>
 {% endblock javascripts %}
 
 {% block javascriptsafter %}
 {{ parent() }}
 <script type="text/javascript">
+
+
+
     var clientsDimmed = {{ globalsGet('clientsDimmed')|raw }};
     for(var i in clientsDimmed){
         clientsDimmed[i].client.compte_solde_montant = clientsDimmed[i].compte_solde_montant?clientsDimmed[i].compte_solde_montant:0;

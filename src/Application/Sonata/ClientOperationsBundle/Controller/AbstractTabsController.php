@@ -43,7 +43,7 @@ class AbstractTabsController extends Controller
      */
     protected $_tabAlias = '';
     protected $_operationType = '';
-    protected $_jsSettingsJson = null;
+    protected $_jsSettingsJson = null, $_jsSettingsJsonData = array();
     protected $_month = 0;
     protected $_query_month = 0;
     protected $_year = 0;
@@ -1512,7 +1512,9 @@ class AbstractTabsController extends Controller
      */
     public function jsSettingsJson(array $data)
     {
-        $this->_jsSettingsJson = json_encode($data);
+        $this->_jsSettingsJsonData = array_merge($this->_jsSettingsJsonData, $data);
+        $this->_jsSettingsJson = json_encode($this->_jsSettingsJsonData);
+    	
     }
     
     

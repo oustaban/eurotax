@@ -62,11 +62,17 @@ class HomeController extends Controller
          */
         $moisExtraColTitle = $now->format('d') > 25 ? date('m.Y', strtotime('now')) : date('m.Y', strtotime('now -1 month'));
         
+        $user = \AppKernel::getStaticContainer()->get('security.context')->getToken()->getUser();
+        
+        
         return array(
             'clients' => array_merge($clients, $clientsDimmed),
             'cookies' => $this->getRequest()->cookies,
             'alert_count' => $alerts[0]['cnt'],
-        	'moisExtraColTitle' => $moisExtraColTitle
+        	'moisExtraColTitle' => $moisExtraColTitle,
+        	
+        	'isSuperviseur' => $user->hasGroup('Superviseur'),
+        	
         );
     }
 
