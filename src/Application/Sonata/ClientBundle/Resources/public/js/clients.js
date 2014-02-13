@@ -4,13 +4,11 @@ function addClient(client, cls){
 	    '</a>' +
 	    '<a href="/sonata/client/client/'+client.id+'/edit">' +
 	    '<i class="icon icon-list-alt" rel="tooltip" data-original-title="Fiche"></i>' +
-	    '</a>',
-	
-	
-	fermer = '<span class="label label-warning">Client ferme</span>',
+	    '</a>',		
+	//fermer = '<span class="label label-warning">Client ferme</span>',
 	
     columns = [
-        Sonata.isSuperviseur ? fermer : operations,       
+        operations,       
         client.code_client,
         client.raison_sociale,
         client.nature_du_client.name,

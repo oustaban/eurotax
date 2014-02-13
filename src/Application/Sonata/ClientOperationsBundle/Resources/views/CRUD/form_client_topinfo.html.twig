@@ -5,8 +5,10 @@
         <span title="S'affiche uniquement si on a cloturé le mois (il y a donc au moins une ligne qui est cloturée)"
               class="label label-warning">Mois en cours cloturé</span>
         {% endif %}
+        {% if client_ferme %}
+        	<span class="label label-warning">Client ferme</span>
+        {% endif %}
     </h1>
-
     <div>
         <label for="selected_month">{{'ApplicationSonataClientOperationsBundle.mois'|trans}}</label>
         <select id="selected_month" name="month">
@@ -21,11 +23,6 @@
     
 	<a class="btn {% if client.getCompteReelSum < 0 %}btn-danger{% endif %}" href="{{ path('admin_sonata_client_compte_list', {'filter[client_id][value]':client_id}) }}">Solde{% if client.getComptePrevisionnelSum %} P{% endif %} {{ client.getCompteReelSum|number_format(2, ',', ' ') }} €</a>
 </form>
-
-
-
-
-
 
 {% set path = url('admin_sonata_clientoperations_'~active_tab~'_list', {'filter[client_id][value]':client_id}) %}
 

@@ -457,10 +457,19 @@ class AbstractTabsController extends Controller
         	'locked' => $this->getLocking() ? 1 : 0,
             'js_settings_json' => $this->_jsSettingsJson,
             '_filter_json' => $this->_parameters_url,
+        	'client_ferme' => $this->clientFerme(),
         ));
     }
 
     
+    protected function clientFerme() {
+    	$user = \AppKernel::getStaticContainer()->get('security.context')->getToken()->getUser();
+    	if($user->hasGroup('Superviseur') && $this->client->getDateFinMission()) {
+
+    		return true;
+    	}
+    	return false;
+    }
    
     
     /**
