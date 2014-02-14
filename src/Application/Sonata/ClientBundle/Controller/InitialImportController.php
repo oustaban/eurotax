@@ -663,6 +663,9 @@ class InitialImportController extends Controller {
 		
 		$skipToLine = $this->clientImportSkipToLine;
 		
+		
+		$formCSRF = $this->get('form.csrf_provider');
+		
 		$adminCode = 'application.sonata.admin.' . strtolower($class);
 		$this->_current_admin = $admin = $this->container->get('sonata.admin.pool')->getAdminByAdminCode($adminCode);
 		
@@ -695,7 +698,7 @@ class InitialImportController extends Controller {
 			$form_builder = $admin->getFormBuilder();
 			$form = $form_builder->getForm();
 			$form->setData($object);
-			$formData = array('_token' => $this->get('form.csrf_provider')->generateCsrfToken('unknown'));
+			$formData = array('_token' => $formCSRF->generateCsrfToken('unknown'));
 			
 			$fields = array();
 		
