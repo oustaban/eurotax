@@ -463,9 +463,7 @@ class AbstractTabsController extends Controller
 
     
     protected function clientFerme() {
-    	$user = \AppKernel::getStaticContainer()->get('security.context')->getToken()->getUser();
-    	if($user->hasGroup('Superviseur') && $this->client->getDateFinMission()) {
-
+    	if($this->client->getDateFinMission()) {
     		return true;
     	}
     	return false;
