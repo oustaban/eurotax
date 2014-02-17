@@ -842,19 +842,16 @@ class AbstractTabsController extends Controller
                 		}
                 	}
                 	
-                	$output = unserialize($process->getOutput());
-                	
+                	$output = unserialize($process->getOutput());                	
                 	$messages = $output['messages'];
                 	$import_counts = $output['import_counts'];
                 }
             }
         }
-
         
         if (!empty($messages)) {
             $this->get('session')->setFlash('sonata_flash_info|raw', implode("<br/>", $messages));
         } else {
-        	
         	$message = trim($this->get('session')->getFlash('sonata_flash_info|raw'));
         	if($message == '') {
         		$this->get('session')->setFlash('sonata_flash_info|raw', $this->admin->trans('Imported : %count%', array('%count%' => 0)));
@@ -862,17 +859,12 @@ class AbstractTabsController extends Controller
         	} else {
         		$this->get('session')->setFlash('sonata_flash_info|raw', $message);
         	} 
-        	
-        	
-        	
         }
         
         if( (isset($import_counts['rows']['errors']) && !empty($import_counts['rows']['errors'])) || $this->_hasImportErrors) {
         	return $this->render(':redirects:back.html.twig');
         } else {
-        	//return $this->forward('ApplicationSonataClientOperationsBundle:Rapprochement:index', array('client_id' => $this->client_id, 'month' => $this->_query_month));
         	return $this->redirect($this->generateUrl('rapprochement_index', array('client_id' => $this->client_id, 'month' => $this->_query_month, 'fromImport' => 1)));
-        	
         }
     }
 

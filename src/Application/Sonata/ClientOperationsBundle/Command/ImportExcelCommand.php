@@ -359,18 +359,11 @@ class ImportExcelCommand extends ContainerAwareCommand {
 	
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		
-		
-		
-		
-		$this->container = $this->getContainer();
-	
+		$this->container = $this->getContainer();	
 		$this->em = $this->getContainer()->get('doctrine')->getManager();
 		$this->em->getConnection()->getConfiguration()->setSQLLogger(null);
 		$this->formCSRF = $this->container->get('form.csrf_provider');
 		$this->adminPool = $this->container->get('sonata.admin.pool');
-
-
 		$this->user = $this->em->getRepository('ApplicationSonataUserBundle:User')->findOneBy(array('id' => $input->getArgument('user_id')));
 		
 		$token = new UsernamePasswordToken($this->user, $this->user->getPassword(), "public", $this->user->getRoles());
@@ -379,9 +372,7 @@ class ImportExcelCommand extends ContainerAwareCommand {
 		// Fire the login event
 		$event = new InteractiveLoginEvent($this->getContainer()->get('request'), $token);
 		$this->getContainer()->get("event_dispatcher")->dispatch("security.interactive_login", $event);
-		
-		
-		
+				
 		$this->admin = $admin = $this->adminPool->getAdminByAdminCode($input->getArgument('admin'));
 		$this->client_id = $input->getArgument('client_id');
 		$this->user_id = $input->getArgument('user_id');
@@ -403,17 +394,9 @@ class ImportExcelCommand extends ContainerAwareCommand {
 		
 		/* @var $objReader \PHPExcel_Reader_Excel2007 */
 		$objReader = \PHPExcel_IOFactory::createReaderForFile($file);
-		
-		if (get_class($objReader) == 'PHPExcel_Reader_CSV') {
-			//$this->get('session')->setFlash('sonata_flash_error', $this->admin->trans('Fichier non lisible'));
-			//return $this->render(':redirects:back.html.twig');
-		} else {
-			$objReader->setReadDataOnly(true);
-		}
+		$objReader->setReadDataOnly(true);
 		$objPHPExcel = $objReader->load($file);
 		$sheets = $objPHPExcel->getAllSheets();
-		
-		
 		
 		$content_arr = array();
 		foreach ($sheets as $sheet) {
