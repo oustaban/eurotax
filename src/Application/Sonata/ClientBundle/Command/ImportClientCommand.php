@@ -107,7 +107,7 @@ class ImportClientCommand extends ContainerAwareCommand {
 				'preavis',
 				'particularite',
 				'type_document',
-				'client'
+				//'client'
 			),
 			'slices' => array(59),
 			'sliceLength' => 5
@@ -122,7 +122,7 @@ class ImportClientCommand extends ContainerAwareCommand {
 				'date_document',
 				'particularite',
 				'type_document',
-				'client'
+				//'client'
 			),
 			'slices' => array(65),
 			'sliceLength' => 4
@@ -142,7 +142,7 @@ class ImportClientCommand extends ContainerAwareCommand {
 				'statut_document_apostille',
 				'date_apostille',
 				'type_document',
-				'client'
+				//'client'
 				
 			),
 			'slices' => array(70),
@@ -162,7 +162,7 @@ class ImportClientCommand extends ContainerAwareCommand {
 				'statut_document_apostille',
 				'date_apostille',
 				'type_document',
-				'client'
+				//'client'
 	
 			),
 			'slices' => array(79),
@@ -179,7 +179,7 @@ class ImportClientCommand extends ContainerAwareCommand {
 				'preavis',
 				'particularite',
 				'type_document',
-				'client'
+				//'client'
 			),
 			'slices' => array(88),
 			'sliceLength' => 5
@@ -195,7 +195,7 @@ class ImportClientCommand extends ContainerAwareCommand {
 				'date_document',
 				'particularite',
 				'type_document',
-				'client'
+				//'client'
 			),
 			'slices' => array(94),
 			'sliceLength' => 4
@@ -217,7 +217,7 @@ class ImportClientCommand extends ContainerAwareCommand {
 				'expire',
 				'note',
 				'type_garantie',
-				'client'
+				//'client'
 			),
 				
 			'slices' => array(101),
@@ -233,7 +233,7 @@ class ImportClientCommand extends ContainerAwareCommand {
 				'date_demission',
 				'note',
 				'type_garantie',
-				'client'
+				//'client'
 			),
 	
 			'slices' => array(111),
@@ -254,7 +254,7 @@ class ImportClientCommand extends ContainerAwareCommand {
 				'expire',
 				'note',
 				'type_garantie',
-				'client'
+				//'client'
 			),
 			'slices' => array(117),
 			'sliceLength' => 9
@@ -272,7 +272,7 @@ class ImportClientCommand extends ContainerAwareCommand {
 				'no_de_compte',
 				'code_swift',
 				'IBAN',
-				'client'
+				//'client'
 			),
 			'slices' => array(127),
 			'sliceLength' => 9
