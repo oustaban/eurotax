@@ -2,6 +2,7 @@
 
 namespace Application\Sonata\ClientBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -85,6 +86,7 @@ class Coordonnees
     /**
      * @var string $code_swift
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="code_swift", type="string", length=100)
      */
     private $code_swift;
