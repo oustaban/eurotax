@@ -12,6 +12,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 
+use Application\Sonata\ClientOperationsBundle\Entity\ImportNotification;
+
 /**
  * Initial import controller.
  *
@@ -349,7 +351,7 @@ class InitialImportController extends Controller {
 							 
 							$this->_hasImportErrors = true;
 							 
-							$this->get('session')->setFlash('sonata_flash_error', $this->admin->trans('There are too many data to be processed. We will just notify you once it\'s done. Check your email ('.$user->getEmail().') within few hours.'));
+							$this->get('session')->setFlash('sonata_flash_error', \AppKernel::getStaticContainer()->get('translator')->trans('There are too many data to be processed. We will just notify you once it\'s done. Check your email ('.$user->getEmail().') within few hours.'));
 							 
 							break;
 							return $this->render(':redirects:back.html.twig');
