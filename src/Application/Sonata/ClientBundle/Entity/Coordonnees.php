@@ -33,7 +33,8 @@ class Coordonnees
 
     /**
      * @var string $nom
-     *
+     * 
+     * @Assert\NotBlank()
      * @ORM\Column(name="nom", type="string", length=100)
      */
     private $nom;
@@ -94,6 +95,7 @@ class Coordonnees
     /**
      * @var string $IBAN
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="IBAN", type="string", length=100)
      */
     private $IBAN;
