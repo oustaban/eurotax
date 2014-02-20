@@ -8,6 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
+use Application\Sonata\ClientBundle\Entity\Client;
 
 class ImportClientCommand extends ContainerAwareCommand {
 
@@ -91,7 +92,7 @@ class ImportClientCommand extends ContainerAwareCommand {
 				'email',
 				'raison_sociale_societe',
 				'affichage_facture_id',
-				//'client'
+				'client'
 			),
 				
 			'slices' => array(40, 49),
@@ -107,7 +108,7 @@ class ImportClientCommand extends ContainerAwareCommand {
 				'preavis',
 				'particularite',
 				'type_document',
-				//'client'
+				'client'
 			),
 			'slices' => array(59),
 			'sliceLength' => 5
@@ -122,7 +123,7 @@ class ImportClientCommand extends ContainerAwareCommand {
 				'date_document',
 				'particularite',
 				'type_document',
-				//'client'
+				'client'
 			),
 			'slices' => array(65),
 			'sliceLength' => 4
@@ -142,7 +143,7 @@ class ImportClientCommand extends ContainerAwareCommand {
 				'statut_document_apostille',
 				'date_apostille',
 				'type_document',
-				//'client'
+				'client'
 				
 			),
 			'slices' => array(70),
@@ -162,7 +163,7 @@ class ImportClientCommand extends ContainerAwareCommand {
 				'statut_document_apostille',
 				'date_apostille',
 				'type_document',
-				//'client'
+				'client'
 	
 			),
 			'slices' => array(79),
@@ -179,7 +180,7 @@ class ImportClientCommand extends ContainerAwareCommand {
 				'preavis',
 				'particularite',
 				'type_document',
-				//'client'
+				'client'
 			),
 			'slices' => array(88),
 			'sliceLength' => 5
@@ -195,7 +196,7 @@ class ImportClientCommand extends ContainerAwareCommand {
 				'date_document',
 				'particularite',
 				'type_document',
-				//'client'
+				'client'
 			),
 			'slices' => array(94),
 			'sliceLength' => 4
@@ -217,7 +218,7 @@ class ImportClientCommand extends ContainerAwareCommand {
 				'expire',
 				'note',
 				'type_garantie',
-				//'client'
+				'client'
 			),
 				
 			'slices' => array(101),
@@ -233,7 +234,7 @@ class ImportClientCommand extends ContainerAwareCommand {
 				'date_demission',
 				'note',
 				'type_garantie',
-				//'client'
+				'client'
 			),
 	
 			'slices' => array(111),
@@ -254,7 +255,7 @@ class ImportClientCommand extends ContainerAwareCommand {
 				'expire',
 				'note',
 				'type_garantie',
-				//'client'
+				'client'
 			),
 			'slices' => array(117),
 			'sliceLength' => 9
@@ -272,7 +273,7 @@ class ImportClientCommand extends ContainerAwareCommand {
 				'no_de_compte',
 				'code_swift',
 				'IBAN',
-				//'client'
+				'client'
 			),
 			'slices' => array(127),
 			'sliceLength' => 9
@@ -420,7 +421,7 @@ class ImportClientCommand extends ContainerAwareCommand {
 		
 	
 		if(!($admin)) return;
-		
+		$ctr = 0;
 		
 		foreach($rows as $key => $row) {
 			if(!is_null($numRowStart)) {
@@ -433,19 +434,13 @@ class ImportClientCommand extends ContainerAwareCommand {
 					continue;
 				}
 				if(($clientId = $this->_clientIdByCode($row[0])) !== false) {
-					$object = $admin->getObject($clientId);
+					//$object = $admin->getObject($clientId);
+					$object = $this->em->getRepository('ApplicationSonataClientBundle:Client')->findOneBy(array('id' => $clientId));
 				} else {
 					$object = $admin->getNewInstance();
 				}
-				
-				if(!$object) {
-					$object = $admin->getNewInstance();
-				}
-				
 				$object->getFilesAbsoluteDir($object);
-	
 			} else {
-	
 				$object = $admin->getNewInstance();
 			}
 	
@@ -506,9 +501,6 @@ class ImportClientCommand extends ContainerAwareCommand {
 	
 	
 						$this->_truncateClientRelatedTables();
-						/* if($this->_client_id && $class != 'Client') {
-						 $this->_current_admin->setClient($this->_client_id);
-						} */
 					}
 				} catch (\Exception $e) {
 	
@@ -523,6 +515,8 @@ class ImportClientCommand extends ContainerAwareCommand {
 					
 			}
 			unset($formData, $form, $form_builder, $object);
+			
+			$ctr++;
 		}
 	
 	}
@@ -560,7 +554,9 @@ class ImportClientCommand extends ContainerAwareCommand {
 						$newRows[] = $newRow;
 					}
 				}
-
+				
+				/* var_dump($newRows);
+				exit; */
 			
 				
 				$this->_saveImport($class, $tab['fields'], $newRows, $this->_client_import_set['numRowStart'][$clientId]);
@@ -937,6 +933,9 @@ class ImportClientCommand extends ContainerAwareCommand {
 		if ($form->getErrors()) {
 			$one_view = array();
 			foreach ($form->getErrors() as $keys => $error) {
+				
+				
+				
 				if (!isset($one_view[$field][$line])) {
 					$one_view[$field][$line] = true;
 					$repeat = str_repeat(' ', $level);
@@ -956,6 +955,11 @@ class ImportClientCommand extends ContainerAwareCommand {
 		}
 	
 		foreach ($form->getChildren() as $field => $child) {
+			if($field == 'client') {
+				continue;
+			}
+			
+			
 			if ($err = $this->getErrorsAsString($fields, $class, $admin, $child, $line, ($level + 4), $field, null)) {
 				$errors[] = $admin->trans('form.' . $class . '.' . $field) . "\n";
 				$errors[] = $err;
