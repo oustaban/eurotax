@@ -839,7 +839,7 @@ If CENTRE DES IMPOTS = CISD/9 and date <> 31 : No validation possible - Message 
     	$user = \AppKernel::getStaticContainer()->get('security.context')->getToken()->getUser();
     	$client = $this->getObject($id);
     	
-    	$user = \AppKernel::getStaticContainer()->get('security.context')->getToken()->getUser();
+    	//$user = \AppKernel::getStaticContainer()->get('security.context')->getToken()->getUser();
     	//return $client->getDateFinMission() && $user->hasGroup('Superviseur');
     	
     	if($client->getDateFinMission()) {

@@ -432,12 +432,15 @@ class AbstractTabsController extends Controller
             return $data;
         }
         
+        $user = \AppKernel::getStaticContainer()->get('security.context')->getToken()->getUser();
+        
         $this->jsSettingsJson(array(
             'url' => array(
                 'rdevises' => $this->admin->generateUrl('RDevises', array('filter' => array('client_id' => array('value' => $this->client_id)))),
             ),
         	'locked' => $this->getLocking() ? 1 : 0,
         	'client_ferme' => (int) $this->clientFerme(),
+        	'isSuperviseur' => (int) $user->hasGroup('Superviseur'),
         	'active_tab' => $this->_tabAlias,
         ));
 
