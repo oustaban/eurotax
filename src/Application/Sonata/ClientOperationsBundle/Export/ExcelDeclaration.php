@@ -502,7 +502,7 @@ class ExcelDeclaration {
 		
 		if($this->clientDeclaration->getA08IMlist()) {
 				
-			$this->_excel->getActiveSheet()->getStyle('G'.$row)->setValue('Importation');
+			$this->_excel->getActiveSheet()->getCell('G'.$row)->setValue('Importation');
 			$row++;
 				
 			foreach($this->clientDeclaration->getA08IMlist() as $entity) {
@@ -531,7 +531,7 @@ class ExcelDeclaration {
 		
 		if($this->clientDeclaration->getA02TVAPrevlist()) {
 			
-			$this->_excel->getActiveSheet()->getStyle('G'.$row)->setValue($this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.vat_purchases') 
+			$this->_excel->getActiveSheet()->getCell('G'.$row)->setValue($this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.vat_purchases') 
 				. ' ' . $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.period_prev_month'));
 			$row++;
 			
@@ -556,7 +556,7 @@ class ExcelDeclaration {
 		}
 		
 		if($this->clientDeclaration->getA08IMPrevlist()) {
-			$this->_excel->getActiveSheet()->getStyle('G'.$row)->setValue('Importation');
+			$this->_excel->getActiveSheet()->getCell('G'.$row)->setValue('Importation');
 			$row++;
 		
 			foreach($this->clientDeclaration->getA08IMPrevlist() as $entity) {
