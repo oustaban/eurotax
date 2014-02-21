@@ -437,6 +437,7 @@ class AbstractTabsController extends Controller
                 'rdevises' => $this->admin->generateUrl('RDevises', array('filter' => array('client_id' => array('value' => $this->client_id)))),
             ),
         	'locked' => $this->getLocking() ? 1 : 0,
+        	'client_ferme' => (int) $this->clientFerme(),
         	'active_tab' => $this->_tabAlias,
         ));
 
