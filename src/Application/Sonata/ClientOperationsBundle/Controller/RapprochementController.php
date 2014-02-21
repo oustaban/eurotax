@@ -19,6 +19,8 @@ use Application\Sonata\ClientOperationsBundle\Entity\Rapprochement;
 use Application\Sonata\ClientOperationsBundle\Entity\RapprochementState;
 use Application\Sonata\ClientOperationsBundle\Form\RapprochementForm;
 
+use Application\Sonata\ClientBundle\Entity\ListTypeDocuments;
+
 use Application\Sonata\ClientOperationsBundle\Export\ExcelDeclaration;
 
 /**
@@ -362,11 +364,6 @@ class RapprochementController extends Controller
         if(!$this->rapprochement) {
         	$this->rapprochement = new Rapprochement();
         }
-        
-        
-        
-        
-        
         
         $v05_lic = $this->_getTableData('V05LIC', array('isDEB' => true, 'groupResults' => true, 'importDataOnly' => $fromImport ? true : false));
         $deb_exped = $this->_getTableData('DEBExped', array('isDEB' => false, 'groupResults' => true, 'importDataOnly' => $fromImport ? true : false));
@@ -732,6 +729,34 @@ class RapprochementController extends Controller
     	return $formatter->format($timestamp);
     }
     
+    public function frameAjaxAction() {
+    	
+    	
+    	$request = $this->get('request');
+    	 
+    	if ($request->getMethod() == 'POST') {
+    		$hasMandatSpecifique = false;
+    		$em = $this->getDoctrine()->getManager();
+    		$client = $em->getRepository('ApplicationSonataClientBundle:Client')->find($_POST['client_id']);
+    		$documents = $client->getDocuments();
+    		
+    		if($documents) {
+    			foreach($documents as $doc) {
+    				if($doc->getTypeDocument()->getId() == ListTypeDocuments::Mandat_Specifique) {
+    					$hasMandatSpecifique = true;
+    					break;
+    				}
+    			}
+    		}
+    		//DRESG
+    		if($client->getCenterDesImpots()->getId() == 6 && $hasMandatSpecifique === false) {
+    			echo 1;	
+    		}
+    	}
+    	exit;
+    }
+    
+    
     public function frameAction($client_id, $month) {
     	$this->validateParams($client_id, $month);
     	
@@ -774,6 +799,7 @@ class RapprochementController extends Controller
 			'rapState' => $rap,
     		'declarationLink' => $this->generateUrl('admin_sonata_clientoperations_v01tva_declaration', array('filter' => array('client_id' => array('value' => $this->_client_id)), 'month' => $this->_query_month)),
     		'exporterDebLink' => $this->generateUrl('admin_sonata_clientoperations_v01tva_exportTransDeb', array('filter' => array('client_id' => array('value' => $this->_client_id)), 'month' => $this->_query_month)),
+    		'ajaxLink' => $this->generateUrl('rapprochement_frame_ajax')
     	));
     }
     

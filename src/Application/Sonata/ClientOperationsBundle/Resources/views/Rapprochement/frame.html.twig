@@ -77,7 +77,7 @@
         <div class="sonata-ba-collapsed-fields">
             <input id="type" type="hidden" name="type" />
             
-            <input id="client_id" type="hidden" name="client_id" />
+            <input id="client_id" type="hidden" name="client_id" value="{{ client_id }}" />
             <input id="month" type="hidden" name="month" />
             <input id="year" type="hidden" name="year" />  
               
@@ -94,7 +94,7 @@
         </div></div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" id="doImport" onclick="javascript:$('#form').submit();">{{ 'Ok'|trans}}</button>
+        <button class="btn btn-primary" id="doImport">{{ 'Ok'|trans}}</button>
         <button class="btn" data-dismiss="modal" aria-hidden="true">{{ 'Annuler'|trans }}</button>
     </div>
 </div>
@@ -102,24 +102,35 @@
 	<script type="text/javascript">
     $(function(){
     	$('#number').height(25);
+    	$('#doImport').click(function() {
+			if($('#form #type').val() == 'ddr') {
+    			$.ajax({
+				  url: "{{ ajaxLink }}",
+				}).done(function( data ) {
+    				if(data == 1) {
+    					$('.alert').html('Pas de Mandat spécifique.').show();
+    				} else {
+    					$('#form').submit();
+    				}
+				});
+    		} else {
+    			$('#form').submit();
+    		}
+    	});
+    	
     	$('#form').submit(function() {
     		var value = parseFloat($('#number').val());
     		if(value < 0) {
     			$('.alert').html('Negative value is not allowed.').show();
     			return false;
     		}
-    		
     		var creditValue = $('#creditValue').val();
     		var demandeValue = $('#demandeValue').val();
-    		
-    		
     		if(demandeValue > creditValue) {
     			$('.alert').html('Remboursement demandé supérieur au crédit de TVA.').show();
     			return false;
     		}
-    		
     		$('.alert').html('').hide();
-    		return true;
     	});
     	$('#demandeBtn, #creditBtn').click(function(){    	
     		$('#form #type').val($(this).attr('type'));
