@@ -554,11 +554,6 @@ class ImportClientCommand extends ContainerAwareCommand {
 						$newRows[] = $newRow;
 					}
 				}
-				
-				/* var_dump($newRows);
-				exit; */
-			
-				
 				$this->_saveImport($class, $tab['fields'], $newRows, $this->_client_import_set['numRowStart'][$clientId]);
 			}
 	
