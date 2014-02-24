@@ -560,10 +560,6 @@ class ImportClientCommand extends ContainerAwareCommand {
 		}
 	}	
 	
-	
-
-
-
 	protected function getFormData($field, $value) {
 		$field = ucfirst(\Doctrine\Common\Util\Inflector::camelize($field));
 		$method = '_get' . $field;
