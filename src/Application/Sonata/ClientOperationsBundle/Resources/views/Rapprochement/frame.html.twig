@@ -103,21 +103,7 @@
     $(function(){
     	$('#number').height(25);
     	$('#doImport').click(function() {
-			if($('#form #type').val() == 'ddr') {
-    			$.ajax({
-				  url: "{{ ajaxLink }}",
-				  type: "POST",
-				  data: $('#form').serialize()
-				}).done(function( data ) {
-    				if(data == 1) {
-    					$('.alert').html('Pas de Mandat spécifique.').show();
-    				} else {
-    					$('#form').submit();
-    				}
-				});
-    		} else {
-    			$('#form').submit();
-    		}
+			$('#form').submit();
     	});
     	
     	$('#form').submit(function() {
@@ -128,6 +114,13 @@
     		}
     		var creditValue = $('#creditValue').val();
     		var demandeValue = $('#demandeValue').val();
+    		
+    		if($('#form #type').val() == 'ddr') {
+    			demandeValue = value;
+    		} else if($('#form #type').val() == 'ctar') {
+    			creditValue = value;
+    		}
+    		
     		if(demandeValue > creditValue) {
     			$('.alert').html('Remboursement demandé supérieur au crédit de TVA.').show();
     			return false;

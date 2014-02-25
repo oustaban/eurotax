@@ -22,6 +22,7 @@ use Application\Sonata\ClientOperationsBundle\Form\RapprochementForm;
 use Application\Sonata\ClientBundle\Entity\ListTypeDocuments;
 
 use Application\Sonata\ClientOperationsBundle\Export\ExcelDeclaration;
+use Application\Sonata\ClientBundle\Entity\ClientAlert;
 
 /**
  * Rapprochement controller.
@@ -729,31 +730,36 @@ class RapprochementController extends Controller
     	return $formatter->format($timestamp);
     }
     
-    public function frameAjaxAction() {
-    	
-    	
-    	$request = $this->get('request');
-    	 
-    	if ($request->getMethod() == 'POST') {
-    		$hasMandatSpecifique = false;
-    		$em = $this->getDoctrine()->getManager();
-    		$client = $em->getRepository('ApplicationSonataClientBundle:Client')->find($_POST['client_id']);
-    		$documents = $client->getDocuments();
-    		
-    		if($documents) {
-    			foreach($documents as $doc) {
-    				if($doc->getTypeDocument()->getId() == ListTypeDocuments::Mandat_Specifique) {
-    					$hasMandatSpecifique = true;
-    					break;
-    				}
+    protected function _setAlert($client_id) {
+    	$hasMandatSpecifique = false;
+    	$em = $this->getDoctrine()->getManager();
+    	$client = $em->getRepository('ApplicationSonataClientBundle:Client')->find($client_id);
+    	$documents = $client->getDocuments();
+
+    	if($documents) {
+    		foreach($documents as $doc) {
+    			if($doc->getTypeDocument()->getId() == ListTypeDocuments::Mandat_Specifique) {
+    				$hasMandatSpecifique = true;
+    				break;
     			}
     		}
-    		//DRESG
-    		if($client->getCenterDesImpots()->getId() == 6 && $hasMandatSpecifique === false) {
-    			echo 1;	
-    		}
     	}
-    	exit;
+    	//DRESG
+    	if($client->getCenterDesImpots()->getId() == 6 && $hasMandatSpecifique === false) {
+    		/* @var $tab \Application\Sonata\ClientBundle\Entity\ListClientTabs */
+    		$tab = $em->getRepository('ApplicationSonataClientBundle:ListClientTabs')->findOneByAlias('general');
+    		 
+    		$alert = new ClientAlert();
+    		$alert->setClient($client);
+    		$alert->setTabs($tab);
+    		$alert->setIsBlocked(false);
+    		$alert->setText('Pas de Mandat spécifique.');
+    		 
+    		$em->persist($alert);
+    		$em->flush();
+    		 
+    	}
+    	
     }
     
     
@@ -769,8 +775,6 @@ class RapprochementController extends Controller
     	}
     	
     	$clientDeclaration = $this->_client->getDeclaration($this->_year, $this->_month);
-    	
-    	
     	$request = $this->get('request');
     	
     	if ($request->getMethod() == 'POST') {
@@ -786,6 +790,9 @@ class RapprochementController extends Controller
     		$em->persist($rap);
     		$em->flush();
     		
+    		
+    		$this->_setAlert($client_id);
+    		
     		return $this->render(':redirects:back.html.twig');
     	}
     	
@@ -799,7 +806,6 @@ class RapprochementController extends Controller
 			'rapState' => $rap,
     		'declarationLink' => $this->generateUrl('admin_sonata_clientoperations_v01tva_declaration', array('filter' => array('client_id' => array('value' => $this->_client_id)), 'month' => $this->_query_month)),
     		'exporterDebLink' => $this->generateUrl('admin_sonata_clientoperations_v01tva_exportTransDeb', array('filter' => array('client_id' => array('value' => $this->_client_id)), 'month' => $this->_query_month)),
-    		'ajaxLink' => $this->generateUrl('rapprochement_frame_ajax')
     	));
     }
     

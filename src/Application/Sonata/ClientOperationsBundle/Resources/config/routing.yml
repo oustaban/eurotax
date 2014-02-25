@@ -6,10 +6,6 @@ rapprochement_frame:
     pattern: /rapprochement/frame/{client_id}/{month}
     defaults: { _controller: ApplicationSonataClientOperationsBundle:Rapprochement:frame }
 
-rapprochement_frame_ajax:
-    pattern: /rapprochement/frame-ajax
-    defaults: { _controller: ApplicationSonataClientOperationsBundle:Rapprochement:frameAjax }
-
 rapprochement_locking:
     pattern: /rapprochement/locking/{client_id}/{month}
     defaults: { _controller: ApplicationSonataClientOperationsBundle:Rapprochement:locking }
