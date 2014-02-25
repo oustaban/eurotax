@@ -72,8 +72,7 @@ class Document
     /**
      * @var \DateTime $date_document
      *
-     * @ORM\Column(name="date_document", type="date")
-     * @Assert\NotBlank()
+     * @ORM\Column(name="date_document", type="date", nullable=true)
      */
     private $date_document;
 
