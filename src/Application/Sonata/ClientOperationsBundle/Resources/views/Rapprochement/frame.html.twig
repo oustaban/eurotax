@@ -107,6 +107,7 @@
     			$.ajax({
 				  url: "{{ ajaxLink }}",
 				  type: "POST",
+				  data: $('#form').serialize()
 				}).done(function( data ) {
     				if(data == 1) {
     					$('.alert').html('Pas de Mandat spécifique.').show();
