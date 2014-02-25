@@ -451,11 +451,11 @@ A06 = 2 lines
 		foreach($entities as $entity) {
 			if(method_exists($entity, 'getHT')) {
 				if(get_class($entity) != 'Application\Sonata\ClientOperationsBundle\Entity\A02TVA') {
-					$ht += round($entity->getHT());
+					$ht += ($entity->getHT());
 				}
 			}
 			if(method_exists($entity, 'getTVA')) {
-				$tva += round($entity->getTVA());
+				$tva += ($entity->getTVA());
 			}
 		}
 		 
