@@ -106,6 +106,7 @@
 			if($('#form #type').val() == 'ddr') {
     			$.ajax({
 				  url: "{{ ajaxLink }}",
+				  type: "POST",
 				}).done(function( data ) {
     				if(data == 1) {
     					$('.alert').html('Pas de Mandat spécifique.').show();
