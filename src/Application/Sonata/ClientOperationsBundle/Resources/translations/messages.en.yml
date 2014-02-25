@@ -22,7 +22,7 @@ ApplicationSonataClientOperationsBundle:
     total: TOTAL
     balance_title: VAT BALANCE
     claim: French VAT Claim
-    operations_header: TAXABLE OPERATIONS
+    operations_header: NON TAXABLE OPERATIONS
     exports_header: Exports
     deliveries_header: Intra-EU Deliveries of goods
     no_tva_header: Sales withtout TVA (Art. 283-1)

@@ -543,6 +543,8 @@ td.i_tva {
     clear: both;
     border: 1px solid black;
     text-align: center;
+    
+    {% if V07EXlist is null and V05LIClist is null and V03283Ilist is null and V11INTlist is null %}display: none;{% endif %}
 }
 
 .block_operations_output {
@@ -644,6 +646,8 @@ td.i_tva {
     clear: both;
     border: 1px solid black;
     text-align: center;
+    {% if A04283ISumPrev is null and A06AIBSumPrev  is null %}display: none;{% endif %}
+    
 }
 
 .block_ruling_charge {
