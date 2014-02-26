@@ -1667,7 +1667,7 @@ class Client
     	if($compte_previsionnel_sum != 0) {
     		$this->_compte_reel_sum += $compte_previsionnel_sum;
     	}
-    	return $this->_compte_reel_sum;
+    	return round($this->_compte_reel_sum);
     }
     
     public function getCompteReel() {
