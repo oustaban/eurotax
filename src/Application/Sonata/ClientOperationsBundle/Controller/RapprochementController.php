@@ -747,8 +747,19 @@ class RapprochementController extends Controller
     	//DRESG
     	if($client->getCenterDesImpots()->getId() == 6 && $hasMandatSpecifique === false) {
     		/* @var $tab \Application\Sonata\ClientBundle\Entity\ListClientTabs */
-    		$tab = $em->getRepository('ApplicationSonataClientBundle:ListClientTabs')->findOneByAlias('general');
+    		$tab = $em->getRepository('ApplicationSonataClientBundle:ListClientTabs')->findOneByAlias('documents');
     		 
+    		$em->getRepository('ApplicationSonataClientBundle:ClientAlert')
+    		->createQueryBuilder('c')
+    		->delete()
+    		->andWhere('c.client = :client')
+    		->andWhere('c.text = "Pas de Mandat spécifique."')
+    		->andWhere('c.tabs = :tab')
+    		->setParameter(':client', $client)
+    		->setParameter(':tab', $tab)
+    		->getQuery()->execute();
+    		
+    		
     		$alert = new ClientAlert();
     		$alert->setClient($client);
     		$alert->setTabs($tab);
