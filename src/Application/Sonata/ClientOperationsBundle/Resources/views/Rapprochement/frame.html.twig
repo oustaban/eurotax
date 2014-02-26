@@ -80,10 +80,12 @@
             <input id="client_id" type="hidden" name="client_id" value="{{ client_id }}" />
             <input id="month" type="hidden" name="month" />
             <input id="year" type="hidden" name="year" />  
-              
-            <input id="demandeValue" type="hidden" name="year" value="{{ rapState.getDemandeDeRemboursement }}" />    
+            {% if clientDeclaration.getSoldeTVATotal() < 0 %}  
+            <input id="demandeValue" type="hidden" name="year" value="{{ rapState.getDemandeDeRemboursement }}" />
+            {% endif %}    
+            {% if client.getTaxeAdditionnelle %} 
             <input id="creditValue" type="hidden" name="year" value="{{ rapState.getCreditTvaAReporter }}" />  
-            
+            {% endif %}
             <div class="controls sonata-ba-field sonata-ba-field-standard-natural ">
         		<label id="numberLabel" for="number"></label> <input class="input-large" id="number" type="text" name="number" />
             </div>
