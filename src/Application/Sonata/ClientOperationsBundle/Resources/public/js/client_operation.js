@@ -375,12 +375,13 @@ function init_clientoperations_buttons(o) {
 
 	if(typeof Sonata !== 'undefined' && typeof Sonata.locked !== 'undefined' && typeof Sonata.active_tab !== 'undefined') {
 		if( (Sonata.isSuperviseur == 0 && Sonata.client_ferme == 1) || (Sonata.locked == 1 && (Sonata.active_tab == 'debexped' || Sonata.active_tab == 'debintro')) ) {
-			$('#block_actions .btn-add').addClass('disabled').attr('href', 'javascript:void(0);');
-			
+			$('#block_actions .btn-add').addClass('disabled').attr('href', 'javascript:void(0);');			
 		}
-		
 		if((Sonata.isSuperviseur == 0 && Sonata.client_ferme == 1 ) || Sonata.locked == 1) {
-			$('#toggleImportModal, #deleteImport, #btn_locking').addClass('disabled').attr('disabled', true).unbind('click');
+			$('#toggleImportModal, #deleteImport').addClass('disabled').attr('disabled', true).unbind('click');
+		}
+		if((Sonata.isSuperviseur == 0 && Sonata.client_ferme == 1 ) || (Sonata.isSuperviseur == 0 && Sonata.locked == 1)) {
+			$('#btn_locking').addClass('disabled').attr('disabled', true).unbind('click');
 		}
 	}
 	
