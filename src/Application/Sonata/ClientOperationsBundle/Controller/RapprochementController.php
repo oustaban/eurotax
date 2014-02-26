@@ -753,7 +753,7 @@ class RapprochementController extends Controller
     		->createQueryBuilder('c')
     		->delete()
     		->andWhere('c.client = :client')
-    		->andWhere('c.text = "Pas de Mandat spécifique."')
+    		->andWhere("c.text = 'Pas de Mandat spécifique.'")
     		->andWhere('c.tabs = :tab')
     		->setParameter(':client', $client)
     		->setParameter(':tab', $tab)
