@@ -469,24 +469,37 @@ class Excel
 		$headerFunc(4, range('A', 'H'));
 		
 		$result = $this->queryResult(array('entity'=>'compte'));
-		$i = 5;
+		$totalResult = count($result);
+		
+		$i = 5; 
+		$this->_excel->getActiveSheet()->getRowDimension($i)->setRowHeight(20);
+		$this->_excel->getActiveSheet()->setCellValue("A$i", \PHPExcel_Shared_Date::PHPToExcel(new \DateTime('01 January ' . date('Y'))));
+		$this->_sheet->getStyle("A$i")->getNumberFormat()->setFormatCode('DD\/MM\/YYYY;@');
+		$this->_excel->getActiveSheet()->getStyle("A$i")->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->_excel->getActiveSheet()->getStyle("A$i")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$this->_excel->getActiveSheet()->getStyle("A$i")->applyFromArray($styleBorders);
+		$this->_excel->getActiveSheet()->setCellValue("B$i", '');
+		$this->_excel->getActiveSheet()->mergeCells("B$i:F$i");
+		$this->_excel->getActiveSheet()->getStyle("B$i:F$i")->applyFromArray($styleBorders);
+		$this->_excel->getActiveSheet()->setCellValue("G$i", '');
+		$this->_excel->getActiveSheet()->getStyle("G$i")->applyFromArray($euroColStyleBorders);
+		$this->_excel->getActiveSheet()->setCellValue("H$i", '');
+		$this->_excel->getActiveSheet()->getStyle("H$i")->applyFromArray($styleBorders);
+
+		
+		
+		$i = 6;
 		$startSumIndex = $i + 1;
 		foreach ($result as $key => $row) {
-			
 			$this->_excel->getActiveSheet()->getRowDimension($i)->setRowHeight(20);
-			
 			
 			$date = \PHPExcel_Shared_Date::PHPToExcel($row->getDate());
 			$this->_excel->getActiveSheet()->setCellValue("A$i", $date);
-			$this->_sheet->getStyle("A$i")->getNumberFormat()->setFormatCode('DD\/MM\/YY;@');
-			
-			
+			$this->_sheet->getStyle("A$i")->getNumberFormat()->setFormatCode('DD\/MM\/YYYY;@');
 			
 			$this->_excel->getActiveSheet()->getStyle("A$i")->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
 			$this->_excel->getActiveSheet()->getStyle("A$i")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 			$this->_excel->getActiveSheet()->getStyle("A$i")->applyFromArray($styleBorders);
-			
-			
 			
 			
 			$this->_excel->getActiveSheet()->setCellValue("B$i", $row->getOperation());
@@ -507,6 +520,30 @@ class Excel
 				$this->_sheet->getStyle("H$i")->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 			}
 			$i++;
+		}
+		
+		if($totalResult < 23) {
+			$lastRow = $i++;
+			$remainingRowCount = 23 - $totalResult;
+			$limit = ($remainingRowCount+$lastRow);
+			
+			for($i = $lastRow; $i < $limit; $i++) {
+				$this->_excel->getActiveSheet()->getRowDimension($i)->setRowHeight(20);
+				
+				$this->_excel->getActiveSheet()->setCellValue("A$i", '');
+				$this->_excel->getActiveSheet()->getStyle("A$i")->applyFromArray($styleBorders);
+				$this->_excel->getActiveSheet()->setCellValue("B$i", '');
+				$this->_excel->getActiveSheet()->mergeCells("B$i:F$i");
+				$this->_excel->getActiveSheet()->getStyle("B$i:F$i")->applyFromArray($styleBorders);
+				$this->_excel->getActiveSheet()->setCellValue("G$i", '');
+				$this->_excel->getActiveSheet()->getStyle("G$i")->applyFromArray($euroColStyleBorders);
+				$this->_excel->getActiveSheet()->setCellValue("H$i", '');
+				
+				$this->_excel->getActiveSheet()->getStyle("H$i")->applyFromArray($styleBorders);
+				
+				$this->_excel->getActiveSheet()->setCellValue("H$i", '0');
+				$this->_sheet->getStyle("H$i")->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+			}
 		}
     }
 
