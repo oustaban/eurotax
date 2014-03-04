@@ -118,15 +118,12 @@
     		var demandeValue = $('#demandeValue').val();
     		
     		if($('#form #type').val() == 'ddr') {
-    			demandeValue = value;
-    		} else if($('#form #type').val() == 'ctar') {
-    			creditValue = value;
+	    		if(demandeValue > creditValue) {
+	    			$('.alert').html('Remboursement demandé supérieur au crédit de TVA.').show();
+	    			return false;
+	    		}
     		}
     		
-    		if(demandeValue > creditValue) {
-    			$('.alert').html('Remboursement demandé supérieur au crédit de TVA.').show();
-    			return false;
-    		}
     		$('.alert').html('').hide();
     	});
     	$('#demandeBtn, #creditBtn').click(function(){    	
