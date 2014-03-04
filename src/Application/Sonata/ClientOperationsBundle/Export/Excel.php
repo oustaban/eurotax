@@ -490,7 +490,7 @@ class Excel
 		
 		
 		$i = 6;
-		$startSumIndex = $i + 1;
+		$startSumIndex = $i - 1;
 		foreach ($result as $key => $row) {
 			$this->_excel->getActiveSheet()->getRowDimension($i)->setRowHeight(20);
 			

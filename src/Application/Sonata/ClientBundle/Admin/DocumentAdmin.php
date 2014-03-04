@@ -31,28 +31,19 @@ class DocumentAdmin extends Admin
         $id = $this->getRequest()->get($this->getIdParameter());
         $client = $this->getClient();
 
-        $doctrine = \AppKernel::getStaticContainer()->get('doctrine');
-        /* @var $em \Doctrine\ORM\EntityManager */
-        $em = $doctrine->getManager();
-        
-
         $typeDocumentId = 0;
         $typeDocDisabled = false;
         
         $dateNotaire = null;
         $dateApostille = null;
         
-        if($id && $document = $em->getRepository('ApplicationSonataClientBundle:Document')->find($id)) {
-        	$typeDocumentId = $document->getTypeDocument()->getId();
-        	
+        if($id && $document = $this->getObject($id)) {
+        	if($document->getTypeDocument()) {
+        		$typeDocumentId = $document->getTypeDocument()->getId();
+        	}
         	$dateNotaire = $document->getDateNotaire();
         	$dateApostille = $document->getDateApostille();
-        	
-        	
         }
-        
-        
-        
         
         // 2 = Pouvoir || 3 = Accord
         if($typeDocumentId == 2 || $typeDocumentId == 3) {
