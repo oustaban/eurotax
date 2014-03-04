@@ -46,10 +46,10 @@ abstract class AbstractTabsAdmin extends Admin
     	$import_file_month;
     
     protected $_taux_de_TVA_rates = array(
-    	'0.20' => '20%',
+    	'0.2' => '20%',
     	'0.196' => '19.6%',
     	'0.13' => '13%',
-    	'0.10' => '10%',
+    	'0.1' => '10%',
     	'0.085' => '8.5%',
     	'0.08' => '8%',
     	'0.07' => '7%',
