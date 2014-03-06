@@ -535,6 +535,10 @@ If CENTRE DES IMPOTS = CISD/9 and date <> 31 : No validation possible - Message 
     		return;
     	}
     	
+    	if($value == 'inconnu') {
+    		return;
+    	}
+    	
     	
     	$key = substr($value, 0, 2);
     	$trail = substr($value, 2); //trailing characters
