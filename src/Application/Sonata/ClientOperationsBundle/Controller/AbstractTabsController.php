@@ -1419,6 +1419,7 @@ class AbstractTabsController extends Controller
         	'SoldeTVATotal' => $clientDeclaration->getSoldeTVATotal(),
         	'TotalBalance' => $clientDeclaration->getTotalBalance(),
         	'CreditToBeReportedTotal' => $clientDeclaration->getCreditToBeReportedTotal(),
+        	'PreviousCreditDeTVA' => $clientDeclaration->getPreviousCreditDeTVA(),
         		
         	'locked' => $this->getLocking()
         ));

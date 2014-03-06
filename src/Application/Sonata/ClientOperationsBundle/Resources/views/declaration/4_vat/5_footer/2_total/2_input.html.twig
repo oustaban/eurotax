@@ -3,7 +3,7 @@
     <tr>
         <td class="i_title">&nbsp;</td>
         <td class="i_value">&nbsp;</td>
-		<td class="i_nett">{% if Total2 and Total2.getHT %}{{ Total2.getHT|number_format(0, ',', ' ') }}{% endif %}</td>
-        <td class="i_tva">{% if Total2 and Total2.getTVA %}{{ Total2.getTVA|number_format(0, ',', ' ') }}{% else %}0{% endif %}</td>    </tr>
+		<td class="i_nett">{% if Total2 and Total2.getHT is defined %}{{ Total2.getHT|number_format(0, ',', ' ') }}{% endif %}</td>
+        <td class="i_tva">{% if Total2 and Total2.getTVA is defined %}{{ Total2.getTVA|number_format(0, ',', ' ') }}{% else %}0{% endif %}</td>    </tr>
     </tbody>
 </table>

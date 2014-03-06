@@ -295,27 +295,50 @@ A06 = 2 lines
 		return $value;
 	}
 	
-	public function getRapprochementState() {
+	
+	public function getPreviousCreditDeTVA() {
+		$value = round($this->getTVACredit()) + round($this->getPreviousMonthRapprochementState()->getDemandeDeRemboursement());
+		return $value;
+	}
+	
+	
+	public function getPreviousMonthRapprochementState() {
 		
+		static $instances = array();
+		
+		$lastMonth = new \DateTime("{$this->_year}-{$this->_month}-01 -1 month");
+		$_year = $lastMonth->format('Y');
+		$_month = $lastMonth->format('m');
+		
+		$key = $this->client->getId(). $_year . $_month;
+		if(!isset($instances[$key])) {
+			$instances[$key] = $this->findRappState($_year, $_month);
+		}
+		
+		return $instances[$key];
+	}
+	
+	
+	protected function findRappState($year, $month) {
+		$em = \AppKernel::getStaticContainer()->get('doctrine')->getManager();
+		$rap = $em->getRepository('ApplicationSonataClientOperationsBundle:RapprochementState')
+			->findOneBy(array('client_id' => $this->client->getId(), 'month' => $this->_month, 'year' => $this->_year));
+		if(!$rap) {
+			$rap = new RapprochementState();
+		}
+		return $rap;
+	}
+	
+	
+	public function getRapprochementState() {
 		if($this->client->getNatureDuClient()->getId() != ListNatureDuClients::sixE && $this->isOperationLocked()) {
 			return new RapprochementState();
 		}
 		
 		static $instances = array();
-		
 		$key = $this->client->getId(). $this->_year . $this->_month;
-		
 		if(!isset($instances[$key])) {
-			$em = \AppKernel::getStaticContainer()->get('doctrine')->getManager();
-			$rap = $em->getRepository('ApplicationSonataClientOperationsBundle:RapprochementState')
-				->findOneBy(array('client_id' => $this->client->getId(), 'month' => $this->_month, 'year' => $this->_year));
-			
-			
-			if(!$rap) {
-				$rap = new RapprochementState();
-			}
-		
-			$instances[$key] = $rap;
+			$instances[$key] = $this->findRappState($this->_year, $this->_month);
 		}
 		return $instances[$key];
 	}
