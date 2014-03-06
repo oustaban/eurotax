@@ -537,7 +537,7 @@ class ExcelDeclaration {
 			
 			
 			
-			$this->_excel->getActiveSheet()->getStyle('G'.$row)->setValue('Purchases');
+			$this->_excel->getActiveSheet()->getCell('G'.$row)->setValue('Purchases');
 			//$row++;
 				
 			
