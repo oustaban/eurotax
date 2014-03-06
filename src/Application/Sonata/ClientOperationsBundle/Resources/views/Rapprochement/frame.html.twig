@@ -104,8 +104,24 @@
 	<script type="text/javascript">
     $(function(){
     	$('#number').height(25);
-    	$('#doImport').click(function() {
-			$('#form').submit();
+    	
+   		$('#doImport').click(function() {
+    		if($('#form #type').val() == 'ddr') {
+    			$.ajax({
+    			  url: "{{ ajaxLink }}",
+    			  type: "POST",
+    			  data: $('#form').serialize()
+    			}).done(function( data ) {
+    				if(data == 1) {
+    					$('.alert').html('Pas de Mandat spécifique.').show();
+    				} else {
+    					$('#form').submit();
+    				}
+    			});
+    		} else {
+    			$('#form').submit();
+    		}
+
     	});
     	
     	$('#form').submit(function() {
