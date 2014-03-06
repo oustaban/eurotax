@@ -545,6 +545,7 @@ td.i_tva {
     text-align: center;
     
     {% if V07EXlist is null and V05LIClist is null and V03283Ilist is null and V11INTlist is null %}display: none;{% endif %}
+    margin-bottom: {{ lh }}px;
 }
 
 .block_operations_output {
@@ -554,7 +555,7 @@ td.i_tva {
 }
 
 .block_operations_output_exports {
-    margin-top: {{ lh }}px;
+    
     border: 1px solid black;
     {% if V07EXlist is null %}display: none;{% endif %}
 }
@@ -570,7 +571,7 @@ td.i_tva {
 
 .block_operations_output_deliveries {
     border: 1px solid black;
-    margin-top: {{ lh }}px;
+    
     {% if V05LIClist is null %}display: none;{% endif %}
 }
 
