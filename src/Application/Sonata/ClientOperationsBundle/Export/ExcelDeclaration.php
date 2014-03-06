@@ -7,7 +7,7 @@ class ExcelDeclaration {
 	
 	protected $translator, $clientDeclaration;
 	
-	private $_excel, $_locking = false,
+	private $_excel, $_sheet, $_locking = false,
 		$_admin,
 		$_client,
 		$_show_all_operations,
@@ -280,23 +280,36 @@ class ExcelDeclaration {
 			)
 		)); */
 		$this->_excel->getActiveSheet()->setTitle('Declaration');
+		$this->_sheet = $this->_excel->getActiveSheet();
 		
+		$this->_sheet->getPageSetup()->setPaperSize(\PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
+		$this->_sheet->getPageSetup()->setOrientation(\PHPExcel_Worksheet_PageSetup::ORIENTATION_PORTRAIT);
+		$this->_sheet->getPageMargins()->setTop(1.9 / 2.54); // haut
+		$this->_sheet->getPageMargins()->setBottom(1.9/ 2.54); // Bas
+		$this->_sheet->getPageMargins()->setLeft(0.50/ 2.54); // Gauche
+		$this->_sheet->getPageMargins()->setRight(0.50 / 2.54); // Droite
+		$this->_sheet->getPageMargins()->setHeader(0.80 / 2.54); // En-tete
+		$this->_sheet->getPageMargins()->setFooter(0.80 / 2.54); // Pied de page
 		
-		
-		
+		$this->_sheet->getPageSetup()->setHorizontalCentered(true);
+		$this->_sheet->getPageSetup()->setFitToPage(true);
+	}
+	
+	private function _pxToExcelWidth($px) {
+		return ($px * 0.026458333) * 5.099;
 	}
 	
 	protected function _cellProperties() {
 		$this->_excel->getActiveSheet()->getColumnDimension('A')->setWidth(2);
 		$this->_excel->getActiveSheet()->getColumnDimension('B')->setWidth(20);
 		
-		$this->_excel->getActiveSheet()->getColumnDimension('C')->setWidth(5);
+		$this->_excel->getActiveSheet()->getColumnDimension('C')->setWidth($this->_pxToExcelWidth(10));
 		$this->_excel->getActiveSheet()->getColumnDimension('D')->setWidth(20);
 		$this->_excel->getActiveSheet()->getColumnDimension('E')->setWidth(20);
-		$this->_excel->getActiveSheet()->getColumnDimension('F')->setWidth(20);
+		$this->_excel->getActiveSheet()->getColumnDimension('F')->setWidth($this->_pxToExcelWidth(70));
 		$this->_excel->getActiveSheet()->getColumnDimension('G')->setWidth(20);
 		
-		$this->_excel->getActiveSheet()->getColumnDimension('H')->setWidth(5);
+		$this->_excel->getActiveSheet()->getColumnDimension('H')->setWidth($this->_pxToExcelWidth(10));
 		
 		$this->_excel->getActiveSheet()->getColumnDimension('I')->setWidth(20);
 		$this->_excel->getActiveSheet()->getColumnDimension('J')->setWidth(20);
