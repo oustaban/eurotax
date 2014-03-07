@@ -113,20 +113,19 @@
             </td>
             <td class="sonata-ba-list-field sonata-ba-list-field-text sonata-ba-list-field-center"  objectId="{{ client[0].id }}">
                 {#{{ client[0].mois_tva }}#}
-                {{ client[0].declaration.getSoldeTVATotalText }}
-                
-                
-            </td>
-            <td class="sonata-ba-list-field sonata-ba-list-field-text sonata-ba-list-field-center"  objectId="{{ client[0].id }}">
-                {#{{ client[0].BAPSA }}#}
-                 {% if client[0].declaration.getSoldeTVATotal is not empty %}
+                 {% if client[0].declaration.getSoldeTVATotal > 0 %}
+                 	{{ client[0].declaration.getSoldeTVATotal|number_format(0, ',', ' ') }}
+                 {% elseif client[0].declaration.getSoldeTVATotal < 0 %}
                  	<span class="{% if client[0].declaration.getSoldeTVATotal < 0 %}negative_value{% endif %}">
                  	{{ client[0].declaration.getSoldeTVATotal|number_format(0, ',', ' ') }}
                  	</span>
                  {% else %}
-                 	{{ client[0].declaration.getRapprochementState.getCreditTvaAReporter }}
-                 {% endif %}
-                 
+                	{{ client[0].declaration.getSoldeTVATotalText }}
+                {% endif %}
+            </td>
+            <td class="sonata-ba-list-field sonata-ba-list-field-text sonata-ba-list-field-center"  objectId="{{ client[0].id }}">
+                {#{{ client[0].BAPSA }}#}
+               	{{ client[0].declaration.getRapprochementState.getCreditTvaAReporter }}
             </td>
             <td class="sonata-ba-list-field sonata-ba-list-field-text sonata-ba-list-field-center"  objectId="{{ client[0].id }}">
                 {#{{ client[0].remboursement_de_TVA }}#}
