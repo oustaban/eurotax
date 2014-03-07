@@ -70,9 +70,7 @@ class HomeController extends Controller
             'cookies' => $this->getRequest()->cookies,
             'alert_count' => $alerts[0]['cnt'],
         	'moisExtraColTitle' => $moisExtraColTitle,
-        	
         	'isSuperviseur' => $user->hasGroup('Superviseur'),
-        	
         );
     }
 
