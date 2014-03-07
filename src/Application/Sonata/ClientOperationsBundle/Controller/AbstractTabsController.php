@@ -1370,6 +1370,17 @@ class AbstractTabsController extends Controller
         	->setMonth($this->_month);
         	
         
+        $lastMonthTS = new \DateTime("{$this->_year}-{$this->_month}-01 -1 month");
+        $_lastYear = $lastMonthTS->format('Y');
+        $_lastMonth = $lastMonthTS->format('m');
+        
+        
+        //$prevMonthClientDeclaration = clone $clientDeclaration;
+        
+        $prevMonthClientDeclaration = new ClientDeclaration($client);
+        $prevMonthClientDeclaration->setShowAllOperations($this->_show_all_operations)
+            ->setYear($_lastYear)
+        	->setMonth($_lastMonth);        
         
         $this->get('request')->setLocale(strtolower($client->getLanguage()));
 
@@ -1419,7 +1430,7 @@ class AbstractTabsController extends Controller
         	'SoldeTVATotal' => $clientDeclaration->getSoldeTVATotal(),
         	'TotalBalance' => $clientDeclaration->getTotalBalance(),
         	'CreditToBeReportedTotal' => $clientDeclaration->getCreditToBeReportedTotal(),
-        	'PreviousCreditDeTVA' => $clientDeclaration->getPreviousCreditDeTVA(),
+        	'PreviousCreditDeTVA' => $prevMonthClientDeclaration->getCreditToBeReportedTotal(),
         		
         	'locked' => $this->getLocking()
         ));

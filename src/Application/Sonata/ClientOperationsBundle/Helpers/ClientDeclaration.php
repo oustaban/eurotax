@@ -296,7 +296,7 @@ A06 = 2 lines
 	}
 	
 	
-	public function getPreviousCreditDeTVA() {
+	/* public function getPreviousCreditDeTVA() {
 		$value = round($this->getTVACredit()) + round($this->getPreviousMonthRapprochementState()->getDemandeDeRemboursement());
 		return $value;
 	}
@@ -316,7 +316,7 @@ A06 = 2 lines
 		}
 		
 		return $instances[$key];
-	}
+	} */
 	
 	
 	protected function findRappState($year, $month) {
