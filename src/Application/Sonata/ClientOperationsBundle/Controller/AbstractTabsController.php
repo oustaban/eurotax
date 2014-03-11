@@ -849,11 +849,12 @@ class AbstractTabsController extends Controller
                 	$output = unserialize($process->getOutput());                	
                 	$messages = $output['messages'];
                 	$import_counts = $output['import_counts'];
+                	$error_counts = $output['error_counts'];
                 }
             }
         }
         
-        if (!empty($messages)) {
+        if (!empty($messages) || $error_counts) {
             $this->get('session')->setFlash('sonata_flash_info|raw', implode("<br/>", $messages));
         } else {
         	$message = trim($this->get('session')->getFlash('sonata_flash_info|raw'));

@@ -22,6 +22,7 @@ class ImportExcelCommand extends ContainerAwareCommand {
 	
 	protected $_locking, $_devise = array(), $_year = 0, $_month = 0;
 	
+	protected $_min_error_count = 50; //break import when it reached this number
 	
 	protected $_import_counts = array();
 	protected $_import_reports = array();
@@ -420,7 +421,7 @@ class ImportExcelCommand extends ContainerAwareCommand {
 		
 		$this->sendNotification();
 		
-		echo serialize(array('messages' => $this->messages, 'import_counts' => $this->_import_counts, 'pid' => $this->pid));
+		echo serialize(array('messages' => $this->messages, 'error_counts' => $this->_import_counts['rows']['errors'], 'import_counts' => $this->_import_counts, 'pid' => $this->pid));
 		
 		
 		
@@ -637,6 +638,11 @@ class ImportExcelCommand extends ContainerAwareCommand {
 		 
 		foreach ($sheets as $title => $data) {
 	
+			
+			
+			
+			
+			
 			if (array_key_exists($title, $this->_config_excel)) {
 				$config_excel = $this->_config_excel[$title];
 				$class = $config_excel['entity'];
@@ -762,8 +768,11 @@ class ImportExcelCommand extends ContainerAwareCommand {
 						$this->setCountImports($class, 'errors', $message);
 					}
 					unset($formData, $form, $form_builder, $object);
-				}
-	
+					
+					if(isset($this->_import_counts['rows']) && isset($this->_import_counts['rows']['errors']) && $this->_import_counts['rows']['errors'] >= $this->_min_error_count) {
+						return;
+					}	
+				}	
 				unset($data, $admin);
 			}
 		}
