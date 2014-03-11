@@ -517,7 +517,7 @@ class Excel
 			$this->_excel->getActiveSheet()->getStyle("H$i")->applyFromArray($styleBorders);
 			//Balance column			
 			if($i > 5) {
-				$this->_excel->getActiveSheet()->setCellValue("H$i", '=SUM(G$'.($startSumIndex).':G'.($i+1).')');
+				$this->_excel->getActiveSheet()->setCellValue("H$i", '=SUM(G$'.($startSumIndex).':G'.($i).')');
 				$this->_sheet->getStyle("H$i")->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 			}
 			$i++;
