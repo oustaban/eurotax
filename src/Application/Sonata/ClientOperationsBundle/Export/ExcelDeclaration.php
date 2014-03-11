@@ -284,12 +284,12 @@ class ExcelDeclaration {
 		
 		$this->_sheet->getPageSetup()->setPaperSize(\PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
 		$this->_sheet->getPageSetup()->setOrientation(\PHPExcel_Worksheet_PageSetup::ORIENTATION_PORTRAIT);
-		$this->_sheet->getPageMargins()->setTop(1.9 / 2.54); // haut
-		$this->_sheet->getPageMargins()->setBottom(1.9/ 2.54); // Bas
+		$this->_sheet->getPageMargins()->setTop(0.9 / 2.54); // haut
+		$this->_sheet->getPageMargins()->setBottom(0.9/ 2.54); // Bas
 		$this->_sheet->getPageMargins()->setLeft(0.50/ 2.54); // Gauche
 		$this->_sheet->getPageMargins()->setRight(0.50 / 2.54); // Droite
-		$this->_sheet->getPageMargins()->setHeader(0.80 / 2.54); // En-tete
-		$this->_sheet->getPageMargins()->setFooter(0.80 / 2.54); // Pied de page
+		$this->_sheet->getPageMargins()->setHeader(0.50 / 2.54); // En-tete
+		$this->_sheet->getPageMargins()->setFooter(0.50 / 2.54); // Pied de page
 		
 		$this->_sheet->getPageSetup()->setHorizontalCentered(true);
 		$this->_sheet->getPageSetup()->setFitToPage(true);
@@ -436,20 +436,20 @@ class ExcelDeclaration {
 		$this->_excel->getActiveSheet()->getCell('E24')->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.tva') );
 		
 
-		$this->_excel->getActiveSheet()->getCell('I24')->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
+		//$this->_excel->getActiveSheet()->getCell('I24')->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
 		$this->_excel->getActiveSheet()->getCell('J24')->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.tva') );
 		
 		
-		$this->_excel->getActiveSheet()->getCell('B25')->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.sales') );
-		$this->_excel->getActiveSheet()->mergeCells('B25:D25');
+		$this->_excel->getActiveSheet()->getCell('B24')->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.sales') );
+		//$this->_excel->getActiveSheet()->mergeCells('B25:D25');
 		
 		//top border
-		$this->_excel->getActiveSheet()->getStyle("B25")->applyFromArray($this->_styleTopLeftBorders);
-		$this->_excel->getActiveSheet()->getStyle("C25:D25")->applyFromArray($this->_styleTopBorders);
-		$this->_excel->getActiveSheet()->getStyle("E25")->applyFromArray($this->_styleTopRightBorders);
+		$this->_excel->getActiveSheet()->getStyle("B24")->applyFromArray($this->_styleTopLeftBorders);
+		$this->_excel->getActiveSheet()->getStyle("C24:D24")->applyFromArray($this->_styleTopBorders);
+		$this->_excel->getActiveSheet()->getStyle("E24")->applyFromArray($this->_styleTopRightBorders);
 		
 		//==totals==//
-		$row = 26;
+		$row = 25;
 		if($this->clientDeclaration->getV01TVAList()) {
 			foreach($this->clientDeclaration->getV01TVAList() as $entity) {
 				$this->_excel->getActiveSheet()->getStyle('D'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
@@ -471,18 +471,18 @@ class ExcelDeclaration {
 		$this->_excel->getActiveSheet()->getStyle("E$row")->applyFromArray($this->_styleBottomRightBorders);
 		
 		
-		$this->_excel->getActiveSheet()->getCell('G25')->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.vat_purchases')
+		$this->_excel->getActiveSheet()->getCell('G24')->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.vat_purchases')
 				. ' ' . $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.period_this_month') );
-		$this->_excel->getActiveSheet()->mergeCells('G25:I25');
+		//$this->_excel->getActiveSheet()->mergeCells('G25:I25');
 		
 		
 		//top border
-		$this->_excel->getActiveSheet()->getStyle("G25")->applyFromArray($this->_styleTopLeftBorders);
-		$this->_excel->getActiveSheet()->getStyle("H25:I25")->applyFromArray($this->_styleTopBorders);
-		$this->_excel->getActiveSheet()->getStyle("J25")->applyFromArray($this->_styleTopRightBorders);
+		$this->_excel->getActiveSheet()->getStyle("G24")->applyFromArray($this->_styleTopLeftBorders);
+		$this->_excel->getActiveSheet()->getStyle("H24:I24")->applyFromArray($this->_styleTopBorders);
+		$this->_excel->getActiveSheet()->getStyle("J24")->applyFromArray($this->_styleTopRightBorders);
 		
 		
-		$row = 26;
+		$row = 25;
 		if($this->clientDeclaration->getA02TVAlist()) {
 			$this->_excel->getActiveSheet()->getCell('G'.$row)->setValue('Purchases');
 			$row++;
@@ -599,6 +599,24 @@ class ExcelDeclaration {
 		
 		
 		$row++;
+		
+		
+		//HT
+		$this->_excel->getActiveSheet()->getCell("D$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
+		//TVA
+		$this->_excel->getActiveSheet()->getCell("E$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.tva') );
+		
+		//HT
+		$this->_excel->getActiveSheet()->getCell("I$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
+		//TVA
+		$this->_excel->getActiveSheet()->getCell("J$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.tva') );
+		
+		$this->_excel->getActiveSheet()->getStyle("B$row")->applyFromArray($this->_styleLeftBorders);
+		$this->_excel->getActiveSheet()->getStyle("J$row")->applyFromArray($this->_styleRightBorders);
+		
+		
+		$row++;
+		
 		if($this->clientDeclaration->getA04283Ilist()) {
 			foreach($this->clientDeclaration->getA04283Ilist() as $entity) {
 				
@@ -652,6 +670,32 @@ class ExcelDeclaration {
 		
 		
 		$row++;
+		
+		
+		
+		//HT
+		$this->_excel->getActiveSheet()->getCell("D$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
+		//TVA
+		$this->_excel->getActiveSheet()->getCell("E$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.tva') );
+		
+		//HT
+		$this->_excel->getActiveSheet()->getCell("I$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
+		//TVA
+		$this->_excel->getActiveSheet()->getCell("J$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.tva') );
+		
+		$this->_excel->getActiveSheet()->getStyle("B$row")->applyFromArray($this->_styleLeftBorders);
+		$this->_excel->getActiveSheet()->getStyle("J$row")->applyFromArray($this->_styleRightBorders);
+		
+		
+		$row++;
+		
+		
+		
+		
+		
+		
+		
+		
 		if($this->clientDeclaration->getA06AIBlist()) {
 			foreach($this->clientDeclaration->getA06AIBlist() as $entity) {
 		
@@ -706,7 +750,11 @@ class ExcelDeclaration {
 		$repeatRow = $row;
 		
 		$this->_excel->getActiveSheet()->getCell("B$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.exports_header') );
-		$this->_excel->getActiveSheet()->mergeCells("B$row:D$row");
+		//$this->_excel->getActiveSheet()->mergeCells("B$row:D$row");
+		//HT
+		$this->_excel->getActiveSheet()->getCell("D$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
+		
+		
 		if($this->clientDeclaration->getV07EXlist()) {
 			foreach($this->clientDeclaration->getV07EXlist() as $entity) {
 		
@@ -723,7 +771,13 @@ class ExcelDeclaration {
 		//quota
 		$row = $repeatRow;
 		$this->_excel->getActiveSheet()->getCell("G$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.quota_header') );
-		$this->_excel->getActiveSheet()->mergeCells("G$row:H$row");
+		//$this->_excel->getActiveSheet()->mergeCells("G$row:H$row");
+		
+		//HT
+		$this->_excel->getActiveSheet()->getCell("I$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
+		
+		
+		
 		if($this->clientDeclaration->getA10CAFlist()) {
 			foreach($this->clientDeclaration->getA10CAFlist() as $entity) {
 		
@@ -739,7 +793,12 @@ class ExcelDeclaration {
 		
 		//deliveries
 		$this->_excel->getActiveSheet()->getCell("B$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.V05LIC.title') );
-		$this->_excel->getActiveSheet()->mergeCells("B$row:D$row");
+		//$this->_excel->getActiveSheet()->mergeCells("B$row:D$row");
+		//HT
+		$this->_excel->getActiveSheet()->getCell("D$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
+		
+		
+		
 		if($this->clientDeclaration->getV05LIClist()) {
 			foreach($this->clientDeclaration->getV05LIClist() as $entity) {
 		
@@ -754,7 +813,11 @@ class ExcelDeclaration {
 		
 		//no tva
 		$this->_excel->getActiveSheet()->getCell("B$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.V03283I.title') );
-		$this->_excel->getActiveSheet()->mergeCells("B$row:D$row");
+		//$this->_excel->getActiveSheet()->mergeCells("B$row:D$row");
+		//HT
+		$this->_excel->getActiveSheet()->getCell("D$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
+		
+		
 		if($this->clientDeclaration->getV03283Ilist()) {
 			foreach($this->clientDeclaration->getV03283Ilist() as $entity) {
 		
@@ -769,7 +832,11 @@ class ExcelDeclaration {
 		
 		//other
 		$this->_excel->getActiveSheet()->getCell("B$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.other_header') );
-		$this->_excel->getActiveSheet()->mergeCells("B$row:D$row");
+		//$this->_excel->getActiveSheet()->mergeCells("B$row:D$row");
+		//HT
+		$this->_excel->getActiveSheet()->getCell("D$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
+		
+		
 		if($this->clientDeclaration->getV11INTlist()) {
 			foreach($this->clientDeclaration->getV11INTlist() as $entity) {
 		
