@@ -293,6 +293,9 @@ class ExcelDeclaration {
 		
 		$this->_sheet->getPageSetup()->setHorizontalCentered(true);
 		$this->_sheet->getPageSetup()->setFitToPage(true);
+		
+		$this->_sheet->setShowGridLines(false);
+		
 	}
 	
 	private function _pxToExcelWidth($px) {
