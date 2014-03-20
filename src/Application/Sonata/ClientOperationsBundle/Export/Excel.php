@@ -517,7 +517,7 @@ class Excel
 			$this->_excel->getActiveSheet()->getStyle("H$i")->applyFromArray($styleBorders);
 			//Balance column			
 			if($i > 5) {
-				$this->_excel->getActiveSheet()->setCellValue("H$i", '=SUM(G$'.($startSumIndex).':G'.($i).')');
+				$this->_excel->getActiveSheet()->setCellValue("H$i", '=SUM(G$'.($startSumIndex).':G'.($i+2).')');
 				$this->_sheet->getStyle("H$i")->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 			}
 			$i++;
@@ -538,11 +538,11 @@ class Excel
 				$this->_excel->getActiveSheet()->getStyle("B$i:F$i")->applyFromArray($styleBorders);
 				$this->_excel->getActiveSheet()->setCellValue("G$i", '');
 				$this->_excel->getActiveSheet()->getStyle("G$i")->applyFromArray($euroColStyleBorders);
-				$this->_excel->getActiveSheet()->setCellValue("H$i", '');
-				
+				//$this->_excel->getActiveSheet()->setCellValue("H$i", '');
 				$this->_excel->getActiveSheet()->getStyle("H$i")->applyFromArray($styleBorders);
+				$this->_excel->getActiveSheet()->setCellValue("H$i", '=SUM(G$'.($startSumIndex).':G'.($i+2).')');
 				
-				$this->_excel->getActiveSheet()->setCellValue("H$i", '0');
+				//$this->_excel->getActiveSheet()->setCellValue("H$i", '0');
 				$this->_sheet->getStyle("H$i")->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 			}
 		}
