@@ -18,6 +18,11 @@
         <td class="balance_type">C</td>
     </tr>
     <tr>
+    	<td colspan="3"><table class="balance_separator">
+    	<tr><td></td></tr>
+    	</table></td>
+    </tr>
+    <tr>
         <td class="balance_title">{{ "ApplicationSonataClientOperationsBundle.declaration.balance.total"|trans() }}</td>
         <td class="balance_value">{{ TotalBalance|number_format(2, ',', ' ') }} €</td>
         <td class="balance_type">on {{ "now"|date('d/m/Y') }}</td>
