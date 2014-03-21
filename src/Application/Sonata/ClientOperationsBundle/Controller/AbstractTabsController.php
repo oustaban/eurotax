@@ -1364,24 +1364,19 @@ class AbstractTabsController extends Controller
     {
         $client = $this->getClient();
         
+        
+        $clientDeclaration = new ClientDeclaration($client);
+        $clientDeclaration->setShowAllOperations($this->_show_all_operations)
+        	->setYear($this->_year)
+        	->setMonth($this->_month);
+        	
+        
         $lastMonthTS = new \DateTime("{$this->_year}-{$this->_month}-01 -1 month");
         $_lastYear = $lastMonthTS->format('Y');
         $_lastMonth = $lastMonthTS->format('m');
         
         
-        $clientDeclaration = new ClientDeclaration($client);
-        $clientDeclaration->setShowAllOperations($this->_show_all_operations)
-        	->setYear($this->_year)
-        	->setMonth($this->_month)
-        	//->setYear($_lastYear)
-        	//->setMonth($_lastMonth)
-        ;
-        	
-        
-        
-        
-        
-        //var_dump($_lastYear, $_lastMonth);
+        //$prevMonthClientDeclaration = clone $clientDeclaration;
         
         $prevMonthClientDeclaration = new ClientDeclaration($client);
         $prevMonthClientDeclaration->setShowAllOperations($this->_show_all_operations)

@@ -335,9 +335,7 @@ A06 = 2 lines
 			return new RapprochementState();
 		}
 		
-		var_dump($this->_year, $this->_month);
-		
-		
+		//var_dump($this->_year, $this->_month);
 		static $instances = array();
 		$key = $this->client->getId(). $this->_year . $this->_month;
 		if(!isset($instances[$key])) {
