@@ -537,6 +537,7 @@ class Excel
 				$this->_excel->getActiveSheet()->mergeCells("B$i:F$i");
 				$this->_excel->getActiveSheet()->getStyle("B$i:F$i")->applyFromArray($styleBorders);
 				$this->_excel->getActiveSheet()->setCellValue("G$i", '');
+				$this->_sheet->getStyle("G$i")->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 				$this->_excel->getActiveSheet()->getStyle("G$i")->applyFromArray($euroColStyleBorders);
 				//$this->_excel->getActiveSheet()->setCellValue("H$i", '');
 				$this->_excel->getActiveSheet()->getStyle("H$i")->applyFromArray($styleBorders);
