@@ -203,6 +203,11 @@ A06 = 2 lines
 			$rulingNettTotal += $A04283ISumPrev->getHT();
 		}
 		
+
+		if($A06AIBSumPrev) {
+			$rulingNettTotal += $A06AIBSumPrev->getHT();
+		}
+		
 		return round($rulingNettTotal);
 	}
 	
