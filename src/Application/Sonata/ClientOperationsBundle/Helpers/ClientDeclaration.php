@@ -335,6 +335,9 @@ A06 = 2 lines
 			return new RapprochementState();
 		}
 		
+		var_dump($this->_year, $this->_month);
+		
+		
 		static $instances = array();
 		$key = $this->client->getId(). $this->_year . $this->_month;
 		if(!isset($instances[$key])) {
@@ -354,7 +357,7 @@ A06 = 2 lines
 	 */
 	public function getEntityList($entity, $isPrevMonth = false, $mergeData = false, $monthField = 'mois', $prevMonthField = 'date_piece') {
 		static $results = array();
-		$key = $entity . $isPrevMonth . $monthField . $prevMonthField;
+		$key = $entity . $isPrevMonth . $monthField . $prevMonthField . $this->_year . $this->_month;
 		 
 		if(!isset($results[$key])) {
 			/* @var $em \Doctrine\ORM\EntityManager */
@@ -500,6 +503,9 @@ A06 = 2 lines
 			$form_month = $this->_year . '-' . $this->_month . '-01';
 			$to_month = $this->_year . '-' . $this->_month . '-31';
 	
+			
+			
+			
 			 
 			//     		if ($this->_query_month == -1) {
 			//     			$qb->orWhere($qb->getRootAlias() . '.'.$monthField.' IS NULL');
