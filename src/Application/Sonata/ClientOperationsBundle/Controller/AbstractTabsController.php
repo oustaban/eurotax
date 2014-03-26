@@ -783,7 +783,7 @@ class AbstractTabsController extends Controller
             $file = TMP_UPLOAD_PATH . '/' . $_FILES["inputFile"]["name"];
             $tmpFile = $_FILES["inputFile"]["tmp_name"];
             $inputFile = $_FILES['inputFile'];
-
+            $error_counts = 0;
             if ($this->importFileValidate($inputFile)) {
                 if (move_uploaded_file($tmpFile, $file)) {
                 	
