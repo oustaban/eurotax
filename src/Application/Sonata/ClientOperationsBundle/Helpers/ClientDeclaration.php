@@ -301,13 +301,20 @@ A06 = 2 lines
 	}
 	
 	
-	/* public function getPreviousCreditDeTVA() {
+	public function getSoldeTVATotalPlusPreviousCreditDeTVA() {
+		$vat = $this->getTotalVat1();
+		return $vat->getTVA() +  $this->getPreviousMonth()->getSoldeTVATotal();
+	}
+	
+	
+	
+	public function getPreviousCreditDeTVA() {
 		$value = round($this->getTVACredit()) + round($this->getPreviousMonthRapprochementState()->getDemandeDeRemboursement());
 		return $value;
 	}
 	
 	
-	public function getPreviousMonthRapprochementState() {
+	public function getPreviousMonth() {
 		
 		static $instances = array();
 		
@@ -315,13 +322,24 @@ A06 = 2 lines
 		$_year = $lastMonth->format('Y');
 		$_month = $lastMonth->format('m');
 		
+		
+		
+		
 		$key = $this->client->getId(). $_year . $_month;
 		if(!isset($instances[$key])) {
-			$instances[$key] = $this->findRappState($_year, $_month);
+			//$instances[$key] = $this->findRappState($_year, $_month);
+			
+			$prevMonthClientDeclaration = new ClientDeclaration($this->client);
+			$prevMonthClientDeclaration->setShowAllOperations($this->_show_all_operations)
+			->setYear($_year)
+			->setMonth($_month);
+			
+			
+			$instances[$key] = $prevMonthClientDeclaration;
 		}
 		
 		return $instances[$key];
-	} */
+	} 
 	
 	
 	protected function findRappState($year, $month) {
@@ -360,7 +378,7 @@ A06 = 2 lines
 	 */
 	public function getEntityList($entity, $isPrevMonth = false, $mergeData = false, $monthField = 'mois', $prevMonthField = 'date_piece') {
 		static $results = array();
-		$key = $entity . $isPrevMonth . $monthField . $prevMonthField . $this->_year . $this->_month;
+		$key = $entity . $isPrevMonth . $mergeData . $monthField . $prevMonthField . $this->_year . $this->_month;
 		 
 		if(!isset($results[$key])) {
 			/* @var $em \Doctrine\ORM\EntityManager */
