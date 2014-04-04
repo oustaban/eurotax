@@ -4,6 +4,7 @@ namespace Application\Sonata\ClientOperationsBundle\Helpers;
 use Application\Sonata\ClientBundle\Entity\Client;
 use Application\Sonata\ClientOperationsBundle\Entity\RapprochementState;
 use Application\Sonata\ClientBundle\Entity\ListNatureDuClients;
+use Application\Sonata\ClientOperationsBundle\Entity\A02TVA;
 
 class ClientDeclaration {
 	
@@ -254,7 +255,6 @@ A06 = 2 lines
         	$Total2MergedData = array_merge($this->getA08IMList()?:array(), $this->getA02TVAPrevList()?:array(), 
         		$this->getA08IMPrevList()?:array(), $this->getA04283IList()?:array(), $this->getA06AIBList()?:array(), $this->getA02TVAList()?:array())
         );
-		
 		return $Total2;
 	}
 	
@@ -322,17 +322,13 @@ A06 = 2 lines
 	
 	
 	public function getPreviousMonth() {
-		
 		static $instances = array();
 		
 		$lastMonth = new \DateTime("{$this->_year}-{$this->_month}-01 -1 month");
 		$_year = $lastMonth->format('Y');
 		$_month = $lastMonth->format('m');
 		
-		
-		
-		
-		$key = $this->client->getId(). $_year . $_month;
+		$key = $this->client->getId() . $_year . $_month;
 		if(!isset($instances[$key])) {
 			//$instances[$key] = $this->findRappState($_year, $_month);
 			
@@ -340,11 +336,8 @@ A06 = 2 lines
 			$prevMonthClientDeclaration->setShowAllOperations($this->_show_all_operations)
 			->setYear($_year)
 			->setMonth($_month);
-			
-			
 			$instances[$key] = $prevMonthClientDeclaration;
 		}
-		
 		return $instances[$key];
 	} 
 	
