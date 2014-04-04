@@ -2063,7 +2063,7 @@ class Client
     	$key = $this->getId(). $year . $month;
     	if(!isset($instances[$key])) {
 	    	$clientDeclaration = new ClientDeclaration($this);
-	    	$clientDeclaration->setYear($year)
+	    	$clientDeclaration->setShowAllOperations(false)->setYear($year)
 	    		->setMonth($month);
 	    	
 	    	$instances[$key] = $clientDeclaration;

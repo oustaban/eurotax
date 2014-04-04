@@ -83,8 +83,6 @@ class ExcelDeclaration {
 		),
 	);
 	
-	
-	
 	protected $_styleTopLeftBorders = array(
 		'borders' => array(
 			'top' => array(
@@ -193,6 +191,59 @@ class ExcelDeclaration {
 	);
 	
 	
+	
+	
+	protected $_styleTopRightLeftBorders = array(
+		'borders' => array(
+			'top' => array(
+				'style' => \PHPExcel_Style_Border::BORDER_THIN,
+			),
+			'bottom' => array(
+				'style' => \PHPExcel_Style_Border::BORDER_NONE,
+			),
+			'left' => array(
+				'style' => \PHPExcel_Style_Border::BORDER_THIN,
+			),
+			'right' => array(
+				'style' => \PHPExcel_Style_Border::BORDER_THIN,
+			),
+		),
+	);
+	
+	protected $_styleBottomRightLeftBorders = array(
+		'borders' => array(
+			'top' => array(
+				'style' => \PHPExcel_Style_Border::BORDER_NONE,
+			),
+			'bottom' => array(
+				'style' => \PHPExcel_Style_Border::BORDER_THIN,
+			),
+			'left' => array(
+				'style' => \PHPExcel_Style_Border::BORDER_THIN,
+			),
+			'right' => array(
+				'style' => \PHPExcel_Style_Border::BORDER_THIN,
+			),
+		),
+	);
+	
+	protected $_styleRightLeftBorders = array(
+		'borders' => array(
+			'top' => array(
+				'style' => \PHPExcel_Style_Border::BORDER_NONE,
+			),
+			'bottom' => array(
+				'style' => \PHPExcel_Style_Border::BORDER_NONE,
+			),
+			'left' => array(
+				'style' => \PHPExcel_Style_Border::BORDER_THIN,
+			),
+			'right' => array(
+				'style' => \PHPExcel_Style_Border::BORDER_THIN,
+			),
+		),
+	);
+	
 	public function __construct($client, $show_all_operations, $year, $month) {
 		$this->_excel = new \PHPExcel();
 		$this->translator = \AppKernel::getStaticContainer()->get('translator');
@@ -266,6 +317,7 @@ class ExcelDeclaration {
 		$this->_financial();
 		$this->_vat();
 		$this->_operations();
+		$this->_ruling();
 		
 		$this->_excel->setActiveSheetIndex(0);
 		/* $this->_excel->getActiveSheet()->getStyle(
@@ -459,7 +511,7 @@ class ExcelDeclaration {
 				$this->_excel->getActiveSheet()->getStyle('E'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 				
 				$this->_excel->getActiveSheet()->getCell('D'.$row)->setValue($entity->getHT());
-				$this->_excel->getActiveSheet()->getCell('D'.$row)->setValue($entity->getTVA());
+				$this->_excel->getActiveSheet()->getCell('E'.$row)->setValue($entity->getTVA());
 				
 				$this->_excel->getActiveSheet()->getStyle("B$row")->applyFromArray($this->_styleLeftBorders);
 				$this->_excel->getActiveSheet()->getStyle("E$row")->applyFromArray($this->_styleRightBorders);
@@ -505,9 +557,9 @@ class ExcelDeclaration {
 			}
 		}
 		//bottom border
-		$this->_excel->getActiveSheet()->getStyle("G$row")->applyFromArray($this->_styleBottomLeftBorders);
-		$this->_excel->getActiveSheet()->getStyle("H$row:I$row")->applyFromArray($this->_styleBottomBorders);
-		$this->_excel->getActiveSheet()->getStyle("J$row")->applyFromArray($this->_styleBottomRightBorders);
+		//$this->_excel->getActiveSheet()->getStyle("G$row")->applyFromArray($this->_styleBottomLeftBorders);
+		//$this->_excel->getActiveSheet()->getStyle("H$row:I$row")->applyFromArray($this->_styleBottomBorders);
+		//$this->_excel->getActiveSheet()->getStyle("J$row")->applyFromArray($this->_styleBottomRightBorders);
 		
 		
 		
@@ -517,7 +569,7 @@ class ExcelDeclaration {
 		$this->_excel->getActiveSheet()->getStyle("J$row")->applyFromArray($this->_styleTopRightBorders);
 		
 		if($this->clientDeclaration->getA08IMlist()) {
-				
+			
 			$this->_excel->getActiveSheet()->getCell('G'.$row)->setValue('Importation');
 			$row++;
 				
@@ -543,48 +595,71 @@ class ExcelDeclaration {
 		
 		
 		$row = $row+2;
+		if($this->clientDeclaration->getA02TVAPrevlist() || $this->clientDeclaration->getA08IMPrevlist()) {
 		
-		
-		if($this->clientDeclaration->getA02TVAPrevlist()) {
 			
-			$this->_excel->getActiveSheet()->getCell('G'.$row)->setValue($this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.vat_purchases') 
+			//top border
+			$this->_excel->getActiveSheet()->getStyle("G$row")->applyFromArray($this->_styleTopLeftBorders);
+			$this->_excel->getActiveSheet()->getStyle("H$row:I$row")->applyFromArray($this->_styleTopBorders);
+			$this->_excel->getActiveSheet()->getStyle("J$row")->applyFromArray($this->_styleTopRightBorders);
+				
+			
+			
+			$this->_excel->getActiveSheet()->getCell('G'.$row)->setValue($this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.vat_purchases')
 				. ' ' . $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.period_prev_month'));
 			$row++;
 			
 			
+			if($this->clientDeclaration->getA02TVAPrevlist()) {
+				
+				
+				$this->_excel->getActiveSheet()->getCell('G'.$row)->setValue('Purchases');
+				//$row++;
+				foreach($this->clientDeclaration->getA02TVAPrevlist() as $entity) {
+					$this->_excel->getActiveSheet()->getStyle('I'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+					$this->_excel->getActiveSheet()->getStyle('J'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 			
-			$this->_excel->getActiveSheet()->getCell('G'.$row)->setValue('Purchases');
-			//$row++;
-				
+					$this->_excel->getActiveSheet()->getCell('I'.$row)->setValue($entity->getTauxDeTVA() * 100);
+					$this->_excel->getActiveSheet()->getCell('J'.$row)->setValue($entity->getTVA());
+					
+					
+
+					$this->_excel->getActiveSheet()->getStyle("G$row")->applyFromArray($this->_styleLeftBorders);
+					$this->_excel->getActiveSheet()->getStyle("J$row")->applyFromArray($this->_styleRightBorders);
+					
+					$row++;
+				}
+			}
 			
-			foreach($this->clientDeclaration->getA02TVAPrevlist() as $entity) {
-				$this->_excel->getActiveSheet()->getStyle('I'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
-				$this->_excel->getActiveSheet()->getStyle('J'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
-		
-				$this->_excel->getActiveSheet()->getCell('I'.$row)->setValue($entity->getTauxDeTVA() * 100);
-				$this->_excel->getActiveSheet()->getCell('J'.$row)->setValue($entity->getTVA());
-				
-				
-				
-				
+			if($this->clientDeclaration->getA08IMPrevlist()) {
+				$this->_excel->getActiveSheet()->getStyle("G$row")->applyFromArray($this->_styleLeftBorders);
+				$this->_excel->getActiveSheet()->getCell('G'.$row)->setValue('Importation');
+				$this->_excel->getActiveSheet()->getStyle("J$row")->applyFromArray($this->_styleRightBorders);
 				$row++;
+			
+				foreach($this->clientDeclaration->getA08IMPrevlist() as $entity) {
+					$this->_excel->getActiveSheet()->getStyle('I'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+					$this->_excel->getActiveSheet()->getStyle('J'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+			
+					$this->_excel->getActiveSheet()->getCell('I'.$row)->setValue($entity->getTauxDeTVA() * 100);
+					$this->_excel->getActiveSheet()->getCell('J'.$row)->setValue($entity->getTVA());
+					
+
+					$this->_excel->getActiveSheet()->getStyle("G$row")->applyFromArray($this->_styleLeftBorders);
+					$this->_excel->getActiveSheet()->getStyle("J$row")->applyFromArray($this->_styleRightBorders);
+					
+					
+					$row++;
+				}
 			}
-		}
-		
-		if($this->clientDeclaration->getA08IMPrevlist()) {
-			$this->_excel->getActiveSheet()->getCell('G'.$row)->setValue('Importation');
-			$row++;
-		
-			foreach($this->clientDeclaration->getA08IMPrevlist() as $entity) {
-				$this->_excel->getActiveSheet()->getStyle('I'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
-				$this->_excel->getActiveSheet()->getStyle('J'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
-		
-				$this->_excel->getActiveSheet()->getCell('I'.$row)->setValue($entity->getTauxDeTVA() * 100);
-				$this->_excel->getActiveSheet()->getCell('J'.$row)->setValue($entity->getTVA());
-				$row++;
-			}
-		}
-		
+			
+			//bottom border
+			$this->_excel->getActiveSheet()->getStyle("G$row")->applyFromArray($this->_styleBottomLeftBorders);
+			$this->_excel->getActiveSheet()->getStyle("H$row:I$row")->applyFromArray($this->_styleBottomBorders);
+			$this->_excel->getActiveSheet()->getStyle("J$row")->applyFromArray($this->_styleBottomRightBorders);
+			
+			
+		}	
 		//==end totals==//
 		
 		
@@ -599,10 +674,7 @@ class ExcelDeclaration {
 		$this->_excel->getActiveSheet()->getCell('D'.$row)->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.charge_header') );
 		$this->_excel->getActiveSheet()->mergeCells("D$row:J$row");
 		$this->_excel->getActiveSheet()->getStyle("D$row:J$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-		
-		
 		$row++;
-		
 		
 		//HT
 		$this->_excel->getActiveSheet()->getCell("D$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
@@ -689,15 +761,7 @@ class ExcelDeclaration {
 		$this->_excel->getActiveSheet()->getStyle("B$row")->applyFromArray($this->_styleLeftBorders);
 		$this->_excel->getActiveSheet()->getStyle("J$row")->applyFromArray($this->_styleRightBorders);
 		
-		
 		$row++;
-		
-		
-		
-		
-		
-		
-		
 		
 		if($this->clientDeclaration->getA06AIBlist()) {
 			foreach($this->clientDeclaration->getA06AIBlist() as $entity) {
@@ -731,6 +795,139 @@ class ExcelDeclaration {
 		$this->_excel->getActiveSheet()->getStyle("J$row")->applyFromArray($this->_styleBottomRightBorders);
 		//==end acquisitions==//
 		$row++;
+		$row++;
+		
+		
+		
+		//==footer==//
+		
+		//credit
+		//input
+		$this->_excel->getActiveSheet()->getCell("G$row")->setValue( 
+			$this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.credit') . ' ' .
+			$this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.from_period_prev'));
+		$this->_excel->getActiveSheet()->mergeCells("G$row:I$row");
+
+		$this->_excel->getActiveSheet()->getStyle('J'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+		$this->_excel->getActiveSheet()->getCell("J$row")->setValue( $this->clientDeclaration->getPreviousMonth()->getCreditToBeReportedTotal() );
+		$this->_excel->getActiveSheet()->getStyle("G$row:J$row")->applyFromArray($this->_styleBorders);
+		
+
+		//total
+		//output
+		$row++;
+		$row++;
+		$this->_excel->getActiveSheet()->getCell("B$row")->setValue($this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.total'));
+		
+
+		if($this->clientDeclaration->getTotalVat1() ) {
+
+			if( $this->clientDeclaration->getTotalVat1()->getHT()) {
+				$this->_excel->getActiveSheet()->getStyle('D'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				$this->_excel->getActiveSheet()->getCell("D$row")->setValue($this->clientDeclaration->getTotalVat1()->getHT());
+			}
+			
+			if( $this->clientDeclaration->getTotalVat1()->getTVA()) {
+				$this->_excel->getActiveSheet()->getStyle('E'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				$this->_excel->getActiveSheet()->getCell("E$row")->setValue($this->clientDeclaration->getTotalVat1()->getTVA());
+			}
+		}
+
+		//total
+		//input
+		if($this->clientDeclaration->getTotalVat2() ) {
+			if( $this->clientDeclaration->getTotalVat2()->getHT()) {
+				$this->_excel->getActiveSheet()->getStyle('I'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				$this->_excel->getActiveSheet()->getCell("I$row")->setValue($this->clientDeclaration->getTotalVat2()->getHT());
+			}
+				
+			if( $this->clientDeclaration->getTotalVat2()->getTVA()) {
+				$this->_excel->getActiveSheet()->getStyle('J'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				$this->_excel->getActiveSheet()->getCell("J$row")->setValue($this->clientDeclaration->getTotalVat2()->getTVA());
+			}
+		}
+		
+		$this->_excel->getActiveSheet()->getStyle("B$row:J$row")->applyFromArray($this->_styleBorders);
+		
+		
+		$row++;
+		$row++;
+		
+		//balance
+		//output
+		$this->_excel->getActiveSheet()->getCell("B$row")->setValue(
+			$this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.balance_title') . ' ' .
+			$this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.period_this') .  ' (TVA>=0)'
+		);
+		$this->_excel->getActiveSheet()->getStyle("B$row")->getFont()->setBold(true);
+		$this->_excel->getActiveSheet()->getStyle("B$row:E$row")->applyFromArray($this->_styleMediumBorders);
+		
+		if($this->clientDeclaration->getSoldeTVATotal() >= 0) {
+			$this->_excel->getActiveSheet()->getStyle('E'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+			$this->_excel->getActiveSheet()->getCell("E$row")->setValue($this->clientDeclaration->getSoldeTVATotalPlusPreviousCreditDeTVA());
+		}
+		
+		
+		//balance
+		//input
+		$this->_excel->getActiveSheet()->getCell("G$row")->setValue(
+			$this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.balance_title') . ' ' .
+			$this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.period_this') .  ' (TVA<0)'
+		);
+		$this->_excel->getActiveSheet()->getStyle("G$row")->getFont()->setBold(true);
+		$this->_excel->getActiveSheet()->getStyle("G$row:J$row")->applyFromArray($this->_styleMediumBorders);
+
+		$value = 0;
+		if($this->clientDeclaration->getSoldeTVATotal() < 0) {			
+			if($this->clientDeclaration->getRapprochementState()->getDemandeDeRemboursement()) {
+				$value = $this->clientDeclaration->getSoldeTVATotal();
+			} else {
+				if($this->clientDeclaration->getTotalVat2() && $tva = $this->clientDeclaration->getTotalVat2()->getTVA()) {
+					$value = $tva;
+				}
+			}
+			
+		}
+		$this->_excel->getActiveSheet()->getStyle('J'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+		$this->_excel->getActiveSheet()->getCell("J$row")->setValue($value);
+		
+		
+
+		$row++;
+		$this->_excel->getActiveSheet()->getCell("G$row")->setValue($this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.claim'));
+		$this->_excel->getActiveSheet()->getStyle("G$row")->getFont()->setBold(true);
+		$this->_excel->getActiveSheet()->getStyle("G$row:J$row")->applyFromArray($this->_styleMediumBorders);
+
+		$value = 0;
+		if($this->clientDeclaration->getSoldeTVATotal() < 0) {
+			$value = $this->clientDeclaration->getRapprochementState()->getDemandeDeRemboursement();
+		}
+		
+		$this->_excel->getActiveSheet()->getStyle('J'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+		$this->_excel->getActiveSheet()->getCell("J$row")->setValue($value);
+		
+		
+		
+		$row++;
+		$this->_excel->getActiveSheet()->getCell("G$row")->setValue($this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.credit_carried'));
+		$this->_excel->getActiveSheet()->getStyle("G$row")->getFont()->setBold(true);
+		$this->_excel->getActiveSheet()->getStyle("G$row:J$row")->applyFromArray($this->_styleMediumBorders);
+		
+		$value = 0;
+		if($this->clientDeclaration->getSoldeTVATotal() < 0) {
+			$value = $this->clientDeclaration->getCreditToBeReportedTotal();
+		}
+		
+		$this->_excel->getActiveSheet()->getStyle('J'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+		$this->_excel->getActiveSheet()->getCell("J$row")->setValue($value);
+		
+		
+		$row++;
+		
+		//==end footer==//
+		
+		$row++;
+		
 		
 		$this->_current_row = $row;
 	}
@@ -748,116 +945,256 @@ class ExcelDeclaration {
 		$this->_excel->getActiveSheet()->getStyle("B$row:J$row")->applyFromArray($this->_styleBorders);
 		
 		//exports
+		$row++;		
 		$row++;
 		
 		$repeatRow = $row;
-		
+	
 		$this->_excel->getActiveSheet()->getCell("B$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.exports_header') );
 		//$this->_excel->getActiveSheet()->mergeCells("B$row:D$row");
 		//HT
 		$this->_excel->getActiveSheet()->getCell("D$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
 		
+		//top border
+		$this->_excel->getActiveSheet()->getStyle("B$row")->applyFromArray($this->_styleTopLeftBorders);
+		$this->_excel->getActiveSheet()->getStyle("C$row:D$row")->applyFromArray($this->_styleTopBorders);
+		$this->_excel->getActiveSheet()->getStyle("E$row")->applyFromArray($this->_styleTopRightBorders);
 		
+		//Exports
 		if($this->clientDeclaration->getV07EXlist()) {
+			
 			foreach($this->clientDeclaration->getV07EXlist() as $entity) {
-		
+				$row++;				
 				//$this->_excel->getActiveSheet()->getStyle('C'.$row)->getNumberFormat()->setFormatCode('0.00%');
 				$this->_excel->getActiveSheet()->getStyle('D'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 				//$this->_excel->getActiveSheet()->getCell('C'.$row)->setValue($entity->getTauxDeTVA() * 100);
 				$this->_excel->getActiveSheet()->getCell('D'.$row)->setValue($entity->getHT());
-		
-				$row++;
+				
+				$this->_excel->getActiveSheet()->getStyle("B$row")->applyFromArray($this->_styleLeftBorders);
+				$this->_excel->getActiveSheet()->getStyle("E$row")->applyFromArray($this->_styleRightBorders);
 			}
-		}
+			$row++;
+		} 
 		
+		//bottom border
+		//$this->_excel->getActiveSheet()->getStyle("B$row")->applyFromArray($this->_styleBottomLeftBorders);
+		//$this->_excel->getActiveSheet()->getStyle("C$row:D$row")->applyFromArray($this->_styleBottomBorders);
+		//$this->_excel->getActiveSheet()->getStyle("E$row")->applyFromArray($this->_styleBottomRightBorders);
+		
+		
+		
+		#####################################################################################################
 		//input
 		//quota
-		$row = $repeatRow;
-		$this->_excel->getActiveSheet()->getCell("G$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.quota_header') );
-		//$this->_excel->getActiveSheet()->mergeCells("G$row:H$row");
-		
-		//HT
-		$this->_excel->getActiveSheet()->getCell("I$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
-		
-		
-		
+		//Quota Free Purchase #Achats en Franchise
 		if($this->clientDeclaration->getA10CAFlist()) {
+		
+			$rowRight = $repeatRow;
+			$this->_excel->getActiveSheet()->getCell("G$rowRight")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.quota_header') );
+			//HT
+			$this->_excel->getActiveSheet()->getCell("I$rowRight")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
+			//top border
+			$this->_excel->getActiveSheet()->getStyle("G$rowRight")->applyFromArray($this->_styleTopLeftBorders);
+			$this->_excel->getActiveSheet()->getStyle("H$rowRight:I$rowRight")->applyFromArray($this->_styleTopBorders);
+			$this->_excel->getActiveSheet()->getStyle("J$rowRight")->applyFromArray($this->_styleTopRightBorders);
+			
 			foreach($this->clientDeclaration->getA10CAFlist() as $entity) {
+				$rowRight++;
+				$this->_excel->getActiveSheet()->getStyle('I'.$rowRight)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				$this->_excel->getActiveSheet()->getCell('I'.$rowRight)->setValue($entity->getHT());
 		
-				$this->_excel->getActiveSheet()->getStyle('I'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
-				$this->_excel->getActiveSheet()->getCell('I'.$row)->setValue($entity->getHT());
+				$this->_excel->getActiveSheet()->getStyle("G$rowRight")->applyFromArray($this->_styleLeftBorders);
+				$this->_excel->getActiveSheet()->getStyle("J$rowRight")->applyFromArray($this->_styleRightBorders);
+			} 
+			
 		
-				$row++;
-			}
+		
+			//bottom border
+			$this->_excel->getActiveSheet()->getStyle("G$rowRight")->applyFromArray($this->_styleBottomLeftBorders);
+			$this->_excel->getActiveSheet()->getStyle("H$rowRight:I$rowRight")->applyFromArray($this->_styleBottomBorders);
+			$this->_excel->getActiveSheet()->getStyle("J$rowRight")->applyFromArray($this->_styleBottomRightBorders);
 		}
+		########################################################################################################
+
 		
 		
 		
-		
+		$this->_excel->getActiveSheet()->getStyle("B$row")->applyFromArray($this->_styleTopLeftBorders);
+		$this->_excel->getActiveSheet()->getStyle("C$row:D$row")->applyFromArray($this->_styleTopBorders);
+		$this->_excel->getActiveSheet()->getStyle("E$row")->applyFromArray($this->_styleTopRightBorders);
 		//deliveries
 		$this->_excel->getActiveSheet()->getCell("B$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.V05LIC.title') );
-		//$this->_excel->getActiveSheet()->mergeCells("B$row:D$row");
 		//HT
 		$this->_excel->getActiveSheet()->getCell("D$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
+		//top border
+		$this->_excel->getActiveSheet()->getStyle("B$row")->applyFromArray($this->_styleTopLeftBorders);
+		$this->_excel->getActiveSheet()->getStyle("C$row:D$row")->applyFromArray($this->_styleTopBorders);
+		$this->_excel->getActiveSheet()->getStyle("E$row")->applyFromArray($this->_styleTopRightBorders);
+				
 		
 		
 		
+		// Intra-EU Deliveries of goods #Livraisons Intra-UE
 		if($this->clientDeclaration->getV05LIClist()) {
 			foreach($this->clientDeclaration->getV05LIClist() as $entity) {
-		
+				$row++;
 				//$this->_excel->getActiveSheet()->getStyle('C'.$row)->getNumberFormat()->setFormatCode('0.00%');
 				$this->_excel->getActiveSheet()->getStyle('D'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 				//$this->_excel->getActiveSheet()->getCell('C'.$row)->setValue($entity->getTauxDeTVA() * 100);
 				$this->_excel->getActiveSheet()->getCell('D'.$row)->setValue($entity->getHT());
-		
-				$row++;
+				
+				$this->_excel->getActiveSheet()->getStyle("B$row")->applyFromArray($this->_styleLeftBorders);
+				$this->_excel->getActiveSheet()->getStyle("E$row")->applyFromArray($this->_styleRightBorders);
 			}
+			$row++;
 		}
+		
+		
+		
 		
 		//no tva
 		$this->_excel->getActiveSheet()->getCell("B$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.V03283I.title') );
-		//$this->_excel->getActiveSheet()->mergeCells("B$row:D$row");
 		//HT
 		$this->_excel->getActiveSheet()->getCell("D$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
+		//top border
+		$this->_excel->getActiveSheet()->getStyle("B$row")->applyFromArray($this->_styleTopLeftBorders);
+		$this->_excel->getActiveSheet()->getStyle("C$row:D$row")->applyFromArray($this->_styleTopBorders);
+		$this->_excel->getActiveSheet()->getStyle("E$row")->applyFromArray($this->_styleTopRightBorders);
 		
 		
+		
+		//Sales without TVA (Art 283-1) #Ventes en France sans TVA
 		if($this->clientDeclaration->getV03283Ilist()) {
 			foreach($this->clientDeclaration->getV03283Ilist() as $entity) {
-		
+				$row++;
 				//$this->_excel->getActiveSheet()->getStyle('C'.$row)->getNumberFormat()->setFormatCode('0.00%');
 				$this->_excel->getActiveSheet()->getStyle('D'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 				//$this->_excel->getActiveSheet()->getCell('C'.$row)->setValue($entity->getTauxDeTVA() * 100);
 				$this->_excel->getActiveSheet()->getCell('D'.$row)->setValue($entity->getHT());
 		
-				$row++;
+				$this->_excel->getActiveSheet()->getStyle("B$row")->applyFromArray($this->_styleLeftBorders);
+				$this->_excel->getActiveSheet()->getStyle("E$row")->applyFromArray($this->_styleRightBorders);
 			}
+			$row++;
 		}
 		
 		//other
 		$this->_excel->getActiveSheet()->getCell("B$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.other_header') );
-		//$this->_excel->getActiveSheet()->mergeCells("B$row:D$row");
 		//HT
 		$this->_excel->getActiveSheet()->getCell("D$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
+		//top border
+		$this->_excel->getActiveSheet()->getStyle("B$row")->applyFromArray($this->_styleTopLeftBorders);
+		$this->_excel->getActiveSheet()->getStyle("C$row:D$row")->applyFromArray($this->_styleTopBorders);
+		$this->_excel->getActiveSheet()->getStyle("E$row")->applyFromArray($this->_styleTopRightBorders);
 		
 		
+		
+		//Other Intl Services Sales 0%
 		if($this->clientDeclaration->getV11INTlist()) {
 			foreach($this->clientDeclaration->getV11INTlist() as $entity) {
-		
+				$row++;
 				//$this->_excel->getActiveSheet()->getStyle('C'.$row)->getNumberFormat()->setFormatCode('0.00%');
 				$this->_excel->getActiveSheet()->getStyle('D'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 				//$this->_excel->getActiveSheet()->getCell('C'.$row)->setValue($entity->getTauxDeTVA() * 100);
 				$this->_excel->getActiveSheet()->getCell('D'.$row)->setValue($entity->getHT());
 		
-				$row++;
+				$this->_excel->getActiveSheet()->getStyle("B$row")->applyFromArray($this->_styleLeftBorders);
+				$this->_excel->getActiveSheet()->getStyle("E$row")->applyFromArray($this->_styleRightBorders);
+				
 			}
+			$row++;
 		}
 		
 		
+		//bottom border
+		$this->_excel->getActiveSheet()->getStyle("B$row")->applyFromArray($this->_styleBottomLeftBorders);
+		$this->_excel->getActiveSheet()->getStyle("C$row:D$row")->applyFromArray($this->_styleBottomBorders);
+		$this->_excel->getActiveSheet()->getStyle("E$row")->applyFromArray($this->_styleBottomRightBorders);
+		
+		$row++;
+		
+		$this->_current_row = $row;
 		
 	}
 	
 	
 	protected function _ruling() {
+		
+		$row = $this->_current_row;
+		$row++;
+		
+		
+		//header
+		$this->_excel->getActiveSheet()->getCell("B$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.ruling_header') );
+		$this->_excel->getActiveSheet()->getStyle("B$row")->getFont()->setBold(true);
+		$this->_excel->getActiveSheet()->mergeCells("B$row:J$row");
+		$this->_excel->getActiveSheet()->getStyle("B$row:J$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$this->_excel->getActiveSheet()->getStyle("B$row:J$row")->applyFromArray($this->_styleBorders);
+		
+		//charge
+		$row++;
+		$row++;
+		
+		
+		//HT
+		$this->_excel->getActiveSheet()->getCell("D$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.ruling_nett_title') );
+		//TVA
+		$this->_excel->getActiveSheet()->getCell("E$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.ruling_vat_title') );
+		
+		
+		$row++;
+		
+		//top border
+		$this->_excel->getActiveSheet()->getStyle("B$row")->applyFromArray($this->_styleTopRightLeftBorders);
+		$this->_excel->getActiveSheet()->getStyle("C$row")->applyFromArray($this->_styleTopBorders);
+		$this->_excel->getActiveSheet()->getStyle("D$row")->applyFromArray($this->_styleTopRightBorders);
+		$this->_excel->getActiveSheet()->getStyle("E$row")->applyFromArray($this->_styleTopRightBorders);
+		
+		if($this->clientDeclaration->getA04283ISumPrev() || $this->clientDeclaration->getA06AIBSumPrev()) {
+			
+			$this->_excel->getActiveSheet()->getCell("B$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.A04283I.title') );
+
+			//
+			if($this->clientDeclaration->getA04283ISumPrev()) {
+				$this->_excel->getActiveSheet()->getStyle("D$row")->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				$this->_excel->getActiveSheet()->getCell("D$row")->setValue( $this->clientDeclaration->getA04283ISumPrev()->getHT() );
+				
+				$this->_excel->getActiveSheet()->getStyle("E$row")->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				$this->_excel->getActiveSheet()->getCell("E$row")->setValue( $this->clientDeclaration->getA04283ISumPrev()->getTVA() );
+			}
+			
+			$row++;
+			$this->_excel->getActiveSheet()->getStyle("B$row")->applyFromArray($this->_styleRightLeftBorders);
+			$this->_excel->getActiveSheet()->getStyle("D$row")->applyFromArray($this->_styleRightBorders);
+			$this->_excel->getActiveSheet()->getStyle("E$row")->applyFromArray($this->_styleBottomRightBorders);
+			
+			$row++;
+			
+			//top border
+			$this->_excel->getActiveSheet()->getStyle("B$row")->applyFromArray($this->_styleTopRightLeftBorders);
+			$this->_excel->getActiveSheet()->getStyle("C$row")->applyFromArray($this->_styleTopBorders);
+			$this->_excel->getActiveSheet()->getStyle("D$row")->applyFromArray($this->_styleTopRightBorders);
+			$this->_excel->getActiveSheet()->getStyle("E$row")->applyFromArray($this->_styleTopRightBorders);
+			
+			$this->_excel->getActiveSheet()->getCell("B$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.A06AIB.title') );
+				
+			if($this->clientDeclaration->getA06AIBSumPrev()) {
+				$this->_excel->getActiveSheet()->getStyle("D$row")->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				$this->_excel->getActiveSheet()->getCell("D$row")->setValue( $this->clientDeclaration->getA06AIBSumPrev()->getHT() );
+				
+				$this->_excel->getActiveSheet()->getStyle("E$row")->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				$this->_excel->getActiveSheet()->getCell("E$row")->setValue( $this->clientDeclaration->getA06AIBSumPrev()->getTVA() );
+					
+			}
+			
+			$row++;
+		}		
+		
+		//bottom border
+		$this->_excel->getActiveSheet()->getStyle("B$row")->applyFromArray($this->_styleBottomRightLeftBorders);
+		$this->_excel->getActiveSheet()->getStyle("C$row")->applyFromArray($this->_styleBottomBorders);
+		$this->_excel->getActiveSheet()->getStyle("D$row")->applyFromArray($this->_styleBottomRightBorders);		
+		$this->_excel->getActiveSheet()->getStyle("E$row")->applyFromArray($this->_styleBottomRightBorders);
 	
 	}
 	

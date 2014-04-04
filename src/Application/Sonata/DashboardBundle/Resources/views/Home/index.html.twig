@@ -113,6 +113,9 @@
             </td>
             <td class="sonata-ba-list-field sonata-ba-list-field-text sonata-ba-list-field-center"  objectId="{{ client[0].id }}">
                 {#{{ client[0].mois_tva }}#}
+                
+                 {{ client[0].declaration.getSoldeTVATotal|number_format(0, ',', ' ') }}
+                
                  {% if client[0].declaration.getSoldeTVATotal > 0 %}
                  	{{ client[0].declaration.getSoldeTVATotal|number_format(0, ',', ' ') }}
                  {% elseif client[0].declaration.getSoldeTVATotal < 0 %}

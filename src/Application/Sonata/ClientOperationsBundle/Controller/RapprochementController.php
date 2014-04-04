@@ -783,6 +783,10 @@ class RapprochementController extends Controller
     public function frameAction($client_id, $month) {
     	$this->validateParams($client_id, $month);
     	
+    	
+    	
+    	
+    	
     	$em = $this->get('doctrine')->getEntityManager();
     	$rap = $em->getRepository('ApplicationSonataClientOperationsBundle:RapprochementState')
     		->findOneBy(array('client_id' => $this->_client_id, 'month' => $this->_month, 'year' => $this->_year));
@@ -793,6 +797,10 @@ class RapprochementController extends Controller
     	
     	$clientDeclaration = $this->_client->getDeclaration($this->_year, $this->_month);
     	$request = $this->get('request');
+    	
+    	//$this->exportExcelDeclaration();
+    	//exit;
+    	
     	
     	if ($request->getMethod() == 'POST') {
     		$rap->setClientId((int) $this->_client_id)
