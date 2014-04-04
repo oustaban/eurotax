@@ -1369,7 +1369,7 @@ class AbstractTabsController extends Controller
         $clientDeclaration->setShowAllOperations($this->_show_all_operations)
         	->setYear($this->_year)
         	->setMonth($this->_month);
-
+        
         $this->get('request')->setLocale(strtolower($client->getLanguage()));
 
         /** @var $em \Doctrine\ORM\EntityManager */

@@ -7,6 +7,7 @@
         	{% if rapState.getDemandeDeRemboursement %}
         		{{ SoldeTVATotal|number_format(0, ',', ' ') }}
         	{% else %}
+       	
 				{% if Total2 and Total2.getTVA is defined %}{{ Total2.getTVA|number_format(0, ',', ' ') }}{% else %}0{% endif %}
 			{% endif %}
 

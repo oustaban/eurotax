@@ -2059,8 +2059,7 @@ class Client
 	    	$year = $dateQuery->format('Y');
 	    	$month = $dateQuery->format('m');
     	}
-    	
-    	$key = $this->getId(). $year . $month;
+    	$key = sha1($this->getId(). $year . $month);
     	if(!isset($instances[$key])) {
 	    	$clientDeclaration = new ClientDeclaration($this);
 	    	$clientDeclaration->setShowAllOperations(false)->setYear($year)

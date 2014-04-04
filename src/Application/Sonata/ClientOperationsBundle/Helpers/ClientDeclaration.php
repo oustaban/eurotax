@@ -9,11 +9,14 @@ use Application\Sonata\ClientOperationsBundle\Entity\A02TVA;
 class ClientDeclaration {
 	
 
-	private $client, $_show_all_operations = false, $_year, $_month;
+	private $client, $_show_all_operations = false, $_year, $_month, $em;
 	
 	
 	public function __construct(Client $client) {
 		$this->client = $client;
+		
+		/* @var $em \Doctrine\ORM\EntityManager */
+		$this->em = \AppKernel::getStaticContainer()->get('doctrine')->getManager();
 	}
 	
 	/**
@@ -328,14 +331,13 @@ A06 = 2 lines
 		$_year = $lastMonth->format('Y');
 		$_month = $lastMonth->format('m');
 		
-		$key = $this->client->getId() . $_year . $_month;
+		$key = sha1($this->client->getId() . $_year . $_month);
 		if(!isset($instances[$key])) {
 			//$instances[$key] = $this->findRappState($_year, $_month);
-			
 			$prevMonthClientDeclaration = new ClientDeclaration($this->client);
 			$prevMonthClientDeclaration->setShowAllOperations($this->_show_all_operations)
-			->setYear($_year)
-			->setMonth($_month);
+				->setYear($_year)
+				->setMonth($_month);
 			$instances[$key] = $prevMonthClientDeclaration;
 		}
 		return $instances[$key];
@@ -343,8 +345,8 @@ A06 = 2 lines
 	
 	
 	protected function findRappState($year, $month) {
-		$em = \AppKernel::getStaticContainer()->get('doctrine')->getManager();
-		$rap = $em->getRepository('ApplicationSonataClientOperationsBundle:RapprochementState')
+		//$em = \AppKernel::getStaticContainer()->get('doctrine')->getManager();
+		$rap = $this->em->getRepository('ApplicationSonataClientOperationsBundle:RapprochementState')
 			->findOneBy(array('client_id' => $this->client->getId(), 'month' => $this->_month, 'year' => $this->_year));
 		if(!$rap) {
 			$rap = new RapprochementState();
@@ -358,12 +360,15 @@ A06 = 2 lines
 			return new RapprochementState();
 		}
 		
-		//var_dump($this->_year, $this->_month);
+		//var_dump($this->client->getId());
 		static $instances = array();
-		$key = $this->client->getId(). $this->_year . $this->_month;
+		$key = sha1($this->client->getId(). $this->_year . $this->_month);
 		if(!isset($instances[$key])) {
 			$instances[$key] = $this->findRappState($this->_year, $this->_month);
 		}
+		
+		//var_dump($key);
+		
 		return $instances[$key];
 	}
 	
@@ -378,12 +383,12 @@ A06 = 2 lines
 	 */
 	public function getEntityList($entity, $isPrevMonth = false, $mergeData = false, $monthField = 'mois', $prevMonthField = 'date_piece') {
 		static $results = array();
-		$key = $entity . $isPrevMonth . $mergeData . $monthField . $prevMonthField . $this->_year . $this->_month;
-		 
+		$key = sha1($this->client->getId() . $entity . $isPrevMonth . $mergeData . $monthField . $prevMonthField . $this->_year . $this->_month);
+		
 		if(!isset($results[$key])) {
 			/* @var $em \Doctrine\ORM\EntityManager */
-			$em = \AppKernel::getStaticContainer()->get('doctrine')->getManager();
-			$qb = $em->createQueryBuilder();
+			//$em = \AppKernel::getStaticContainer()->get('doctrine')->getManager();
+			$qb = $this->em->createQueryBuilder();
 			$q = $qb->select('v')->from("Application\Sonata\ClientOperationsBundle\Entity\\". $entity, 'v');
 			$qb = $this->_listQueryFilter($qb, $isPrevMonth, $monthField, $prevMonthField);
 	
@@ -402,7 +407,8 @@ A06 = 2 lines
 			} */
 	
 		}
-		 
+
+		
 		if (!empty($results[$key])) {
 			if($mergeData) {
 				return $this->_mergeData($results[$key]);
@@ -568,7 +574,7 @@ A06 = 2 lines
 	
 	
 	private function isOperationLocked() {
-		$this->_locking = \AppKernel::getStaticContainer()->get('doctrine')->getRepository('ApplicationSonataClientOperationsBundle:Locking')
+		$this->_locking = $this->em->getRepository('ApplicationSonataClientOperationsBundle:Locking')
 			->findOneBy(array('client_id' => $this->client->getId(), 'month' => $this->_month, 'year' => $this->_year));
 		
 		return $this->_locking ? true : false;

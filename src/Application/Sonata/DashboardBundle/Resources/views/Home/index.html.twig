@@ -113,17 +113,17 @@
             </td>
             <td class="sonata-ba-list-field sonata-ba-list-field-text sonata-ba-list-field-center"  objectId="{{ client[0].id }}">
                 {#{{ client[0].mois_tva }}#}
+                {% if client[0].getDeclaration.getRapprochementState.getDemandeDeRemboursement %}
+                	<span class="{% if client[0].getDeclaration.getSoldeTVATotal < 0 %}negative_value{% endif %}">
+                	{{ client[0].getDeclaration.getSoldeTVATotal|number_format(0, ',', ' ') }} 
+                	</span>
+                {% else %}
+                	{% if client[0].getDeclaration.getTotalVat2 and client[0].getDeclaration.getTotalVat2.getTVA is defined %}
+                		{{ client[0].getDeclaration.getTotalVat2.getTVA|number_format(0, ',', ' ') }} 
+                	{% else %}
+                		0
+                	{% endif %}
                 
-                 {{ client[0].declaration.getSoldeTVATotal|number_format(0, ',', ' ') }}
-                
-                 {% if client[0].declaration.getSoldeTVATotal > 0 %}
-                 	{{ client[0].declaration.getSoldeTVATotal|number_format(0, ',', ' ') }}
-                 {% elseif client[0].declaration.getSoldeTVATotal < 0 %}
-                 	<span class="{% if client[0].declaration.getSoldeTVATotal < 0 %}negative_value{% endif %}">
-                 	{{ client[0].declaration.getSoldeTVATotal|number_format(0, ',', ' ') }}
-                 	</span>
-                 {% else %}
-                	{{ client[0].declaration.getSoldeTVATotalText }}
                 {% endif %}
             </td>
             <td class="sonata-ba-list-field sonata-ba-list-field-text sonata-ba-list-field-center"  objectId="{{ client[0].id }}">
@@ -133,6 +133,12 @@
             <td class="sonata-ba-list-field sonata-ba-list-field-text sonata-ba-list-field-center"  objectId="{{ client[0].id }}">
                 {#{{ client[0].remboursement_de_TVA }}#}
                 {{ client[0].declaration.getRapprochementState.getDemandeDeRemboursement }}
+                
+                
+                
+                
+                
+                
             </td>
             <td class="sonata-ba-list-field sonata-ba-list-field-money2"  objectId="{{ client[0].id }}">
                 <div class="montant{% if client.compte_solde_montant<0 %} negative_value{% endif %}">

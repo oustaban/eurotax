@@ -110,6 +110,12 @@ class ClientAdmin extends Admin
         	$client = $this->getObject($id);
         }
         
+        
+        
+        
+        //var_dump($client->getDeclaration()->getTotalVat2()->getTVA());
+        
+        
         //var_dump($client->getFilesWebDir($client));
         $formMapper
         	->add('is_new', 'hidden', array('data' => $id ? 0 : 1, 'mapped' => false, 'attr' => array('class' => 'is_new')))
