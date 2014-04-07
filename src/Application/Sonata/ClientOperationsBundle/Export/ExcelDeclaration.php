@@ -443,7 +443,7 @@ class ExcelDeclaration {
 		$this->_excel->getActiveSheet()->getCell('B12')->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.balance.tva') );
 		$this->_excel->getActiveSheet()->getCell('B13')->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.balance.additional_taxes') );
 		$this->_excel->getActiveSheet()->getCell('B14')->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.balance.account_balance') );
-		$this->_excel->getActiveSheet()->getCell('B15')->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.balance.total') );
+		$this->_excel->getActiveSheet()->getCell('B15')->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.balance.total') . ' (A + B - C)');
 		
 		
 		$this->_excel->getActiveSheet()->getCell('E12')->setValue($this->clientDeclaration->getSoldeTVATotal());
@@ -458,6 +458,9 @@ class ExcelDeclaration {
 		
 		$this->_excel->getActiveSheet()->getCell('E14')->setValue($this->_client->getCompteReelSum());
 		$this->_excel->getActiveSheet()->getStyle('E14')->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+		
+		$this->_excel->getActiveSheet()->getStyle('B14:E14')->applyFromArray($this->_styleBottomBorders);
+		
 		$this->_excel->getActiveSheet()->getCell('E15')->setValue($this->clientDeclaration->getTotalBalance());
 		$this->_excel->getActiveSheet()->getStyle('E15')->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 		

@@ -97,9 +97,9 @@ ApplicationSonataClientOperationsBundle:
       overview_desc_2: Estratto conto cliente  #Financial statement of your account with us
 
       sales_title_1: Vendite imponibili in Francia #Sales with Output TVA
-      sales_desc_1: Sales of Goods & Services in France. TVA charged
+      sales_desc_1: Vendita di beni e servizi imponibili in Francia, IVA fatturata #Sales of Goods & Services in France. TVA charged
 
-      sales_title_2: Vendite esonerate IVA Francia Sales without TVA (Art 283-1)
+      sales_title_2: Vendite esonerate IVA Francia #Sales without TVA (Art 283-1)
       sales_desc_2: Vendita di beni e servizi imponibili in Francia, IVA fatturata #Sales of Goods & Services in France. TVA not charged (Art 283-1 FTC)
 
       sales_title_3: Cessioni intracomunitarie #Intra-EU deliveries of goods
