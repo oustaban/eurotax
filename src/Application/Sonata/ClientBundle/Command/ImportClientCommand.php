@@ -27,6 +27,7 @@ class ImportClientCommand extends ContainerAwareCommand {
 	protected $clientImportSkipToLine = 7;
 	protected $translator;
 	protected $targetProcess;
+	protected $absErrorLogFilename;
 	
 	protected $clientFieldsToImport = array(
 			
@@ -340,7 +341,7 @@ class ImportClientCommand extends ContainerAwareCommand {
 		
 		$this->sendNotification();
 		
-		echo serialize(array('messages' => $this->messages, 'import_counts' => $this->_import_counts, 'pid' => $this->pid));
+		echo serialize(array('messages' => $this->messages, 'import_counts' => $this->_import_counts, 'pid' => $this->pid, 'absErrorLogFilename' => $this->absErrorLogFilename));
 		
 	}
 	
@@ -1028,6 +1029,9 @@ class ImportClientCommand extends ContainerAwareCommand {
 		if ($hasErrors) {
 			$error_log_filename = '/data/imports/import-error-log-' . md5(time() . rand(1, 99999999)) . '.txt';
 	
+			
+			$this->absErrorLogFilename = DOCUMENT_ROOT.$error_log_filename;
+			
 			$render_view_popup = $this->container->get('templating')->render('ApplicationSonataClientBundle:popup:popup_message.html.twig', array(
 				'error_reports' => $this->_import_reports,
 				'active_tab' => '',

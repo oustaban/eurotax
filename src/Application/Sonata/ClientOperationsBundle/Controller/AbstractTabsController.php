@@ -847,7 +847,8 @@ class AbstractTabsController extends Controller
                 	}
                 	
                 	$output = unserialize($process->getOutput());                	
-                	$messages = $output['messages'];
+                	$messages = file_get_contents($output['absErrorLogFilename']);
+                	
                 	$import_counts = $output['import_counts'];
                 	$error_counts = $output['error_counts'];
                 }

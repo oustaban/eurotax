@@ -798,7 +798,7 @@ class RapprochementController extends Controller
     	$clientDeclaration = $this->_client->getDeclaration($this->_year, $this->_month);
     	$request = $this->get('request');
     	
-    	$this->exportExcelDeclaration();
+    	//$this->exportExcelDeclaration();
     	//exit;
     	
     	
