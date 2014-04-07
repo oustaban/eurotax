@@ -4,12 +4,18 @@
         <td class="title">{{ "ApplicationSonataClientOperationsBundle.declaration.balance_title"|trans() }} {{ "ApplicationSonataClientOperationsBundle.declaration.period_this"|trans() }} (TVA<0) </td>
         <td class="i_tva">
         {% if SoldeTVATotal < 0 %}
+        
+        	{{ SoldeTVATotal|number_format(0, ',', ' ') }}
+        
+        	{#
         	{% if rapState.getDemandeDeRemboursement %}
         		{{ SoldeTVATotal|number_format(0, ',', ' ') }}
         	{% else %}
        	
 				{% if Total2 and Total2.getTVA is defined %}{{ Total2.getTVA|number_format(0, ',', ' ') }}{% else %}0{% endif %}
 			{% endif %}
+
+			#}
 
 		{% else %}
 			0

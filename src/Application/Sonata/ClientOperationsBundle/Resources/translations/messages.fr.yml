@@ -28,6 +28,8 @@ ApplicationSonataClientOperationsBundle:
     deliveries_header: Livraisons Intra-UE #Intra-EU Deliveries of goods
     no_tva_header: Ventes Art 283-I #Sales withtout TVA (Art. 283-1)
     other_header: Autres opérations non imposables #Other non taxable operations
+    other_header-1: Autres opérations
+    other_header-2: non imposables
     quota_header: Achats en Franchise #Quota Free Purchases
     ruling_header: RESCRIT Autoliquidation - Ligne 21 de la déclaration de TVA #REVERSE CHARGE RULING
     ruling_nett_title: HT (€) #Nett (€)
@@ -50,8 +52,16 @@ ApplicationSonataClientOperationsBundle:
   exports:
     V01TVA:
       title: Ventes en France avec TVA
+    V01TVA-1:
+      title: Ventes en France
+    V01TVA-2:
+      title: avec TVA
     V03283I:
       title: Ventes en France sans TVA
+    V03283I-1:
+      title: Ventes en
+    V03283I-2:
+      title: sans TVA
     V05LIC:
       title: Livraisons Intra-UE
     DEBExped:
@@ -66,6 +76,10 @@ ApplicationSonataClientOperationsBundle:
       title: Achats avec TVA à récupérer
     A04283I:
       title: Achats France TVA autoliquidée
+    A04283I-1:
+      title: Achats France
+    A04283I-2:
+      title: TVA autoliquidée
     A06AIB:
       title: Acquisitions Intra-UE
     DEBIntro:

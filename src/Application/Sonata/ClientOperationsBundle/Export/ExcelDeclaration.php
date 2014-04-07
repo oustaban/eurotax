@@ -451,8 +451,11 @@ class ExcelDeclaration {
 		
 		if($this->_client->getTaxeAdditionnelle()) {
 			$this->_excel->getActiveSheet()->getCell('E13')->setValue($this->clientDeclaration->getRapprochementState()->getCreditTvaAReporter());
-			$this->_excel->getActiveSheet()->getStyle('E13')->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+		} else {
+			$this->_excel->getActiveSheet()->getCell('E13')->setValue(0);
 		}
+		$this->_excel->getActiveSheet()->getStyle('E13')->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+		
 		$this->_excel->getActiveSheet()->getCell('E14')->setValue($this->_client->getCompteReelSum());
 		$this->_excel->getActiveSheet()->getStyle('E14')->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 		$this->_excel->getActiveSheet()->getCell('E15')->setValue($this->clientDeclaration->getTotalBalance());
@@ -488,14 +491,18 @@ class ExcelDeclaration {
 		$this->_excel->getActiveSheet()->getStyle('G21:J21')->applyFromArray($this->_styleBorders);
 		
 		$this->_excel->getActiveSheet()->getCell('D24')->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
+		$this->_excel->getActiveSheet()->getStyle("D24")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		
 		$this->_excel->getActiveSheet()->getCell('E24')->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.tva') );
+		$this->_excel->getActiveSheet()->getStyle("E24")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		
 
 		//$this->_excel->getActiveSheet()->getCell('I24')->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
 		$this->_excel->getActiveSheet()->getCell('J24')->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.tva') );
+		$this->_excel->getActiveSheet()->getStyle("J24")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		
-		
-		$this->_excel->getActiveSheet()->getCell('B24')->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.sales') );
+		$this->_excel->getActiveSheet()->getCell('B24')->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.V01TVA-1.title') );
+		$this->_excel->getActiveSheet()->getCell('B25')->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.V01TVA-2.title') );
 		//$this->_excel->getActiveSheet()->mergeCells('B25:D25');
 		
 		//top border
@@ -509,6 +516,10 @@ class ExcelDeclaration {
 			foreach($this->clientDeclaration->getV01TVAList() as $entity) {
 				$this->_excel->getActiveSheet()->getStyle('D'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 				$this->_excel->getActiveSheet()->getStyle('E'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				
+				$this->_excel->getActiveSheet()->getStyle("D$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+				$this->_excel->getActiveSheet()->getStyle("E$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+				
 				
 				$this->_excel->getActiveSheet()->getCell('D'.$row)->setValue($entity->getHT());
 				$this->_excel->getActiveSheet()->getCell('E'.$row)->setValue($entity->getTVA());
@@ -540,12 +551,17 @@ class ExcelDeclaration {
 		$row = 25;
 		if($this->clientDeclaration->getA02TVAlist()) {
 			$this->_excel->getActiveSheet()->getCell('G'.$row)->setValue('Purchases');
+			$this->_excel->getActiveSheet()->getStyle("G$row")->applyFromArray($this->_styleLeftBorders);
+			$this->_excel->getActiveSheet()->getStyle("J$row")->applyFromArray($this->_styleRightBorders);
 			$row++;
 			
 			foreach($this->clientDeclaration->getA02TVAlist() as $entity) {
 				$this->_excel->getActiveSheet()->getStyle('I'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 				$this->_excel->getActiveSheet()->getStyle('J'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 		
+				$this->_excel->getActiveSheet()->getStyle("I$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+				$this->_excel->getActiveSheet()->getStyle("J$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+				
 				$this->_excel->getActiveSheet()->getCell('I'.$row)->setValue($entity->getTauxDeTVA() * 100);
 				$this->_excel->getActiveSheet()->getCell('J'.$row)->setValue($entity->getTVA());
 				
@@ -577,6 +593,10 @@ class ExcelDeclaration {
 				$this->_excel->getActiveSheet()->getStyle('I'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 				$this->_excel->getActiveSheet()->getStyle('J'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 		
+				$this->_excel->getActiveSheet()->getStyle("I$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+				$this->_excel->getActiveSheet()->getStyle("J$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+				
+				
 				$this->_excel->getActiveSheet()->getCell('I'.$row)->setValue($entity->getTauxDeTVA() * 100);
 				$this->_excel->getActiveSheet()->getCell('J'.$row)->setValue($entity->getTVA());
 				
@@ -619,6 +639,10 @@ class ExcelDeclaration {
 					$this->_excel->getActiveSheet()->getStyle('I'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 					$this->_excel->getActiveSheet()->getStyle('J'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 			
+					$this->_excel->getActiveSheet()->getStyle("I$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+					$this->_excel->getActiveSheet()->getStyle("J$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+					
+					
 					$this->_excel->getActiveSheet()->getCell('I'.$row)->setValue($entity->getTauxDeTVA() * 100);
 					$this->_excel->getActiveSheet()->getCell('J'.$row)->setValue($entity->getTVA());
 					
@@ -640,6 +664,9 @@ class ExcelDeclaration {
 				foreach($this->clientDeclaration->getA08IMPrevlist() as $entity) {
 					$this->_excel->getActiveSheet()->getStyle('I'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 					$this->_excel->getActiveSheet()->getStyle('J'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+					
+					$this->_excel->getActiveSheet()->getStyle("I$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+					$this->_excel->getActiveSheet()->getStyle("J$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 			
 					$this->_excel->getActiveSheet()->getCell('I'.$row)->setValue($entity->getTauxDeTVA() * 100);
 					$this->_excel->getActiveSheet()->getCell('J'.$row)->setValue($entity->getTVA());
@@ -678,13 +705,21 @@ class ExcelDeclaration {
 		
 		//HT
 		$this->_excel->getActiveSheet()->getCell("D$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
+		$this->_excel->getActiveSheet()->getStyle("D$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		
+		
 		//TVA
 		$this->_excel->getActiveSheet()->getCell("E$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.tva') );
+		$this->_excel->getActiveSheet()->getStyle("E$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		
 		
 		//HT
 		$this->_excel->getActiveSheet()->getCell("I$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
+		$this->_excel->getActiveSheet()->getStyle("I$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		
 		//TVA
 		$this->_excel->getActiveSheet()->getCell("J$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.tva') );
+		$this->_excel->getActiveSheet()->getStyle("J$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		
 		$this->_excel->getActiveSheet()->getStyle("B$row")->applyFromArray($this->_styleLeftBorders);
 		$this->_excel->getActiveSheet()->getStyle("J$row")->applyFromArray($this->_styleRightBorders);
@@ -698,6 +733,8 @@ class ExcelDeclaration {
 				$this->_excel->getActiveSheet()->getStyle('C'.$row)->getNumberFormat()->setFormatCode('0.00%');
 				$this->_excel->getActiveSheet()->getStyle('D'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 				$this->_excel->getActiveSheet()->getStyle('E'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				$this->_excel->getActiveSheet()->getStyle("D$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+				$this->_excel->getActiveSheet()->getStyle("E$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 			
 				$this->_excel->getActiveSheet()->getCell('C'.$row)->setValue($entity->getTauxDeTVA() * 100);
 				$this->_excel->getActiveSheet()->getCell('D'.$row)->setValue($entity->getHT());
@@ -707,6 +744,8 @@ class ExcelDeclaration {
 				$this->_excel->getActiveSheet()->getStyle('H'.$row)->getNumberFormat()->setFormatCode('0.00%');
 				$this->_excel->getActiveSheet()->getStyle('I'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 				$this->_excel->getActiveSheet()->getStyle('J'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				$this->_excel->getActiveSheet()->getStyle("I$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+				$this->_excel->getActiveSheet()->getStyle("J$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 					
 				$this->_excel->getActiveSheet()->getCell('H'.$row)->setValue($entity->getTauxDeTVA() * 100);
 				$this->_excel->getActiveSheet()->getCell('I'.$row)->setValue($entity->getHT());
@@ -750,13 +789,17 @@ class ExcelDeclaration {
 		
 		//HT
 		$this->_excel->getActiveSheet()->getCell("D$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
+		$this->_excel->getActiveSheet()->getStyle("D$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		//TVA
 		$this->_excel->getActiveSheet()->getCell("E$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.tva') );
+		$this->_excel->getActiveSheet()->getStyle("E$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		
 		//HT
 		$this->_excel->getActiveSheet()->getCell("I$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
+		$this->_excel->getActiveSheet()->getStyle("I$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		//TVA
 		$this->_excel->getActiveSheet()->getCell("J$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.tva') );
+		$this->_excel->getActiveSheet()->getStyle("J$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		
 		$this->_excel->getActiveSheet()->getStyle("B$row")->applyFromArray($this->_styleLeftBorders);
 		$this->_excel->getActiveSheet()->getStyle("J$row")->applyFromArray($this->_styleRightBorders);
@@ -769,6 +812,8 @@ class ExcelDeclaration {
 				$this->_excel->getActiveSheet()->getStyle('C'.$row)->getNumberFormat()->setFormatCode('0.00%');
 				$this->_excel->getActiveSheet()->getStyle('D'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 				$this->_excel->getActiveSheet()->getStyle('E'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				$this->_excel->getActiveSheet()->getStyle("D$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+				$this->_excel->getActiveSheet()->getStyle("E$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 					
 				$this->_excel->getActiveSheet()->getCell('C'.$row)->setValue($entity->getTauxDeTVA() * 100);
 				$this->_excel->getActiveSheet()->getCell('D'.$row)->setValue($entity->getHT());
@@ -778,6 +823,8 @@ class ExcelDeclaration {
 				$this->_excel->getActiveSheet()->getStyle('H'.$row)->getNumberFormat()->setFormatCode('0.00%');
 				$this->_excel->getActiveSheet()->getStyle('I'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 				$this->_excel->getActiveSheet()->getStyle('J'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				$this->_excel->getActiveSheet()->getStyle("I$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+				$this->_excel->getActiveSheet()->getStyle("J$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 					
 				$this->_excel->getActiveSheet()->getCell('H'.$row)->setValue($entity->getTauxDeTVA() * 100);
 				$this->_excel->getActiveSheet()->getCell('I'.$row)->setValue($entity->getHT());
@@ -810,6 +857,7 @@ class ExcelDeclaration {
 
 		$this->_excel->getActiveSheet()->getStyle('J'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 		$this->_excel->getActiveSheet()->getCell("J$row")->setValue( $this->clientDeclaration->getPreviousMonth()->getCreditToBeReportedTotal() );
+		$this->_excel->getActiveSheet()->getStyle("J$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		$this->_excel->getActiveSheet()->getStyle("G$row:J$row")->applyFromArray($this->_styleBorders);
 		
 
@@ -824,11 +872,13 @@ class ExcelDeclaration {
 
 			if( $this->clientDeclaration->getTotalVat1()->getHT()) {
 				$this->_excel->getActiveSheet()->getStyle('D'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				$this->_excel->getActiveSheet()->getStyle("D$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 				$this->_excel->getActiveSheet()->getCell("D$row")->setValue($this->clientDeclaration->getTotalVat1()->getHT());
 			}
 			
 			if( $this->clientDeclaration->getTotalVat1()->getTVA()) {
 				$this->_excel->getActiveSheet()->getStyle('E'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				$this->_excel->getActiveSheet()->getStyle("E$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 				$this->_excel->getActiveSheet()->getCell("E$row")->setValue($this->clientDeclaration->getTotalVat1()->getTVA());
 			}
 		}
@@ -838,11 +888,13 @@ class ExcelDeclaration {
 		if($this->clientDeclaration->getTotalVat2() ) {
 			if( $this->clientDeclaration->getTotalVat2()->getHT()) {
 				$this->_excel->getActiveSheet()->getStyle('I'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				$this->_excel->getActiveSheet()->getStyle("I$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 				$this->_excel->getActiveSheet()->getCell("I$row")->setValue($this->clientDeclaration->getTotalVat2()->getHT());
 			}
 				
 			if( $this->clientDeclaration->getTotalVat2()->getTVA()) {
 				$this->_excel->getActiveSheet()->getStyle('J'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				$this->_excel->getActiveSheet()->getStyle("J$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 				$this->_excel->getActiveSheet()->getCell("J$row")->setValue($this->clientDeclaration->getTotalVat2()->getTVA());
 			}
 		}
@@ -864,6 +916,7 @@ class ExcelDeclaration {
 		
 		if($this->clientDeclaration->getSoldeTVATotal() >= 0) {
 			$this->_excel->getActiveSheet()->getStyle('E'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+			$this->_excel->getActiveSheet()->getStyle("E$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 			$this->_excel->getActiveSheet()->getCell("E$row")->setValue($this->clientDeclaration->getSoldeTVATotalPlusPreviousCreditDeTVA());
 		}
 		
@@ -889,6 +942,7 @@ class ExcelDeclaration {
 			
 		}
 		$this->_excel->getActiveSheet()->getStyle('J'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+		$this->_excel->getActiveSheet()->getStyle("J$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		$this->_excel->getActiveSheet()->getCell("J$row")->setValue($value);
 		
 		
@@ -904,6 +958,7 @@ class ExcelDeclaration {
 		}
 		
 		$this->_excel->getActiveSheet()->getStyle('J'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+		$this->_excel->getActiveSheet()->getStyle("J$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		$this->_excel->getActiveSheet()->getCell("J$row")->setValue($value);
 		
 		
@@ -919,6 +974,7 @@ class ExcelDeclaration {
 		}
 		
 		$this->_excel->getActiveSheet()->getStyle('J'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+		$this->_excel->getActiveSheet()->getStyle("J$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		$this->_excel->getActiveSheet()->getCell("J$row")->setValue($value);
 		
 		
@@ -954,6 +1010,7 @@ class ExcelDeclaration {
 		//$this->_excel->getActiveSheet()->mergeCells("B$row:D$row");
 		//HT
 		$this->_excel->getActiveSheet()->getCell("D$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
+		$this->_excel->getActiveSheet()->getStyle("D$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		
 		//top border
 		$this->_excel->getActiveSheet()->getStyle("B$row")->applyFromArray($this->_styleTopLeftBorders);
@@ -967,6 +1024,7 @@ class ExcelDeclaration {
 				$row++;				
 				//$this->_excel->getActiveSheet()->getStyle('C'.$row)->getNumberFormat()->setFormatCode('0.00%');
 				$this->_excel->getActiveSheet()->getStyle('D'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				$this->_excel->getActiveSheet()->getStyle("D$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 				//$this->_excel->getActiveSheet()->getCell('C'.$row)->setValue($entity->getTauxDeTVA() * 100);
 				$this->_excel->getActiveSheet()->getCell('D'.$row)->setValue($entity->getHT());
 				
@@ -993,6 +1051,8 @@ class ExcelDeclaration {
 			$this->_excel->getActiveSheet()->getCell("G$rowRight")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.quota_header') );
 			//HT
 			$this->_excel->getActiveSheet()->getCell("I$rowRight")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
+			$this->_excel->getActiveSheet()->getStyle("I$rowRight")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			
 			//top border
 			$this->_excel->getActiveSheet()->getStyle("G$rowRight")->applyFromArray($this->_styleTopLeftBorders);
 			$this->_excel->getActiveSheet()->getStyle("H$rowRight:I$rowRight")->applyFromArray($this->_styleTopBorders);
@@ -1026,6 +1086,8 @@ class ExcelDeclaration {
 		$this->_excel->getActiveSheet()->getCell("B$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.V05LIC.title') );
 		//HT
 		$this->_excel->getActiveSheet()->getCell("D$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
+		$this->_excel->getActiveSheet()->getStyle("D$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		
 		//top border
 		$this->_excel->getActiveSheet()->getStyle("B$row")->applyFromArray($this->_styleTopLeftBorders);
 		$this->_excel->getActiveSheet()->getStyle("C$row:D$row")->applyFromArray($this->_styleTopBorders);
@@ -1040,6 +1102,7 @@ class ExcelDeclaration {
 				$row++;
 				//$this->_excel->getActiveSheet()->getStyle('C'.$row)->getNumberFormat()->setFormatCode('0.00%');
 				$this->_excel->getActiveSheet()->getStyle('D'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				$this->_excel->getActiveSheet()->getStyle("D$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 				//$this->_excel->getActiveSheet()->getCell('C'.$row)->setValue($entity->getTauxDeTVA() * 100);
 				$this->_excel->getActiveSheet()->getCell('D'.$row)->setValue($entity->getHT());
 				
@@ -1053,9 +1116,11 @@ class ExcelDeclaration {
 		
 		
 		//no tva
-		$this->_excel->getActiveSheet()->getCell("B$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.V03283I.title') );
+		$this->_excel->getActiveSheet()->getCell("B$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.V03283I-1.title') );
+		$this->_excel->getActiveSheet()->getCell("B".($row+1))->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.V03283I-2.title') );
 		//HT
 		$this->_excel->getActiveSheet()->getCell("D$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
+		$this->_excel->getActiveSheet()->getStyle("D$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		//top border
 		$this->_excel->getActiveSheet()->getStyle("B$row")->applyFromArray($this->_styleTopLeftBorders);
 		$this->_excel->getActiveSheet()->getStyle("C$row:D$row")->applyFromArray($this->_styleTopBorders);
@@ -1069,6 +1134,7 @@ class ExcelDeclaration {
 				$row++;
 				//$this->_excel->getActiveSheet()->getStyle('C'.$row)->getNumberFormat()->setFormatCode('0.00%');
 				$this->_excel->getActiveSheet()->getStyle('D'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				$this->_excel->getActiveSheet()->getStyle("D$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 				//$this->_excel->getActiveSheet()->getCell('C'.$row)->setValue($entity->getTauxDeTVA() * 100);
 				$this->_excel->getActiveSheet()->getCell('D'.$row)->setValue($entity->getHT());
 		
@@ -1079,9 +1145,11 @@ class ExcelDeclaration {
 		}
 		
 		//other
-		$this->_excel->getActiveSheet()->getCell("B$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.other_header') );
+		$this->_excel->getActiveSheet()->getCell("B$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.other_header-1') );
+		$this->_excel->getActiveSheet()->getCell("B".($row+1))->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.other_header-2') );
 		//HT
 		$this->_excel->getActiveSheet()->getCell("D$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.th.nett') );
+		$this->_excel->getActiveSheet()->getStyle("D$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		//top border
 		$this->_excel->getActiveSheet()->getStyle("B$row")->applyFromArray($this->_styleTopLeftBorders);
 		$this->_excel->getActiveSheet()->getStyle("C$row:D$row")->applyFromArray($this->_styleTopBorders);
@@ -1095,6 +1163,7 @@ class ExcelDeclaration {
 				$row++;
 				//$this->_excel->getActiveSheet()->getStyle('C'.$row)->getNumberFormat()->setFormatCode('0.00%');
 				$this->_excel->getActiveSheet()->getStyle('D'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				$this->_excel->getActiveSheet()->getStyle("D$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 				//$this->_excel->getActiveSheet()->getCell('C'.$row)->setValue($entity->getTauxDeTVA() * 100);
 				$this->_excel->getActiveSheet()->getCell('D'.$row)->setValue($entity->getHT());
 		
@@ -1138,8 +1207,10 @@ class ExcelDeclaration {
 		
 		//HT
 		$this->_excel->getActiveSheet()->getCell("D$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.ruling_nett_title') );
+		$this->_excel->getActiveSheet()->getStyle("D$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		//TVA
 		$this->_excel->getActiveSheet()->getCell("E$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.ruling_vat_title') );
+		$this->_excel->getActiveSheet()->getStyle("E$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		
 		
 		$row++;
@@ -1152,14 +1223,17 @@ class ExcelDeclaration {
 		
 		if($this->clientDeclaration->getA04283ISumPrev() || $this->clientDeclaration->getA06AIBSumPrev()) {
 			
-			$this->_excel->getActiveSheet()->getCell("B$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.A04283I.title') );
+			$this->_excel->getActiveSheet()->getCell("B$row")->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.A04283I-1.title') );
+			$this->_excel->getActiveSheet()->getCell("B".($row+1))->setValue( $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.A04283I-2.title') );
 
 			//
 			if($this->clientDeclaration->getA04283ISumPrev()) {
 				$this->_excel->getActiveSheet()->getStyle("D$row")->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				$this->_excel->getActiveSheet()->getStyle("D$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 				$this->_excel->getActiveSheet()->getCell("D$row")->setValue( $this->clientDeclaration->getA04283ISumPrev()->getHT() );
 				
 				$this->_excel->getActiveSheet()->getStyle("E$row")->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				$this->_excel->getActiveSheet()->getStyle("E$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 				$this->_excel->getActiveSheet()->getCell("E$row")->setValue( $this->clientDeclaration->getA04283ISumPrev()->getTVA() );
 			}
 			
@@ -1180,9 +1254,11 @@ class ExcelDeclaration {
 				
 			if($this->clientDeclaration->getA06AIBSumPrev()) {
 				$this->_excel->getActiveSheet()->getStyle("D$row")->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				$this->_excel->getActiveSheet()->getStyle("D$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 				$this->_excel->getActiveSheet()->getCell("D$row")->setValue( $this->clientDeclaration->getA06AIBSumPrev()->getHT() );
 				
 				$this->_excel->getActiveSheet()->getStyle("E$row")->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
+				$this->_excel->getActiveSheet()->getStyle("E$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 				$this->_excel->getActiveSheet()->getCell("E$row")->setValue( $this->clientDeclaration->getA06AIBSumPrev()->getTVA() );
 					
 			}
