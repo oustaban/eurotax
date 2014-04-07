@@ -305,14 +305,9 @@ A06 = 2 lines
 	
 	
 	public function getSoldeTVATotalPlusPreviousCreditDeTVA() {
-		$vat = $this->getTotalVat1();
-		
 		$total = $this->getPreviousMonth()->getSoldeTVATotal();
-		
-		if($vat && $vat->getTVA()) {
-			$total += $vat->getTVA();
-		}
-		
+		$total += $this->getSoldeTVATotal();
+				
 		return $total;
 	}
 	
