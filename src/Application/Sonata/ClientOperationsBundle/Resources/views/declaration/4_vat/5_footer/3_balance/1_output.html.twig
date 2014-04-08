@@ -2,7 +2,7 @@
     <tbody>
     <tr>
         <td class="title">{{ "ApplicationSonataClientOperationsBundle.declaration.balance_title"|trans() }} {{ "ApplicationSonataClientOperationsBundle.declaration.period_this"|trans() }} (TVA>=0)</td>
-        <td class="o_tva">{% if SoldeTVATotal >= 0 %}{{ SoldeTVATotal|number_format(0, ',', ' ') }}{% else %}0{% endif %}</td>
+        <td class="o_tva">{% if SoldeTVATotal >= 0 %}{{ (SoldeTVATotal-PreviousCreditDeTVA)|number_format(0, ',', ' ') }}{% else %}0{% endif %}</td>
     </tr>
     </tbody>
 </table>

@@ -300,7 +300,7 @@ A06 = 2 lines
 	
 	public function getCreditToBeReportedTotal() {
 		$value = round($this->getTVACredit()) + round($this->getRapprochementState()->getDemandeDeRemboursement());
-		return $value;
+		return abs($value);
 	}
 	
 	
@@ -314,7 +314,7 @@ A06 = 2 lines
 	
 	
 	public function getPreviousCreditDeTVA() {
-		$value = round($this->getTVACredit()) + round($this->getPreviousMonthRapprochementState()->getDemandeDeRemboursement());
+		$value = round($this->getTVACredit()) + round($this->getRapprochementState()->getDemandeDeRemboursement());
 		return $value;
 	}
 	
