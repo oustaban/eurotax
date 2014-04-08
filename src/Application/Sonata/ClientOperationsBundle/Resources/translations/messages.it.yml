@@ -48,39 +48,44 @@ ApplicationSonataClientOperationsBundle:
 
   exports:
     V01TVA:
-      title: Riepilogo IVA #Sales with Output TVA #Ventes en France avec TVA
+      title: Vendite imponibili in Francia #Sales with Output TVA #Ventes en France avec TVA
     V03283I:
-      title: Vendite imponibili in Francia #Sales without TVA (Art 283-1) #Ventes en France sans TVA
+      title: Vendite esonerate IVA Francia #Sales without TVA (Art 283-1) #Ventes en France sans TVA
     V03283I-1:
-      title: Vendite imponibili
+      title: Vendite esonerate
     V03283I-2:
-      title: in Francia
+      title: IVA Francia
     V05LIC:
-      title: Vendite esonerate IVA Francia #Intra-EU Deliveries of goods #Livraisons Intra-UE
+      title: Cessioni intracomunitarie #Intra-EU Deliveries of goods #Livraisons Intra-UE
     DEBExped:
-      title: Cessioni intracomunitarie #Intrastat (Dispatches) #DEB à l'expédition
+      title: Intrastat Extra #Intrastat (Dispatches) #DEB à l'expédition
     V07EX:
-      title: Intrastat Extra #Exports of goods 0% #Exports Biens vers pays tiers
+      title: Esportazioni di beni #Exports of goods 0% #Exports Biens vers pays tiers
     V09DES:
-      title: Esportazioni di beni #V09DES
+      title:  #V09DES
     V11INT:
       title: Altri servizi int.li 0% #Other Intl Services Sales 0% #Autres Ventes Services Intl 0%
     A02TVA:
       title: Acquisti con IVA detraibile #Purchases with TVA #Achats avec TVA à récupérer
     A04283I:
-      title: Import. con IVA da recuperare #Purchases without TVA #Achats France TVA autoliquidée
+      title: Acquisti in FR (Rev. Ch) #Purchases without TVA #Achats France TVA autoliquidée
     A04283I-1:
-      title: Import. con IVA
+      title: Acquisti in FR
     A04283I-2:
-      title: da recuperare
+      title: (Rev. Ch)
     A06AIB:
       title: Acquisto Beni da UE #Intra-EU Acquisitions of goods #Acquisitions Intra-UE
     DEBIntro:
       title: Intrastat Intra #Intrastat (Arrivals) #DEB à l'introduction
     A08IM:
-      title: Acquisti in esenzione IVA #Import of goods #Imports avec TVA à récupérer
+      title: Import. con IVA da recuperare #Import of goods #Imports avec TVA à récupérer
     A10CAF:
-      title: Quota Free Purchase #Achats en Franchise
+      title: Acquisti in esenzione IVA #Quota Free Purchase #Achats en Franchise
+
+    TOTALDuMois: TOTALE del Mese
+    DontFactures: Importo negativo
+    DontAvoirs: Importo positivo
+	
 
     KEY_TAB:
       key: Legenda #Key
@@ -129,11 +134,11 @@ ApplicationSonataClientOperationsBundle:
       purchases_title_5: Intrastat Intro. #Intrastat (Arrivals)
       purchases_desc_5: Elenco riepilogativo degli acquisti intracomunitari #Intrastat return (for Customs purposes) : Arrivals from another EU country to France
 
-      purchases_title_6: Acquisti in esenzione IVA  #Purch. of EU & non-EU Services
-      purchases_desc_6: Acquisti di beni e servizi in Francia, IVA non fatturata dai fornitori #EU & non-EU Purchases of Services : Reverse Charge
+      purchases_title_6: Purch. of EU & non-EU Services
+      purchases_desc_6: EU & non-EU Purchases of Services : Reverse Charge
 
-      purchases_title_7: QFP Evolution
-      purchases_desc_7: Purchases of Goods & Services taxable in France. TVA not charged : Quota of Free Purchase (QFP)
+      purchases_title_7: Acquisti in esenzione IVA  #QFP Evolution
+      purchases_desc_7: Acquisti di beni e servizi in Francia, IVA non fatturata dai fornitori #Purchases of Goods & Services taxable in France. TVA not charged : Quota of Free Purchase (QFP)
 
     ACCOUNT_TAB:
       account: Conteggio

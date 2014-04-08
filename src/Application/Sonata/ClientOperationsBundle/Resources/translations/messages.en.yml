@@ -84,6 +84,10 @@ ApplicationSonataClientOperationsBundle:
     A10CAF:
       title: Quota Free Purchase #Achats en Franchise
 
+    TOTALDuMois: TOTAL of the Month
+    DontFactures: Incl. Invoices
+    DontAvoirs: Incl. Credit Notes
+
     KEY_TAB:
       key: Key
       title: Title

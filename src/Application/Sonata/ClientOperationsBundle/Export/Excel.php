@@ -552,6 +552,7 @@ class Excel
     
     
     protected function keyTabData() {
+    	
     	// Key tab
     	$this->_excel->setActiveSheetIndex(0);
     	$this->_sheet = $this->_excel->getActiveSheet();
@@ -590,7 +591,9 @@ class Excel
     	$this->_excel->getActiveSheet()->setCellValue('C3', $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.KEY_TAB.description_operations'));
     	$this->yellowHeader('C3');
     	
-    	
+    	if($this->translator->getLocale() == 'it') {
+    		unset($this->_keyTabData['Purchases'][5]);
+    	} 
     	
     	$startRow = 4;
     	foreach($this->_keyTabData as $head => $rows) {
@@ -1082,13 +1085,20 @@ class Excel
                 }
             }
         } else {
+        	
+        	$TOTALDuMois = $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.TOTALDuMois');
+        	$DontFactures = $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.DontFactures');
+        	$DontAvoirs = $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.DontAvoirs');
+        	 
+        	
+        	
             //sum
             if (isset($this->_sum['HT'])) {
-                $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUM', 'TOTAL du mois', 'left');
+                $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUM', $TOTALDuMois, 'left');
 
             }
             if (isset($this->_sum['valeur_fiscale'])) {
-                $this->getTotal($count + $this->_skip, $this->_sum['valeur_fiscale'], 'SUM', 'TOTAL du mois', 'left');
+                $this->getTotal($count + $this->_skip, $this->_sum['valeur_fiscale'], 'SUM', $TOTALDuMois, 'left');
             }
             
             $text = 'selon filtre';
@@ -1101,7 +1111,7 @@ class Excel
 
             if (isset($this->_sum['TVA'])) {
                 if ($params['entity'] == 'A08IM') {
-                    $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUM', 'TOTAL du mois', 'left');
+                    $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUM', $TOTALDuMois, 'left');
                 }
                 
 
@@ -1121,12 +1131,12 @@ class Excel
             //sum_positive
             $count += 2;
             if (isset($this->_sum['HT'])) {
-                $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUMIFGreaterThanZero', 'Dont factures', 'left', false);
+                $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUMIFGreaterThanZero', $DontFactures, 'left', false);
 
             }
 
             if (isset($this->_sum['valeur_fiscale'])) {
-                $this->getTotal($count + $this->_skip, $this->_sum['valeur_fiscale'], 'SUMIFGreaterThanZero', 'Dont factures', 'left', false);
+                $this->getTotal($count + $this->_skip, $this->_sum['valeur_fiscale'], 'SUMIFGreaterThanZero', $DontFactures, 'left', false);
             }
 
             
@@ -1140,7 +1150,7 @@ class Excel
             if (isset($this->_sum['TVA'])) {
 
                 if ($params['entity'] == 'A08IM') {
-                    $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUMIFGreaterThanZero', 'Dont factures', 'left', false);
+                    $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUMIFGreaterThanZero', $DontFactures, 'left', false);
                 }
                 
                 $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUMIFGreaterThanZero', $text, 'right', false);
@@ -1157,11 +1167,11 @@ class Excel
             //sum_negative
             $count += 2;
             if (isset($this->_sum['HT'])) {
-                $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUMIFLessThanZero', 'Dont avoirs', 'left', false);
+                $this->getTotal($count + $this->_skip, $this->_sum['HT'], 'SUMIFLessThanZero', $DontAvoirs, 'left', false);
             }
 
             if (isset($this->_sum['valeur_fiscale'])) {
-                $this->getTotal($count + $this->_skip, $this->_sum['valeur_fiscale'], 'SUMIFLessThanZero', 'Dont avoirs', 'left', false);
+                $this->getTotal($count + $this->_skip, $this->_sum['valeur_fiscale'], 'SUMIFLessThanZero', $DontAvoirs, 'left', false);
             }
 
             

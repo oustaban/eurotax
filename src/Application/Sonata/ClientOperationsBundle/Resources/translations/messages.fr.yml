@@ -88,7 +88,11 @@ ApplicationSonataClientOperationsBundle:
       title: Imports avec TVA à récupérer
     A10CAF:
       title: Achats en Franchise
-    
+
+    TOTALDuMois: TOTAL du mois
+    DontFactures: Dont factures
+    DontAvoirs: Dont avoirs
+
     KEY_TAB:
       key: Légende
       title: Titre
