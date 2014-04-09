@@ -370,6 +370,8 @@ class RapprochementController extends Controller
         $deb_exped = $this->_getTableData('DEBExped', array('isDEB' => false, 'groupResults' => true, 'importDataOnly' => $fromImport ? true : false));
         $form = $this->form();
         
+        $this->exportExcelDeclaration();
+        
         return array(
             'info' => array(
                 'time' => strtotime($this->_year . '-' . $this->_month . '-01'),
