@@ -82,8 +82,8 @@ ApplicationSonataClientOperationsBundle:
     A10CAF:
       title: Acquisti in esenzione IVA #Quota Free Purchase #Achats en Franchise
     TOTALDuMois: TOTALE del Mese
-    DontFactures: Importo negativo
-    DontAvoirs: Importo positivo
+    DontFactures: Importo positivo
+    DontAvoirs: Importo negativo
     KEY_TAB:
       key: Legenda #Key
       title: Intestazione #Title
