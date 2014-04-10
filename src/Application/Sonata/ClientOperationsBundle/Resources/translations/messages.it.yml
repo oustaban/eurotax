@@ -81,12 +81,9 @@ ApplicationSonataClientOperationsBundle:
       title: Import. con IVA da recuperare #Import of goods #Imports avec TVA à récupérer
     A10CAF:
       title: Acquisti in esenzione IVA #Quota Free Purchase #Achats en Franchise
-
     TOTALDuMois: TOTALE del Mese
     DontFactures: Importo negativo
     DontAvoirs: Importo positivo
-	
-
     KEY_TAB:
       key: Legenda #Key
       title: Intestazione #Title

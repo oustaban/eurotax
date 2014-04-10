@@ -54,15 +54,15 @@ A06 = 2 lines
 		
 		
 		$entities = array(
-			'V01TVA' => $V01TVAlist = $this->getEntityList('V01TVA', false),
-			'V03283I' => $V03283Ilist = $this->getEntityList('V03283I', false),
-			'V05LIC' => $V05LIClist = $this->getEntityList('V05LIC', false),
-			'V07EX' => $V07EXlist = $this->getEntityList('V07EX', false),
-			'A02TVA' => $A02TVAlist = $this->getEntityList('A02TVA', false, false, 'paiement_date'),
-			'A04283I' => $A04283Ilist = $this->getEntityList('A04283I', false),
-			'A06AIB' => $A06AIBlist = $this->getEntityList('A06AIB', false),
-			'A08IM' => $A08IMlist = $this->getEntityList('A08IM', false, false, 'date_piece'),
-			'A10CAF' => $A10CAFlist = $this->getEntityList('A10CAF', false)
+			'V01TVA' => $this->getEntityList('V01TVA', false),
+			'V03283I' => $this->getEntityList('V03283I', false),
+			'V05LIC' => $this->getEntityList('V05LIC', false),
+			'V07EX' => $this->getEntityList('V07EX', false),
+			'A02TVA' => $this->getEntityList('A02TVA', false, false, 'paiement_date'),
+			'A04283I' => $this->getEntityList('A04283I', false),
+			'A06AIB' => $this->getEntityList('A06AIB', false),
+			'A08IM' => $this->getEntityList('A08IM', false, false, 'date_piece'),
+			'A10CAF' => $this->getEntityList('A10CAF', false)
 		);
 		
 		$count = 0;
@@ -73,6 +73,8 @@ A06 = 2 lines
 				$count++;
 			}
 		}
+		//var_dump($count);
+		//exit;
 		
 		//It should be merged if there is at least one entity with more than 3 lines.
 		if($count > 0) {
@@ -397,9 +399,12 @@ A06 = 2 lines
 			//->getSql()
 			;
 	
-			/* if($entity == 'A02TVA' && $isPrevMonth) {
-			 var_dump($this->_query_month, ($this->_query_month == -1), $q->getQuery()->getSql());
-			} */
+			/* if($entity == 'A02TVA' && !$isPrevMonth) {
+				$form_month = $this->_year . '-' . $this->_month . '-01';
+				$to_month = $this->_year . '-' . $this->_month . '-31';
+				
+			 	var_dump($form_month, $to_month, $q->getQuery()->getSql());
+			} */ 
 	
 		}
 
