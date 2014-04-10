@@ -28,7 +28,7 @@
     </tr>
     <tr>
         <td class="title">{{ "ApplicationSonataClientOperationsBundle.declaration.credit_carried"|trans() }}</td>
-        <td class="i_tva">{% if SoldeTVATotal < 0 %}{{ CreditToBeReportedTotal|number_format(0, ',', ' ') }}{% else %}0{% endif %}</td>
+        <td class="i_tva">{% if SoldeTVATotal < 0 %}{{ NaturalCreditToBeReportedTotal|number_format(0, ',', ' ') }}{% else %}0{% endif %}</td>
     </tr>
     </tbody>
 </table>

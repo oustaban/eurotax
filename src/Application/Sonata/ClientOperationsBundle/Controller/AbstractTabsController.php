@@ -1368,7 +1368,8 @@ class AbstractTabsController extends Controller
         $clientDeclaration = new ClientDeclaration($client);
         $clientDeclaration->setShowAllOperations($this->_show_all_operations)
         	->setYear($this->_year)
-        	->setMonth($this->_month);
+        	->setMonth($this->_month)
+        	->setQueryMonth($this->_query_month);
         
         $this->get('request')->setLocale(strtolower($client->getLanguage()));
 
@@ -1418,6 +1419,7 @@ class AbstractTabsController extends Controller
         	'SoldeTVATotal' => $clientDeclaration->getSoldeTVATotal(),
         	'TotalBalance' => $clientDeclaration->getTotalBalance(),
         	'CreditToBeReportedTotal' => $clientDeclaration->getCreditToBeReportedTotal(),
+        	'NaturalCreditToBeReportedTotal' => $clientDeclaration->getNaturalCreditToBeReportedTotal(),
         	'PreviousCreditDeTVA' => $clientDeclaration->getPreviousMonth()->getCreditToBeReportedTotal(),
         	
         	'SoldeTVATotalPlusPreviousCreditDeTVA' => $clientDeclaration->getSoldeTVATotalPlusPreviousCreditDeTVA(),

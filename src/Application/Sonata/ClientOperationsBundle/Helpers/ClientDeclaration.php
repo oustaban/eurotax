@@ -8,8 +8,9 @@ use Application\Sonata\ClientOperationsBundle\Entity\A02TVA;
 
 class ClientDeclaration {
 	
-
-	private $client, $_show_all_operations = false, $_year, $_month, $em;
+	private $client, $_show_all_operations = false, 
+		$_year, $_month, $em, 
+		$_query_month = 0;
 	
 	
 	public function __construct(Client $client) {
@@ -25,6 +26,11 @@ class ClientDeclaration {
 	 */
 	public function setShowAllOperations($bool = false) {
 		$this->_show_all_operations = $bool;	
+		return $this;
+	}
+	
+	public function setQueryMonth($month) {
+		$this->_query_month = $month;
 		return $this;
 	}
 	
@@ -258,7 +264,8 @@ A06 = 2 lines
 	public function getTotalVat2() {
 		$Total2 = $this->_sumData(
         	$Total2MergedData = array_merge($this->getA08IMList()?:array(), $this->getA02TVAPrevList()?:array(), 
-        		$this->getA08IMPrevList()?:array(), $this->getA04283IList()?:array(), $this->getA06AIBList()?:array(), $this->getA02TVAList()?:array())
+        		$this->getA08IMPrevList()?:array(), $this->getA04283IList()?:array(), 
+        		$this->getA06AIBList()?:array(), $this->getA02TVAList()?:array())
         );
 		return $Total2;
 	}
@@ -303,6 +310,12 @@ A06 = 2 lines
 	public function getCreditToBeReportedTotal() {
 		$value = round($this->getTVACredit()) + round($this->getRapprochementState()->getDemandeDeRemboursement());
 		return abs($value);
+		//return $value;
+	}
+	
+	public function getNaturalCreditToBeReportedTotal() {
+		$value = round($this->getTVACredit()) + round($this->getRapprochementState()->getDemandeDeRemboursement());
+		return $value;
 	}
 	
 	
@@ -404,6 +417,7 @@ A06 = 2 lines
 				$to_month = $this->_year . '-' . $this->_month . '-31';
 				
 			 	var_dump($form_month, $to_month, $q->getQuery()->getSql());
+			 	exit;
 			} */ 
 	
 		}
@@ -530,17 +544,14 @@ A06 = 2 lines
 			$form_month = $this->_year . '-' . $this->_month . '-01';
 			$to_month = $this->_year . '-' . $this->_month . '-31';
 	
+			//var_dump($this->_query_month);
 			
-			
-			
-			 
-			//     		if ($this->_query_month == -1) {
-			//     			$qb->orWhere($qb->getRootAlias() . '.'.$monthField.' IS NULL');
-			//     			$qb->orWhere($qb->getRootAlias() . '.'.$monthField.' BETWEEN :form_month AND :to_month');
-			//     		} else {
-			$qb->andWhere($qb->getRootAlias() . '.'.$monthField.' BETWEEN :form_month AND :to_month');
-			//     		
-		
+			/* if ($this->_query_month == -1) {
+				$qb->orWhere($qb->getRootAlias() . '.'.$monthField.' IS NULL');
+			    $qb->orWhere($qb->getRootAlias() . '.'.$monthField.' BETWEEN :form_month AND :to_month');
+			} else { */
+				$qb->andWhere($qb->getRootAlias() . '.'.$monthField.' BETWEEN :form_month AND :to_month');
+			//}  		
 	
 			if($isPrevMonth) {
 				$lastMonth = new \DateTime($form_month);
@@ -554,15 +565,11 @@ A06 = 2 lines
 				 
 				$qb->setParameter(':dp_form_month', $dp_form_month);
 				$qb->setParameter(':dp_to_month', $dp_to_month);
-				 
-				 
 				//var_dump($form_month, $to_month, $dp_form_month, $dp_to_month);
-				 
 			}
 	
 			$qb->setParameter(':form_month', $form_month);
-			$qb->setParameter(':to_month', $to_month);
-			 
+			$qb->setParameter(':to_month', $to_month);			 
 		}
 	
 		$qb->andWhere($qb->getRootAlias() . '.client_id=' . $this->client->getId())
