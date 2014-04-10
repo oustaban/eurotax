@@ -871,34 +871,34 @@ class ExcelDeclaration {
 		$this->_excel->getActiveSheet()->getCell("B$row")->setValue($this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.total'));
 		
 
-		if($this->clientDeclaration->getTotalVat1() ) {
+		if($totalVat1 = $this->clientDeclaration->getTotalVat1()) {
 
-			if( $this->clientDeclaration->getTotalVat1()->getHT()) {
+			if(method_exists($totalVat1, 'getHT') && $totalVat1->getHT()) {
 				$this->_excel->getActiveSheet()->getStyle('D'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 				$this->_excel->getActiveSheet()->getStyle("D$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-				$this->_excel->getActiveSheet()->getCell("D$row")->setValue($this->clientDeclaration->getTotalVat1()->getHT());
+				$this->_excel->getActiveSheet()->getCell("D$row")->setValue($totalVat1->getHT());
 			}
 			
-			if( $this->clientDeclaration->getTotalVat1()->getTVA()) {
+			if(method_exists($totalVat1, 'getTVA') && $totalVat1->getTVA()) {
 				$this->_excel->getActiveSheet()->getStyle('E'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 				$this->_excel->getActiveSheet()->getStyle("E$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-				$this->_excel->getActiveSheet()->getCell("E$row")->setValue($this->clientDeclaration->getTotalVat1()->getTVA());
+				$this->_excel->getActiveSheet()->getCell("E$row")->setValue($totalVat1->getTVA());
 			}
 		}
 
 		//total
 		//input
-		if($this->clientDeclaration->getTotalVat2() ) {
-			if( $this->clientDeclaration->getTotalVat2()->getHT()) {
+		if($totalVat2 = $this->clientDeclaration->getTotalVat2()) {
+			if(method_exists($totalVat2, 'getHT') && $totalVat2->getHT()) {
 				$this->_excel->getActiveSheet()->getStyle('I'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 				$this->_excel->getActiveSheet()->getStyle("I$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-				$this->_excel->getActiveSheet()->getCell("I$row")->setValue($this->clientDeclaration->getTotalVat2()->getHT());
+				$this->_excel->getActiveSheet()->getCell("I$row")->setValue($totalVat2->getHT());
 			}
 				
-			if( $this->clientDeclaration->getTotalVat2()->getTVA()) {
+			if(method_exists($totalVat2, 'getTVA') && $totalVat2->getTVA()) {
 				$this->_excel->getActiveSheet()->getStyle('J'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
 				$this->_excel->getActiveSheet()->getStyle("J$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-				$this->_excel->getActiveSheet()->getCell("J$row")->setValue($this->clientDeclaration->getTotalVat2()->getTVA());
+				$this->_excel->getActiveSheet()->getCell("J$row")->setValue($totalVat2->getTVA());
 			}
 		}
 		
