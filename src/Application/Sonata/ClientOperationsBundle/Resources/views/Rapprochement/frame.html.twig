@@ -104,7 +104,7 @@
 	<script type="text/javascript">
     $(function(){
     	$('#number').height(25);
-    	
+    	var hasSeenError = false;
    		$('#doImport').click(function() {
     		if($('#form #type').val() == 'ddr') {
     			$.ajax({
@@ -112,7 +112,8 @@
     			  type: "POST",
     			  data: $('#form').serialize()
     			}).done(function( data ) {
-    				if(data == 1) {
+    				if(data == 1 && !hasSeenError) {
+    					hasSeenError = true;
     					$('.alert').html('Pas de Mandat spécifique.').show();
     				} else {
     					$('#form').submit();
