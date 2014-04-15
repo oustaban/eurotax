@@ -87,6 +87,8 @@ ApplicationSonataClientOperationsBundle:
     TOTALDuMois: TOTAL of the Month
     DontFactures: Incl. Invoices
     DontAvoirs: Incl. Credit Notes
+    Avoirs: avoirs
+    ToutData: tout data
 
     KEY_TAB:
       key: Key

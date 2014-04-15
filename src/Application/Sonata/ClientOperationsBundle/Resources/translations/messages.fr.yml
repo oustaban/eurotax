@@ -92,6 +92,9 @@ ApplicationSonataClientOperationsBundle:
     TOTALDuMois: TOTAL du mois
     DontFactures: Dont factures
     DontAvoirs: Dont avoirs
+    Avoirs: avoirs
+    ToutData: tout data
+
 
     KEY_TAB:
       key: Légende

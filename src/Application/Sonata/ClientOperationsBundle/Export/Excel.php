@@ -1176,7 +1176,8 @@ class Excel
 
             
             
-            $text = 'tout data';
+            $text = $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.ToutData');
+            
             if($params['entity'] == 'V01TVA' || $params['entity'] == 'A02TVA' || $params['entity'] == 'A06AIB' || $params['entity'] == 'A08IM' 
             	|| $params['entity'] == 'A10CAF' || $params['entity'] == 'V05LIC') {
             	
@@ -1186,7 +1187,8 @@ class Excel
             if (isset($this->_sum['TVA'])) {
 
                 if ($params['entity'] == 'A08IM') {
-                    $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUMIFLessThanZero', 'avoirs', 'left', false);
+                	$avoirs = $this->translator->trans('ApplicationSonataClientOperationsBundle.exports.Avoirs');
+                    $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUMIFLessThanZero', $avoirs, 'left', false);
                 }
                 
                 $this->getTotal($count + $this->_skip, $this->_sum['TVA'], 'SUMIFLessThanZero', $text, 'right', false);
