@@ -64,10 +64,10 @@ A06 = 2 lines
 			'V03283I' => $this->getEntityList('V03283I', false),
 			'V05LIC' => $this->getEntityList('V05LIC', false),
 			'V07EX' => $this->getEntityList('V07EX', false),
-			'A02TVA' => $this->getEntityList('A02TVA', false, false, 'paiement_date'),
+			'A02TVA' => $this->getEntityList('A02TVA', false),
 			'A04283I' => $this->getEntityList('A04283I', false),
 			'A06AIB' => $this->getEntityList('A06AIB', false),
-			'A08IM' => $this->getEntityList('A08IM', false, false, 'date_piece'),
+			'A08IM' => $this->getEntityList('A08IM', false),
 			'A10CAF' => $this->getEntityList('A10CAF', false)
 		);
 		
