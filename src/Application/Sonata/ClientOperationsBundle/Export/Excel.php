@@ -17,7 +17,7 @@ class Excel
     private $_header_cell = array();
     private $_params = array();
     
-    protected $_admin;
+    protected $_admin, $_year, $_month;
     
     protected $_styleBorders = array(
         'borders' => array(
@@ -226,8 +226,6 @@ class Excel
         $this->_excel = new \PHPExcel();
         $this->translator = \AppKernel::getStaticContainer()->get('translator');
         
-        
-        
     }
 
     /**
@@ -304,7 +302,8 @@ class Excel
         $this->getProperties();
         $this->keyTabData();
         $this->accountTabData();
-        $i = 2;
+        $this->declarationData();
+        $i = 3;
         foreach ($this->get('_config_excel') as $table => $params) {
 
         	$result = $this->queryResult($params);
@@ -549,6 +548,15 @@ class Excel
 		}
     }
 
+    
+    protected function declarationData() {
+    	
+    	$this->_excel->createSheet(2);
+    	$this->_excel->setActiveSheetIndex(2);
+    	$this->_excel->getActiveSheet()->setTitle('Declaration');
+    	$excel = new ExcelDeclaration($this->_client, false, $this->_year, $this->_month, $this->_excel);
+    	$excel->getDeclaration();
+    }
     
     
     protected function keyTabData() {

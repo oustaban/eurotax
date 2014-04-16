@@ -244,8 +244,12 @@ class ExcelDeclaration {
 		),
 	);
 	
-	public function __construct($client, $show_all_operations, $year, $month) {
-		$this->_excel = new \PHPExcel();
+	public function __construct($client, $show_all_operations, $year, $month, $excel = null) {
+		if(is_null($excel)) {
+			$this->_excel = new \PHPExcel();
+		} else {
+			$this->_excel = $excel;
+		}
 		$this->translator = \AppKernel::getStaticContainer()->get('translator');
 		
 		$this->_client = $client;
@@ -305,6 +309,19 @@ class ExcelDeclaration {
 		));
 			
 		
+	}
+	
+	public function getDeclaration() {
+		
+		$this->_excel->getActiveSheet()->setShowGridLines(false);
+		
+		$this->_cellProperties();
+		$this->_head();
+		$this->_info();
+		$this->_financial();
+		$this->_vat();
+		$this->_operations();
+		$this->_ruling();
 	}
 	
 	public function getData() {

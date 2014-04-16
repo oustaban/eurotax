@@ -1069,6 +1069,9 @@ class AbstractTabsController extends Controller
         $excel->set('_config_excel', $this->_config_excel);
         $excel->set('_locking', $this->getLocking());
         $excel->set('_admin', $this->admin);
+        $excel->set('_year', $this->_year);
+        $excel->set('_month', $this->_month);
+        
         $excel->render();
 
         if ($this->getLocking()) {
