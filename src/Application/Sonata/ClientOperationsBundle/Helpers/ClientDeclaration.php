@@ -68,7 +68,8 @@ A06 = 2 lines
 			'A04283I' => $this->getEntityList('A04283I', false),
 			'A06AIB' => $this->getEntityList('A06AIB', false),
 			'A08IM' => $this->getEntityList('A08IM', false),
-			'A10CAF' => $this->getEntityList('A10CAF', false)
+			'A10CAF' => $this->getEntityList('A10CAF', false),
+			'V11INT' => $this->getEntityList('V11INT', false)
 		);
 		
 		$count = 0;
