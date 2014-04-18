@@ -67,10 +67,7 @@
 <script type="text/javascript">
     $(function(){
     	$('#raprochement').click(function() {
-    		var popup = window.open("about:blank", "myPopup");
-    		var popup2 = window.open("about:blank", "myPopup2");
-    		popup.location = '{{ path('rapprochement_index', {client_id: client_id, month: month~'|'~year } ) }}';
-    		popup2.location = '{{ path('rapprochement_frame', {client_id: client_id, month: month~'|'~year } ) }}'; 
+    		window.location = '{{ path('rapprochement_index', {client_id: client_id, month: month~'|'~year } ) }}';
     	});
     	
     	
