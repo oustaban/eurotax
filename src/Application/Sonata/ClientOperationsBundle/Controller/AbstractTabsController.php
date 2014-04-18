@@ -1075,10 +1075,11 @@ class AbstractTabsController extends Controller
         $excel->render();
 
         if ($this->getLocking()) {
-
             $this->client->moveFile($excel->getFileAbsolute(), $excel->getFileNameExt());
-
-            $this->get('session')->setFlash('sonata_flash_success', $this->admin->trans('File %name% was successfully saved at Client directory', array('%name%' => $excel)));
+            $excelFile = $this->client->getFilesWebDir($this->client) . '/' . $excel->getFileNameExt(); 
+            $this->get('session')->setFlash('sonata_flash_success|raw', 
+            	$this->admin->trans('File %name% was successfully saved at Client directory. Or download it <a href="%file%">here</a>', 
+            		array('%name%' => $excel, '%file%' => $excelFile)));
             return new RedirectResponse($this->admin->generateUrl('list'));
         }
         exit;
