@@ -345,6 +345,18 @@ A06 = 2 lines
 		return $value;
 	}
 	
+	/**
+	 * Credit of VAT carried forward
+	 */
+	public function getCreditOfVATCarriedForward() {
+		/**
+		  	VAT BALANCE = - 80 000
+			French VAT claim = 50 000
+			Credit of VAT = - 30 000
+		 */
+		return round($this->getRealSoldeTVATotal() + $this->getRapprochementState()->getDemandeDeRemboursement());
+	}
+	
 	
 	public function getSoldeTVATotalPlusPreviousCreditDeTVA() {
 		$total = $this->getPreviousMonth()->getSoldeTVATotal();
