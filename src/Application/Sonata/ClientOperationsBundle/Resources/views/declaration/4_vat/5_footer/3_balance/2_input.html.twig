@@ -3,9 +3,9 @@
     <tr>
         <td class="title">{{ "ApplicationSonataClientOperationsBundle.declaration.balance_title"|trans() }} {{ "ApplicationSonataClientOperationsBundle.declaration.period_this"|trans() }} (TVA<0) </td>
         <td class="i_tva">
-        {% if SoldeTVATotal < 0 %}
+        {% if RealSoldeTVATotal < 0 %}
         
-        	{{ SoldeTVATotal|number_format(0, ',', ' ') }}
+        	{{ RealSoldeTVATotal|number_format(0, ',', ' ') }}
         
         	{#
         	{% if rapState.getDemandeDeRemboursement %}
@@ -24,11 +24,11 @@
     </tr>
     <tr>
         <td class="title">{{ "ApplicationSonataClientOperationsBundle.declaration.claim"|trans() }}</td>
-        <td class="i_tva">{% if SoldeTVATotal < 0 %}{{ rapState.getDemandeDeRemboursement|number_format(0, ',', ' ') }}{% else %}0{% endif %}</td>
+        <td class="i_tva">{% if RealSoldeTVATotal < 0 %}{{ rapState.getDemandeDeRemboursement|number_format(0, ',', ' ') }}{% else %}0{% endif %}</td>
     </tr>
     <tr>
         <td class="title">{{ "ApplicationSonataClientOperationsBundle.declaration.credit_carried"|trans() }}</td>
-        <td class="i_tva">{% if SoldeTVATotal < 0 %}{{ NaturalCreditToBeReportedTotal|number_format(0, ',', ' ') }}{% else %}0{% endif %}</td>
+        <td class="i_tva">{% if RealSoldeTVATotal < 0 %}{{ NaturalCreditToBeReportedTotal|number_format(0, ',', ' ') }}{% else %}0{% endif %}</td>
     </tr>
     </tbody>
 </table>

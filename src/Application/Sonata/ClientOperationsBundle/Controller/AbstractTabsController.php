@@ -1421,6 +1421,7 @@ class AbstractTabsController extends Controller
 			'Total1' => $clientDeclaration->getTotalVat1(),
 			'Total2' => $clientDeclaration->getTotalVat2(),
         	'SoldeTVATotal' => $clientDeclaration->getSoldeTVATotal(),
+        	'RealSoldeTVATotal' => $clientDeclaration->getRealSoldeTVATotal(),
         	'TotalBalance' => $clientDeclaration->getTotalBalance(),
         	'CreditToBeReportedTotal' => $clientDeclaration->getCreditToBeReportedTotal(),
         	'NaturalCreditToBeReportedTotal' => $clientDeclaration->getNaturalCreditToBeReportedTotal(),

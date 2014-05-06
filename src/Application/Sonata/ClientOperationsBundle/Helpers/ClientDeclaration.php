@@ -279,10 +279,36 @@ A06 = 2 lines
 	public function getSoldeTVATotal() {
 		$Total1 = $this->getTotalVat1();
 		$Total2 = $this->getTotalVat2();
-		$soldeTVATotal = ($Total1?$Total1->getTVA():0) - ($Total2?$Total2->getTVA():0);
+		
+		$outputTVA = $Total1 ? $Total1->getTVA() : 0;
+		$inputTVA = $Total2 ? $Total2->getTVA() : 0;
+		
+		$soldeTVATotal = $initialSoldeTVATotal = ($outputTVA) - ($inputTVA);
+		//$soldeTVATotal = ($outputTVA) - ($inputTVA + ($initialSoldeTVATotal + $this->getRapprochementState()->getDemandeDeRemboursement()));
+		
+		//$value = round($this->getTVACredit()) + round($this->getRapprochementState()->getDemandeDeRemboursement());
+
 		
 		return round($soldeTVATotal);
 	}
+	
+	/**
+	 * Final solde total
+	 */
+	public function getRealSoldeTVATotal() {
+		$Total1 = $this->getTotalVat1();
+		$Total2 = $this->getTotalVat2();
+		
+		$outputTVA = $Total1 ? $Total1->getTVA() : 0;
+		$inputTVA = $Total2 ? $Total2->getTVA() : 0;
+		
+		$previousCreditDeTVA = $this->getPreviousMonth()->getCreditToBeReportedTotal();
+		$soldeTVATotal = ($outputTVA) - ($inputTVA + $previousCreditDeTVA);
+		
+		return round($soldeTVATotal);
+	}
+	
+	
 	
 	public function getSoldeTVATotalText() {
 		$soldeTVATotal = $this->getSoldeTVATotal();
