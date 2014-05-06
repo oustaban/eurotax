@@ -1425,7 +1425,7 @@ class AbstractTabsController extends Controller
         	'TotalBalance' => $clientDeclaration->getTotalBalance(),
         	'CreditToBeReportedTotal' => $clientDeclaration->getCreditToBeReportedTotal(),
         	'CreditOfVATCarriedForward' => $clientDeclaration->getCreditOfVATCarriedForward(),
-        	'PreviousCreditDeTVA' => $clientDeclaration->getPreviousMonth()->getCreditToBeReportedTotal(),
+        	'PreviousCreditDeTVA' => $clientDeclaration->getPreviousMonth()->getCreditOfVATCarriedForward(),
         	
         	'SoldeTVATotalPlusPreviousCreditDeTVA' => $clientDeclaration->getSoldeTVATotalPlusPreviousCreditDeTVA(),
         		
