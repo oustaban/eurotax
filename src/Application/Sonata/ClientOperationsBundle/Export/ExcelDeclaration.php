@@ -876,7 +876,7 @@ class ExcelDeclaration {
 		$this->_excel->getActiveSheet()->mergeCells("G$row:I$row");
 
 		$this->_excel->getActiveSheet()->getStyle('J'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
-		$this->_excel->getActiveSheet()->getCell("J$row")->setValue( $this->clientDeclaration->getPreviousMonth()->getCreditToBeReportedTotal() );
+		$this->_excel->getActiveSheet()->getCell("J$row")->setValue( $this->clientDeclaration->getPreviousMonth()->getAbsCreditOfVATCarriedForward() );
 		$this->_excel->getActiveSheet()->getStyle("J$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		$this->_excel->getActiveSheet()->getStyle("G$row:J$row")->applyFromArray($this->_styleBorders);
 		
