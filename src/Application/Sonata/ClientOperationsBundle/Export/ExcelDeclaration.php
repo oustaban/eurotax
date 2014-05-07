@@ -990,7 +990,7 @@ class ExcelDeclaration {
 		
 		$value = 0;
 		if($this->clientDeclaration->getSoldeTVATotal() < 0) {
-			$value = $this->clientDeclaration->getCreditToBeReportedTotal();
+			$value = $this->clientDeclaration->getAbsCreditOfVATCarriedForward();
 		}
 		
 		$this->_excel->getActiveSheet()->getStyle('J'.$row)->getNumberFormat()->setFormatCode('#,##0.00;[RED]\(#,##0.00\)');
