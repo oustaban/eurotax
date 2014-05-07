@@ -292,18 +292,47 @@ A06 = 2 lines
 		return round($soldeTVATotal);
 	}
 	
+	public function getTotalInputHT() {
+		$Total2 = $this->getTotalVat2();
+		
+		$inputHT = 0;
+		
+		if($Total2 && method_exists($Total2, 'getHT')) {
+			$inputHT = $Total2->getHT();
+		}
+		return $inputHT;
+	}
+	
+	public function getTotalInputTVA() {
+		$Total2 = $this->getTotalVat2();
+		$inputTVA = $Total2 ? $Total2->getTVA() : 0;
+		//return $inputTVA + $this->getPreviousMonth()->getCreditOfVATCarriedForward();
+		
+		return $inputTVA;
+	}
+	
+	
+	public function getTotalOutputHT() {
+		$Total1 = $this->getTotalVat1();
+		$outputHT = $Total1 ? $Total1->getHT() : 0;
+		return $outputHT;
+	}
+	
+	public function getTotalOutputTVA() {
+		$Total1 = $this->getTotalVat1();
+		$outputTVA = $Total1 ? $Total1->getTVA() : 0;
+		return $outputTVA;
+	}
+	
+	
+	
+	
+	
 	/**
 	 * Final solde total
 	 */
 	public function getRealSoldeTVATotal() {
-		$Total1 = $this->getTotalVat1();
-		$Total2 = $this->getTotalVat2();
-		
-		$outputTVA = $Total1 ? $Total1->getTVA() : 0;
-		$inputTVA = $Total2 ? $Total2->getTVA() : 0;
-		
-		$previousCreditDeTVA = $this->getPreviousMonth()->getCreditToBeReportedTotal();
-		$soldeTVATotal = ($outputTVA) - ($inputTVA + $previousCreditDeTVA);
+		$soldeTVATotal = $this->getTotalOutputTVA() - $this->getTotalInputTVA();
 		
 		return round($soldeTVATotal);
 	}
@@ -334,11 +363,6 @@ A06 = 2 lines
 	}
 	
 	
-	public function getCreditToBeReportedTotal() {
-		$value = round($this->getTVACredit()) + round($this->getRapprochementState()->getDemandeDeRemboursement());
-		return abs($value);
-		//return $value;
-	}
 	
 	public function getNaturalCreditToBeReportedTotal() {
 		$value = round($this->getTVACredit()) + round($this->getRapprochementState()->getDemandeDeRemboursement());
@@ -357,6 +381,11 @@ A06 = 2 lines
 		return round($this->getRealSoldeTVATotal() + $this->getRapprochementState()->getDemandeDeRemboursement());
 	}
 	
+	public function getAbsCreditOfVATCarriedForward() {
+		return abs($this->getCreditOfVATCarriedForward());
+	}
+	
+
 	
 	public function getSoldeTVATotalPlusPreviousCreditDeTVA() {
 		$total = $this->getPreviousMonth()->getSoldeTVATotal();

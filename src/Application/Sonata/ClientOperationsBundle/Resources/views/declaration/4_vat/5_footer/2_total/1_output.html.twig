@@ -3,8 +3,8 @@
     <tr>
         <td class="o_title">{{ "ApplicationSonataClientOperationsBundle.declaration.total"|trans() }}</td>
         <td class="o_value">&nbsp;</td>
-        <td class="o_nett">{% if Total1 and Total1.getHT %}{{ Total1.getHT|number_format(0, ',', ' ') }}{% else %}{% endif %}</td>
-        <td class="o_tva">{% if Total1 and Total1.getTVA %}{{ Total1.getTVA|number_format(0, ',', ' ') }}{% else %}0{% endif %}</td>
+        <td class="o_nett">{{ ClientDeclaration.getTotalOutputHT|number_format(0, ',', ' ') }}</td>
+        <td class="o_tva">{{ ClientDeclaration.getTotalOutputTVA|number_format(0, ',', ' ') }}</td>
     </tr>
     </tbody>
 </table>

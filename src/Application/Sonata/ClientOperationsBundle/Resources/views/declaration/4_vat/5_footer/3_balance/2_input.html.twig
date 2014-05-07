@@ -1,22 +1,11 @@
 <table cellpadding="0" cellspacing="-1" border="0">
     <tbody>
     <tr>
-        <td class="title">{{ "ApplicationSonataClientOperationsBundle.declaration.balance_title"|trans() }} {{ "ApplicationSonataClientOperationsBundle.declaration.period_this"|trans() }} (TVA<0) </td>
+        <td class="title">{{ "ApplicationSonataClientOperationsBundle.declaration.balance_title"|trans() }} 
+        	{{ "ApplicationSonataClientOperationsBundle.declaration.period_this"|trans() }} (TVA<0) </td>
         <td class="i_tva">
-        {% if RealSoldeTVATotal < 0 %}
-        
-        	{{ RealSoldeTVATotal|number_format(0, ',', ' ') }}
-        
-        	{#
-        	{% if rapState.getDemandeDeRemboursement %}
-        		{{ SoldeTVATotal|number_format(0, ',', ' ') }}
-        	{% else %}
-       	
-				{% if Total2 and Total2.getTVA is defined %}{{ Total2.getTVA|number_format(0, ',', ' ') }}{% else %}0{% endif %}
-			{% endif %}
-
-			#}
-
+        {% if (RealSoldeTVATotal+ClientDeclaration.getPreviousMonth.getCreditOfVATCarriedForward) < 0 %}
+        	{{ (RealSoldeTVATotal+ClientDeclaration.getPreviousMonth.getCreditOfVATCarriedForward)|number_format(0, ',', ' ') }}
 		{% else %}
 			0
 		{% endif %}
@@ -24,11 +13,11 @@
     </tr>
     <tr>
         <td class="title">{{ "ApplicationSonataClientOperationsBundle.declaration.claim"|trans() }}</td>
-        <td class="i_tva">{% if RealSoldeTVATotal < 0 %}{{ rapState.getDemandeDeRemboursement|number_format(0, ',', ' ') }}{% else %}0{% endif %}</td>
+        <td class="i_tva">{% if (RealSoldeTVATotal+ClientDeclaration.getPreviousMonth.getCreditOfVATCarriedForward) < 0 %}{{ rapState.getDemandeDeRemboursement|number_format(0, ',', ' ') }}{% else %}0{% endif %}</td>
     </tr>
     <tr>
         <td class="title">{{ "ApplicationSonataClientOperationsBundle.declaration.credit_carried"|trans() }}</td>
-        <td class="i_tva">{% if RealSoldeTVATotal < 0 %}{{ CreditOfVATCarriedForward|number_format(0, ',', ' ') }}{% else %}0{% endif %}</td>
+        <td class="i_tva">{% if (RealSoldeTVATotal+ClientDeclaration.getPreviousMonth.getCreditOfVATCarriedForward) < 0 %}{{ CreditOfVATCarriedForward|number_format(0, ',', ' ') }}{% else %}0{% endif %}</td>
     </tr>
     </tbody>
 </table>
