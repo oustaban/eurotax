@@ -184,14 +184,18 @@ A06 = 2 lines
 		
 	
 	public function getA02TVAPrevList() {
-		$A02TVAPrevlist = $this->getEntityList('A02TVA', true, true, 'mois', 'paiement_date'); // Previous month
-		
+		$A02TVAPrevlist = $this->getEntityList('A02TVA', true, false, 'mois', 'paiement_date'); // Previous month
+		if($this->isGrouped()) {
+			$A02TVAPrevlist = $this->getEntityList('A02TVA', true, true, 'mois', 'paiement_date'); // Previous month
+		}
 		return $A02TVAPrevlist;
 	}
 	
 	public function getA08IMPrevList() {
-		$A08IMPrevlist = $this->getEntityList('A08IM', true, true, 'mois', 'date_piece'); // Previous month
-		
+		$A08IMPrevlist = $this->getEntityList('A08IM', true, false, 'mois', 'date_piece'); // Previous month
+		if($this->isGrouped()) {
+			$A08IMPrevlist = $this->getEntityList('A08IM', true, true, 'mois', 'date_piece'); // Previous month
+		}
 		return $A08IMPrevlist;
 	}
 		 
