@@ -1,6 +1,12 @@
-{% set nn = "ApplicationSonataClientOperationsBundle.declaration.negative_nett"|trans() %}
-{% set nv = "ApplicationSonataClientOperationsBundle.declaration.negative_vat"|trans() %}
 <table cellpadding="0" cellspacing="0" border="0">
+	<thead>
+    <tr>
+    	<td>&nbsp;</td>
+    	<td>&nbsp;</td>
+    	<td class="th_nett o_nett">{{ "ApplicationSonataClientOperationsBundle.declaration.th.nett"|trans() }}</td>
+    	<td class="th_tva o_tva">{{ "ApplicationSonataClientOperationsBundle.declaration.th.tva"|trans() }}</td>
+    </tr>
+    </thead>
     <tbody>
     {% for data in A04283Ilist %}
     <tr>
