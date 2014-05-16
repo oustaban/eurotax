@@ -90,7 +90,7 @@ class ExportDouaneController extends Controller {
 	protected function _header() {
 		//INTRACOMD0IO1131       1218332089218000410141984819          0141984818          Fabrice COCHET
 		//$user = $this->get('security.context')->getToken()->getUser();
-		return "INTRACOMD0IO" . $this->_month . "31       ". date('dm') ."332089218000410141984819          0141984818           Fabrice COCHET";
+		return "INTRACOMD0IO" . $this->_month . "31       ". date('md') ."332089218000410141984819          0141984818           Fabrice COCHET";
 	}
 	
 	
