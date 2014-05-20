@@ -5,6 +5,7 @@ namespace Application\Sonata\ClientBundle\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Application\Sonata\ClientOperationsBundle\Helpers\ClientDeclaration;
+use Application\Sonata\ClientOperationsBundle\Helpers\ClientDeclarationComputation;
 
 
 /**
@@ -2069,6 +2070,12 @@ class Client
     	}
     	return $instances[$key];
     }
+    
+    
+    public function getDeclarationComputation($year = null, $month = null) {
+    	return new ClientDeclarationComputation($this->getDeclaration($year, $month));
+    }
+    
     
     
 }

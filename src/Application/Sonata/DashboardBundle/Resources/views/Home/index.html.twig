@@ -114,12 +114,7 @@
             <td class="sonata-ba-list-field sonata-ba-list-field-text sonata-ba-list-field-center"  objectId="{{ client[0].id }}">
                 {#{{ client[0].mois_tva }}#}
                 
-                
-                
-                
-                {% set SoldeTVATotal = client[0].getDeclaration.getRealSoldeTVATotal+client[0].getDeclaration.getPreviousMonth.getCreditOfVATCarriedForward %}
-                
-                
+                {% set SoldeTVATotal = client[0].getDeclarationComputation.getSoldeTVATotal %}
                 	<span class="{% if SoldeTVATotal < 0 %}negative_value{% endif %}">
                 	{{ SoldeTVATotal|number_format(0, ',', ' ') }} 
                 	</span>
