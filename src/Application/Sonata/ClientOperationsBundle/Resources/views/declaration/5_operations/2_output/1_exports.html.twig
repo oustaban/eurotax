@@ -6,16 +6,12 @@
     	<td class="th_nett o_nett">{{ "ApplicationSonataClientOperationsBundle.declaration.th.nett"|trans() }}</td>
     	<td class="th_tva o_tva">&nbsp;</td>
     </tr>
-    <tr>
-        <th colspan="4">{{ "ApplicationSonataClientOperationsBundle.declaration.exports_header"|trans() }}</th>
-    </tr>
     </thead>
     <tbody>
     
     {% for data in V07EXlist %}
     <tr>
-        <td class="o_title"><!-- {{ "ApplicationSonataClientOperationsBundle.exports.V07EX.title"|trans() }} --></td>
-        <td class="o_value">&nbsp;</td>
+        <td colspan="2" class="o_title">{{ "ApplicationSonataClientOperationsBundle.declaration.exports_header"|trans() }}</td>
         <td class="o_nett">{{ data.getHT()|number_format(0, ',', ' ') }}</td>
         <td class="o_tva">&nbsp;</td>
     </tr>
