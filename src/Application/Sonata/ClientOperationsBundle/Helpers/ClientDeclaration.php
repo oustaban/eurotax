@@ -375,8 +375,12 @@ A06 = 2 lines
 	
 	/**
 	 * Credit of VAT carried forward
+	 * 
+	 * @deprecated Use ClientDeclatrationComputation#getCreditOfVATCarriedForward
 	 */
 	public function getCreditOfVATCarriedForward() {
+		
+		
 		/**
 		  	VAT BALANCE = - 80 000
 			French VAT claim = 50 000

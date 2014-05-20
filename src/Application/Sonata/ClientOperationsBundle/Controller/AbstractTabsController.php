@@ -19,6 +19,7 @@ use Application\Sonata\DevisesBundle\Entity\Devises;
 use Application\Sonata\ClientOperationsBundle\Helpers\ClientDeclaration;
 
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
+use Application\Sonata\ClientOperationsBundle\Helpers\ClientDeclarationComputation;
 
 class AbstractTabsController extends Controller
 {
@@ -1423,11 +1424,14 @@ class AbstractTabsController extends Controller
         	'SoldeTVATotal' => $clientDeclaration->getSoldeTVATotal(),
         	'RealSoldeTVATotal' => $clientDeclaration->getRealSoldeTVATotal(),
         	'TotalBalance' => $clientDeclaration->getTotalBalance(),
-        	'CreditOfVATCarriedForward' => $clientDeclaration->getCreditOfVATCarriedForward(),
+        	
         	'PreviousCreditDeTVA' => $clientDeclaration->getPreviousMonth()->getAbsCreditOfVATCarriedForward(),
         	'SoldeTVATotalPlusPreviousCreditDeTVA' => $clientDeclaration->getSoldeTVATotalPlusPreviousCreditDeTVA(),
         		
         	'ClientDeclaration' => $clientDeclaration,
+        	
+        	
+        	'ClientDeclarationComputation' => new ClientDeclarationComputation($clientDeclaration),
         	'locked' => $this->getLocking()
         ));
 

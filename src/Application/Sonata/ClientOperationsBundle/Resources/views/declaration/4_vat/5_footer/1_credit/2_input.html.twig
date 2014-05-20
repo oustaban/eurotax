@@ -2,7 +2,7 @@
     <tbody>
     <tr>
         <td class="title">{{ "ApplicationSonataClientOperationsBundle.declaration.credit"|trans() }} {{ "ApplicationSonataClientOperationsBundle.declaration.from_period_prev"|trans() }}</td>
-        <td class="i_tva">{{ PreviousCreditDeTVA|number_format(0, ',', ' ') }}</td>
+        <td class="i_tva">{{ ClientDeclarationComputation.getAbsCreditOfVATFromPreviousPeriod|number_format(0, ',', ' ') }}</td>
     </tr>
     </tbody>
 </table>

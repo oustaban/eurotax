@@ -4,8 +4,8 @@
         <td class="title">{{ "ApplicationSonataClientOperationsBundle.declaration.balance_title"|trans() }} 
         	{{ "ApplicationSonataClientOperationsBundle.declaration.period_this"|trans() }} (TVA<0) </td>
         <td class="i_tva">
-        {% if (RealSoldeTVATotal+ClientDeclaration.getPreviousMonth.getCreditOfVATCarriedForward) < 0 %}
-        	{{ (RealSoldeTVATotal+ClientDeclaration.getPreviousMonth.getCreditOfVATCarriedForward)|number_format(0, ',', ' ') }}
+        {% if (ClientDeclarationComputation.getSoldeTVATotal) < 0 %}
+        	{{ ClientDeclarationComputation.getSoldeTVATotal|number_format(0, ',', ' ') }}
 		{% else %}
 			0
 		{% endif %}
@@ -13,11 +13,13 @@
     </tr>
     <tr>
         <td class="title">{{ "ApplicationSonataClientOperationsBundle.declaration.claim"|trans() }}</td>
-        <td class="i_tva">{% if (RealSoldeTVATotal+ClientDeclaration.getPreviousMonth.getCreditOfVATCarriedForward) < 0 %}{{ rapState.getDemandeDeRemboursement|number_format(0, ',', ' ') }}{% else %}0{% endif %}</td>
+        <td class="i_tva">{% if (ClientDeclarationComputation.getSoldeTVATotal) < 0 %}
+        	{{ rapState.getDemandeDeRemboursement|number_format(0, ',', ' ') }}{% else %}0{% endif %}</td>
     </tr>
     <tr>
         <td class="title">{{ "ApplicationSonataClientOperationsBundle.declaration.credit_carried"|trans() }}</td>
-        <td class="i_tva">{% if (RealSoldeTVATotal+ClientDeclaration.getPreviousMonth.getCreditOfVATCarriedForward) < 0 %}{{ CreditOfVATCarriedForward|number_format(0, ',', ' ') }}{% else %}0{% endif %}</td>
+        <td class="i_tva">{% if (ClientDeclarationComputation.getSoldeTVATotal) < 0 %}
+        	{{ ClientDeclarationComputation.getCreditOfVATCarriedForward|number_format(0, ',', ' ') }}{% else %}0{% endif %}</td>
     </tr>
     </tbody>
 </table>
