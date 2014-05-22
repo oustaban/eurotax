@@ -11,7 +11,7 @@
     
 	{% for data in A10CAFlist %}
     <tr>
-        <td colspan="2" class="i_title">{{ "ApplicationSonataClientOperationsBundle.declaration.quota_header"|trans() }}</td>
+        <td colspan="2" class="i_title">{% if loop.index == 1 %}{{ "ApplicationSonataClientOperationsBundle.declaration.quota_header"|trans() }}{% endif %}</td>
         <td class="i_nett">{{ data.getHT()|number_format(0, ',', ' ') }}</td>
         <td class="i_tva">&nbsp;</td>
     </tr>
