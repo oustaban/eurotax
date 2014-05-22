@@ -11,7 +11,7 @@
     
     {% for data in V07EXlist %}
     <tr>
-        <td colspan="2" class="o_title">{{ "ApplicationSonataClientOperationsBundle.declaration.exports_header"|trans() }}</td>
+        <td colspan="2" class="o_title">{% if loop.index == 1 %}{{ "ApplicationSonataClientOperationsBundle.declaration.exports_header"|trans() }}{% endif %}</td>
         <td class="o_nett">{{ data.getHT()|number_format(0, ',', ' ') }}</td>
         <td class="o_tva">&nbsp;</td>
     </tr>

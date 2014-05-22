@@ -10,7 +10,7 @@
     <tbody>
     {% for data in V05LIClist %}
     <tr>
-        <td colspan="2" class="o_title">{{ "ApplicationSonataClientOperationsBundle.exports.V05LIC.title"|trans() }}</td>
+        <td colspan="2" class="o_title">{% if loop.index == 1 %}{{ "ApplicationSonataClientOperationsBundle.exports.V05LIC.title"|trans() }}{% endif %}</td>
         <td class="o_nett">{{ data.getHT()|number_format(0, ',', ' ') }}</td>
         <td class="o_tva">&nbsp;</td>
     </tr>
