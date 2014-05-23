@@ -682,7 +682,9 @@ class ErrorElements
     	$regime = (int)$this->_object->getRegime();
     	$client = $this->_object->getClient();
     	
-    	if($regime == 29 && $client->getNatureDuClient()->getId() == \Application\Sonata\ClientBundle\Entity\ListNatureDuClients::DEB
+    	//var_dump($this->_object->getId());
+    	
+    	if($regime == 29 && $client && $client->getNatureDuClient()->getId() == \Application\Sonata\ClientBundle\Entity\ListNatureDuClients::DEB
     		&& $client->getNiveauDobligationExpedId() == 4) {
     		$this->_errorElement->with('regime')->addViolation('Régime 29 impossible en Niveau 4.')->end();
     	}

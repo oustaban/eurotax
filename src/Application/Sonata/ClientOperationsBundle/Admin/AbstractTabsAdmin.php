@@ -146,6 +146,13 @@ abstract class AbstractTabsAdmin extends Admin
         return '';
     }
 
+    
+    public function setClientId($clientId) {
+    	$this->client_id = $clientId;
+    	
+    	return $this;
+    }
+    
 
     /**
      * @return array

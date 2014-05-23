@@ -421,7 +421,10 @@ class ImportExcelCommand extends ContainerAwareCommand {
 		
 		$this->sendNotification();
 		
-		echo serialize(array('messages' => $this->messages, 'error_counts' => $this->_import_counts['rows']['errors'], 'import_counts' => $this->_import_counts, 'pid' => $this->pid));
+		echo serialize(array('messages' => $this->messages, 
+			'error_counts' => !empty($this->_import_counts['rows']['errors']) ? $this->_import_counts['rows']['errors'] : 0, 
+			'import_counts' => $this->_import_counts, 
+			'pid' => $this->pid));
 		
 		
 		
@@ -680,7 +683,8 @@ class ImportExcelCommand extends ContainerAwareCommand {
 					$object = $admin->getNewInstance();
 					$admin->setSubject($object);
 					$admin->setIndexImport($key + 1);
-	
+					$admin->setClientId($this->client_id);
+					
 					$admin->import_file_year = $this->_year;
 					$admin->import_file_month = $this->_month;
 	
@@ -755,6 +759,8 @@ class ImportExcelCommand extends ContainerAwareCommand {
 						try {
 							if ($save) {
 								$object->setImports($this->_imports);
+								$object->setClientId($this->client_id);
+								
 								$admin->create($object);
 								$this->setCountImports($class, 'success');
 							}
