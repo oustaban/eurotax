@@ -23,6 +23,9 @@ use Application\Sonata\ClientBundle\Entity\ListTypeDocuments;
 
 use Application\Sonata\ClientOperationsBundle\Export\ExcelDeclaration;
 use Application\Sonata\ClientBundle\Entity\ClientAlert;
+use Application\Sonata\ClientOperationsBundle\Helpers\ClientDeclaration;
+use Application\Sonata\ClientOperationsBundle\Helpers\ClientDeclarationComputation;
+
 
 /**
  * Rapprochement controller.
@@ -467,6 +470,7 @@ class RapprochementController extends Controller
     		$this->get('session')->setFlash('sonata_flash_error', 'Le mois ' . $this->_unlockingYear . '-' . $this->_unlockingMonth . ' est déjà vérouillé, vous ne pouvez donc pas dévérouillé le mois sélectionné.');
     	} else {
     		$this->setLocking();
+    		$this->setRealCreditTvaAReporter();
     		$this->exportTransDeb();
     		$this->exportExcelDeclaration();
     	}
@@ -517,6 +521,39 @@ class RapprochementController extends Controller
     		}
     	}
     }
+    
+    
+    protected function setRealCreditTvaAReporter() {
+
+    	$em = $this->getDoctrine()->getManager();
+    	
+    	$rapState = $em->getRepository('ApplicationSonataClientOperationsBundle:RapprochementState')
+    		->findOneBy(array('client_id' => $this->_client_id, 'month' => $this->_month, 'year' => $this->_year));
+    	
+    	
+    	if(!$rapState) {
+    		$rapState = new RapprochementState();
+    		$rapState->setClientId($this->_client_id)
+    			->setMonth($this->_month)
+    			->setYear($this->_year);
+    	}
+    	
+    	
+    	$clientDeclaration = new ClientDeclaration($this->_client);
+    	$clientDeclaration->setYear($this->_year)
+    		->setMonth($this->_month);
+    	 
+    	$clientDeclarationComputation = new ClientDeclarationComputation($clientDeclaration);
+    	
+    	
+    	$realCreditTvaAReporter = $clientDeclarationComputation->getCreditOfVATCarriedForward();
+    	$rapState->setRealCreditTvaAReporter($realCreditTvaAReporter);
+    	
+    	$em->persist($rapState);
+    	$em->flush();
+    	
+    }
+    
     
     protected function exportTransDeb() {
     	$transdeb = $this->get('client.operation.transdeb');
