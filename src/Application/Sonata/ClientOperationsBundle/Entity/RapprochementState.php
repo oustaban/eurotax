@@ -75,13 +75,24 @@ class RapprochementState {
 	
 	
 	/**
-	 * ADDITIONAL TAXES
+	 * ADDITIONAL TAXES / Taxes Assimilées
 	 * 
 	 * @var integer $credit_tva_a_reporter
 	 *
 	 * @ORM\Column(name="credit_tva_a_reporter", type="float", nullable=true)
 	 */
 	private $credit_tva_a_reporter;
+	
+	
+	/**
+	 * Crédit TVA à reporter
+	 *
+	 * @var integer $credit_tva_a_reporter
+	 *
+	 * @ORM\Column(name="real_credit_tva_a_reporter", type="float", nullable=true)
+	 */
+	private $real_credit_tva_a_reporter;
+	
 	
 	
 	/**
@@ -107,7 +118,7 @@ class RapprochementState {
 	 * @return float
 	 */
 	public function getDemandeDeRemboursement() {
-		return $this->demande_de_remboursement;
+		return $this->demande_de_remboursement?:0;
 	}
 	
 	
@@ -123,10 +134,27 @@ class RapprochementState {
 	 *
 	 * @return float
 	 */
+	public function getRealCreditTvaAReporter() {
+		return round($this->real_credit_tva_a_reporter);
+	}
+	
+	
+	
+	/**
+	 *
+	 * @param float $real_credit_tva_a_reporter
+	 */
+	public function setRealCreditTvaAReporter($real_credit_tva_a_reporter) {
+		$this->real_credit_tva_a_reporter = $real_credit_tva_a_reporter;
+	}
+	
+	/**
+	 *
+	 * @return float
+	 */
 	public function getCreditTvaAReporter() {
 		return round($this->credit_tva_a_reporter);
 	}
-	
 	
 	/**
 	 * Sets the creation date

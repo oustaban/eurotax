@@ -7,21 +7,21 @@ use Application\Sonata\ClientOperationsBundle\Helpers\ClientDeclaration;
 
 class ClientDeclarationComputation {
 	
-	protected $currentClientDeclatraion,
+	protected $currentClientDeclaration,
 		$previousMonthClientDeclaration;
 	
 	
 	public function __construct(ClientDeclaration $clientDeclaration) {
-		$this->currentClientDeclatraion = $clientDeclaration;
+		$this->currentClientDeclaration = $clientDeclaration;
 		$this->previousMonthClientDeclaration = $clientDeclaration->getPreviousMonth();
 	}
 	
 	public function getSoldeTVATotal() {
-		return round($this->currentClientDeclatraion->getRealSoldeTVATotal()  + $this->getCreditOfVATFromPreviousPeriod());
+		return round($this->currentClientDeclaration->getRealSoldeTVATotal()  + $this->getCreditOfVATFromPreviousPeriod());
 	}
 	
 	public function getCreditOfVATCarriedForward() {
-		return round($this->getSoldeTVATotal()	+ $this->currentClientDeclatraion->getRapprochementState()->getDemandeDeRemboursement());
+		return round($this->getSoldeTVATotal()	+ $this->currentClientDeclaration->getRapprochementState()->getDemandeDeRemboursement());
 	}
 	
 	
@@ -30,12 +30,11 @@ class ClientDeclarationComputation {
 	}	
 	
 	public function getCreditOfVATFromPreviousPeriod() {
-		return round(($this->previousMonthClientDeclaration->getRealSoldeTVATotal() + $this->previousMonthClientDeclaration->getPreviousMonth()->getCreditOfVATCarriedForward())
-			+ $this->previousMonthClientDeclaration->getRapprochementState()->getDemandeDeRemboursement());
+		return $this->previousMonthClientDeclaration->getRapprochementState()->getRealCreditTvaAReporter();
 	}
 	
 	public function getTotalInputTVA() {
-		return round($this->currentClientDeclatraion->getTotalInputTVA() + $this->getAbsCreditOfVATFromPreviousPeriod());
+		return round($this->currentClientDeclaration->getTotalInputTVA() + $this->getAbsCreditOfVATFromPreviousPeriod());
 	}
 
 	
