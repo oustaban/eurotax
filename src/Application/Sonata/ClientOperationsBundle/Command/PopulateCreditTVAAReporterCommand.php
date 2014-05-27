@@ -38,29 +38,33 @@ class PopulateCreditTVAAReporterCommand extends ContainerAwareCommand {
 					->setMonth($lock->getMonth())
 					->setYear($lock->getYear());
 			}
-			$realCreditTvaAReporter = 0;
+			
+			$key = sha1($lock->getClientId() . $lock->getYear() . $lock->getMonth());
+			
 
-			if(!isset($clients[$lock->getClientId()])) {
+			if(!isset($clients[$key])) {
 				$client = $this->em->getRepository('ApplicationSonataClientBundle:Client')
 					->findOneBy(array('id' => $lock->getClientId()));
 				
 				if(!$client) {
 					continue;
 				}
-				$clients[$lock->getClientId()] = $client;
+				$clients[$key] = $client;
 			}
 
 
-			if(!isset($clientDeclarations[$lock->getClientId()])) {
-				$clientDeclaration = new ClientDeclaration($clients[$lock->getClientId()]);
+			if(!isset($clientDeclarations[$key])) {
+				$clientDeclaration = new ClientDeclaration($clients[$key]);
 				$clientDeclaration->setYear($lock->getYear())
 				->setMonth($lock->getMonth());
 					
-				$clientDeclarations[$lock->getClientId()] = $clientDeclaration;
-				$clientDeclarationComputations[$lock->getClientId()] = new ClientDeclarationComputation($clientDeclaration);
+				$clientDeclarations[$key] = $clientDeclaration;
+				$clientDeclarationComputations[$key] = new ClientDeclarationComputation($clientDeclaration);
 			}
 
-			$realCreditTvaAReporter = $clientDeclarationComputations[$lock->getClientId()]->getCreditOfVATCarriedForward();
+			$realCreditTvaAReporter = $clientDeclarationComputations[$key]->getCreditOfVATCarriedForward();
+			
+			
 			$rapState->setRealCreditTvaAReporter($realCreditTvaAReporter);
 
 			$this->em->persist($rapState);
