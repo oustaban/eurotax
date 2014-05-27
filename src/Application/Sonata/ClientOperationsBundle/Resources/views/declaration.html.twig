@@ -361,7 +361,7 @@ td.i_tva {
 }
 
 .block_vat_totals_input_th {
-    margin-top: {{ lh }}px;
+    {% if A02TVAlist is not null and A08IMlist is not null %}margin-top: {{ lh }}px;{% endif %}
     float: none;
     clear: both;
 }
@@ -625,7 +625,7 @@ td.i_tva {
 }
 
 .block_operations_input_quota {
-    margin-top: {{ lh }}px;
+    /* margin-top: {{ lh }}px; */
     border: 1px solid black;
     {% if A10CAFlist is null %}display: none;{% endif %}
 }
