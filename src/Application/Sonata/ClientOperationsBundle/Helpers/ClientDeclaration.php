@@ -310,9 +310,9 @@ A06 = 2 lines
 	public function getTotalInputTVA() {
 		$Total2 = $this->getTotalVat2();
 		$inputTVA = $Total2 ? $Total2->getTVA() : 0;
-		//return $inputTVA + $this->getPreviousMonth()->getCreditOfVATCarriedForward();
+		return $inputTVA +  + abs($this->getPreviousMonth()->getRapprochementState()->getRealCreditTvaAReporter());
 		
-		return $inputTVA;
+		//return $inputTVA;
 	}
 	
 	
@@ -336,6 +336,9 @@ A06 = 2 lines
 	 * Final solde total
 	 */
 	public function getRealSoldeTVATotal() {
+		
+		//var_dump($this->getTotalOutputTVA(), $this->getTotalInputTVA());
+		
 		$soldeTVATotal = $this->getTotalOutputTVA() - $this->getTotalInputTVA();
 		
 		return round($soldeTVATotal);

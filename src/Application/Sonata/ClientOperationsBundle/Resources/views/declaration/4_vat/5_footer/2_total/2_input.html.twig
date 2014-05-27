@@ -4,7 +4,7 @@
         <td class="i_title">&nbsp;</td>
         <td class="i_value">&nbsp;</td>
 		<td class="i_nett">{{ ClientDeclaration.getTotalInputHT|number_format(0, ',', ' ') }}</td>
-        <td class="i_tva">{{ (ClientDeclarationComputation.getTotalInputTVA)|number_format(0, ',', ' ') }}</td>    
+        <td class="i_tva">{{ (ClientDeclaration.getTotalInputTVA)|number_format(0, ',', ' ') }}</td>    
     </tr>
     </tbody>
 </table>

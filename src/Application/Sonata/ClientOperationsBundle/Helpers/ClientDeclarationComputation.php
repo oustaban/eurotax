@@ -17,7 +17,7 @@ class ClientDeclarationComputation {
 	}
 	
 	public function getSoldeTVATotal() {
-		return round($this->currentClientDeclaration->getRealSoldeTVATotal()  + $this->getCreditOfVATFromPreviousPeriod());
+		return round($this->currentClientDeclaration->getRealSoldeTVATotal());
 	}
 	
 	public function getCreditOfVATCarriedForward() {
@@ -33,9 +33,7 @@ class ClientDeclarationComputation {
 		return $this->previousMonthClientDeclaration->getRapprochementState()->getRealCreditTvaAReporter();
 	}
 	
-	public function getTotalInputTVA() {
-		return round($this->currentClientDeclaration->getTotalInputTVA() + $this->getAbsCreditOfVATFromPreviousPeriod());
-	}
+	
 
 	
 	
