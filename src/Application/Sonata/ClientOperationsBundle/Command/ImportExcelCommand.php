@@ -677,9 +677,21 @@ class ImportExcelCommand extends ContainerAwareCommand {
  				$admin->setValidateImport();
  				
 				foreach ($data as $key => $line) {
-					if ($this->getImportsBreak($data, $key) || ( empty($line[0]) && empty($line[1]) && empty($line[2]) && empty($line[3]) ) ) {
+					if ($this->getImportsBreak($data, $key)) {
 						break;
 					}
+					
+					if($class != 'DEBExped' && $class != 'DEBIntro') {
+						$_line = $line;
+						if (in_array('commentaires', $fields)) {
+							array_pop($_line); // Exclude commentaires column		
+						}
+						
+						if (count($_line) != count(array_filter($_line))) {
+							$this->setCountImports($class, 'errors', 'Row ('. ($key + ($skip_line+1)) .') has empty column.');
+						}
+					}
+					
 					$object = $admin->getNewInstance();
 					$admin->setSubject($object);
 					$admin->setIndexImport($key + 1);
