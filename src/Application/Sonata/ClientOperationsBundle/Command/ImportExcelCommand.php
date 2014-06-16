@@ -638,14 +638,10 @@ class ImportExcelCommand extends ContainerAwareCommand {
 	{
 		$this->_validateAIB06DEBIntro($sheets);
 		$this->_validateV05LICDEBExped($sheets);
+		
+		list($current_year, $current_month) = explode('-', date('Y-m', strtotime('now' . (date('d') < 25 ? ' -1 month' : ''))));
 		 
 		foreach ($sheets as $title => $data) {
-	
-			
-			
-			
-			
-			
 			if (array_key_exists($title, $this->_config_excel)) {
 				$config_excel = $this->_config_excel[$title];
 				$class = $config_excel['entity'];
@@ -681,16 +677,7 @@ class ImportExcelCommand extends ContainerAwareCommand {
 						break;
 					}
 					
-					if($class != 'DEBExped' && $class != 'DEBIntro') {
-						$_line = $line;
-						if (in_array('commentaires', $fields)) {
-							array_pop($_line); // Exclude commentaires column		
-						}
-						
-						if (count($_line) != count(array_filter($_line))) {
-							$this->setCountImports($class, 'errors', 'Row ('. ($key + ($skip_line+1)) .') has empty column.');
-						}
-					}
+					
 					
 					$object = $admin->getNewInstance();
 					$admin->setSubject($object);
@@ -721,27 +708,36 @@ class ImportExcelCommand extends ContainerAwareCommand {
 						}
 					}
 					//exit;
-	
+					
 					if($class != 'DEBExped' && $class != 'DEBIntro') {
-						//Only lines with MOIS = current month must be imported.
-						if(isset($formData['mois']) && $mois = $formData['mois']) {
-							list($current_year, $current_month) = explode('-', date('Y-m', strtotime('now' . (date('d') < 25 ? ' -1 month' : ''))));
-	
-							if ($mois) {
-								if ($mois instanceof \DateTime) {
-									$month = $value->format('n');
-									$year = $value->format('Y');
-								} else {
-									$month = $mois['month'];
-									$year = $mois['year'];
-								}
-	
-								if (!$this->admin->getLocking() && !($year == $current_year && $month == $current_month)) {
-									continue;
-								}
+						$_line = $line;
+						$mois = false;
+					
+						if(!empty($formData['mois'])) {
+							$mois = $formData['mois'];
+								
+							if ($mois instanceof \DateTime) {
+								$month = $mois->format('n');
+								$year = $mois->format('Y');
+							} else {
+								$month = $mois['month'];
+								$year = $mois['year'];
 							}
-						} else {
-							continue;
+					
+							//Only lines with MOIS = current month must be imported.
+							if (!$this->admin->getLocking() && !($year == $current_year && $month == $current_month)) {
+								continue;
+							}
+							
+					
+							if (in_array('commentaires', $fields)) {
+								array_pop($_line); // Exclude commentaires column
+							}
+								
+							if (count($_line) != count(array_filter($_line))) {
+								//$this->setCountImports($class, 'errors', 'Row ('. ($key + ($skip_line+1)) .') has empty column.');
+								$save = false;
+							} 
 						}
 					}
 	
