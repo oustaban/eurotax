@@ -734,10 +734,10 @@ class ImportExcelCommand extends ContainerAwareCommand {
 								array_pop($_line); // Exclude commentaires column
 							}
 								
-							if (count($_line) != count(array_filter($_line))) {
+							//if (count($_line) != count(array_filter($_line))) {
 								//$this->setCountImports($class, 'errors', 'Row ('. ($key + ($skip_line+1)) .') has empty column.');
-								$save = false;
-							} 
+								//$save = false;
+							//} 
 						} else {
 							// Don't import empty mois
 							continue;
@@ -786,9 +786,9 @@ class ImportExcelCommand extends ContainerAwareCommand {
 					}
 					unset($formData, $form, $form_builder, $object);
 					
-					if(isset($this->_import_counts['rows']) && isset($this->_import_counts['rows']['errors']) && $this->_import_counts['rows']['errors'] >= $this->_min_error_count) {
+				 	if(isset($this->_import_counts['rows']) && isset($this->_import_counts['rows']['errors']) && $this->_import_counts['rows']['errors'] >= $this->_min_error_count) {
 						return;
-					}	
+					}
 				}	
 				unset($data, $admin);
 			}
