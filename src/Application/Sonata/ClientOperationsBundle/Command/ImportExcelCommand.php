@@ -738,6 +738,9 @@ class ImportExcelCommand extends ContainerAwareCommand {
 								//$this->setCountImports($class, 'errors', 'Row ('. ($key + ($skip_line+1)) .') has empty column.');
 								$save = false;
 							} 
+						} else {
+							// Don't import empty mois
+							continue;
 						}
 					}
 	
