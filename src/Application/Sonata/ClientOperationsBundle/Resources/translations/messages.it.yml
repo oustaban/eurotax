@@ -84,7 +84,7 @@ ApplicationSonataClientOperationsBundle:
     TOTALDuMois: TOTALE del Mese
     DontFactures: Importo positivo
     DontAvoirs: Importo negativo
-    Avoirs: note di credito
+    Avoirs: Importo negativo
     ToutData: tutti i dati
 
     KEY_TAB:
