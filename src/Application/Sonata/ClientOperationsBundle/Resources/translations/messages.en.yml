@@ -1,5 +1,6 @@
 ApplicationSonataClientOperationsBundle:
   declaration:
+    eurotax_bank_details: eurotax bank details
     address: 77-79 Av. A. Briand<br />94110 ARCUEIL
     vat_entity: VAT-Registered Company
     summ: SUMMARY of the Period

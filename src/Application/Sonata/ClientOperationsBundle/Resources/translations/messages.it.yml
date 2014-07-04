@@ -1,5 +1,6 @@
 ApplicationSonataClientOperationsBundle:
   declaration:
+    eurotax_bank_details: Coordinate bancarie
     address: 77-79 Avenue Aristide Briand<br />94110-ARCUEIL-France<br />France
     vat_entity: CONTRIBUENTE
     summ: RIEPILOGO del Periodo
@@ -35,7 +36,7 @@ ApplicationSonataClientOperationsBundle:
     balance:
       tva: IVA
       additional_taxes: TASSE ACCESSORIE
-      account_balance: SALDO DE CONTEGGIO
+      account_balance: Saldo contabile
       total: IMPORTO ATTUALE
 
     th:
@@ -155,10 +156,10 @@ ApplicationSonataClientOperationsBundle:
 
     V01TVA:
       title: V01-TVA
-      tiers: Terzo
-      no_TVA_tiers: Terzo Partita IVA
+      tiers: Ragione sociale
+      no_TVA_tiers: No P.IVA acquirente
       date_piece: Data
-      numero_piece: Numero de Fattura
+      numero_piece: Fattura No
       devise_id: Valuta
       devise: Valuta
       montant_HT_en_devise: Base imponibile in valuta
@@ -166,8 +167,8 @@ ApplicationSonataClientOperationsBundle:
       montant_TVA_francaise: Importo IVA. francese
       montant_TTC: Totale fattura IVA. inclusa
       paiement_montant: Importo pagato
-      paiement_devise_id: Valuta in pagamento
-      paiement_devise: Valuta in pagamento
+      paiement_devise_id: valuta
+      paiement_devise: valuta
       paiement_date: Data di pagamento
       mois: Mese
       taux_de_change: Tasso di cambio
@@ -177,10 +178,10 @@ ApplicationSonataClientOperationsBundle:
 
     V03283I:
       title: V03-283-I
-      tiers: Terzo
-      no_TVA_tiers: Terzo Partita IVA
+      tiers: Ragione sociale
+      no_TVA_tiers: No P.IVA acquirente
       date_piece: Data
-      numero_piece: Numero de Fattura
+      numero_piece: Fattura No
       devise_id: Valuta
       devise: Valuta
       montant_HT_en_devise: Base imponibile in valuta
@@ -191,10 +192,10 @@ ApplicationSonataClientOperationsBundle:
 
     V05LIC:
       title: V05-LIC
-      tiers: Terzo
-      no_TVA_tiers: Terzo Partita IVA
+      tiers: Ragione sociale
+      no_TVA_tiers: No P.IVA acquirente
       date_piece: Data
-      numero_piece: Numero de Fattura
+      numero_piece: Fattura No
       devise_id: Valuta
       devise: Valuta
       montant_HT_en_devise: Base imponibile in valuta
@@ -243,9 +244,9 @@ ApplicationSonataClientOperationsBundle:
 
     V07EX:
       title: V07-EX
-      tiers: Terzo
+      tiers: Ragione sociale
       date_piece: Data
-      numero_piece: Numero de Fattura
+      numero_piece: Fattura No
       devise_id: Valuta
       devise: Valuta
       montant_HT_en_devise: Base imponibile in valuta
@@ -256,9 +257,9 @@ ApplicationSonataClientOperationsBundle:
 
     V11INT:
       title: V11-INT
-      tiers: Terzo
+      tiers: Ragione sociale
       date_piece: Data
-      numero_piece: Numero de Fattura
+      numero_piece: Fattura No
       devise_id: Valuta
       devise: Valuta
       montant_HT_en_devise: Base imponibile in valuta
@@ -269,9 +270,9 @@ ApplicationSonataClientOperationsBundle:
 
     A02TVA:
       title: A02-TVA
-      tiers: Terzo
+      tiers: Ragione sociale
       date_piece: Data
-      numero_piece: Numero de Fattura
+      numero_piece: Fattura No
       devise_id: Valuta
       devise: Valuta
       montant_HT_en_devise: Base imponibile in valuta
@@ -279,8 +280,8 @@ ApplicationSonataClientOperationsBundle:
       montant_TVA_francaise: Importo IVA. francese
       montant_TTC: Totale fattura IVA. inclusa
       paiement_montant: Importo pagato
-      paiement_devise_id: Valuta in pagamento
-      paiement_devise: Valuta in pagamento
+      paiement_devise_id: valuta
+      paiement_devise: valuta
       paiement_date: Data di pagamento
       mois: Mese
       taux_de_change: Tasso di cambio
@@ -290,10 +291,10 @@ ApplicationSonataClientOperationsBundle:
 
     A04283I:
       title: A04-283-I
-      tiers: Terzo
-      no_TVA_tiers: Terzo Partita IVA
+      tiers: Ragione sociale
+      no_TVA_tiers: No P.IVA acquirente
       date_piece: Data
-      numero_piece: Numero de Fattura
+      numero_piece: Fattura No
       devise_id: Valuta
       devise: Valuta
       montant_HT_en_devise: Base imponibile in valuta
@@ -306,10 +307,10 @@ ApplicationSonataClientOperationsBundle:
 
     V09DES:
       title: V09-DES
-      tiers: Terzo
-      no_TVA_tiers: Terzo Partita IVA
+      tiers: Ragione sociale
+      no_TVA_tiers: No P.IVA acquirente
       date_piece: Data
-      numero_piece: Numero de Fattura
+      numero_piece: Fattura No
       devise_id: Valuta
       devise: Valuta
       montant_HT_en_devise: Base imponibile in valuta
@@ -321,9 +322,9 @@ ApplicationSonataClientOperationsBundle:
 
     A06AIB:
       title: A06-AIB
-      tiers: Terzo
+      tiers: Ragione sociale
       date_piece: Data
-      numero_piece: Numero de Fattura
+      numero_piece: Fattura No
       devise_id: Valuta
       devise: Valuta
       montant_HT_en_devise: Base imponibile in valuta
@@ -373,9 +374,9 @@ ApplicationSonataClientOperationsBundle:
 
     A08IM:
       title: A08-IM
-      tiers: Terzo
+      tiers: Ragione sociale
       date_piece: Data
-      numero_piece: Numero de Fattura
+      numero_piece: Fattura No
       taux_de_TVA: Aliquota IVA
       TVA: IVA
       mois: Mese
@@ -383,9 +384,9 @@ ApplicationSonataClientOperationsBundle:
 
     A10CAF:
       title: A10-CAF
-      tiers: Terzo
+      tiers: Ragione sociale
       date_piece: Data
-      numero_piece: Numero de Fattura
+      numero_piece: Fattura No
       HT: Base imponibile
       mois: Mese
       commentaires: Commentaires
@@ -396,10 +397,10 @@ ApplicationSonataClientOperationsBundle:
     Alerts: Alertes
     V01TVA:
       title: V01-TVA
-      tiers: Terzo
-      no_TVA_tiers: Terzo Partita IVA
+      tiers: Ragione sociale
+      no_TVA_tiers: No P.IVA acquirente
       date_piece: Data
-      numero_piece: Numero de Fattura
+      numero_piece: Fattura No
       devise_id: Valuta
       devise: Valuta
       montant_HT_en_devise: Base imponibile in valuta
@@ -407,8 +408,8 @@ ApplicationSonataClientOperationsBundle:
       montant_TVA_francaise: Importo IVA. francese
       montant_TTC: Totale fattura IVA. inclusa
       paiement_montant: Importo pagato
-      paiement_devise_id: Valuta in pagamento
-      paiement_devise: Valuta in pagamento
+      paiement_devise_id: valuta
+      paiement_devise: valuta
       paiement_date: Data di pagamento
       mois: Mese
       taux_de_change: Tasso di cambio
@@ -417,10 +418,10 @@ ApplicationSonataClientOperationsBundle:
       commentaires: Commentaires
 
     V03283I:
-      tiers: Terzo
-      no_TVA_tiers: Terzo Partita IVA
+      tiers: Ragione sociale
+      no_TVA_tiers: No P.IVA acquirente
       date_piece: Data
-      numero_piece: Numero de Fattura
+      numero_piece: Fattura No
       devise_id: Valuta
       devise: Valuta
       montant_HT_en_devise: Base imponibile in valuta
@@ -431,10 +432,10 @@ ApplicationSonataClientOperationsBundle:
 
     V05LIC:
       title: V05-LIC
-      tiers: Terzo
-      no_TVA_tiers: Terzo Partita IVA
+      tiers: Ragione sociale
+      no_TVA_tiers: No P.IVA acquirente
       date_piece: Data
-      numero_piece: Numero de Fattura
+      numero_piece: Fattura No
       devise_id: Valuta
       devise: Valuta
       montant_HT_en_devise: Base imponibile in valuta
@@ -482,9 +483,9 @@ ApplicationSonataClientOperationsBundle:
 
     V07EX:
       title: V07-EX
-      tiers: Terzo
+      tiers: Ragione sociale
       date_piece: Data
-      numero_piece: Numero de Fattura
+      numero_piece: Fattura No
       devise_id: Valuta
       devise: Valuta
       montant_HT_en_devise: Base imponibile in valuta
@@ -495,10 +496,10 @@ ApplicationSonataClientOperationsBundle:
 
     V09DES:
       title: V09-DES
-      tiers: Terzo
-      no_TVA_tiers: N° TVA Terzo
+      tiers: Ragione sociale
+      no_TVA_tiers: N° TVA Ragione sociale
       date_piece: Data
-      numero_piece: Numero de Fattura
+      numero_piece: Fattura No
       devise_id: Valuta
       devise: Valuta
       montant_HT_en_devise: Base imponibile in valuta
@@ -510,9 +511,9 @@ ApplicationSonataClientOperationsBundle:
 
     V11INT:
       title: V11-INT
-      tiers: Terzo
+      tiers: Ragione sociale
       date_piece: Data
-      numero_piece: Numero de Fattura
+      numero_piece: Fattura No
       devise_id: Valuta
       devise: Valuta
       montant_HT_en_devise: Base imponibile in valuta
@@ -523,9 +524,9 @@ ApplicationSonataClientOperationsBundle:
 
     A02TVA:
       title: A02-TVA
-      tiers: Terzo
+      tiers: Ragione sociale
       date_piece: Data
-      numero_piece: Numero de Fattura
+      numero_piece: Fattura No
       devise_id: Valuta
       devise: Valuta
       montant_HT_en_devise: Base imponibile in valuta
@@ -533,8 +534,8 @@ ApplicationSonataClientOperationsBundle:
       montant_TVA_francaise: Importo IVA. francese
       montant_TTC: Totale fattura IVA. inclusa
       paiement_montant: Importo pagato
-      paiement_devise_id: Valuta in pagamento
-      paiement_devise: Valuta in pagamento
+      paiement_devise_id: valuta
+      paiement_devise: valuta
       paiement_date: Data di pagamento
       mois: Mese
       taux_de_change: Tasso di cambio
@@ -544,10 +545,10 @@ ApplicationSonataClientOperationsBundle:
 
     A04283I:
       title: A04-283-I
-      tiers: Terzo
-      no_TVA_tiers: Terzo Partita IVA
+      tiers: Ragione sociale
+      no_TVA_tiers: No P.IVA acquirente
       date_piece: Data
-      numero_piece: Numero de Fattura
+      numero_piece: Fattura No
       devise_id: Valuta
       devise: Valuta
       montant_HT_en_devise: Base imponibile in valuta
@@ -560,9 +561,9 @@ ApplicationSonataClientOperationsBundle:
 
     A06AIB:
       title: A06-AIB
-      tiers: Terzo
+      tiers: Ragione sociale
       date_piece: Data
-      numero_piece: Numero de Fattura
+      numero_piece: Fattura No
       devise_id: Valuta
       devise: Valuta
       montant_HT_en_devise: Base imponibile in valuta
@@ -611,9 +612,9 @@ ApplicationSonataClientOperationsBundle:
 
     A08IM:
       title: A08-IM
-      tiers: Terzo
+      tiers: Ragione sociale
       date_piece: Data
-      numero_piece: Numero de Fattura
+      numero_piece: Fattura No
       taux_de_TVA: Aliquota IVA
       TVA: IVA (€)
       mois: Mese
@@ -621,9 +622,9 @@ ApplicationSonataClientOperationsBundle:
 
     A10CAF:
       title: A10-CAF
-      tiers: Terzo
+      tiers: Ragione sociale
       date_piece: Data
-      numero_piece: Numero de Fattura
+      numero_piece: Fattura No
       HT: Base imponibile (€)
       mois: Mese
       commentaires: Commentaires

@@ -484,7 +484,7 @@ class ExcelDeclaration {
 		$this->_excel->getActiveSheet()->getCell('F15')->setValue('on ' . date('d/m/Y'));
 		
 		//bank
-		$this->_excel->getActiveSheet()->getCell('I13')->setValue('eurotax bank details:');
+		$this->_excel->getActiveSheet()->getCell('I13')->setValue($this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.eurotax_bank_details'));
 		$this->_excel->getActiveSheet()->getCell('I14')->setValue('BARCLAYS BANK Paris');
 		$this->_excel->getActiveSheet()->getCell('I15')->setValue('BIC : BARCFRPP');
 		$this->_excel->getActiveSheet()->getCell('I16')->setValue('IBAN : FR7630588610817346941010126');

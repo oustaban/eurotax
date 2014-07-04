@@ -1,6 +1,7 @@
 ApplicationSonataClientOperationsBundle:
   link_action_create: Ajouter une ligne
   declaration:
+    eurotax_bank_details: eurotax bank details
     address: 77-79 Av. A. Briand<br />94110 ARCUEIL
     vat_entity: REDEVABLE #VAT-Registered
     summ: RESUME de la Période #SUMMARY of the Period
