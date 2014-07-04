@@ -88,6 +88,7 @@ ApplicationSonataClientOperationsBundle:
     ToutData: tutti i dati
 
     KEY_TAB:
+      declaration: Dichiarazione
       key: Legenda #Key
       title: Intestazione #Title
       description_operations: Natura delle operazioni #Description of operations

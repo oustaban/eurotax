@@ -91,6 +91,7 @@ ApplicationSonataClientOperationsBundle:
     ToutData: tout data
 
     KEY_TAB:
+      declaration: Declaration
       key: Key
       title: Title
       description_operations: Description of operations

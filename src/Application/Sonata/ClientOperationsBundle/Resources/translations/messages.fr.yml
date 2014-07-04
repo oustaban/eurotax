@@ -97,6 +97,7 @@ ApplicationSonataClientOperationsBundle:
 
 
     KEY_TAB:
+      declaration: Declaration
       key: Légende
       title: Titre
       description_operations: Libellé (détail des opérations)

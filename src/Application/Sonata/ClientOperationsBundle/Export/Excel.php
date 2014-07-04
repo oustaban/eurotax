@@ -553,7 +553,7 @@ class Excel
     	
     	$this->_excel->createSheet(2);
     	$this->_excel->setActiveSheetIndex(2);
-    	$this->_excel->getActiveSheet()->setTitle('Declaration');
+    	$this->_excel->getActiveSheet()->setTitle($this->translator->trans('ApplicationSonataClientOperationsBundle.exports.KEY_TAB.declaration'));
     	$excel = new ExcelDeclaration($this->_client, false, $this->_year, $this->_month, $this->_excel);
     	$excel->getDeclaration();
     }
