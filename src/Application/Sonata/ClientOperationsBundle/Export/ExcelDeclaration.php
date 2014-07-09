@@ -582,7 +582,7 @@ class ExcelDeclaration {
 				$this->_excel->getActiveSheet()->getStyle("I$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 				$this->_excel->getActiveSheet()->getStyle("J$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 				
-				$this->_excel->getActiveSheet()->getCell('I'.$row)->setValue($entity->getTauxDeTVA() * 100);
+				$this->_excel->getActiveSheet()->getCell('I'.$row)->setValue($entity->getTauxDeTVA());
 				$this->_excel->getActiveSheet()->getCell('J'.$row)->setValue($entity->getTVA());
 				
 				
@@ -617,7 +617,7 @@ class ExcelDeclaration {
 				$this->_excel->getActiveSheet()->getStyle("J$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 				
 				
-				$this->_excel->getActiveSheet()->getCell('I'.$row)->setValue($entity->getTauxDeTVA() * 100);
+				$this->_excel->getActiveSheet()->getCell('I'.$row)->setValue($entity->getTauxDeTVA());
 				$this->_excel->getActiveSheet()->getCell('J'.$row)->setValue($entity->getTVA());
 				
 				$this->_excel->getActiveSheet()->getStyle("G$row")->applyFromArray($this->_styleLeftBorders);
@@ -663,7 +663,7 @@ class ExcelDeclaration {
 					$this->_excel->getActiveSheet()->getStyle("J$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 					
 					
-					$this->_excel->getActiveSheet()->getCell('I'.$row)->setValue($entity->getTauxDeTVA() * 100);
+					$this->_excel->getActiveSheet()->getCell('I'.$row)->setValue($entity->getTauxDeTVA());
 					$this->_excel->getActiveSheet()->getCell('J'.$row)->setValue($entity->getTVA());
 					
 					
@@ -688,7 +688,7 @@ class ExcelDeclaration {
 					$this->_excel->getActiveSheet()->getStyle("I$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 					$this->_excel->getActiveSheet()->getStyle("J$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 			
-					$this->_excel->getActiveSheet()->getCell('I'.$row)->setValue($entity->getTauxDeTVA() * 100);
+					$this->_excel->getActiveSheet()->getCell('I'.$row)->setValue($entity->getTauxDeTVA());
 					$this->_excel->getActiveSheet()->getCell('J'.$row)->setValue($entity->getTVA());
 					
 
@@ -756,7 +756,7 @@ class ExcelDeclaration {
 				$this->_excel->getActiveSheet()->getStyle("D$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 				$this->_excel->getActiveSheet()->getStyle("E$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 			
-				$this->_excel->getActiveSheet()->getCell('C'.$row)->setValue($entity->getTauxDeTVA() * 100);
+				$this->_excel->getActiveSheet()->getCell('C'.$row)->setValue($entity->getTauxDeTVA());
 				$this->_excel->getActiveSheet()->getCell('D'.$row)->setValue($entity->getHT());
 				$this->_excel->getActiveSheet()->getCell('E'.$row)->setValue($entity->getTVA());
 				
@@ -767,7 +767,7 @@ class ExcelDeclaration {
 				$this->_excel->getActiveSheet()->getStyle("I$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 				$this->_excel->getActiveSheet()->getStyle("J$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 					
-				$this->_excel->getActiveSheet()->getCell('H'.$row)->setValue($entity->getTauxDeTVA() * 100);
+				$this->_excel->getActiveSheet()->getCell('H'.$row)->setValue($entity->getTauxDeTVA());
 				$this->_excel->getActiveSheet()->getCell('I'.$row)->setValue($entity->getHT());
 				$this->_excel->getActiveSheet()->getCell('J'.$row)->setValue($entity->getTVA());
 				
@@ -835,7 +835,7 @@ class ExcelDeclaration {
 				$this->_excel->getActiveSheet()->getStyle("D$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 				$this->_excel->getActiveSheet()->getStyle("E$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 					
-				$this->_excel->getActiveSheet()->getCell('C'.$row)->setValue($entity->getTauxDeTVA() * 100);
+				$this->_excel->getActiveSheet()->getCell('C'.$row)->setValue($entity->getTauxDeTVA());
 				$this->_excel->getActiveSheet()->getCell('D'.$row)->setValue($entity->getHT());
 				$this->_excel->getActiveSheet()->getCell('E'.$row)->setValue($entity->getTVA());
 		
@@ -846,7 +846,7 @@ class ExcelDeclaration {
 				$this->_excel->getActiveSheet()->getStyle("I$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 				$this->_excel->getActiveSheet()->getStyle("J$row")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 					
-				$this->_excel->getActiveSheet()->getCell('H'.$row)->setValue($entity->getTauxDeTVA() * 100);
+				$this->_excel->getActiveSheet()->getCell('H'.$row)->setValue($entity->getTauxDeTVA());
 				$this->_excel->getActiveSheet()->getCell('I'.$row)->setValue($entity->getHT());
 				$this->_excel->getActiveSheet()->getCell('J'.$row)->setValue($entity->getTVA());
 				
