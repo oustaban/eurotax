@@ -375,13 +375,13 @@ class ExcelDeclaration {
 		$this->_excel->getActiveSheet()->getColumnDimension('A')->setWidth(2);
 		$this->_excel->getActiveSheet()->getColumnDimension('B')->setWidth(20);
 		
-		$this->_excel->getActiveSheet()->getColumnDimension('C')->setWidth($this->_pxToExcelWidth(20));
+		$this->_excel->getActiveSheet()->getColumnDimension('C')->setWidth($this->_pxToExcelWidth(30));
 		$this->_excel->getActiveSheet()->getColumnDimension('D')->setWidth(20);
 		$this->_excel->getActiveSheet()->getColumnDimension('E')->setWidth(20);
 		$this->_excel->getActiveSheet()->getColumnDimension('F')->setWidth($this->_pxToExcelWidth(70));
 		$this->_excel->getActiveSheet()->getColumnDimension('G')->setWidth(20);
 		
-		$this->_excel->getActiveSheet()->getColumnDimension('H')->setWidth($this->_pxToExcelWidth(20));
+		$this->_excel->getActiveSheet()->getColumnDimension('H')->setWidth($this->_pxToExcelWidth(30));
 		
 		$this->_excel->getActiveSheet()->getColumnDimension('I')->setWidth(20);
 		$this->_excel->getActiveSheet()->getColumnDimension('J')->setWidth(20);
