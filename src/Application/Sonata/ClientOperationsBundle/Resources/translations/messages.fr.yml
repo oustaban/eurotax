@@ -11,6 +11,8 @@ ApplicationSonataClientOperationsBundle:
     total_header_input: TVA DEDUCTIBLE (€) #Total Input TVA
     sales: Ventes France #Sales with French TVA
     vat_purchases: Achats et importations en France #Purchases & importation with VAT
+    purchases: Purchases
+    importation: Importation
     period_this_month: Période courante #of the month
     period_prev_month: Périodes antérieures #of previous months
     period_this: de la période #of the period

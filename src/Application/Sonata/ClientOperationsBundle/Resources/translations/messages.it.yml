@@ -6,10 +6,12 @@ ApplicationSonataClientOperationsBundle:
     summ: RIEPILOGO del Periodo
     fin_situation: Incassi e pagamenti in EURO
     vat_situation: Liquidazione IVA in EURO
-    total_header_output: Liquidazioni I.V.A (€)
+    total_header_output: Liquidazione I.V.A (€)
     total_header_input: I.V.A detraibile (€)
     sales: Vendite in Francia
     vat_purchases: Acquisti con IVA importazioni in Francia
+    purchases: Acquisti
+    importation: Importazioni
     period_this_month: Del mese
     period_prev_month: Precedente
     period_this: del periodo

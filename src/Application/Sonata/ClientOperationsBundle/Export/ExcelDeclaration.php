@@ -570,7 +570,7 @@ class ExcelDeclaration {
 		
 		$row = 25;
 		if($this->clientDeclaration->getA02TVAlist()) {
-			$this->_excel->getActiveSheet()->getCell('G'.$row)->setValue('Purchases');
+			$this->_excel->getActiveSheet()->getCell('G'.$row)->setValue($this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.purchases'));
 			$this->_excel->getActiveSheet()->getStyle("G$row")->applyFromArray($this->_styleLeftBorders);
 			$this->_excel->getActiveSheet()->getStyle("J$row")->applyFromArray($this->_styleRightBorders);
 			$row++;
@@ -606,7 +606,7 @@ class ExcelDeclaration {
 		
 		if($this->clientDeclaration->getA08IMlist()) {
 			
-			$this->_excel->getActiveSheet()->getCell('G'.$row)->setValue('Importation');
+			$this->_excel->getActiveSheet()->getCell('G'.$row)->setValue($this->translator->trans('ApplicationSonataClientOperationsBundle.declaration.importation'));
 			$row++;
 				
 			foreach($this->clientDeclaration->getA08IMlist() as $entity) {
