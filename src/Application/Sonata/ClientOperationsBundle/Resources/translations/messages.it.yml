@@ -9,11 +9,11 @@ ApplicationSonataClientOperationsBundle:
     total_header_output: Liquidazione I.V.A (€)
     total_header_input: I.V.A detraibile (€)
     sales: Vendite in Francia
-    vat_purchases: Acquisti con IVA importazioni in Francia
+    vat_purchases: Acquisti/importazioni riporto credito 
     purchases: Acquisti
     importation: Importazioni
-    period_this_month: Del mese
-    period_prev_month: Precedente
+    period_this_month: del mese
+    period_prev_month: periodo precedente
     period_this: del periodo
     from_period_prev: (precedente periodo)
     negative_nett: Imp. negativo
@@ -38,7 +38,7 @@ ApplicationSonataClientOperationsBundle:
     balance:
       tva: IVA
       additional_taxes: TASSE ACCESSORIE
-      account_balance: Saldo contabile
+      account_balance: SALDO CONTABILE
       total: IMPORTO ATTUALE
 
     th:
