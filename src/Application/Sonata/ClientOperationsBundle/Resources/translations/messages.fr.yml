@@ -11,8 +11,8 @@ ApplicationSonataClientOperationsBundle:
     total_header_input: TVA DEDUCTIBLE (€) #Total Input TVA
     sales: Ventes France #Sales with French TVA
     vat_purchases: Achats et importations en France #Purchases & importation with VAT
-    purchases: Acquisti
-    importation: Importazioni
+    purchases: Purchases
+    importation: Importation
     period_this_month: Période courante #of the month
     period_prev_month: Périodes antérieures #of previous months
     period_this: de la période #of the period
@@ -30,9 +30,9 @@ ApplicationSonataClientOperationsBundle:
     exports_header: Exportations #Exports
     deliveries_header: Livraisons Intra-UE #Intra-EU Deliveries of goods
     no_tva_header: Ventes Art 283-I #Sales withtout TVA (Art. 283-1)
-    other_header:  Altri servizi int.li 0%. #Other non taxable operations
-    other_header-1: Altri servizi
-    other_header-2: int.li 0%
+    other_header: Autres opérations non imposables #Other non taxable operations
+    other_header-1: Autres opérations
+    other_header-2: non imposables
     quota_header: Achats en Franchise #Quota Free Purchases
     ruling_header: RESCRIT Autoliquidation - Ligne 21 de la déclaration de TVA #REVERSE CHARGE RULING
     ruling_nett_title: HT (€) #Nett (€)

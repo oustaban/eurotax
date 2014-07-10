@@ -52,6 +52,10 @@ ApplicationSonataClientOperationsBundle:
   exports:
     V01TVA:
       title: Vendite imponibili in Francia #Sales with Output TVA #Ventes en France avec TVA
+    V01TVA-1:
+      title: Vendite imponibili
+    V01TVA-2:
+      title: in Francia
     V03283I:
       title: Vendite esonerate IVA Francia #Sales without TVA (Art 283-1) #Ventes en France sans TVA
     V03283I-1:
