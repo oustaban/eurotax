@@ -15,7 +15,7 @@
     
     {% for data in A02TVAPrevlist %}
     <tr>
-        <td class="i_title">{% if loop.index == 1 %} Purchases {% endif %}</td>
+        <td class="i_title">{% if loop.index == 1 %} {{ "ApplicationSonataClientOperationsBundle.declaration.purchases"|trans() }} {% endif %}</td>
         <td class="i_value">{{ (data.getTauxDeTVA() * 100) }}%</td>
         <td class="i_nett">&nbsp;</td>
         <td class="i_tva">{{ data.getTVA()|number_format(0, ',', ' ') }}</td>
@@ -24,7 +24,7 @@
     
     {% for data in A08IMPrevlist %}
     <tr>
-        <td class="i_title">{% if loop.index == 1 %} Importation {% endif %}</td>
+        <td class="i_title">{% if loop.index == 1 %} {{ "ApplicationSonataClientOperationsBundle.declaration.importation"|trans() }} {% endif %}</td>
         <td class="i_value">{{ (data.getTauxDeTVA() * 100) }}%</td>
         <td class="i_nett">&nbsp;</td>
         <td class="i_tva">{{ data.getTVA()|number_format(0, ',', ' ') }}</td>
