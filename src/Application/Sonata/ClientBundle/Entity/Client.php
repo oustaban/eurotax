@@ -389,6 +389,19 @@ class Client
     
     private $_compte_reel_sum = 0, $_compte_previsionnel_sum = 0;
     
+    
+    /**
+     * Montant crédit initial
+     * 
+     * @var float $montant_credit_initial
+     *
+     * @ORM\Column(name="montant_credit_initial", type="float")
+     */
+    private $montant_credit_initial;
+    
+    
+    
+    
     /**
      * Returns a string representation
      *
@@ -404,10 +417,6 @@ class Client
     {
         $this->garantie = new \Doctrine\Common\Collections\ArrayCollection();
         $this->pays_postal = $this->pays_facturation = ListCountries::getDefault();
-        
-        
-        
-        
     }
     
    
@@ -2049,6 +2058,28 @@ class Client
         return $this->getCodePostalPostal().' '.$this->getVillePostal();
     }
     
+    /**
+     * Set montant_credit_initial
+     *
+     * @param float $montantHTEnDevise
+     * @return A02TVA
+     */
+    public function setMontantCreditInitial($amount)
+    {
+    	$this->montant_credit_initial = $amount;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get montant_credit_initial
+     *
+     * @return float
+     */
+    public function getMontantCreditInitial()
+    {
+    	return $this->montant_credit_initial;
+    }
     
     
     public function getDeclaration($year = null, $month = null) {
