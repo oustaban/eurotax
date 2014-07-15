@@ -30,6 +30,8 @@ ApplicationSonataClientOperationsBundle:
     deliveries_header: Cessioni intracommunatarie di beni
     no_tva_header: Vendite esonerate da I.V.A
     other_header: Altri operazioni esonerate
+    other_header-1: Altri servizi
+    other_header-2: int.li 0%.
     quota_header: Acquisti in sospensione I.V.A
     ruling_header: Reverse charge operazioni pregresse
     ruling_nett_title: Imp. (€)
