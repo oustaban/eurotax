@@ -487,8 +487,9 @@ class ImportClientCommand extends ContainerAwareCommand {
 			if ($form->isValid()) {
 				try {
 					if(isset($clientId) && $clientId) {
-						$admin->update($object);
-						$this->setCountImports($class, 'updated');
+						//$admin->update($object);
+						$this->setCountImports($class, 'client_existed', $object->getNom() . ' est déjà dans la base');
+						
 					} else {
 						$admin->create($object);
 						$clientId = $object->getId();
@@ -1012,7 +1013,9 @@ class ImportClientCommand extends ContainerAwareCommand {
 			if (isset($values['errors'])) {
 				$message[] = $str_repeat . '<span class="error">' . $translator->trans('Not valid : %count%', array('%count%' => $values['errors'])) . '</span>';
 			}
-				
+			if (isset($values['client_existed'])) {
+				$message[] = $str_repeat . $translator->trans('Existing Clients : %count%', array('%count%' => $values['client_existed']));
+			}	
 	
 			$messages[] = '<strong>' . $table_trans . '</strong><br />' . implode('; ', $message);
 				
