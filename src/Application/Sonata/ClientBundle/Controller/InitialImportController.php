@@ -379,4 +379,24 @@ class InitialImportController extends Controller {
 	}
 	
 	
+	
+	/**
+	 * @param $value
+	 * @return array
+	 */
+	protected function _dateFormValue($value) {
+		if ($value) {
+			$t = strtotime($value);
+	
+			if (!$t) {
+				$t = \PHPExcel_Shared_Date::ExcelToPHP($value);
+			}
+	
+			$value = date('d/m/Y', $t);
+	
+			return $value;
+		}
+		return null;
+	}
+	
 }
