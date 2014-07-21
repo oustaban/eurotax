@@ -140,10 +140,12 @@ A06 = 2 lines
 	}
 	
 	public function getA02TVAList() {	
-		$A02TVAlist = $this->getEntityList('A02TVA', false, false, 'paiement_date');
+		//$A02TVAlist = $this->getEntityList('A02TVA', false, false, 'paiement_date');
+		$A02TVAlist = $this->getEntityList('A02TVA', false, false);
 		
 		if($this->isGrouped()) {
-			$A02TVAlist = $this->getEntityList('A02TVA', false, true, 'paiement_date');
+			//$A02TVAlist = $this->getEntityList('A02TVA', false, true, 'paiement_date');
+			$A02TVAlist = $this->getEntityList('A02TVA', false, true);
 		}
 		return $A02TVAlist;
 	}
@@ -165,9 +167,11 @@ A06 = 2 lines
 	}
 	
 	public function getA08IMList() {
-		$A08IMlist = $this->getEntityList('A08IM', false, false, 'date_piece');
+		//$A08IMlist = $this->getEntityList('A08IM', false, false, 'date_piece');
+		$A08IMlist = $this->getEntityList('A08IM', false, false);
 		if($this->isGrouped()) {
-			$A08IMlist = $this->getEntityList('A08IM', false, true, 'date_piece');
+			//$A08IMlist = $this->getEntityList('A08IM', false, true, 'date_piece');
+			$A08IMlist = $this->getEntityList('A08IM', false, true);
 		}
 		return $A08IMlist;
 	}
@@ -184,17 +188,21 @@ A06 = 2 lines
 		
 	
 	public function getA02TVAPrevList() {
-		$A02TVAPrevlist = $this->getEntityList('A02TVA', true, false, 'mois', 'paiement_date'); // Previous month
+		//$A02TVAPrevlist = $this->getEntityList('A02TVA', true, false, 'mois', 'paiement_date'); // Previous month
+		$A02TVAPrevlist = $this->getEntityList('A02TVA', true, false, 'mois', 'mois'); // Previous month
 		if($this->isGrouped()) {
-			$A02TVAPrevlist = $this->getEntityList('A02TVA', true, true, 'mois', 'paiement_date'); // Previous month
+			//$A02TVAPrevlist = $this->getEntityList('A02TVA', true, true, 'mois', 'paiement_date'); // Previous month
+			$A02TVAPrevlist = $this->getEntityList('A02TVA', true, true, 'mois', 'mois'); // Previous month
 		}
 		return $A02TVAPrevlist;
 	}
 	
 	public function getA08IMPrevList() {
-		$A08IMPrevlist = $this->getEntityList('A08IM', true, false, 'mois', 'date_piece'); // Previous month
+		//$A08IMPrevlist = $this->getEntityList('A08IM', true, false, 'mois', 'date_piece'); // Previous month
+		$A08IMPrevlist = $this->getEntityList('A08IM', true, false, 'mois', 'mois'); // Previous month
 		if($this->isGrouped()) {
-			$A08IMPrevlist = $this->getEntityList('A08IM', true, true, 'mois', 'date_piece'); // Previous month
+			//$A08IMPrevlist = $this->getEntityList('A08IM', true, true, 'mois', 'date_piece'); // Previous month
+			$A08IMPrevlist = $this->getEntityList('A08IM', true, true, 'mois', 'mois'); // Previous month
 		}
 		return $A08IMPrevlist;
 	}
