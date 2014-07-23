@@ -140,12 +140,22 @@ A06 = 2 lines
 	}
 	
 	public function getA02TVAList() {	
-		//$A02TVAlist = $this->getEntityList('A02TVA', false, false, 'paiement_date');
-		$A02TVAlist = $this->getEntityList('A02TVA', false, false);
+		if($this->isOperationLocked()) {
+			$A02TVAlist = $this->getEntityList('A02TVA', false, false);
+		} else {
+			$A02TVAlist = $this->getEntityList('A02TVA', false, false, 'paiement_date');
+		}
 		
 		if($this->isGrouped()) {
 			//$A02TVAlist = $this->getEntityList('A02TVA', false, true, 'paiement_date');
-			$A02TVAlist = $this->getEntityList('A02TVA', false, true);
+			//$A02TVAlist = $this->getEntityList('A02TVA', false, true);
+			
+			if($this->isOperationLocked()) {
+				$A02TVAlist = $this->getEntityList('A02TVA', false, true);
+			} else {
+				$A02TVAlist = $this->getEntityList('A02TVA', false, true, 'paiement_date');
+			}
+				
 		}
 		return $A02TVAlist;
 	}
@@ -167,11 +177,18 @@ A06 = 2 lines
 	}
 	
 	public function getA08IMList() {
-		//$A08IMlist = $this->getEntityList('A08IM', false, false, 'date_piece');
-		$A08IMlist = $this->getEntityList('A08IM', false, false);
+		if($this->isOperationLocked()) {
+			$A08IMlist = $this->getEntityList('A08IM', false, false);
+		} else {
+			$A08IMlist = $this->getEntityList('A08IM', false, false, 'date_piece');
+		}
+		
 		if($this->isGrouped()) {
-			//$A08IMlist = $this->getEntityList('A08IM', false, true, 'date_piece');
-			$A08IMlist = $this->getEntityList('A08IM', false, true);
+			if($this->isOperationLocked()) {
+				$A08IMlist = $this->getEntityList('A08IM', false, true);
+			} else {
+				$A08IMlist = $this->getEntityList('A08IM', false, true, 'date_piece');
+			}
 		}
 		return $A08IMlist;
 	}
@@ -188,21 +205,35 @@ A06 = 2 lines
 		
 	
 	public function getA02TVAPrevList() {
-		//$A02TVAPrevlist = $this->getEntityList('A02TVA', true, false, 'mois', 'paiement_date'); // Previous month
-		$A02TVAPrevlist = $this->getEntityList('A02TVA', true, false, 'mois', 'mois'); // Previous month
+		if($this->isOperationLocked()) {
+			$A02TVAPrevlist = $this->getEntityList('A02TVA', true, false, 'mois', 'mois'); // Previous month
+		} else {
+			$A02TVAPrevlist = $this->getEntityList('A02TVA', true, false, 'mois', 'paiement_date'); // Previous month
+		}
+		
 		if($this->isGrouped()) {
-			//$A02TVAPrevlist = $this->getEntityList('A02TVA', true, true, 'mois', 'paiement_date'); // Previous month
-			$A02TVAPrevlist = $this->getEntityList('A02TVA', true, true, 'mois', 'mois'); // Previous month
+			if($this->isOperationLocked()) {
+				$A02TVAPrevlist = $this->getEntityList('A02TVA', true, true, 'mois', 'mois'); // Previous month
+			} else {
+				$A02TVAPrevlist = $this->getEntityList('A02TVA', true, true, 'mois', 'paiement_date'); // Previous month
+			}
 		}
 		return $A02TVAPrevlist;
 	}
 	
 	public function getA08IMPrevList() {
-		//$A08IMPrevlist = $this->getEntityList('A08IM', true, false, 'mois', 'date_piece'); // Previous month
-		$A08IMPrevlist = $this->getEntityList('A08IM', true, false, 'mois', 'mois'); // Previous month
+		if($this->isOperationLocked()) {
+			$A08IMPrevlist = $this->getEntityList('A08IM', true, false, 'mois', 'mois'); // Previous month
+		} else {
+			$A08IMPrevlist = $this->getEntityList('A08IM', true, false, 'mois', 'date_piece'); // Previous month
+		}
+		
 		if($this->isGrouped()) {
-			//$A08IMPrevlist = $this->getEntityList('A08IM', true, true, 'mois', 'date_piece'); // Previous month
-			$A08IMPrevlist = $this->getEntityList('A08IM', true, true, 'mois', 'mois'); // Previous month
+			if($this->isOperationLocked()) {
+				$A08IMPrevlist = $this->getEntityList('A08IM', true, true, 'mois', 'mois'); // Previous month
+			} else {
+				$A08IMPrevlist = $this->getEntityList('A08IM', true, true, 'mois', 'date_piece'); // Previous month
+			}
 		}
 		return $A08IMPrevlist;
 	}
