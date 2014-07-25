@@ -245,8 +245,8 @@ A06 = 2 lines
 	}
 	
 	public function getA06AIBSumPrev() {
+		$data = $this->getEntityList('A06AIB', true, false);
 		$A06AIBSumPrev = $this->_sumData($this->getEntityList('A06AIB', true, false));
-		
 		return $A06AIBSumPrev;
 	}
 		
@@ -511,7 +511,8 @@ A06 = 2 lines
 	 */
 	public function getEntityList($entity, $isPrevMonth = false, $mergeData = false, $monthField = 'mois', $prevMonthField = 'date_piece') {
 		static $results = array();
-		$key = sha1($this->client->getId() . $entity . $isPrevMonth . $mergeData . $monthField . $prevMonthField . $this->_year . $this->_month);
+		$key = sha1($this->client->getId() . $entity . $isPrevMonth . $mergeData . $monthField . $prevMonthField 
+			. $this->_year . $this->_month . ($isPrevMonth ? ($this->_month - 1) : ''));
 		
 		if(!isset($results[$key])) {
 			/* @var $em \Doctrine\ORM\EntityManager */
