@@ -530,7 +530,12 @@ class ImportClientCommand extends ContainerAwareCommand {
 	
 		$tabs = $this->clientFieldsToImport;
 		unset($tabs['Client']);
-			
+
+		if(empty($this->_client_import_set['rows'])) {
+			return;
+		}
+		
+		
 		foreach($this->_client_import_set['rows'] as $clientId => $row) {
 			foreach($tabs as $class => $tab) {
 				$newclass = array();

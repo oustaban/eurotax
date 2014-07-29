@@ -395,7 +395,7 @@ class Client
      * 
      * @var float $montant_credit_initial
      *
-     * @ORM\Column(name="montant_credit_initial", type="float")
+     * @ORM\Column(name="montant_credit_initial", type="float", nullable=true)
      */
     private $montant_credit_initial;
     
