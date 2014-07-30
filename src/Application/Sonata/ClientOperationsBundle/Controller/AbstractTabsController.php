@@ -1437,7 +1437,7 @@ class AbstractTabsController extends Controller
 
 
         if (!$debug) {
-            $mpdf = new mPDF('c', 'A4', 0, '', 15, 15, 13, 13, 9, 2);
+            $mpdf = new mPDF('c', 'A4', 0, '', 15, 15, 10, 13, 9, 2);
             //$mpdf->SetDisplayMode('fullpage');
             //$mpdf->SetHeader('test header', 'E');
             
