@@ -639,15 +639,18 @@ function init_rapprochement_sums() {
     		var i1 = real_num($('#totals_input_calcu1 b').html()), 
     			i2 = real_num($('#totals_input_calcu2 b').html()),
     			o1 = real_num($('#totals_output_calcu1 b').html()), 
-    			o2 = real_num($('#totals_output_calcu2 b').html());
+    			o2 = real_num($('#totals_output_calcu2 b').html()),
+    			$obj = $('#btn_locking, #link_declaration');
+    		
+    		
+    		if(!$obj.attr('old-href')) {
+				$obj.attr('old-href', $obj.attr('href'));
+			}
     		
     		if(i1 != 0 || i2 != 0 || o1 != 0 || o2 != 0) {
-    			$('#btn_locking, #link_declaration').attr('disabled', true).on('click', function(e) {
-    				e.preventDefault();
-    				e.stopPropagation();
-    			});
+    			$obj.attr('disabled', true).attr('href', 'javascript:void(0);');
     		} else {
-    			$('#btn_locking, #link_declaration').attr('disabled', false);
+    			$obj.attr('disabled', false).attr('href', $obj.attr('old-href'));
     		}
     	});
     	
