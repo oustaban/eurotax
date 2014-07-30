@@ -19,7 +19,7 @@ form:
   raison_sociale_2: Raison sociale
   N_TVA_CEE_facture: N° TVA CEE facturé
   date_fin_mission: Date fin mission
-  date_de_depot_id: Date de dépot
+  date_de_depot_id: Date de dépôt
   N_TVA_CEE: N° TVA CEE
   niveau_dobligation_id: Niveau d'obligation
   teledeclaration: Télédéclaration
@@ -28,6 +28,7 @@ form:
   EN: Anglais
   FR: Français
   IT: Italien
+  montant_credit_initial: Montant Crédit Initial
 
   Client:
     title: Client
@@ -51,7 +52,7 @@ form:
     raison_sociale_2: Raison sociale
     N_TVA_CEE_facture: N° TVA CEE facturé
     date_fin_mission: Date fin mission
-    date_de_depot_id: Date de dépot
+    date_de_depot_id: Date de dépôt
     N_TVA_CEE: N° TVA CEE
     niveau_dobligation_id: Niveau d'obligation
     teledeclaration: Télédéclaration
@@ -323,7 +324,7 @@ filter:
   raison_sociale_2: Raison sociale
   N_TVA_CEE_facture: N° TVA CEE facturé
   date_fin_mission: Date fin mission
-  date_de_depot_id: Date de dépot
+  date_de_depot_id: Date de dépôt
   N_TVA_CEE: N° TVA CEE
   niveau_dobligation_id: Niveau d'obligation
   N_TVA_FR: N° TVA FR

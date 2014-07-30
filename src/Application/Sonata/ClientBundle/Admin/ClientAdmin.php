@@ -253,7 +253,7 @@ class ClientAdmin extends Admin
         ->with('form.client.row18')
         ->add('language', null, array('label' => 'form.language', 'empty_value' => '', 'required' => true))
         
-        ->add('montant_credit_initial', null, array())
+        ->add('montant_credit_initial', null, array('label' => 'form.montant_credit_initial'))
         ;
             
             
