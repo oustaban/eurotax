@@ -1322,7 +1322,7 @@ class AbstractTabsController extends Controller
     public function importListAction()
     {
         $form_month = $this->_year . '-' . $this->_month . '-01';
-        $to_month = $this->_year . '-' . $this->_month . '-31';
+        $to_month = $this->_year . '-' . $this->_month . '-31 23:59:59';
 
         /* @var $em \Doctrine\ORM\EntityManager */
         $em = $this->getDoctrine()->getManager();
