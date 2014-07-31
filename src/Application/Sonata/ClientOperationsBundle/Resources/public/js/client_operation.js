@@ -640,17 +640,20 @@ function init_rapprochement_sums() {
     			i2 = real_num($('#totals_input_calcu2 b').html()),
     			o1 = real_num($('#totals_output_calcu1 b').html()), 
     			o2 = real_num($('#totals_output_calcu2 b').html()),
-    			$obj = $('#btn_locking, #link_declaration');
-    		
-    		
-    		if(!$obj.attr('old-href')) {
-				$obj.attr('old-href', $obj.attr('href'));
-			}
+    			$btn_locking = $('#btn_locking'),
+    			$link_declaration = $('#link_declaration')
+    			;
     		
     		if(i1 != 0 || i2 != 0 || o1 != 0 || o2 != 0) {
-    			$obj.attr('disabled', true).attr('href', 'javascript:void(0);');
+    			$btn_locking.attr('disabled', true);
+    			$link_declaration.attr('disabled', true).on('click', function() {
+    				return false;
+    			});
     		} else {
-    			$obj.attr('disabled', false).attr('href', $obj.attr('old-href'));
+    			$btn_locking.attr('disabled', false);
+    			$link_declaration.attr('disabled', false).on('click', function() {
+    				window.open($link_declaration.attr('href'));
+    			});
     		}
     	});
     	
